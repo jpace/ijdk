@@ -10,23 +10,23 @@ public class OrderedPair<FirstType extends Comparable<? super FirstType>, Second
         return new OrderedPair<X, Y>(first, second);
     }
 
-    private FirstType _first;
+    private final FirstType first;
     
-    private SecondType _second;
+    private final SecondType second;
     
     public OrderedPair(FirstType first, SecondType second) {
         super(first, second);
         
-        _first  = first;
-        _second = second;
+        this.first  = first;
+        this.second = second;
     }
 
     public FirstType getFirst() {
-        return _first;
+        return first;
     }
 
     public SecondType getSecond() {
-        return _second;
+        return second;
     }
 
     public int compareTo(Pair<FirstType, SecondType> other) {

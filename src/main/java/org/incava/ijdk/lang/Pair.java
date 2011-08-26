@@ -11,21 +11,21 @@ public class Pair<FirstType, SecondType> implements Comparable<Pair<FirstType, S
         return new Pair<X, Y>(first, second);
     }
 
-    private final FirstType _first;
+    private final FirstType first;
     
-    private final SecondType _second;
+    private final SecondType second;
     
     public Pair(FirstType first, SecondType second) {
-        _first  = first;
-        _second = second;
+        this.first  = first;
+        this.second = second;
     }
 
     public FirstType getFirst() {
-        return _first;
+        return first;
     }
 
     public SecondType getSecond() {
-        return _second;
+        return second;
     }
 
     public boolean equals(Object obj) {

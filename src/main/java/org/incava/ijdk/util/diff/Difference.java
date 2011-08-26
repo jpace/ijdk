@@ -10,6 +10,7 @@ package org.incava.ijdk.util.diff;
  * addition.
  */
 public class Difference {
+
     public static final int NONE = -1;
     
     /**

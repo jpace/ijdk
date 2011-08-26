@@ -2,10 +2,11 @@ package org.incava.ijdk.util;
 
 
 public class ANSI {
-    private static String ESC = String.valueOf(new byte[] { 27 });
 
-    public static String makeColor(int n) {
-        return ESC + "[" + n + "m";
+    protected static String makeColor(int n) {
+        // this behavior changed in Java 1.4.2-01, so this is a char, not a
+        // byte.
+        return "" + (char)27 + "[" + n + "m";
     }
 
     public final static String NONE = makeColor(0);
@@ -32,11 +33,4 @@ public class ANSI {
     public final static String ON_MAGENTA = makeColor(45);
     public final static String ON_CYAN = makeColor(46);
     public final static String ON_WHITE = makeColor(47);
-    
-    public static void main(String[] args) {
-        String ESC = new String(new byte[] { 27 });
-        System.out.println(ESC + "[34mblue" + ESC + "[0m");
-        System.out.println(BOLD + "bold" + RESET);
-    }
-
 }

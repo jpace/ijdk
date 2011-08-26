@@ -5,20 +5,20 @@ import java.util.*;
 
 public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
 
-    private Set<Map.Entry<K, Collection<V>>> _entrySet;
+    private Set<Map.Entry<K, Collection<V>>> entrySet;
 
     public MultiMap() {
-        _entrySet = null;
+        entrySet = null;
     }
 
     // get entrySet on access; allow to override
 
     public Set<Map.Entry<K, Collection<V>>> entrySet() {
-        if (_entrySet == null) {
-            _entrySet = new HashSet<Map.Entry<K, Collection<V>>>();
+        if (entrySet == null) {
+            entrySet = new HashSet<Map.Entry<K, Collection<V>>>();
         }
 
-        return _entrySet;
+        return entrySet;
     }
 
     public Collection<V> getCollection() {
@@ -26,15 +26,15 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
     }
 
     public Collection<V> put(K key, Collection<V> value) {
-        Set<Map.Entry<K, Collection<V>>> entrySet = entrySet();
+        Set<Map.Entry<K, Collection<V>>> entries = entrySet();
 
-        for (Map.Entry<K, Collection<V>> entry : entrySet) {
+        for (Map.Entry<K, Collection<V>> entry : entries) {
             if (key == entry.getKey() || (key != null && key.equals(entry.getKey()))) {
                 return entry.setValue(value);
             }
         }
 
-        entrySet.add(new MultiMapEntry<K, V>(key, value));
+        entries.add(new MultiMapEntry<K, V>(key, value));
 
         return null;
     }
@@ -54,35 +54,48 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
         return coll;
     }
 
+    public Collection<V> put(K key, V value) {
+        Collection<V> coll = get(key);
+
+        if (coll == null) {
+            coll = getCollection();
+            put(key, coll);
+        }
+
+        coll.add(value);
+    
+        return coll;
+    }
+
     public class MultiMapEntry<K, V> implements Map.Entry<K, Collection<V>>, Comparable<Map.Entry<K, Collection<V>>> {
         
-        private final K _key;
+        private final K key;
 
-        private Collection<V> _value;
+        private Collection<V> value;
 
         public MultiMapEntry(K key, Collection<V> value) {
-            _key = key;
-            _value = value;
+            this.key = key;
+            this.value = value;
         }
 
         public K getKey() {
-            return _key;
+            return key;
         }
 
         public Collection<V> getValue() {
-            return _value;
+            return value;
         }
 
         public Collection<V> setValue(Collection<V> newValue) {
-            Collection<V> oldValue = _value;
-            _value = newValue;
+            Collection<V> oldValue = value;
+            value = newValue;
             return oldValue;
         }
 
         public boolean equals(Object obj) {
             if (obj instanceof MultiMapEntry) {
                 MultiMapEntry other = (MultiMapEntry)obj;
-                return areEqual(_key, other.getKey()) && areEqual(_value, other.getValue());
+                return areEqual(key, other.getKey()) && areEqual(value, other.getValue());
             }
             else {
                 return false;
@@ -90,13 +103,13 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
         }
 
         public int hashCode() {
-            return (_key == null ? 0 : _key.hashCode()) ^ (_value == null ? 0 : _value.hashCode());
+            return (key == null ? 0 : key.hashCode()) ^ (value == null ? 0 : value.hashCode());
         }
 
         public int compareTo(Map.Entry<K, Collection<V>> other) {
-            int cmp = compareObjects(_key, other.getKey());
+            int cmp = compareObjects(key, other.getKey());
             if (cmp == 0) {
-                cmp = compareObjects(_value, other.getValue());
+                cmp = compareObjects(value, other.getValue());
             }
             return cmp;
         }
