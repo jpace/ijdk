@@ -1,7 +1,5 @@
 package org.incava.ijdk.util;
 
-import org.incava.qualog.Qualog;
-
 
 /**
  * Times an event, from when the object is created, until when the

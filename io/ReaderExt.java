@@ -20,7 +20,6 @@ public class ReaderExt {
             return lines.toArray(new String[lines.size()]);
         }
         catch (IOException ioe) {
-            tr.Ace.log("error reading source: " + ioe);
             return new String[0];
         }
     }

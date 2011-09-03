@@ -30,7 +30,6 @@ public class OrderedPair<FirstType extends Comparable<? super FirstType>, Second
     }
 
     public int compareTo(Pair<FirstType, SecondType> other) {
-        tr.Ace.log("other", other);
         if (other instanceof OrderedPair) {
             return compareTo((OrderedPair<FirstType, SecondType>)other);
         }
@@ -40,18 +39,11 @@ public class OrderedPair<FirstType extends Comparable<? super FirstType>, Second
     }
 
     public int compareTo(OrderedPair<FirstType, SecondType> other) {
-        tr.Ace.cyan("this", this);
-        tr.Ace.cyan("other", other);
-
         int cmp = getFirst().compareTo(other.getFirst());
-        tr.Ace.cyan("cmp", String.valueOf(cmp));
 
         if (cmp == 0) {
             cmp = getSecond().compareTo(other.getSecond());
-            tr.Ace.cyan("cmp", String.valueOf(cmp));
         }
-
-        tr.Ace.cyan("cmp", String.valueOf(cmp));
         
         return cmp;
     }

@@ -3,7 +3,6 @@ package org.incava.ijdk.io;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import org.incava.qualog.Qualog;
 
 
 /**
@@ -19,7 +18,6 @@ public class Find {
         try {
             File fd = new File(name);
             if (fd.isDirectory()) {
-                Qualog.log("processing directory");
                 String[] contents = fd.list(new FilenameFilter() {
                         public boolean accept(File dir, String nm) {
                             File f = new File(dir, nm);
@@ -31,7 +29,6 @@ public class Find {
                 }
             }
             else if (fd.isFile()) {
-                Qualog.log("adding: " + fd);
                 fileList.add(fd.getCanonicalPath());
             }
             else {

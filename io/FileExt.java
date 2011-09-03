@@ -2,7 +2,6 @@ package org.incava.ijdk.io;
 
 import java.io.*;
 import java.util.*;
-import org.incava.qualog.Qualog;
 
 
 public class FileExt {
@@ -69,7 +68,6 @@ public class FileExt {
             return lines.toArray(new String[lines.size()]);
         }
         catch (Exception e) {
-            Qualog.log("exception: " + e);
             return null;
         }
     }
@@ -91,7 +89,6 @@ public class FileExt {
             return lines.toArray(new String[lines.size()]);
         }
         catch (Exception e) {
-            Qualog.log("exception: " + e);
             return new String[0];
         }
     }
@@ -127,7 +124,6 @@ public class FileExt {
             return contents.toString();
         }
         catch (Exception e) {
-            Qualog.log("exception: " + e);
             return null;
         }
     }
