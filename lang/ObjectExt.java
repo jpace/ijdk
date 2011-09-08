@@ -6,6 +6,9 @@ package org.incava.ijdk.lang;
  */
 public class ObjectExt {
 
+    /**
+     * Returns whether the objects are equal, including whether they are both null.
+     */
     public static boolean equal(Object x, Object y) {
         if (x == null) {
             return y == null;
@@ -18,6 +21,9 @@ public class ObjectExt {
         }
     }
 
+    /**
+     * Compares the two objects, including testing for null.
+     */
     public static<A extends Comparable<A>> int compare(A x, A y) {
         if (x == null) {
             return y == null ? 0 : -1;
