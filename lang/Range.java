@@ -4,10 +4,11 @@ import java.io.*;
 import java.util.*;
 
 
-public class Range {
-    private int first;
+public class Range implements Comparable<Range> {
 
-    private int last;
+    private final int first;
+
+    private final int last;
     
     public Range(int first, int last) {
         this.first = first;
@@ -18,30 +19,16 @@ public class Range {
         return first;
     }
 
-    public void setFirst(int first) {
-        this.first = first;
-        if (first > last) {
-            last = first;
-        }
-    }
-
     public int getLast() {
         return last;
-    }
-
-    public void setLast(int last) {
-        this.last = last;
-        if (first > last) {
-            first = last;
-        }
     }
 
     public boolean includes(int n) {
         return n >= first && n <= last;
     }
 
-    public Object[] lastArray() {
-        return new Object[] { new Integer(first), new Integer(last) };
+    public Integer[] toArray() {
+        return new Integer[] { first, last };
     }
 
     public boolean equals(Object obj) {
@@ -54,17 +41,15 @@ public class Range {
         }
     }
 
-    public void expandTo(int i) {
-        if (i < first) {
-            first = i;
-        }
-        if (i > last) {
-            last = i;
-        }
-    }
-
     public String toString() {
         return "[" + first + ", " + last + "]";
     }
 
+    public int compareTo(Range other) {
+        int cmp = IntegerExt.compare(first, other.first);
+        if (cmp == 0) {
+            cmp = IntegerExt.compare(last, other.last);
+        }
+        return cmp;
+    }
 }

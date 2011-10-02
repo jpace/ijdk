@@ -6,8 +6,8 @@ import java.util.*;
 /**
  * Extensions to the String class.
  */
-public class StringExt
-{
+public class StringExt {
+
     /**
      * Set this to true for debugging output.
      */
