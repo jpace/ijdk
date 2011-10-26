@@ -1,4 +1,4 @@
-package org.incava.ijdk;
+package org.incava.ijdk.util;
 
 import java.util.*;
 
@@ -10,7 +10,7 @@ public class IUtil {
     }
 
     public static <T> T elvis(T obj, T defVal) {
-        return isTrue(obj) ? defVal : obj;
+        return isTrue(obj) ? obj : defVal;
     }
 
 }
