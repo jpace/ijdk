@@ -12,4 +12,11 @@ public class MathExt {
         }
         return m;
     }
+
+    /**
+     * Returns whether the value is between the lower and upper bound, inclusive.
+     */
+    public static boolean isWithin(int val, int lowerBound, int upperBound) {
+        return val >= lowerBound && val <= upperBound;
+    }
 }

@@ -214,6 +214,22 @@ public class StringExt {
         return join(Arrays.asList(ary), str);
     }
 
+    /**
+     * Returns the character at the given index, or null if <code>index</code>
+     * is out of range. If <code>index</code> is negative, the character is the
+     * nth character from the end of the string, where -1 is the last character
+     * in the string.
+     */
+    public static Character charAt(String str, int index) {
+        if (str == null) {
+            return null;
+        }
+        else {
+            int idx = index < 0 ? str.size() + index : index;
+            return idx >= str.size() ? null : str.charAt(idx);
+        }
+    }
+
     public static void main(String[] args) {
         test("this;is;a;test", ';');
         test(";is;a;test", ';');

@@ -9,7 +9,7 @@ public class ObjectExt {
     /**
      * Returns whether the objects are equal, including whether they are both null.
      */
-    public static boolean equal(Object x, Object y) {
+    public static boolean areEqual(Object x, Object y) {
         if (x == null) {
             return y == null;
         }
@@ -19,6 +19,13 @@ public class ObjectExt {
         else {
             return x.equals(y);
         }
+    }
+
+    /**
+     * Returns whether the objects are equal, including whether they are both null.
+     */
+    public static boolean equal(Object x, Object y) {
+        return areEqual(x, y);
     }
 
     /**

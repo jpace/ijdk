@@ -1,6 +1,9 @@
 package org.incava.ijdk.util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 
 
 public class IUtil {
@@ -44,12 +47,12 @@ public class IUtil {
         return isTrue(a) ? a : (isTrue(b) ? b : null);
     }
 
-    public static <T> Iterator<T> iterator(T[] ary) {
-        return ary == null ? (new ArrayList<T>()).iterator() : Arrays.asList(ary).iterator();
+    public static <T> Iterable<T> iter(T[] ary) {
+        return ary == null ? new ArrayList<T>() : Arrays.asList(ary);
     }
 
-    public static <T> Iterator<T> iterator(Iterable<T> coll) {
-        return coll == null ? (new ArrayList<T>()).iterator() : coll.iterator();
+    public static <T> Iterable<T> iter(Iterable<T> coll) {
+        return coll == null ? new ArrayList<T>() : coll;
     }
 
 }
