@@ -177,24 +177,6 @@ public class StringExt {
         return str.substring(s);
     }
 
-    public static void test(String str, char del) {
-        System.out.println("-----  test: \"" + str + "\"  -----");
-        String[] splits = StringExt.split(str, del);
-        System.out.println("#splits: " + splits.length);
-        for (int i = 0; i < splits.length; ++i) {
-            System.out.println("    # " + i + ": " + splits[i]);
-        }
-    }
-
-    public static void test(String str, String del) {
-        System.out.println("-----  test: \"" + str + "\"  -----");
-        String[] splits = StringExt.split(str, del);
-        System.out.println("#splits: " + splits.length);
-        for (int i = 0; i < splits.length; ++i) {
-            System.out.println("    # " + i + ": " + splits[i]);
-        }
-    }
-
     public static String join(Collection c, String str) {
         StringBuffer buf = new StringBuffer();
         boolean isFirst = true;
@@ -219,25 +201,18 @@ public class StringExt {
      * is out of range. If <code>index</code> is negative, the character is the
      * nth character from the end of the string, where -1 is the last character
      * in the string.
+     *
+     * @return The character at the given index, or null if out of range.
+     * @param str The source string.
+     * @param index The index into the source string. Negative value goes from end backward.
      */
     public static Character charAt(String str, int index) {
         if (str == null) {
             return null;
         }
         else {
-            int idx = index < 0 ? str.size() + index : index;
-            return idx >= str.size() ? null : str.charAt(idx);
+            int idx = index < 0 ? str.length() + index : index;
+            return idx < 0 || idx >= str.length() ? null : str.charAt(idx);
         }
     }
-
-    public static void main(String[] args) {
-        test("this;is;a;test", ';');
-        test(";is;a;test", ';');
-        test("this;is;a;", ';');
-        test("this;;a;test", ';');
-        test(";this;;a;test;;", ';');
-        test("this is yet another test, it is.", "is");
-    }
 }
-
-
