@@ -215,4 +215,8 @@ public class StringExt {
             return idx < 0 || idx >= str.length() ? null : str.charAt(idx);
         }
     }
+
+    public static Character get(String str, int index) {
+        return charAt(str, index);
+    }
 }
