@@ -35,6 +35,10 @@ public class IUtil {
         return obj == null;
     }
 
+    public static boolean isNotNull(Object obj) {
+        return obj != null;
+    }
+
     public static <T> T elvis(T obj, T defVal) {
         return isTrue(obj) ? obj : defVal;
     }
