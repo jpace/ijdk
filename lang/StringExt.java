@@ -1,6 +1,7 @@
 package org.incava.ijdk.lang;
 
 import java.util.*;
+import static org.incava.ijdk.util.IUtil.*;
 
 
 /**
@@ -216,7 +217,69 @@ public class StringExt {
         }
     }
 
+    /**
+     * An alias for StringExt#charAt.
+     *
+     * @see String#charAt(String, int).
+     */
     public static Character get(String str, int index) {
         return charAt(str, index);
+    }
+
+    /**
+     * Returns a substring from the string, with negatives indices applying to
+     * the distance from the end of the string. If fromIndex is null, the
+     * substring begins with the first character. If toIndex is null, the
+     * substring ends with the last character. If the indices are out of bounds,
+     * they will be restricted to the size of the string. The range is
+     * inclusive: "foobar"[2 .. 4] == "oba", which is unlike the JDK
+     * String#substring behavior.
+     *
+     * @see String#get(String, int).
+     */
+    public static String substring(String str, Integer fromIndex, Integer toIndex) {
+        if (str == null) {
+            return null;
+        }
+
+        Integer frIdx = getIndex(str, fromIndex);
+
+        if (isNull(frIdx)) {
+            return "";
+        }
+
+        Integer toIdx = getIndex(str, toIndex);
+
+        if (isNull(toIdx)) {
+            toIdx = str.length() - 1;
+        }
+
+        if (frIdx > toIdx) {
+            // We could return null, but Ruby returns "" if the indices are
+            // within the length of the string, and null if not. We'll just go
+            // with empty.
+            return "";
+        }
+        else {
+            return str.substring(frIdx, 1 + toIdx);
+        }
+    }
+
+    /**
+     * Same as StringExt#substring, but more like the syntax str[4 .. 8].
+     */
+    public static String get(String str, Integer fromIndex, Integer toIndex) {
+        return substring(str, fromIndex, toIndex);
+    }
+    
+    /**
+     * Converts the index, which can be positive or negative, to one within
+     * range for this string. A negative index will result in the distance from
+     * the end of the string, with index -1 meaning the last character in the
+     * string. Returns null if the resulting index is out of range.
+     */
+    protected static Integer getIndex(String str, Integer index) {
+        int idx = index < 0 ? str.length() + index : index;
+        return idx < 0 || idx >= str.length() ? null : idx;
     }
 }
