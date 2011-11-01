@@ -9,7 +9,7 @@ public class ListExt {
      * Returns the last element in the list.
      */
     public static <T> T last(List<T> list) {
-        return get(list, -1);
+        return list == null ? null : get(list, -1);
     }
 
     /**
@@ -17,6 +17,9 @@ public class ListExt {
      * from the end of the list. Returns null if out of bounds.
      */
     public static <T> T get(List<T> list, int index) {
+        if (list == null) {
+            return null;
+        }
         Integer idx = getIndex(list.size(), index);
         return idx == null ? null : list.get(idx);
     }

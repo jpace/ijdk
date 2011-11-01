@@ -1,6 +1,7 @@
 package org.incava.ijdk.lang;
 
 import java.util.*;
+import org.incava.ijdk.util.ListExt;
 import static org.incava.ijdk.util.IUtil.*;
 
 
@@ -212,8 +213,8 @@ public class StringExt {
             return null;
         }
         else {
-            int idx = index < 0 ? str.length() + index : index;
-            return idx < 0 || idx >= str.length() ? null : str.charAt(idx);
+            Integer idx = getIndex(str, index);
+            return isNull(idx) ? null : str.charAt(idx);
         }
     }
 
@@ -279,7 +280,6 @@ public class StringExt {
      * string. Returns null if the resulting index is out of range.
      */
     protected static Integer getIndex(String str, Integer index) {
-        int idx = index < 0 ? str.length() + index : index;
-        return idx < 0 || idx >= str.length() ? null : idx;
+        return isNull(str) ? null : ListExt.getIndex(str.length(), index);
     }
 }
