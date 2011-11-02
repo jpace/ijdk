@@ -86,7 +86,7 @@ public class StringExt {
      * Converts the (possibly quoted) string into a list, delimited by
      * whitespace and commas..
      */
-    public static List<String> listify(String str) {
+    public static List<String> toList(String str) {
         // strip leading/trailing single/double quotes
         if (str.charAt(0) == str.charAt(str.length() - 1) &&
             (str.charAt(0) == '"' || str.charAt(0) == '\'')) {
