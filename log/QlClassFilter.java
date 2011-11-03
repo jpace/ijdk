@@ -11,7 +11,7 @@ import java.util.*;
  * @see QlFilter
  */
 public class QlClassFilter extends QlFilter {
-    private Class<?> cls;
+    private final Class<?> cls;
 
     public QlClassFilter(Class<?> cls, QlLevel level) {
         super(level);

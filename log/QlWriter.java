@@ -78,7 +78,7 @@ public class QlWriter {
     /**
      * Adds a filter to be applied for output.
      *
-     * @see org.incava.qualog.QlFilter
+     * @see org.incava.ijdk.log.QlFilter
      */
     public void addFilter(QlFilter filter) {
         filters.add(filter);
@@ -143,21 +143,21 @@ public class QlWriter {
      * Resets parameters to their defaults.
      */
     public void clear() {
-        packageColors = new HashMap<String, ANSIColor>();
-        classColors = new HashMap<String, ANSIColor>();
-        methodColors = new HashMap<String, ANSIColor>();
-        fileColors = new HashMap<String, ANSIColor>();
-        prevStackElement = null;
-        prevThread = null;
-        prevDisplayedClass = null;
-        prevDisplayedMethod = null;
-        level = Qualog.LEVEL9;
-        filters = new ArrayList<QlFilter>();
+        this.packageColors = new HashMap<String, ANSIColor>();
+        this.classColors = new HashMap<String, ANSIColor>();
+        this.methodColors = new HashMap<String, ANSIColor>();
+        this.fileColors = new HashMap<String, ANSIColor>();
+        this.prevStackElement = null;
+        this.prevThread = null;
+        this.prevDisplayedClass = null;
+        this.prevDisplayedMethod = null;
+        this.level = Qualog.LEVEL9;
+        this.filters = new ArrayList<QlFilter>();
     }
 
     public void reset() {
-        prevThread       = Thread.currentThread();
-        prevStackElement = null;
+        this.prevThread       = Thread.currentThread();
+        this.prevStackElement = null;
     }
 
     public boolean stack(QlLevel level, 
@@ -168,15 +168,19 @@ public class QlWriter {
                          ANSIColor classColor,
                          ANSIColor methodColor,
                          int numFrames) {
+
+        System.err.println("obj: " + obj);
+
         if (isLoggable(level)) {
             String nm = name == null ? "" : name;
+            System.err.println("nm: " + nm);
         
             if (obj == null) {
                 String msg = nm + ": " + "null";
                 return stack(level, msgColors, msg, fileColor, classColor, methodColor, numFrames);
             }
             else if (obj instanceof Collection) {
-                Collection c = (Collection)obj;
+                Collection<?> c = (Collection<?>)obj;
                 return QlCollection.stack(level, msgColors, nm, c, fileColor, classColor, methodColor, numFrames);
             }
             else if (obj instanceof Iterator) {
@@ -243,7 +247,10 @@ public class QlWriter {
                 return QlObjectArray.stack(level, msgColors, nm, strs, fileColor, classColor, methodColor, numFrames);
             }
             else {
-                String msg = nm + ": " + objectToString(obj);
+                String msg = (name == null ? "" : (nm + ": ")) + objectToString(obj);
+
+                System.err.println("msg: " + nm);
+
                 return stack(level, msgColors, msg, fileColor, classColor, methodColor, numFrames);
             }
         }
@@ -343,7 +350,6 @@ public class QlWriter {
                 }
                 outputMessage(buf, framesShown, msgColor, msg, stackElement);
 
-                System.err.println("out: " + out);
                 System.err.println("writing: " + buf.toString());
                 out.println(buf.toString());
 

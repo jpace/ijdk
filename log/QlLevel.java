@@ -1,15 +1,11 @@
 package org.incava.ijdk.log;
 
-import java.io.*;
-import java.util.*;
-
 
 /**
  * <p>Represents a logging/output level. Is essentially a wrapper around an
  * Integer.</p>
  */
-class QlLevel implements Comparable
-{
+class QlLevel implements Comparable {
     private Integer level = null;
     
     public QlLevel(int level) {
@@ -37,5 +33,4 @@ class QlLevel implements Comparable
     public String toString() {
         return level.toString();
     }
-
 }
