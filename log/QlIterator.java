@@ -2,6 +2,7 @@ package org.incava.ijdk.log;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Iterator;
 
 
@@ -11,7 +12,7 @@ import java.util.Iterator;
 public class QlIterator {
 
     public static <T> boolean stack(QlLevel level, 
-                                    ANSIColor[] msgColors,
+                                    EnumSet<ANSIColor> msgColors,
                                     String name,
                                     Iterator<T> it,
                                     ANSIColor fileColor,

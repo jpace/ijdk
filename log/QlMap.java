@@ -1,5 +1,6 @@
 package org.incava.ijdk.log;
 
+import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ import java.util.Set;
  */
 public class QlMap {
     public static boolean stack(QlLevel level, 
-                                ANSIColor[] msgColors,
+                                EnumSet<ANSIColor> msgColors,
                                 String name,
                                 Map<?, ?> map,
                                 ANSIColor fileColor,

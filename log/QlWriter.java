@@ -173,7 +173,7 @@ public class QlWriter {
     }
 
     public boolean stack(QlLevel level, 
-                         ANSIColor[] msgColors,
+                         EnumSet<ANSIColor> msgColors,
                          String name,
                          Object obj,
                          ANSIColor fileColor,
@@ -306,7 +306,7 @@ public class QlWriter {
     }
 
     public synchronized boolean stack(QlLevel lvl,
-                                      ANSIColor[] msgColor,
+                                      EnumSet<ANSIColor> msgColor,
                                       String msg,
                                       ANSIColor fileColor,
                                       ANSIColor classColor,
@@ -519,7 +519,7 @@ public class QlWriter {
 
     protected void outputMessage(StringBuffer buf,
                                  int framesShown,
-                                 ANSIColor[] msgColor,
+                                 EnumSet<ANSIColor> msgColor,
                                  String msg,
                                  StackTraceElement stackElement) {
         // remove ending EOLN
@@ -532,7 +532,7 @@ public class QlWriter {
             }
             if (useColor) {
                 boolean hasColor = false;
-                if (msgColor == null || (msgColor.length > 0 && msgColor[0] == null)) {
+                if (msgColor == null || msgColor.isEmpty()) {
                     ANSIColor col = null;
                     col = methodColors.get(stackElement.getClassName() + "#" + stackElement.getMethodName());
                     if (col == null) {
@@ -542,17 +542,15 @@ public class QlWriter {
                         }
                     }
                     if (col != null) {
-                        msg = col + msg;
+                        msg = col.toString() + msg;
                         hasColor = true;
                     }
                 }
                 else {
-                    for (int i = 0; i < msgColor.length; ++i) {
-                        if (msgColor[i] != null) {
-                            msg = msgColor[i] + msg;
-                            hasColor = true;
-                        }
+                    for (ANSIColor col : msgColor) {
+                        msg = col.toString() + msg;
                     }
+                    hasColor = true;
                 }
 
                 if (hasColor) {

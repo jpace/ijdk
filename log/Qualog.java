@@ -36,7 +36,7 @@ public class Qualog {
     /**
      * An array denoting no colors.
      */
-    public final static ANSIColor[] NO_COLORS = null;
+    public final static EnumSet<ANSIColor> NO_COLORS = EnumSet.noneOf(ANSIColor.class);
 
     /**
      * An object denoting no color.
@@ -409,7 +409,7 @@ public class Qualog {
     }
 
     public static boolean stack(QlLevel level, 
-                                ANSIColor[] msgColors,
+                                EnumSet<ANSIColor> msgColors,
                                 String name,
                                 Object obj,
                                 ANSIColor fileColor,
@@ -419,7 +419,7 @@ public class Qualog {
         return writer.stack(level, msgColors, name, obj, fileColor, classColor, methodColor, numFrames);
     }
 
-    public static boolean stack(ANSIColor[] msgColors,
+    public static boolean stack(EnumSet<ANSIColor> msgColors,
                                 String msg, 
                                 ANSIColor fileColor,
                                 ANSIColor classColor,
@@ -435,11 +435,11 @@ public class Qualog {
                                 ANSIColor classColor,
                                 ANSIColor methodColor,
                                 int numFrames) {
-        return stack(level, new ANSIColor[] { msgColor }, msg, fileColor, classColor, methodColor, numFrames);
+        return stack(level, EnumSet.of(msgColor), msg, fileColor, classColor, methodColor, numFrames);
     }
 
     public synchronized static boolean stack(QlLevel lvl,
-                                             ANSIColor[] msgColor,
+                                             EnumSet<ANSIColor> msgColor,
                                              String msg,
                                              ANSIColor fileColor,
                                              ANSIColor classColor,
@@ -469,10 +469,10 @@ public class Qualog {
     }
 
     public static boolean stack(ANSIColor color, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { color }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
+        return stack(LEVEL5, EnumSet.of(color), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(ANSIColor[] colors, Object obj) {
+    public static boolean stack(EnumSet<ANSIColor> colors, Object obj) {
         return stack(LEVEL5, colors, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
@@ -481,10 +481,10 @@ public class Qualog {
     }
 
     public static boolean stack(QlLevel level, ANSIColor color, Object obj) {
-        return stack(level, new ANSIColor[] { color }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
+        return stack(level, EnumSet.of(color), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(QlLevel level, ANSIColor[] colors, Object obj) {
+    public static boolean stack(QlLevel level, EnumSet<ANSIColor> colors, Object obj) {
         return stack(level, colors, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
@@ -493,10 +493,10 @@ public class Qualog {
     }
 
     public static boolean stack(ANSIColor color, String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { color }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
+        return stack(LEVEL5, EnumSet.of(color), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(ANSIColor[] colors, String name, Object obj) {
+    public static boolean stack(EnumSet<ANSIColor> colors, String name, Object obj) {
         return stack(LEVEL5, colors, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
@@ -505,10 +505,10 @@ public class Qualog {
     }
 
     public static boolean stack(QlLevel level, ANSIColor color, String name, Object obj) {
-        return stack(level, new ANSIColor[] { color }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
+        return stack(level, EnumSet.of(color), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(QlLevel level, ANSIColor[] colors, String name, Object obj) {
+    public static boolean stack(QlLevel level, EnumSet<ANSIColor> colors, String name, Object obj) {
         return stack(level, colors, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
@@ -517,10 +517,10 @@ public class Qualog {
     }
 
     public static boolean stack(ANSIColor color, Object obj, int depth) {
-        return stack(LEVEL5, new ANSIColor[] { color }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
+        return stack(LEVEL5, EnumSet.of(color), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
-    public static boolean stack(ANSIColor[] colors, Object obj, int depth) {
+    public static boolean stack(EnumSet<ANSIColor> colors, Object obj, int depth) {
         return stack(LEVEL5, colors, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
@@ -529,10 +529,10 @@ public class Qualog {
     }
 
     public static boolean stack(QlLevel level, ANSIColor color, Object obj, int depth) {
-        return stack(level, new ANSIColor[] { color }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
+        return stack(level, EnumSet.of(color), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
-    public static boolean stack(QlLevel level, ANSIColor[] colors, Object obj, int depth) {
+    public static boolean stack(QlLevel level, EnumSet<ANSIColor> colors, Object obj, int depth) {
         return stack(level, colors, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
@@ -541,10 +541,10 @@ public class Qualog {
     }
 
     public static boolean stack(ANSIColor color, String name, Object obj, int depth) {
-        return stack(LEVEL5, new ANSIColor[] { color }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
+        return stack(LEVEL5, EnumSet.of(color), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
-    public static boolean stack(ANSIColor[] colors, String name, Object obj, int depth) {
+    public static boolean stack(EnumSet<ANSIColor> colors, String name, Object obj, int depth) {
         return stack(LEVEL5, colors, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
@@ -553,379 +553,379 @@ public class Qualog {
     }
 
     public static boolean stack(QlLevel level, ANSIColor color, String name, Object obj, int depth) {
-        return stack(level, new ANSIColor[] { color }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
+        return stack(level, EnumSet.of(color), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
-    public static boolean stack(QlLevel level, ANSIColor[] colors, String name, Object obj, int depth) {
+    public static boolean stack(QlLevel level, EnumSet<ANSIColor> colors, String name, Object obj, int depth) {
         return stack(level, colors, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
     public static boolean none(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { NONE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.NONE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean none(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { NONE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.NONE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean none(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { NONE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.NONE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean none(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { NONE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.NONE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean bold(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { BOLD }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.BOLD), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean bold(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { BOLD }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.BOLD), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean bold(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { BOLD }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.BOLD), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean bold(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { BOLD }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.BOLD), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean underscore(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { UNDERSCORE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.UNDERSCORE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean underscore(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { UNDERSCORE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.UNDERSCORE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean underscore(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { UNDERSCORE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.UNDERSCORE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean underscore(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { UNDERSCORE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.UNDERSCORE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean underline(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { UNDERLINE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.UNDERLINE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean underline(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { UNDERLINE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.UNDERLINE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean underline(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { UNDERLINE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.UNDERLINE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean underline(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { UNDERLINE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.UNDERLINE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean blink(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { BLINK }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.BLINK), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean blink(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { BLINK }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.BLINK), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean blink(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { BLINK }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.BLINK), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean blink(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { BLINK }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.BLINK), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean reverse(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { REVERSE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.REVERSE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean reverse(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { REVERSE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.REVERSE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean reverse(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { REVERSE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.REVERSE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean reverse(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { REVERSE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.REVERSE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean concealed(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { CONCEALED }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.CONCEALED), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean concealed(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { CONCEALED }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.CONCEALED), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean concealed(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { CONCEALED }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.CONCEALED), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean concealed(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { CONCEALED }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.CONCEALED), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean black(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { BLACK }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.BLACK), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean black(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { BLACK }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.BLACK), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean black(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { BLACK }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.BLACK), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean black(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { BLACK }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.BLACK), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean red(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { RED }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.RED), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean red(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { RED }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.RED), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean red(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { RED }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.RED), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean red(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { RED }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.RED), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean green(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { GREEN }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.GREEN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean green(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { GREEN }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.GREEN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean green(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { GREEN }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.GREEN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean green(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { GREEN }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.GREEN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean yellow(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { YELLOW }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.YELLOW), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean yellow(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { YELLOW }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.YELLOW), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean yellow(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { YELLOW }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.YELLOW), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean yellow(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { YELLOW }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.YELLOW), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean blue(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { BLUE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.BLUE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean blue(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { BLUE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.BLUE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean blue(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { BLUE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.BLUE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean blue(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { BLUE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.BLUE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean magenta(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { MAGENTA }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.MAGENTA), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean magenta(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { MAGENTA }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.MAGENTA), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean magenta(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { MAGENTA }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.MAGENTA), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean magenta(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { MAGENTA }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.MAGENTA), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean cyan(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { CYAN }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.CYAN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean cyan(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { CYAN }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.CYAN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean cyan(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { CYAN }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.CYAN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean cyan(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { CYAN }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.CYAN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean white(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { WHITE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.WHITE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean white(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { WHITE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.WHITE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean white(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { WHITE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.WHITE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean white(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { WHITE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.WHITE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onBlack(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_BLACK }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_BLACK), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onBlack(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { ON_BLACK }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_BLACK), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onBlack(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_BLACK }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_BLACK), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onBlack(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { ON_BLACK }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_BLACK), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onRed(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_RED }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_RED), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onRed(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { ON_RED }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_RED), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onRed(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_RED }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_RED), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onRed(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { ON_RED }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_RED), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onGreen(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_GREEN }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_GREEN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onGreen(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { ON_GREEN }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_GREEN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onGreen(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_GREEN }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_GREEN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onGreen(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { ON_GREEN }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_GREEN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onYellow(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_YELLOW }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_YELLOW), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onYellow(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { ON_YELLOW }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_YELLOW), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onYellow(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_YELLOW }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_YELLOW), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onYellow(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { ON_YELLOW }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_YELLOW), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onBlue(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_BLUE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_BLUE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onBlue(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { ON_BLUE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_BLUE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onBlue(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_BLUE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_BLUE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onBlue(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { ON_BLUE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_BLUE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onMagenta(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_MAGENTA }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_MAGENTA), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onMagenta(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { ON_MAGENTA }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_MAGENTA), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onMagenta(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_MAGENTA }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_MAGENTA), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onMagenta(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { ON_MAGENTA }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_MAGENTA), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onCyan(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_CYAN }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_CYAN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onCyan(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { ON_CYAN }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_CYAN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onCyan(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_CYAN }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_CYAN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onCyan(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { ON_CYAN }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_CYAN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onWhite(Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_WHITE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_WHITE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onWhite(QlLevel level, Object obj) {
-        return stack(level, new ANSIColor[] { ON_WHITE }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_WHITE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onWhite(String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { ON_WHITE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(ANSIColor.ON_WHITE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean onWhite(QlLevel level, String name, Object obj) {
-        return stack(level, new ANSIColor[] { ON_WHITE }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(ANSIColor.ON_WHITE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
     public static boolean log(Object obj) {
@@ -933,11 +933,10 @@ public class Qualog {
     }
 
     public static boolean log(ANSIColor color, Object obj) {
-        System.err.println("color; obj: " + obj);
-        return stack(LEVEL5, new ANSIColor[] { color }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(color), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean log(ANSIColor[] colors, Object obj) {
+    public static boolean log(EnumSet<ANSIColor> colors, Object obj) {
         return stack(LEVEL5, colors, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -946,10 +945,10 @@ public class Qualog {
     }
 
     public static boolean log(QlLevel level, ANSIColor color, Object obj) {
-        return stack(level, new ANSIColor[] { color }, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(color), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean log(QlLevel level, ANSIColor[] colors, Object obj) {
+    public static boolean log(QlLevel level, EnumSet<ANSIColor> colors, Object obj) {
         return stack(level, colors, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -958,10 +957,10 @@ public class Qualog {
     }
 
     public static boolean log(ANSIColor color, String name, Object obj) {
-        return stack(LEVEL5, new ANSIColor[] { color }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(LEVEL5, EnumSet.of(color), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean log(ANSIColor[] colors, String name, Object obj) {
+    public static boolean log(EnumSet<ANSIColor> colors, String name, Object obj) {
         return stack(LEVEL5, colors, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -970,17 +969,15 @@ public class Qualog {
     }
 
     public static boolean log(QlLevel level, ANSIColor color, String name, Object obj) {
-        return stack(level, new ANSIColor[] { color }, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
+        return stack(level, EnumSet.of(color), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean log(QlLevel level, ANSIColor[] colors, String name, Object obj) {
+    public static boolean log(QlLevel level, EnumSet<ANSIColor> colors, String name, Object obj) {
         return stack(level, colors, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
 
     //--- end of autogenerated section.
-
-
     
     protected static StackTraceElement[] getStack(int depth) {
         return (new Exception("")).getStackTrace();

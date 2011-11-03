@@ -1,6 +1,7 @@
 package org.incava.ijdk.log;
 
 import java.util.Collection;
+import java.util.EnumSet;
 
 
 /**
@@ -8,7 +9,7 @@ import java.util.Collection;
  */
 public class QlCollection {
     public static boolean stack(QlLevel level, 
-                                ANSIColor[] msgColors,
+                                EnumSet<ANSIColor> msgColors,
                                 String name,
                                 Collection<?> c,
                                 ANSIColor fileColor,

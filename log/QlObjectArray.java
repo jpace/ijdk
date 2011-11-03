@@ -1,7 +1,6 @@
 package org.incava.ijdk.log;
 
-import java.io.*;
-import java.util.*;
+import java.util.EnumSet;
 
 
 /**
@@ -9,7 +8,7 @@ import java.util.*;
  */
 public class QlObjectArray {
     public static boolean stack(QlLevel level, 
-                                ANSIColor[] msgColors,
+                                EnumSet<ANSIColor> msgColors,
                                 String name,
                                 Object[] ary,
                                 ANSIColor fileColor,
