@@ -1,7 +1,7 @@
 package org.incava.ijdk.log;
 
-import java.io.*;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -11,12 +11,12 @@ public class QlMap {
     public static boolean stack(QlLevel level, 
                                 ANSIColor[] msgColors,
                                 String name,
-                                Map map,
+                                Map<?, ?> map,
                                 ANSIColor fileColor,
                                 ANSIColor classColor,
                                 ANSIColor methodColor,
                                 int numFrames) {
-        Set keySet = map.keySet();
+        Set<?> keySet = map.keySet();
         Object[] keys = keySet.toArray();
         
         if (keys.length == 0) {

@@ -1,53 +1,49 @@
 package org.incava.ijdk.log;
 
-import java.util.*;
-
 
 public class QlTimedPeriod {
-    String _fileName;
+    private final String fileName;
 
-    String _className;
+    private final String className;
 
-    String _methodName;
+    private final String methodName;
     
-    int _lineNumber;
+    private final int lineNumber;
 
-    String _message;
+    private final String message;
 
-    long _start;
+    private final long start;
 
     public QlTimedPeriod(String fileName, String className, String methodName, int lineNumber, String message) {
-        _fileName   = fileName;
-        _className  = className;
-        _methodName = methodName;
-        _lineNumber = lineNumber;
-        _message    = message;
-        _start      = System.currentTimeMillis();
+        this.fileName   = fileName;
+        this.className  = className;
+        this.methodName = methodName;
+        this.lineNumber = lineNumber;
+        this.message    = message;
+        this.start      = System.currentTimeMillis();
     }
 
     public String getFileName() {
-        return _fileName;
+        return this.fileName;
     }
 
     public String getClassName() {
-        return _className;
+        return this.className;
     }
     
     public String getMethodName() {
-        return _methodName;
+        return this.methodName;
     }
 
     public int getLineNumber() {
-        return _lineNumber;
+        return this.lineNumber;
     }
 
     public String getMessage() {
-        return _message;
+        return this.message;
     }
 
     public long getStartTime() {
-        return _start;
+        return this.start;
     }
-
 }
-

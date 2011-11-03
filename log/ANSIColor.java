@@ -36,6 +36,8 @@ public enum ANSIColor {
     ANSIColor(int n) {
         // this behavior changed in Java 1.4.2-01, so this is a char, not a
         // byte.
+
+        //$$$ todo: make this OS and environment dependent
         this.str = "" + (char)27 + "[" + n + "m";
     }
 

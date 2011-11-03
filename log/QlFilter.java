@@ -1,7 +1,6 @@
 package org.incava.ijdk.log;
 
-import java.util.*;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 import org.incava.ijdk.lang.Range;
 
 

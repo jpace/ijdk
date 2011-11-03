@@ -1,8 +1,20 @@
 package org.incava.ijdk.log;
 
-import java.io.*;
-import java.util.*;
-
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import org.incava.ijdk.lang.StringExt;
 
 /**
  * <p>Writes the logging output, applying filters and decorations. The
@@ -38,7 +50,7 @@ public class QlWriter {
 
     public List<String> packagesSkipped = new ArrayList<String>(Arrays.asList(
                                                                     new String[] {
-                                                                        "org.incava.ijdk.log.",
+                                                                        "org.incava.ijdk.log",
                                                                         "org.incava.qualog",
                                                                     }));
     
@@ -266,7 +278,7 @@ public class QlWriter {
         }
         else {
             for (String pkgName : packagesSkipped) {
-                if (className.startsWith(pkgName)) {
+                if (className.startsWith(pkgName + ".")) {
                     return true;
                 }
             }
@@ -277,7 +289,6 @@ public class QlWriter {
     public boolean isLoggable(QlLevel level) {
         return outputType != NO_OUTPUT && this.level != null && this.level.compareTo(level) >= 0;
     }
-
 
     /**
      * Returns the index in the stack where logging (stacks) should be
@@ -376,7 +387,7 @@ public class QlWriter {
             prevStackElement.getFileName().equals(fileName)) {
             
             int width = columns ? Math.min(fileWidth, fileName.length()) : fileName.length();
-            fileName = repeat(width, ' ');
+            fileName = StringExt.repeat(' ', width);
         }
 
         String lnStr = stackElement.getLineNumber() >= 0 ? String.valueOf(stackElement.getLineNumber()) : "";
@@ -390,7 +401,8 @@ public class QlWriter {
             if (col == null) {
                 appendPadded(buf, fileName, fileWidth);
                 buf.append(' ');
-                buf.append(repeat(lineWidth - lnStr.length(), ' ')).append(lnStr);
+                buf.append(StringExt.repeat(' ', lineWidth - lnStr.length()));
+                buf.append(lnStr);
             }
             else {
                 buf.append(col);
@@ -430,7 +442,7 @@ public class QlWriter {
         
         boolean sameClass = prevStackElement != null && prevStackElement.getClassName().equals(className);
         if (sameClass) {
-            className = repeat(prevDisplayedClass.length(), ' ');
+            className = StringExt.repeat(' ', prevDisplayedClass.length());
             classColor = null;
         }
         else if (className != null && (className.startsWith("org.") || className.startsWith("com."))) {
@@ -475,7 +487,7 @@ public class QlWriter {
         }
         
         if (sameClass && prevStackElement != null && prevStackElement.getMethodName().equals(methodName)) {
-            methodName = repeat(prevDisplayedMethod.length(), ' ');
+            methodName = StringExt.repeat(' ', prevDisplayedMethod.length());
             methodColor = null;
         }
 
@@ -556,14 +568,6 @@ public class QlWriter {
         return (new Exception("")).getStackTrace();
     }
 
-    protected String repeat(int len, char ch) {
-        StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < len; ++i) {
-            buf.append(ch);
-        }
-        return buf.toString();
-    }
-
     protected StringBuffer repeat(StringBuffer buf, int len, char ch) {
         for (int i = 0; i < len; ++i) {
             buf.append(ch);
@@ -587,17 +591,17 @@ public class QlWriter {
             str = "null";
         }
         else {            
-            Class<?>[] undecorated = new Class<?>[] {
+            Class<?>[] undecoratedClasses = new Class<?>[] {
                 String.class,
                 Number.class,
                 Character.class,
                 Boolean.class
             };
 
-            Class<?> cls = obj.getClass();
+            Class<?> objCls = obj.getClass();
 
-            for (int ui = 0; ui < undecorated.length; ++ui) {
-                if (undecorated[ui].isAssignableFrom(cls)) {
+            for (Class<?> undecCls : undecoratedClasses) {
+                if (undecCls.isAssignableFrom(objCls)) {
                     str = obj.toString();
                     break;
                 }

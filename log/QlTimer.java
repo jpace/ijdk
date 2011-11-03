@@ -1,6 +1,8 @@
 package org.incava.ijdk.log;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class QlTimer {
@@ -56,15 +58,11 @@ public class QlTimer {
             matchness += fileName.equals(qtp.getFileName())     ? 1 : 0;
             matchness += methodName.equals(qtp.getMethodName()) ? 1 : 0;
 
-            // System.out.println("matchness: " + matchness);
             if (matchness >= bestMatchness) {
                 bestMatchness = matchness;
                 bestMatchIdx  = idx;
             }
         }
-
-        // System.out.println("best matchness: " + bestMatchness);
-        // System.out.println("best match idx: " + bestMatchIdx);
 
         if (bestMatchIdx >= 0) {
             QlTimedPeriod qtp     = periods.remove(bestMatchIdx);
@@ -133,5 +131,4 @@ public class QlTimer {
         }
         return buf.toString();
     }
-
 }
