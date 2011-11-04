@@ -8,8 +8,8 @@ import java.util.Set;
 /**
  * Wraps Java maps for output.
  */
-public class QlMap {
-    public static boolean stack(QlLevel level, 
+public class LogMap {
+    public static boolean stack(LogLevel level, 
                                 EnumSet<ANSIColor> msgColors,
                                 String name,
                                 Map<?, ?> map,
@@ -21,13 +21,13 @@ public class QlMap {
         Object[] keys = keySet.toArray();
         
         if (keys.length == 0) {
-            return Qualog.stack(level, msgColors, name, "()", fileColor, classColor, methodColor, numFrames);
+            return Log.stack(level, msgColors, name, "()", fileColor, classColor, methodColor, numFrames);
         }
         else {
             boolean ret = true;
             for (int ki = 0; ki < keys.length; ++ki) {
                 int nFrames = ki == keys.length - 1 ? numFrames : 1;
-                ret = Qualog.stack(level, msgColors, name + "[" + keys[ki] + "]", map.get(keys[ki]), fileColor, classColor, methodColor, nFrames);
+                ret = Log.stack(level, msgColors, name + "[" + keys[ki] + "]", map.get(keys[ki]), fileColor, classColor, methodColor, nFrames);
             }
             return ret;
         }

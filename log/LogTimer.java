@@ -5,11 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class QlTimer {
-    private final List<QlTimedPeriod> periods;
+public class LogTimer {
+    private final List<LogTimedPeriod> periods;
 
-    public QlTimer() {
-        periods = new ArrayList<QlTimedPeriod>();
+    public LogTimer() {
+        periods = new ArrayList<LogTimedPeriod>();
     }
 
     public boolean start() {
@@ -28,7 +28,7 @@ public class QlTimer {
         int    lineNumber = ste.getLineNumber();
         String fileName   = ste.getFileName();
 
-        QlTimedPeriod qtp = new QlTimedPeriod(fileName, className, methodName, lineNumber, msg);
+        LogTimedPeriod qtp = new LogTimedPeriod(fileName, className, methodName, lineNumber, msg);
         periods.add(qtp);
 
         return true;
@@ -48,9 +48,9 @@ public class QlTimer {
         int    bestMatchIdx  = -1;
         int    bestMatchness = -1;
         
-        Iterator<QlTimedPeriod> pit = periods.iterator();
+        Iterator<LogTimedPeriod> pit = periods.iterator();
         for (int idx = 0; pit.hasNext(); ++idx) {
-            QlTimedPeriod qtp       = pit.next();
+            LogTimedPeriod qtp       = pit.next();
             int           matchness = 0;
             
             matchness += qtp.getMessage() != null && msg.equals(qtp.getMessage()) ? 1 : 0;
@@ -65,7 +65,7 @@ public class QlTimer {
         }
 
         if (bestMatchIdx >= 0) {
-            QlTimedPeriod qtp     = periods.remove(bestMatchIdx);
+            LogTimedPeriod qtp     = periods.remove(bestMatchIdx);
             long          elapsed = endTime - qtp.getStartTime();
             StringBuffer  buf     = new StringBuffer();
 
@@ -90,7 +90,7 @@ public class QlTimer {
             buf.append(methodName);
             buf.append("}");
 
-            Qualog.log(buf.toString());
+            Log.log(buf.toString());
         }
         else {
             System.err.println("ERROR no matching start!");
@@ -101,7 +101,7 @@ public class QlTimer {
 
     protected StackTraceElement getFrame() {
         StackTraceElement[] stack = (new Exception("")).getStackTrace();
-        int                 stIdx = Qualog.findStackStart(stack);
+        int                 stIdx = Log.findStackStart(stack);
         StackTraceElement   ste   = stack[stIdx];
 
         return ste;

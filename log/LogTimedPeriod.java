@@ -1,7 +1,7 @@
 package org.incava.ijdk.log;
 
 
-public class QlTimedPeriod {
+public class LogTimedPeriod {
     private final String fileName;
 
     private final String className;
@@ -14,7 +14,7 @@ public class QlTimedPeriod {
 
     private final long start;
 
-    public QlTimedPeriod(String fileName, String className, String methodName, int lineNumber, String message) {
+    public LogTimedPeriod(String fileName, String className, String methodName, int lineNumber, String message) {
         this.fileName   = fileName;
         this.className  = className;
         this.methodName = methodName;

@@ -8,12 +8,12 @@ import org.incava.ijdk.lang.Range;
  * Represents a filter for selective enabling or disabling of logging
  * statements.
  */
-public class QlFilter {
+public class LogFilter {
     public static final Pattern NO_PATTERN = null;
 
     public static final Range NO_RANGE = null;
     
-    private QlLevel level;
+    private LogLevel level;
 
     private Pattern fileNamePat;
 
@@ -23,11 +23,11 @@ public class QlFilter {
 
     private Pattern methodNamePat;
 
-    public QlFilter(QlLevel level) {
+    public LogFilter(LogLevel level) {
         this.level = level;
     }
 
-    public QlFilter(QlLevel level, Pattern fname, Range lnum, Pattern clsName, Pattern methName) {
+    public LogFilter(LogLevel level, Pattern fname, Range lnum, Pattern clsName, Pattern methName) {
         this.level = level;
 
         fileNamePat = fname;
@@ -36,7 +36,7 @@ public class QlFilter {
         methodNamePat = methName;
     }
 
-    public QlFilter(QlLevel level, String fname, Range lnum, String clsName, String methName) {
+    public LogFilter(LogLevel level, String fname, Range lnum, String clsName, String methName) {
         this(level,
              fname == null    ? (Pattern)null : Pattern.compile(fname),
              lnum,
@@ -47,7 +47,7 @@ public class QlFilter {
     /**
      * Returns the level.
      */
-    public QlLevel getLevel() {
+    public LogLevel getLevel() {
         return level;
     }
 

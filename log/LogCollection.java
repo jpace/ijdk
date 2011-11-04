@@ -7,8 +7,8 @@ import java.util.EnumSet;
 /**
  * Wraps Collections for output.
  */
-public class QlCollection {
-    public static boolean stack(QlLevel level, 
+public class LogCollection {
+    public static boolean stack(LogLevel level, 
                                 EnumSet<ANSIColor> msgColors,
                                 String name,
                                 Collection<?> c,
@@ -17,7 +17,7 @@ public class QlCollection {
                                 ANSIColor methodColor,
                                 int numFrames) {
         Object[] ary = c.toArray();
-        return QlObjectArray.stack(level, msgColors, name, ary, fileColor, classColor, methodColor, numFrames);
+        return LogObjectArray.stack(level, msgColors, name, ary, fileColor, classColor, methodColor, numFrames);
     }
 }
 

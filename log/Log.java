@@ -26,12 +26,14 @@ import java.util.*;
  *
  * <p>There is a serious performance hit to using this package, since each
  * output statement results in an exception being created.</p>
+ *
+ * <p>Remember: all kids love log.</p>
  */
-public class Qualog {
+public class Log {
     /**
-     * The version of the Qualog module.
+     * The version of the log module.
      */
-    public final static String VERSION = "1.0.2";
+    public final static String VERSION = "1.1.0";
     
     /**
      * An array denoting no colors.
@@ -163,45 +165,45 @@ public class Qualog {
      */
     public final static ANSIColor ON_WHITE = ANSIColor.ON_WHITE;
     
-    public final static String CLASS_WIDTH_PROPERTY_KEY = "qualog.classwidth";
-    public final static String COLUMNAR_PROPERTY_KEY = "qualog.columnar";
-    public final static String FILE_WIDTH_PROPERTY_KEY = "qualog.filewidth";
-    public final static String LEVEL_PROPERTY_KEY = "qualog.level";
-    public final static String LINE_WIDTH_PROPERTY_KEY = "qualog.linewidth";
-    public final static String METHOD_WIDTH_PROPERTY_KEY = "qualog.methodwidth";
-    public final static String SHOW_CLASSES_PROPERTY_KEY = "qualog.showclasses";
-    public final static String SHOW_FILES_PROPERTY_KEY = "qualog.showfiles";
-    public final static String VERBOSE_PROPERTY_KEY = "qualog.verbose";
+    public final static String CLASS_WIDTH_PROPERTY_KEY = "org.incava.ijdk.log.classwidth";
+    public final static String COLUMNAR_PROPERTY_KEY = "org.incava.ijdk.log.columnar";
+    public final static String FILE_WIDTH_PROPERTY_KEY = "org.incava.ijdk.log.filewidth";
+    public final static String LEVEL_PROPERTY_KEY = "org.incava.ijdk.log.level";
+    public final static String LINE_WIDTH_PROPERTY_KEY = "org.incava.ijdk.log.linewidth";
+    public final static String METHOD_WIDTH_PROPERTY_KEY = "org.incava.ijdk.log.methodwidth";
+    public final static String SHOW_CLASSES_PROPERTY_KEY = "org.incava.ijdk.log.showclasses";
+    public final static String SHOW_FILES_PROPERTY_KEY = "org.incava.ijdk.log.showfiles";
+    public final static String VERBOSE_PROPERTY_KEY = "org.incava.ijdk.log.verbose";
     
-    public final static QlLevel LEVEL0 = new QlLevel(0);
-    public final static QlLevel LEVEL1 = new QlLevel(1);
-    public final static QlLevel LEVEL2 = new QlLevel(2);
-    public final static QlLevel LEVEL3 = new QlLevel(3);
-    public final static QlLevel LEVEL4 = new QlLevel(4);
-    public final static QlLevel LEVEL5 = new QlLevel(5);
-    public final static QlLevel LEVEL6 = new QlLevel(6);
-    public final static QlLevel LEVEL7 = new QlLevel(7);
-    public final static QlLevel LEVEL8 = new QlLevel(8);
-    public final static QlLevel LEVEL9 = new QlLevel(9);
+    public final static LogLevel LEVEL0 = new LogLevel(0);
+    public final static LogLevel LEVEL1 = new LogLevel(1);
+    public final static LogLevel LEVEL2 = new LogLevel(2);
+    public final static LogLevel LEVEL3 = new LogLevel(3);
+    public final static LogLevel LEVEL4 = new LogLevel(4);
+    public final static LogLevel LEVEL5 = new LogLevel(5);
+    public final static LogLevel LEVEL6 = new LogLevel(6);
+    public final static LogLevel LEVEL7 = new LogLevel(7);
+    public final static LogLevel LEVEL8 = new LogLevel(8);
+    public final static LogLevel LEVEL9 = new LogLevel(9);
 
-    public static final int NO_OUTPUT = QlWriter.NO_OUTPUT;
+    public static final int NO_OUTPUT = LogWriter.NO_OUTPUT;
 
-    public static final int QUIET = QlWriter.QUIET;
+    public static final int QUIET = LogWriter.QUIET;
     
-    public static final int VERBOSE = QlWriter.VERBOSE;
+    public static final int VERBOSE = LogWriter.VERBOSE;
     
     /**
      * The default number of stack trace elements to display in a stack.
      */
     protected static final int DEFAULT_STACK_DEPTH = 5;
 
-    protected static QlWriter writer;
+    protected static LogWriter writer;
 
-    protected static QlTimer timer;
+    protected static LogTimer timer;
 
     static {
-        writer = new QlWriter();
-        timer = new QlTimer();
+        writer = new LogWriter();
+        timer = new LogTimer();
         
         String verStr = System.getProperty(VERBOSE_PROPERTY_KEY);
         if (verStr == null) {
@@ -210,16 +212,16 @@ public class Qualog {
 
         if (verStr != null) {
             boolean verbose = Boolean.valueOf(verStr).booleanValue();
-            QlLevel level = LEVEL5;
+            LogLevel level = LEVEL5;
 
             String lvlStr = System.getProperty(LEVEL_PROPERTY_KEY);
             if (lvlStr != null) {
-                level = new QlLevel((new Integer(lvlStr)).intValue());
+                level = new LogLevel((new Integer(lvlStr)).intValue());
             }
 
             if (verbose) {
                 setOutput(VERBOSE, level);
-                System.out.println("Qualog, version " + VERSION);
+                System.out.println("Log, version " + VERSION);
             }
         }
         
@@ -263,15 +265,15 @@ public class Qualog {
         }
     }
 
-    public static boolean isLoggable(QlLevel level) {
+    public static boolean isLoggable(LogLevel level) {
         return writer.isLoggable(level);
     }
 
     public static void setDisabled(Class cls) {
-        addFilter(new QlClassFilter(cls, null));
+        addFilter(new LogClassFilter(cls, null));
     }
 
-    public static void addFilter(QlFilter filter) {
+    public static void addFilter(LogFilter filter) {
         writer.addFilter(filter);
     }
 
@@ -348,11 +350,11 @@ public class Qualog {
         setOutput(QUIET, LEVEL5);
     }
 
-    public static void setOutput(int type, QlLevel level) {
+    public static void setOutput(int type, LogLevel level) {
         writer.setOutput(type, level);
     }
 
-    public static void setQuiet(QlLevel level) {
+    public static void setQuiet(LogLevel level) {
         writer.setOutput(QUIET, level);
     }
 
@@ -408,7 +410,7 @@ public class Qualog {
         return timer.end();
     }
 
-    public static boolean stack(QlLevel level, 
+    public static boolean stack(LogLevel level, 
                                 EnumSet<ANSIColor> msgColors,
                                 String name,
                                 Object obj,
@@ -428,7 +430,7 @@ public class Qualog {
         return stack(LEVEL5, msgColors, msg, fileColor, classColor, methodColor, numFrames);
     }
 
-    public static boolean stack(QlLevel level,
+    public static boolean stack(LogLevel level,
                                 ANSIColor msgColor,
                                 String msg,
                                 ANSIColor fileColor,
@@ -438,7 +440,7 @@ public class Qualog {
         return stack(level, EnumSet.of(msgColor), msg, fileColor, classColor, methodColor, numFrames);
     }
 
-    public synchronized static boolean stack(QlLevel lvl,
+    public synchronized static boolean stack(LogLevel lvl,
                                              EnumSet<ANSIColor> msgColor,
                                              String msg,
                                              ANSIColor fileColor,
@@ -476,15 +478,15 @@ public class Qualog {
         return stack(LEVEL5, colors, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(QlLevel level, Object obj) {
+    public static boolean stack(LogLevel level, Object obj) {
         return stack(level, NO_COLORS, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(QlLevel level, ANSIColor color, Object obj) {
+    public static boolean stack(LogLevel level, ANSIColor color, Object obj) {
         return stack(level, EnumSet.of(color), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(QlLevel level, EnumSet<ANSIColor> colors, Object obj) {
+    public static boolean stack(LogLevel level, EnumSet<ANSIColor> colors, Object obj) {
         return stack(level, colors, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
@@ -500,15 +502,15 @@ public class Qualog {
         return stack(LEVEL5, colors, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(QlLevel level, String name, Object obj) {
+    public static boolean stack(LogLevel level, String name, Object obj) {
         return stack(level, NO_COLORS, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(QlLevel level, ANSIColor color, String name, Object obj) {
+    public static boolean stack(LogLevel level, ANSIColor color, String name, Object obj) {
         return stack(level, EnumSet.of(color), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(QlLevel level, EnumSet<ANSIColor> colors, String name, Object obj) {
+    public static boolean stack(LogLevel level, EnumSet<ANSIColor> colors, String name, Object obj) {
         return stack(level, colors, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, DEFAULT_STACK_DEPTH);
     }
 
@@ -524,15 +526,15 @@ public class Qualog {
         return stack(LEVEL5, colors, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
-    public static boolean stack(QlLevel level, Object obj, int depth) {
+    public static boolean stack(LogLevel level, Object obj, int depth) {
         return stack(level, NO_COLORS, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
-    public static boolean stack(QlLevel level, ANSIColor color, Object obj, int depth) {
+    public static boolean stack(LogLevel level, ANSIColor color, Object obj, int depth) {
         return stack(level, EnumSet.of(color), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
-    public static boolean stack(QlLevel level, EnumSet<ANSIColor> colors, Object obj, int depth) {
+    public static boolean stack(LogLevel level, EnumSet<ANSIColor> colors, Object obj, int depth) {
         return stack(level, colors, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
@@ -548,15 +550,15 @@ public class Qualog {
         return stack(LEVEL5, colors, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
-    public static boolean stack(QlLevel level, String name, Object obj, int depth) {
+    public static boolean stack(LogLevel level, String name, Object obj, int depth) {
         return stack(level, NO_COLORS, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
-    public static boolean stack(QlLevel level, ANSIColor color, String name, Object obj, int depth) {
+    public static boolean stack(LogLevel level, ANSIColor color, String name, Object obj, int depth) {
         return stack(level, EnumSet.of(color), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
-    public static boolean stack(QlLevel level, EnumSet<ANSIColor> colors, String name, Object obj, int depth) {
+    public static boolean stack(LogLevel level, EnumSet<ANSIColor> colors, String name, Object obj, int depth) {
         return stack(level, colors, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, depth);
     }
 
@@ -564,7 +566,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.NONE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean none(QlLevel level, Object obj) {
+    public static boolean none(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.NONE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -572,7 +574,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.NONE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean none(QlLevel level, String name, Object obj) {
+    public static boolean none(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.NONE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -580,7 +582,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BOLD), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean bold(QlLevel level, Object obj) {
+    public static boolean bold(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BOLD), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -588,7 +590,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BOLD), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean bold(QlLevel level, String name, Object obj) {
+    public static boolean bold(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BOLD), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -596,7 +598,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.UNDERSCORE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean underscore(QlLevel level, Object obj) {
+    public static boolean underscore(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.UNDERSCORE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -604,7 +606,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.UNDERSCORE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean underscore(QlLevel level, String name, Object obj) {
+    public static boolean underscore(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.UNDERSCORE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -612,7 +614,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.UNDERLINE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean underline(QlLevel level, Object obj) {
+    public static boolean underline(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.UNDERLINE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -620,7 +622,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.UNDERLINE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean underline(QlLevel level, String name, Object obj) {
+    public static boolean underline(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.UNDERLINE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -628,7 +630,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BLINK), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean blink(QlLevel level, Object obj) {
+    public static boolean blink(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BLINK), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -636,7 +638,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BLINK), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean blink(QlLevel level, String name, Object obj) {
+    public static boolean blink(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BLINK), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -644,7 +646,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.REVERSE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean reverse(QlLevel level, Object obj) {
+    public static boolean reverse(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.REVERSE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -652,7 +654,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.REVERSE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean reverse(QlLevel level, String name, Object obj) {
+    public static boolean reverse(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.REVERSE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -660,7 +662,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.CONCEALED), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean concealed(QlLevel level, Object obj) {
+    public static boolean concealed(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.CONCEALED), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -668,7 +670,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.CONCEALED), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean concealed(QlLevel level, String name, Object obj) {
+    public static boolean concealed(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.CONCEALED), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -676,7 +678,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BLACK), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean black(QlLevel level, Object obj) {
+    public static boolean black(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BLACK), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -684,7 +686,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BLACK), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean black(QlLevel level, String name, Object obj) {
+    public static boolean black(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BLACK), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -692,7 +694,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.RED), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean red(QlLevel level, Object obj) {
+    public static boolean red(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.RED), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -700,7 +702,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.RED), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean red(QlLevel level, String name, Object obj) {
+    public static boolean red(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.RED), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -708,7 +710,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.GREEN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean green(QlLevel level, Object obj) {
+    public static boolean green(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.GREEN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -716,7 +718,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.GREEN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean green(QlLevel level, String name, Object obj) {
+    public static boolean green(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.GREEN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -724,7 +726,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.YELLOW), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean yellow(QlLevel level, Object obj) {
+    public static boolean yellow(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.YELLOW), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -732,7 +734,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.YELLOW), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean yellow(QlLevel level, String name, Object obj) {
+    public static boolean yellow(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.YELLOW), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -740,7 +742,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BLUE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean blue(QlLevel level, Object obj) {
+    public static boolean blue(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BLUE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -748,7 +750,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BLUE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean blue(QlLevel level, String name, Object obj) {
+    public static boolean blue(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BLUE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -756,7 +758,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.MAGENTA), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean magenta(QlLevel level, Object obj) {
+    public static boolean magenta(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.MAGENTA), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -764,7 +766,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.MAGENTA), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean magenta(QlLevel level, String name, Object obj) {
+    public static boolean magenta(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.MAGENTA), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -772,7 +774,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.CYAN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean cyan(QlLevel level, Object obj) {
+    public static boolean cyan(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.CYAN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -780,7 +782,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.CYAN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean cyan(QlLevel level, String name, Object obj) {
+    public static boolean cyan(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.CYAN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -788,7 +790,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.WHITE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean white(QlLevel level, Object obj) {
+    public static boolean white(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.WHITE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -796,7 +798,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.WHITE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean white(QlLevel level, String name, Object obj) {
+    public static boolean white(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.WHITE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -804,7 +806,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_BLACK), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onBlack(QlLevel level, Object obj) {
+    public static boolean onBlack(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_BLACK), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -812,7 +814,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_BLACK), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onBlack(QlLevel level, String name, Object obj) {
+    public static boolean onBlack(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_BLACK), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -820,7 +822,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_RED), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onRed(QlLevel level, Object obj) {
+    public static boolean onRed(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_RED), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -828,7 +830,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_RED), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onRed(QlLevel level, String name, Object obj) {
+    public static boolean onRed(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_RED), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -836,7 +838,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_GREEN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onGreen(QlLevel level, Object obj) {
+    public static boolean onGreen(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_GREEN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -844,7 +846,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_GREEN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onGreen(QlLevel level, String name, Object obj) {
+    public static boolean onGreen(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_GREEN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -852,7 +854,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_YELLOW), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onYellow(QlLevel level, Object obj) {
+    public static boolean onYellow(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_YELLOW), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -860,7 +862,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_YELLOW), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onYellow(QlLevel level, String name, Object obj) {
+    public static boolean onYellow(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_YELLOW), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -868,7 +870,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_BLUE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onBlue(QlLevel level, Object obj) {
+    public static boolean onBlue(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_BLUE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -876,7 +878,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_BLUE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onBlue(QlLevel level, String name, Object obj) {
+    public static boolean onBlue(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_BLUE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -884,7 +886,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_MAGENTA), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onMagenta(QlLevel level, Object obj) {
+    public static boolean onMagenta(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_MAGENTA), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -892,7 +894,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_MAGENTA), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onMagenta(QlLevel level, String name, Object obj) {
+    public static boolean onMagenta(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_MAGENTA), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -900,7 +902,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_CYAN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onCyan(QlLevel level, Object obj) {
+    public static boolean onCyan(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_CYAN), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -908,7 +910,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_CYAN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onCyan(QlLevel level, String name, Object obj) {
+    public static boolean onCyan(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_CYAN), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -916,7 +918,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_WHITE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onWhite(QlLevel level, Object obj) {
+    public static boolean onWhite(LogLevel level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_WHITE), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -924,7 +926,7 @@ public class Qualog {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_WHITE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean onWhite(QlLevel level, String name, Object obj) {
+    public static boolean onWhite(LogLevel level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_WHITE), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -940,15 +942,15 @@ public class Qualog {
         return stack(LEVEL5, colors, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean log(QlLevel level, Object obj) {
+    public static boolean log(LogLevel level, Object obj) {
         return stack(level, NO_COLORS, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean log(QlLevel level, ANSIColor color, Object obj) {
+    public static boolean log(LogLevel level, ANSIColor color, Object obj) {
         return stack(level, EnumSet.of(color), null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean log(QlLevel level, EnumSet<ANSIColor> colors, Object obj) {
+    public static boolean log(LogLevel level, EnumSet<ANSIColor> colors, Object obj) {
         return stack(level, colors, null, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
@@ -964,15 +966,15 @@ public class Qualog {
         return stack(LEVEL5, colors, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean log(QlLevel level, String name, Object obj) {
+    public static boolean log(LogLevel level, String name, Object obj) {
         return stack(level, NO_COLORS, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean log(QlLevel level, ANSIColor color, String name, Object obj) {
+    public static boolean log(LogLevel level, ANSIColor color, String name, Object obj) {
         return stack(level, EnumSet.of(color), name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 
-    public static boolean log(QlLevel level, EnumSet<ANSIColor> colors, String name, Object obj) {
+    public static boolean log(LogLevel level, EnumSet<ANSIColor> colors, String name, Object obj) {
         return stack(level, colors, name, obj, NO_COLOR, NO_COLOR, NO_COLOR, 1);
     }
 

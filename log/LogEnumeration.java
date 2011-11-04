@@ -9,9 +9,9 @@ import java.util.EnumSet;
 /**
  * Wraps Enumerations for output.
  */
-public class QlEnumeration {
+public class LogEnumeration {
     
-    public static <T> boolean stack(QlLevel level, 
+    public static <T> boolean stack(LogLevel level, 
                                     EnumSet<ANSIColor> msgColors,
                                     String name,
                                     Enumeration<T> en,
@@ -21,7 +21,7 @@ public class QlEnumeration {
                                     int numFrames) {
         Collection<T> ary = Collections.list(en);
 
-        return QlCollection.stack(level, msgColors, name, ary, fileColor, classColor, methodColor, numFrames);
+        return LogCollection.stack(level, msgColors, name, ary, fileColor, classColor, methodColor, numFrames);
     }
 }
 

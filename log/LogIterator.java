@@ -9,9 +9,9 @@ import java.util.Iterator;
 /**
  * Wraps Iterators for output.
  */
-public class QlIterator {
+public class LogIterator {
 
-    public static <T> boolean stack(QlLevel level, 
+    public static <T> boolean stack(LogLevel level, 
                                     EnumSet<ANSIColor> msgColors,
                                     String name,
                                     Iterator<T> it,
@@ -24,7 +24,7 @@ public class QlIterator {
             ary.add(it.next());
         }
 
-        return QlCollection.stack(level, msgColors, name, ary, fileColor, classColor, methodColor, numFrames);
+        return LogCollection.stack(level, msgColors, name, ary, fileColor, classColor, methodColor, numFrames);
     }
 }
 

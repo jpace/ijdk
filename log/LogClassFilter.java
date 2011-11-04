@@ -4,16 +4,16 @@ import java.util.*;
 
 
 /**
- * A filter for logging statements from a class. Unlike <code>QlFilter</code>,
+ * A filter for logging statements from a class. Unlike <code>LogFilter</code>,
  * the class under consideration is checked that it is assignable from the
  * filter class, that is, it is of the same class, or is a superclass.
  *
- * @see QlFilter
+ * @see LogFilter
  */
-public class QlClassFilter extends QlFilter {
+public class LogClassFilter extends LogFilter {
     private final Class<?> cls;
 
-    public QlClassFilter(Class<?> cls, QlLevel level) {
+    public LogClassFilter(Class<?> cls, LogLevel level) {
         super(level);
 
         this.cls = cls;

@@ -18,12 +18,12 @@ import org.incava.ijdk.lang.StringExt;
 
 /**
  * <p>Writes the logging output, applying filters and decorations. The
- * <code>Qualog</code> class offers a much cleaner and more thorough interface
+ * <code>Log</code> class offers a much cleaner and more thorough interface
  * than this class.</p>
  *
- * @see org.incava.qualog.Qualog
+ * @see org.incava.qualog.Log
  */
-public class QlWriter {
+public class LogWriter {
     public static final int NO_OUTPUT = 0;
 
     public static final int QUIET = 1;
@@ -81,23 +81,23 @@ public class QlWriter {
 
     private String prevDisplayedMethod = null;
 
-    private QlLevel level = Qualog.LEVEL9;
+    private LogLevel level = Log.LEVEL9;
 
-    private List<QlFilter> filters = new ArrayList<QlFilter>();
+    private List<LogFilter> filters = new ArrayList<LogFilter>();
 
     private boolean useColor = true;
 
     /**
      * Adds a filter to be applied for output.
      *
-     * @see org.incava.ijdk.log.QlFilter
+     * @see org.incava.ijdk.log.LogFilter
      */
-    public void addFilter(QlFilter filter) {
+    public void addFilter(LogFilter filter) {
         filters.add(filter);
     }
 
     public void setDisabled(Class cls) {
-        addFilter(new QlClassFilter(cls, null));
+        addFilter(new LogClassFilter(cls, null));
     }
 
     public void setClassColor(String className, ANSIColor color) {
@@ -130,7 +130,7 @@ public class QlWriter {
     /**
      * Sets the output type and level. Either verbose or quiet can be enabled.
      */
-    public void setOutput(int type, QlLevel level) {
+    public void setOutput(int type, LogLevel level) {
         this.outputType = type;
         this.level      = level;
     }
@@ -163,8 +163,8 @@ public class QlWriter {
         this.prevThread = null;
         this.prevDisplayedClass = null;
         this.prevDisplayedMethod = null;
-        this.level = Qualog.LEVEL9;
-        this.filters = new ArrayList<QlFilter>();
+        this.level = Log.LEVEL9;
+        this.filters = new ArrayList<LogFilter>();
     }
 
     public void reset() {
@@ -172,7 +172,7 @@ public class QlWriter {
         this.prevStackElement = null;
     }
 
-    public boolean stack(QlLevel level, 
+    public boolean stack(LogLevel level, 
                          EnumSet<ANSIColor> msgColors,
                          String name,
                          Object obj,
@@ -193,23 +193,23 @@ public class QlWriter {
             }
             else if (obj instanceof Collection) {
                 Collection<?> c = (Collection<?>)obj;
-                return QlCollection.stack(level, msgColors, nm, c, fileColor, classColor, methodColor, numFrames);
+                return LogCollection.stack(level, msgColors, nm, c, fileColor, classColor, methodColor, numFrames);
             }
             else if (obj instanceof Iterator) {
                 Iterator<?> it = (Iterator<?>)obj;
-                return QlIterator.stack(level, msgColors, nm, it, fileColor, classColor, methodColor, numFrames);
+                return LogIterator.stack(level, msgColors, nm, it, fileColor, classColor, methodColor, numFrames);
             }
             else if (obj instanceof Enumeration) {
                 Enumeration<?> en = (Enumeration<?>)obj;
-                return QlEnumeration.stack(level, msgColors, nm, en, fileColor, classColor, methodColor, numFrames);
+                return LogEnumeration.stack(level, msgColors, nm, en, fileColor, classColor, methodColor, numFrames);
             }
             else if (obj instanceof Object[]) {
                 Object[] ary = (Object[])obj;
-                return QlObjectArray.stack(level, msgColors, nm, ary, fileColor, classColor, methodColor, numFrames);
+                return LogObjectArray.stack(level, msgColors, nm, ary, fileColor, classColor, methodColor, numFrames);
             }
             else if (obj instanceof Map) {
                 Map m = (Map)obj;
-                return QlMap.stack(level, msgColors, nm, m, fileColor, classColor, methodColor, numFrames);
+                return LogMap.stack(level, msgColors, nm, m, fileColor, classColor, methodColor, numFrames);
             }
             else if (obj.getClass().isArray()) {
                 String[] strs = null;
@@ -256,7 +256,7 @@ public class QlWriter {
                     }
                 }
 
-                return QlObjectArray.stack(level, msgColors, nm, strs, fileColor, classColor, methodColor, numFrames);
+                return LogObjectArray.stack(level, msgColors, nm, strs, fileColor, classColor, methodColor, numFrames);
             }
             else {
                 String msg = (name == null ? "" : (nm + ": ")) + objectToString(obj);
@@ -286,7 +286,7 @@ public class QlWriter {
         return false;
     }
 
-    public boolean isLoggable(QlLevel level) {
+    public boolean isLoggable(LogLevel level) {
         return outputType != NO_OUTPUT && this.level != null && this.level.compareTo(level) >= 0;
     }
 
@@ -305,7 +305,7 @@ public class QlWriter {
         return stack.length;
     }
 
-    public synchronized boolean stack(QlLevel lvl,
+    public synchronized boolean stack(LogLevel lvl,
                                       EnumSet<ANSIColor> msgColor,
                                       String msg,
                                       ANSIColor fileColor,
@@ -334,12 +334,12 @@ public class QlWriter {
                 boolean           isLoggable   = true;
                 
                 if (framesShown == 0) {
-                    for (QlFilter filter : filters) {
+                    for (LogFilter filter : filters) {
                         int    lineNum  = stackElement.getLineNumber();
                         String fileName = stackElement.getFileName();
                             
                         if (filter.isMatch(fileName, lineNum, className, methodName)) {
-                            QlLevel flevel = filter.getLevel();
+                            LogLevel flevel = filter.getLevel();
                             isLoggable = flevel != null && level.compareTo(flevel) >= 0;
                         }
                     }
@@ -407,10 +407,10 @@ public class QlWriter {
             else {
                 buf.append(col);
                 buf.append(fileName);
-                buf.append(Qualog.NONE);
+                buf.append(Log.NONE);
                 repeat(buf, fileWidth - fileName.length(), ' ');
                 repeat(buf, 1 + lineWidth - lnStr.length(), ' ');
-                buf.append(col).append(lnStr).append(Qualog.NONE);
+                buf.append(col).append(lnStr).append(Log.NONE);
             }
         }
         else if (col == null) {
@@ -421,7 +421,7 @@ public class QlWriter {
             buf.append(fileName);
             buf.append(':');
             buf.append(lnStr);
-            buf.append(Qualog.NONE);
+            buf.append(Log.NONE);
             repeat(buf, fileWidth - fileName.length() - 1 - lnStr.length(), ' ');
         }
 
@@ -469,7 +469,7 @@ public class QlWriter {
         }
         buf.append(className);
         if (classColor != null) {
-            buf.append(Qualog.NONE);
+            buf.append(Log.NONE);
         }
 
         if (columns) {
@@ -504,7 +504,7 @@ public class QlWriter {
         }
         buf.append(methodName);
         if (methodColor != null) {
-            buf.append(Qualog.NONE);
+            buf.append(Log.NONE);
         }
 
         if (!columns) {
@@ -554,7 +554,7 @@ public class QlWriter {
                 }
 
                 if (hasColor) {
-                    msg += Qualog.NONE;
+                    msg += Log.NONE;
                 }
             }
         }
