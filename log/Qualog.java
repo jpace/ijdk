@@ -234,32 +234,32 @@ public class Qualog {
 
         String showClassesStr = System.getProperty(SHOW_CLASSES_PROPERTY_KEY);
         if (showClassesStr != null) {
-            writer.showClasses = (new Boolean(showClassesStr)).booleanValue();
+            writer.showClasses = new Boolean(showClassesStr);
         }
 
         String columnarStr = System.getProperty(COLUMNAR_PROPERTY_KEY);
         if (columnarStr != null) {
-            writer.columns = (new Boolean(columnarStr)).booleanValue();
+            writer.columns = new Boolean(columnarStr);
         }
 
         String fileWidthStr = System.getProperty(FILE_WIDTH_PROPERTY_KEY);
         if (fileWidthStr != null) {
-            writer.fileWidth = (new Integer(fileWidthStr)).intValue();
+            writer.fileWidth = new Integer(fileWidthStr);
         }
 
         String lineWidthStr = System.getProperty(LINE_WIDTH_PROPERTY_KEY);
         if (lineWidthStr != null) {
-            writer.lineWidth = (new Integer(lineWidthStr)).intValue();
+            writer.lineWidth = new Integer(lineWidthStr);
         }
 
         String classWidthStr = System.getProperty(CLASS_WIDTH_PROPERTY_KEY);
         if (classWidthStr != null) {
-            writer.classWidth = (new Integer(classWidthStr)).intValue();
+            writer.classWidth = new Integer(classWidthStr);
         }
 
         String methodWidthStr = System.getProperty(METHOD_WIDTH_PROPERTY_KEY);
         if (methodWidthStr != null) {
-            writer.functionWidth = (new Integer(methodWidthStr)).intValue();
+            writer.functionWidth = new Integer(methodWidthStr);
         }
     }
 
