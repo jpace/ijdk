@@ -17,20 +17,29 @@ public class LogMap {
                                 ANSIColor classColor,
                                 ANSIColor methodColor,
                                 int numFrames) {
-        Set<?> keySet = map.keySet();
-        Object[] keys = keySet.toArray();
-        
-        if (keys.length == 0) {
-            return Log.stack(level, msgColors, name, "()", fileColor, classColor, methodColor, numFrames);
+        if (map.isEmpty()) {
+            return LogCollection.stackEmptyCollection(level, msgColors, name, fileColor, classColor, methodColor, numFrames);
         }
         else {
-            boolean ret = true;
-            for (int ki = 0; ki < keys.length; ++ki) {
-                int nFrames = ki == keys.length - 1 ? numFrames : 1;
-                ret = Log.stack(level, msgColors, name + "[" + keys[ki] + "]", map.get(keys[ki]), fileColor, classColor, methodColor, nFrames);
-            }
-            return ret;
+            return stackNonEmptyMap(level, msgColors, name, map, fileColor, classColor, methodColor, numFrames);
         }
     }
-}
 
+    protected static boolean stackNonEmptyMap(LogLevel level, 
+                                              EnumSet<ANSIColor> msgColors,
+                                              String name,
+                                              Map<?, ?> map,
+                                              ANSIColor fileColor,
+                                              ANSIColor classColor,
+                                              ANSIColor methodColor,
+                                              int numFrames) {
+        Set<?> keySet = map.keySet();
+        Object[] keys = keySet.toArray();        
+        boolean ret = true;
+        for (int ki = 0; ki < keys.length; ++ki) {
+            int nFrames = ki == keys.length - 1 ? numFrames : 1;
+            ret = Log.stack(level, msgColors, name + "[" + keys[ki] + "]", map.get(keys[ki]), fileColor, classColor, methodColor, nFrames);
+        }
+        return ret;
+    }
+}

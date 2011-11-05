@@ -5,7 +5,6 @@ package org.incava.ijdk.lang;
  * Extensions to the Object class.
  */
 public class ObjectExt {
-
     /**
      * Returns whether the objects are equal, including whether they are both null.
      */

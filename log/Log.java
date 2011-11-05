@@ -2,6 +2,7 @@ package org.incava.ijdk.log;
 
 import java.io.*;
 import java.util.*;
+import static org.incava.ijdk.util.IUtil.*;
 
 
 /**
@@ -201,29 +202,35 @@ public class Log {
 
     protected static LogTimer timer;
 
+    /**
+     * Sets verbose from system property settings.
+     */
+    protected static void setVerbosity() {
+        String verStr = System.getProperty(VERBOSE_PROPERTY_KEY, System.getProperty("verbose"));
+
+        if (isNull(verStr)) {
+            return;
+        }
+
+        boolean verbose = Boolean.valueOf(verStr);
+        LogLevel level = LEVEL5;
+            
+        String lvlStr = System.getProperty(LEVEL_PROPERTY_KEY);
+        if (isNotNull(lvlStr)) {
+            level = new LogLevel(new Integer(lvlStr));
+        }
+
+        if (verbose) {
+            setOutput(VERBOSE, level);
+            System.out.println("Log, version " + VERSION);
+        }
+    }
+
     static {
         writer = new LogWriter();
         timer = new LogTimer();
-        
-        String verStr = System.getProperty(VERBOSE_PROPERTY_KEY);
-        if (verStr == null) {
-            verStr = System.getProperty("verbose");
-        }
 
-        if (verStr != null) {
-            boolean verbose = Boolean.valueOf(verStr).booleanValue();
-            LogLevel level = LEVEL5;
-
-            String lvlStr = System.getProperty(LEVEL_PROPERTY_KEY);
-            if (lvlStr != null) {
-                level = new LogLevel((new Integer(lvlStr)).intValue());
-            }
-
-            if (verbose) {
-                setOutput(VERBOSE, level);
-                System.out.println("Log, version " + VERSION);
-            }
-        }
+        setVerbosity();
         
         if (System.getProperty("os.name").equals("Linux")) {
             writer.setUseColor(true);
@@ -334,7 +341,6 @@ public class Log {
     public static void setFileColor(ANSIColor color) {
         StackTraceElement[] stack = getStack(3);
         String fileName = stack[2].getFileName();
-        tr.Ace.red("fileName: " + fileName);
         writer.setFileColor(fileName, color);
     }
 

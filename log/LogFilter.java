@@ -13,18 +13,18 @@ public class LogFilter {
 
     public static final Range NO_RANGE = null;
     
-    private LogLevel level;
+    private final LogLevel level;
 
-    private Pattern fileNamePat;
+    private final Pattern fileNamePat;
 
-    private Range lineNumberRng;
+    private final Range lineNumberRng;
     
-    private Pattern classNamePat;
+    private final Pattern classNamePat;
 
-    private Pattern methodNamePat;
+    private final Pattern methodNamePat;
 
     public LogFilter(LogLevel level) {
-        this.level = level;
+        this(level, (Pattern)null, null, null, null);
     }
 
     public LogFilter(LogLevel level, Pattern fname, Range lnum, Pattern clsName, Pattern methName) {
@@ -61,4 +61,7 @@ public class LogFilter {
                 (methodNamePat == null || methodNamePat.matcher(methodName).matches()));
     }
 
+    public boolean isMatch(StackTraceElement ste) {
+        return isMatch(ste.getFileName(), ste.getLineNumber(), ste.getClassName(), ste.getMethodName());
+    }
 }

@@ -58,5 +58,4 @@ public class IntegerArray {
         }
         return ary;
     }
-
 }

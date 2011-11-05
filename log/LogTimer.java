@@ -3,6 +3,7 @@ package org.incava.ijdk.log;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.incava.ijdk.lang.Pair;
 
 
 public class LogTimer {
@@ -39,12 +40,13 @@ public class LogTimer {
 
         StackTraceElement ste = getFrame();
 
-        // System.out.println("ste: " + ste);
-
         String className     = ste.getClassName();
         String methodName    = ste.getMethodName();
         int    lineNumber    = ste.getLineNumber();
         String fileName      = ste.getFileName();
+
+        // first is index, second is score.
+        Pair<Integer, Integer> bestMatch = new Pair<Integer, Integer>(-1, -1);
         int    bestMatchIdx  = -1;
         int    bestMatchness = -1;
         
@@ -58,14 +60,13 @@ public class LogTimer {
             matchness += fileName.equals(qtp.getFileName())     ? 1 : 0;
             matchness += methodName.equals(qtp.getMethodName()) ? 1 : 0;
 
-            if (matchness >= bestMatchness) {
-                bestMatchness = matchness;
-                bestMatchIdx  = idx;
+            if (matchness >= bestMatch.getSecond()) {
+                bestMatch = new Pair<Integer, Integer>(idx, matchness);
             }
         }
 
-        if (bestMatchIdx >= 0) {
-            LogTimedPeriod qtp     = periods.remove(bestMatchIdx);
+        if (bestMatch.getFirst() >= 0) {
+            LogTimedPeriod qtp    = periods.remove(bestMatch.getFirst().intValue());
             long          elapsed = endTime - qtp.getStartTime();
             StringBuffer  buf     = new StringBuffer();
 

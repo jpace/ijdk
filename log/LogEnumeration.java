@@ -9,8 +9,7 @@ import java.util.EnumSet;
 /**
  * Wraps Enumerations for output.
  */
-public class LogEnumeration {
-    
+public class LogEnumeration {    
     public static <T> boolean stack(LogLevel level, 
                                     EnumSet<ANSIColor> msgColors,
                                     String name,
@@ -20,7 +19,6 @@ public class LogEnumeration {
                                     ANSIColor methodColor,
                                     int numFrames) {
         Collection<T> ary = Collections.list(en);
-
         return LogCollection.stack(level, msgColors, name, ary, fileColor, classColor, methodColor, numFrames);
     }
 }

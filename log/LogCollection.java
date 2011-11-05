@@ -19,5 +19,14 @@ public class LogCollection {
         Object[] ary = c.toArray();
         return LogObjectArray.stack(level, msgColors, name, ary, fileColor, classColor, methodColor, numFrames);
     }
+    
+    public static boolean stackEmptyCollection(LogLevel level, 
+                                               EnumSet<ANSIColor> msgColors,
+                                               String name,
+                                               ANSIColor fileColor,
+                                               ANSIColor classColor,
+                                               ANSIColor methodColor,
+                                               int numFrames) {
+        return Log.stack(level, msgColors, name, "()", fileColor, classColor, methodColor, numFrames);
+    }
 }
-
