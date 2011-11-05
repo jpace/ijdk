@@ -51,6 +51,15 @@ public class IUtil {
         return isTrue(a) ? a : (isTrue(b) ? b : null);
     }
 
+    public static <T> T or(T ... operands) {
+        for (T op : operands) {
+            if (isTrue(op)) {
+                return op;
+            }
+        }
+        return null;
+    }
+
     public static <T> Iterable<T> iter(T[] ary) {
         return ary == null ? new ArrayList<T>() : Arrays.asList(ary);
     }
