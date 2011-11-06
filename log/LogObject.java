@@ -58,8 +58,6 @@ public class LogObject {
 
         Field[] fields = obj.getClass().getDeclaredFields();
         for (Field fld : fields) {
-            tr.Ace.log("fld", fld);
-
             getFieldValue(inspOpts, obj, fld, attributes);
         }
 
@@ -81,7 +79,6 @@ public class LogObject {
 
         try {
             Object val = fld.get(obj);
-            tr.Ace.log("val", val);
             attributes.put(fld.getName(), val);
         }
         catch (IllegalAccessException iae) {
