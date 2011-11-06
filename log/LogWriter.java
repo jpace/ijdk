@@ -165,65 +165,49 @@ public class LogWriter {
         this.prevStackElement = null;
     }
 
-    public boolean stack(LogLevel level, 
-                         EnumSet<ANSIColor> msgColors,
-                         String name,
-                         Object obj,
-                         ANSIColor fileColor,
-                         ANSIColor classColor,
-                         ANSIColor methodColor,
-                         int numFrames) {
-
-        System.err.println("obj: " + obj);
-
+    public boolean stack(LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
         if (!isLoggable(level)) {
             return true;
         }
 
+        // LogColors logColors = new LogColors(msgColors, fileColor, classColor, methodColor);
+
         String nm = name == null ? "" : name;
-        System.err.println("nm: " + nm);
         
         if (obj == null) {
             String msg = nm + ": " + "null";
-            return stack(level, msgColors, msg, fileColor, classColor, methodColor, numFrames);
+            return stack(level, logColors, msg, numFrames);
         }
         else if (obj instanceof Collection) {
-            Collection<?> c = (Collection<?>)obj;
-            return LogCollection.stack(level, msgColors, nm, c, fileColor, classColor, methodColor, numFrames);
+            Collection<?> coll = (Collection<?>)obj;
+            return LogCollection.stack(level, logColors, nm, coll, numFrames);
         }
         else if (obj instanceof Iterator) {
             Iterator<?> it = (Iterator<?>)obj;
-            return LogIterator.stack(level, msgColors, nm, it, fileColor, classColor, methodColor, numFrames);
+            return LogIterator.stack(level, logColors, nm, it, numFrames);
         }
         else if (obj instanceof Enumeration) {
             Enumeration<?> en = (Enumeration<?>)obj;
-            return LogEnumeration.stack(level, msgColors, nm, en, fileColor, classColor, methodColor, numFrames);
+            return LogEnumeration.stack(level, logColors, nm, en, numFrames);
         }
         else if (obj instanceof Object[]) {
             Object[] ary = (Object[])obj;
-            return LogObjectArray.stack(level, msgColors, nm, ary, fileColor, classColor, methodColor, numFrames);
+            return LogObjectArray.stack(level, logColors, nm, ary, numFrames);
         }
         else if (obj instanceof Map) {
             Map m = (Map)obj;
-            return LogMap.stack(level, msgColors, nm, m, fileColor, classColor, methodColor, numFrames);
+            return LogMap.stack(level, logColors, nm, m, numFrames);
         }
         else if (obj.getClass().isArray()) {
-            return stackArray(level, msgColors, nm, obj, fileColor, classColor, methodColor, numFrames);
+            return stackArray(level, logColors, nm, obj, numFrames);
         }
         else {
             String msg = (name == null ? "" : (nm + ": ")) + LogObject.toString(obj);
-            return stack(level, msgColors, msg, fileColor, classColor, methodColor, numFrames);
+            return stack(level, logColors, msg, numFrames);
         }
     }
 
-    protected boolean stackArray(LogLevel level, 
-                                 EnumSet<ANSIColor> msgColors,
-                                 String name,
-                                 Object obj,
-                                 ANSIColor fileColor,
-                                 ANSIColor classColor,
-                                 ANSIColor methodColor,
-                                 int numFrames) {
+    protected boolean stackArray(LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
         String[] strs = null;
         if (obj instanceof boolean[]) {
             boolean[] ary = (boolean[])obj;
@@ -258,7 +242,7 @@ public class LogWriter {
             strs = ShortArray.toStringArray(ary);
         }
 
-        return LogObjectArray.stack(level, msgColors, name, strs, fileColor, classColor, methodColor, numFrames);
+        return LogObjectArray.stack(level, logColors, name, strs, numFrames);
     }
 
     public boolean isSkipped(StackTraceElement ste) {
@@ -296,11 +280,8 @@ public class LogWriter {
     }
 
     public synchronized boolean stack(LogLevel lvl,
-                                      EnumSet<ANSIColor> msgColor,
+                                      LogColors logColors,
                                       String msg,
-                                      ANSIColor fileColor,
-                                      ANSIColor classColor,
-                                      ANSIColor methodColor,
                                       int numFrames) {
         if (outputType == NO_OUTPUT || isNull(level) || level.compareTo(lvl) < 0) {
             return true;
@@ -326,39 +307,31 @@ public class LogWriter {
                 return true;
             }
 
-            outputFrame(stackElement, framesShown, msgColor, msg, fileColor, classColor, methodColor);
+            outputFrame(stackElement, framesShown, logColors, msg);
         }
         return true;
     }
 
-    public void outputVerbose(StringBuilder sb,
-                              StackTraceElement stackElement, 
-                              ANSIColor fileColor,
-                              ANSIColor classColor,
-                              ANSIColor methodColor) {
+    public void outputVerbose(StringBuilder sb, StackTraceElement stackElement, LogColors logColors) {
         if (this.showFiles) {
-            outputFileName(sb, fileColor, stackElement);
+            outputFileName(sb, logColors, stackElement);
         }
         if (this.showClasses) {
-            outputClassAndMethod(sb, classColor, methodColor, stackElement);
+            outputClassAndMethod(sb, logColors, stackElement);
         }
     }
 
     public void outputFrame(StackTraceElement stackElement, 
                             int framesShown, 
-                            EnumSet<ANSIColor> msgColor,
-                            String msg,
-                            ANSIColor fileColor,
-                            ANSIColor classColor,
-                            ANSIColor methodColor) {
+                            LogColors logColors,
+                            String msg) {
         StringBuilder sb = new StringBuilder();
         
         if (outputType == VERBOSE) {
-            outputVerbose(sb, stackElement, fileColor, classColor, methodColor);
+            outputVerbose(sb, stackElement, logColors);
         }
-        outputMessage(sb, framesShown, msgColor, msg, stackElement);
+        outputMessage(sb, framesShown, logColors.msgColors, msg, stackElement);
 
-        System.err.println("writing: " + sb.toString());
         out.println(sb.toString());
 
         prevStackElement = stackElement;
@@ -377,11 +350,11 @@ public class LogWriter {
         return isLoggable;
     }
     
-    void setUseColor(boolean useColor) {
+    public void setUseColor(boolean useColor) {
         this.useColor = useColor;
     }
 
-    protected void outputFileName(StringBuilder sb, ANSIColor fileColor, StackTraceElement stackElement) {
+    protected void outputFileName(StringBuilder sb, LogColors logColors, StackTraceElement stackElement) {
         String fileName = or(stackElement.getFileName(), "");
         
         sb.append("[");
@@ -395,7 +368,7 @@ public class LogWriter {
         }
 
         String    lnStr = stackElement.getLineNumber() >= 0 ? String.valueOf(stackElement.getLineNumber()) : "";
-        ANSIColor col   = or(fileColor, fileColors.get(fileName));
+        ANSIColor col   = or(logColors.fileColor, fileColors.get(fileName));
 
         if (this.columns) {
             outputColumns(sb, col, fileName, lnStr);
@@ -432,15 +405,12 @@ public class LogWriter {
         }
     }
 
-    protected void outputClassAndMethod(StringBuilder sb,
-                                        ANSIColor classColor,
-                                        ANSIColor methodColor,
-                                        StackTraceElement stackElement) {
+    protected void outputClassAndMethod(StringBuilder sb, LogColors logColors, StackTraceElement stackElement) {
         sb.append("{");
 
         String className = stackElement.getClassName();
 
-        classColor = or(classColor, classColors.get(className));
+        ANSIColor classColor = or(logColors.classColor, classColors.get(className));
         
         boolean sameClass = prevStackElement != null && prevStackElement.getClassName().equals(className);
         if (sameClass) {
@@ -479,7 +449,7 @@ public class LogWriter {
         
         String methodName = stackElement.getMethodName();
 
-        methodColor = or(methodColor, methodColors.get(methodName));
+        ANSIColor methodColor = or(logColors.methodColor, methodColors.get(methodName));
         
         if (sameClass && prevStackElement != null && prevStackElement.getMethodName().equals(methodName)) {
             methodName = StringExt.repeat(' ', prevDisplayedMethod.length());
@@ -528,12 +498,12 @@ public class LogWriter {
         sb.append(msg);
     }
 
-    protected String getMessage(String msg, StackTraceElement ste, EnumSet<ANSIColor> msgColor) {
+    protected String getMessage(String msg, StackTraceElement ste, EnumSet<ANSIColor> msgColors) {
         // remove ending EOLN
         msg = unwindThroughEoln(msg);
         
         if (this.useColor) {
-            msg = colorizeMessage(msg, ste, msgColor);
+            msg = colorizeMessage(msg, ste, msgColors);
         }
 
         return msg;

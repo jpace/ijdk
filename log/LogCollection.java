@@ -8,25 +8,12 @@ import java.util.EnumSet;
  * Wraps Collections for output.
  */
 public class LogCollection {
-    public static boolean stack(LogLevel level, 
-                                EnumSet<ANSIColor> msgColors,
-                                String name,
-                                Collection<?> c,
-                                ANSIColor fileColor,
-                                ANSIColor classColor,
-                                ANSIColor methodColor,
-                                int numFrames) {
-        Object[] ary = c.toArray();
-        return LogObjectArray.stack(level, msgColors, name, ary, fileColor, classColor, methodColor, numFrames);
+    public static boolean stack(LogLevel level, LogColors logColors, String name, Collection<?> coll, int numFrames) {
+        Object[] ary = coll.toArray();
+        return LogObjectArray.stack(level, logColors, name, ary, numFrames);
     }
     
-    public static boolean stackEmptyCollection(LogLevel level, 
-                                               EnumSet<ANSIColor> msgColors,
-                                               String name,
-                                               ANSIColor fileColor,
-                                               ANSIColor classColor,
-                                               ANSIColor methodColor,
-                                               int numFrames) {
-        return Log.stack(level, msgColors, name, "()", fileColor, classColor, methodColor, numFrames);
+    public static boolean stackEmptyCollection(LogLevel level, LogColors logColors, String name, int numFrames) {
+        return Log.stack(level, logColors, name, "()", numFrames);
     }
 }

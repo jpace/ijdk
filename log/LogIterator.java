@@ -10,21 +10,13 @@ import java.util.Iterator;
  * Wraps Iterators for output.
  */
 public class LogIterator {
-
-    public static <T> boolean stack(LogLevel level, 
-                                    EnumSet<ANSIColor> msgColors,
-                                    String name,
-                                    Iterator<T> it,
-                                    ANSIColor fileColor,
-                                    ANSIColor classColor,
-                                    ANSIColor methodColor,
-                                    int numFrames) {
+    public static <T> boolean stack(LogLevel level, LogColors logColors, String name, Iterator<T> it, int numFrames) {
         Collection<T> ary = new ArrayList<T>();
         while (it.hasNext()) {
             ary.add(it.next());
         }
 
-        return LogCollection.stack(level, msgColors, name, ary, fileColor, classColor, methodColor, numFrames);
+        return LogCollection.stack(level, logColors, name, ary, numFrames);
     }
 }
 
