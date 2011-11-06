@@ -111,4 +111,15 @@ public class FileExt {
             return null;
         }
     }
+
+    /**
+     * Resolves the file name, converting ~ to /home/user.
+     */
+    public static String resolveFileName(String fname) {
+        int tildePos = fname.indexOf('~');
+        if (tildePos >= 0) {
+            return fname.substring(0, tildePos) + System.getProperty("user.home") + fname.substring(tildePos + 1);
+        }
+        return fname;
+    }
 }
