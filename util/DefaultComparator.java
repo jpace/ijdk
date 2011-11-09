@@ -2,7 +2,6 @@ package org.incava.ijdk.util;
 
 import java.util.Comparator;
 
-
 /**
  * Provides a default implementation for a Comparator. <code>equals</code>
  * relies on <code>compare</code> (returning true if <code>compare</code>
@@ -39,10 +38,6 @@ public abstract class DefaultComparator<T> implements Comparator<T> {
         else {
             cmp = -1;
         }
-
-//         tr.Ace.log("x", x);
-//         tr.Ace.log("y", y);
-//         tr.Ace.log("cmp: " + cmp);
 
         return cmp;
     }
