@@ -1,25 +1,22 @@
 package org.incava.ijdk.lang;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.StringTokenizer;
 import org.incava.ijdk.util.ListExt;
 import static org.incava.ijdk.util.IUtil.*;
-
 
 /**
  * Extensions to the String class.
  */
 public class StringExt {
-
-    /**
-     * Set this to true for debugging output.
-     */
-    public static boolean DEBUG = false;
-
     /**
      * Returns an array of strings split at the character delimiter.
      */
     public static String[] split(String str, char delim, int max) {
-        return split(str, "" + delim, max);
+        return split(str, String.valueOf(delim), max);
     }
 
     /**
@@ -55,13 +52,6 @@ public class StringExt {
             if (strlen > beg) {
                 String tmp = strlen == beg ? "" : str.substring(beg, strlen);
                 splitList.add(tmp);
-            }
-
-            if (DEBUG) {
-                System.out.println("split(" + str + ", " + delim + ", " + max + "):");
-                for (int i = 0; i < splitList.size(); ++i) {
-                    System.out.println("    [" + i + "] = '" + splitList.get(i) + "'");
-                }
             }
             
             return splitList.toArray(new String[splitList.size()]);
@@ -112,11 +102,11 @@ public class StringExt {
      *     pad("abcd", '*', 3) -> "abcd"
      */
     public static String pad(String str, char ch, int length) {
-        StringBuffer buf = new StringBuffer(str);
-        while (buf.length() < length) {
-            buf.append(ch);
+        StringBuilder sb = new StringBuilder(str);
+        while (sb.length() < length) {
+            sb.append(ch);
         }
-        return buf.toString();
+        return sb.toString();
     }
 
     /**
@@ -142,19 +132,15 @@ public class StringExt {
     }
 
     public static String repeat(String str, int length) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; ++i) {
-            buf.append(str);
+            sb.append(str);
         }
-        return buf.toString();
+        return sb.toString();
     }
 
     public static String repeat(char ch, int length) {
-        StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < length; ++i) {
-            buf.append(ch);
-        }
-        return buf.toString();
+        return repeat(String.valueOf(ch), length);
     }
 
     /**
@@ -162,9 +148,7 @@ public class StringExt {
      * of the string. Does not throw the annoying IndexOutOfBoundsException.
      */
     public static String left(String str, int n) {
-        int x = Math.min(n, str.length());
-        x = Math.max(0, x);     // guard against 0
-        return str.substring(0, x);
+        return get(str, 0, n - 1);
     }
 
     /**
@@ -173,25 +157,22 @@ public class StringExt {
      * IndexOutOfBoundsException.
      */
     public static String right(String str, int n) {
-        int x = Math.min(n, str.length());
-        x = Math.max(0, x);     // guard against 0
-        int s = str.length() - x;
-        return str.substring(s);
+        return get(str, -Math.min(n, str.length()), -1);
     }
 
     public static String join(Collection c, String str) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         boolean isFirst = true;
         for (Object obj : c) {
             if (!isFirst) {
-                buf.append(str);
+                sb.append(str);
             }
             else {
                 isFirst = false;
             }
-            buf.append(obj.toString());
+            sb.append(obj.toString());
         }
-        return buf.toString();
+        return sb.toString();
     }
 
     public static String join(Object[] ary, String str) {

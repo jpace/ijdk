@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-
 public class IUtil {
 
     public static boolean isTrue(Object obj) {
@@ -22,6 +21,9 @@ public class IUtil {
         }
         else if (obj instanceof String) {
             return ((String)obj).isEmpty();
+        }
+        else if (obj instanceof Object[]) {
+            return ((Object[])obj).length == 0;
         }
         else if (obj instanceof Collection) {
             return ((Collection)obj).isEmpty();
@@ -51,7 +53,22 @@ public class IUtil {
         return isTrue(a) ? a : (isTrue(b) ? b : null);
     }
 
+    public static <T> T and(T ... operands) {
+        if (isFalse(operands)) {
+            return null;
+        }
+        for (T op : operands) {
+            if (isFalse(op)) {
+                return null;
+            }
+        }
+        return operands[operands.length - 1];
+    }
+
     public static <T> T or(T ... operands) {
+        if (isFalse(operands)) {
+            return null;
+        }
         for (T op : operands) {
             if (isTrue(op)) {
                 return op;
