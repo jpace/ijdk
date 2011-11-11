@@ -1,14 +1,14 @@
 package org.incava.ijdk.lang;
 
 
-public class Pair<FirstType, SecondType> implements Comparable<Pair<FirstType, SecondType>> {
-
+// public class Pair<FirstType, SecondType> implements Comparable<Pair<FirstType, SecondType>> {
+public class Pair<FirstType, SecondType> {
     public static <X, Y> Pair<X, Y> create(X first, Y second) {
         return new Pair<X, Y>(first, second);
     }
 
-    public static <X extends Comparable<? super X>, Y extends Comparable<? super Y>> Pair<X, Y> create(X first, Y second) {
-        return new Pair<X, Y>(first, second);
+    public static <X extends Comparable<? super X>, Y extends Comparable<? super Y>> OrderedPair<X, Y> create(X first, Y second) {
+        return new OrderedPair<X, Y>(first, second);
     }
 
     private final FirstType first;
@@ -38,32 +38,6 @@ public class Pair<FirstType, SecondType> implements Comparable<Pair<FirstType, S
         }
     }
 
-    public int compareTo(Pair<FirstType, SecondType> other) {
-        int cmp = compare(getFirst(), other.getFirst());
-
-        if (cmp == 0) {
-            cmp = compare(getSecond(), other.getSecond());
-        }
-
-        return cmp;
-    }
-
-    @SuppressWarnings("unchecked")
-    public <Type> int compare(Type a, Type b) {
-        if (a == null) {
-            return b == null ? 0 : 1;
-        }
-        else if (b == null) {
-            return -1;
-        }
-        else if (a instanceof Comparable) {
-            return ((Comparable)a).compareTo((Comparable)b);
-        }
-        else {
-            return a.equals(b) ? 0 : -1;
-        }
-    }
-
     public String toString() {
         return getFirst().toString() + ", " + getSecond().toString();
     }
@@ -71,5 +45,4 @@ public class Pair<FirstType, SecondType> implements Comparable<Pair<FirstType, S
     public int hashCode() {
         return getFirst().hashCode() * 31 + getSecond().hashCode();
     }
-
 }

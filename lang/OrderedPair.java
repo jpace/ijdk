@@ -4,8 +4,7 @@ package org.incava.ijdk.lang;
 /**
  * An ordered pair is comparable.
  */
-public class OrderedPair<FirstType extends Comparable<? super FirstType>, SecondType extends Comparable<? super SecondType>> extends Pair<FirstType, SecondType> {
-
+public class OrderedPair<FirstType extends Comparable<? super FirstType>, SecondType extends Comparable<? super SecondType>> extends Pair<FirstType, SecondType> implements Comparable<OrderedPair<FirstType, SecondType>> {
     public static <X extends Comparable<X>, Y extends Comparable<Y>> OrderedPair<X, Y> create(X first, Y second) {
         return new OrderedPair<X, Y>(first, second);
     }
@@ -29,14 +28,14 @@ public class OrderedPair<FirstType extends Comparable<? super FirstType>, Second
         return second;
     }
 
-    public int compareTo(Pair<FirstType, SecondType> other) {
-        if (other instanceof OrderedPair) {
-            return compareTo((OrderedPair<FirstType, SecondType>)other);
-        }
-        else {
-            return super.compareTo(other);
-        }
-    }
+    // public int compareTo(ComparablePair<FirstType, SecondType> other) {
+    //     if (other instanceof OrderedPair) {
+    //         return compareTo((OrderedPair<FirstType, SecondType>)other);
+    //     }
+    //     else {
+    //         return -1;
+    //     }
+    // }
 
     public int compareTo(OrderedPair<FirstType, SecondType> other) {
         int cmp = getFirst().compareTo(other.getFirst());
