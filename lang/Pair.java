@@ -1,8 +1,6 @@
 package org.incava.ijdk.lang;
 
-
 public class Pair<FirstType, SecondType> implements Comparable<Pair<FirstType, SecondType>> {
-
     public static <X, Y> Pair<X, Y> create(X first, Y second) {
         return new Pair<X, Y>(first, second);
     }
@@ -71,5 +69,4 @@ public class Pair<FirstType, SecondType> implements Comparable<Pair<FirstType, S
     public int hashCode() {
         return getFirst().hashCode() * 31 + getSecond().hashCode();
     }
-
 }

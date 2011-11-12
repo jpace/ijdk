@@ -2,9 +2,11 @@ package org.incava.ijdk.io;
 
 import java.io.*;
 import java.util.*;
-
+import static org.incava.ijdk.util.IUtil.*;
 
 public class FileExt {
+    public enum ReadOptionType { NONEMPTY };
+    
     /**
      * The end-of-line character/sequence for this OS.
      */
@@ -62,14 +64,50 @@ public class FileExt {
      * Reads the file into a string array, without end-of-line characters
      * (sequences). Returns empty array on error.
      */
-    public static String[] readLines(File file) {
+    public static String[] readLines(File file, EnumSet<ReadOptionType> options) {
         try {
-            BufferedReader br    = new BufferedReader(new FileReader(file));
+            return readLines(new FileReader(file), options);
+        }
+        catch (FileNotFoundException fnfe) {
+            return new String[0];
+        }
+    }
+
+    public static String[] readLines(File file) {
+        return readLines(file, null);
+    }
+
+    /**
+     * Reads the file into a string array, without end-of-line characters
+     * (sequences). Returns empty array on error.
+     */
+    public static String[] readLines(InputStream stream) {
+        return readLines(new InputStreamReader(stream), null);
+    }
+
+    /**
+     * Reads the file into a string array, without end-of-line characters
+     * (sequences). Returns empty array on error.
+     */
+    public static String[] readLines(InputStream stream, EnumSet<ReadOptionType> options) {
+        return readLines(new InputStreamReader(stream), options);
+    }
+
+    /**
+     * Reads into a string array, without end-of-line characters (sequences).
+     * Returns an empty array on error.
+     */
+    public static String[] readLines(Reader reader, EnumSet<ReadOptionType> options) {
+        try {
+            BufferedReader br    = new BufferedReader(reader);
             List<String>   lines = new ArrayList<String>();
+            boolean        checkEmpty = options != null && options.contains(ReadOptionType.NONEMPTY);
 
             String in;
             while ((in = br.readLine()) != null) {
-                lines.add(in);
+                if (!checkEmpty || !isEmpty(in)) {
+                    lines.add(in);
+                }
             }
 
             return lines.toArray(new String[lines.size()]);
@@ -79,19 +117,23 @@ public class FileExt {
         }
     }
 
+    public static String[] readLines(String fName) {
+        return readLines(fName, null);
+    }
+
     /**
      * Reads the file into a string array, without end-of-line characters
      * (sequences). Returns empty array on error.
      */
-    public static String[] readLines(String fName) {
-        return readLines(new File(fName));
+    public static String[] readLines(String fName, EnumSet<ReadOptionType> options) {
+        return readLines(new File(fName), options);
     }
 
     /**
      * Reads the file into a string array, optionally with end-of-line
      * characters (sequences).
      */
-    public static String read(FileReader fr, boolean eoln) {
+    public static String read(Reader fr, boolean eoln) {
         StringBuilder sb = new StringBuilder();
         
         try {
