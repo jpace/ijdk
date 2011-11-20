@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public class IUtil {
 
@@ -83,6 +84,10 @@ public class IUtil {
 
     public static <T> Iterable<T> iter(Iterable<T> coll) {
         return coll == null ? new ArrayList<T>() : coll;
+    }
+
+    public static <T> List<T> list(T ... elements) {
+        return new ArrayList<T>(Arrays.asList(elements));
     }
 
 }

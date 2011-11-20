@@ -9,7 +9,6 @@ import static org.incava.ijdk.util.IUtil.*;
  * Wraps logging for an object.
  */
 public class LogObject {
-
     public enum InspectOptionType { INCLUDE_SUPERCLASSES, INCLUDE_STATIC };
 
     /**
