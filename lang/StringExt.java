@@ -263,4 +263,24 @@ public class StringExt {
     protected static Integer getIndex(String str, Integer index) {
         return isNull(str) ? null : ListExt.getIndex(str.length(), index);
     }
+
+    /**
+     * Converts the (possibly quoted) string into a list, delimited by
+     * whitespace and commas..
+     */
+    public static List<String> listify(String str) {
+        // strip leading/trailing single/double quotes
+        if (str.charAt(0) == str.charAt(str.length() - 1) &&
+            (str.charAt(0) == '"' || str.charAt(0) == '\'')) {
+            str = str.substring(1, str.length() - 1);
+        }
+        
+        List<String> list = new ArrayList<String>();
+        StringTokenizer st = new StringTokenizer(str, " \t\n\r\f,");
+        while (st.hasMoreTokens()) {
+            String tk = st.nextToken();
+            list.add(tk);
+        }
+        return list;
+    }
 }
