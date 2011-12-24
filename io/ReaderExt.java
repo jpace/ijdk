@@ -3,9 +3,7 @@ package org.incava.ijdk.io;
 import java.io.*;
 import java.util.*;
 
-
-public class ReaderExt {
-    
+public class ReaderExt {    
     public static String[] readlines(Reader rdr) {
         try {
             List<String>   lines = new ArrayList<String>();

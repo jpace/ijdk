@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Support for <code>find(1)</code>-like behavior.
  */
@@ -56,5 +55,4 @@ public class Find {
         }
         return fileList.toArray(new String[fileList.size()]);
     }
-
 }

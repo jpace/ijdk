@@ -1,18 +1,36 @@
 package org.incava.ijdk.lang;
 
-import java.io.*;
 import java.util.*;
 
-
-public class Range implements Comparable<Range> {
-
+public class Range implements Comparable<Range>, Iterable<Integer> {
     private final int first;
-
     private final int last;
+
+    class RangeIterator implements Iterator<Integer> {
+        private int idx;
+        private final int last;
+        public RangeIterator(int first, int last) {
+            this.idx = first;
+            this.last = last;
+        }
+        public Integer next() {
+            return this.idx++;
+        }
+        public boolean hasNext() {
+            return this.idx <= this.last;
+        }
+        public void remove() {
+            throw new UnsupportedOperationException();
+        } 
+    }
     
     public Range(int first, int last) {
         this.first = first;
         this.last = last;
+    }
+
+    public Iterator<Integer> iterator() {
+        return new RangeIterator(this.first, this.last);
     }
 
     public int getFirst() {

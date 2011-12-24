@@ -2,12 +2,10 @@ package org.incava.ijdk.util;
 
 import java.util.*;
 
-
 /**
  * Collects a collections into a collection.
  */
-public abstract class Collect<FromType, ToType> extends ArrayList<ToType> {
-    
+public abstract class Collect<FromType, ToType> extends ArrayList<ToType> {    
     /**
      * Creates a new collection, where the condition passes the condition.
      *

@@ -87,7 +87,8 @@ public class IUtil {
     }
 
     public static <T> List<T> list(T ... elements) {
-        return new ArrayList<T>(Arrays.asList(elements));
+        List<T> ary = Arrays.asList(elements);
+        return new ArrayList<T>(ary);
     }
 
 }

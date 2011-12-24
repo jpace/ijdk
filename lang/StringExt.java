@@ -111,7 +111,7 @@ public class StringExt {
 
     /**
      * Same as the <code>pad</code> method, but applies the padding to the
-     * left - hand (leading) side of the string.
+     * left-hand (leading) side of the string.
      *
      * Examples:
      * <pre>
@@ -262,5 +262,22 @@ public class StringExt {
      */
     protected static Integer getIndex(String str, Integer index) {
         return isNull(str) ? null : ListExt.getIndex(str.length(), index);
+    }
+
+    /**
+     * Returns whether the string <code>str</code> begins with the character
+     * <code>ch</code>.
+     */
+    public static boolean startsWith(String str, char ch) {
+        Character startChar = get(str, 0);
+        return startChar != null && startChar == ch;
+    }
+
+    /**
+     * Returns whether the string <code>str</code> begins with the string
+     * <code>prefix</code>. For consistency with String.
+     */
+    public static boolean startsWith(String str, String pref) {
+        return str != null && str.startsWith(pref);
     }
 }

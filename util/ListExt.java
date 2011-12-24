@@ -2,9 +2,7 @@ package org.incava.ijdk.util;
 
 import java.util.List;
 
-
 public class ListExt {
-
     /**
      * Returns the last element in the list.
      */
@@ -34,5 +32,4 @@ public class ListExt {
         int idx = index < 0 ? size + index : index;
         return idx < 0 || idx >= size ? null : idx;
     }
-
 }

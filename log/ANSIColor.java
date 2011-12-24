@@ -1,11 +1,9 @@
 package org.incava.ijdk.log;
 
-
 /**
  * Provides constants that produce colorized output on ANSI terminals.
  */
 public enum ANSIColor {
-
     NONE(0),
     RESET(0),
     BOLD(1),
