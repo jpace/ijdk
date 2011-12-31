@@ -1,8 +1,6 @@
 package org.incava.ijdk.util;
 
-
 public class ANSI {
-
     protected static String makeColor(int n) {
         // this behavior changed in Java 1.4.2-01, so this is a char, not a
         // byte.

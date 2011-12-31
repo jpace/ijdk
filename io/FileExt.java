@@ -50,11 +50,9 @@ public class FileExt {
         }
         else {
             StringBuilder sb = new StringBuilder();
-            
             for (int i = 0; contents != null && i < contents.length; ++i) {
                 sb.append(contents[i]).append(EOLN);
             }
-            
             return sb.toString();
         }
     }
@@ -154,11 +152,9 @@ public class FileExt {
      * characters (sequences).
      */
     public static String read(Reader fr, boolean eoln) {
-        StringBuilder sb = new StringBuilder();
-        
+        StringBuilder sb = new StringBuilder();        
         try {
             BufferedReader br = new BufferedReader(fr);
-
             String in;
             while ((in = br.readLine()) != null) {
                 sb.append(in);

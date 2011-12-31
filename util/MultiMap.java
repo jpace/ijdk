@@ -1,10 +1,13 @@
 package org.incava.ijdk.util;
 
-import java.util.*;
-
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
-
     private Set<Map.Entry<K, Collection<V>>> entrySet;
 
     public MultiMap() {
@@ -54,23 +57,8 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
         return coll;
     }
 
-    public Collection<V> put(K key, V value) {
-        Collection<V> coll = get(key);
-
-        if (coll == null) {
-            coll = getCollection();
-            put(key, coll);
-        }
-
-        coll.add(value);
-    
-        return coll;
-    }
-
-    public class MultiMapEntry<K, V> implements Map.Entry<K, Collection<V>>, Comparable<Map.Entry<K, Collection<V>>> {
-        
+    public class MultiMapEntry<K, V> implements Map.Entry<K, Collection<V>>, Comparable<Map.Entry<K, Collection<V>>> {        
         private final K key;
-
         private Collection<V> value;
 
         public MultiMapEntry(K key, Collection<V> value) {
