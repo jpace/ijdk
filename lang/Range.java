@@ -3,11 +3,8 @@ package org.incava.ijdk.lang;
 import java.io.*;
 import java.util.*;
 
-
 public class Range implements Comparable<Range> {
-
     private final int first;
-
     private final int last;
     
     public Range(int first, int last) {

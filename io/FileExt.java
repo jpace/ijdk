@@ -1,11 +1,19 @@
 package org.incava.ijdk.io;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.*;
+import java.util.EnumSet;
 import static org.incava.ijdk.util.IUtil.*;
 
 public class FileExt {
-    public enum ReadOptionType { NONEMPTY };
+    public enum ReadOptionType { NONEMPTY, WITH_EXCEPTION };
     
     /**
      * The end-of-line character/sequence for this OS.
@@ -97,7 +105,15 @@ public class FileExt {
      * Reads into a string array, without end-of-line characters (sequences).
      * Returns an empty array on error.
      */
-    public static String[] readLines(Reader reader, EnumSet<ReadOptionType> options) {
+    public static String[] readLines(Reader reader) throws RuntimeException {
+        return readLines(reader, null);
+    }
+
+    /**
+     * Reads into a string array, without end-of-line characters (sequences).
+     * Returns an empty array on error.
+     */
+    public static String[] readLines(Reader reader, EnumSet<ReadOptionType> options) throws RuntimeException {
         try {
             BufferedReader br    = new BufferedReader(reader);
             List<String>   lines = new ArrayList<String>();
@@ -113,6 +129,10 @@ public class FileExt {
             return lines.toArray(new String[lines.size()]);
         }
         catch (Exception e) {
+            if (hasReadOption(options, ReadOptionType.WITH_EXCEPTION)) {
+                // $$$ todo: add UncheckedException
+                throw new RuntimeException(e);
+            }
             return new String[0];
         }
     }
@@ -163,5 +183,9 @@ public class FileExt {
             return fname.substring(0, tildePos) + System.getProperty("user.home") + fname.substring(tildePos + 1);
         }
         return fname;
+    }
+
+    public static boolean hasReadOption(EnumSet<ReadOptionType> options, ReadOptionType opt) {
+        return options != null && options.contains(opt);
     }
 }
