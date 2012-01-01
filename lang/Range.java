@@ -1,23 +1,25 @@
 package org.incava.ijdk.lang;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Range implements Comparable<Range>, Iterable<Integer> {
     private final int first;
     private final int last;
 
     class RangeIterator implements Iterator<Integer> {
-        private int idx;
+        private int current;
         private final int last;
         public RangeIterator(int first, int last) {
-            this.idx = first;
+            this.current = first;
             this.last = last;
         }
         public Integer next() {
-            return this.idx++;
+            return this.current++;
         }
         public boolean hasNext() {
-            return this.idx <= this.last;
+            return this.current <= this.last;
         }
         public void remove() {
             throw new UnsupportedOperationException();
@@ -47,6 +49,14 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
 
     public Integer[] toArray() {
         return new Integer[] { first, last };
+    }
+
+    public Integer[] toExpandedArray() {
+        List<Integer> list = new ArrayList<Integer>();
+        for (int num = first; num <= last; ++num) {
+            list.add(num);
+        }
+        return list.toArray(new Integer[list.size()]);
     }
 
     public boolean equals(Object obj) {
