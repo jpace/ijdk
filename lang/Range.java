@@ -5,28 +5,32 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Range implements Comparable<Range>, Iterable<Integer> {
-    private final int first;
-    private final int last;
+    private final Integer first;
+    private final Integer last;
 
     class RangeIterator implements Iterator<Integer> {
-        private int current;
-        private final int last;
-        public RangeIterator(int first, int last) {
+        private Integer current;
+        private final Integer last;
+        
+        public RangeIterator(Integer first, Integer last) {
             this.current = first;
             this.last = last;
         }
+
         public Integer next() {
             return this.current++;
         }
+
         public boolean hasNext() {
-            return this.current <= this.last;
+            return this.current.intValue() <= this.last.intValue();
         }
+
         public void remove() {
             throw new UnsupportedOperationException();
         } 
     }
     
-    public Range(int first, int last) {
+    public Range(Integer first, Integer last) {
         this.first = first;
         this.last = last;
     }
@@ -35,15 +39,15 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
         return new RangeIterator(this.first, this.last);
     }
 
-    public int getFirst() {
+    public Integer getFirst() {
         return first;
     }
 
-    public int getLast() {
+    public Integer getLast() {
         return last;
     }
 
-    public boolean includes(int n) {
+    public boolean includes(Integer n) {
         return n >= first && n <= last;
     }
 
@@ -53,7 +57,7 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
 
     public Integer[] toExpandedArray() {
         List<Integer> list = new ArrayList<Integer>();
-        for (int num = first; num <= last; ++num) {
+        for (Integer num = first; num <= last; ++num) {
             list.add(num);
         }
         return list.toArray(new Integer[list.size()]);
@@ -70,13 +74,13 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
     }
 
     public String toString() {
-        return "[" + first + ", " + last + "]";
+        return "[" + first + " ... " + last + "]";
     }
 
     public int compareTo(Range other) {
-        int cmp = IntegerExt.compare(first, other.first);
+        int cmp = ObjectExt.compare(first, other.first);
         if (cmp == 0) {
-            cmp = IntegerExt.compare(last, other.last);
+            cmp = ObjectExt.compare(last, other.last);
         }
         return cmp;
     }
