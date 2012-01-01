@@ -3,7 +3,8 @@ package org.incava.ijdk.util;
 import java.util.*;
 
 /**
- * Collects a collections into a collection.
+ * Collects a collection into a collection. That is, applies quasi-closures to
+ * the collection to transform it into a new one.
  */
 public abstract class Collect<FromType, ToType> extends ArrayList<ToType> {    
     /**

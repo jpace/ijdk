@@ -202,7 +202,7 @@ public class StringExt {
     /**
      * An alias for StringExt#charAt.
      *
-     * @see String#charAt(String, int).
+     * @see StringExt#charAt(String, int).
      */
     public static Character get(String str, int index) {
         return charAt(str, index);
@@ -217,7 +217,7 @@ public class StringExt {
      * inclusive: "foobar"[2 .. 4] == "oba", which is unlike the JDK
      * String#substring behavior.
      *
-     * @see String#get(String, int).
+     * @see StringExt#get(String, int).
      */
     public static String substring(String str, Integer fromIndex, Integer toIndex) {
         if (str == null) {

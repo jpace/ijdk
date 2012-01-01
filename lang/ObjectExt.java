@@ -1,12 +1,12 @@
 package org.incava.ijdk.lang;
 
-
 /**
  * Extensions to the Object class.
  */
 public class ObjectExt {
     /**
-     * Returns whether the objects are equal, including whether they are both null.
+     * Returns whether the objects are equal, including whether they are both
+     * null.
      */
     public static boolean areEqual(Object x, Object y) {
         if (x == null) {
@@ -21,7 +21,10 @@ public class ObjectExt {
     }
 
     /**
-     * Returns whether the objects are equal, including whether they are both null.
+     * Returns whether the objects are equal, including whether they are both
+     * null.
+     *
+     * @see #areEqual
      */
     public static boolean equal(Object x, Object y) {
         return areEqual(x, y);

@@ -8,13 +8,12 @@ import java.util.*;
 import org.incava.ijdk.lang.*;
 import static org.incava.ijdk.util.IUtil.*;
 
-
 /**
  * <p>Writes the logging output, applying filters and decorations. The
  * <code>Log</code> class offers a much cleaner and more thorough interface
  * than this class.</p>
  *
- * @see org.incava.qualog.Log
+ * @see org.incava.ijdk.log.Log
  */
 public class LogWriter {
     public static final int NO_OUTPUT = 0;

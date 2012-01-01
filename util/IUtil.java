@@ -11,8 +11,8 @@ public class IUtil {
      * Returns whether the object is non-null and, if it is a collection or a
      * string, has a length greater than zero.
      *
-     * @see isEmpty
-     * @see isFalse
+     * @see #isEmpty
+     * @see #isFalse
      */
     public static boolean isTrue(Object obj) {
         return !isEmpty(obj);
@@ -21,7 +21,7 @@ public class IUtil {
     /**
      * Returns whether the object is null or is a string or collection of zero length.
      *
-     * @see isEmpty
+     * @see #isEmpty
      */
     public static boolean isFalse(Object obj) {
         return isEmpty(obj);
@@ -30,7 +30,7 @@ public class IUtil {
     /**
      * Returns whether the object is null or is a string or collection of zero length.
      *
-     * @see isEmpty
+     * @see #isEmpty
      */
     public static boolean isEmpty(Object obj) {
         if (obj == null) {
@@ -54,7 +54,7 @@ public class IUtil {
      * Returns whether the object is null. This method provides an alternative
      * syntax than "if (obj == null)".
      *
-     * @see isNotNull
+     * @see #isNotNull
      */
     public static boolean isNull(Object obj) {
         return obj == null;
@@ -64,7 +64,7 @@ public class IUtil {
      * Returns whether the object is not null. This method provides an
      * alternative syntax than "if (obj != null)".
      *
-     * @see isNull
+     * @see #isNull
      */
     public static boolean isNotNull(Object obj) {
         return obj != null;
@@ -93,8 +93,8 @@ public class IUtil {
      *     String status = db.status() != null ? db.status : db.initialize());
      * </pre>
      *
-     * @see elvis
-     * @see isTrue
+     * @see #elvis
+     * @see #isTrue
      */
     public static <T> T or(T a, T b) {
         return isTrue(a) ? a : (isTrue(b) ? b : null);
@@ -109,8 +109,8 @@ public class IUtil {
      *    String statusName = IUtil.and(userName, lastName);
      * </pre>
      *
-     * @see or
-     * @see isTrue
+     * @see #or
+     * @see #isTrue
      */
     public static <T> T and(T a, T b) {
         return isTrue(a) ? (isTrue(b) ? b : null) : null;
@@ -120,7 +120,7 @@ public class IUtil {
      * An alias for the <code>or</code> method. So-named for the "?:" operator
      * in Groovy.
      *
-     * @see or
+     * @see #or
      */
     public static <T> T elvis(T obj, T defVal) {
         return or(obj, defVal);
@@ -130,8 +130,8 @@ public class IUtil {
      * Returns the last parameter, if all parameters evaluate to true (via
      * <code>isTrue</code>).
      *
-     * @see or
-     * @see isTrue
+     * @see #or
+     * @see #isTrue
      */
     public static <T> T and(T ... operands) {
         if (isFalse(operands)) {
@@ -149,8 +149,8 @@ public class IUtil {
      * Returns the first parameter that evaluates to true (via
      * <code>isTrue</code>).
      *
-     * @see or
-     * @see isTrue
+     * @see #or
+     * @see #isTrue
      */
     public static <T> T or(T ... operands) {
         if (isFalse(operands)) {
@@ -190,7 +190,6 @@ public class IUtil {
      *     List<String> names = new ArrayList<String>(Arrays.asList("kevin", "jacob", "isaac"));
      *     names.add("henry");
      * </pre>
-     * 
      * <pre>
      *     List<String> names = list("kevin", "jacob", "isaac");
      *     names.add("henry");

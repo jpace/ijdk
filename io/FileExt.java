@@ -13,7 +13,22 @@ import java.util.EnumSet;
 import static org.incava.ijdk.util.IUtil.*;
 
 public class FileExt {
-    public enum ReadOptionType { NONEMPTY, WITH_EXCEPTION };
+    /**
+     * Options for reading files.
+     * 
+     * @see #readLines
+     */
+    public enum ReadOptionType { 
+        /**
+         * Return only lines containing other than whitespace.
+         */
+        NONEMPTY, 
+
+            /**
+             * Throw an exception if there is an error reading the file.
+             */
+            WITH_EXCEPTION
+            };
     
     /**
      * The end-of-line character/sequence for this OS.
