@@ -1,6 +1,8 @@
 package org.incava.ijdk.util;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CollectionExt {
     /**
@@ -27,5 +29,13 @@ public class CollectionExt {
             }
         }
         return intSet;
+    }
+
+    /**
+     * Returns whether the collection (if not null) contains the given value.
+     * Returns false if <code>coll</code> is null.
+     */
+    public static <Type> boolean contains(Collection<Type> coll, Type val) {
+        return coll != null && coll.contains(val);
     }
 }

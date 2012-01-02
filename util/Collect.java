@@ -1,6 +1,7 @@
 package org.incava.ijdk.util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Collects a collection into a collection. That is, applies quasi-closures to
