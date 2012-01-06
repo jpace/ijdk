@@ -17,5 +17,12 @@ public class IOExceptionHandler {
             throw new IORuntimeException(ioe);
         }
         return new ArrayList<String>();
+
     }
+    public static void handle(IOException ioe, EnumSet<WriteOptionType> options) throws IORuntimeException {
+        if (CollectionExt.contains(options, WriteOptionType.WITH_EXCEPTION)) {
+            throw new IORuntimeException(ioe);
+        }
+    }
+
 }

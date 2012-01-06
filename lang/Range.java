@@ -74,7 +74,7 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
     }
 
     public String toString() {
-        return "[" + first + " ... " + last + "]";
+        return "[" + first + " .. " + last + "]";
     }
 
     public int compareTo(Range other) {

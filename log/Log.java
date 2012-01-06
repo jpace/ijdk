@@ -237,37 +237,37 @@ public class Log {
             writer.setUseColor(true);
         }
         
-        Boolean showFiles = PropertyExt.getBooleanProperty(SHOW_FILES_PROPERTY_KEY);
+        Boolean showFiles = PropertyExt.getBoolean(SHOW_FILES_PROPERTY_KEY);
         if (isNotNull(showFiles)) {
             writer.showFiles = showFiles;
         }
 
-        Boolean showClasses = PropertyExt.getBooleanProperty(SHOW_CLASSES_PROPERTY_KEY);
+        Boolean showClasses = PropertyExt.getBoolean(SHOW_CLASSES_PROPERTY_KEY);
         if (isNotNull(showClasses)) {
             writer.showClasses = showClasses;
         }
 
-        Boolean columnar = PropertyExt.getBooleanProperty(COLUMNAR_PROPERTY_KEY);
+        Boolean columnar = PropertyExt.getBoolean(COLUMNAR_PROPERTY_KEY);
         if (isNotNull(columnar)) {
             writer.columns = columnar;
         }
 
-        Integer fileWidth = PropertyExt.getIntegerProperty(FILE_WIDTH_PROPERTY_KEY);
+        Integer fileWidth = PropertyExt.getInteger(FILE_WIDTH_PROPERTY_KEY);
         if (isNotNull(fileWidth)) {
             writer.fileWidth = fileWidth;
         }
 
-        Integer lineWidth = PropertyExt.getIntegerProperty(LINE_WIDTH_PROPERTY_KEY);
+        Integer lineWidth = PropertyExt.getInteger(LINE_WIDTH_PROPERTY_KEY);
         if (isNotNull(lineWidth)) {
             writer.lineWidth = lineWidth;
         }
 
-        Integer classWidth = PropertyExt.getIntegerProperty(CLASS_WIDTH_PROPERTY_KEY);
+        Integer classWidth = PropertyExt.getInteger(CLASS_WIDTH_PROPERTY_KEY);
         if (isNotNull(classWidth)) {
             writer.classWidth = classWidth;
         }
 
-        Integer methodWidth = PropertyExt.getIntegerProperty(METHOD_WIDTH_PROPERTY_KEY);
+        Integer methodWidth = PropertyExt.getInteger(METHOD_WIDTH_PROPERTY_KEY);
         if (isNotNull(methodWidth)) {
             writer.functionWidth = methodWidth;
         }

@@ -27,11 +27,17 @@ public class IO {
      * Returns a list of Strings read the given file.
      *
      * @param fileName the file to read.
-     * @param options denotes special options when reading.
      *
      * @see ReadOptionType
      */
     public static List<String> readLines(String fileName) {
         return readLines(fileName, EnumSet.noneOf(ReadOptionType.class));
+    }
+
+    /**
+     * Prints the lines (with println).
+     */
+    public static void printLines(String fileName, List<String> lines) {
+        FileExt.printLines(new File(fileName), lines);
     }
 }
