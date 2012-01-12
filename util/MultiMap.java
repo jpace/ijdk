@@ -42,7 +42,7 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
         return null;
     }
 
-    public Collection<V> put(K key, V ... values) {
+    public Collection<V> put(K key, V value) {
         Collection<V> coll = get(key);
 
         if (coll == null) {
@@ -50,8 +50,15 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
             put(key, coll);
         }
 
+        coll.add(value);
+    
+        return coll;
+    }        
+
+    public Collection<V> put(K key, V ... values) {
+        Collection<V> coll = null;
         for (V val : values) {
-            coll.add(val);
+            coll = put(key, val);
         }
     
         return coll;
