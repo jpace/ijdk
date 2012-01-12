@@ -38,4 +38,42 @@ public class CollectionExt {
     public static <Type> boolean contains(Collection<Type> coll, Type val) {
         return coll != null && coll.contains(val);
     }
+
+    /**
+     * Returns whether all elements in <code>tgt</code> are in <code>src</code>.
+     * If <code>src</code> or <code>tgt</code> is null, false is returned.
+     */
+    public static <Type> boolean hasAll(Collection<Type> src, Collection<Type> tgt) {
+        return checkHas(src, tgt, true);
+    }   
+
+    /**
+     * Returns whether any elements in <code>tgt</code> is in <code>src</code>.
+     * If <code>src</code> or <code>tgt</code> is null, false is returned.
+     */
+    public static <Type> boolean hasAny(Collection<Type> src, Collection<Type> tgt) {
+        return checkHas(src, tgt, false);
+    }
+
+    /**
+     * Returns whether the elements in <code>tgt</code> are in <code>src</code>.
+     * If <code>src</code> or <code>tgt</code> is null, false is returned. If
+     * <code>forAll</code> is true, then this method returns true if all
+     * elements from <code>tgt</code> are in <code>src</code>. If
+     * <code>forAll</code> is false, then true is returned if any element in
+     * <code>tgt</code> is in <code>src</code>.
+     */
+    private static <Type> boolean checkHas(Collection<Type> src, Collection<Type> tgt, boolean forAll) {
+        if (src == null || tgt == null) {
+            return false;
+        }
+
+        for (Type elmt : tgt) {
+            if (forAll != src.contains(elmt)) {
+                return !forAll;
+            }
+        }
+
+        return forAll;
+    }
 }

@@ -29,7 +29,7 @@ public class FileExt {
      * Reads the file into a string array, returning an empty array if there is
      * an error.
      *
-     * @see #readLines(File, EnumSet<ReadOptionType>)
+     * @see #readLines(File, EnumSet)
      */
     public static List<String> readLines(File file) {
         return readLines(file, null);
@@ -53,7 +53,7 @@ public class FileExt {
     /**
      * Prints the file as lines, using writer.println.
      *
-     * @see #printLines(File, List<String>, EnumSet<WriteOptionType>)
+     * @see #printLines(File, List, EnumSet)
      */
     public static void printLines(File file, List<String> lines) {
         printLines(file, null);
