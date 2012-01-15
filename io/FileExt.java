@@ -56,7 +56,7 @@ public class FileExt {
      * @see #printLines(File, List, EnumSet)
      */
     public static void printLines(File file, List<String> lines) {
-        printLines(file, null);
+        printLines(file, lines, null);
     }
     
     /**
