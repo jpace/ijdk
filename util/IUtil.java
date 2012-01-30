@@ -199,4 +199,12 @@ public class IUtil {
         List<T> ary = Arrays.asList(elements);
         return new ArrayList<T>(ary);
     }
+
+    public void puts(Object obj) {
+        System.out.println(obj);
+    }
+
+    public void printf(String fmt, Object ... args) {
+        System.out.printf(fmt, args);
+    }
 }
