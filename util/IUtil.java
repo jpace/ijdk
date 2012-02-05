@@ -181,6 +181,13 @@ public class IUtil {
     }
 
     /**
+     * Returns an iterator to be executed <code>num</code> times.
+     */
+    public static NumIterable iter(int num) {
+        return new NumIterable(num);
+    }
+
+    /**
      * Returns a list (an ArrayList) initialized with the given elements. The
      * list returned is of dynamic size (unlike <code>Arrays.asList(...)</code>,
      * which returned a fixed-size array). The following two blocks are
