@@ -200,8 +200,16 @@ public class Logger {
         writer.set(columns, fileWidth, lineWidth, classWidth, funcWidth);
     }
 
+    public static void setVerbose() {
+        setVerbose(true);
+    }
+
     public static void setVerbose(boolean verbose) {
         setOutput(LogOutputType.VERBOSE, verbose ? LEVEL5 : null);
+    }
+
+    public static void setQuiet() {
+        setQuiet(true);
     }
 
     public static void setQuiet(boolean quiet) {
