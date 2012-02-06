@@ -16,12 +16,6 @@ import static org.incava.ijdk.util.IUtil.*;
  * @see org.incava.ijdk.log.Log
  */
 public class LogWriter {
-    public static final int NO_OUTPUT = 0;
-
-    public static final int QUIET = 1;
-    
-    public static final int VERBOSE = 2;
-    
     public int fileWidth = 25;
 
     public boolean columns = true;
@@ -55,7 +49,7 @@ public class LogWriter {
                                                                    new String[] {
                                                                    }));
     
-    private int outputType = NO_OUTPUT;
+    private LogOutputType outputType = LogOutputType.NONE;
 
     private Map<String, ANSIColor> packageColors = new HashMap<String, ANSIColor>();
 
@@ -122,13 +116,13 @@ public class LogWriter {
     /**
      * Sets the output type and level. Either verbose or quiet can be enabled.
      */
-    public void setOutput(int type, LogLevel level) {
+    public void setOutput(LogOutputType type, LogLevel level) {
         this.outputType = type;
         this.level      = level;
     }
 
     public boolean verbose() {
-        return outputType == VERBOSE;
+        return outputType.equals(LogOutputType.VERBOSE);
     }
 
     public void setColumns(boolean cols) {
@@ -260,7 +254,7 @@ public class LogWriter {
     }
 
     public boolean isLoggable(LogLevel level) {
-        return outputType != NO_OUTPUT && this.level != null && this.level.compareTo(level) >= 0;
+        return !outputType.equals(LogOutputType.NONE) && this.level != null && this.level.compareTo(level) >= 0;
     }
 
     /**
@@ -282,11 +276,11 @@ public class LogWriter {
                                       LogColors logColors,
                                       String msg,
                                       int numFrames) {
-        if (outputType == NO_OUTPUT || isNull(level) || level.compareTo(lvl) < 0) {
+        if (outputType.equals(LogOutputType.NONE) || isNull(level) || level.compareTo(lvl) < 0) {
             return true;
         }
 
-        if (outputType == QUIET) {
+        if (outputType.equals(LogOutputType.QUIET)) {
             numFrames = 1;
         }
 
@@ -326,7 +320,7 @@ public class LogWriter {
                             String msg) {
         StringBuilder sb = new StringBuilder();
         
-        if (outputType == VERBOSE) {
+        if (outputType.equals(LogOutputType.VERBOSE)) {
             outputVerbose(sb, stackElement, logColors);
         }
         outputMessage(sb, framesShown, logColors.msgColors, msg, stackElement);
