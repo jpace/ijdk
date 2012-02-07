@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.*;
 import org.incava.ijdk.lang.*;
+import org.incava.ijdk.util.IUtil;
 import static org.incava.ijdk.util.IUtil.*;
 
 /**
@@ -16,48 +17,21 @@ import static org.incava.ijdk.util.IUtil.*;
  * @see org.incava.ijdk.log.Log
  */
 public class LogWriter {
-    public int fileWidth = 25;
+    public LogMessageSettings settings = new LogMessageSettings();
 
     public boolean columns = true;
-
-    public int lineWidth = 5;
-
-    public int functionWidth = 25;
-
-    public int classWidth = 35;
-
-    public boolean showFiles = true;
-
-    public boolean showClasses = true;
 
     // this writes to stdout even in Gradle and Ant, which redirect stdout.
 
     public PrintWriter out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
 
-    public List<String> packagesSkipped = new ArrayList<String>(Arrays.asList(
-                                                                    new String[] {
-                                                                        "org.incava.ijdk.log",
-                                                                        "org.incava.qualog",
-                                                                    }));
-    
-    public List<String> classesSkipped = new ArrayList<String>(Arrays.asList(
-                                                                   new String[] {
-                                                                       "tr.Ace"
-                                                                   }));
-    
-    public List<String> methodsSkipped = new ArrayList<String>(Arrays.asList(
-                                                                   new String[] {
-                                                                   }));
+    private List<String> packagesSkipped = list("org.incava.ijdk.log", "org.incava.qualog");
+    private List<String> classesSkipped = list("tr.Ace");
+    private List<String> methodsSkipped = IUtil.<String>list();
     
     private LogOutputType outputType = LogOutputType.NONE;
 
-    private Map<String, ANSIColor> packageColors = new HashMap<String, ANSIColor>();
-
-    private Map<String, ANSIColor> classColors = new HashMap<String, ANSIColor>();
-
-    private Map<String, ANSIColor> methodColors = new HashMap<String, ANSIColor>();
-
-    private Map<String, ANSIColor> fileColors = new HashMap<String, ANSIColor>();
+    private LogColorSettings colorSettings = new LogColorSettings();
 
     private StackTraceElement prevStackElement = null;
     
@@ -70,8 +44,6 @@ public class LogWriter {
     private LogLevel level = Log.LEVEL9;
 
     private List<LogFilter> filters = new ArrayList<LogFilter>();
-
-    private boolean useColor = true;
 
     /**
      * Adds a filter to be applied for output.
@@ -87,30 +59,33 @@ public class LogWriter {
     }
 
     public void setClassColor(String className, ANSIColor color) {
-        classColors.put(className, color);
+        colorSettings.setClassColor(className, color);
     }
 
-    public void setPackageColor(String pkg, ANSIColor color) {
+    public void setPackageColor(String pkgName, ANSIColor color) {
+        colorSettings.setPackageColor(pkgName, color);
     }
 
     public void setMethodColor(String className, String methodName, ANSIColor color) {
-        methodColors.put(className + "#" + methodName, color);
+        colorSettings.setMethodColor(className, methodName, color);
     }
 
     public void clearClassColor(String className) {
-        classColors.remove(className);
+        colorSettings.setClassColor(className, null);
     }
 
     public void setFileColor(String fileName, ANSIColor color) {
-        fileColors.put(fileName, color);
+        colorSettings.setFileColor(fileName, color);
     }
 
     public void set(boolean columns, int fileWidth, int lineWidth, int classWidth, int functionWidth) {
         this.columns = columns;
-        this.fileWidth = fileWidth;
-        this.lineWidth = lineWidth;
-        this.classWidth = classWidth;
-        this.functionWidth = functionWidth;
+
+        settings = new LogMessageSettings();
+        settings.fileWidth = fileWidth;
+        settings.lineWidth = lineWidth;
+        settings.classWidth = classWidth;
+        settings.functionWidth = functionWidth;
     }
 
     /**
@@ -141,10 +116,7 @@ public class LogWriter {
      * Resets parameters to their defaults.
      */
     public void clear() {
-        this.packageColors = new HashMap<String, ANSIColor>();
-        this.classColors = new HashMap<String, ANSIColor>();
-        this.methodColors = new HashMap<String, ANSIColor>();
-        this.fileColors = new HashMap<String, ANSIColor>();
+        this.colorSettings = new LogColorSettings();
         this.prevStackElement = null;
         this.prevThread = null;
         this.prevDisplayedClass = null;
@@ -166,7 +138,7 @@ public class LogWriter {
         String nm = name == null ? "" : name;
         
         if (obj == null) {
-            LogElement le = new LogElement(level, logColors, name, obj, numFrames);            
+            LogElement le = LogElement.create(level, logColors, name, obj, numFrames);            
             return stack(le);
         }
         else if (obj instanceof Collection) {
@@ -193,7 +165,7 @@ public class LogWriter {
             return stackArray(level, logColors, nm, obj, numFrames);
         }
         else {
-            LogElement le = new LogElement(level, logColors, name, obj, numFrames);
+            LogElement le = LogElement.create(level, logColors, name, obj, numFrames);
             return stack(le);
         }
     }
@@ -301,10 +273,10 @@ public class LogWriter {
     }
 
     public void outputVerbose(StringBuilder sb, StackTraceElement stackElement, LogColors logColors) {
-        if (this.showFiles) {
+        if (settings.showFiles) {
             outputFileName(sb, logColors, stackElement);
         }
-        if (this.showClasses) {
+        if (settings.showClasses) {
             outputClassAndMethod(sb, logColors, stackElement);
         }
     }
@@ -324,19 +296,17 @@ public class LogWriter {
 
     public boolean isLoggable(StackTraceElement stackElement) {
         boolean isLoggable = true;
-        
         for (LogFilter filter : filters) {
             LogLevel flevel = filter.getLevel();
             if (filter.isMatch(stackElement)) {
                 isLoggable = flevel != null && level.compareTo(flevel) >= 0;
             }
         }
-
         return isLoggable;
     }
     
     public void setUseColor(boolean useColor) {
-        this.useColor = useColor;
+        colorSettings.setUseColor(useColor);
     }
 
     protected void outputFileName(StringBuilder sb, LogColors logColors, StackTraceElement stackElement) {
@@ -344,22 +314,19 @@ public class LogWriter {
         
         sb.append("[");
 
-        if (prevStackElement != null && 
-            prevStackElement.getFileName() != null && 
-            prevStackElement.getFileName().equals(fileName)) {
-            
-            int width = this.columns ? Math.min(this.fileWidth, fileName.length()) : fileName.length();
+        if (isPreviousFileName(stackElement)) {
+            int width = this.columns ? Math.min(getFileWidth(), fileName.length()) : fileName.length();
             fileName = StringExt.repeat(' ', width);
         }
 
         String    lnStr = stackElement.getLineNumber() >= 0 ? String.valueOf(stackElement.getLineNumber()) : "";
-        ANSIColor col   = or(logColors.fileColor, fileColors.get(fileName));
+        ANSIColor col   = or(logColors.fileColor, colorSettings.getFileColor(fileName));
 
         if (this.columns) {
             outputColumns(sb, col, fileName, lnStr);
         }
         else if (isNull(col)) {
-            appendPadded(sb, fileName + ":" + lnStr, this.fileWidth);
+            LogUtil.appendPadded(sb, fileName + ":" + lnStr, getFileWidth());
         }
         else {
             sb.append(col);
@@ -367,50 +334,86 @@ public class LogWriter {
             sb.append(':');
             sb.append(lnStr);
             sb.append(ANSIColor.NONE);
-            repeat(sb, this.fileWidth - fileName.length() - 1 - lnStr.length(), ' ');
+            LogUtil.addSpaces(sb, getFileWidth() - fileName.length() - 1 - lnStr.length());
         }
 
         sb.append("] ");
     }
 
+    public int getLineWidth() {
+        return settings.lineWidth;
+    }
+
+    public int getFileWidth() {
+        return settings.fileWidth;
+    }
+
+    public int getFunctionWidth() {
+        return settings.functionWidth;
+    }
+
+    public int getClassWidth() {
+        return settings.classWidth;
+    }
+
+    public void setLineWidth(int lnWidth) {
+        settings.lineWidth = lnWidth;
+    }
+
+    public void setFileWidth(int flWidth) {
+        settings.fileWidth = flWidth;
+    }
+
+    public void setFunctionWidth(int funcWidth) {
+        settings.functionWidth = funcWidth;
+    }
+
+    public void setClassWidth(int clsWidth) {
+        settings.classWidth = clsWidth;
+    }
+
+    public void setShowClasses(boolean showCls) {
+        settings.showClasses = showCls;
+    }
+
+    public void setShowFiles(boolean showFls) {
+        settings.showFiles = showFls;
+    }
+
     protected void outputColumns(StringBuilder sb, ANSIColor col, String fileName, String lnStr) {
         if (isNull(col)) {
-            appendPadded(sb, fileName, this.fileWidth);
-            sb.append(' ');
-            sb.append(StringExt.repeat(' ', this.lineWidth - lnStr.length()));
-            sb.append(lnStr);
+            String fmt = "%-" + getFileWidth() + "s %" + getLineWidth() + "s";
+            String val = String.format(fmt, fileName, lnStr);
+            sb.append(val);
         }
         else {
-            sb.append(col);
-            sb.append(fileName);
-            sb.append(ANSIColor.NONE);
-            repeat(sb, this.fileWidth - fileName.length(), ' ');
-            repeat(sb, 1 + this.lineWidth - lnStr.length(), ' ');
+            sb.append(col).append(fileName).append(ANSIColor.NONE);
+
+            int nSpaces = getFileWidth() - fileName.length() + 1 + getLineWidth() - lnStr.length();
+            LogUtil.addSpaces(sb, nSpaces);
+            
             sb.append(col).append(lnStr).append(ANSIColor.NONE);
         }
     }
 
     protected int addClassForOutput(StringBuilder sb, LogColors logColors, StackTraceElement stackElement) {
         if (isPreviousClass(stackElement)) {
-            repeat(sb, this.classWidth, ' ');
+            LogUtil.addSpaces(sb, getClassWidth());
             return 0;
         }
 
         String className = stackElement.getClassName();
-        ANSIColor classColor = or(logColors.classColor, classColors.get(className));        
+        ANSIColor classColor = or(logColors.classColor, colorSettings.getClassColor(className));        
         
         className = className.replaceFirst("(com|org)\\.\\w+\\.", "...");
+        className = snip(className, getClassWidth());
 
-        if (className.length() > this.classWidth) {
-            className = this.classWidth > 0 ? className.substring(0, this.classWidth - 1) + '-' : "";
-        }
+        LogUtil.append(sb, className, classColor);
 
-        append(sb, className, classColor == null ? EnumSet.noneOf(ANSIColor.class) : EnumSet.of(classColor));
-
-        int nSpaces = this.classWidth - className.length();
+        int nSpaces = getClassWidth() - className.length();
 
         if (this.columns) {
-            repeat(sb, nSpaces, ' ');
+            LogUtil.addSpaces(sb, nSpaces);
         }
 
         prevDisplayedClass = className;
@@ -422,47 +425,54 @@ public class LogWriter {
         return prevStackElement != null && prevStackElement.getClassName().equals(stackElement.getClassName());
     }
 
+    protected boolean isPreviousFileName(StackTraceElement stackElement) {
+        return prevStackElement != null && ObjectExt.areEqual(prevStackElement.getFileName(), stackElement.getFileName());
+    }
+
+    protected boolean isPreviousMethod(StackTraceElement stackElement) {
+        return isPreviousClass(stackElement) && ObjectExt.areEqual(prevStackElement.getMethodName(), stackElement.getMethodName());
+    }
+
+    protected String snip(String str, int len) {
+        return len <= 0 ? "" : str.length() > len ? str.substring(0, len - 1) + '-' : str;
+    }
+
+    protected int addMethodForOutput(StringBuilder sb, LogColors logColors, StackTraceElement stackElement, int classPadding) {
+        String methodName = stackElement.getMethodName();
+
+        ANSIColor methodColor = or(logColors.methodColor, colorSettings.getMethodColor(stackElement.getClassName(), methodName));
+        
+        if (isPreviousMethod(stackElement)) {
+            methodName = StringExt.repeat(' ', prevDisplayedMethod.length());
+            methodColor = null;
+        }
+
+        methodName = snip(methodName, getFunctionWidth());
+
+        LogUtil.append(sb, methodName, methodColor);
+
+        int nSpaces = getFunctionWidth() - methodName.length();
+
+        if (!this.columns) {
+            LogUtil.addSpaces(sb, classPadding);
+        }
+        LogUtil.addSpaces(sb, nSpaces);
+
+        prevDisplayedMethod = methodName;
+        
+        return nSpaces;
+    }
+
     protected void outputClassAndMethod(StringBuilder sb, LogColors logColors, StackTraceElement stackElement) {
         sb.append("{");
 
         int classPadding = addClassForOutput(sb, logColors, stackElement);
 
         sb.append('#');
-        
-        String methodName = stackElement.getMethodName();
 
-        ANSIColor methodColor = or(logColors.methodColor, methodColors.get(methodName));
-        
-        if (isPreviousClass(stackElement) && prevStackElement.getMethodName().equals(methodName)) {
-            methodName = StringExt.repeat(' ', prevDisplayedMethod.length());
-            methodColor = null;
-        }
-
-        int methodPadding = 0;
-        if (methodName.length() > this.functionWidth) {
-            methodName = methodName.substring(0, this.functionWidth - 1) + '-';
-        }
-        else {
-            methodPadding = this.functionWidth - methodName.length();
-        }
-
-        append(sb, methodName, methodColor == null ? EnumSet.noneOf(ANSIColor.class) : EnumSet.of(methodColor));
-
-        if (!this.columns) {
-            repeat(sb, classPadding, ' ');
-        }
-        repeat(sb, methodPadding, ' ');
-
-        prevDisplayedMethod = methodName;
+        addMethodForOutput(sb, logColors, stackElement, classPadding);
 
         sb.append("} ");
-    }
-
-    protected String unwindThroughEoln(String str) {
-        while (str.length() > 0 && "\r\n".indexOf(StringExt.get(str, -1)) != -1) {
-            str = StringExt.get(str, 0, -1);
-        }
-        return str;
     }
 
     protected void outputMessage(StringBuilder sb,
@@ -470,71 +480,11 @@ public class LogWriter {
                                  EnumSet<ANSIColor> msgColors,
                                  String msg,
                                  StackTraceElement stackElement) {
-        msg = isRepeatedFrame ? "\"\"" : getMessage(msg, stackElement, msgColors);        
+        msg = isRepeatedFrame ? "\"\"" : LogMessage.getMessage(msg, stackElement, msgColors, colorSettings);
         sb.append(msg);
     }
-
-    protected String getMessage(String msg, StackTraceElement ste, EnumSet<ANSIColor> msgColors) {
-        // remove ending EOLN
-        msg = unwindThroughEoln(msg);
-        
-        if (this.useColor) {
-            msg = colorizeMessage(msg, ste, msgColors);
-        }
-
-        return msg;
-    }
-
-    protected String colorizeMessage(String msg, StackTraceElement stackElement, EnumSet<ANSIColor> msgColors) {
-        EnumSet<ANSIColor> colors = msgColors;
-        
-        if (isEmpty(colors)) {
-            ANSIColor col = or(methodColors.get(stackElement.getClassName() + "#" + stackElement.getMethodName()),
-                               classColors.get(stackElement.getClassName()),
-                               fileColors.get(stackElement.getFileName()));
-            if (isTrue(col)) {
-                colors = EnumSet.of(col);
-            }
-        }
-
-        if (isTrue(colors)) {
-            StringBuilder sb = new StringBuilder();
-            append(sb, msg, colors);
-            return sb.toString();
-        }
-        
-        return msg;
-    }
     
-    protected StackTraceElement[] getStack(int depth) {
+    protected static StackTraceElement[] getStack(int depth) {
         return (new Exception("")).getStackTrace();
-    }
-
-    protected StringBuilder repeat(StringBuilder sb, int len, char ch) {
-        sb.append(StringExt.repeat(ch, len));
-        return sb;
-    }
-
-    protected void appendPadded(StringBuilder sb, String str, int maxSize) {
-        if (str.length() > maxSize) {
-            sb.append(str.substring(0, maxSize - 1)).append("-");
-        }
-        else {
-            sb.append(str);
-            repeat(sb, maxSize - str.length(), ' ');
-        }
-    }
-
-    protected void append(StringBuilder sb, String str, EnumSet<ANSIColor> colors) {
-        if (isTrue(colors)) {
-            for (ANSIColor col : colors) {
-                sb.append(col.toString());
-            }
-            sb.append(str);
-            sb.append(ANSIColor.NONE);
-        }
-        else {
-            sb.append(str);
-        }
     }
 }

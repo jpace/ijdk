@@ -89,12 +89,12 @@ public class Logger {
         
         Boolean showFiles = PropertyExt.getBoolean(SHOW_FILES_PROPERTY_KEY);
         if (isNotNull(showFiles)) {
-            writer.showFiles = showFiles;
+            writer.setShowFiles(showFiles);
         }
 
         Boolean showClasses = PropertyExt.getBoolean(SHOW_CLASSES_PROPERTY_KEY);
         if (isNotNull(showClasses)) {
-            writer.showClasses = showClasses;
+            writer.setShowClasses(showClasses);
         }
 
         Boolean columnar = PropertyExt.getBoolean(COLUMNAR_PROPERTY_KEY);
@@ -104,22 +104,22 @@ public class Logger {
 
         Integer fileWidth = PropertyExt.getInteger(FILE_WIDTH_PROPERTY_KEY);
         if (isNotNull(fileWidth)) {
-            writer.fileWidth = fileWidth;
+            writer.setFileWidth(fileWidth);
         }
 
         Integer lineWidth = PropertyExt.getInteger(LINE_WIDTH_PROPERTY_KEY);
         if (isNotNull(lineWidth)) {
-            writer.lineWidth = lineWidth;
+            writer.setLineWidth(lineWidth);
         }
 
         Integer classWidth = PropertyExt.getInteger(CLASS_WIDTH_PROPERTY_KEY);
         if (isNotNull(classWidth)) {
-            writer.classWidth = classWidth;
+            writer.setClassWidth(classWidth);
         }
 
         Integer methodWidth = PropertyExt.getInteger(METHOD_WIDTH_PROPERTY_KEY);
         if (isNotNull(methodWidth)) {
-            writer.functionWidth = methodWidth;
+            writer.setFunctionWidth(methodWidth);
         }
     }
     
@@ -140,19 +140,19 @@ public class Logger {
     }
 
     public static void setFileWidth(int fileWidth) {
-        writer.fileWidth = fileWidth;
+        writer.setFileWidth(fileWidth);
     }
 
     public static void setClassWidth(int classWidth) {
-        writer.classWidth = classWidth;
+        writer.setClassWidth(classWidth);
     }
 
     public static void setLineWidth(int lineWidth) {
-        writer.lineWidth = lineWidth;
+        writer.setLineWidth(lineWidth);
     }
 
     public static void setFunctionWidth(int functionWidth) {
-        writer.functionWidth = functionWidth;
+        writer.setFunctionWidth(functionWidth);
     }
 
     public static void setClassColor(String className, ANSIColor color) {
