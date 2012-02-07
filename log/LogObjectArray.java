@@ -2,7 +2,6 @@ package org.incava.ijdk.log;
 
 import java.util.EnumSet;
 
-
 /**
  * Wraps C-style arrays for output.
  */

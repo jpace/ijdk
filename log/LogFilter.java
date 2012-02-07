@@ -3,24 +3,18 @@ package org.incava.ijdk.log;
 import java.util.regex.Pattern;
 import org.incava.ijdk.lang.Range;
 
-
 /**
  * Represents a filter for selective enabling or disabling of logging
  * statements.
  */
 public class LogFilter {
     public static final Pattern NO_PATTERN = null;
-
     public static final Range NO_RANGE = null;
     
     private final LogLevel level;
-
     private final Pattern fileNamePat;
-
-    private final Range lineNumberRng;
-    
+    private final Range lineNumberRng;    
     private final Pattern classNamePat;
-
     private final Pattern methodNamePat;
 
     public LogFilter(LogLevel level) {

@@ -3,7 +3,6 @@ package org.incava.ijdk.log;
 import java.util.Collection;
 import java.util.EnumSet;
 
-
 /**
  * Wraps Collections for output.
  */

@@ -5,12 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 import org.incava.ijdk.lang.Pair;
 
-
 public class LogTimer {
     private final List<LogTimedPeriod> periods;
 
     public LogTimer() {
-        periods = new ArrayList<LogTimedPeriod>();
+        this.periods = new ArrayList<LogTimedPeriod>();
     }
 
     public boolean start() {

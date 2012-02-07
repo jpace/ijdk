@@ -1,10 +1,11 @@
 package org.incava.ijdk.log;
 
-import java.io.*;
-import java.util.*;
+import java.io.PrintWriter;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Map;
 import org.incava.ijdk.util.PropertyExt;
 import static org.incava.ijdk.util.IUtil.*;
-
 
 /**
  * Base class of the Log class, which expands the interface via generated
@@ -40,9 +41,7 @@ public class Logger {
     public final static LogLevel LEVEL9 = new LogLevel(9);
 
     public static final LogOutputType NO_OUTPUT = LogOutputType.NONE;
-
-    public static final LogOutputType QUIET = LogOutputType.QUIET;
-    
+    public static final LogOutputType QUIET = LogOutputType.QUIET;    
     public static final LogOutputType VERBOSE = LogOutputType.VERBOSE;
     
     /**

@@ -1,6 +1,5 @@
 package org.incava.ijdk.log;
 
-
 /**
  * <p>Represents a logging/output level. Is essentially a wrapper around an
  * Integer.</p>
