@@ -63,7 +63,7 @@ public class LogMessage {
         else {
             int nSpaces = fileWidth - fileName.length() + 1 + lineWidth - lnStr.length();
             // we append these separately, with no colors between the file name and line number.
-            LogUtil.appendPadded(sb, fileName, col, nSpaces);            
+            LogUtil.appendPadded(sb, fileName, col, nSpaces);
             LogUtil.append(sb, lnStr, col);
         }
     }

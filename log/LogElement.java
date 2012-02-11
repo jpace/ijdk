@@ -56,4 +56,9 @@ public class LogElement {
         String msg = (name == null ? "" : (name + ": ")) + LogObject.toString(object);
         return msg;
     }
+
+    public boolean stack() {
+        return Logger.stack(this);
+    }
+
 }

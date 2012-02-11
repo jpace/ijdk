@@ -50,6 +50,10 @@ public class LogWriter {
         filters.add(filter);
     }
 
+    public LogColorSettings getColorSettings() {
+        return colorSettings;
+    }
+
     public void setDisabled(Class cls) {
         addFilter(new LogClassFilter(cls, null));
     }
@@ -302,9 +306,9 @@ public class LogWriter {
     }
 
     protected void outputFileName(StringBuilder sb, LogColors logColors, StackTraceElement stackElement) {
-        String stackFileName = stackElement.getFileName();
+        String stackFileName = LogUtil.snip(stackElement.getFileName(), getFileWidth());
         String fileName = isPreviousFileName(stackElement) ? StringExt.repeat(' ', stackFileName.length()) : or(stackFileName, "");
-        
+
         sb.append("[");
 
         int lineNum = stackElement.getLineNumber();
