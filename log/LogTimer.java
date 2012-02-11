@@ -3,7 +3,9 @@ package org.incava.ijdk.log;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.incava.ijdk.lang.ObjectExt;
 import org.incava.ijdk.lang.Pair;
+import static org.incava.ijdk.util.IUtil.*;
 
 public class LogTimer {
     private final List<LogTimedPeriod> periods;
@@ -34,6 +36,13 @@ public class LogTimer {
         return true;
     }
 
+    /**
+     * Returns 1 if the objects are equal, and otherwise zero.
+     */
+    private int getScore(Object x, Object y) {
+        return ObjectExt.areEqual(x, y) ? 1 : 0;
+    }
+
     private Integer findBestMatch(StackTraceElement ste, String msg) {
         String className  = ste.getClassName();
         String methodName = ste.getMethodName();
@@ -41,19 +50,14 @@ public class LogTimer {
 
         // first is index, second is score.
         Pair<Integer, Integer> bestMatch = new Pair<Integer, Integer>(-1, -1);
-        int    bestMatchIdx  = -1;
-        int    bestMatchness = -1;
         
-        Iterator<LogTimedPeriod> pit = periods.iterator();
-        for (int idx = 0; pit.hasNext(); ++idx) {
-            LogTimedPeriod qtp       = pit.next();
-            int           matchness = 0;
+        for (int idx : iter(periods.size())) {
+            LogTimedPeriod qtp       = periods.get(idx);
+            int            matchness = (getScore(msg,        qtp.getMessage()) +
+                                        getScore(className,  qtp.getClassName()) + 
+                                        getScore(fileName,   qtp.getFileName()) +
+                                        getScore(methodName, qtp.getMethodName()));
             
-            matchness += qtp.getMessage() != null && msg.equals(qtp.getMessage()) ? 1 : 0;
-            matchness += className.equals(qtp.getClassName())   ? 1 : 0;
-            matchness += fileName.equals(qtp.getFileName())     ? 1 : 0;
-            matchness += methodName.equals(qtp.getMethodName()) ? 1 : 0;
-
             if (matchness >= bestMatch.getSecond()) {
                 bestMatch = new Pair<Integer, Integer>(idx, matchness);
             }
@@ -73,7 +77,7 @@ public class LogTimer {
         if (bestMatch >= 0) {
             LogTimedPeriod qtp     = periods.remove(bestMatch.intValue());
             long           elapsed = endTime - qtp.getStartTime();
-            String          str    = getMessage(ste, msg, elapsed);
+            String         str     = getMessage(ste, msg, elapsed);
 
             Log.log(str);
         }
