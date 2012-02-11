@@ -32,4 +32,8 @@ class LogLevel implements Comparable {
     public String toString() {
         return level.toString();
     }
+
+    public boolean isLoggable(LogOutputType outputType, LogLevel lvl) {
+        return !outputType.equals(LogOutputType.NONE) && level != null && compareTo(lvl) >= 0;
+    }
 }

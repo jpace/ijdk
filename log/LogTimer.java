@@ -34,15 +34,10 @@ public class LogTimer {
         return true;
     }
 
-    public boolean end(String msg) {
-        long endTime = System.currentTimeMillis();
-
-        StackTraceElement ste = getFrame();
-
-        String className     = ste.getClassName();
-        String methodName    = ste.getMethodName();
-        int    lineNumber    = ste.getLineNumber();
-        String fileName      = ste.getFileName();
+    private Integer findBestMatch(StackTraceElement ste, String msg) {
+        String className  = ste.getClassName();
+        String methodName = ste.getMethodName();
+        String fileName   = ste.getFileName();
 
         // first is index, second is score.
         Pair<Integer, Integer> bestMatch = new Pair<Integer, Integer>(-1, -1);
@@ -64,39 +59,61 @@ public class LogTimer {
             }
         }
 
-        if (bestMatch.getFirst() >= 0) {
-            LogTimedPeriod qtp    = periods.remove(bestMatch.getFirst().intValue());
-            long          elapsed = endTime - qtp.getStartTime();
-            StringBuffer  buf     = new StringBuffer();
+        return bestMatch.getFirst();
+    }
 
-            buf.append(format(elapsed));
-            buf.append("; ");
-                
-            if (msg != null) {
-                buf.append(msg);
-                buf.append("; ");
-            }            
-            
-            buf.append("from: [");
-            buf.append(fileName);
-            buf.append(":");
-            buf.append(Integer.toString(lineNumber));
-            buf.append("]");
-            buf.append(" ");
+    public boolean end(String msg) {
+        long endTime = System.currentTimeMillis();
 
-            buf.append("{");
-            buf.append(className);
-            buf.append("#");
-            buf.append(methodName);
-            buf.append("}");
+        StackTraceElement ste = getFrame();
 
-            Log.log(buf.toString());
+        // index of periods:
+        Integer bestMatch = findBestMatch(ste, msg);
+
+        if (bestMatch >= 0) {
+            LogTimedPeriod qtp     = periods.remove(bestMatch.intValue());
+            long           elapsed = endTime - qtp.getStartTime();
+            String          str    = getMessage(ste, msg, elapsed);
+
+            Log.log(str);
         }
         else {
             System.err.println("ERROR no matching start!");
         }
 
         return true;
+    }
+
+    private String getMessage(StackTraceElement ste, String msg, long elapsed) {
+        String className  = ste.getClassName();
+        String methodName = ste.getMethodName();
+        int    lineNumber = ste.getLineNumber();
+        String fileName   = ste.getFileName();
+
+        StringBuilder  sb     = new StringBuilder();
+
+        sb.append(format(elapsed));
+        sb.append("; ");
+                
+        if (msg != null) {
+            sb.append(msg);
+            sb.append("; ");
+        }            
+            
+        sb.append("from: [");
+        sb.append(fileName);
+        sb.append(":");
+        sb.append(Integer.toString(lineNumber));
+        sb.append("]");
+        sb.append(" ");
+
+        sb.append("{");
+        sb.append(className);
+        sb.append("#");
+        sb.append(methodName);
+        sb.append("}");
+
+        return sb.toString();
     }
 
     protected StackTraceElement getFrame() {
@@ -108,27 +125,27 @@ public class LogTimer {
     }
 
     public String format(long duration) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (duration < 10000) {
-            buf.append(Long.toString(duration));
-            buf.append(" ms");
+            sb.append(Long.toString(duration));
+            sb.append(" ms");
         }
         else if (duration < 100000) {
             double nSecs = duration / 1000.0;
-            buf.append(Double.toString(nSecs));
-            buf.append(" sec");
+            sb.append(Double.toString(nSecs));
+            sb.append(" sec");
         }
         else if (duration < 1000000) {
             double nMin = Math.floor(duration / (60 * 1000.0));
             double nSec = (duration - 60.0 * nMin) / 1000.0;
-            buf.append(Double.toString(nMin));
-            buf.append(":");
-            buf.append(Double.toString(nSec));
+            sb.append(Double.toString(nMin));
+            sb.append(":");
+            sb.append(Double.toString(nSec));
         }
         else {
             // convert to HH:MM:SS, etc.
-            buf.append(Long.toString(duration));
+            sb.append(Long.toString(duration));
         }
-        return buf.toString();
+        return sb.toString();
     }
 }

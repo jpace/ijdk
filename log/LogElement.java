@@ -1,9 +1,5 @@
 package org.incava.ijdk.log;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.util.*;
 import org.incava.ijdk.lang.*;
 import static org.incava.ijdk.util.IUtil.*;
@@ -57,8 +53,7 @@ public class LogElement {
         return msg;
     }
 
-    public boolean stack() {
-        return Logger.stack(this);
+    public boolean stack(LogWriter lw) {
+        return lw.stack(this);
     }
-
 }

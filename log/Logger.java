@@ -99,7 +99,7 @@ public class Logger {
 
         Boolean columnar = PropertyExt.getBoolean(COLUMNAR_PROPERTY_KEY);
         if (isNotNull(columnar)) {
-            writer.columns = columnar;
+            writer.setColumns(columnar);
         }
 
         Integer fileWidth = PropertyExt.getInteger(FILE_WIDTH_PROPERTY_KEY);
@@ -136,7 +136,7 @@ public class Logger {
     }
 
     public static void setOut(PrintWriter out) {
-        writer.out = out;
+        writer.setOut(out);
     }
 
     public static void setFileWidth(int fileWidth) {
@@ -179,10 +179,6 @@ public class Logger {
 
     public static void setMethodColor(String className, String methodName, ANSIColor color) {
         writer.setMethodColor(className, methodName, color);
-    }
-
-    public static void clearClassColor(String className) {
-        writer.clearClassColor(className);
     }
 
     public static void setFileColor(String fileName, ANSIColor color) {

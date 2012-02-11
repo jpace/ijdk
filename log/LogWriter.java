@@ -11,19 +11,20 @@ import static org.incava.ijdk.util.IUtil.*;
 
 /**
  * <p>Writes the logging output, applying filters and decorations. The
- * <code>Log</code> class offers a much cleaner and more thorough interface
- * than this class.</p>
+ * <code>Log</code> and <code>Logger</code> classes offers cleaner and more
+ * thorough interfaces than this class.</p>
  *
  * @see org.incava.ijdk.log.Log
+ * @see org.incava.ijdk.log.Logger
  */
 public class LogWriter {
-    public LogMessageSettings settings = new LogMessageSettings();
+    private LogMessageSettings settings = new LogMessageSettings();
 
-    public boolean columns = true;
+    private boolean columns = true;
 
     // this writes to stdout even in Gradle and Ant, which redirect stdout.
 
-    public PrintWriter out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
+    private PrintWriter out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
 
     private List<String> packagesSkipped = list("org.incava.ijdk.log", "org.incava.qualog");
     private List<String> classesSkipped = list("tr.Ace");
@@ -50,6 +51,14 @@ public class LogWriter {
         filters.add(filter);
     }
 
+    public void setColumns(boolean cols) {
+        columns = cols;
+    }
+
+    public void setOut(PrintWriter out) {
+        this.out = out;
+    }
+
     public LogColorSettings getColorSettings() {
         return colorSettings;
     }
@@ -68,10 +77,6 @@ public class LogWriter {
 
     public void setMethodColor(String className, String methodName, ANSIColor color) {
         colorSettings.setMethodColor(className, methodName, color);
-    }
-
-    public void clearClassColor(String className) {
-        colorSettings.setClassColor(className, null);
     }
 
     public void setFileColor(String fileName, ANSIColor color) {
@@ -98,10 +103,6 @@ public class LogWriter {
 
     public boolean verbose() {
         return outputType.equals(LogOutputType.VERBOSE);
-    }
-
-    public void setColumns(boolean cols) {
-        this.columns = cols;
     }
 
     public void addClassSkipped(Class cls) {
@@ -138,7 +139,7 @@ public class LogWriter {
         
         if (obj == null) {
             LogElement le = LogElement.create(level, logColors, name, obj, numFrames);            
-            return stack(le);
+            return le.stack(this);
         }
         else if (obj instanceof Collection) {
             Collection<?> coll = (Collection<?>)obj;
@@ -165,7 +166,7 @@ public class LogWriter {
         }
         else {
             LogElement le = LogElement.create(level, logColors, name, obj, numFrames);
-            return stack(le);
+            return le.stack(this);
         }
     }
 
@@ -220,8 +221,8 @@ public class LogWriter {
         return false;
     }
 
-    public boolean isLoggable(LogLevel level) {
-        return !outputType.equals(LogOutputType.NONE) && this.level != null && this.level.compareTo(level) >= 0;
+    public boolean isLoggable(LogLevel lvl) {
+        return level.isLoggable(outputType, lvl);
     }
 
     /**
@@ -312,8 +313,8 @@ public class LogWriter {
         sb.append("[");
 
         int lineNum = stackElement.getLineNumber();
-        String    lnStr = lineNum >= 0 ? String.valueOf(lineNum) : "";
-        ANSIColor col   = or(logColors.fileColor, colorSettings.getFileColor(fileName));
+        String lnStr = lineNum >= 0 ? String.valueOf(lineNum) : "";
+        ANSIColor col = or(logColors.fileColor, colorSettings.getFileColor(fileName));
 
         if (this.columns) {
             LogMessage.outputColumns(settings, sb, col, fileName, lnStr);
