@@ -138,73 +138,29 @@ public class LogWriter {
         String nm = name == null ? "" : name;
         
         if (obj == null) {
-            LogElement le = LogElement.create(level, logColors, name, obj, numFrames);            
+            LogElement le = LogElement.create(level, logColors, name, obj, numFrames);
             return le.stack(this);
         }
         else if (obj instanceof Collection) {
-            Collection<?> coll = (Collection<?>)obj;
-            return LogCollection.stack(level, logColors, nm, coll, numFrames);
+            LogElement le = LogElement.create(level, logColors, name, obj, numFrames);
+            return le.stack(this);
         }
         else if (obj instanceof Iterator) {
-            Iterator<?> it = (Iterator<?>)obj;
-            return LogIterator.stack(level, logColors, nm, it, numFrames);
+            LogElement le = LogElement.create(level, logColors, name, obj, numFrames);
+            return le.stack(this);
         }
         else if (obj instanceof Enumeration) {
             Enumeration<?> en = (Enumeration<?>)obj;
             return LogEnumeration.stack(level, logColors, nm, en, numFrames);
         }
-        else if (obj instanceof Object[]) {
-            Object[] ary = (Object[])obj;
-            return LogObjectArray.stack(level, logColors, nm, ary, numFrames);
-        }
         else if (obj instanceof Map) {
-            Map m = (Map)obj;
+            Map<?,?> m = (Map<?,?>)obj;
             return LogMap.stack(level, logColors, nm, m, numFrames);
-        }
-        else if (obj.getClass().isArray()) {
-            return stackArray(level, logColors, nm, obj, numFrames);
         }
         else {
             LogElement le = LogElement.create(level, logColors, name, obj, numFrames);
             return le.stack(this);
         }
-    }
-
-    protected boolean stackArray(LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
-        String[] strs = null;
-        if (obj instanceof boolean[]) {
-            boolean[] ary = (boolean[])obj;
-            strs = BooleanArray.toStringArray(ary);
-        }
-        else if (obj instanceof byte[]) {
-            byte[] ary = (byte[])obj;
-            strs = ByteArray.toStringArray(ary);
-        }
-        else if (obj instanceof char[]) {
-            char[] ary = (char[])obj;
-            strs = CharArray.toStringArray(ary);
-        }
-        else if (obj instanceof double[]) {
-            double[] ary = (double[])obj;
-            strs = DoubleArray.toStringArray(ary);
-        } 
-        else if (obj instanceof float[]) {
-            float[] ary = (float[])obj;
-            strs = FloatArray.toStringArray(ary);
-        }
-        else if (obj instanceof int[]) {
-            int[] ary = (int[])obj;
-            strs = IntArray.toStringArray(ary);
-        }
-        else if (obj instanceof long[]) {
-            long[] ary = (long[])obj;
-            strs = LongArray.toStringArray(ary);
-        }
-        else if (obj instanceof short[]) {
-            short[] ary = (short[])obj;
-            strs = ShortArray.toStringArray(ary);
-        }
-        return LogObjectArray.stack(level, logColors, name, strs, numFrames);
     }
 
     public boolean isSkipped(StackTraceElement ste) {
@@ -239,17 +195,16 @@ public class LogWriter {
         return stack.length;
     }
 
+    /**
+     * Logs the element. Assumes the level is already matched.
+     */
     public synchronized boolean stack(LogElement le) {
-        LogLevel level = le.getLevel();
-        if (!isLoggable(level)) {
-            return true;
-        }
-
         // when we're switching threads, reset to a null state.
         if (!Thread.currentThread().equals(prevThread)) {
             reset();
         }
 
+        // only show 1 frame in quiet mode:
         int numFrames = outputType.equals(LogOutputType.QUIET) ? 1 : le.getNumFrames();
         StackTraceElement[] stack = getStack(numFrames);
 
@@ -278,6 +233,7 @@ public class LogWriter {
     public void outputFrame(StackTraceElement stackElement, boolean isRepeatedFrame, LogElement le) {
         LogColors logColors = le.getColors();
         String msg = le.getMessage();
+        System.err.println("msg: '" + msg + "'");
         StringBuilder sb = new StringBuilder();
         
         if (outputType.equals(LogOutputType.VERBOSE)) {

@@ -11,7 +11,20 @@ import static org.incava.ijdk.util.IUtil.*;
  */
 public class LogElement {
     public static LogElement create(LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
-        return new LogElement(level, logColors, name, obj, numFrames);
+        if (obj.getClass().isArray()) {
+            return LogObjectArray.create(level, logColors, name, obj, numFrames);
+        }
+        else if (obj instanceof Collection) {
+            Collection coll = (Collection)obj;
+            return new LogCollection(level, logColors, name, coll, numFrames);
+        }
+        else if (obj instanceof Iterator) {
+            Iterator<?> it = (Iterator<?>)obj;
+            return LogIterator.create(level, logColors, name, it, numFrames);
+        }
+        else {
+            return new LogElement(level, logColors, name, obj, numFrames);
+        }
     }
 
     private final LogLevel level;
@@ -49,8 +62,8 @@ public class LogElement {
     }
     
     public String getMessage() {
-        String msg = (name == null ? "" : (name + ": ")) + LogObject.toString(object);
-        return msg;
+        String nm = getName();
+        return (nm == null ? "" : (nm + ": ")) + LogObject.toString(object);
     }
 
     public boolean stack(LogWriter lw) {
