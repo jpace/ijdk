@@ -135,32 +135,8 @@ public class LogWriter {
             return true;
         }
 
-        String nm = name == null ? "" : name;
-        
-        if (obj == null) {
-            LogElement le = LogElement.create(level, logColors, name, obj, numFrames);
-            return le.stack(this);
-        }
-        else if (obj instanceof Collection) {
-            LogElement le = LogElement.create(level, logColors, name, obj, numFrames);
-            return le.stack(this);
-        }
-        else if (obj instanceof Iterator) {
-            LogElement le = LogElement.create(level, logColors, name, obj, numFrames);
-            return le.stack(this);
-        }
-        else if (obj instanceof Enumeration) {
-            Enumeration<?> en = (Enumeration<?>)obj;
-            return LogEnumeration.stack(level, logColors, nm, en, numFrames);
-        }
-        else if (obj instanceof Map) {
-            Map<?,?> m = (Map<?,?>)obj;
-            return LogMap.stack(level, logColors, nm, m, numFrames);
-        }
-        else {
-            LogElement le = LogElement.create(level, logColors, name, obj, numFrames);
-            return le.stack(this);
-        }
+        LogElement le = LogElementFactory.create(level, logColors, name, obj, numFrames);
+        return le.stack(this);
     }
 
     public boolean isSkipped(StackTraceElement ste) {

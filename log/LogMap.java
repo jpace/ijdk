@@ -3,11 +3,32 @@ package org.incava.ijdk.log;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
  * Wraps Java maps for output.
  */
-public class LogMap {
+public class LogMap extends LogElement {
+    private final Map<?, ?> map;
+
+    public LogMap(LogLevel level, LogColors logColors, String name, Map<?,?> map, int numFrames) {
+        super(level, logColors, name, map, numFrames);
+
+        this.map = map;
+    }
+
+    public boolean stack(LogWriter lw) {
+        LogLevel level = getLevel();
+        LogColors logColors = getColors();
+        String name = getName();
+        int numFrames = getNumFrames();
+
+        if (map.isEmpty()) {
+            return LogCollection.stackEmptyCollection(level, logColors, name, numFrames);
+        }
+        else {
+            return stackNonEmptyMap(level, logColors, name, map, numFrames);
+        }
+    }
+
     public static boolean stack(LogLevel level, LogColors logColors, String name, Map<?,?> map, int numFrames) {
         if (map.isEmpty()) {
             return LogCollection.stackEmptyCollection(level, logColors, name, numFrames);

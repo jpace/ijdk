@@ -10,23 +10,6 @@ import static org.incava.ijdk.util.IUtil.*;
  * @see org.incava.ijdk.log.Log
  */
 public class LogElement {
-    public static LogElement create(LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
-        if (obj.getClass().isArray()) {
-            return LogObjectArray.create(level, logColors, name, obj, numFrames);
-        }
-        else if (obj instanceof Collection) {
-            Collection coll = (Collection)obj;
-            return new LogCollection(level, logColors, name, coll, numFrames);
-        }
-        else if (obj instanceof Iterator) {
-            Iterator<?> it = (Iterator<?>)obj;
-            return LogIterator.create(level, logColors, name, it, numFrames);
-        }
-        else {
-            return new LogElement(level, logColors, name, obj, numFrames);
-        }
-    }
-
     private final LogLevel level;
     private final LogColors logColors;
     private final String name;
