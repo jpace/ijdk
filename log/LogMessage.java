@@ -8,29 +8,49 @@ import static org.incava.ijdk.util.IUtil.*;
  * A log message.
  */
 public class LogMessage {
+    private final LogElement logElement;
     private final LogColors logColors;
     private final StackTraceElement stackElement;
     private final StackTraceElement previousStackElement;
     private final LogColorSettings colorSettings;
     private final LogMessageSettings msgSettings;
 
-    public LogMessage(LogColors logColors, 
+    public LogMessage(LogElement logElement,
                       StackTraceElement stackElement, 
                       StackTraceElement previousStackElement, 
                       LogColorSettings colorSettings,
                       LogMessageSettings msgSettings) {
-        this.logColors = logColors;
+        this.logElement = logElement;
+        this.logColors = logElement.getColors();
         this.stackElement = stackElement;
         this.previousStackElement = previousStackElement;
         this.colorSettings = colorSettings;
         this.msgSettings = msgSettings;
     }
 
+    public String getLine(boolean isRepeatedFrame, boolean verboseOutput) {
+        String msg = logElement.getMessage();
+        StringBuilder sb = new StringBuilder();
+        
+        if (verboseOutput) {
+            if (msgSettings.showFiles) {
+                outputFileName(sb);
+            }
+            if (msgSettings.showClasses) {
+                outputClassAndMethod(sb);
+            }
+        }
+        String outputMsg = isRepeatedFrame ? "\"\"" : getMessage(msg);
+        sb.append(outputMsg);
+
+        return sb.toString();
+    }
+
     public void outputFileName(StringBuilder sb) {
         int fileWidth = msgSettings.fileWidth;
         
         String stackFileName = LogUtil.snip(stackElement.getFileName(), fileWidth);
-        String fileName = isFileNameMatch() ? StringExt.repeat(' ', stackFileName.length()) : or(stackFileName, "");
+        String fileName = isRepeatedFileName() ? StringExt.repeat(' ', stackFileName.length()) : or(stackFileName, "");
 
         sb.append("[");
 
@@ -39,7 +59,7 @@ public class LogMessage {
         ANSIColor color = or(logColors.fileColor, colorSettings.getFileColor(fileName));
 
         if (msgSettings.useColumns) {
-            LogMessage.outputColumns(msgSettings, sb, color, fileName, lnStr);
+            outputColumns(sb, color, fileName, lnStr);
         }
         else {
             String fileLineNum = fileName + ":" + lnStr;
@@ -50,7 +70,6 @@ public class LogMessage {
 
         sb.append("] ");
     }
-
 
     public void outputClassAndMethod(StringBuilder sb) {
         sb.append("{");
@@ -64,18 +83,22 @@ public class LogMessage {
         sb.append("} ");
     }
 
-    protected boolean isFileNameMatch() {
+    protected boolean isRepeatedFileName() {
         return previousStackElement != null && ObjectExt.areEqual(previousStackElement.getFileName(), stackElement.getFileName());
     }
 
-    public boolean isClassMatch() {
+    public boolean isRepeatedClass() {
         return previousStackElement != null && previousStackElement.getClassName().equals(stackElement.getClassName());
+    }
+
+    protected boolean isRepeatedMethod() {
+        return isRepeatedClass() && ObjectExt.areEqual(previousStackElement.getMethodName(), stackElement.getMethodName());
     }
 
     public int addClassForOutput(StringBuilder sb) {
         int classWidth = msgSettings.classWidth;
         
-        if (isClassMatch()) {
+        if (isRepeatedClass()) {
             LogUtil.addSpaces(sb, classWidth);
             return 0;
         }
@@ -96,10 +119,6 @@ public class LogMessage {
 
         return nSpaces;
     }
-
-    protected boolean isMethodMatch() {
-        return isClassMatch() && ObjectExt.areEqual(previousStackElement.getMethodName(), stackElement.getMethodName());
-    }
     
     public int addMethodForOutput(StringBuilder sb, int classPadding) {
         int methodWidth = msgSettings.functionWidth;
@@ -107,7 +126,7 @@ public class LogMessage {
 
         ANSIColor methodColor = or(logColors.methodColor, colorSettings.getMethodColor(stackElement.getClassName(), methodName));
         
-        if (isMethodMatch()) {
+        if (isRepeatedMethod()) {
             methodName = StringExt.repeat(' ', methodWidth);
             // no colors on repeated methods:
             methodColor = null;
@@ -128,8 +147,8 @@ public class LogMessage {
         return nSpaces;
     }
 
-    public static String colorizeMessage(String msg, StackTraceElement stackElement, EnumSet<ANSIColor> msgColors, LogColorSettings colorSettings) {
-        EnumSet<ANSIColor> colors = msgColors;
+    public String colorizeMessage(String msg) {
+        EnumSet<ANSIColor> colors = logColors.msgColors;
         
         if (isEmpty(colors)) {
             ANSIColor col = colorSettings.getColor(stackElement);
@@ -147,27 +166,27 @@ public class LogMessage {
         return msg;
     }
 
-    public static String unwindThroughEoln(String str) {
+    public String unwindThroughEoln(String str) {
         while (str.length() > 0 && "\r\n".indexOf(StringExt.get(str, -1)) != -1) {
             str = StringExt.get(str, 0, -1);
         }
         return str;
     }
 
-    public static String getMessage(String msg, StackTraceElement ste, EnumSet<ANSIColor> msgColors, LogColorSettings colorSettings) {
+    public String getMessage(String msg) {
         // remove ending EOLN
         String newMsg = unwindThroughEoln(msg);
         
         if (colorSettings.useColor()) {
-            newMsg = colorizeMessage(newMsg, ste, msgColors, colorSettings);
+            newMsg = colorizeMessage(newMsg);
         }
 
         return newMsg;
     }
 
-    public static void outputColumns(LogMessageSettings settings, StringBuilder sb, ANSIColor color, String fileName, String lnStr) {
-        int fileWidth = settings.fileWidth;
-        int lineWidth = settings.lineWidth;
+    public void outputColumns(StringBuilder sb, ANSIColor color, String fileName, String lnStr) {
+        int fileWidth = msgSettings.fileWidth;
+        int lineWidth = msgSettings.lineWidth;
 
         if (isNull(color)) {
             String fmt = "%-" + fileWidth + "s %" + lineWidth + "s";
