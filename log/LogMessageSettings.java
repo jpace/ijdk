@@ -15,4 +15,6 @@ public class LogMessageSettings {
     public int classWidth = 35;
     public boolean showFiles = true;
     public boolean showClasses = true;
+
+    public boolean useColumns = true;
 }

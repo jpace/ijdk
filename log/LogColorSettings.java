@@ -61,4 +61,10 @@ public class LogColorSettings {
     public ANSIColor getFileColor(String fileName) {
         return fileColors.get(fileName);
     }    
+
+    public ANSIColor getColor(StackTraceElement ste) {
+        return or(getMethodColor(ste.getClassName(), ste.getMethodName()),
+                  getClassColor(ste.getClassName()),
+                  getFileColor(ste.getFileName()));
+    }
 }

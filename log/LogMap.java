@@ -22,23 +22,9 @@ public class LogMap extends LogElement {
         int numFrames = getNumFrames();
 
         if (map.isEmpty()) {
-            return LogCollection.stackEmptyCollection(level, logColors, name, numFrames);
+            return stackEmptyCollection();
         }
-        else {
-            return stackNonEmptyMap(level, logColors, name, map, numFrames);
-        }
-    }
-
-    public static boolean stack(LogLevel level, LogColors logColors, String name, Map<?,?> map, int numFrames) {
-        if (map.isEmpty()) {
-            return LogCollection.stackEmptyCollection(level, logColors, name, numFrames);
-        }
-        else {
-            return stackNonEmptyMap(level, logColors, name, map, numFrames);
-        }
-    }
-
-    protected static boolean stackNonEmptyMap(LogLevel level, LogColors logColors, String name, Map<?,?> map, int numFrames) {
+        
         Set<?> keySet = map.keySet();
         Object[] keys = keySet.toArray();
         boolean ret = true;

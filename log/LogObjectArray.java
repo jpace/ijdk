@@ -67,19 +67,10 @@ public class LogObjectArray extends LogElement {
         int numFrames = getNumFrames();
 
         // @todo: add usage of writer
-        return stack(level, logColors, name, ary, numFrames);
-    }
-
-    public static boolean stack(LogLevel level, LogColors logColors, String name, Object[] ary, int numFrames) {
-        if (ary.length == 0) {
-            return LogCollection.stackEmptyCollection(level, logColors, name, numFrames);
+        if (ary == null || ary.length == 0) {
+            return stackEmptyCollection();
         }
-        else {
-            return stackNonEmptyArray(level, logColors, name, ary, numFrames);
-        }
-    }
 
-    protected static boolean stackNonEmptyArray(LogLevel level, LogColors logColors, String name, Object[] ary, int numFrames) {
         boolean ret = true;
         for (int ai = 0; ai < ary.length; ++ai) {
             int nFrames = ai == ary.length - 1 ? numFrames : 1;

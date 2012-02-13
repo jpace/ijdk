@@ -52,4 +52,8 @@ public class LogElement {
     public boolean stack(LogWriter lw) {
         return lw.stack(this);
     }
+
+    public boolean stackEmptyCollection() {
+        return Log.stack(level, logColors, name, "()", numFrames);
+    }
 }

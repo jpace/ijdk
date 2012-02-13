@@ -12,13 +12,4 @@ public class LogCollection extends LogObjectArray {
         super(level, logColors, name, coll.toArray(), numFrames);
         this.coll = coll;
     }
-
-    public static boolean stack(LogLevel level, LogColors logColors, String name, Collection coll, int numFrames) {
-        Object[] ary = coll.toArray();
-        return LogObjectArray.stack(level, logColors, name, ary, numFrames);
-    }
-    
-    public static boolean stackEmptyCollection(LogLevel level, LogColors logColors, String name, int numFrames) {
-        return Log.stack(level, logColors, name, "()", numFrames);
-    }
 }
