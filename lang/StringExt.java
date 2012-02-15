@@ -280,4 +280,15 @@ public class StringExt {
     public static boolean startsWith(String str, String pref) {
         return str != null && str.startsWith(pref);
     }
+
+    /**
+     * Removes end of line characters.
+     */
+    public static String chomp(String str) {
+        int idx = str.length() - 1;
+        while (idx >= 0 && "\r\n".indexOf(str.charAt(idx)) != -1) {
+            --idx;
+        }
+        return str.substring(0, idx + 1);
+    }
 }

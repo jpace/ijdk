@@ -7,7 +7,10 @@ import java.util.Map;
 
 public class LogElementFactory {
     public static LogElement create(LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
-        if (obj.getClass().isArray()) {
+        if (obj == null) {
+            return new LogElement(level, logColors, name, obj, numFrames);
+        }
+        else if (obj.getClass().isArray()) {
             return LogObjectArray.create(level, logColors, name, obj, numFrames);
         }
         else if (obj instanceof Collection) {

@@ -14,6 +14,7 @@ public class LogMessage {
     private final StackTraceElement previousStackElement;
     private final LogColorSettings colorSettings;
     private final LogMessageSettings msgSettings;
+    private final LogMessage previousMessage;
 
     public LogMessage(LogElement logElement,
                       StackTraceElement stackElement, 
@@ -26,6 +27,7 @@ public class LogMessage {
         this.previousStackElement = previousStackElement;
         this.colorSettings = colorSettings;
         this.msgSettings = msgSettings;
+        this.previousMessage = null;
     }
 
     public String getLine(boolean isRepeatedFrame, boolean verboseOutput) {
@@ -34,10 +36,10 @@ public class LogMessage {
         
         if (verboseOutput) {
             if (msgSettings.showFiles) {
-                outputFileName(sb);
+                appendFileName(sb);
             }
             if (msgSettings.showClasses) {
-                outputClassAndMethod(sb);
+                appendClassAndMethod(sb);
             }
         }
         String outputMsg = isRepeatedFrame ? "\"\"" : getMessage(msg);
@@ -46,7 +48,7 @@ public class LogMessage {
         return sb.toString();
     }
 
-    public void outputFileName(StringBuilder sb) {
+    public void appendFileName(StringBuilder sb) {
         int fileWidth = msgSettings.fileWidth;
         
         String stackFileName = LogUtil.snip(stackElement.getFileName(), fileWidth);
@@ -57,21 +59,25 @@ public class LogMessage {
         int lineNum = stackElement.getLineNumber();
         String lnStr = lineNum >= 0 ? String.valueOf(lineNum) : "";
         ANSIColor color = or(logColors.fileColor, colorSettings.getFileColor(fileName));
-
+        ANSIColorList colors = color == null ? null : new ANSIColorList(color);
+            
         if (msgSettings.useColumns) {
-            outputColumns(sb, color, fileName, lnStr);
+            int lineWidth = msgSettings.lineWidth;
+
+            String flstr = LogMessageFormat.format(fileName, fileWidth, true,  colors, true);
+            String lnstr = LogMessageFormat.format(lnStr,    lineWidth, false, colors, false);
+            sb.append(flstr).append(' ').append(lnstr);
         }
         else {
-            String fileLineNum = fileName + ":" + lnStr;
-            int width = isNull(color) ? fileWidth : fileWidth - fileName.length() - 1 - lnStr.length();
-
-            LogUtil.appendPadded(sb, fileLineNum, color, width);
+            String fileLineNum = LogUtil.snip(fileName, fileWidth) + ":" + lnStr;
+            String flnstr      = LogMessageFormat.format(fileLineNum, fileWidth, true, colors, false);
+            sb.append(flnstr);
         }
 
         sb.append("] ");
     }
 
-    public void outputClassAndMethod(StringBuilder sb) {
+    public void appendClassAndMethod(StringBuilder sb) {
         sb.append("{");
 
         int classPadding = addClassForOutput(sb);
@@ -120,84 +126,48 @@ public class LogMessage {
         return nSpaces;
     }
     
-    public int addMethodForOutput(StringBuilder sb, int classPadding) {
+    public void addMethodForOutput(StringBuilder sb, int classPadding) {
         int methodWidth = msgSettings.functionWidth;
         String methodName = stackElement.getMethodName();
 
-        ANSIColor methodColor = or(logColors.methodColor, colorSettings.getMethodColor(stackElement.getClassName(), methodName));
+        ANSIColor color = or(logColors.methodColor, colorSettings.getMethodColor(stackElement.getClassName(), methodName));
         
         if (isRepeatedMethod()) {
             methodName = StringExt.repeat(' ', methodWidth);
             // no colors on repeated methods:
-            methodColor = null;
+            color = null;
         }
         else {
             methodName = LogUtil.snip(methodName, methodWidth);
         }
 
-        LogUtil.append(sb, methodName, methodColor);
+        ANSIColorList colors = color == null ? null : new ANSIColorList(color);
 
-        int nSpaces = methodWidth - methodName.length();
-
-        if (!msgSettings.useColumns) {
-            LogUtil.addSpaces(sb, classPadding);
-        }
-        LogUtil.addSpaces(sb, nSpaces);
-
-        return nSpaces;
+        String methstr = LogMessageFormat.format(methodName, methodWidth, true, colors, true);
+        sb.append(methstr);
     }
 
-    public String colorizeMessage(String msg) {
-        EnumSet<ANSIColor> colors = logColors.msgColors;
+    private String colorizeMessage(String msg) {
+        ANSIColorList colors = logColors.getMessageColors();
         
         if (isEmpty(colors)) {
             ANSIColor col = colorSettings.getColor(stackElement);
             if (isTrue(col)) {
-                colors = EnumSet.of(col);
+                colors = new ANSIColorList(col);
             }
         }
 
-        if (isTrue(colors)) {
-            StringBuilder sb = new StringBuilder();
-            LogUtil.append(sb, msg, colors);
-            return sb.toString();
-        }
-        
-        return msg;
-    }
-
-    public String unwindThroughEoln(String str) {
-        while (str.length() > 0 && "\r\n".indexOf(StringExt.get(str, -1)) != -1) {
-            str = StringExt.get(str, 0, -1);
-        }
-        return str;
+        return LogMessageFormat.format(msg, null, true, colors, false);
     }
 
     public String getMessage(String msg) {
         // remove ending EOLN
-        String newMsg = unwindThroughEoln(msg);
+        String newMsg = StringExt.chomp(msg);
         
         if (colorSettings.useColor()) {
             newMsg = colorizeMessage(newMsg);
         }
 
         return newMsg;
-    }
-
-    public void outputColumns(StringBuilder sb, ANSIColor color, String fileName, String lnStr) {
-        int fileWidth = msgSettings.fileWidth;
-        int lineWidth = msgSettings.lineWidth;
-
-        if (isNull(color)) {
-            String fmt = "%-" + fileWidth + "s %" + lineWidth + "s";
-            String val = String.format(fmt, fileName, lnStr);
-            sb.append(val);
-        }
-        else {
-            int nSpaces = fileWidth - fileName.length() + 1 + lineWidth - lnStr.length();
-            // we append these separately, with no colors between the file name and line number.
-            LogUtil.appendPadded(sb, fileName, color, nSpaces);
-            LogUtil.append(sb, lnStr, color);
-        }
     }
 }

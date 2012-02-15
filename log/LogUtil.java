@@ -13,35 +13,26 @@ public class LogUtil {
         return sb;
     }
 
-    public static void appendPadded(StringBuilder sb, String str, int width) {
-        appendPadded(sb, str, EnumSet.noneOf(ANSIColor.class), width);
-    }
-
-    public static void appendPadded(StringBuilder sb, String str, EnumSet<ANSIColor> colors, int width) {
+    public static void appendPadded(StringBuilder sb, String str, ANSIColorList colors, int width) {
         String snipped = snip(str, width);
         append(sb, str, colors);
         addSpaces(sb, width - snipped.length());
     }
 
-    public static void appendPadded(StringBuilder sb, String str, ANSIColor color, int width) {
-        appendPadded(sb, str, toColorSet(color), width);
+    public static void appendPadded(StringBuilder sb, String str, int width) {
+        appendPadded(sb, str, toColorList(null), width);
     }
-    
-    public static void append(StringBuilder sb, String str, EnumSet<ANSIColor> colors) {
-        if (isTrue(colors)) {
-            for (ANSIColor col : colors) {
-                sb.append(col.toString());
-            }
-            sb.append(str);
-            sb.append(ANSIColor.NONE);
-        }
-        else {
-            sb.append(str);
-        }
+
+    public static void appendPadded(StringBuilder sb, String str, ANSIColor color, int width) {
+        appendPadded(sb, str, toColorList(color), width);
+    }
+
+    public static void append(StringBuilder sb, String str, ANSIColorList colors) {
+        sb.append(isTrue(colors) ? colors.toString(str) : str);
     }
 
     public static void append(StringBuilder sb, String str, ANSIColor color) {
-        append(sb, str, toColorSet(color));
+        append(sb, str, color == null ? null : new ANSIColorList(color));
     }
 
     public static void addSpaces(StringBuilder sb, int num) {
@@ -52,7 +43,7 @@ public class LogUtil {
         return len <= 0 ? "" : str.length() > len ? str.substring(0, len - 1) + '-' : str;
     }
 
-    public static EnumSet<ANSIColor> toColorSet(ANSIColor color) {
-        return color == null ? EnumSet.noneOf(ANSIColor.class) : EnumSet.of(color);
+    public static ANSIColorList toColorList(ANSIColor color) {
+        return color == null ? null : new ANSIColorList(color);
     }
 }

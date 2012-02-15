@@ -68,13 +68,13 @@ public class LogObjectArray extends LogElement {
 
         // @todo: add usage of writer
         if (ary == null || ary.length == 0) {
-            return stackEmptyCollection();
+            return stackEmptyCollection(lw);
         }
 
         boolean ret = true;
         for (int ai = 0; ai < ary.length; ++ai) {
             int nFrames = ai == ary.length - 1 ? numFrames : 1;
-            ret = Log.stack(level, logColors, name + "[" + ai + "]", ary[ai], nFrames);
+            ret = lw.stack(level, logColors, name + "[" + ai + "]", ary[ai], nFrames);
         }
         return ret;
     }

@@ -42,4 +42,14 @@ public enum ANSIColor {
     public String toString() {
         return this.str;
     }
+
+    /**
+     * Wraps the given string in this color, appending NONE (reset).
+     */
+    public String toString(String str) {
+        StringBuffer sb = new StringBuffer(this.str);
+        sb.append(str);
+        sb.append(NONE);
+        return sb.toString();
+    }
 }
