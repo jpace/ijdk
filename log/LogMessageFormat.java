@@ -42,8 +42,8 @@ public class LogMessageFormat {
         else {
             int nSpaces = 0;
             int strlen = str.length();
-            if (strlen > width) {
-                str = str.substring(0, strlen - 1) + "-";
+            if (snipIfLong && strlen > width) {
+                str = LogUtil.snip(str, width);
             }
             else {
                 nSpaces = width - strlen;

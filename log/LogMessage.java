@@ -63,7 +63,6 @@ public class LogMessage {
             
         if (msgSettings.useColumns) {
             int lineWidth = msgSettings.lineWidth;
-
             String flstr = LogMessageFormat.format(fileName, fileWidth, true,  colors, true);
             String lnstr = LogMessageFormat.format(lnStr,    lineWidth, false, colors, false);
             sb.append(flstr).append(' ').append(lnstr);
@@ -79,13 +78,9 @@ public class LogMessage {
 
     public void appendClassAndMethod(StringBuilder sb) {
         sb.append("{");
-
-        int classPadding = addClassForOutput(sb);
-
+        addToLine(sb, msgSettings.classWidth, getClassName(), getClassColor());
         sb.append('#');
-
-        addMethodForOutput(sb, classPadding);
-
+        addToLine(sb, msgSettings.functionWidth, getMethodName(), getMethodColor());
         sb.append("} ");
     }
 
@@ -101,53 +96,49 @@ public class LogMessage {
         return isRepeatedClass() && ObjectExt.areEqual(previousStackElement.getMethodName(), stackElement.getMethodName());
     }
 
-    public int addClassForOutput(StringBuilder sb) {
+    public ANSIColor getClassColor() {
+        return isRepeatedClass() ? null : or(logColors.classColor, colorSettings.getClassColor(stackElement.getClassName()));
+    }
+
+    public String getClassName() {
         int classWidth = msgSettings.classWidth;
         
         if (isRepeatedClass()) {
-            LogUtil.addSpaces(sb, classWidth);
-            return 0;
+            return StringExt.repeat(' ', classWidth);
         }
 
         String className = stackElement.getClassName();
-        ANSIColor classColor = or(logColors.classColor, colorSettings.getClassColor(className));
-        
         className = className.replaceFirst("(com|org)\\.\\w+\\.", "...");
-        className = LogUtil.snip(className, classWidth);
-
-        LogUtil.append(sb, className, classColor);
-
-        int nSpaces = classWidth - className.length();
-
-        if (msgSettings.useColumns) {
-            LogUtil.addSpaces(sb, nSpaces);
-        }
-
-        return nSpaces;
+        return LogUtil.snip(className, classWidth);
     }
-    
-    public void addMethodForOutput(StringBuilder sb, int classPadding) {
-        int methodWidth = msgSettings.functionWidth;
-        String methodName = stackElement.getMethodName();
 
-        ANSIColor color = or(logColors.methodColor, colorSettings.getMethodColor(stackElement.getClassName(), methodName));
-        
+    public void addToLine(StringBuilder sb, int width, String name, ANSIColor color) {
+        ANSIColorList colors = color == null ? null : new ANSIColorList(color);
+        String str = LogMessageFormat.format(name, width, true, colors, true);
+        sb.append(str);
+    }
+
+    public void addClassForOutput(StringBuilder sb) {
+        addToLine(sb, msgSettings.classWidth, getClassName(), getClassColor());
+    }
+
+    public ANSIColor getMethodColor() {
+        return isRepeatedMethod() ? null : or(logColors.methodColor, colorSettings.getMethodColor(stackElement.getClassName(), stackElement.getMethodName()));
+    }
+
+    public String getMethodName() {
+        int methodWidth = msgSettings.functionWidth;
+
         if (isRepeatedMethod()) {
-            methodName = StringExt.repeat(' ', methodWidth);
-            // no colors on repeated methods:
-            color = null;
+            return StringExt.repeat(' ', methodWidth);
         }
         else {
-            methodName = LogUtil.snip(methodName, methodWidth);
+            String methodName = stackElement.getMethodName();
+            return LogUtil.snip(methodName, methodWidth);
         }
+    }    
 
-        ANSIColorList colors = color == null ? null : new ANSIColorList(color);
-
-        String methstr = LogMessageFormat.format(methodName, methodWidth, true, colors, true);
-        sb.append(methstr);
-    }
-
-    private String colorizeMessage(String msg) {
+    public ANSIColorList getMessageColors() {
         ANSIColorList colors = logColors.getMessageColors();
         
         if (isEmpty(colors)) {
@@ -157,7 +148,7 @@ public class LogMessage {
             }
         }
 
-        return LogMessageFormat.format(msg, null, true, colors, false);
+        return colors;
     }
 
     public String getMessage(String msg) {
@@ -165,7 +156,8 @@ public class LogMessage {
         String newMsg = StringExt.chomp(msg);
         
         if (colorSettings.useColor()) {
-            newMsg = colorizeMessage(newMsg);
+            ANSIColorList colors = getMessageColors();
+            return LogMessageFormat.format(newMsg, null, true, colors, false);
         }
 
         return newMsg;
