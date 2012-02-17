@@ -20,10 +20,7 @@ import static org.incava.ijdk.util.IUtil.*;
 public class LogWriter {
     private LogMessageSettings msgSettings = new LogMessageSettings();
 
-    private boolean columns = true;
-
-    // this writes to stdout even in Gradle and Ant, which redirect stdout.
-
+    // this writes to stdout even in Gradle and Ant, which redirect stdout:
     private PrintWriter out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
 
     private List<String> packagesSkipped = list("org.incava.ijdk.log", "org.incava.qualog");
@@ -31,16 +28,11 @@ public class LogWriter {
     private List<String> methodsSkipped = IUtil.<String>list();
     
     private LogOutputType outputType = LogOutputType.NONE;
-
     private LogColorSettings colorSettings = new LogColorSettings();
-
-    private LogMessage previousMessage = null;
-    
+    private LogMessage previousMessage = null;    
     private StackTraceElement prevStackElement = null;    
     private Thread prevThread = null;
-
     private LogLevel level = Log.LEVEL9;
-
     private List<LogFilter> filters = new ArrayList<LogFilter>();
 
     /**
@@ -58,10 +50,6 @@ public class LogWriter {
 
     public void setOut(PrintWriter out) {
         this.out = out;
-    }
-
-    public LogColorSettings getColorSettings() {
-        return colorSettings;
     }
 
     public void setDisabled(Class cls) {
@@ -114,7 +102,7 @@ public class LogWriter {
     }
 
     /**
-     * Resets parameters to their defaults.
+     * Sets parameters to their defaults.
      */
     public void clear() {
         this.colorSettings = new LogColorSettings();
@@ -124,8 +112,11 @@ public class LogWriter {
         this.filters = new ArrayList<LogFilter>();
     }
 
-    public void reset() {
-        this.prevThread       = Thread.currentThread();
+    /**
+     * Resets the thread and stack element.
+     */
+    protected void reset() {
+        this.prevThread = Thread.currentThread();
         this.prevStackElement = null;
     }
 
@@ -191,11 +182,41 @@ public class LogWriter {
                 return true;
             }
 
-            LogMessage lm = new LogMessage(le, stackElement, prevStackElement, colorSettings, msgSettings);
+            LogColors elmtColors = le.getColors();
+
+            // the colors of the message part, not the whole line:
+            ANSIColorList msgColors = getMessageColors(elmtColors, stackElement);
+            LogColors lineColors = new LogColors(msgColors,
+                                                 or(elmtColors.getFileColor(), colorSettings.getFileColor(stackElement.getFileName())),
+                                                 or(elmtColors.getClassColor(), colorSettings.getClassColor(stackElement.getClassName())),
+                                                 or(elmtColors.getMethodColor(), colorSettings.getMethodColor(stackElement.getClassName(), stackElement.getMethodName())));
+            
+            LogMessage lm = new LogMessage(le, lineColors, stackElement, prevStackElement, msgSettings);
             out.println(lm.getLine(framesShown > 0, outputType.equals(LogOutputType.VERBOSE)));
             prevStackElement = stackElement;
         }
         return true;
+    }
+
+    private ANSIColorList getMessageColors(LogColors elmtColors, StackTraceElement ste) {
+        if (!colorSettings.useColor()) {
+            return null;
+        }
+        
+        // the colors of the message part, not the whole line:
+        ANSIColorList msgColors = elmtColors.getMessageColors();
+
+        if (isEmpty(msgColors)) {
+            ANSIColor col = or(colorSettings.getMethodColor(ste.getClassName(), ste.getMethodName()),
+                               colorSettings.getClassColor(ste.getClassName()),
+                               colorSettings.getFileColor(ste.getFileName()));
+
+            if (isTrue(col)) {
+                msgColors = new ANSIColorList(col);
+            }
+        }
+
+        return msgColors;
     }
 
     public boolean isLoggable(StackTraceElement stackElement) {

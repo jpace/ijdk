@@ -4,10 +4,10 @@ import java.util.EnumSet;
 import static org.incava.ijdk.util.IUtil.*;
 
 public class LogColors {
-    public final ANSIColorList msgColors;
-    public final ANSIColor fileColor;
-    public final ANSIColor classColor;
-    public final ANSIColor methodColor;
+    private final ANSIColorList msgColors;
+    private final ANSIColor fileColor;
+    private final ANSIColor classColor;
+    private final ANSIColor methodColor;
 
     public LogColors(ANSIColorList msgColors,
                      ANSIColor fileColor,
@@ -25,5 +25,17 @@ public class LogColors {
 
     public ANSIColorList getMessageColors() {
         return msgColors;
+    }
+
+    public ANSIColor getFileColor() {
+        return fileColor;
+    }
+
+    public ANSIColor getClassColor() {
+        return classColor;
+    }
+
+    public ANSIColor getMethodColor() {
+        return methodColor;
     }
 }
