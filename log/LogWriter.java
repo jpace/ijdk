@@ -45,7 +45,7 @@ public class LogWriter {
     }
 
     public void setColumns(boolean cols) {
-        lineSettings.useColumns = cols;
+        lineSettings.setUseColumns(cols);
     }
 
     public void setOut(PrintWriter out) {
@@ -74,11 +74,11 @@ public class LogWriter {
 
     public void set(boolean columns, int fileWidth, int lineWidth, int classWidth, int functionWidth) {
         lineSettings = new LogLineSettings();
-        lineSettings.fileWidth = fileWidth;
-        lineSettings.lineWidth = lineWidth;
-        lineSettings.classWidth = classWidth;
-        lineSettings.functionWidth = functionWidth;
-        lineSettings.useColumns = columns;
+        lineSettings.setFileWidth(fileWidth);
+        lineSettings.setLineWidth(lineWidth);
+        lineSettings.setClassWidth(classWidth);
+        lineSettings.setFunctionWidth(functionWidth);
+        lineSettings.setUseColumns(columns);
     }
 
     /**
@@ -235,43 +235,43 @@ public class LogWriter {
     }
 
     public int getLineWidth() {
-        return lineSettings.lineWidth;
+        return lineSettings.getLineWidth();
     }
 
     public int getFileWidth() {
-        return lineSettings.fileWidth;
+        return lineSettings.getFileWidth();
     }
 
     public int getFunctionWidth() {
-        return lineSettings.functionWidth;
+        return lineSettings.getFunctionWidth();
     }
 
     public int getClassWidth() {
-        return lineSettings.classWidth;
+        return lineSettings.getClassWidth();
     }
 
     public void setLineWidth(int lnWidth) {
-        lineSettings.lineWidth = lnWidth;
+        lineSettings.setLineWidth(lnWidth);
     }
 
     public void setFileWidth(int flWidth) {
-        lineSettings.fileWidth = flWidth;
+        lineSettings.setFileWidth(flWidth);
     }
 
     public void setFunctionWidth(int funcWidth) {
-        lineSettings.functionWidth = funcWidth;
+        lineSettings.setFunctionWidth(funcWidth);
     }
 
     public void setClassWidth(int clsWidth) {
-        lineSettings.classWidth = clsWidth;
+        lineSettings.setClassWidth(clsWidth);
     }
 
     public void setShowClasses(boolean showCls) {
-        lineSettings.showClasses = showCls;
+        lineSettings.setShowClasses(showCls);
     }
 
     public void setShowFiles(boolean showFls) {
-        lineSettings.showFiles = showFls;
+        lineSettings.setShowFiles(showFls);
     }
 
     protected static StackTraceElement[] getStack(int depth) {

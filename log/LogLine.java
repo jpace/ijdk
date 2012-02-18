@@ -16,10 +16,10 @@ public class LogLine {
     private final LogLine previousMessage;
     
     public LogLine(LogElement logElement,
-                      LogColors msgColors,
-                      StackTraceElement stackElement, 
-                      StackTraceElement previousStackElement, 
-                      LogLineSettings msgSettings) {
+                   LogColors msgColors,
+                   StackTraceElement stackElement, 
+                   StackTraceElement previousStackElement, 
+                   LogLineSettings msgSettings) {
         this.logElement = logElement;
         this.logColors = msgColors;
         this.stackElement = stackElement;
@@ -33,10 +33,10 @@ public class LogLine {
         StringBuilder sb = new StringBuilder();
         
         if (verboseOutput) {
-            if (msgSettings.showFiles) {
+            if (msgSettings.showFiles()) {
                 appendFileName(sb);
             }
-            if (msgSettings.showClasses) {
+            if (msgSettings.showClasses()) {
                 appendClassAndMethod(sb);
             }
         }
@@ -46,42 +46,22 @@ public class LogLine {
         return sb.toString();
     }
 
-    public ANSIColor getFileNameColor() {
-        return isRepeatedFileName() ? null : logColors.getFileColor();
-    }
-
-    public String getFileName() {
-        int fileWidth = msgSettings.fileWidth;
-        String stackFileName = LogUtil.snip(stackElement.getFileName(), fileWidth);
-
-        if (isRepeatedFileName()) {
-            return StringExt.repeat(' ', stackFileName.length());
-        }
-        
-        return or(stackFileName, "");
-    }
-
     public void appendFileName(StringBuilder sb) {
-        int fileWidth = msgSettings.fileWidth;        
-        String fileName = getFileName();
-
         sb.append("[");
 
-        int lineNum = stackElement.getLineNumber();
-        String lnStr = lineNum >= 0 ? String.valueOf(lineNum) : "";
-        ANSIColor color = getFileNameColor();
-        ANSIColorList colors = color == null ? null : new ANSIColorList(color);
+        ANSIColor color = logColors.getFileColor();
         
-        if (msgSettings.useColumns) {
-            int lineWidth = msgSettings.lineWidth;
-            String flstr = LogLineFormat.format(fileName, fileWidth, true,  colors, true);
-            String lnstr = LogLineFormat.format(lnStr,    lineWidth, false, colors, false);
+        if (msgSettings.useColumns()) {
+            LogFileName lfn = new LogFileName(color, stackElement, previousStackElement, msgSettings.getFileWidth());
+            String flstr = lfn.getFormatted();
+
+            LogLineNumber lln = new LogLineNumber(color, stackElement, previousStackElement, msgSettings.getLineWidth());
+            String lnstr = lln.getFormatted();
             sb.append(flstr).append(' ').append(lnstr);
         }
         else {
-            String fileLineNum = LogUtil.snip(fileName, fileWidth) + ":" + lnStr;
-            String flnstr      = LogLineFormat.format(fileLineNum, fileWidth, true, colors, false);
-            sb.append(flnstr);
+            LogFileNameLineNumber lfnln = new LogFileNameLineNumber(color, stackElement, previousStackElement, msgSettings.getFileWidth());
+            sb.append(lfnln.getFormatted());
         }
 
         sb.append("] ");
@@ -89,79 +69,20 @@ public class LogLine {
 
     public void appendClassAndMethod(StringBuilder sb) {
         sb.append("{");
-        addToLine(sb, msgSettings.classWidth, getClassName(), getClassColor());
+
+        LogClassName lcn = new LogClassName(logColors.getClassColor(), stackElement, previousStackElement, msgSettings.getClassWidth());
+        sb.append(lcn.getFormatted());
+        
         sb.append('#');
-        addToLine(sb, msgSettings.functionWidth, getMethodName(), getMethodColor());
+
+        LogMethodName lmn = new LogMethodName(logColors.getMethodColor(), stackElement, previousStackElement, msgSettings.getFunctionWidth());
+        sb.append(lmn.getFormatted());
+
         sb.append("} ");
     }
 
-    protected boolean isRepeatedFileName() {
-        return previousStackElement != null && ObjectExt.areEqual(previousStackElement.getFileName(), stackElement.getFileName());
-    }
-
-    public boolean isRepeatedClass() {
-        return previousStackElement != null && previousStackElement.getClassName().equals(stackElement.getClassName());
-    }
-
-    protected boolean isRepeatedMethod() {
-        return isRepeatedClass() && ObjectExt.areEqual(previousStackElement.getMethodName(), stackElement.getMethodName());
-    }
-
-    public ANSIColor getClassColor() {
-        return isRepeatedClass() ? null : logColors.getClassColor();
-    }
-
-    public String getClassName() {
-        int classWidth = msgSettings.classWidth;
-        
-        if (isRepeatedClass()) {
-            return StringExt.repeat(' ', classWidth);
-        }
-
-        String className = stackElement.getClassName();
-        className = className.replaceFirst("(com|org)\\.\\w+\\.", "...");
-        return LogUtil.snip(className, classWidth);
-    }
-
-    public void addToLine(StringBuilder sb, int width, String name, ANSIColor color) {
-        ANSIColorList colors = color == null ? null : new ANSIColorList(color);
-        String str = LogLineFormat.format(name, width, true, colors, true);
-        sb.append(str);
-    }
-
-    public void addClassForOutput(StringBuilder sb) {
-        addToLine(sb, msgSettings.classWidth, getClassName(), getClassColor());
-    }
-
-    public ANSIColor getMethodColor() {
-        return isRepeatedMethod() ? null : logColors.getMethodColor();
-    }
-
-    public String getMethodName() {
-        int methodWidth = msgSettings.functionWidth;
-
-        if (isRepeatedMethod()) {
-            return StringExt.repeat(' ', methodWidth);
-        }
-        else {
-            String methodName = stackElement.getMethodName();
-            return LogUtil.snip(methodName, methodWidth);
-        }
-    }    
-
-    public ANSIColorList getMessageColors() {
-        return logColors.getMessageColors();
-    }
-
     public String getMessage(String msg) {
-        // remove ending EOLN
-        String newMsg = StringExt.chomp(msg);
-        ANSIColorList colors = getMessageColors();
-        
-        if (isTrue(colors)) {
-            return LogLineFormat.format(newMsg, null, true, colors, false);
-        }
-
-        return newMsg;
+        LogMessage lm = new LogMessage(logColors.getMessageColors(), stackElement, previousStackElement, msg);
+        return lm.getFormatted();
     }
 }
