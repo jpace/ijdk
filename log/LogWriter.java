@@ -18,7 +18,7 @@ import static org.incava.ijdk.util.IUtil.*;
  * @see org.incava.ijdk.log.Logger
  */
 public class LogWriter {
-    private LogMessageSettings msgSettings = new LogMessageSettings();
+    private LogLineSettings lineSettings = new LogLineSettings();
 
     // this writes to stdout even in Gradle and Ant, which redirect stdout:
     private PrintWriter out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
@@ -29,7 +29,7 @@ public class LogWriter {
     
     private LogOutputType outputType = LogOutputType.NONE;
     private LogColorSettings colorSettings = new LogColorSettings();
-    private LogMessage previousMessage = null;    
+    private LogLine previousLine = null;    
     private StackTraceElement prevStackElement = null;    
     private Thread prevThread = null;
     private LogLevel level = Log.LEVEL9;
@@ -45,7 +45,7 @@ public class LogWriter {
     }
 
     public void setColumns(boolean cols) {
-        msgSettings.useColumns = cols;
+        lineSettings.useColumns = cols;
     }
 
     public void setOut(PrintWriter out) {
@@ -73,12 +73,12 @@ public class LogWriter {
     }
 
     public void set(boolean columns, int fileWidth, int lineWidth, int classWidth, int functionWidth) {
-        msgSettings = new LogMessageSettings();
-        msgSettings.fileWidth = fileWidth;
-        msgSettings.lineWidth = lineWidth;
-        msgSettings.classWidth = classWidth;
-        msgSettings.functionWidth = functionWidth;
-        msgSettings.useColumns = columns;
+        lineSettings = new LogLineSettings();
+        lineSettings.fileWidth = fileWidth;
+        lineSettings.lineWidth = lineWidth;
+        lineSettings.classWidth = classWidth;
+        lineSettings.functionWidth = functionWidth;
+        lineSettings.useColumns = columns;
     }
 
     /**
@@ -191,8 +191,8 @@ public class LogWriter {
                                                  or(elmtColors.getClassColor(), colorSettings.getClassColor(stackElement.getClassName())),
                                                  or(elmtColors.getMethodColor(), colorSettings.getMethodColor(stackElement.getClassName(), stackElement.getMethodName())));
             
-            LogMessage lm = new LogMessage(le, lineColors, stackElement, prevStackElement, msgSettings);
-            out.println(lm.getLine(framesShown > 0, outputType.equals(LogOutputType.VERBOSE)));
+            LogLine line = new LogLine(le, lineColors, stackElement, prevStackElement, lineSettings);
+            out.println(line.getLine(framesShown > 0, outputType.equals(LogOutputType.VERBOSE)));
             prevStackElement = stackElement;
         }
         return true;
@@ -235,43 +235,43 @@ public class LogWriter {
     }
 
     public int getLineWidth() {
-        return msgSettings.lineWidth;
+        return lineSettings.lineWidth;
     }
 
     public int getFileWidth() {
-        return msgSettings.fileWidth;
+        return lineSettings.fileWidth;
     }
 
     public int getFunctionWidth() {
-        return msgSettings.functionWidth;
+        return lineSettings.functionWidth;
     }
 
     public int getClassWidth() {
-        return msgSettings.classWidth;
+        return lineSettings.classWidth;
     }
 
     public void setLineWidth(int lnWidth) {
-        msgSettings.lineWidth = lnWidth;
+        lineSettings.lineWidth = lnWidth;
     }
 
     public void setFileWidth(int flWidth) {
-        msgSettings.fileWidth = flWidth;
+        lineSettings.fileWidth = flWidth;
     }
 
     public void setFunctionWidth(int funcWidth) {
-        msgSettings.functionWidth = funcWidth;
+        lineSettings.functionWidth = funcWidth;
     }
 
     public void setClassWidth(int clsWidth) {
-        msgSettings.classWidth = clsWidth;
+        lineSettings.classWidth = clsWidth;
     }
 
     public void setShowClasses(boolean showCls) {
-        msgSettings.showClasses = showCls;
+        lineSettings.showClasses = showCls;
     }
 
     public void setShowFiles(boolean showFls) {
-        msgSettings.showFiles = showFls;
+        lineSettings.showFiles = showFls;
     }
 
     protected static StackTraceElement[] getStack(int depth) {

@@ -1,13 +1,9 @@
 package org.incava.ijdk.log;
 
-import java.util.*;
-import org.incava.ijdk.lang.*;
-import static org.incava.ijdk.util.IUtil.*;
-
 /**
- * Settings for logging messages.
+ * Settings for logging lines.
  */
-public class LogMessageSettings {
+public class LogLineSettings {
     public int fileWidth = 25;
     public int lineWidth = 5;
     public int functionWidth = 25;

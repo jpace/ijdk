@@ -7,19 +7,19 @@ import static org.incava.ijdk.util.IUtil.*;
 /**
  * A log message.
  */
-public class LogMessage {
+public class LogLine {
     private final LogElement logElement;
     private final LogColors logColors;
     private final StackTraceElement stackElement;
     private final StackTraceElement previousStackElement;
-    private final LogMessageSettings msgSettings;
-    private final LogMessage previousMessage;
+    private final LogLineSettings msgSettings;
+    private final LogLine previousMessage;
     
-    public LogMessage(LogElement logElement,
+    public LogLine(LogElement logElement,
                       LogColors msgColors,
                       StackTraceElement stackElement, 
                       StackTraceElement previousStackElement, 
-                      LogMessageSettings msgSettings) {
+                      LogLineSettings msgSettings) {
         this.logElement = logElement;
         this.logColors = msgColors;
         this.stackElement = stackElement;
@@ -74,13 +74,13 @@ public class LogMessage {
         
         if (msgSettings.useColumns) {
             int lineWidth = msgSettings.lineWidth;
-            String flstr = LogMessageFormat.format(fileName, fileWidth, true,  colors, true);
-            String lnstr = LogMessageFormat.format(lnStr,    lineWidth, false, colors, false);
+            String flstr = LogLineFormat.format(fileName, fileWidth, true,  colors, true);
+            String lnstr = LogLineFormat.format(lnStr,    lineWidth, false, colors, false);
             sb.append(flstr).append(' ').append(lnstr);
         }
         else {
             String fileLineNum = LogUtil.snip(fileName, fileWidth) + ":" + lnStr;
-            String flnstr      = LogMessageFormat.format(fileLineNum, fileWidth, true, colors, false);
+            String flnstr      = LogLineFormat.format(fileLineNum, fileWidth, true, colors, false);
             sb.append(flnstr);
         }
 
@@ -125,7 +125,7 @@ public class LogMessage {
 
     public void addToLine(StringBuilder sb, int width, String name, ANSIColor color) {
         ANSIColorList colors = color == null ? null : new ANSIColorList(color);
-        String str = LogMessageFormat.format(name, width, true, colors, true);
+        String str = LogLineFormat.format(name, width, true, colors, true);
         sb.append(str);
     }
 
@@ -159,7 +159,7 @@ public class LogMessage {
         ANSIColorList colors = getMessageColors();
         
         if (isTrue(colors)) {
-            return LogMessageFormat.format(newMsg, null, true, colors, false);
+            return LogLineFormat.format(newMsg, null, true, colors, false);
         }
 
         return newMsg;

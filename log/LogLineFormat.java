@@ -5,14 +5,14 @@ import org.incava.ijdk.lang.*;
 import static org.incava.ijdk.util.IUtil.*;
 
 /**
- * A formatter for logging messages.
+ * A formatter for logging lines.
  */
-public class LogMessageFormat {
+public class LogLineFormat {
     private String format;
     private final int fileWidth;
     private final int lineWidth;
     
-    public LogMessageFormat(int fileWidth, int lineWidth) {
+    public LogLineFormat(int fileWidth, int lineWidth) {
         this.fileWidth = fileWidth;
         this.lineWidth = lineWidth;
 
