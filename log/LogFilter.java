@@ -49,10 +49,18 @@ public class LogFilter {
      * Returns whether the given parameters match this filter.
      */
     public boolean isMatch(String fileName, int lineNumber, String className, String methodName) {
-        return ((fileNamePat   == null || fileNamePat.matcher(fileName).matches())   &&
-                (lineNumberRng == null || lineNumberRng.includes(lineNumber))        &&
-                (classNamePat  == null || classNamePat.matcher(className).matches()) && 
-                (methodNamePat == null || methodNamePat.matcher(methodName).matches()));
+        return (isMatch(fileNamePat,   fileName)   &&
+                isMatch(lineNumberRng, lineNumber) &&
+                isMatch(classNamePat,  className)  && 
+                isMatch(methodNamePat, methodName));
+    }
+
+    private boolean isMatch(Pattern pattern, String name) {
+        return pattern == null || pattern.matcher(name).matches();
+    }
+
+    private boolean isMatch(Range range, int num) {
+        return range == null || range.includes(num);
     }
 
     public boolean isMatch(StackTraceElement ste) {

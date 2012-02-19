@@ -26,14 +26,13 @@ public class LogElement {
      */
     protected static boolean isUndecorated(Object obj) {
         Class<?> objCls = obj.getClass();
-
-        boolean undec = false;
-
-        for (int ci = 0; !undec && ci < UNDECORATED_CLASSES.size(); ++ci) {
+        for (int ci = 0; ci < UNDECORATED_CLASSES.size(); ++ci) {
             Class<?> undecCls = UNDECORATED_CLASSES.get(ci);
-            undec = undecCls.isAssignableFrom(objCls);
+            if (undecCls.isAssignableFrom(objCls)) {
+                return true;
+            }
         }
-        return undec;
+        return false;
     }
 
     private final LogLevel level;

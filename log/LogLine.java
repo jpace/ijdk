@@ -8,39 +8,36 @@ import static org.incava.ijdk.util.IUtil.*;
  * A log message.
  */
 public class LogLine {
-    private final LogElement logElement;
-    private final LogColors logColors;
+    private final String message;
+    private final LogColors colors;
     private final StackTraceElement stackElement;
     private final StackTraceElement previousStackElement;
-    private final LogLineSettings msgSettings;
-    private final LogLine previousMessage;
+    private final LogConfiguration config;
     
-    public LogLine(LogElement logElement,
-                   LogColors msgColors,
+    public LogLine(String message,
+                   LogColors colors,
                    StackTraceElement stackElement, 
                    StackTraceElement previousStackElement, 
-                   LogLineSettings msgSettings) {
-        this.logElement = logElement;
-        this.logColors = msgColors;
+                   LogConfiguration config) {
+        this.message = message;
+        this.colors = colors;
         this.stackElement = stackElement;
         this.previousStackElement = previousStackElement;
-        this.msgSettings = msgSettings;
-        this.previousMessage = null;
+        this.config = config;
     }
 
     public String getLine(boolean isRepeatedFrame, boolean verboseOutput) {
-        String msg = logElement.getMessage();
         StringBuilder sb = new StringBuilder();
         
         if (verboseOutput) {
-            if (msgSettings.showFiles()) {
+            if (config.showFiles()) {
                 appendFileName(sb);
             }
-            if (msgSettings.showClasses()) {
+            if (config.showClasses()) {
                 appendClassAndMethod(sb);
             }
         }
-        String outputMsg = isRepeatedFrame ? "\"\"" : getMessage(msg);
+        String outputMsg = isRepeatedFrame ? "\"\"" : getMessage();
         sb.append(outputMsg);
 
         return sb.toString();
@@ -49,18 +46,18 @@ public class LogLine {
     public void appendFileName(StringBuilder sb) {
         sb.append("[");
 
-        ANSIColor color = logColors.getFileColor();
+        ANSIColor color = colors.getFileColor();
         
-        if (msgSettings.useColumns()) {
-            LogFileName lfn = new LogFileName(color, stackElement, previousStackElement, msgSettings.getFileWidth());
+        if (config.useColumns()) {
+            LogFileName lfn = new LogFileName(color, stackElement, previousStackElement, config.getFileWidth());
             String flstr = lfn.getFormatted();
 
-            LogLineNumber lln = new LogLineNumber(color, stackElement, previousStackElement, msgSettings.getLineWidth());
+            LogLineNumber lln = new LogLineNumber(color, stackElement, previousStackElement, config.getLineWidth());
             String lnstr = lln.getFormatted();
             sb.append(flstr).append(' ').append(lnstr);
         }
         else {
-            LogFileNameLineNumber lfnln = new LogFileNameLineNumber(color, stackElement, previousStackElement, msgSettings.getFileWidth());
+            LogFileNameLineNumber lfnln = new LogFileNameLineNumber(color, stackElement, previousStackElement, config.getFileWidth());
             sb.append(lfnln.getFormatted());
         }
 
@@ -70,19 +67,19 @@ public class LogLine {
     public void appendClassAndMethod(StringBuilder sb) {
         sb.append("{");
 
-        LogClassName lcn = new LogClassName(logColors.getClassColor(), stackElement, previousStackElement, msgSettings.getClassWidth());
+        LogClassName lcn = new LogClassName(colors.getClassColor(), stackElement, previousStackElement, config.getClassWidth());
         sb.append(lcn.getFormatted());
         
         sb.append('#');
 
-        LogMethodName lmn = new LogMethodName(logColors.getMethodColor(), stackElement, previousStackElement, msgSettings.getFunctionWidth());
+        LogMethodName lmn = new LogMethodName(colors.getMethodColor(), stackElement, previousStackElement, config.getFunctionWidth());
         sb.append(lmn.getFormatted());
 
         sb.append("} ");
     }
 
-    public String getMessage(String msg) {
-        LogMessage lm = new LogMessage(logColors.getMessageColors(), stackElement, previousStackElement, msg);
+    public String getMessage() {
+        LogMessage lm = new LogMessage(colors.getMessageColors(), stackElement, previousStackElement, message);
         return lm.getFormatted();
     }
 }

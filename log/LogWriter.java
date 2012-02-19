@@ -18,7 +18,7 @@ import static org.incava.ijdk.util.IUtil.*;
  * @see org.incava.ijdk.log.Logger
  */
 public class LogWriter {
-    private LogLineSettings lineSettings = new LogLineSettings();
+    private LogConfiguration config = new LogConfiguration();
 
     // this writes to stdout even in Gradle and Ant, which redirect stdout:
     private PrintWriter out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
@@ -28,8 +28,6 @@ public class LogWriter {
     private List<String> methodsSkipped = IUtil.<String>list();
     
     private LogOutputType outputType = LogOutputType.NONE;
-    private LogColorSettings colorSettings = new LogColorSettings();
-    private LogLine previousLine = null;    
     private StackTraceElement prevStackElement = null;    
     private Thread prevThread = null;
     private LogLevel level = Log.LEVEL9;
@@ -45,7 +43,7 @@ public class LogWriter {
     }
 
     public void setColumns(boolean cols) {
-        lineSettings.setUseColumns(cols);
+        config.setUseColumns(cols);
     }
 
     public void setOut(PrintWriter out) {
@@ -57,28 +55,27 @@ public class LogWriter {
     }
 
     public void setClassColor(String className, ANSIColor color) {
-        colorSettings.setClassColor(className, color);
+        config.setClassColor(className, color);
     }
 
     public void setPackageColor(String pkgName, ANSIColor color) {
-        colorSettings.setPackageColor(pkgName, color);
+        config.setPackageColor(pkgName, color);
     }
 
     public void setMethodColor(String className, String methodName, ANSIColor color) {
-        colorSettings.setMethodColor(className, methodName, color);
+        config.setMethodColor(className, methodName, color);
     }
 
     public void setFileColor(String fileName, ANSIColor color) {
-        colorSettings.setFileColor(fileName, color);
+        config.setFileColor(fileName, color);
     }
 
     public void set(boolean columns, int fileWidth, int lineWidth, int classWidth, int functionWidth) {
-        lineSettings = new LogLineSettings();
-        lineSettings.setFileWidth(fileWidth);
-        lineSettings.setLineWidth(lineWidth);
-        lineSettings.setClassWidth(classWidth);
-        lineSettings.setFunctionWidth(functionWidth);
-        lineSettings.setUseColumns(columns);
+        config.setFileWidth(fileWidth);
+        config.setLineWidth(lineWidth);
+        config.setClassWidth(classWidth);
+        config.setFunctionWidth(functionWidth);
+        config.setUseColumns(columns);
     }
 
     /**
@@ -105,7 +102,7 @@ public class LogWriter {
      * Sets parameters to their defaults.
      */
     public void clear() {
-        this.colorSettings = new LogColorSettings();
+        this.config = new LogConfiguration();
         this.prevStackElement = null;
         this.prevThread = null;
         this.level = Log.LEVEL9;
@@ -187,11 +184,11 @@ public class LogWriter {
             // the colors of the message part, not the whole line:
             ANSIColorList msgColors = getMessageColors(elmtColors, stackElement);
             LogColors lineColors = new LogColors(msgColors,
-                                                 or(elmtColors.getFileColor(), colorSettings.getFileColor(stackElement.getFileName())),
-                                                 or(elmtColors.getClassColor(), colorSettings.getClassColor(stackElement.getClassName())),
-                                                 or(elmtColors.getMethodColor(), colorSettings.getMethodColor(stackElement.getClassName(), stackElement.getMethodName())));
+                                                 or(elmtColors.getFileColor(), config.getFileColor(stackElement.getFileName())),
+                                                 or(elmtColors.getClassColor(), config.getClassColor(stackElement.getClassName())),
+                                                 or(elmtColors.getMethodColor(), config.getMethodColor(stackElement.getClassName(), stackElement.getMethodName())));
             
-            LogLine line = new LogLine(le, lineColors, stackElement, prevStackElement, lineSettings);
+            LogLine line = new LogLine(le.getMessage(), lineColors, stackElement, prevStackElement, config);
             out.println(line.getLine(framesShown > 0, outputType.equals(LogOutputType.VERBOSE)));
             prevStackElement = stackElement;
         }
@@ -199,7 +196,7 @@ public class LogWriter {
     }
 
     private ANSIColorList getMessageColors(LogColors elmtColors, StackTraceElement ste) {
-        if (!colorSettings.useColor()) {
+        if (!config.useColor()) {
             return null;
         }
         
@@ -207,9 +204,9 @@ public class LogWriter {
         ANSIColorList msgColors = elmtColors.getMessageColors();
 
         if (isEmpty(msgColors)) {
-            ANSIColor col = or(colorSettings.getMethodColor(ste.getClassName(), ste.getMethodName()),
-                               colorSettings.getClassColor(ste.getClassName()),
-                               colorSettings.getFileColor(ste.getFileName()));
+            ANSIColor col = or(config.getMethodColor(ste.getClassName(), ste.getMethodName()),
+                               config.getClassColor(ste.getClassName()),
+                               config.getFileColor(ste.getFileName()));
 
             if (isTrue(col)) {
                 msgColors = new ANSIColorList(col);
@@ -231,47 +228,47 @@ public class LogWriter {
     }
     
     public void setUseColor(boolean useColor) {
-        colorSettings.setUseColor(useColor);
+        config.setUseColor(useColor);
     }
 
     public int getLineWidth() {
-        return lineSettings.getLineWidth();
+        return config.getLineWidth();
     }
 
     public int getFileWidth() {
-        return lineSettings.getFileWidth();
+        return config.getFileWidth();
     }
 
     public int getFunctionWidth() {
-        return lineSettings.getFunctionWidth();
+        return config.getFunctionWidth();
     }
 
     public int getClassWidth() {
-        return lineSettings.getClassWidth();
+        return config.getClassWidth();
     }
 
     public void setLineWidth(int lnWidth) {
-        lineSettings.setLineWidth(lnWidth);
+        config.setLineWidth(lnWidth);
     }
 
     public void setFileWidth(int flWidth) {
-        lineSettings.setFileWidth(flWidth);
+        config.setFileWidth(flWidth);
     }
 
     public void setFunctionWidth(int funcWidth) {
-        lineSettings.setFunctionWidth(funcWidth);
+        config.setFunctionWidth(funcWidth);
     }
 
     public void setClassWidth(int clsWidth) {
-        lineSettings.setClassWidth(clsWidth);
+        config.setClassWidth(clsWidth);
     }
 
     public void setShowClasses(boolean showCls) {
-        lineSettings.setShowClasses(showCls);
+        config.setShowClasses(showCls);
     }
 
     public void setShowFiles(boolean showFls) {
-        lineSettings.setShowFiles(showFls);
+        config.setShowFiles(showFls);
     }
 
     protected static StackTraceElement[] getStack(int depth) {
