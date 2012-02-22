@@ -224,13 +224,19 @@ public class StringExt {
             return null;
         }
 
-        Integer frIdx = getIndex(str, fromIndex);
+        Integer frIdx = null;
 
-        if (isNull(frIdx)) {
-            return "";
+        if (fromIndex == null) {
+            frIdx = 0;
+        }
+        else {
+            frIdx = getIndex(str, fromIndex);
+            if (isNull(frIdx)) {
+                return "";
+            }
         }
 
-        Integer toIdx = getIndex(str, toIndex);
+        Integer toIdx = toIndex == null ? null : getIndex(str, toIndex);
 
         if (isNull(toIdx)) {
             toIdx = str.length() - 1;
@@ -244,6 +250,20 @@ public class StringExt {
         }
         else {
             return str.substring(frIdx, 1 + toIdx);
+        }
+    }
+
+    /**
+     * Returns the substring after the nth <code>ch</code> character. If the
+     * string does not contain the given character, null is returned.
+     */
+    public static String substringAfter(String str, Character ch) {
+        if (isNull(str) || isNull(ch)) {
+            return null;
+        }
+        else {
+            int idx = str.indexOf(ch);
+            return idx >= 0 ? substring(str, idx + 1, null) : null;
         }
     }
 
@@ -290,5 +310,13 @@ public class StringExt {
             --idx;
         }
         return str.substring(0, idx + 1);
+    }
+
+    /**
+     * Returns whether the string contains the character. If <code>str</code> or
+     * <code>ch</code> is null, false is returned.
+     */
+    public static boolean contains(String str, Character ch) {
+        return str != null && ch != null && str.indexOf(ch) >= 0;
     }
 }
