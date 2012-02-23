@@ -258,13 +258,17 @@ public class StringExt {
      * string does not contain the given character, null is returned.
      */
     public static String substringAfter(String str, Character ch) {
-        if (isNull(str) || isNull(ch)) {
-            return null;
-        }
-        else {
-            int idx = str.indexOf(ch);
-            return idx >= 0 ? substring(str, idx + 1, null) : null;
-        }
+        Integer idx = indexOf(str, ch);
+        return idx == null ? null : substring(str, idx + 1, null);
+    }
+
+    /**
+     * Returns the substring before the nth <code>ch</code> character. If the
+     * string does not contain the given character, null is returned.
+     */
+    public static String substringBefore(String str, Character ch) {
+        Integer idx = indexOf(str, ch);
+        return idx == null ? null : idx == 0 ? "" : substring(str, 0, idx - 1);
     }
 
     /**
@@ -317,6 +321,21 @@ public class StringExt {
      * <code>ch</code> is null, false is returned.
      */
     public static boolean contains(String str, Character ch) {
-        return str != null && ch != null && str.indexOf(ch) >= 0;
+        return indexOf(str, ch) != null;
+    }
+    
+    /**
+     * Returns the index of the first occurance of the character in the string,
+     * or null if either <code>str</code> or <code>ch</code> is null, or if the
+     * character is not in the string.
+     */
+    public static Integer indexOf(String str, Character ch) {
+        if (isNull(str) || isNull(ch)) {
+            return null;
+        }
+        else {
+            int idx = str.indexOf(ch);
+            return idx >= 0 ? Integer.valueOf(idx) : null;
+        }
     }
 }
