@@ -338,4 +338,12 @@ public class StringExt {
             return idx >= 0 ? Integer.valueOf(idx) : null;
         }
     }
+
+    public static Boolean eq(String a, String b) {
+        return ObjectExt.areEqual(a, b);
+    }
+
+    public static Boolean eqi(String a, String b) {
+        return a == null && b == null ? true : a == null ? false : b == null ? false : a.equalsIgnoreCase(b);
+    }
 }
