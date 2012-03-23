@@ -35,9 +35,9 @@ public class LocationRange implements Comparable<LocationRange> {
     }
 
     public int compareTo(LocationRange other) {
-        int cmp = getStart().compareTo(other.getStart());
+        int cmp = ObjectExt.compare(start, other.start);
         if (cmp == 0) {
-            cmp = getEnd().compareTo(other.getEnd());
+            cmp = ObjectExt.compare(end, other.end);
         }
         return cmp;
     }

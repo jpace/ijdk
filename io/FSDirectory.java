@@ -11,19 +11,11 @@ import java.util.List;
  * either suppress exceptions, or throw the unchecked IORuntimeException instead
  * of IOException.
  */
-public class FSDirectory {
-    private final File directory;
-    
+public class FSDirectory extends File {
+    public static final long serialVersionUID = 1L;
+
     public FSDirectory(String name) {
-        this.directory = new File(name);
-    }
-
-    public FSDirectory(File dir) {
-        this.directory = dir;
-    }
-
-    public File getDirectory() {
-        return this.directory;
+        super(name);
     }
 
     /**
@@ -36,18 +28,16 @@ public class FSDirectory {
     public List<String> find(final String suffix) {
         List<String> matches = new ArrayList<String>();
         
-        if (this.directory.isDirectory()) {
-            List<File> contents = list();
-
-            for (File fd : contents) {
-                if (fd.isDirectory()) {
-                    FSDirectory fsd = new FSDirectory(fd);
-                    // matches.addAll(
-                }
-                else if (fd.isFile()) {
-                    if (fd.getName().endsWith(suffix)) {
-                        matches.add(getCanonicalPath(fd));
-                    }
+        List<File> contents = listAll();
+        
+        for (File fd : contents) {
+            if (fd.isDirectory()) {
+                // FSDirectory fsd = new FSDirectory(fd);
+                // matches.addAll(
+            }
+            else if (fd.isFile()) {
+                if (fd.getName().endsWith(suffix)) {
+                    matches.add(getCanonicalPath(fd));
                 }
             }
         }
@@ -67,7 +57,7 @@ public class FSDirectory {
     /**
      * Returns a list of files and directories in the given directory.
      */
-    public List<File> list() {
-        return Arrays.asList(this.directory.listFiles());
+    public List<File> listAll() {
+        return Arrays.asList(listFiles());
     }
 }
