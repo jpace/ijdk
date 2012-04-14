@@ -1,6 +1,5 @@
 package org.incava.ijdk.util.diff;
 
-
 /**
  * Represents a difference, as used in <code>Diff</code>. A difference consists
  * of two pairs of starting and ending points, each pair representing either the
@@ -10,34 +9,33 @@ package org.incava.ijdk.util.diff;
  * addition.
  */
 public class Difference {
-
-    public static final int NONE = -1;
+    public static final Integer NONE = -1;
     
     /**
      * The point at which the deletion starts.
      */
-    private int delStart = NONE;
+    private Integer delStart = NONE;
 
     /**
      * The point at which the deletion ends.
      */
-    private int delEnd = NONE;
+    private Integer delEnd = NONE;
 
     /**
      * The point at which the addition starts.
      */
-    private int addStart = NONE;
+    private Integer addStart = NONE;
 
     /**
      * The point at which the addition ends.
      */
-    private int addEnd = NONE;
+    private Integer addEnd = NONE;
 
     /**
      * Creates the difference for the given start and end points for the
      * deletion and addition.
      */
-    public Difference(int delStart, int delEnd, int addStart, int addEnd) {
+    public Difference(Integer delStart, Integer delEnd, Integer addStart, Integer addEnd) {
         this.delStart = delStart;
         this.delEnd   = delEnd;
         this.addStart = addStart;
@@ -48,7 +46,7 @@ public class Difference {
      * The point at which the deletion starts, if any. A value equal to
      * <code>NONE</code> means this is an addition.
      */
-    public int getDeletedStart() {
+    public Integer getDeletedStart() {
         return delStart;
     }
 
@@ -56,7 +54,7 @@ public class Difference {
      * The point at which the deletion ends, if any. A value equal to
      * <code>NONE</code> means this is an addition.
      */
-    public int getDeletedEnd() {
+    public Integer getDeletedEnd() {
         return delEnd;
     }
 
@@ -64,7 +62,7 @@ public class Difference {
      * The point at which the addition starts, if any. A value equal to
      * <code>NONE</code> means this must be an addition.
      */
-    public int getAddedStart() {
+    public Integer getAddedStart() {
         return addStart;
     }
 
@@ -72,7 +70,7 @@ public class Difference {
      * The point at which the addition ends, if any. A value equal to
      * <code>NONE</code> means this must be an addition.
      */
-    public int getAddedEnd() {
+    public Integer getAddedEnd() {
         return addEnd;
     }
 
@@ -101,7 +99,6 @@ public class Difference {
     public boolean equals(Object obj) {
         if (obj instanceof Difference) {
             Difference other = (Difference)obj;
-
             return (delStart == other.delStart && 
                     delEnd   == other.delEnd && 
                     addStart == other.addStart && 
