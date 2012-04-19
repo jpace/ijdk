@@ -279,7 +279,9 @@ public class Diff <T extends Object> {
         return bMatches;
     }
 
-    private Map<Integer, Object[]> getLinks(int aStart, int aEnd, int bStart, int bEnd) {
+    private void addMatches(TreeMap<Integer, Integer> matches, int aStart, int aEnd, int bStart, int bEnd) {
+        thresh = new TreeMap<Integer, Integer>();
+
         Map<T, List<Integer>> bMatches = getBMatches(bStart, bEnd);
 
         Map<Integer, Object[]> links = new HashMap<Integer, Object[]>();
@@ -303,7 +305,17 @@ public class Diff <T extends Object> {
                 }
             }
         }
-        return links;
+
+        if (!thresh.isEmpty()) {
+            Integer  ti   = thresh.lastKey();
+            Object[] link = links.get(ti);
+            while (link != null) {
+                Integer x = (Integer)link[1];
+                Integer y = (Integer)link[2];
+                matches.put(x, y);
+                link = (Object[])link[0];
+            }
+        }
     }
 
     /**
@@ -318,29 +330,15 @@ public class Diff <T extends Object> {
 
         TreeMap<Integer, Integer> matches = new TreeMap<Integer, Integer>();
 
+        // common beginning and ending elements:
         while (aStart <= aEnd && bStart <= bEnd && equals(a.get(aStart), b.get(bStart))) {
             matches.put(aStart++, bStart++);
         }
-
         while (aStart <= aEnd && bStart <= bEnd && equals(a.get(aEnd), b.get(bEnd))) {
             matches.put(aEnd--, bEnd--);
         }
 
-        thresh = new TreeMap<Integer, Integer>();
-
-        Map<Integer, Object[]> links = getLinks(aStart, aEnd, bStart, bEnd);
-
-        if (!thresh.isEmpty()) {
-            Integer  ti   = thresh.lastKey();
-            Object[] link = links.get(ti);
-            while (link != null) {
-                Integer x = (Integer)link[1];
-                Integer y = (Integer)link[2];
-                matches.put(x, y);
-                link = (Object[])link[0];
-            }
-        }
-
+        addMatches(matches, aStart, aEnd, bStart, bEnd);
         return toArray(matches);
     }
 
