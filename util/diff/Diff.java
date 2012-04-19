@@ -137,7 +137,6 @@ public class Diff <T extends Object> {
         boolean calledFinishB = false;
 
         while (ai <= lastA || bi <= lastB) {
-
             // last A?
             if (ai == lastA + 1 && bi <= lastB) {
                 if (!calledFinishA && callFinishedA()) {
@@ -326,8 +325,6 @@ public class Diff <T extends Object> {
         while (aStart <= aEnd && bStart <= bEnd && equals(a.get(aEnd), b.get(bEnd))) {
             matches.put(aEnd--, bEnd--);
         }
-
-        Map<T, List<Integer>> bMatches = getBMatches(bStart, bEnd);
 
         thresh = new TreeMap<Integer, Integer>();
 
