@@ -36,7 +36,7 @@ public class Diff <T extends Object> {
     /**
      * The list of differences, as <code>Difference</code> instances.
      */
-    protected List<Difference> diffs = new ArrayList<Difference>();
+    protected List<Difference> diffs;
 
     /**
      * The pending, uncommitted difference.
@@ -51,7 +51,7 @@ public class Diff <T extends Object> {
     /**
      * The thresholds.
      */
-    private TreeMap<Integer, Integer> thresh;
+    private Thresholds thresh;
 
     /**
      * Constructs the Diff object for the two arrays, using the given comparator.
@@ -70,6 +70,15 @@ public class Diff <T extends Object> {
     }
 
     /**
+     * Constructs the Diff object for the two collections, using the default
+     * comparison mechanism between the objects, such as <code>equals</code> and
+     * <code>compareTo</code>.
+     */
+    public Diff(List<T> a, List<T> b) {
+        this(a, b, null);
+    }
+
+    /**
      * Constructs the Diff object for the two collections, using the given
      * comparator.
      */
@@ -77,16 +86,8 @@ public class Diff <T extends Object> {
         this.a = a;
         this.b = b;
         this.comparator = comp;
-        this.thresh = null;     // created in getLongestCommonSubsequences
-    }
-
-    /**
-     * Constructs the Diff object for the two collections, using the default
-     * comparison mechanism between the objects, such as <code>equals</code> and
-     * <code>compareTo</code>.
-     */
-    public Diff(List<T> a, List<T> b) {
-        this(a, b, null);
+        this.thresh = new Thresholds();
+        this.diffs = new ArrayList<Difference>();
     }
 
     /**
@@ -280,8 +281,6 @@ public class Diff <T extends Object> {
     }
 
     private void addMatches(TreeMap<Integer, Integer> matches, int aStart, int aEnd, int bStart, int bEnd) {
-        thresh = new TreeMap<Integer, Integer>();
-
         Map<T, List<Integer>> bMatches = getBMatches(bStart, bEnd);
 
         Map<Integer, Object[]> links = new HashMap<Integer, Object[]>();
@@ -296,7 +295,7 @@ public class Diff <T extends Object> {
                 while (pit.hasPrevious()) {
                     Integer j = pit.previous();
 
-                    k = insert(j, k);
+                    k = thresh.insert(j, k);
 
                     if (k != null) {
                         Object value = k > 0 ? links.get(k.intValue() - 1) : null;
@@ -353,103 +352,4 @@ public class Diff <T extends Object> {
         }
         return ary;
     }
-
-    /**
-     * Returns whether the integer is not zero (including if it is not null).
-     */
-    protected static boolean isNonzero(Integer i) {
-        return i != null && i.intValue() != 0;
-    }
-
-    /**
-     * Returns whether the value in the map for the given index is greater than
-     * the given value.
-     */
-    protected boolean isGreaterThan(Integer index, Integer val) {
-        Integer lhs = thresh.get(index);
-        return lhs != null && val != null && lhs.compareTo(val) > 0;
-    }
-
-    /**
-     * Returns whether the value in the map for the given index is less than
-     * the given value.
-     */
-    protected boolean isLessThan(Integer index, Integer val) {
-        Integer lhs = thresh.get(index);
-        return lhs != null && (val == null || lhs.compareTo(val) < 0);
-    }
-
-    /**
-     * Returns the value for the greatest key in the map.
-     */
-    protected Integer getLastValue() {
-        return thresh.get(thresh.lastKey());
-    }
-
-    /**
-     * Adds the given value to the "end" of the threshold map, that is, with the
-     * greatest index/key.
-     */
-    protected void append(Integer value) {
-        Integer addIdx = null;
-        if (thresh.isEmpty()) {
-            addIdx = 0;
-        }
-        else {
-            Integer lastKey = thresh.lastKey();
-            addIdx = lastKey.intValue() + 1;
-        }
-        thresh.put(addIdx, value);
-    }
-
-    /**
-     * Inserts the given values into the threshold map.
-     */
-    protected Integer insert(Integer j, Integer k) {
-        if (isNonzero(k) && isGreaterThan(k, j) && isLessThan(k.intValue() - 1, j)) {
-            thresh.put(k, j);
-        }
-        else {
-            int hi = -1;
-            
-            if (isNonzero(k)) {
-                hi = k.intValue();
-            }
-            else if (!thresh.isEmpty()) {
-                hi = thresh.lastKey();
-            }
-
-            // off the end?
-            if (hi == -1 || j.compareTo(getLastValue()) > 0) {
-                append(j);
-                k = hi + 1;
-            }
-            else {
-                // binary search for insertion point:
-                int lo = 0;
-        
-                while (lo <= hi) {
-                    int     index = (hi + lo) / 2;
-                    Integer val   = thresh.get(index);
-                    int     cmp   = j.compareTo(val);
-
-                    if (cmp == 0) {
-                        return null;
-                    }
-                    else if (cmp > 0) {
-                        lo = index + 1;
-                    }
-                    else {
-                        hi = index - 1;
-                    }
-                }
-        
-                thresh.put(lo, j);
-                k = lo;
-            }
-        }
-
-        return k;
-    }
-
 }
