@@ -88,6 +88,8 @@ public class Diff <T extends Object> {
         this.comparator = comp;
         this.thresh = new Thresholds();
         this.diffs = new ArrayList<Difference>();
+
+        tr.Ace.setVerbose(true);
     }
 
     /**
@@ -283,7 +285,7 @@ public class Diff <T extends Object> {
     private void addMatches(TreeMap<Integer, Integer> matches, int aStart, int aEnd, int bStart, int bEnd) {
         Map<T, List<Integer>> bMatches = getBMatches(bStart, bEnd);
 
-        Map<Integer, Object[]> links = new HashMap<Integer, Object[]>();
+        LCSTable links = new LCSTable();
 
         for (int i = aStart; i <= aEnd; ++i) {
             Object aElement = a.get(i); // keygen here.
@@ -294,26 +296,18 @@ public class Diff <T extends Object> {
                 ListIterator<Integer> pit = positions.listIterator(positions.size());
                 while (pit.hasPrevious()) {
                     Integer j = pit.previous();
-
                     k = thresh.insert(j, k);
-
                     if (k != null) {
-                        Object value = k > 0 ? links.get(k.intValue() - 1) : null;
-                        links.put(k, new Object[] { value, i, j });
+                        links.update(i, j, k);
                     }   
                 }
             }
         }
 
         if (!thresh.isEmpty()) {
-            Integer  ti   = thresh.lastKey();
-            Object[] link = links.get(ti);
-            while (link != null) {
-                Integer x = (Integer)link[1];
-                Integer y = (Integer)link[2];
-                matches.put(x, y);
-                link = (Object[])link[0];
-            }
+            Integer ti = thresh.lastKey();
+            Map<Integer, Integer> chain = links.getChain(ti);
+            matches.putAll(chain);
         }
     }
 
