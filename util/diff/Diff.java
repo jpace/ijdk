@@ -249,26 +249,7 @@ public class Diff <T extends Object> {
         return comparator == null ? x.equals(y) : comparator.compare(x, y) == 0;
     }
     
-    /**
-     * Returns an array of the longest common subsequences.
-     */
-    public Integer[] getLongestCommonSubsequences() {
-        int aStart = 0;
-        int aEnd = a.size() - 1;
-
-        int bStart = 0;
-        int bEnd = b.size() - 1;
-
-        TreeMap<Integer, Integer> matches = new TreeMap<Integer, Integer>();
-
-        while (aStart <= aEnd && bStart <= bEnd && equals(a.get(aStart), b.get(bStart))) {
-            matches.put(aStart++, bStart++);
-        }
-
-        while (aStart <= aEnd && bStart <= bEnd && equals(a.get(aEnd), b.get(bEnd))) {
-            matches.put(aEnd--, bEnd--);
-        }
-
+    private Map<T, List<Integer>> getBMatches(int bStart, int bEnd) {
         Map<T, List<Integer>> bMatches = null;
         if (comparator == null) {
             if (a.size() > 0 && a.get(0) instanceof Comparable) {
@@ -296,8 +277,12 @@ public class Diff <T extends Object> {
             }
             positions.add(bi);
         }
+        return bMatches;
+    }
 
-        thresh = new TreeMap<Integer, Integer>();
+    private Map<Integer, Object[]> getLinks(int aStart, int aEnd, int bStart, int bEnd) {
+        Map<T, List<Integer>> bMatches = getBMatches(bStart, bEnd);
+
         Map<Integer, Object[]> links = new HashMap<Integer, Object[]>();
 
         for (int i = aStart; i <= aEnd; ++i) {
@@ -312,16 +297,41 @@ public class Diff <T extends Object> {
 
                     k = insert(j, k);
 
-                    if (k == null) {
-                        // nothing
-                    }
-                    else {
+                    if (k != null) {
                         Object value = k > 0 ? links.get(k.intValue() - 1) : null;
                         links.put(k, new Object[] { value, i, j });
                     }   
                 }
             }
         }
+        return links;
+    }
+
+    /**
+     * Returns an array of the longest common subsequences.
+     */
+    public Integer[] getLongestCommonSubsequences() {
+        int aStart = 0;
+        int aEnd = a.size() - 1;
+
+        int bStart = 0;
+        int bEnd = b.size() - 1;
+
+        TreeMap<Integer, Integer> matches = new TreeMap<Integer, Integer>();
+
+        while (aStart <= aEnd && bStart <= bEnd && equals(a.get(aStart), b.get(bStart))) {
+            matches.put(aStart++, bStart++);
+        }
+
+        while (aStart <= aEnd && bStart <= bEnd && equals(a.get(aEnd), b.get(bEnd))) {
+            matches.put(aEnd--, bEnd--);
+        }
+
+        Map<T, List<Integer>> bMatches = getBMatches(bStart, bEnd);
+
+        thresh = new TreeMap<Integer, Integer>();
+
+        Map<Integer, Object[]> links = getLinks(aStart, aEnd, bStart, bEnd);
 
         if (!thresh.isEmpty()) {
             Integer  ti   = thresh.lastKey();
