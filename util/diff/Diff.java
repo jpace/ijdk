@@ -49,11 +49,6 @@ public class Diff <T extends Object> {
     private Comparator<T> comparator;
 
     /**
-     * The thresholds.
-     */
-    private Thresholds thresh;
-
-    /**
      * Constructs the Diff object for the two arrays, using the given comparator.
      */
     public Diff(T[] a, T[] b, Comparator<T> comp) {
@@ -86,7 +81,6 @@ public class Diff <T extends Object> {
         this.a = a;
         this.b = b;
         this.comparator = comp;
-        this.thresh = new Thresholds();
         this.diffs = new ArrayList<Difference>();
 
         tr.Ace.setVerbose(true);
@@ -270,8 +264,7 @@ public class Diff <T extends Object> {
         }
 
         for (int bi = bStart; bi <= bEnd; ++bi) {
-            T element = b.get(bi);
-            T key     = element;
+            T key = b.get(bi);
             List<Integer> positions = bMatches.get(key);
             if (positions == null) {
                 positions = new ArrayList<Integer>();
@@ -286,6 +279,7 @@ public class Diff <T extends Object> {
         Map<T, List<Integer>> bMatches = getBMatches(bStart, bEnd);
 
         LCSTable links = new LCSTable();
+        Thresholds thresh = new Thresholds();
 
         for (int i = aStart; i <= aEnd; ++i) {
             Object aElement = a.get(i); // keygen here.
