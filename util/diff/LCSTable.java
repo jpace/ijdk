@@ -18,10 +18,6 @@ public class LCSTable {
      * Updates the value for the key <code>k</code>.
      */
     public void update(Integer i, Integer j, Integer k) {
-        tr.Ace.red("i", i);
-        tr.Ace.red("j", j);
-        tr.Ace.red("k", k);
-
         Object value = k > 0 ? links.get(k - 1) : null;
         links.put(k, new Object[] { value, i, j });
     }
@@ -30,8 +26,6 @@ public class LCSTable {
      * Returns the links starting from <code>key</code>.
      */
     public Map<Integer, Integer> getChain(Integer key) {
-        tr.Ace.red("key", key);
-
         Map<Integer, Integer> chain = new HashMap<Integer, Integer>();
         Object[] link = links.get(key);
         while (link != null) {

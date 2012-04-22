@@ -82,8 +82,6 @@ public class Diff <T extends Object> {
         this.b = b;
         this.comparator = comp;
         this.diffs = new ArrayList<Difference>();
-
-        tr.Ace.setVerbose(true);
     }
 
     /**
@@ -91,13 +89,19 @@ public class Diff <T extends Object> {
      */
     public List<Difference> diff() {
         traverseSequences();
+        addPending();
+        return diffs;
+    }
 
+    protected List<Difference> getDiffs() {
+        return diffs;
+    }
+
+    protected void addPending() {
         // add the last difference, if pending:
         if (pending != null) {
             diffs.add(pending);
         }
-
-        return diffs;
     }
 
     /**
@@ -112,7 +116,6 @@ public class Diff <T extends Object> {
         int lastB = b.size() - 1;
         int bi = 0;
         int ai;
-
         int lastMatch = matches.length - 1;
         
         for (ai = 0; ai <= lastMatch; ++ai) {

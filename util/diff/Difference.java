@@ -60,7 +60,7 @@ public class Difference {
 
     /**
      * The point at which the addition starts, if any. A value equal to
-     * <code>NONE</code> means this must be an addition.
+     * <code>NONE</code> means this must be a deletion.
      */
     public Integer getAddedStart() {
         return addStart;
@@ -68,7 +68,7 @@ public class Difference {
 
     /**
      * The point at which the addition ends, if any. A value equal to
-     * <code>NONE</code> means this must be an addition.
+     * <code>NONE</code> means this must be a deletion.
      */
     public Integer getAddedEnd() {
         return addEnd;
@@ -119,5 +119,4 @@ public class Difference {
         sb.append("add: [").append(addStart).append(", ").append(addEnd).append(']');
         return sb.toString();
     }
-
 }
