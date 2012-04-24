@@ -26,17 +26,17 @@ public class Diff <T extends Object> {
     /**
      * The source array, AKA the "from" values.
      */
-    protected List<T> a;
+    protected final List<T> a;
 
     /**
      * The target array, AKA the "to" values.
      */
-    protected List<T> b;
+    protected final List<T> b;
 
     /**
      * The list of differences, as <code>Difference</code> instances.
      */
-    protected List<Difference> diffs;
+    protected final List<Difference> diffs;
 
     /**
      * The pending, uncommitted difference.
@@ -46,7 +46,7 @@ public class Diff <T extends Object> {
     /**
      * The comparator used, if any.
      */
-    private Comparator<T> comparator;
+    private final Comparator<T> comparator;
 
     /**
      * Constructs the Diff object for the two arrays, using the given comparator.
