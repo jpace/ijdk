@@ -112,6 +112,8 @@ public class Diff <T extends Object> {
     protected void traverseSequences() {
         Integer[] matches = getLongestCommonSubsequences();
 
+        // tr.Ace.yellow("matches", matches);
+
         int lastA = a.size() - 1;
         int lastB = b.size() - 1;
         int bi = 0;
@@ -275,6 +277,8 @@ public class Diff <T extends Object> {
             }
             positions.add(bi);
         }
+
+        tr.Ace.bold("bMatches", bMatches);
         return bMatches;
     }
 
@@ -304,6 +308,7 @@ public class Diff <T extends Object> {
         if (!thresh.isEmpty()) {
             Integer ti = thresh.lastKey();
             Map<Integer, Integer> chain = links.getChain(ti);
+            // tr.Ace.bold("chain", chain);
             matches.putAll(chain);
         }
     }
@@ -329,6 +334,9 @@ public class Diff <T extends Object> {
         }
 
         addMatches(matches, aStart, aEnd, bStart, bEnd);
+
+        // tr.Ace.onBlue("matches", matches);
+
         return toArray(matches);
     }
 
