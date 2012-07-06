@@ -4,7 +4,7 @@ package org.incava.ijdk.log;
  * <p>Represents a logging/output level. Is essentially a wrapper around an
  * Integer.</p>
  */
-class LogLevel implements Comparable {
+public class LogLevel implements Comparable {
     private Integer level = null;
     
     public LogLevel(int level) {

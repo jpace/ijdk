@@ -1,16 +1,46 @@
 package org.incava.ijdk.log;
 
+import java.lang.reflect.*;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 public class LogElementFactory {
+    private static final Map<Class, Class<? extends LogElement>> clsToElmtClasses = new HashMap<Class, Class<? extends LogElement>>();
+    
+    public static void add(Class cls, Class<? extends LogElement> elmtCls) {
+        clsToElmtClasses.put(cls, elmtCls);
+    }
+
+    public static Class<? extends LogElement> findElmtClass(Object obj) {
+        Class<?> objCls = obj.getClass();
+        return clsToElmtClasses.get(objCls);
+    }
+
+    public static LogElement createLogElement(Class<? extends LogElement> elmtCls, LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
+        try {
+            Constructor<?> ctor = elmtCls.getConstructor(LogLevel.class, LogColors.class, String.class, Object.class, int.class);
+            return (LogElement)ctor.newInstance(level, logColors, name, obj, numFrames);
+        }
+        catch (Exception ex) {
+            return null;
+        }
+    }
+
     public static LogElement create(LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
         if (obj == null) {
             return new LogElement(level, logColors, name, obj, numFrames);
         }
-        else if (obj.getClass().isArray()) {
+        else {
+            Class<? extends LogElement> elmtCls = findElmtClass(obj);
+            if (elmtCls != null) {
+                return createLogElement(elmtCls, level, logColors, name, obj, numFrames);
+            }
+        }
+
+        if (obj.getClass().isArray()) {
             return LogObjectArray.create(level, logColors, name, obj, numFrames);
         }
         else if (obj instanceof Collection) {
