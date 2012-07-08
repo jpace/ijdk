@@ -10,7 +10,8 @@ public class LogFileNameLineNumber extends AbstractLogItem {
     }
 
     public Object getValue(StackTraceElement stackElement) {
-        String fileName = getSnipped(stackElement.getFileName());
+        String fileName = stackElement.getFileName();
+        fileName = fileName.replace(".java", "");
 
         if (isRepeated()) {
             fileName = StringExt.repeat(' ', fileName.length());

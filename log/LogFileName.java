@@ -10,7 +10,9 @@ public class LogFileName extends AbstractLogItem {
     }
 
     public Object getValue(StackTraceElement stackElement) {
-        String stackFileName = getSnipped(stackElement.getFileName());
+        String fileName = stackElement.getFileName();
+        fileName = fileName.replace(".java", "");
+        String stackFileName = getSnipped(fileName);
 
         if (isRepeated()) {
             return StringExt.repeat(' ', stackFileName.length());
