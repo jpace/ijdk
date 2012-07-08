@@ -8,15 +8,20 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class LogElementFactory {
-    private static final Map<Class, Class<? extends LogElement>> clsToElmtClasses = new HashMap<Class, Class<? extends LogElement>>();
+    private static final Map<Class<?>, Class<? extends LogElement>> clsToElmtClasses = new HashMap<Class<?>, Class<? extends LogElement>>();
     
-    public static void add(Class cls, Class<? extends LogElement> elmtCls) {
+    public static void add(Class<?> cls, Class<? extends LogElement> elmtCls) {
         clsToElmtClasses.put(cls, elmtCls);
     }
 
     public static Class<? extends LogElement> findElmtClass(Object obj) {
         Class<?> objCls = obj.getClass();
-        return clsToElmtClasses.get(objCls);
+        for (Map.Entry<Class<?>, Class<? extends LogElement>> entry : clsToElmtClasses.entrySet()) {
+            if (entry.getKey().isAssignableFrom(objCls)) {
+                return entry.getValue();
+            }
+        }
+        return null;
     }
 
     public static LogElement createLogElement(Class<? extends LogElement> elmtCls, LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
