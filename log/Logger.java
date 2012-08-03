@@ -131,7 +131,7 @@ public class Logger {
         addFilter(new ClassFilter(cls, null));
     }
 
-    public static void addFilter(LogFilter filter) {
+    public static void addFilter(Filter filter) {
         writer.addFilter(filter);
     }
 

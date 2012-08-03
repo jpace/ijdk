@@ -1,13 +1,13 @@
 package org.incava.ijdk.log;
 
 /**
- * A filter for logging statements from a class. Unlike <code>LogFilter</code>,
- * the class under consideration is checked that it is assignable from the
- * filter class, that is, it is of the same class, or is a superclass.
+ * A filter for logging statements from a class. Unlike <code>Filter</code>, the
+ * class under consideration is checked that it is assignable from the filter
+ * class, that is, it is of the same class, or is a superclass.
  *
- * @see LogFilter
+ * @see Filter
  */
-public class ClassFilter extends LogFilter {
+public class ClassFilter extends Filter {
     private final Class<?> cls;
 
     public ClassFilter(Class<?> cls, Level level) {

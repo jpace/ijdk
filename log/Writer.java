@@ -31,14 +31,14 @@ public class Writer {
     private StackTraceElement prevStackElement = null;    
     private Thread prevThread = null;
     private Level level = Log.LEVEL9;
-    private List<LogFilter> filters = new ArrayList<LogFilter>();
+    private List<Filter> filters = new ArrayList<Filter>();
 
     /**
      * Adds a filter to be applied for output.
      *
-     * @see org.incava.ijdk.log.LogFilter
+     * @see org.incava.ijdk.log.Filter
      */
-    public void addFilter(LogFilter filter) {
+    public void addFilter(Filter filter) {
         filters.add(filter);
     }
 
@@ -106,7 +106,7 @@ public class Writer {
         this.prevStackElement = null;
         this.prevThread = null;
         this.level = Log.LEVEL9;
-        this.filters = new ArrayList<LogFilter>();
+        this.filters = new ArrayList<Filter>();
     }
 
     /**
@@ -218,7 +218,7 @@ public class Writer {
 
     public boolean isLoggable(StackTraceElement stackElement) {
         boolean isLoggable = true;
-        for (LogFilter filter : filters) {
+        for (Filter filter : filters) {
             Level flevel = filter.getLevel();
             if (filter.isMatch(stackElement)) {
                 isLoggable = flevel != null && level.compareTo(flevel) >= 0;

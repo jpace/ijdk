@@ -7,7 +7,7 @@ import org.incava.ijdk.lang.Range;
  * Represents a filter for selective enabling or disabling of logging
  * statements.
  */
-public class LogFilter {
+public class Filter {
     public static final Pattern NO_PATTERN = null;
     public static final Range NO_RANGE = null;
     
@@ -17,25 +17,25 @@ public class LogFilter {
     private final Pattern classNamePat;
     private final Pattern methodNamePat;
 
-    public LogFilter(Level level) {
+    public Filter(Level level) {
         this(level, (Pattern)null, null, null, null);
     }
 
-    public LogFilter(Level level, Pattern fname, Range lnum, Pattern clsName, Pattern methName) {
+    public Filter(Level level, Pattern fnamePat, Range lnum, Pattern clsName, Pattern methName) {
         this.level = level;
 
-        fileNamePat = fname;
+        fileNamePat = fnamePat;
         lineNumberRng = lnum;
         classNamePat = clsName;
         methodNamePat = methName;
     }
 
-    public LogFilter(Level level, String fname, Range lnum, String clsName, String methName) {
-        this(level,
-             fname == null    ? (Pattern)null : Pattern.compile(fname),
-             lnum,
-             clsName == null  ? (Pattern)null : Pattern.compile(clsName),
-             methName == null ? (Pattern)null : Pattern.compile(methName));
+    public Filter(Level level, String fname, Range lnum, String clsName, String methName) {
+        this(level, toPattern(fname), lnum, toPattern(clsName), toPattern(methName));
+    }
+
+    private static Pattern toPattern(String str) {
+        return str == null ? (Pattern)null : Pattern.compile(str);
     }
 
     /**
