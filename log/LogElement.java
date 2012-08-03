@@ -74,11 +74,11 @@ public class LogElement {
         return (nm == null ? "" : (nm + ": ")) + toString(object);
     }
 
-    public boolean stack(LogWriter lw) {
+    public boolean stack(Writer lw) {
         return lw.stack(this);
     }
 
-    public boolean stackEmptyCollection(LogWriter lw) {
+    public boolean stackEmptyCollection(Writer lw) {
         return lw.stack(level, logColors, name, "()", numFrames);
     }
 

@@ -7,18 +7,18 @@ import static org.incava.ijdk.util.IUtil.*;
 /**
  * A log message.
  */
-public class LogLine {
+public class Line {
     private final String message;
     private final LogColors colors;
     private final StackTraceElement stackElement;
     private final StackTraceElement previousStackElement;
     private final LogConfiguration config;
     
-    public LogLine(String message,
-                   LogColors colors,
-                   StackTraceElement stackElement, 
-                   StackTraceElement previousStackElement, 
-                   LogConfiguration config) {
+    public Line(String message,
+                LogColors colors,
+                StackTraceElement stackElement, 
+                StackTraceElement previousStackElement, 
+                LogConfiguration config) {
         this.message = message;
         this.colors = colors;
         this.stackElement = stackElement;
@@ -52,7 +52,7 @@ public class LogLine {
             LogFileName lfn = new LogFileName(color, stackElement, previousStackElement, config.getFileWidth());
             String flstr = lfn.getFormatted();
 
-            LogLineNumber lln = new LogLineNumber(color, stackElement, previousStackElement, config.getLineWidth());
+            LineNumber lln = new LineNumber(color, stackElement, previousStackElement, config.getLineWidth());
             String lnstr = lln.getFormatted();
             sb.append(flstr).append(' ').append(lnstr);
         }

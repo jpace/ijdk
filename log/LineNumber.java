@@ -1,11 +1,7 @@
 package org.incava.ijdk.log;
 
-import java.util.*;
-import org.incava.ijdk.lang.*;
-import static org.incava.ijdk.util.IUtil.*;
-
-public class LogLineNumber extends AbstractLogItem {    
-    public LogLineNumber(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int lineWidth) {
+public class LineNumber extends AbstractLogItem {    
+    public LineNumber(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int lineWidth) {
         super(color, stackElement, previousStackElement, lineWidth);
     }
 

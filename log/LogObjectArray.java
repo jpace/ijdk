@@ -60,7 +60,7 @@ public class LogObjectArray extends LogElement {
         this.ary = ary;
     }
 
-    public boolean stack(LogWriter lw) {
+    public boolean stack(Writer lw) {
         LogLevel level = getLevel();
         LogColors logColors = getColors();
         String name = getName();

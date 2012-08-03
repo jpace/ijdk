@@ -49,7 +49,7 @@ public class Logger {
      */
     protected static final int DEFAULT_STACK_DEPTH = 5;
 
-    protected static LogWriter writer;
+    protected static Writer writer;
 
     protected static LogTimer timer;
 
@@ -78,7 +78,7 @@ public class Logger {
     }
 
     static {
-        writer = new LogWriter();
+        writer = new Writer();
         timer = new LogTimer();
 
         setVerbosity();

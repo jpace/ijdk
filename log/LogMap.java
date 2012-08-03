@@ -15,7 +15,7 @@ public class LogMap extends LogElement {
         this.map = map;
     }
 
-    public boolean stack(LogWriter lw) {
+    public boolean stack(Writer lw) {
         LogLevel level = getLevel();
         LogColors logColors = getColors();
         String name = getName();

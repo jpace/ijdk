@@ -17,7 +17,7 @@ import static org.incava.ijdk.util.IUtil.*;
  * @see org.incava.ijdk.log.Log
  * @see org.incava.ijdk.log.Logger
  */
-public class LogWriter {
+public class Writer {
     private LogConfiguration config = new LogConfiguration();
 
     // this writes to stdout even in Gradle and Ant, which redirect stdout:
@@ -188,7 +188,7 @@ public class LogWriter {
                                                  or(elmtColors.getClassColor(), config.getClassColor(stackElement.getClassName())),
                                                  or(elmtColors.getMethodColor(), config.getMethodColor(stackElement.getClassName(), stackElement.getMethodName())));
             
-            LogLine line = new LogLine(le.getMessage(), lineColors, stackElement, prevStackElement, config);
+            Line line = new Line(le.getMessage(), lineColors, stackElement, prevStackElement, config);
             out.println(line.getLine(framesShown > 0, outputType.equals(LogOutputType.VERBOSE)));
             prevStackElement = stackElement;
         }
