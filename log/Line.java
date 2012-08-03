@@ -8,13 +8,13 @@ public class Line {
     private final LogColors colors;
     private final StackTraceElement stackElement;
     private final StackTraceElement previousStackElement;
-    private final LogConfiguration config;
+    private final Configuration config;
     
     public Line(String message,
                 LogColors colors,
                 StackTraceElement stackElement, 
                 StackTraceElement previousStackElement, 
-                LogConfiguration config) {
+                Configuration config) {
         this.message = message;
         this.colors = colors;
         this.stackElement = stackElement;

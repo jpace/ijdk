@@ -1,6 +1,8 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.types;
 
 import java.util.Collection;
+import org.incava.ijdk.log.Level;
+import org.incava.ijdk.log.LogColors;
 
 /**
  * Wraps Collections for output.

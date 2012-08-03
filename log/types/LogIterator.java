@@ -1,8 +1,10 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.types;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import org.incava.ijdk.log.Level;
+import org.incava.ijdk.log.LogColors;
 
 /**
  * Wraps Iterators for output.

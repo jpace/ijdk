@@ -6,6 +6,8 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.*;
 import org.incava.ijdk.lang.*;
+import org.incava.ijdk.log.types.LogElement;
+import org.incava.ijdk.log.types.LogElementFactory;
 import org.incava.ijdk.util.IUtil;
 import static org.incava.ijdk.util.IUtil.*;
 
@@ -18,7 +20,7 @@ import static org.incava.ijdk.util.IUtil.*;
  * @see org.incava.ijdk.log.Logger
  */
 public class Writer {
-    private LogConfiguration config = new LogConfiguration();
+    private Configuration config = new Configuration();
 
     // this writes to stdout even in Gradle and Ant, which redirect stdout:
     private PrintWriter out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
@@ -102,7 +104,7 @@ public class Writer {
      * Sets parameters to their defaults.
      */
     public void clear() {
-        this.config = new LogConfiguration();
+        this.config = new Configuration();
         this.prevStackElement = null;
         this.prevThread = null;
         this.level = Log.LEVEL9;

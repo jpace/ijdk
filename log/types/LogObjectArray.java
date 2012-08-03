@@ -1,6 +1,9 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.types;
 
 import org.incava.ijdk.lang.*;
+import org.incava.ijdk.log.Level;
+import org.incava.ijdk.log.LogColors;
+import org.incava.ijdk.log.Writer;
 
 /**
  * Wraps C-style arrays for output.

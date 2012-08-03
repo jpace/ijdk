@@ -7,7 +7,7 @@ import static org.incava.ijdk.util.IUtil.*;
 /**
  * System-wide settings for logging.
  */
-public class LogConfiguration {
+public class Configuration {
     private int fileWidth = 25;
     private int lineWidth = 5;
     private int functionWidth = 25;
@@ -24,7 +24,7 @@ public class LogConfiguration {
 
     private boolean useColor;
 
-    public LogConfiguration() {
+    public Configuration() {
         useColor = true;
         packageColors = new HashMap<String, ANSIColor>();
         classColors = new HashMap<String, ANSIColor>();

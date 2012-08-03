@@ -1,7 +1,9 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.types;
 
 import java.util.Collections;
 import java.util.Enumeration;
+import org.incava.ijdk.log.Level;
+import org.incava.ijdk.log.LogColors;
 
 /**
  * Wraps Enumerations for output.

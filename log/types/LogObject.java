@@ -1,7 +1,8 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.types;
 
 import java.lang.reflect.*;
 import java.util.*;
+import org.incava.ijdk.log.Level;
 import static org.incava.ijdk.util.IUtil.*;
 
 /**

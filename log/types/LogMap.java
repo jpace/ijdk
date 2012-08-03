@@ -1,7 +1,10 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.types;
 
 import java.util.Map;
 import java.util.Set;
+import org.incava.ijdk.log.Level;
+import org.incava.ijdk.log.LogColors;
+import org.incava.ijdk.log.Writer;
 
 /**
  * Wraps Java maps for output.
