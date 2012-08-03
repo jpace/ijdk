@@ -1,6 +1,6 @@
 package org.incava.ijdk.log;
 
-public class LineNumber extends AbstractLogItem {    
+public class LineNumber extends Item {    
     public LineNumber(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int lineWidth) {
         super(color, stackElement, previousStackElement, lineWidth);
     }

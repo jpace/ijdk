@@ -4,7 +4,7 @@ import java.util.*;
 import org.incava.ijdk.lang.*;
 import static org.incava.ijdk.util.IUtil.*;
 
-public class LogFileName extends AbstractLogItem {    
+public class LogFileName extends Item {    
     public LogFileName(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int fileWidth) {
         super(color, stackElement, previousStackElement, fileWidth);
     }

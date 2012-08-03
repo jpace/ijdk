@@ -1,9 +1,8 @@
 package org.incava.ijdk.log;
 
-import org.incava.ijdk.lang.*;
-import static org.incava.ijdk.util.IUtil.*;
+import org.incava.ijdk.lang.StringExt;
 
-public class LogMessage extends AbstractLogItem {    
+public class LogMessage extends Item {
     private final String message;
     
     public LogMessage(ANSIColorList colors, StackTraceElement stackElement, StackTraceElement previousStackElement, String msg) {

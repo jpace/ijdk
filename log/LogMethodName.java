@@ -1,10 +1,9 @@
 package org.incava.ijdk.log;
 
-import java.util.*;
-import org.incava.ijdk.lang.*;
-import static org.incava.ijdk.util.IUtil.*;
+import org.incava.ijdk.lang.ObjectExt;
+import org.incava.ijdk.lang.StringExt;
 
-public class LogMethodName extends AbstractLogItem {    
+public class LogMethodName extends Item {    
     private final StackTraceElement stackElement;
     private final StackTraceElement previousStackElement;
 

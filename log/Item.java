@@ -1,19 +1,18 @@
 package org.incava.ijdk.log;
 
-import org.incava.ijdk.lang.*;
-import static org.incava.ijdk.util.IUtil.*;
+import org.incava.ijdk.lang.ObjectExt;
 
-public abstract class AbstractLogItem {
+public abstract class Item {
     private final ANSIColorList colors;
     private final StackTraceElement stackElement;
     private final StackTraceElement previousStackElement;
     protected final Integer width;    
     
-    public AbstractLogItem(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, Integer width) {
+    public Item(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, Integer width) {
         this(color == null ? null : new ANSIColorList(color), stackElement, previousStackElement, width);
     }
 
-    public AbstractLogItem(ANSIColorList colors, StackTraceElement stackElement, StackTraceElement previousStackElement, Integer width) {
+    public Item(ANSIColorList colors, StackTraceElement stackElement, StackTraceElement previousStackElement, Integer width) {
         this.colors = colors;
         this.stackElement = stackElement;
         this.previousStackElement = previousStackElement;
