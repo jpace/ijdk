@@ -1,7 +1,9 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.output;
 
 import org.incava.ijdk.lang.ObjectExt;
 import org.incava.ijdk.lang.StringExt;
+import org.incava.ijdk.log.ANSIColor;
+import org.incava.ijdk.log.ANSIColorList;
 
 public abstract class Item {
     private final ANSIColorList colors;
@@ -55,7 +57,8 @@ public abstract class Item {
     public abstract String getStackField(StackTraceElement stackElement);
 
     public String getFormatted() {
+        LogLineFormat llf = new LogLineFormat(width, justifyLeft(), getColors(), snipIfLong());
         Object value = getValue(stackElement);
-        return LogLineFormat.format(value, width, justifyLeft(), getColors(), snipIfLong());
+        return llf.format(value);
     }
 }

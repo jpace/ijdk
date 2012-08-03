@@ -1,6 +1,7 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.output;
 
 import org.incava.ijdk.lang.StringExt;
+import org.incava.ijdk.log.ANSIColorList;
 
 public class Message extends Item {
     private final String message;

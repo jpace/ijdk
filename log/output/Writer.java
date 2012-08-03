@@ -1,4 +1,4 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.output;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
@@ -6,6 +6,14 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.*;
 import org.incava.ijdk.lang.*;
+import org.incava.ijdk.log.ANSIColor;
+import org.incava.ijdk.log.ANSIColorList;
+import org.incava.ijdk.log.ClassFilter;
+import org.incava.ijdk.log.Configuration;
+import org.incava.ijdk.log.Filter;
+import org.incava.ijdk.log.Level;
+import org.incava.ijdk.log.Log;
+import org.incava.ijdk.log.LogColors;
 import org.incava.ijdk.log.types.LogElement;
 import org.incava.ijdk.log.types.LogElementFactory;
 import org.incava.ijdk.util.IUtil;
@@ -32,7 +40,7 @@ public class Writer {
     private OutputType outputType = OutputType.NONE;
     private StackTraceElement prevStackElement = null;    
     private Thread prevThread = null;
-    private Level level = Log.LEVEL9;
+    private Level level = new Level(9);
     private List<Filter> filters = new ArrayList<Filter>();
 
     /**
@@ -114,7 +122,7 @@ public class Writer {
     /**
      * Resets the thread and stack element.
      */
-    protected void reset() {
+    public void reset() {
         this.prevThread = Thread.currentThread();
         this.prevStackElement = null;
     }

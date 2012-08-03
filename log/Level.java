@@ -1,8 +1,9 @@
 package org.incava.ijdk.log;
 
+import org.incava.ijdk.log.output.OutputType;
+
 /**
- * <p>Represents a logging/output level. Is essentially a wrapper around an
- * Integer.</p>
+ * <p>Represents a logging/output level.
  */
 public class Level implements Comparable {
     private Integer level = null;    

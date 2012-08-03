@@ -1,6 +1,7 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.output;
 
 import org.incava.ijdk.lang.StringExt;
+import org.incava.ijdk.log.ANSIColor;
 import static org.incava.ijdk.util.IUtil.*;
 
 public class LogFileNameLineNumber extends Item {    

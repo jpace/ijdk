@@ -1,4 +1,4 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.output;
 
 /**
  * Represents output type for logging.

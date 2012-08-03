@@ -4,7 +4,7 @@ import java.util.*;
 import org.incava.ijdk.lang.*;
 import org.incava.ijdk.log.Level;
 import org.incava.ijdk.log.LogColors;
-import org.incava.ijdk.log.Writer;
+import org.incava.ijdk.log.output.Writer;
 import static org.incava.ijdk.util.IUtil.*;
 
 /**

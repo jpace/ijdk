@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import org.incava.ijdk.log.Level;
 import org.incava.ijdk.log.LogColors;
-import org.incava.ijdk.log.Writer;
+import org.incava.ijdk.log.output.Writer;
 
 /**
  * Wraps Java maps for output.
