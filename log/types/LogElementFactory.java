@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import org.incava.ijdk.log.Level;
-import org.incava.ijdk.log.LogColors;
+import org.incava.ijdk.log.output.LogColors;
 
 public class LogElementFactory {
     private static final Map<Class<?>, Class<? extends LogElement>> clsToElmtClasses = new HashMap<Class<?>, Class<? extends LogElement>>();

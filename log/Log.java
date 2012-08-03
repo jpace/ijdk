@@ -1,6 +1,7 @@
 package org.incava.ijdk.log;
 
 import java.util.EnumSet;
+import org.incava.ijdk.log.output.ANSIColor;
 import org.incava.ijdk.util.PropertyExt;
 import static org.incava.ijdk.util.IUtil.*;
 

@@ -1,4 +1,4 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.output;
 
 import java.util.EnumSet;
 import static org.incava.ijdk.util.IUtil.*;

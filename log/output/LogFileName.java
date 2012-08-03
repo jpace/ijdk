@@ -2,7 +2,6 @@ package org.incava.ijdk.log.output;
 
 import java.util.*;
 import org.incava.ijdk.lang.*;
-import org.incava.ijdk.log.ANSIColor;
 import static org.incava.ijdk.util.IUtil.*;
 
 public class LogFileName extends Item {    

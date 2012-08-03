@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import org.incava.ijdk.log.Level;
-import org.incava.ijdk.log.LogColors;
+import org.incava.ijdk.log.output.LogColors;
 
 /**
  * Wraps Iterators for output.

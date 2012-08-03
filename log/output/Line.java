@@ -1,8 +1,6 @@
 package org.incava.ijdk.log.output;
 
-import org.incava.ijdk.log.ANSIColor;
 import org.incava.ijdk.log.Configuration;
-import org.incava.ijdk.log.LogColors;
 
 /**
  * A log message.

@@ -1,7 +1,5 @@
 package org.incava.ijdk.log.output;
 
-import org.incava.ijdk.log.ANSIColor;
-
 public class LineNumber extends Item {    
     public LineNumber(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int lineWidth) {
         super(color, stackElement, previousStackElement, lineWidth);

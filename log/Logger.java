@@ -4,6 +4,8 @@ import java.io.PrintWriter;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import org.incava.ijdk.log.output.ANSIColor;
+import org.incava.ijdk.log.output.LogColors;
 import org.incava.ijdk.log.output.OutputType;
 import org.incava.ijdk.log.output.Writer;
 import org.incava.ijdk.log.types.LogObject;

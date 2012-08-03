@@ -2,7 +2,6 @@ package org.incava.ijdk.log.output;
 
 import org.incava.ijdk.lang.ObjectExt;
 import org.incava.ijdk.lang.StringExt;
-import org.incava.ijdk.log.ANSIColor;
 
 public class MethodName extends Item {    
     private final StackTraceElement stackElement;

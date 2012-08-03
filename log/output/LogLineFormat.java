@@ -1,7 +1,6 @@
 package org.incava.ijdk.log.output;
 
 import org.incava.ijdk.lang.StringExt;
-import org.incava.ijdk.log.ANSIColorList;
 import static org.incava.ijdk.util.IUtil.*;
 
 /**

@@ -2,8 +2,6 @@ package org.incava.ijdk.log.output;
 
 import org.incava.ijdk.lang.ObjectExt;
 import org.incava.ijdk.lang.StringExt;
-import org.incava.ijdk.log.ANSIColor;
-import org.incava.ijdk.log.ANSIColorList;
 
 public abstract class Item {
     private final ANSIColorList colors;

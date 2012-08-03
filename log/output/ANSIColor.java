@@ -1,4 +1,4 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.output;
 
 /**
  * Provides constants that produce colorized output on ANSI terminals.
