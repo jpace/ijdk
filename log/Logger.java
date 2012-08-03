@@ -29,20 +29,20 @@ public class Logger {
     public final static String SHOW_FILES_PROPERTY_KEY = "org.incava.ijdk.log.showfiles";
     public final static String VERBOSE_PROPERTY_KEY = "org.incava.ijdk.log.verbose";
     
-    public final static LogLevel LEVEL0 = new LogLevel(0);
-    public final static LogLevel LEVEL1 = new LogLevel(1);
-    public final static LogLevel LEVEL2 = new LogLevel(2);
-    public final static LogLevel LEVEL3 = new LogLevel(3);
-    public final static LogLevel LEVEL4 = new LogLevel(4);
-    public final static LogLevel LEVEL5 = new LogLevel(5);
-    public final static LogLevel LEVEL6 = new LogLevel(6);
-    public final static LogLevel LEVEL7 = new LogLevel(7);
-    public final static LogLevel LEVEL8 = new LogLevel(8);
-    public final static LogLevel LEVEL9 = new LogLevel(9);
+    public final static Level LEVEL0 = new Level(0);
+    public final static Level LEVEL1 = new Level(1);
+    public final static Level LEVEL2 = new Level(2);
+    public final static Level LEVEL3 = new Level(3);
+    public final static Level LEVEL4 = new Level(4);
+    public final static Level LEVEL5 = new Level(5);
+    public final static Level LEVEL6 = new Level(6);
+    public final static Level LEVEL7 = new Level(7);
+    public final static Level LEVEL8 = new Level(8);
+    public final static Level LEVEL9 = new Level(9);
 
-    public static final LogOutputType NO_OUTPUT = LogOutputType.NONE;
-    public static final LogOutputType QUIET = LogOutputType.QUIET;    
-    public static final LogOutputType VERBOSE = LogOutputType.VERBOSE;
+    public static final OutputType NO_OUTPUT = OutputType.NONE;
+    public static final OutputType QUIET = OutputType.QUIET;    
+    public static final OutputType VERBOSE = OutputType.VERBOSE;
     
     /**
      * The default number of stack trace elements to display in a stack.
@@ -64,15 +64,15 @@ public class Logger {
         }
 
         boolean verbose = Boolean.valueOf(verStr);
-        LogLevel level = LEVEL5;
+        Level level = LEVEL5;
             
         String lvlStr = System.getProperty(LEVEL_PROPERTY_KEY);
         if (isNotNull(lvlStr)) {
-            level = new LogLevel(new Integer(lvlStr));
+            level = new Level(new Integer(lvlStr));
         }
 
         if (verbose) {
-            setOutput(LogOutputType.VERBOSE, level);
+            setOutput(OutputType.VERBOSE, level);
             System.out.println("Log, version " + VERSION);
         }
     }
@@ -123,7 +123,7 @@ public class Logger {
         }
     }
     
-    public static boolean isLoggable(LogLevel level) {
+    public static boolean isLoggable(Level level) {
         return writer.isLoggable(level);
     }
 
@@ -200,7 +200,7 @@ public class Logger {
     }
 
     public static void setVerbose(boolean verbose) {
-        setOutput(LogOutputType.VERBOSE, verbose ? LEVEL5 : null);
+        setOutput(OutputType.VERBOSE, verbose ? LEVEL5 : null);
     }
 
     public static void setQuiet() {
@@ -208,15 +208,15 @@ public class Logger {
     }
 
     public static void setQuiet(boolean quiet) {
-        setOutput(LogOutputType.QUIET, LEVEL5);
+        setOutput(OutputType.QUIET, LEVEL5);
     }
 
-    public static void setOutput(LogOutputType type, LogLevel level) {
+    public static void setOutput(OutputType type, Level level) {
         writer.setOutput(type, level);
     }
 
-    public static void setQuiet(LogLevel level) {
-        writer.setOutput(LogOutputType.QUIET, level);
+    public static void setQuiet(Level level) {
+        writer.setOutput(OutputType.QUIET, level);
     }
 
     public static boolean verbose() {
@@ -267,21 +267,21 @@ public class Logger {
         return timer.end(msg);
     }
 
-    public static boolean stack(LogLevel level, EnumSet<ANSIColor> msgColors, String name, Object obj, int numFrames) {
+    public static boolean stack(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj, int numFrames) {
         LogColors logColors = new LogColors(msgColors);
         return stack(level, logColors, name, obj, numFrames);
     }
 
-    public static boolean log(LogLevel level, EnumSet<ANSIColor> msgColors, String name, Object obj) {
+    public static boolean log(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj) {
         LogColors logColors = new LogColors(msgColors);
         return stack(level, logColors, name, obj, 1);
     }
 
-    public static boolean stack(LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
+    public static boolean stack(Level level, LogColors logColors, String name, Object obj, int numFrames) {
         return writer.stack(level, logColors, name, obj, numFrames);
     }
 
-    public static boolean inspect(LogLevel level, EnumSet<ANSIColor> msgColors, String name, Object obj, int numFrames) {
+    public static boolean inspect(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj, int numFrames) {
         LogColors logColors = new LogColors(msgColors);
         if (isNull(obj)) {
             return stack(level, logColors, name, obj, numFrames);

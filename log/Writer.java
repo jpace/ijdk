@@ -27,10 +27,10 @@ public class Writer {
     private List<String> classesSkipped = list("tr.Ace");
     private List<String> methodsSkipped = IUtil.<String>list();
     
-    private LogOutputType outputType = LogOutputType.NONE;
+    private OutputType outputType = OutputType.NONE;
     private StackTraceElement prevStackElement = null;    
     private Thread prevThread = null;
-    private LogLevel level = Log.LEVEL9;
+    private Level level = Log.LEVEL9;
     private List<LogFilter> filters = new ArrayList<LogFilter>();
 
     /**
@@ -81,13 +81,13 @@ public class Writer {
     /**
      * Sets the output type and level. Either verbose or quiet can be enabled.
      */
-    public void setOutput(LogOutputType type, LogLevel level) {
+    public void setOutput(OutputType type, Level level) {
         this.outputType = type;
         this.level      = level;
     }
 
     public boolean verbose() {
-        return outputType.equals(LogOutputType.VERBOSE);
+        return outputType.equals(OutputType.VERBOSE);
     }
 
     public void addClassSkipped(Class cls) {
@@ -117,7 +117,7 @@ public class Writer {
         this.prevStackElement = null;
     }
 
-    public boolean stack(LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
+    public boolean stack(Level level, LogColors logColors, String name, Object obj, int numFrames) {
         if (!isLoggable(level)) {
             return true;
         }
@@ -140,7 +140,7 @@ public class Writer {
         return false;
     }
 
-    public boolean isLoggable(LogLevel lvl) {
+    public boolean isLoggable(Level lvl) {
         return level.isLoggable(outputType, lvl);
     }
 
@@ -168,7 +168,7 @@ public class Writer {
         }
 
         // only show 1 frame in quiet mode:
-        int numFrames = outputType.equals(LogOutputType.QUIET) ? 1 : le.getNumFrames();
+        int numFrames = outputType.equals(OutputType.QUIET) ? 1 : le.getNumFrames();
         StackTraceElement[] stack = getStack(numFrames);
 
         int fi = findStackStart(stack);
@@ -189,7 +189,7 @@ public class Writer {
                                                  or(elmtColors.getMethodColor(), config.getMethodColor(stackElement.getClassName(), stackElement.getMethodName())));
             
             Line line = new Line(le.getMessage(), lineColors, stackElement, prevStackElement, config);
-            out.println(line.getLine(framesShown > 0, outputType.equals(LogOutputType.VERBOSE)));
+            out.println(line.getLine(framesShown > 0, outputType.equals(OutputType.VERBOSE)));
             prevStackElement = stackElement;
         }
         return true;
@@ -219,7 +219,7 @@ public class Writer {
     public boolean isLoggable(StackTraceElement stackElement) {
         boolean isLoggable = true;
         for (LogFilter filter : filters) {
-            LogLevel flevel = filter.getLevel();
+            Level flevel = filter.getLevel();
             if (filter.isMatch(stackElement)) {
                 isLoggable = flevel != null && level.compareTo(flevel) >= 0;
             }

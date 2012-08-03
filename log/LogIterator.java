@@ -8,7 +8,7 @@ import java.util.Iterator;
  * Wraps Iterators for output.
  */
 public class LogIterator extends LogCollection {
-    public static <T> LogIterator create(LogLevel level, LogColors logColors, String name, Iterator<T> it, int numFrames) {
+    public static <T> LogIterator create(Level level, LogColors logColors, String name, Iterator<T> it, int numFrames) {
         return new LogIterator(level, logColors, name, it, numFrames);
     }
 
@@ -20,7 +20,7 @@ public class LogIterator extends LogCollection {
         return coll;
     }
 
-    public <T> LogIterator(LogLevel level, LogColors logColors, String name, Iterator<T> it, int numFrames) {
+    public <T> LogIterator(Level level, LogColors logColors, String name, Iterator<T> it, int numFrames) {
         super(level, logColors, name, iteratorToCollection(it), numFrames);
     }
 }

@@ -24,9 +24,9 @@ public class LogElementFactory {
         return null;
     }
 
-    public static LogElement createLogElement(Class<? extends LogElement> elmtCls, LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
+    public static LogElement createLogElement(Class<? extends LogElement> elmtCls, Level level, LogColors logColors, String name, Object obj, int numFrames) {
         try {
-            Constructor<?> ctor = elmtCls.getConstructor(LogLevel.class, LogColors.class, String.class, Object.class, int.class);
+            Constructor<?> ctor = elmtCls.getConstructor(Level.class, LogColors.class, String.class, Object.class, int.class);
             return (LogElement)ctor.newInstance(level, logColors, name, obj, numFrames);
         }
         catch (Exception ex) {
@@ -34,7 +34,7 @@ public class LogElementFactory {
         }
     }
 
-    public static LogElement create(LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
+    public static LogElement create(Level level, LogColors logColors, String name, Object obj, int numFrames) {
         if (obj == null) {
             return new LogElement(level, logColors, name, obj, numFrames);
         }

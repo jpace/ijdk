@@ -6,7 +6,7 @@ import org.incava.ijdk.lang.*;
  * Wraps C-style arrays for output.
  */
 public class LogObjectArray extends LogElement {
-    public static LogObjectArray create(LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
+    public static LogObjectArray create(Level level, LogColors logColors, String name, Object obj, int numFrames) {
         Object[] objAry;
 
         if (obj == null) {
@@ -55,13 +55,13 @@ public class LogObjectArray extends LogElement {
 
     private final Object[] ary;
     
-    public LogObjectArray(LogLevel level, LogColors logColors, String name, Object[] ary, int numFrames) {
+    public LogObjectArray(Level level, LogColors logColors, String name, Object[] ary, int numFrames) {
         super(level, logColors, name, ary, numFrames);
         this.ary = ary;
     }
 
     public boolean stack(Writer lw) {
-        LogLevel level = getLevel();
+        Level level = getLevel();
         LogColors logColors = getColors();
         String name = getName();
         int numFrames = getNumFrames();

@@ -10,7 +10,7 @@ package org.incava.ijdk.log;
 public class ClassFilter extends LogFilter {
     private final Class<?> cls;
 
-    public ClassFilter(Class<?> cls, LogLevel level) {
+    public ClassFilter(Class<?> cls, Level level) {
         super(level);
         this.cls = cls;
     }

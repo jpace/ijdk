@@ -35,13 +35,13 @@ public class LogElement {
         return false;
     }
 
-    private final LogLevel level;
+    private final Level level;
     private final LogColors logColors;
     private final String name;
     private final Object object;
     private final int numFrames;
         
-    public LogElement(LogLevel level, LogColors logColors, String name, Object obj, int numFrames) {
+    public LogElement(Level level, LogColors logColors, String name, Object obj, int numFrames) {
         this.level = level;
         this.logColors = logColors;
         this.name = name;
@@ -49,7 +49,7 @@ public class LogElement {
         this.numFrames = numFrames;
     }
 
-    public LogLevel getLevel() {
+    public Level getLevel() {
         return level;
     }
     

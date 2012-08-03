@@ -43,7 +43,7 @@ public class LogLineFormat {
             int nSpaces = 0;
             int strlen = str.length();
             if (snipIfLong && strlen > width) {
-                str = LogUtil.snip(str, width);
+                str = StringExt.snip(str, width);
             }
             else {
                 nSpaces = width - strlen;

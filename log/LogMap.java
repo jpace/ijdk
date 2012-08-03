@@ -9,14 +9,14 @@ import java.util.Set;
 public class LogMap extends LogElement {
     private final Map<?, ?> map;
 
-    public LogMap(LogLevel level, LogColors logColors, String name, Map<?,?> map, int numFrames) {
+    public LogMap(Level level, LogColors logColors, String name, Map<?,?> map, int numFrames) {
         super(level, logColors, name, map, numFrames);
 
         this.map = map;
     }
 
     public boolean stack(Writer lw) {
-        LogLevel level = getLevel();
+        Level level = getLevel();
         LogColors logColors = getColors();
         String name = getName();
         int numFrames = getNumFrames();

@@ -1,6 +1,7 @@
 package org.incava.ijdk.log;
 
 import org.incava.ijdk.lang.ObjectExt;
+import org.incava.ijdk.lang.StringExt;
 
 public abstract class Item {
     private final ANSIColorList colors;
@@ -33,7 +34,7 @@ public abstract class Item {
     }
 
     public String getSnipped(String str) {
-        return LogUtil.snip(str, width);
+        return StringExt.snip(str, width);
     }
 
     public int getWidth() {

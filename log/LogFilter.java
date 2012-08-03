@@ -11,17 +11,17 @@ public class LogFilter {
     public static final Pattern NO_PATTERN = null;
     public static final Range NO_RANGE = null;
     
-    private final LogLevel level;
+    private final Level level;
     private final Pattern fileNamePat;
     private final Range lineNumberRng;    
     private final Pattern classNamePat;
     private final Pattern methodNamePat;
 
-    public LogFilter(LogLevel level) {
+    public LogFilter(Level level) {
         this(level, (Pattern)null, null, null, null);
     }
 
-    public LogFilter(LogLevel level, Pattern fname, Range lnum, Pattern clsName, Pattern methName) {
+    public LogFilter(Level level, Pattern fname, Range lnum, Pattern clsName, Pattern methName) {
         this.level = level;
 
         fileNamePat = fname;
@@ -30,7 +30,7 @@ public class LogFilter {
         methodNamePat = methName;
     }
 
-    public LogFilter(LogLevel level, String fname, Range lnum, String clsName, String methName) {
+    public LogFilter(Level level, String fname, Range lnum, String clsName, String methName) {
         this(level,
              fname == null    ? (Pattern)null : Pattern.compile(fname),
              lnum,
@@ -41,7 +41,7 @@ public class LogFilter {
     /**
      * Returns the level.
      */
-    public LogLevel getLevel() {
+    public Level getLevel() {
         return level;
     }
 

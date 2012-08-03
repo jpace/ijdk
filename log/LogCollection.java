@@ -8,7 +8,7 @@ import java.util.Collection;
 public class LogCollection extends LogObjectArray {
     private final Collection coll;
 
-    public LogCollection(LogLevel level, LogColors logColors, String name, Collection coll, int numFrames) {
+    public LogCollection(Level level, LogColors logColors, String name, Collection coll, int numFrames) {
         super(level, logColors, name, coll.toArray(), numFrames);
         this.coll = coll;
     }

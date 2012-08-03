@@ -1,7 +1,6 @@
 package org.incava.ijdk.log;
 
-import java.io.*;
-import java.util.*;
+import java.util.EnumSet;
 import org.incava.ijdk.util.PropertyExt;
 import static org.incava.ijdk.util.IUtil.*;
 
@@ -175,15 +174,15 @@ public class Log extends Logger {
         return stack(LEVEL5, colors, null, obj, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(LogLevel level, Object obj) {
+    public static boolean stack(Level level, Object obj) {
         return stack(level, NO_COLORS, null, obj, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(LogLevel level, ANSIColor color, Object obj) {
+    public static boolean stack(Level level, ANSIColor color, Object obj) {
         return stack(level, EnumSet.of(color), null, obj, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(LogLevel level, EnumSet<ANSIColor> colors, Object obj) {
+    public static boolean stack(Level level, EnumSet<ANSIColor> colors, Object obj) {
         return stack(level, colors, null, obj, DEFAULT_STACK_DEPTH);
     }
 
@@ -199,15 +198,15 @@ public class Log extends Logger {
         return stack(LEVEL5, colors, name, obj, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(LogLevel level, String name, Object obj) {
+    public static boolean stack(Level level, String name, Object obj) {
         return stack(level, NO_COLORS, name, obj, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(LogLevel level, ANSIColor color, String name, Object obj) {
+    public static boolean stack(Level level, ANSIColor color, String name, Object obj) {
         return stack(level, EnumSet.of(color), name, obj, DEFAULT_STACK_DEPTH);
     }
 
-    public static boolean stack(LogLevel level, EnumSet<ANSIColor> colors, String name, Object obj) {
+    public static boolean stack(Level level, EnumSet<ANSIColor> colors, String name, Object obj) {
         return stack(level, colors, name, obj, DEFAULT_STACK_DEPTH);
     }
 
@@ -223,15 +222,15 @@ public class Log extends Logger {
         return stack(LEVEL5, colors, null, obj, depth);
     }
 
-    public static boolean stack(LogLevel level, Object obj, int depth) {
+    public static boolean stack(Level level, Object obj, int depth) {
         return stack(level, NO_COLORS, null, obj, depth);
     }
 
-    public static boolean stack(LogLevel level, ANSIColor color, Object obj, int depth) {
+    public static boolean stack(Level level, ANSIColor color, Object obj, int depth) {
         return stack(level, EnumSet.of(color), null, obj, depth);
     }
 
-    public static boolean stack(LogLevel level, EnumSet<ANSIColor> colors, Object obj, int depth) {
+    public static boolean stack(Level level, EnumSet<ANSIColor> colors, Object obj, int depth) {
         return stack(level, colors, null, obj, depth);
     }
 
@@ -247,11 +246,11 @@ public class Log extends Logger {
         return stack(LEVEL5, colors, name, obj, depth);
     }
 
-    public static boolean stack(LogLevel level, String name, Object obj, int depth) {
+    public static boolean stack(Level level, String name, Object obj, int depth) {
         return stack(level, NO_COLORS, name, obj, depth);
     }
 
-    public static boolean stack(LogLevel level, ANSIColor color, String name, Object obj, int depth) {
+    public static boolean stack(Level level, ANSIColor color, String name, Object obj, int depth) {
         return stack(level, EnumSet.of(color), name, obj, depth);
     }
 
@@ -259,7 +258,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.NONE), null, obj, 1);
     }
 
-    public static boolean none(LogLevel level, Object obj) {
+    public static boolean none(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.NONE), null, obj, 1);
     }
 
@@ -267,7 +266,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.NONE), name, obj, 1);
     }
 
-    public static boolean none(LogLevel level, String name, Object obj) {
+    public static boolean none(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.NONE), name, obj, 1);
     }
 
@@ -275,7 +274,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BOLD), null, obj, 1);
     }
 
-    public static boolean bold(LogLevel level, Object obj) {
+    public static boolean bold(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BOLD), null, obj, 1);
     }
 
@@ -283,7 +282,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BOLD), name, obj, 1);
     }
 
-    public static boolean bold(LogLevel level, String name, Object obj) {
+    public static boolean bold(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BOLD), name, obj, 1);
     }
 
@@ -291,7 +290,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.UNDERSCORE), null, obj, 1);
     }
 
-    public static boolean underscore(LogLevel level, Object obj) {
+    public static boolean underscore(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.UNDERSCORE), null, obj, 1);
     }
 
@@ -299,7 +298,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.UNDERSCORE), name, obj, 1);
     }
 
-    public static boolean underscore(LogLevel level, String name, Object obj) {
+    public static boolean underscore(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.UNDERSCORE), name, obj, 1);
     }
 
@@ -307,7 +306,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.UNDERLINE), null, obj, 1);
     }
 
-    public static boolean underline(LogLevel level, Object obj) {
+    public static boolean underline(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.UNDERLINE), null, obj, 1);
     }
 
@@ -315,7 +314,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.UNDERLINE), name, obj, 1);
     }
 
-    public static boolean underline(LogLevel level, String name, Object obj) {
+    public static boolean underline(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.UNDERLINE), name, obj, 1);
     }
 
@@ -323,7 +322,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BLINK), null, obj, 1);
     }
 
-    public static boolean blink(LogLevel level, Object obj) {
+    public static boolean blink(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BLINK), null, obj, 1);
     }
 
@@ -331,7 +330,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BLINK), name, obj, 1);
     }
 
-    public static boolean blink(LogLevel level, String name, Object obj) {
+    public static boolean blink(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BLINK), name, obj, 1);
     }
 
@@ -339,7 +338,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.REVERSE), null, obj, 1);
     }
 
-    public static boolean reverse(LogLevel level, Object obj) {
+    public static boolean reverse(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.REVERSE), null, obj, 1);
     }
 
@@ -347,7 +346,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.REVERSE), name, obj, 1);
     }
 
-    public static boolean reverse(LogLevel level, String name, Object obj) {
+    public static boolean reverse(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.REVERSE), name, obj, 1);
     }
 
@@ -355,7 +354,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.CONCEALED), null, obj, 1);
     }
 
-    public static boolean concealed(LogLevel level, Object obj) {
+    public static boolean concealed(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.CONCEALED), null, obj, 1);
     }
 
@@ -363,7 +362,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.CONCEALED), name, obj, 1);
     }
 
-    public static boolean concealed(LogLevel level, String name, Object obj) {
+    public static boolean concealed(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.CONCEALED), name, obj, 1);
     }
 
@@ -371,7 +370,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BLACK), null, obj, 1);
     }
 
-    public static boolean black(LogLevel level, Object obj) {
+    public static boolean black(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BLACK), null, obj, 1);
     }
 
@@ -379,7 +378,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BLACK), name, obj, 1);
     }
 
-    public static boolean black(LogLevel level, String name, Object obj) {
+    public static boolean black(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BLACK), name, obj, 1);
     }
 
@@ -387,7 +386,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.RED), null, obj, 1);
     }
 
-    public static boolean red(LogLevel level, Object obj) {
+    public static boolean red(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.RED), null, obj, 1);
     }
 
@@ -395,7 +394,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.RED), name, obj, 1);
     }
 
-    public static boolean red(LogLevel level, String name, Object obj) {
+    public static boolean red(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.RED), name, obj, 1);
     }
 
@@ -403,7 +402,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.GREEN), null, obj, 1);
     }
 
-    public static boolean green(LogLevel level, Object obj) {
+    public static boolean green(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.GREEN), null, obj, 1);
     }
 
@@ -411,7 +410,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.GREEN), name, obj, 1);
     }
 
-    public static boolean green(LogLevel level, String name, Object obj) {
+    public static boolean green(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.GREEN), name, obj, 1);
     }
 
@@ -419,7 +418,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.YELLOW), null, obj, 1);
     }
 
-    public static boolean yellow(LogLevel level, Object obj) {
+    public static boolean yellow(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.YELLOW), null, obj, 1);
     }
 
@@ -427,7 +426,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.YELLOW), name, obj, 1);
     }
 
-    public static boolean yellow(LogLevel level, String name, Object obj) {
+    public static boolean yellow(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.YELLOW), name, obj, 1);
     }
 
@@ -435,7 +434,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BLUE), null, obj, 1);
     }
 
-    public static boolean blue(LogLevel level, Object obj) {
+    public static boolean blue(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BLUE), null, obj, 1);
     }
 
@@ -443,7 +442,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.BLUE), name, obj, 1);
     }
 
-    public static boolean blue(LogLevel level, String name, Object obj) {
+    public static boolean blue(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.BLUE), name, obj, 1);
     }
 
@@ -451,7 +450,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.MAGENTA), null, obj, 1);
     }
 
-    public static boolean magenta(LogLevel level, Object obj) {
+    public static boolean magenta(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.MAGENTA), null, obj, 1);
     }
 
@@ -459,7 +458,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.MAGENTA), name, obj, 1);
     }
 
-    public static boolean magenta(LogLevel level, String name, Object obj) {
+    public static boolean magenta(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.MAGENTA), name, obj, 1);
     }
 
@@ -467,7 +466,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.CYAN), null, obj, 1);
     }
 
-    public static boolean cyan(LogLevel level, Object obj) {
+    public static boolean cyan(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.CYAN), null, obj, 1);
     }
 
@@ -475,7 +474,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.CYAN), name, obj, 1);
     }
 
-    public static boolean cyan(LogLevel level, String name, Object obj) {
+    public static boolean cyan(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.CYAN), name, obj, 1);
     }
 
@@ -483,7 +482,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.WHITE), null, obj, 1);
     }
 
-    public static boolean white(LogLevel level, Object obj) {
+    public static boolean white(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.WHITE), null, obj, 1);
     }
 
@@ -491,7 +490,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.WHITE), name, obj, 1);
     }
 
-    public static boolean white(LogLevel level, String name, Object obj) {
+    public static boolean white(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.WHITE), name, obj, 1);
     }
 
@@ -499,7 +498,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_BLACK), null, obj, 1);
     }
 
-    public static boolean onBlack(LogLevel level, Object obj) {
+    public static boolean onBlack(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_BLACK), null, obj, 1);
     }
 
@@ -507,7 +506,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_BLACK), name, obj, 1);
     }
 
-    public static boolean onBlack(LogLevel level, String name, Object obj) {
+    public static boolean onBlack(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_BLACK), name, obj, 1);
     }
 
@@ -515,7 +514,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_RED), null, obj, 1);
     }
 
-    public static boolean onRed(LogLevel level, Object obj) {
+    public static boolean onRed(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_RED), null, obj, 1);
     }
 
@@ -523,7 +522,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_RED), name, obj, 1);
     }
 
-    public static boolean onRed(LogLevel level, String name, Object obj) {
+    public static boolean onRed(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_RED), name, obj, 1);
     }
 
@@ -531,7 +530,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_GREEN), null, obj, 1);
     }
 
-    public static boolean onGreen(LogLevel level, Object obj) {
+    public static boolean onGreen(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_GREEN), null, obj, 1);
     }
 
@@ -539,7 +538,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_GREEN), name, obj, 1);
     }
 
-    public static boolean onGreen(LogLevel level, String name, Object obj) {
+    public static boolean onGreen(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_GREEN), name, obj, 1);
     }
 
@@ -547,7 +546,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_YELLOW), null, obj, 1);
     }
 
-    public static boolean onYellow(LogLevel level, Object obj) {
+    public static boolean onYellow(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_YELLOW), null, obj, 1);
     }
 
@@ -555,7 +554,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_YELLOW), name, obj, 1);
     }
 
-    public static boolean onYellow(LogLevel level, String name, Object obj) {
+    public static boolean onYellow(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_YELLOW), name, obj, 1);
     }
 
@@ -563,7 +562,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_BLUE), null, obj, 1);
     }
 
-    public static boolean onBlue(LogLevel level, Object obj) {
+    public static boolean onBlue(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_BLUE), null, obj, 1);
     }
 
@@ -571,7 +570,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_BLUE), name, obj, 1);
     }
 
-    public static boolean onBlue(LogLevel level, String name, Object obj) {
+    public static boolean onBlue(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_BLUE), name, obj, 1);
     }
 
@@ -579,7 +578,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_MAGENTA), null, obj, 1);
     }
 
-    public static boolean onMagenta(LogLevel level, Object obj) {
+    public static boolean onMagenta(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_MAGENTA), null, obj, 1);
     }
 
@@ -587,7 +586,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_MAGENTA), name, obj, 1);
     }
 
-    public static boolean onMagenta(LogLevel level, String name, Object obj) {
+    public static boolean onMagenta(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_MAGENTA), name, obj, 1);
     }
 
@@ -595,7 +594,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_CYAN), null, obj, 1);
     }
 
-    public static boolean onCyan(LogLevel level, Object obj) {
+    public static boolean onCyan(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_CYAN), null, obj, 1);
     }
 
@@ -603,7 +602,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_CYAN), name, obj, 1);
     }
 
-    public static boolean onCyan(LogLevel level, String name, Object obj) {
+    public static boolean onCyan(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_CYAN), name, obj, 1);
     }
 
@@ -611,7 +610,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_WHITE), null, obj, 1);
     }
 
-    public static boolean onWhite(LogLevel level, Object obj) {
+    public static boolean onWhite(Level level, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_WHITE), null, obj, 1);
     }
 
@@ -619,7 +618,7 @@ public class Log extends Logger {
         return stack(LEVEL5, EnumSet.of(ANSIColor.ON_WHITE), name, obj, 1);
     }
 
-    public static boolean onWhite(LogLevel level, String name, Object obj) {
+    public static boolean onWhite(Level level, String name, Object obj) {
         return stack(level, EnumSet.of(ANSIColor.ON_WHITE), name, obj, 1);
     }
 
@@ -635,15 +634,15 @@ public class Log extends Logger {
         return stack(LEVEL5, colors, null, obj, 1);
     }
 
-    public static boolean log(LogLevel level, Object obj) {
+    public static boolean log(Level level, Object obj) {
         return stack(level, NO_COLORS, null, obj, 1);
     }
 
-    public static boolean log(LogLevel level, ANSIColor color, Object obj) {
+    public static boolean log(Level level, ANSIColor color, Object obj) {
         return stack(level, EnumSet.of(color), null, obj, 1);
     }
 
-    public static boolean log(LogLevel level, EnumSet<ANSIColor> colors, Object obj) {
+    public static boolean log(Level level, EnumSet<ANSIColor> colors, Object obj) {
         return stack(level, colors, null, obj, 1);
     }
 
@@ -659,11 +658,11 @@ public class Log extends Logger {
         return stack(LEVEL5, colors, name, obj, 1);
     }
 
-    public static boolean log(LogLevel level, String name, Object obj) {
+    public static boolean log(Level level, String name, Object obj) {
         return stack(level, NO_COLORS, name, obj, 1);
     }
 
-    public static boolean log(LogLevel level, ANSIColor color, String name, Object obj) {
+    public static boolean log(Level level, ANSIColor color, String name, Object obj) {
         return stack(level, EnumSet.of(color), name, obj, 1);
     }
 
@@ -679,15 +678,15 @@ public class Log extends Logger {
         return inspect(LEVEL5, colors, null, obj, 1);
     }
 
-    public static boolean inspect(LogLevel level, Object obj) {
+    public static boolean inspect(Level level, Object obj) {
         return inspect(level, NO_COLORS, null, obj, 1);
     }
 
-    public static boolean inspect(LogLevel level, ANSIColor color, Object obj) {
+    public static boolean inspect(Level level, ANSIColor color, Object obj) {
         return inspect(level, EnumSet.of(color), null, obj, 1);
     }
 
-    public static boolean inspect(LogLevel level, EnumSet<ANSIColor> colors, Object obj) {
+    public static boolean inspect(Level level, EnumSet<ANSIColor> colors, Object obj) {
         return inspect(level, colors, null, obj, 1);
     }
 
@@ -703,15 +702,15 @@ public class Log extends Logger {
         return inspect(LEVEL5, colors, name, obj, 1);
     }
 
-    public static boolean inspect(LogLevel level, String name, Object obj) {
+    public static boolean inspect(Level level, String name, Object obj) {
         return inspect(level, NO_COLORS, name, obj, 1);
     }
 
-    public static boolean inspect(LogLevel level, ANSIColor color, String name, Object obj) {
+    public static boolean inspect(Level level, ANSIColor color, String name, Object obj) {
         return inspect(level, EnumSet.of(color), name, obj, 1);
     }
 
-    public static boolean inspect(LogLevel level, EnumSet<ANSIColor> colors, String name, Object obj) {
+    public static boolean inspect(Level level, EnumSet<ANSIColor> colors, String name, Object obj) {
         return inspect(level, colors, name, obj, 1);
     }
 
