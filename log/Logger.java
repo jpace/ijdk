@@ -8,7 +8,7 @@ import org.incava.ijdk.log.output.ANSIColor;
 import org.incava.ijdk.log.output.ItemColors;
 import org.incava.ijdk.log.output.OutputType;
 import org.incava.ijdk.log.output.Writer;
-import org.incava.ijdk.log.timer.LogTimer;
+import org.incava.ijdk.log.timer.Timer;
 import org.incava.ijdk.log.types.LogObject;
 import org.incava.ijdk.util.PropertyExt;
 import static org.incava.ijdk.util.IUtil.*;
@@ -57,7 +57,7 @@ public class Logger {
 
     protected static Writer writer;
 
-    protected static LogTimer timer;
+    protected static Timer timer;
 
     /**
      * Sets verbose from system property settings.
@@ -85,7 +85,7 @@ public class Logger {
 
     static {
         writer = new Writer();
-        timer = new LogTimer();
+        timer = new Timer();
 
         setVerbosity();
         

@@ -8,11 +8,11 @@ import org.incava.ijdk.lang.Pair;
 import org.incava.ijdk.log.Log;
 import static org.incava.ijdk.util.IUtil.*;
 
-public class LogTimer {
-    private final List<LogTimedPeriod> periods;
+public class Timer {
+    private final List<TimedPeriod> periods;
 
-    public LogTimer() {
-        periods = new ArrayList<LogTimedPeriod>();
+    public Timer() {
+        periods = new ArrayList<TimedPeriod>();
     }
 
     public boolean start() {
@@ -31,7 +31,7 @@ public class LogTimer {
         int    lineNumber = ste.getLineNumber();
         String fileName   = ste.getFileName();
 
-        LogTimedPeriod qtp = new LogTimedPeriod(fileName, className, methodName, lineNumber, msg);
+        TimedPeriod qtp = new TimedPeriod(fileName, className, methodName, lineNumber, msg);
         periods.add(qtp);
 
         return true;
@@ -53,7 +53,7 @@ public class LogTimer {
         Pair<Integer, Integer> bestMatch = new Pair<Integer, Integer>(-1, -1);
         
         for (int idx : iter(periods.size())) {
-            LogTimedPeriod qtp       = periods.get(idx);
+            TimedPeriod qtp       = periods.get(idx);
             int            matchness = (getScore(msg,        qtp.getMessage()) +
                                         getScore(className,  qtp.getClassName()) + 
                                         getScore(fileName,   qtp.getFileName()) +
@@ -76,9 +76,9 @@ public class LogTimer {
         Integer bestMatch = findBestMatch(ste, msg);
 
         if (bestMatch >= 0) {
-            LogTimedPeriod qtp     = periods.remove(bestMatch.intValue());
-            long           elapsed = endTime - qtp.getStartTime();
-            String         str     = getMessage(ste, msg, elapsed);
+            TimedPeriod qtp     = periods.remove(bestMatch.intValue());
+            long        elapsed = endTime - qtp.getStartTime();
+            String      str     = getMessage(ste, msg, elapsed);
 
             Log.log(str);
         }
