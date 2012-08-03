@@ -346,4 +346,8 @@ public class StringExt {
     public static Boolean eqi(String a, String b) {
         return a == null && b == null ? true : a == null ? false : b == null ? false : a.equalsIgnoreCase(b);
     }
+
+    public static String snip(String str, int len) {
+        return len <= 0 ? "" : str.length() > len ? str.substring(0, len - 1) + '-' : str;
+    }
 }
