@@ -4,7 +4,6 @@ import java.util.*;
 import org.incava.ijdk.lang.*;
 import org.incava.ijdk.log.output.ANSIColor;
 import org.incava.ijdk.log.output.ANSIColorList;
-import org.incava.ijdk.log.output.LogColors;
 import static org.incava.ijdk.util.IUtil.*;
 
 /**

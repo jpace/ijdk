@@ -3,8 +3,8 @@ package org.incava.ijdk.log.output;
 import org.incava.ijdk.lang.StringExt;
 import static org.incava.ijdk.util.IUtil.*;
 
-public class LogFileNameLineNumber extends Item {    
-    public LogFileNameLineNumber(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int fileWidth) {
+public class FileNameLineNumber extends Item {    
+    public FileNameLineNumber(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int fileWidth) {
         super(color, stackElement, previousStackElement, fileWidth);
     }
 
@@ -21,9 +21,7 @@ public class LogFileNameLineNumber extends Item {
         int lineNum = stackElement.getLineNumber();
         String lnStr = lineNum >= 0 ? String.valueOf(lineNum) : "";
 
-        String value = getSnipped(fileName) + ":" + lnStr;
-        
-        return value;
+        return getSnipped(fileName) + ":" + lnStr;
     }
 
     public String getStackField(StackTraceElement stackElement) {

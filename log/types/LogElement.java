@@ -3,7 +3,7 @@ package org.incava.ijdk.log.types;
 import java.util.*;
 import org.incava.ijdk.lang.*;
 import org.incava.ijdk.log.Level;
-import org.incava.ijdk.log.output.LogColors;
+import org.incava.ijdk.log.output.ItemColors;
 import org.incava.ijdk.log.output.Writer;
 import static org.incava.ijdk.util.IUtil.*;
 
@@ -39,14 +39,14 @@ public class LogElement {
     }
 
     private final Level level;
-    private final LogColors logColors;
+    private final ItemColors colors;
     private final String name;
     private final Object object;
     private final int numFrames;
         
-    public LogElement(Level level, LogColors logColors, String name, Object obj, int numFrames) {
+    public LogElement(Level level, ItemColors colors, String name, Object obj, int numFrames) {
         this.level = level;
-        this.logColors = logColors;
+        this.colors = colors;
         this.name = name;
         this.object = obj;
         this.numFrames = numFrames;
@@ -56,8 +56,8 @@ public class LogElement {
         return level;
     }
     
-    public LogColors getColors() {
-        return logColors;
+    public ItemColors getColors() {
+        return colors;
     }
 
     public String getName() {
@@ -82,7 +82,7 @@ public class LogElement {
     }
 
     public boolean stackEmptyCollection(Writer lw) {
-        return lw.stack(level, logColors, name, "()", numFrames);
+        return lw.stack(level, colors, name, "()", numFrames);
     }
 
     public String toString(Object obj) {

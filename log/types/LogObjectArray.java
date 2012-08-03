@@ -3,13 +3,13 @@ package org.incava.ijdk.log.types;
 import org.incava.ijdk.lang.*;
 import org.incava.ijdk.log.Level;
 import org.incava.ijdk.log.output.Writer;
-import org.incava.ijdk.log.output.LogColors;
+import org.incava.ijdk.log.output.ItemColors;
 
 /**
  * Wraps C-style arrays for output.
  */
 public class LogObjectArray extends LogElement {
-    public static LogObjectArray create(Level level, LogColors logColors, String name, Object obj, int numFrames) {
+    public static LogObjectArray create(Level level, ItemColors colors, String name, Object obj, int numFrames) {
         Object[] objAry;
 
         if (obj == null) {
@@ -53,19 +53,19 @@ public class LogObjectArray extends LogElement {
         else {
             objAry = null;
         }
-        return new LogObjectArray(level, logColors, name, objAry, numFrames);
+        return new LogObjectArray(level, colors, name, objAry, numFrames);
     }
 
     private final Object[] ary;
     
-    public LogObjectArray(Level level, LogColors logColors, String name, Object[] ary, int numFrames) {
-        super(level, logColors, name, ary, numFrames);
+    public LogObjectArray(Level level, ItemColors colors, String name, Object[] ary, int numFrames) {
+        super(level, colors, name, ary, numFrames);
         this.ary = ary;
     }
 
     public boolean stack(Writer lw) {
         Level level = getLevel();
-        LogColors logColors = getColors();
+        ItemColors colors = getColors();
         String name = getName();
         int numFrames = getNumFrames();
 
@@ -77,7 +77,7 @@ public class LogObjectArray extends LogElement {
         boolean ret = true;
         for (int ai = 0; ai < ary.length; ++ai) {
             int nFrames = ai == ary.length - 1 ? numFrames : 1;
-            ret = lw.stack(level, logColors, name + "[" + ai + "]", ary[ai], nFrames);
+            ret = lw.stack(level, colors, name + "[" + ai + "]", ary[ai], nFrames);
         }
         return ret;
     }

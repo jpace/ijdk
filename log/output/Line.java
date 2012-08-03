@@ -7,13 +7,13 @@ import org.incava.ijdk.log.Configuration;
  */
 public class Line {
     private final String message;
-    private final LogColors colors;
+    private final ItemColors colors;
     private final StackTraceElement stackElement;
     private final StackTraceElement previousStackElement;
     private final Configuration config;
     
     public Line(String message,
-                LogColors colors,
+                ItemColors colors,
                 StackTraceElement stackElement, 
                 StackTraceElement previousStackElement, 
                 Configuration config) {
@@ -47,7 +47,7 @@ public class Line {
         ANSIColor color = colors.getFileColor();
         
         if (config.useColumns()) {
-            LogFileName lfn = new LogFileName(color, stackElement, previousStackElement, config.getFileWidth());
+            FileName lfn = new FileName(color, stackElement, previousStackElement, config.getFileWidth());
             String flstr = lfn.getFormatted();
 
             LineNumber lln = new LineNumber(color, stackElement, previousStackElement, config.getLineWidth());
@@ -55,7 +55,7 @@ public class Line {
             sb.append(flstr).append(' ').append(lnstr);
         }
         else {
-            LogFileNameLineNumber lfnln = new LogFileNameLineNumber(color, stackElement, previousStackElement, config.getFileWidth());
+            FileNameLineNumber lfnln = new FileNameLineNumber(color, stackElement, previousStackElement, config.getFileWidth());
             sb.append(lfnln.getFormatted());
         }
 

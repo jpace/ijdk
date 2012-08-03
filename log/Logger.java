@@ -5,9 +5,10 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import org.incava.ijdk.log.output.ANSIColor;
-import org.incava.ijdk.log.output.LogColors;
+import org.incava.ijdk.log.output.ItemColors;
 import org.incava.ijdk.log.output.OutputType;
 import org.incava.ijdk.log.output.Writer;
+import org.incava.ijdk.log.timer.LogTimer;
 import org.incava.ijdk.log.types.LogObject;
 import org.incava.ijdk.util.PropertyExt;
 import static org.incava.ijdk.util.IUtil.*;
@@ -273,27 +274,27 @@ public class Logger {
     }
 
     public static boolean stack(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj, int numFrames) {
-        LogColors logColors = new LogColors(msgColors);
-        return stack(level, logColors, name, obj, numFrames);
+        ItemColors colors = new ItemColors(msgColors);
+        return stack(level, colors, name, obj, numFrames);
     }
 
     public static boolean log(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj) {
-        LogColors logColors = new LogColors(msgColors);
-        return stack(level, logColors, name, obj, 1);
+        ItemColors colors = new ItemColors(msgColors);
+        return stack(level, colors, name, obj, 1);
     }
 
-    public static boolean stack(Level level, LogColors logColors, String name, Object obj, int numFrames) {
-        return writer.stack(level, logColors, name, obj, numFrames);
+    public static boolean stack(Level level, ItemColors colors, String name, Object obj, int numFrames) {
+        return writer.stack(level, colors, name, obj, numFrames);
     }
 
     public static boolean inspect(Level level, EnumSet<ANSIColor> msgColors, String name, Object obj, int numFrames) {
-        LogColors logColors = new LogColors(msgColors);
+        ItemColors colors = new ItemColors(msgColors);
         if (isNull(obj)) {
-            return stack(level, logColors, name, obj, numFrames);
+            return stack(level, colors, name, obj, numFrames);
         }
         else {
             Map<String, Object> objMap = LogObject.inspect(obj);
-            return stack(level, logColors, name, objMap, numFrames);
+            return stack(level, colors, name, objMap, numFrames);
         }
     }
 

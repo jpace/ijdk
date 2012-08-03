@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import org.incava.ijdk.log.Level;
-import org.incava.ijdk.log.output.LogColors;
+import org.incava.ijdk.log.output.ItemColors;
 
 /**
  * Wraps Iterators for output.
  */
 public class LogIterator extends LogCollection {
-    public static <T> LogIterator create(Level level, LogColors logColors, String name, Iterator<T> it, int numFrames) {
-        return new LogIterator(level, logColors, name, it, numFrames);
+    public static <T> LogIterator create(Level level, ItemColors colors, String name, Iterator<T> it, int numFrames) {
+        return new LogIterator(level, colors, name, it, numFrames);
     }
 
     public static <T> Collection<T> iteratorToCollection(Iterator<T> it) {
@@ -22,7 +22,7 @@ public class LogIterator extends LogCollection {
         return coll;
     }
 
-    public <T> LogIterator(Level level, LogColors logColors, String name, Iterator<T> it, int numFrames) {
-        super(level, logColors, name, iteratorToCollection(it), numFrames);
+    public <T> LogIterator(Level level, ItemColors colors, String name, Iterator<T> it, int numFrames) {
+        super(level, colors, name, iteratorToCollection(it), numFrames);
     }
 }

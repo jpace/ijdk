@@ -2,6 +2,7 @@ package org.incava.ijdk.log.output;
 
 import org.incava.ijdk.lang.ObjectExt;
 import org.incava.ijdk.lang.StringExt;
+import static org.incava.ijdk.util.IUtil.*;
 
 public abstract class Item {
     private final ANSIColorList colors;
@@ -55,8 +56,28 @@ public abstract class Item {
     public abstract String getStackField(StackTraceElement stackElement);
 
     public String getFormatted() {
-        LogLineFormat llf = new LogLineFormat(width, justifyLeft(), getColors(), snipIfLong());
+        ANSIColorList colors = getColors();
+        
         Object value = getValue(stackElement);
-        return llf.format(value);
+        String str = String.valueOf(value);
+        if (width == null) {    
+            return colors == null ? str : colors.toString(str);
+        }
+        
+        int nSpaces = 0;
+        int strlen = str.length();
+        if (snipIfLong() && strlen > width) {
+            str = StringExt.snip(str, width);
+        }
+        else {
+            nSpaces = width - strlen;
+        }
+        String colstr = colors == null ? str : colors.toString(str);
+        StringBuilder sb = new StringBuilder(colstr);
+        int insertPoint = justifyLeft() ? sb.length() : 0;
+        for (int i : iter(nSpaces)) {
+            sb.insert(insertPoint, ' ');
+        }
+        return sb.toString();
     }
 }

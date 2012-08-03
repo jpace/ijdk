@@ -1,17 +1,18 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.timer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.incava.ijdk.lang.ObjectExt;
 import org.incava.ijdk.lang.Pair;
+import org.incava.ijdk.log.Log;
 import static org.incava.ijdk.util.IUtil.*;
 
 public class LogTimer {
     private final List<LogTimedPeriod> periods;
 
     public LogTimer() {
-        this.periods = new ArrayList<LogTimedPeriod>();
+        periods = new ArrayList<LogTimedPeriod>();
     }
 
     public boolean start() {
@@ -94,7 +95,7 @@ public class LogTimer {
         int    lineNumber = ste.getLineNumber();
         String fileName   = ste.getFileName();
 
-        StringBuilder  sb     = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
         sb.append(format(elapsed));
         sb.append("; ");

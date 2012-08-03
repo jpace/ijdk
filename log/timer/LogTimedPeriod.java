@@ -1,17 +1,11 @@
-package org.incava.ijdk.log;
-
+package org.incava.ijdk.log.timer;
 
 public class LogTimedPeriod {
     private final String fileName;
-
     private final String className;
-
-    private final String methodName;
-    
+    private final String methodName;    
     private final int lineNumber;
-
     private final String message;
-
     private final long start;
 
     public LogTimedPeriod(String fileName, String className, String methodName, int lineNumber, String message) {

@@ -124,12 +124,12 @@ public class Writer {
         this.prevStackElement = null;
     }
 
-    public boolean stack(Level level, LogColors logColors, String name, Object obj, int numFrames) {
+    public boolean stack(Level level, ItemColors colors, String name, Object obj, int numFrames) {
         if (!isLoggable(level)) {
             return true;
         }
 
-        LogElement le = LogElementFactory.create(level, logColors, name, obj, numFrames);
+        LogElement le = LogElementFactory.create(level, colors, name, obj, numFrames);
         return le.stack(this);
     }
 
@@ -186,11 +186,11 @@ public class Writer {
                 return true;
             }
 
-            LogColors elmtColors = le.getColors();
+            ItemColors elmtColors = le.getColors();
 
             // the colors of the message part, not the whole line:
             ANSIColorList msgColors = getMessageColors(elmtColors, stackElement);
-            LogColors lineColors = new LogColors(msgColors,
+            ItemColors lineColors = new ItemColors(msgColors,
                                                  or(elmtColors.getFileColor(), config.getFileColor(stackElement.getFileName())),
                                                  or(elmtColors.getClassColor(), config.getClassColor(stackElement.getClassName())),
                                                  or(elmtColors.getMethodColor(), config.getMethodColor(stackElement.getClassName(), stackElement.getMethodName())));
@@ -202,7 +202,7 @@ public class Writer {
         return true;
     }
 
-    private ANSIColorList getMessageColors(LogColors elmtColors, StackTraceElement ste) {
+    private ANSIColorList getMessageColors(ItemColors elmtColors, StackTraceElement ste) {
         if (!config.useColor()) {
             return null;
         }
