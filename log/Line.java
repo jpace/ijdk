@@ -1,9 +1,5 @@
 package org.incava.ijdk.log;
 
-import java.util.*;
-import org.incava.ijdk.lang.*;
-import static org.incava.ijdk.util.IUtil.*;
-
 /**
  * A log message.
  */
@@ -67,19 +63,19 @@ public class Line {
     public void appendClassAndMethod(StringBuilder sb) {
         sb.append("{");
 
-        LogClassName lcn = new LogClassName(colors.getClassColor(), stackElement, previousStackElement, config.getClassWidth());
+        ClassName lcn = new ClassName(colors.getClassColor(), stackElement, previousStackElement, config.getClassWidth());
         sb.append(lcn.getFormatted());
         
         sb.append('#');
 
-        LogMethodName lmn = new LogMethodName(colors.getMethodColor(), stackElement, previousStackElement, config.getFunctionWidth());
+        MethodName lmn = new MethodName(colors.getMethodColor(), stackElement, previousStackElement, config.getFunctionWidth());
         sb.append(lmn.getFormatted());
 
         sb.append("} ");
     }
 
     public String getMessage() {
-        LogMessage lm = new LogMessage(colors.getMessageColors(), stackElement, previousStackElement, message);
+        Message lm = new Message(colors.getMessageColors(), stackElement, previousStackElement, message);
         return lm.getFormatted();
     }
 }

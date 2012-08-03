@@ -3,11 +3,11 @@ package org.incava.ijdk.log;
 import org.incava.ijdk.lang.ObjectExt;
 import org.incava.ijdk.lang.StringExt;
 
-public class LogMethodName extends Item {    
+public class MethodName extends Item {    
     private final StackTraceElement stackElement;
     private final StackTraceElement previousStackElement;
 
-    public LogMethodName(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int methodWidth) {
+    public MethodName(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int methodWidth) {
         super(color, stackElement, previousStackElement, methodWidth);
 
         this.stackElement = stackElement;

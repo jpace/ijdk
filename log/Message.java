@@ -2,10 +2,10 @@ package org.incava.ijdk.log;
 
 import org.incava.ijdk.lang.StringExt;
 
-public class LogMessage extends Item {
+public class Message extends Item {
     private final String message;
     
-    public LogMessage(ANSIColorList colors, StackTraceElement stackElement, StackTraceElement previousStackElement, String msg) {
+    public Message(ANSIColorList colors, StackTraceElement stackElement, StackTraceElement previousStackElement, String msg) {
         super(colors, stackElement, previousStackElement, null);
         this.message = StringExt.chomp(msg);
     }

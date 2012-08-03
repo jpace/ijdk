@@ -51,7 +51,7 @@ public class Writer {
     }
 
     public void setDisabled(Class cls) {
-        addFilter(new LogClassFilter(cls, null));
+        addFilter(new ClassFilter(cls, null));
     }
 
     public void setClassColor(String className, ANSIColor color) {

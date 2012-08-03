@@ -1,8 +1,5 @@
 package org.incava.ijdk.log;
 
-import java.util.*;
-
-
 /**
  * A filter for logging statements from a class. Unlike <code>LogFilter</code>,
  * the class under consideration is checked that it is assignable from the
@@ -10,12 +7,11 @@ import java.util.*;
  *
  * @see LogFilter
  */
-public class LogClassFilter extends LogFilter {
+public class ClassFilter extends LogFilter {
     private final Class<?> cls;
 
-    public LogClassFilter(Class<?> cls, LogLevel level) {
+    public ClassFilter(Class<?> cls, LogLevel level) {
         super(level);
-
         this.cls = cls;
     }
 
@@ -32,5 +28,4 @@ public class LogClassFilter extends LogFilter {
             return false;
         }
     }
-
 }

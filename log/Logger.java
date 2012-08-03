@@ -128,7 +128,7 @@ public class Logger {
     }
 
     public static void setDisabled(Class cls) {
-        addFilter(new LogClassFilter(cls, null));
+        addFilter(new ClassFilter(cls, null));
     }
 
     public static void addFilter(LogFilter filter) {
