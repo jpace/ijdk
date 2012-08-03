@@ -4,8 +4,8 @@ import org.incava.ijdk.lang.StringExt;
 import static org.incava.ijdk.util.IUtil.*;
 
 public class FileNameLineNumber extends Item {    
-    public FileNameLineNumber(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int fileWidth) {
-        super(color, stackElement, previousStackElement, fileWidth);
+    public FileNameLineNumber(ANSIColor color, StackElements stackElements, int fileWidth) {
+        super(color, stackElements, fileWidth);
     }
 
     public Object getValue(StackTraceElement stackElement) {

@@ -1,8 +1,8 @@
 package org.incava.ijdk.log.output;
 
 public class LineNumber extends Item {    
-    public LineNumber(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int lineWidth) {
-        super(color, stackElement, previousStackElement, lineWidth);
+    public LineNumber(ANSIColor color, StackElements stackElements, int lineWidth) {
+        super(color, stackElements, lineWidth);
     }
 
     public Object getValue(StackTraceElement stackElement) {

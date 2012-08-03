@@ -1,4 +1,4 @@
-package org.incava.ijdk.log;
+package org.incava.ijdk.log.types;
 
 import java.util.List;
 

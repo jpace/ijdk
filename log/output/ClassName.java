@@ -3,8 +3,8 @@ package org.incava.ijdk.log.output;
 import org.incava.ijdk.lang.StringExt;
 
 public class ClassName extends Item {    
-    public ClassName(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int classWidth) {
-        super(color, stackElement, previousStackElement, classWidth);
+    public ClassName(ANSIColor color, StackElements stackElements, int classWidth) {
+        super(color, stackElements, classWidth);
     }
 
     public Object getValue(StackTraceElement stackElement) {

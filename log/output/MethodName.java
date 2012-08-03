@@ -4,14 +4,8 @@ import org.incava.ijdk.lang.ObjectExt;
 import org.incava.ijdk.lang.StringExt;
 
 public class MethodName extends Item {    
-    private final StackTraceElement stackElement;
-    private final StackTraceElement previousStackElement;
-
-    public MethodName(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, int methodWidth) {
-        super(color, stackElement, previousStackElement, methodWidth);
-
-        this.stackElement = stackElement;
-        this.previousStackElement = previousStackElement;
+    public MethodName(ANSIColor color, StackElements stackElements, int methodWidth) {
+        super(color, stackElements, methodWidth);
     }
 
     public Object getValue(StackTraceElement stackElement) {
@@ -24,10 +18,15 @@ public class MethodName extends Item {
         }
     }
 
-    public boolean isRepeated() {
-        return (previousStackElement != null &&
-                ObjectExt.areEqual(previousStackElement.getMethodName(), stackElement.getMethodName()) &&
-                ObjectExt.areEqual(previousStackElement.getClassName(), stackElement.getClassName()));
+    public boolean isRepeated(StackElements stackElements) {
+        StackTraceElement previous = stackElements.getPrevious();
+        if (previous == null) {
+            return false;
+        }
+
+        StackTraceElement current = stackElements.getCurrent();
+        return (ObjectExt.areEqual(previous.getMethodName(), current.getMethodName()) &&
+                ObjectExt.areEqual(previous.getClassName(), current.getClassName()));
     }
     
     public String getStackField(StackTraceElement stackElement) {

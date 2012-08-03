@@ -6,18 +6,17 @@ import static org.incava.ijdk.util.IUtil.*;
 
 public abstract class Item {
     private final ANSIColorList colors;
-    private final StackTraceElement stackElement;
-    private final StackTraceElement previousStackElement;
+    private final StackElements stackElements;
+
     protected final Integer width;    
     
-    public Item(ANSIColor color, StackTraceElement stackElement, StackTraceElement previousStackElement, Integer width) {
-        this(color == null ? null : new ANSIColorList(color), stackElement, previousStackElement, width);
+    public Item(ANSIColor color, StackElements stackElements, Integer width) {
+        this(color == null ? null : new ANSIColorList(color), stackElements, width);
     }
 
-    public Item(ANSIColorList colors, StackTraceElement stackElement, StackTraceElement previousStackElement, Integer width) {
+    public Item(ANSIColorList colors, StackElements stackElements, Integer width) {
         this.colors = colors;
-        this.stackElement = stackElement;
-        this.previousStackElement = previousStackElement;
+        this.stackElements = stackElements;
         this.width = width;
     }
 
@@ -30,8 +29,12 @@ public abstract class Item {
      */
     public abstract Object getValue(StackTraceElement stackElement);
 
+    public boolean isRepeated(StackElements stackElements) {
+        return stackElements.getPrevious() != null && ObjectExt.areEqual(getStackField(stackElements.getPrevious()), getStackField(stackElements.getCurrent()));
+    }
+
     public boolean isRepeated() {
-        return previousStackElement != null && ObjectExt.areEqual(getStackField(previousStackElement), getStackField(stackElement));
+        return isRepeated(stackElements);
     }
 
     public String getSnipped(String str) {
@@ -58,7 +61,7 @@ public abstract class Item {
     public String getFormatted() {
         ANSIColorList colors = getColors();
         
-        Object value = getValue(stackElement);
+        Object value = getValue(stackElements.getCurrent());
         String str = String.valueOf(value);
         if (width == null) {    
             return colors == null ? str : colors.toString(str);

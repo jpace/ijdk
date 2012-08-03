@@ -8,8 +8,7 @@ import org.incava.ijdk.log.Configuration;
 public class Line {
     private final String message;
     private final ItemColors colors;
-    private final StackTraceElement stackElement;
-    private final StackTraceElement previousStackElement;
+    private final StackElements stackElements;
     private final Configuration config;
     
     public Line(String message,
@@ -19,8 +18,7 @@ public class Line {
                 Configuration config) {
         this.message = message;
         this.colors = colors;
-        this.stackElement = stackElement;
-        this.previousStackElement = previousStackElement;
+        this.stackElements = new StackElements(stackElement, previousStackElement);
         this.config = config;
     }
 
@@ -47,15 +45,15 @@ public class Line {
         ANSIColor color = colors.getFileColor();
         
         if (config.useColumns()) {
-            FileName lfn = new FileName(color, stackElement, previousStackElement, config.getFileWidth());
+            FileName lfn = new FileName(color, stackElements, config.getFileWidth());
             String flstr = lfn.getFormatted();
 
-            LineNumber lln = new LineNumber(color, stackElement, previousStackElement, config.getLineWidth());
+            LineNumber lln = new LineNumber(color, stackElements, config.getLineWidth());
             String lnstr = lln.getFormatted();
             sb.append(flstr).append(' ').append(lnstr);
         }
         else {
-            FileNameLineNumber lfnln = new FileNameLineNumber(color, stackElement, previousStackElement, config.getFileWidth());
+            FileNameLineNumber lfnln = new FileNameLineNumber(color, stackElements, config.getFileWidth());
             sb.append(lfnln.getFormatted());
         }
 
@@ -65,19 +63,19 @@ public class Line {
     public void appendClassAndMethod(StringBuilder sb) {
         sb.append("{");
 
-        ClassName lcn = new ClassName(colors.getClassColor(), stackElement, previousStackElement, config.getClassWidth());
+        ClassName lcn = new ClassName(colors.getClassColor(), stackElements, config.getClassWidth());
         sb.append(lcn.getFormatted());
         
         sb.append('#');
 
-        MethodName lmn = new MethodName(colors.getMethodColor(), stackElement, previousStackElement, config.getFunctionWidth());
+        MethodName lmn = new MethodName(colors.getMethodColor(), stackElements, config.getFunctionWidth());
         sb.append(lmn.getFormatted());
 
         sb.append("} ");
     }
 
     public String getMessage() {
-        Message lm = new Message(colors.getMessageColors(), stackElement, previousStackElement, message);
+        Message lm = new Message(colors.getMessageColors(), stackElements, message);
         return lm.getFormatted();
     }
 }

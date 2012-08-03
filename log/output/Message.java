@@ -5,8 +5,8 @@ import org.incava.ijdk.lang.StringExt;
 public class Message extends Item {
     private final String message;
     
-    public Message(ANSIColorList colors, StackTraceElement stackElement, StackTraceElement previousStackElement, String msg) {
-        super(colors, stackElement, previousStackElement, null);
+    public Message(ANSIColorList colors, StackElements stackElements, String msg) {
+        super(colors, stackElements, null);
         this.message = StringExt.chomp(msg);
     }
 
