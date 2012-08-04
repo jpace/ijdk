@@ -207,11 +207,11 @@ public class IUtil {
         return new ArrayList<T>(ary);
     }
 
-    public void puts(Object obj) {
+    public static void puts(Object obj) {
         System.out.println(obj);
     }
 
-    public void printf(String fmt, Object ... args) {
+    public static void printf(String fmt, Object ... args) {
         System.out.printf(fmt, args);
     }
 }

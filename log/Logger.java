@@ -206,7 +206,7 @@ public class Logger {
     }
 
     public static void setVerbose(boolean verbose) {
-        setOutput(OutputType.VERBOSE, verbose ? LEVEL5 : null);
+        setOutput(OutputType.VERBOSE, verbose ? LEVEL5 : LEVEL0);
     }
 
     public static void setQuiet() {
