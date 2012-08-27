@@ -24,14 +24,16 @@ public class ANSIColorList extends ArrayList<ANSIColor> {
      * Wraps the given string in these colors, ending it with NONE (reset).
      */
     public String toString(String str) {
+        if (isEmpty()) {
+            return str;
+        }
+
         StringBuffer sb = new StringBuffer();
         for (ANSIColor color : this) {
             sb.append(color);
         }
         sb.append(str);
-        if (!isEmpty()) {
-            sb.append(ANSIColor.NONE);
-        }
+        sb.append(ANSIColor.NONE);
         return sb.toString();
     }
 }

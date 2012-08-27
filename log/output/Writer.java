@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.*;
+import java.util.regex.Pattern;
 import org.incava.ijdk.lang.*;
 import org.incava.ijdk.log.ClassFilter;
 import org.incava.ijdk.log.Configuration;
@@ -38,7 +39,7 @@ public class Writer {
     private StackTraceElement prevStackElement = null;    
     private Thread prevThread = null;
     private Level level = new Level(9);
-    private List<Filter> filters = new ArrayList<Filter>();
+    private List<Filter> filters = IUtil.<Filter>list();
 
     /**
      * Adds a filter to be applied for output.
