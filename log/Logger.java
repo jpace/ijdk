@@ -240,6 +240,10 @@ public class Logger {
     public static void addClassSkipped(String clsName) {
         writer.addClassSkipped(clsName);
     }
+    
+    public static void addPackageSkipped(String pkgName) {
+        writer.addPackageSkipped(pkgName);
+    }
 
     public static void reset() {
         writer.reset();

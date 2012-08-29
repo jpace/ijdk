@@ -106,6 +106,10 @@ public class Writer {
         classesSkipped.add(clsName);
     }
 
+    public void addPackageSkipped(String pkgName) {
+        packagesSkipped.add(pkgName);
+    }
+
     /**
      * Sets parameters to their defaults.
      */
@@ -166,6 +170,18 @@ public class Writer {
         return stack.length;
     }
 
+    public ANSIColor getFileColor(ItemColors elmtColors, StackTraceElement stackElement) {
+        return or(elmtColors.getFileColor(), config.getFileColor(stackElement.getFileName()));
+    }
+
+    public ANSIColor getClassColor(ItemColors elmtColors, StackTraceElement stackElement) {
+        return or(elmtColors.getClassColor(), config.getClassColor(stackElement.getClassName()));
+    }
+
+    public ANSIColor getMethodColor(ItemColors elmtColors, StackTraceElement stackElement) {
+        return or(elmtColors.getMethodColor(), config.getMethodColor(stackElement.getClassName(), stackElement.getMethodName()));
+    }
+
     /**
      * Logs the element. Assumes the level is already matched.
      */
@@ -192,9 +208,9 @@ public class Writer {
             // the colors of the message part, not the whole line:
             ANSIColorList msgColors = getMessageColors(elmtColors, stackElement);
             ItemColors lineColors = new ItemColors(msgColors,
-                                                 or(elmtColors.getFileColor(), config.getFileColor(stackElement.getFileName())),
-                                                 or(elmtColors.getClassColor(), config.getClassColor(stackElement.getClassName())),
-                                                 or(elmtColors.getMethodColor(), config.getMethodColor(stackElement.getClassName(), stackElement.getMethodName())));
+                                                   getFileColor(elmtColors, stackElement),
+                                                   getClassColor(elmtColors, stackElement),
+                                                   getMethodColor(elmtColors, stackElement));
             
             Line line = new Line(le.getMessage(), lineColors, stackElement, prevStackElement, config);
             out.println(line.getLine(framesShown > 0, outputType.equals(OutputType.VERBOSE)));
@@ -237,22 +253,6 @@ public class Writer {
     
     public void setUseColor(boolean useColor) {
         config.setUseColor(useColor);
-    }
-
-    public int getLineWidth() {
-        return config.getLineWidth();
-    }
-
-    public int getFileWidth() {
-        return config.getFileWidth();
-    }
-
-    public int getFunctionWidth() {
-        return config.getFunctionWidth();
-    }
-
-    public int getClassWidth() {
-        return config.getClassWidth();
     }
 
     public void setLineWidth(int lnWidth) {
