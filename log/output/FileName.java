@@ -11,6 +11,10 @@ public class FileName extends Item {
     
     public Object getValue(StackTraceElement stackElement) {
         String fileName = stackElement.getFileName();
+        if (fileName == null) {
+            return "";
+        }
+        
         fileName = fileName.replace(".java", "");
         String stackFileName = getSnipped(fileName);
 
