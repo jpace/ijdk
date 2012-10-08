@@ -87,18 +87,26 @@ public class Diff <T extends Object> {
     /**
      * Runs diff and returns the results.
      */
-    public List<Difference> diff() {
+    public List<Difference> execute() {
         traverseSequences();
         addPending();
         return diffs;
     }
 
-    protected List<Difference> getDiffs() {
-        return diffs;
+    /**
+     * Runs diff and returns the results.
+     *
+     * @deprecated <code>execute</code> is a more accurate and descriptive name.
+     */
+    @Deprecated 
+    public List<Difference> diff() {
+        return execute();
     }
 
+    /**
+     * Adds the last difference, if pending.
+     */
     protected void addPending() {
-        // add the last difference, if pending:
         if (pending != null) {
             diffs.add(pending);
         }
