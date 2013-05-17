@@ -1,4 +1,4 @@
-package org.incava.idjk.text;
+package org.incava.ijdk.text;
 
 import java.text.MessageFormat;
 
