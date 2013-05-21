@@ -16,4 +16,8 @@ public class Message {
     public String getPattern() {
         return pattern;
     }
+
+    public boolean equals(Message other) {
+        return pattern.equals(other.pattern);
+    }
 }
