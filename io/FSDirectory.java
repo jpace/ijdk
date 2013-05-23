@@ -22,8 +22,6 @@ public class FSDirectory extends File {
      * Returns a list of files, with directories processed recursively,
      * collecting files with the suffix of <code>suffix</code> (or all files if
      * <code>suffix</code> is null.
-     *
-     * @see 
      */
     public List<String> find(final String suffix) {
         List<String> matches = new ArrayList<String>();
@@ -32,13 +30,11 @@ public class FSDirectory extends File {
         
         for (File fd : contents) {
             if (fd.isDirectory()) {
-                // FSDirectory fsd = new FSDirectory(fd);
-                // matches.addAll(
+                FSDirectory fsd = new FSDirectory(fd.getAbsolutePath());
+                matches.addAll(fsd.find(suffix));
             }
-            else if (fd.isFile()) {
-                if (fd.getName().endsWith(suffix)) {
-                    matches.add(getCanonicalPath(fd));
-                }
+            else if (fd.isFile() && fd.getName().endsWith(suffix)) {
+                matches.add(getCanonicalPath(fd));
             }
         }
 

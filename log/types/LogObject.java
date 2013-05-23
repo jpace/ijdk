@@ -70,7 +70,7 @@ public class LogObject {
             Object val = fld.get(obj);
             attributes.put(fld.getName(), val);
         }
-        catch (IllegalAccessException iae) {
+        catch (IllegalAccessException iae) { // NOPMD
         }
 
         if (!wasAccessible) {

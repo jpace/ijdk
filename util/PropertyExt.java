@@ -8,7 +8,7 @@ public class PropertyExt {
      */
     public static Boolean getBoolean(String name) {
         String val = System.getProperty(name);
-        return isNull(val) ? null : new Boolean(val);
+        return isNull(val) ? null : Boolean.valueOf(val);
     }
 
     /**
@@ -16,6 +16,6 @@ public class PropertyExt {
      */
     public static Integer getInteger(String name) {
         String val = System.getProperty(name);
-        return isNull(val) ? null : new Integer(val);
+        return isNull(val) ? null : Integer.valueOf(val);
     }
 }

@@ -39,4 +39,8 @@ public class Location implements Comparable<Location> {
         }
         return cmp;
     }
+
+    public int hashCode() {
+        return line * 31 + column;
+    }
 }

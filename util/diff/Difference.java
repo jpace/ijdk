@@ -109,6 +109,14 @@ public class Difference {
         }
     }
 
+    public int hashCode() {
+        int hash = 1;
+        for (Integer i : new Integer[] { delStart, delEnd, addStart, addEnd }) {
+            hash = hash * 17 + i.hashCode();
+        }
+        return hash;
+    }
+
     /**
      * Returns a string representation of this difference.
      */

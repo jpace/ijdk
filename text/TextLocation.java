@@ -39,4 +39,9 @@ public class TextLocation extends Location {
 
         return cmp;
     }
+    
+    public int hashCode() {
+        int hash = super.hashCode();
+        return hash * 31 + position;
+    }
 }

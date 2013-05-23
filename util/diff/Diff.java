@@ -241,10 +241,7 @@ public class Diff <T extends Object> {
      * Invoked for elements matching in <code>a</code> and <code>b</code>.
      */
     protected void onMatch(int ai, int bi) {
-        if (pending == null) {
-            // no current pending
-        }
-        else {
+        if (pending != null) {
             diffs.add(pending);
             pending = null;
         }
