@@ -33,4 +33,8 @@ public class TextRange {
     public boolean equals(TextRange other) {
         return ObjectExt.equal(other.start, start) && ObjectExt.equal(other.end, end);
     }
+
+    public int hashCode() {
+        return start.hashCode() * 31 + end.hashCode();
+    }
 }

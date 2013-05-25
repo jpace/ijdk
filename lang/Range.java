@@ -73,6 +73,10 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
         }
     }
 
+    public int hashCode() {
+        return first.hashCode() * 17 + last.hashCode();
+    }
+
     public String toString() {
         return "[" + first + " .. " + last + "]";
     }
