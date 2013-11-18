@@ -1,13 +1,8 @@
 package org.incava.ijdk.util.diff;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Compares two collections, returning a list of the additions, changes, and
