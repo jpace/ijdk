@@ -91,8 +91,18 @@ public class Difference {
      * include the given index.
      */
     public void setDeleted(int index) {
+        tr.Ace.setVerbose(true);
+        tr.Ace.log("index", index);
+        tr.Ace.log("delStart", delStart);
+        tr.Ace.log("delEnd", delEnd);
+        tr.Ace.log("addStart", addStart);
+        tr.Ace.log("addEnd", addEnd);
         delStart = Math.min(index, delStart);
-        delEnd = Math.max(index, delEnd);
+        delEnd   = Math.max(index, delEnd);
+        tr.Ace.log("delStart", delStart);
+        tr.Ace.log("delEnd", delEnd);
+        tr.Ace.log("addStart", addStart);
+        tr.Ace.stack("addEnd", addEnd);
     }
 
     /**
@@ -100,8 +110,18 @@ public class Difference {
      * include the given index.
      */
     public void setAdded(int index) {
+        tr.Ace.setVerbose(true);
+        tr.Ace.log("index", index);
+        tr.Ace.log("delStart", delStart);
+        tr.Ace.log("delEnd", delEnd);
+        tr.Ace.log("addStart", addStart);
+        tr.Ace.log("addEnd", addEnd);
         addStart = Math.min(index, addStart);
-        addEnd = Math.max(index, addEnd);
+        addEnd   = Math.max(index, addEnd);
+        tr.Ace.log("delStart", delStart);
+        tr.Ace.log("delEnd", delEnd);
+        tr.Ace.log("addStart", addStart);
+        tr.Ace.stack("addEnd", addEnd);
     }
 
     /**
