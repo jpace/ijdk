@@ -74,22 +74,34 @@ public class Difference {
         return addEnd;
     }
 
+    public boolean isAdd() {
+        return delEnd == NONE;
+    }
+
+    public boolean isDelete() {
+        return addEnd == NONE;
+    }
+
+    public boolean isChange() {
+        return addEnd != NONE && delEnd != NONE;
+    }
+
     /**
      * Sets the point as deleted. The start and end points will be modified to
-     * include the given line.
+     * include the given index.
      */
-    public void setDeleted(int line) {
-        delStart = Math.min(line, delStart);
-        delEnd   = Math.max(line, delEnd);
+    public void setDeleted(int index) {
+        delStart = Math.min(index, delStart);
+        delEnd = Math.max(index, delEnd);
     }
 
     /**
      * Sets the point as added. The start and end points will be modified to
-     * include the given line.
+     * include the given index.
      */
-    public void setAdded(int line) {
-        addStart = Math.min(line, addStart);
-        addEnd   = Math.max(line, addEnd);
+    public void setAdded(int index) {
+        addStart = Math.min(index, addStart);
+        addEnd = Math.max(index, addEnd);
     }
 
     /**
@@ -120,11 +132,38 @@ public class Difference {
     /**
      * Returns a string representation of this difference.
      */
-    public String toString() {
+    public String toStringOrig() {
         StringBuilder sb = new StringBuilder();
         sb.append("del: [").append(delStart).append(", ").append(delEnd).append(']');
         sb.append(' ');
         sb.append("add: [").append(addStart).append(", ").append(addEnd).append(']');
+        sb.append("add: [").append(addStart).append(", ").append(addEnd).append(']');
+        return sb.toString();
+    }
+
+    protected String toString(int from, int to) {
+        StringBuilder sb = new StringBuilder("[");
+        if (from != NONE) {
+            sb.append(from);
+            if (to != NONE) {
+                sb.append(", ").append(to);
+            }
+        }
+        else {
+            sb.append(to);
+        }
+        sb.append(']');
+        return sb.toString();
+    }
+
+    /**
+     * Returns a string representation of this difference.
+     */
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(toString(delStart, delEnd));
+        sb.append(" => ");
+        sb.append(toString(addStart, addEnd));
         return sb.toString();
     }
 }

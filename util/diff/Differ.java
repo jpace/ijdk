@@ -114,6 +114,7 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      */
     protected void addPending() {
         if (pending != null) {
+            tr.Ace.cyan("pending", pending);
             diffs.add(pending);
         }
     }
@@ -246,6 +247,7 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      */
     protected void onMatch(int ai, int bi) {
         if (pending != null) {
+            tr.Ace.cyan("pending", pending);
             diffs.add(pending);
             pending = null;
         }
