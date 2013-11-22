@@ -13,8 +13,8 @@ import java.util.TreeMap;
  * Compares two collections, returning a list of the additions, changes, and
  * deletions between them. A <code>Comparator</code> may be passed as an
  * argument to the constructor, and will thus be used. If not provided, the
- * initial value in the <code>a</code> ("from") collection will be looked at to
- * see if it supports the <code>Comparable</code> interface. If so, its
+ * initial value in the <code>from</code> collection will be looked at to see if
+ * it supports the <code>Comparable</code> interface. If so, its
  * <code>equals</code> and <code>compareTo</code> methods will be invoked on the
  * instances in the "from" and "to" collections; otherwise, for speed, hash
  * codes from the objects will be used instead for comparison.
@@ -26,12 +26,12 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
     /**
      * The source array, AKA the "from" values.
      */
-    protected final List<ObjectType> a;
+    protected final List<ObjectType> from;
 
     /**
      * The target array, AKA the "to" values.
      */
-    protected final List<ObjectType> b;
+    protected final List<ObjectType> to;
 
     /**
      * The list of differences, as <code>DiffType</code> instances.
@@ -51,8 +51,8 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
     /**
      * Constructs the Differ object for the two arrays, using the given comparator.
      */
-    public Differ(ObjectType[] a, ObjectType[] b, Comparator<ObjectType> comp) {
-        this(Arrays.asList(a), Arrays.asList(b), comp);
+    public Differ(ObjectType[] from, ObjectType[] to, Comparator<ObjectType> comp) {
+        this(Arrays.asList(from), Arrays.asList(to), comp);
     }
 
     /**
@@ -60,8 +60,8 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      * comparison mechanism between the objects, such as <code>equals</code> and
      * <code>compareTo</code>.
      */
-    public Differ(ObjectType[] a, ObjectType[] b) {
-        this(a, b, null);
+    public Differ(ObjectType[] from, ObjectType[] to) {
+        this(from, to, null);
     }
 
     /**
@@ -69,17 +69,17 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      * comparison mechanism between the objects, such as <code>equals</code> and
      * <code>compareTo</code>.
      */
-    public Differ(List<ObjectType> a, List<ObjectType> b) {
-        this(a, b, null);
+    public Differ(List<ObjectType> from, List<ObjectType> to) {
+        this(from, to, null);
     }
 
     /**
      * Constructs the Differ object for the two collections, using the given
      * comparator.
      */
-    public Differ(List<ObjectType> a, List<ObjectType> b, Comparator<ObjectType> comp) {
-        this.a = a;
-        this.b = b;
+    public Differ(List<ObjectType> from, List<ObjectType> to, Comparator<ObjectType> comp) {
+        this.from = from;
+        this.to = to;
         this.comparator = comp;
         this.diffs = new ArrayList<DiffType>();
     }
@@ -121,14 +121,14 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
 
     /**
      * Traverses the sequences, seeking the longest common subsequences,
-     * invoking the methods <code>finishedA</code>, <code>finishedB</code>,
-     * <code>onANotB</code>, and <code>onBNotA</code>.
+     * invoking the methods <code>finishedFrom</code>, <code>finishedTo</code>,
+     * <code>onFromNotTo</code>, and <code>onToNotFrom</code>.
      */
     protected void traverseSequences() {
         Integer[] matches = getLongestCommonSubsequences();
 
-        int lastA = a.size() - 1;
-        int lastB = b.size() - 1;
+        int lastA = from.size() - 1;
+        int lastB = to.size() - 1;
         int bi = 0;
         int ai;
         int lastMatch = matches.length - 1;
@@ -137,11 +137,11 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
             Integer bLine = matches[ai];
 
             if (bLine == null) {
-                onANotB(ai, bi);
+                onFromNotTo(ai, bi);
             }
             else {
                 while (bi < bLine.intValue()) {
-                    onBNotA(ai, bi++);
+                    onToNotFrom(ai, bi++);
                 }
 
                 onMatch(ai, bi++);
@@ -152,76 +152,76 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
         boolean calledFinishB = false;
 
         while (ai <= lastA || bi <= lastB) {
-            // last A?
+            // last FROM?
             if (ai == lastA + 1 && bi <= lastB) {
-                if (!calledFinishA && callFinishedA()) {
-                    finishedA(lastA);
+                if (!calledFinishA && callFinishedFrom()) {
+                    finishedFrom(lastA);
                     calledFinishA = true;
                 }
                 else {
                     while (bi <= lastB) {
-                        onBNotA(ai, bi++);
+                        onToNotFrom(ai, bi++);
                     }
                 }
             }
 
-            // last B?
+            // last TO?
             if (bi == lastB + 1 && ai <= lastA) {
-                if (!calledFinishB && callFinishedB()) {
-                    finishedB(lastB);
+                if (!calledFinishB && callFinishedTo()) {
+                    finishedTo(lastB);
                     calledFinishB = true;
                 }
                 else {
                     while (ai <= lastA) {
-                        onANotB(ai++, bi);
+                        onFromNotTo(ai++, bi);
                     }
                 }
             }
 
             if (ai <= lastA) {
-                onANotB(ai++, bi);
+                onFromNotTo(ai++, bi);
             }
 
             if (bi <= lastB) {
-                onBNotA(ai, bi++);
+                onToNotFrom(ai, bi++);
             }
         }
     }
 
     /**
-     * Override and return true in order to have <code>finishedA</code> invoked
-     * at the last element in the <code>a</code> array.
+     * Override and return true in order to have <code>finishedFrom</code> invoked
+     * at the last element in the <code>from</code> array.
      */
-    protected boolean callFinishedA() {
+    protected boolean callFinishedFrom() {
         return false;
     }
 
     /**
-     * Override and return true in order to have <code>finishedB</code> invoked
-     * at the last element in the <code>b</code> array.
+     * Override and return true in order to have <code>finishedTo</code> invoked
+     * at the last element in the <code>to</code> array.
      */
-    protected boolean callFinishedB() {
+    protected boolean callFinishedTo() {
         return false;
     }
 
     /**
-     * Invoked at the last element in <code>a</code>, if
-     * <code>callFinishedA</code> returns true.
+     * Invoked at the last element in <code>from</code>, if
+     * <code>callFinishedFrom</code> returns true.
      */
-    protected void finishedA(int lastA) {
+    protected void finishedFrom(int lastA) {
     }
 
     /**
-     * Invoked at the last element in <code>b</code>, if
-     * <code>callFinishedB</code> returns true.
+     * Invoked at the last element in <code>to</code>, if
+     * <code>callFinishedTo</code> returns true.
      */
-    protected void finishedB(int lastB) {
+    protected void finishedTo(int lastB) {
     }
 
     /**
-     * Invoked for elements in <code>a</code> and not in <code>b</code>.
+     * Invoked for elements in <code>from</code> and not in <code>to</code>.
      */
-    protected void onANotB(int ai, int bi) {
+    protected void onFromNotTo(int ai, int bi) {
         if (pending == null) {
             pending = createDifference(ai, ai, bi, -1);
         }
@@ -231,9 +231,9 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
     }
 
     /**
-     * Invoked for elements in <code>b</code> and not in <code>a</code>.
+     * Invoked for elements in <code>to</code> and not in <code>from</code>.
      */
-    protected void onBNotA(int ai, int bi) {
+    protected void onToNotFrom(int ai, int bi) {
         if (pending == null) {
             pending = createDifference(ai, -1, bi, bi);
         }
@@ -243,7 +243,7 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
     }
 
     /**
-     * Invoked for elements matching in <code>a</code> and <code>b</code>.
+     * Invoked for elements matching in <code>from</code> and <code>to</code>.
      */
     protected void onMatch(int ai, int bi) {
         if (pending != null) {
@@ -261,10 +261,10 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
         return comparator == null ? x.equals(y) : comparator.compare(x, y) == 0;
     }
     
-    private Map<ObjectType, List<Integer>> getBMatches(int bStart, int bEnd) {
+    private Map<ObjectType, List<Integer>> getBMatches(int toStart, int toEnd) {
         Map<ObjectType, List<Integer>> bMatches = null;
         if (comparator == null) {
-            if (a.size() > 0 && a.get(0) instanceof Comparable) {
+            if (from.size() > 0 && from.get(0) instanceof Comparable) {
                 // this uses the Comparable interface
                 bMatches = new TreeMap<ObjectType, List<Integer>>();
             }
@@ -279,8 +279,8 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
             bMatches = new TreeMap<ObjectType, List<Integer>>(comparator);
         }
 
-        for (int bi = bStart; bi <= bEnd; ++bi) {
-            ObjectType key = b.get(bi);
+        for (int bi = toStart; bi <= toEnd; ++bi) {
+            ObjectType key = to.get(bi);
             List<Integer> positions = bMatches.get(key);
             if (positions == null) {
                 positions = new ArrayList<Integer>();
@@ -292,14 +292,14 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
         return bMatches;
     }
 
-    private void addMatches(TreeMap<Integer, Integer> matches, int aStart, int aEnd, int bStart, int bEnd) {
-        Map<ObjectType, List<Integer>> bMatches = getBMatches(bStart, bEnd);
+    private void addMatches(TreeMap<Integer, Integer> matches, int fromStart, int fromEnd, int toStart, int toEnd) {
+        Map<ObjectType, List<Integer>> bMatches = getBMatches(toStart, toEnd);
 
         LCSTable links = new LCSTable();
         Thresholds thresh = new Thresholds();
 
-        for (int i = aStart; i <= aEnd; ++i) {
-            Object aElement = a.get(i); // keygen here.
+        for (int i = fromStart; i <= fromEnd; ++i) {
+            Object aElement = from.get(i); // keygen here.
             List<Integer> positions = bMatches.get(aElement);
 
             if (positions != null) {
@@ -326,23 +326,23 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      * Returns an array of the longest common subsequences.
      */
     public Integer[] getLongestCommonSubsequences() {
-        int aStart = 0;
-        int aEnd = a.size() - 1;
+        int fromStart = 0;
+        int fromEnd = from.size() - 1;
 
-        int bStart = 0;
-        int bEnd = b.size() - 1;
+        int toStart = 0;
+        int toEnd = to.size() - 1;
 
         TreeMap<Integer, Integer> matches = new TreeMap<Integer, Integer>();
 
         // common beginning and ending elements:
-        while (aStart <= aEnd && bStart <= bEnd && equals(a.get(aStart), b.get(bStart))) {
-            matches.put(aStart++, bStart++);
+        while (fromStart <= fromEnd && toStart <= toEnd && equals(from.get(fromStart), to.get(toStart))) {
+            matches.put(fromStart++, toStart++);
         }
-        while (aStart <= aEnd && bStart <= bEnd && equals(a.get(aEnd), b.get(bEnd))) {
-            matches.put(aEnd--, bEnd--);
+        while (fromStart <= fromEnd && toStart <= toEnd && equals(from.get(fromEnd), to.get(toEnd))) {
+            matches.put(fromEnd--, toEnd--);
         }
 
-        addMatches(matches, aStart, aEnd, bStart, bEnd);
+        addMatches(matches, fromStart, fromEnd, toStart, toEnd);
         
         return toArray(matches);
     }
