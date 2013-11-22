@@ -127,63 +127,63 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
     protected void traverseSequences() {
         Integer[] matches = getLongestCommonSubsequences();
 
-        int lastA = from.size() - 1;
-        int lastB = to.size() - 1;
-        int bi = 0;
-        int ai;
+        int lastFrom = from.size() - 1;
+        int lastTo = to.size() - 1;
+        int toIdx = 0;
+        int fromIdx;
         int lastMatch = matches.length - 1;
         
-        for (ai = 0; ai <= lastMatch; ++ai) {
-            Integer bLine = matches[ai];
+        for (fromIdx = 0; fromIdx <= lastMatch; ++fromIdx) {
+            Integer toElement = matches[fromIdx];
 
-            if (bLine == null) {
-                onFromNotTo(ai, bi);
+            if (toElement == null) {
+                onFromNotTo(fromIdx, toIdx);
             }
             else {
-                while (bi < bLine.intValue()) {
-                    onToNotFrom(ai, bi++);
+                while (toIdx < toElement.intValue()) {
+                    onToNotFrom(fromIdx, toIdx++);
                 }
 
-                onMatch(ai, bi++);
+                onMatch(fromIdx, toIdx++);
             }
         }
 
-        boolean calledFinishA = false;
-        boolean calledFinishB = false;
+        boolean calledFinishFrom = false;
+        boolean calledFinishTo = false;
 
-        while (ai <= lastA || bi <= lastB) {
-            // last FROM?
-            if (ai == lastA + 1 && bi <= lastB) {
-                if (!calledFinishA && callFinishedFrom()) {
-                    finishedFrom(lastA);
-                    calledFinishA = true;
+        while (fromIdx <= lastFrom || toIdx <= lastTo) {
+            // last from?
+            if (fromIdx == lastFrom + 1 && toIdx <= lastTo) {
+                if (!calledFinishFrom && callFinishedFrom()) {
+                    finishedFrom(lastFrom);
+                    calledFinishFrom = true;
                 }
                 else {
-                    while (bi <= lastB) {
-                        onToNotFrom(ai, bi++);
+                    while (toIdx <= lastTo) {
+                        onToNotFrom(fromIdx, toIdx++);
                     }
                 }
             }
 
-            // last TO?
-            if (bi == lastB + 1 && ai <= lastA) {
-                if (!calledFinishB && callFinishedTo()) {
-                    finishedTo(lastB);
-                    calledFinishB = true;
+            // last to?
+            if (toIdx == lastTo + 1 && fromIdx <= lastFrom) {
+                if (!calledFinishTo && callFinishedTo()) {
+                    finishedTo(lastTo);
+                    calledFinishTo = true;
                 }
                 else {
-                    while (ai <= lastA) {
-                        onFromNotTo(ai++, bi);
+                    while (fromIdx <= lastFrom) {
+                        onFromNotTo(fromIdx++, toIdx);
                     }
                 }
             }
 
-            if (ai <= lastA) {
-                onFromNotTo(ai++, bi);
+            if (fromIdx <= lastFrom) {
+                onFromNotTo(fromIdx++, toIdx);
             }
 
-            if (bi <= lastB) {
-                onToNotFrom(ai, bi++);
+            if (toIdx <= lastTo) {
+                onToNotFrom(fromIdx, toIdx++);
             }
         }
     }
@@ -208,44 +208,44 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      * Invoked at the last element in <code>from</code>, if
      * <code>callFinishedFrom</code> returns true.
      */
-    protected void finishedFrom(int lastA) {
+    protected void finishedFrom(int lastFrom) {
     }
 
     /**
      * Invoked at the last element in <code>to</code>, if
      * <code>callFinishedTo</code> returns true.
      */
-    protected void finishedTo(int lastB) {
+    protected void finishedTo(int lastTo) {
     }
 
     /**
      * Invoked for elements in <code>from</code> and not in <code>to</code>.
      */
-    protected void onFromNotTo(int ai, int bi) {
+    protected void onFromNotTo(int fromIdx, int toIdx) {
         if (pending == null) {
-            pending = createDifference(ai, ai, bi, -1);
+            pending = createDifference(fromIdx, fromIdx, toIdx, -1);
         }
         else {
-            pending.setDeleted(ai);
+            pending.setDeleted(fromIdx);
         }
     }
 
     /**
      * Invoked for elements in <code>to</code> and not in <code>from</code>.
      */
-    protected void onToNotFrom(int ai, int bi) {
+    protected void onToNotFrom(int fromIdx, int toIdx) {
         if (pending == null) {
-            pending = createDifference(ai, -1, bi, bi);
+            pending = createDifference(fromIdx, -1, toIdx, toIdx);
         }
         else {
-            pending.setAdded(bi);
+            pending.setAdded(toIdx);
         }
     }
 
     /**
      * Invoked for elements matching in <code>from</code> and <code>to</code>.
      */
-    protected void onMatch(int ai, int bi) {
+    protected void onMatch(int fromIdx, int toIdx) {
         if (pending != null) {
             tr.Ace.cyan("pending", pending);
             diffs.add(pending);
@@ -261,57 +261,59 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
         return comparator == null ? x.equals(y) : comparator.compare(x, y) == 0;
     }
     
-    private Map<ObjectType, List<Integer>> getBMatches(int toStart, int toEnd) {
-        Map<ObjectType, List<Integer>> bMatches = null;
+    private Map<ObjectType, List<Integer>> getToMatches(int toStart, int toEnd) {
+        Map<ObjectType, List<Integer>> toMatches = null;
         if (comparator == null) {
             if (from.size() > 0 && from.get(0) instanceof Comparable) {
                 // this uses the Comparable interface
-                bMatches = new TreeMap<ObjectType, List<Integer>>();
+                toMatches = new TreeMap<ObjectType, List<Integer>>();
             }
             else {
                 // this just uses hashCode()
-                bMatches = new HashMap<ObjectType, List<Integer>>();
+                toMatches = new HashMap<ObjectType, List<Integer>>();
             }
         }
         else {
             // we don't really want them sorted, but this is the only Map
             // implementation (as of JDK 1.4) that takes a comparator.
-            bMatches = new TreeMap<ObjectType, List<Integer>>(comparator);
+            toMatches = new TreeMap<ObjectType, List<Integer>>(comparator);
         }
 
-        for (int bi = toStart; bi <= toEnd; ++bi) {
-            ObjectType key = to.get(bi);
-            List<Integer> positions = bMatches.get(key);
+        for (int toIdx = toStart; toIdx <= toEnd; ++toIdx) {
+            ObjectType key = to.get(toIdx);
+            List<Integer> positions = toMatches.get(key);
             if (positions == null) {
                 positions = new ArrayList<Integer>();
-                bMatches.put(key, positions);
+                toMatches.put(key, positions);
             }
-            positions.add(bi);
+            positions.add(toIdx);
         }
 
-        return bMatches;
+        return toMatches;
     }
 
     private void addMatches(TreeMap<Integer, Integer> matches, int fromStart, int fromEnd, int toStart, int toEnd) {
-        Map<ObjectType, List<Integer>> bMatches = getBMatches(toStart, toEnd);
+        Map<ObjectType, List<Integer>> toMatches = getToMatches(toStart, toEnd);
 
         LCSTable links = new LCSTable();
         Thresholds thresh = new Thresholds();
 
-        for (int i = fromStart; i <= fromEnd; ++i) {
-            Object aElement = from.get(i); // keygen here.
-            List<Integer> positions = bMatches.get(aElement);
+        for (int idx = fromStart; idx <= fromEnd; ++idx) {
+            ObjectType fromElement = from.get(idx); // keygen here.
+            List<Integer> positions = toMatches.get(fromElement);
 
-            if (positions != null) {
-                Integer k = 0;
-                ListIterator<Integer> pit = positions.listIterator(positions.size());
-                while (pit.hasPrevious()) {
-                    Integer j = pit.previous();
-                    k = thresh.insert(j, k);
-                    if (k != null) {
-                        links.update(i, j, k);
-                    }   
-                }
+            if (positions == null) {
+                continue;
+            }
+            
+            Integer k = 0;
+            ListIterator<Integer> pit = positions.listIterator(positions.size());
+            while (pit.hasPrevious()) {
+                Integer j = pit.previous();
+                k = thresh.insert(j, k);
+                if (k != null) {
+                    links.update(idx, j, k);
+                }   
             }
         }
 
@@ -336,9 +338,17 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
 
         // common beginning and ending elements:
         while (fromStart <= fromEnd && toStart <= toEnd && equals(from.get(fromStart), to.get(toStart))) {
+            tr.Ace.log("fromStart", fromStart);
+            tr.Ace.log("fromEnd", fromEnd);
+            tr.Ace.log("toStart", toStart);
+            tr.Ace.log("toEnd", toEnd);
             matches.put(fromStart++, toStart++);
         }
         while (fromStart <= fromEnd && toStart <= toEnd && equals(from.get(fromEnd), to.get(toEnd))) {
+            tr.Ace.log("fromStart", fromStart);
+            tr.Ace.log("fromEnd", fromEnd);
+            tr.Ace.log("toStart", toStart);
+            tr.Ace.log("toEnd", toEnd);
             matches.put(fromEnd--, toEnd--);
         }
 
