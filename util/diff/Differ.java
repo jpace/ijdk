@@ -257,11 +257,11 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      * Compares the two objects, using the comparator provided with the
      * constructor, if any.
      */
-    protected boolean equals(ObjectType x, ObjectType y) {
+    protected boolean equals(Comparator<ObjectType> comparator, ObjectType x, ObjectType y) {
         return comparator == null ? x.equals(y) : comparator.compare(x, y) == 0;
     }
     
-    private Map<ObjectType, List<Integer>> getToMatches(int toStart, int toEnd) {
+    public Map<ObjectType, List<Integer>> getToMatches(int toStart, int toEnd) {
         Map<ObjectType, List<Integer>> toMatches = null;
         if (comparator == null) {
             if (from.size() > 0 && from.get(0) instanceof Comparable) {
@@ -299,8 +299,11 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
         Thresholds thresh = new Thresholds();
 
         for (int idx = fromStart; idx <= fromEnd; ++idx) {
+            tr.Ace.cyan("idx", idx);
             ObjectType fromElement = from.get(idx); // keygen here.
+            tr.Ace.cyan("fromElement", fromElement);
             List<Integer> positions = toMatches.get(fromElement);
+            tr.Ace.cyan("positions", positions);
 
             if (positions == null) {
                 continue;
@@ -310,6 +313,7 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
             ListIterator<Integer> pit = positions.listIterator(positions.size());
             while (pit.hasPrevious()) {
                 Integer j = pit.previous();
+                tr.Ace.yellow("j", j);
                 k = thresh.insert(j, k);
                 if (k != null) {
                     links.update(idx, j, k);
@@ -317,9 +321,12 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
             }
         }
 
+        tr.Ace.cyan("thresh", thresh);
+
         if (!thresh.isEmpty()) {
             Integer ti = thresh.lastKey();
             Map<Integer, Integer> chain = links.getChain(ti);
+            tr.Ace.cyan("chain", chain);
             matches.putAll(chain);
         }
     }
@@ -337,14 +344,14 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
         TreeMap<Integer, Integer> matches = new TreeMap<Integer, Integer>();
 
         // common beginning and ending elements:
-        while (fromStart <= fromEnd && toStart <= toEnd && equals(from.get(fromStart), to.get(toStart))) {
+        while (fromStart <= fromEnd && toStart <= toEnd && equals(comparator, from.get(fromStart), to.get(toStart))) {
             tr.Ace.log("fromStart", fromStart);
             tr.Ace.log("fromEnd", fromEnd);
             tr.Ace.log("toStart", toStart);
             tr.Ace.log("toEnd", toEnd);
             matches.put(fromStart++, toStart++);
         }
-        while (fromStart <= fromEnd && toStart <= toEnd && equals(from.get(fromEnd), to.get(toEnd))) {
+        while (fromStart <= fromEnd && toStart <= toEnd && equals(comparator, from.get(fromEnd), to.get(toEnd))) {
             tr.Ace.log("fromStart", fromStart);
             tr.Ace.log("fromEnd", fromEnd);
             tr.Ace.log("toStart", toStart);
@@ -354,18 +361,6 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
 
         addMatches(matches, fromStart, fromEnd, toStart, toEnd);
         
-        return toArray(matches);
-    }
-
-    /**
-     * Converts the map into an array.
-     */
-    protected static Integer[] toArray(TreeMap<Integer, Integer> map) {
-        int       size = map.isEmpty() ? 0 : 1 + map.lastKey();
-        Integer[] ary  = new Integer[size];
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            ary[entry.getKey()] = entry.getValue();
-        }
-        return ary;
+        return LCS.toArray(matches);
     }
 }
