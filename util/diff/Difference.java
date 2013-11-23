@@ -40,11 +40,6 @@ public class Difference {
         this.delEnd   = delEnd;
         this.addStart = addStart;
         this.addEnd   = addEnd;
-        tr.Ace.setVerbose(true);
-        tr.Ace.yellow("delStart", delStart);
-        tr.Ace.yellow("delEnd", delEnd);
-        tr.Ace.yellow("addStart", addStart);
-        tr.Ace.yellow("addEnd", addEnd);
     }
 
     /**
@@ -96,18 +91,8 @@ public class Difference {
      * include the given index.
      */
     public void setDeleted(int index) {
-        tr.Ace.setVerbose(true);
-        tr.Ace.magenta("index", index);
-        tr.Ace.magenta("delStart", delStart);
-        tr.Ace.magenta("delEnd", delEnd);
-        tr.Ace.magenta("addStart", addStart);
-        tr.Ace.magenta("addEnd", addEnd);
         delStart = Math.min(index, delStart);
-        delEnd   = Math.max(index, delEnd);
-        tr.Ace.magenta("delStart", delStart);
-        tr.Ace.magenta("delEnd", delEnd);
-        tr.Ace.magenta("addStart", addStart);
-        tr.Ace.stack("addEnd", addEnd);
+        delEnd = Math.max(index, delEnd);
     }
 
     /**
@@ -115,18 +100,8 @@ public class Difference {
      * include the given index.
      */
     public void setAdded(int index) {
-        tr.Ace.setVerbose(true);
-        tr.Ace.red("index", index);
-        tr.Ace.red("delStart", delStart);
-        tr.Ace.red("delEnd", delEnd);
-        tr.Ace.red("addStart", addStart);
-        tr.Ace.red("addEnd", addEnd);
         addStart = Math.min(index, addStart);
-        addEnd   = Math.max(index, addEnd);
-        tr.Ace.red("delStart", delStart);
-        tr.Ace.red("delEnd", delEnd);
-        tr.Ace.red("addStart", addStart);
-        tr.Ace.stack("addEnd", addEnd);
+        addEnd = Math.max(index, addEnd);
     }
 
     /**

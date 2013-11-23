@@ -3,11 +3,7 @@ package org.incava.ijdk.util.diff;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Compares two collections, returning a list of the additions, changes, and
@@ -26,17 +22,17 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
     /**
      * The source array, AKA the "from" values.
      */
-    protected final List<ObjectType> from;
+    private final List<ObjectType> from;
 
     /**
      * The target array, AKA the "to" values.
      */
-    protected final List<ObjectType> to;
+    private final List<ObjectType> to;
 
     /**
      * The list of differences, as <code>DiffType</code> instances.
      */
-    protected final List<DiffType> diffs;
+    private final List<DiffType> diffs;
 
     /**
      * The pending, uncommitted difference.
@@ -104,7 +100,7 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
     }
 
     /**
-     * Subclasses override this to return their own subclass of
+     * Subclasses implement this to return their own subclass of
      * <code>Difference</code>.
      */
     public abstract DiffType createDifference(Integer delStart, Integer delEnd, Integer addStart, Integer addEnd);
@@ -114,7 +110,6 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      */
     protected void addPending() {
         if (pending != null) {
-            tr.Ace.cyan("pending", pending);
             diffs.add(pending);
         }
     }
@@ -125,15 +120,16 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      * <code>onFromNotTo</code>, and <code>onToNotFrom</code>.
      */
     protected void traverseSequences() {
-        Integer[] matches = getLongestCommonSubsequences();
+        LCS<ObjectType> lcs = new LCS<ObjectType>(from, to, comparator);
+        Integer[] matches = lcs.getMatches();
 
         int lastFrom = from.size() - 1;
         int lastTo = to.size() - 1;
         int toIdx = 0;
-        int fromIdx;
+        int fromIdx = 0;
         int lastMatch = matches.length - 1;
         
-        for (fromIdx = 0; fromIdx <= lastMatch; ++fromIdx) {
+        while (fromIdx <= lastMatch) {
             Integer toElement = matches[fromIdx];
 
             if (toElement == null) {
@@ -146,6 +142,7 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
 
                 onMatch(fromIdx, toIdx++);
             }
+            fromIdx++;
         }
 
         boolean calledFinishFrom = false;
@@ -247,120 +244,8 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      */
     protected void onMatch(int fromIdx, int toIdx) {
         if (pending != null) {
-            tr.Ace.cyan("pending", pending);
             diffs.add(pending);
             pending = null;
         }
-    }
-
-    /**
-     * Compares the two objects, using the comparator provided with the
-     * constructor, if any.
-     */
-    protected boolean equals(Comparator<ObjectType> comparator, ObjectType x, ObjectType y) {
-        return comparator == null ? x.equals(y) : comparator.compare(x, y) == 0;
-    }
-    
-    public Map<ObjectType, List<Integer>> getToMatches(int toStart, int toEnd) {
-        Map<ObjectType, List<Integer>> toMatches = null;
-        if (comparator == null) {
-            if (from.size() > 0 && from.get(0) instanceof Comparable) {
-                // this uses the Comparable interface
-                toMatches = new TreeMap<ObjectType, List<Integer>>();
-            }
-            else {
-                // this just uses hashCode()
-                toMatches = new HashMap<ObjectType, List<Integer>>();
-            }
-        }
-        else {
-            // we don't really want them sorted, but this is the only Map
-            // implementation (as of JDK 1.4) that takes a comparator.
-            toMatches = new TreeMap<ObjectType, List<Integer>>(comparator);
-        }
-
-        for (int toIdx = toStart; toIdx <= toEnd; ++toIdx) {
-            ObjectType key = to.get(toIdx);
-            List<Integer> positions = toMatches.get(key);
-            if (positions == null) {
-                positions = new ArrayList<Integer>();
-                toMatches.put(key, positions);
-            }
-            positions.add(toIdx);
-        }
-
-        return toMatches;
-    }
-
-    private void addMatches(TreeMap<Integer, Integer> matches, int fromStart, int fromEnd, int toStart, int toEnd) {
-        Map<ObjectType, List<Integer>> toMatches = getToMatches(toStart, toEnd);
-
-        LCSTable links = new LCSTable();
-        Thresholds thresh = new Thresholds();
-
-        for (int idx = fromStart; idx <= fromEnd; ++idx) {
-            tr.Ace.cyan("idx", idx);
-            ObjectType fromElement = from.get(idx); // keygen here.
-            tr.Ace.cyan("fromElement", fromElement);
-            List<Integer> positions = toMatches.get(fromElement);
-            tr.Ace.cyan("positions", positions);
-
-            if (positions == null) {
-                continue;
-            }
-            
-            Integer k = 0;
-            ListIterator<Integer> pit = positions.listIterator(positions.size());
-            while (pit.hasPrevious()) {
-                Integer j = pit.previous();
-                tr.Ace.yellow("j", j);
-                k = thresh.insert(j, k);
-                if (k != null) {
-                    links.update(idx, j, k);
-                }   
-            }
-        }
-
-        tr.Ace.cyan("thresh", thresh);
-
-        if (!thresh.isEmpty()) {
-            Integer ti = thresh.lastKey();
-            Map<Integer, Integer> chain = links.getChain(ti);
-            tr.Ace.cyan("chain", chain);
-            matches.putAll(chain);
-        }
-    }
-
-    /**
-     * Returns an array of the longest common subsequences.
-     */
-    public Integer[] getLongestCommonSubsequences() {
-        int fromStart = 0;
-        int fromEnd = from.size() - 1;
-
-        int toStart = 0;
-        int toEnd = to.size() - 1;
-
-        TreeMap<Integer, Integer> matches = new TreeMap<Integer, Integer>();
-
-        // common beginning and ending elements:
-        while (fromStart <= fromEnd && toStart <= toEnd && equals(comparator, from.get(fromStart), to.get(toStart))) {
-            tr.Ace.log("fromStart", fromStart);
-            tr.Ace.log("fromEnd", fromEnd);
-            tr.Ace.log("toStart", toStart);
-            tr.Ace.log("toEnd", toEnd);
-            matches.put(fromStart++, toStart++);
-        }
-        while (fromStart <= fromEnd && toStart <= toEnd && equals(comparator, from.get(fromEnd), to.get(toEnd))) {
-            tr.Ace.log("fromStart", fromStart);
-            tr.Ace.log("fromEnd", fromEnd);
-            tr.Ace.log("toStart", toStart);
-            tr.Ace.log("toEnd", toEnd);
-            matches.put(fromEnd--, toEnd--);
-        }
-
-        addMatches(matches, fromStart, fromEnd, toStart, toEnd);
-        
-        return LCS.toArray(matches);
     }
 }
