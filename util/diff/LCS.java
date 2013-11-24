@@ -2,6 +2,7 @@ package org.incava.ijdk.util.diff;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -62,7 +63,7 @@ public class LCS<ObjectType> {
     /**
      * Returns an array of the longest common subsequences.
      */
-    public Integer[] getMatches() {
+    public List<Integer> getMatches() {
         int fromStart = 0;
         int fromEnd = from.size() - 1;
 
@@ -82,7 +83,7 @@ public class LCS<ObjectType> {
 
         addMatches(matches, fromStart, fromEnd, toStart, toEnd);
         
-        return LCS.toArray(matches);
+        return toList(matches);
     }
 
     public void addMatches(TreeMap<Integer, Integer> matches, int fromStart, int fromEnd, int toStart, int toEnd) {
@@ -160,14 +161,16 @@ public class LCS<ObjectType> {
     }
 
     /**
-     * Converts the map into an array.
+     * Converts the map into a list.
      */
-    protected static Integer[] toArray(TreeMap<Integer, Integer> map) {
+    protected static List<Integer> toList(TreeMap<Integer, Integer> map) {
+        tr.Ace.setVerbose(true);
+        
         int size = map.isEmpty() ? 0 : 1 + map.lastKey();
-        Integer[] ary  = new Integer[size];
+        ArrayList<Integer> list = new ArrayList<Integer>(Collections.nCopies(size, (Integer)null));
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            ary[entry.getKey()] = entry.getValue();
+            list.set(entry.getKey(), entry.getValue());
         }
-        return ary;
+        return list;
     }
 }
