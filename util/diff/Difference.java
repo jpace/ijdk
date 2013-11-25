@@ -14,22 +14,22 @@ public class Difference {
     /**
      * The point at which the deletion starts.
      */
-    private Integer delStart = NONE;
+    private final Integer delStart;
 
     /**
      * The point at which the deletion ends.
      */
-    private Integer delEnd = NONE;
+    private final Integer delEnd;
 
     /**
      * The point at which the addition starts.
      */
-    private Integer addStart = NONE;
+    private final Integer addStart;
 
     /**
      * The point at which the addition ends.
      */
-    private Integer addEnd = NONE;
+    private final Integer addEnd;
 
     /**
      * Creates the difference for the given start and end points for the
@@ -84,24 +84,6 @@ public class Difference {
 
     public boolean isChange() {
         return addEnd != NONE && delEnd != NONE;
-    }
-
-    /**
-     * Sets the point as deleted. The start and end points will be modified to
-     * include the given index.
-     */
-    public void setDeleted(int index) {
-        delStart = Math.min(index, delStart);
-        delEnd = Math.max(index, delEnd);
-    }
-
-    /**
-     * Sets the point as added. The start and end points will be modified to
-     * include the given index.
-     */
-    public void setAdded(int index) {
-        addStart = Math.min(index, addStart);
-        addEnd = Math.max(index, addEnd);
     }
 
     /**

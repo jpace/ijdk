@@ -35,29 +35,24 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
     private final List<DiffType> diffs;
 
     /**
-     * The pending, uncommitted difference.
-     */
-    private DiffType pending;
-
-    /**
      * The point at which the pending deletion starts.
      */
-    private Integer delStart = Difference.NONE;
+    private Integer delStart = null;
 
     /**
      * The point at which the pending deletion ends.
      */
-    private Integer delEnd = Difference.NONE;
+    private Integer delEnd = null;
 
     /**
      * The point at which the pending addition starts.
      */
-    private Integer addStart = Difference.NONE;
+    private Integer addStart = null;
 
     /**
      * The point at which the pending addition ends.
      */
-    private Integer addEnd = Difference.NONE;
+    private Integer addEnd = null;
 
     /**
      * The comparator used, if any.
@@ -129,8 +124,12 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      * Adds the last difference, if pending.
      */
     protected void addPending() {
-        if (pending != null) {
-            diffs.add(pending);
+        if (delStart != null) {
+            diffs.add(createDifference(delStart, delEnd, addStart, addEnd));
+            delStart = null;
+            delEnd   = null;
+            addStart = null;
+            addEnd   = null;
         }
     }
 
@@ -236,46 +235,18 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
     }
 
     /**
-     * Sets the point as deleted. The start and end points will be modified to
-     * include the given index.
-     */
-    public void setDeleted(int index) {
-        pending.setDeleted(index);
-        delStart = Math.min(index, delStart);
-        delEnd = Math.max(index, delEnd);
-        tr.Ace.setVerbose(true);
-        tr.Ace.yellow("pending", pending);
-        tr.Ace.yellow("delStart", delStart);
-        tr.Ace.yellow("delEnd", delEnd);
-    }
-
-    /**
-     * Sets the point as added. The start and end points will be modified to
-     * include the given index.
-     */
-    public void setAdded(int index) {
-        pending.setAdded(index);
-        addStart = Math.min(index, addStart);
-        addEnd = Math.max(index, addEnd);
-        tr.Ace.setVerbose(true);
-        tr.Ace.cyan("pending", pending);
-        tr.Ace.cyan("addStart", addStart);
-        tr.Ace.cyan("addEnd", addEnd);
-    }
-
-    /**
      * Invoked for elements in <code>from</code> and not in <code>to</code>.
      */
     protected void onFromNotTo(int fromIdx, int toIdx) {
-        if (pending == null) {
-            pending = createDifference(fromIdx, fromIdx, toIdx, Difference.NONE);
+        if (delStart == null && delEnd == null && addStart == null && addEnd == null) {
             delStart = fromIdx;
-            delEnd   = fromIdx;
+            delEnd = fromIdx;
             addStart = toIdx;
-            addEnd   = Difference.NONE;
+            addEnd = Difference.NONE;
         }
         else {
-            setDeleted(fromIdx);
+            delStart = Math.min(fromIdx, delStart);
+            delEnd = Math.max(fromIdx, delEnd);
         }
     }
 
@@ -283,16 +254,15 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      * Invoked for elements in <code>to</code> and not in <code>from</code>.
      */
     protected void onToNotFrom(int fromIdx, int toIdx) {
-        tr.Ace.log("fromIdx", fromIdx);
-        if (pending == null) {
-            pending = createDifference(fromIdx, Difference.NONE, toIdx, toIdx);
+        if (delStart == null && delEnd == null && addStart == null && addEnd == null) {
             delStart = fromIdx;
-            delEnd   = Difference.NONE;
+            delEnd = Difference.NONE;
             addStart = toIdx;
-            addEnd   = toIdx;
+            addEnd = toIdx;
         }
         else {
-            setAdded(toIdx);
+            addStart = Math.min(toIdx, addStart);
+            addEnd = Math.max(toIdx, addEnd);
         }
     }
 
@@ -300,13 +270,6 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      * Invoked for elements matching in <code>from</code> and <code>to</code>.
      */
     protected void onMatch(int fromIdx, int toIdx) {
-        if (pending != null) {
-            diffs.add(pending);
-            pending = null;
-            delStart = null;
-            delEnd   = null;
-            addStart = null;
-            addEnd   = null;
-        }
+        addPending();
     }
 }
