@@ -142,8 +142,6 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
         LCS<ObjectType> lcs = new LCS<ObjectType>(from, to, comparator);
         List<Integer> matches = lcs.getMatches();
 
-        int lastFrom = from.size() - 1;
-        int lastTo = to.size() - 1;
         int toIdx = 0;
         int fromIdx = 0;
         int lastMatch = matches.size() - 1;
@@ -164,33 +162,25 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
             fromIdx++;
         }
 
-        boolean calledFinishFrom = false;
-        boolean calledFinishTo = false;
+        traverseEndOfSequences(fromIdx, toIdx);
+    }
+
+    protected void traverseEndOfSequences(int fromIdx, int toIdx) {
+        int lastFrom = from.size() - 1;
+        int lastTo = to.size() - 1;
 
         while (fromIdx <= lastFrom || toIdx <= lastTo) {
             // last from?
             if (fromIdx == lastFrom + 1 && toIdx <= lastTo) {
-                if (!calledFinishFrom && callFinishedFrom()) {
-                    finishedFrom(lastFrom);
-                    calledFinishFrom = true;
-                }
-                else {
-                    while (toIdx <= lastTo) {
-                        onToNotFrom(fromIdx, toIdx++);
-                    }
+                while (toIdx <= lastTo) {
+                    onToNotFrom(fromIdx, toIdx++);
                 }
             }
 
             // last to?
             if (toIdx == lastTo + 1 && fromIdx <= lastFrom) {
-                if (!calledFinishTo && callFinishedTo()) {
-                    finishedTo(lastTo);
-                    calledFinishTo = true;
-                }
-                else {
-                    while (fromIdx <= lastFrom) {
-                        onFromNotTo(fromIdx++, toIdx);
-                    }
+                while (fromIdx <= lastFrom) {
+                    onFromNotTo(fromIdx++, toIdx);
                 }
             }
 
@@ -205,44 +195,11 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
     }
 
     /**
-     * Override and return true in order to have <code>finishedFrom</code> invoked
-     * at the last element in the <code>from</code> array.
-     */
-    protected boolean callFinishedFrom() {
-        return false;
-    }
-
-    /**
-     * Override and return true in order to have <code>finishedTo</code> invoked
-     * at the last element in the <code>to</code> array.
-     */
-    protected boolean callFinishedTo() {
-        return false;
-    }
-
-    /**
-     * Invoked at the last element in <code>from</code>, if
-     * <code>callFinishedFrom</code> returns true.
-     */
-    protected void finishedFrom(int lastFrom) {
-    }
-
-    /**
-     * Invoked at the last element in <code>to</code>, if
-     * <code>callFinishedTo</code> returns true.
-     */
-    protected void finishedTo(int lastTo) {
-    }
-
-    /**
      * Invoked for elements in <code>from</code> and not in <code>to</code>.
      */
     protected void onFromNotTo(int fromIdx, int toIdx) {
-        if (delStart == null && delEnd == null && addStart == null && addEnd == null) {
-            delStart = fromIdx;
-            delEnd = fromIdx;
-            addStart = toIdx;
-            addEnd = Difference.NONE;
+        if (delStart == null) {
+            setIndices(fromIdx, fromIdx, toIdx, Difference.NONE);
         }
         else {
             delStart = Math.min(fromIdx, delStart);
@@ -254,16 +211,20 @@ public abstract class Differ <ObjectType extends Object, DiffType extends Differ
      * Invoked for elements in <code>to</code> and not in <code>from</code>.
      */
     protected void onToNotFrom(int fromIdx, int toIdx) {
-        if (delStart == null && delEnd == null && addStart == null && addEnd == null) {
-            delStart = fromIdx;
-            delEnd = Difference.NONE;
-            addStart = toIdx;
-            addEnd = toIdx;
+        if (delStart == null) {
+            setIndices(fromIdx, Difference.NONE, toIdx, toIdx);
         }
         else {
             addStart = Math.min(toIdx, addStart);
             addEnd = Math.max(toIdx, addEnd);
         }
+    }
+
+    private void setIndices(int delSt, int delEn, int addSt, int addEn) {
+        delStart = delSt;
+        delEnd = delEn;
+        addStart = addSt;
+        addEnd = addEn;
     }
 
     /**

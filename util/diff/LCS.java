@@ -164,8 +164,6 @@ public class LCS<ObjectType> {
      * Converts the map into a list.
      */
     protected static List<Integer> toList(TreeMap<Integer, Integer> map) {
-        tr.Ace.setVerbose(true);
-        
         int size = map.isEmpty() ? 0 : 1 + map.lastKey();
         ArrayList<Integer> list = new ArrayList<Integer>(Collections.nCopies(size, (Integer)null));
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
