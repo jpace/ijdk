@@ -58,7 +58,7 @@ public class Writer {
         this.out = out;
     }
 
-    public void setDisabled(Class cls) {
+    public void setDisabled(Class<?> cls) {
         addFilter(new ClassFilter(cls, null));
     }
 
@@ -98,7 +98,7 @@ public class Writer {
         return outputType.equals(OutputType.VERBOSE);
     }
 
-    public void addClassSkipped(Class cls) {
+    public void addClassSkipped(Class<?> cls) {
         addClassSkipped(cls.getName());
     }
     

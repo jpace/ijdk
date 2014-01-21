@@ -21,7 +21,7 @@ public class FileExt {
             return ReaderExt.readLines(new FileReader(file), options);
         }
         catch (FileNotFoundException fnfe) {
-            return IOExceptionHandler.handle(fnfe, options);
+            return IOExceptionHandler.handleReadException(fnfe, options);
         }
     }
 
@@ -46,7 +46,7 @@ public class FileExt {
             PrintWriterExt.printLines(new PrintWriter(file), lines);
         }
         catch (FileNotFoundException fnfe) {
-            IOExceptionHandler.handle(fnfe, options);
+            IOExceptionHandler.handleWriteException(fnfe, options);
         }
     }
 

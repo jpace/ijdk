@@ -51,7 +51,7 @@ public class LogElementFactory {
             return LogObjectArray.create(level, colors, name, obj, numFrames);
         }
         else if (obj instanceof Collection) {
-            Collection coll = (Collection)obj;
+            Collection<?> coll = (Collection<?>)obj;
             return new LogCollection(level, colors, name, coll, numFrames);
         }
         else if (obj instanceof Iterator) {

@@ -29,7 +29,7 @@ public class LogObject {
         }
 
         Map<String, Object> attributes = new TreeMap<String, Object>();
-        Class cls = obj.getClass();
+        Class<?> cls = obj.getClass();
 
         while (cls != null) {
             attributes.putAll(inspectForClass(inspOpts, cls, obj));
@@ -38,7 +38,7 @@ public class LogObject {
         return attributes;
     }
 
-    public static Map<String, Object> inspectForClass(EnumSet<InspectOptionType> inspOpts, Class cls, Object obj) {
+    public static Map<String, Object> inspectForClass(EnumSet<InspectOptionType> inspOpts, Class<?> cls, Object obj) {
         if (isNull(obj)) {
             return null;
         }

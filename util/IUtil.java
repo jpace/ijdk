@@ -19,12 +19,31 @@ public class IUtil {
     }
 
     /**
+     * Returns whether the array is not null and is not of zero length.
+     *
+     * @see #isEmpty
+     * @see #isFalse
+     */
+    public static boolean isTrue(Object ... obj) {
+        return obj != null && obj.length > 0;
+    }
+
+    /**
      * Returns whether the object is null or is a string or collection of zero length.
      *
      * @see #isEmpty
      */
     public static boolean isFalse(Object obj) {
         return isEmpty(obj);
+    }
+
+    /**
+     * Returns whether the array is not null and is not of zero length.
+     *
+     * @see #isEmpty
+     */
+    public static boolean isFalse(Object ... obj) {
+        return obj == null || obj.length == 0;
     }
 
     /**
@@ -37,17 +56,26 @@ public class IUtil {
             return true;
         }
         else if (obj instanceof String) {
-            return ((String)obj).isEmpty();
+            return isEmpty((String)obj);
         }
         else if (obj instanceof Object[]) {
             return ((Object[])obj).length == 0;
         }
         else if (obj instanceof Collection) {
-            return ((Collection)obj).isEmpty();
+            return ((Collection<?>)obj).isEmpty();
         }
         else {
             return false;
         }
+    }
+
+    /**
+     * Returns whether the string is null or of zero length.
+     *
+     * @see #isEmpty
+     */
+    public static boolean isEmpty(String str) {
+        return str == null || str.isEmpty();
     }
 
     /**
@@ -133,6 +161,7 @@ public class IUtil {
      * @see #or
      * @see #isTrue
      */
+    @SafeVarargs
     public static <T> T and(T ... operands) {
         if (isFalse(operands)) {
             return null;
@@ -152,6 +181,7 @@ public class IUtil {
      * @see #or
      * @see #isTrue
      */
+    @SafeVarargs
     public static <T> T or(T ... operands) {
         if (isFalse(operands)) {
             return null;
@@ -202,9 +232,13 @@ public class IUtil {
      *     names.add("henry");
      * </pre>
      */
+    @SafeVarargs
     public static <T> List<T> list(T ... elements) {
-        List<T> ary = Arrays.asList(elements);
-        return new ArrayList<T>(ary);
+        List<T> ary = new ArrayList<T>();
+        for (T element : elements) {
+            ary.add(element);
+        }
+        return ary;
     }
 
     public static void puts(Object obj) {

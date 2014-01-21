@@ -5,25 +5,23 @@ import org.incava.ijdk.log.output.OutputType;
 /**
  * <p>Represents a logging/output level.
  */
-public class Level implements Comparable {
+public class Level implements Comparable<Level> {
     private Integer level = null;    
 
     public Level(Integer level) {
         this.level = level;
     }
 
-    public int compareTo(Object other) {
-        if (other instanceof Level) {
-            Level qother = (Level)other;
-            return level.compareTo(qother.level);
-        }
-        else {
-            return -1;
-        }
+    public int compareTo(Level other) {
+        return other == null ? -1 : level.compareTo(other.level);
     }
 
-    public boolean equals(Object other) {
-        return compareTo(other) == 0;
+    public boolean equals(Object obj) {
+        if (obj instanceof Level) {
+            Level other = (Level)obj;
+            return compareTo(other) == 0;
+        }
+        return false;
     }
 
     public String toString() {

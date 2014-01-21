@@ -35,7 +35,7 @@ public class ReaderExt {
             return lines;
         }
         catch (IOException ioe) {
-            return IOExceptionHandler.handle(ioe, options);
+            return IOExceptionHandler.handleReadException(ioe, options);
         }
     }
 

@@ -42,7 +42,7 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
         return null;
     }
 
-    public Collection<V> put(K key, V value) {
+    public Collection<V> add(K key, V value) {
         Collection<V> coll = get(key);
 
         if (coll == null) {
@@ -55,10 +55,11 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
         return coll;
     }        
 
-    public Collection<V> put(K key, V ... values) {
+    @SafeVarargs
+    public final Collection<V> putEach(K key, V ... values) {
         Collection<V> coll = null;
         for (V val : values) {
-            coll = put(key, val);
+            coll = add(key, val);
         }
     
         return coll;
@@ -87,9 +88,10 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
             return oldValue;
         }
 
+        @SuppressWarnings("unchecked")
         public boolean equals(Object obj) {
             if (obj instanceof MultiMapEntry) {
-                MultiMapEntry other = (MultiMapEntry)obj;
+                MultiMapEntry<?, ?> other = (MultiMapEntry<?, ?>)obj;
                 return areEqual(key, other.getKey()) && areEqual(value, other.getValue());
             }
             else {

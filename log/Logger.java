@@ -133,7 +133,7 @@ public class Logger {
         return writer.isLoggable(level);
     }
 
-    public static void setDisabled(Class cls) {
+    public static void setDisabled(Class<?> cls) {
         addFilter(new ClassFilter(cls, null));
     }
 
@@ -233,7 +233,7 @@ public class Logger {
         writer.setColumns(cols);
     }
     
-    public static void addClassSkipped(Class cls) {
+    public static void addClassSkipped(Class<?> cls) {
         writer.addClassSkipped(cls);
     }
     

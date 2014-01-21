@@ -9,9 +9,9 @@ import java.util.Comparator;
  * provided.
  */
 public abstract class DefaultComparator<T> implements Comparator<T> {
-    private final Class type;
+    private final Class<?> type;
     
-    public DefaultComparator(Class type) {
+    public DefaultComparator(Class<?> type) {
         this.type = type;
     }
 

@@ -160,7 +160,7 @@ public class StringExt {
         return get(str, -Math.min(n, str.length()), -1);
     }
 
-    public static String join(Collection c, String str) {
+    public static String join(Collection<?> c, String str) {
         StringBuilder sb = new StringBuilder();
         boolean isFirst = true;
         for (Object obj : c) {

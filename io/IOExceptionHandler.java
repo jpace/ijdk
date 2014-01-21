@@ -12,17 +12,16 @@ import static org.incava.ijdk.util.IUtil.*;
  * exception.
  */
 public class IOExceptionHandler {
-    public static List<String> handle(IOException ioe, EnumSet<ReadOptionType> options) throws IORuntimeException {
+    public static List<String> handleReadException(IOException ioe, EnumSet<ReadOptionType> options) throws IORuntimeException {
         if (CollectionExt.contains(options, ReadOptionType.WITH_EXCEPTION)) {
             throw new IORuntimeException(ioe);
         }
         return new ArrayList<String>();
 
     }
-    public static void handle(IOException ioe, EnumSet<WriteOptionType> options) throws IORuntimeException {
+    public static void handleWriteException(IOException ioe, EnumSet<WriteOptionType> options) throws IORuntimeException {
         if (CollectionExt.contains(options, WriteOptionType.WITH_EXCEPTION)) {
             throw new IORuntimeException(ioe);
         }
     }
-
 }
