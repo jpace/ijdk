@@ -220,7 +220,7 @@ public class IUtil {
     /**
      * Returns a list (an ArrayList) initialized with the given elements. The
      * list returned is of dynamic size (unlike <code>Arrays.asList(...)</code>,
-     * which returned a fixed-size array). The following two blocks are
+     * which returns a fixed-size array). The following two blocks are
      * equivalent:
      *
      * <pre>
