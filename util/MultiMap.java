@@ -7,6 +7,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Maps from a single key to a collection of values, the equivalent of <code>Map&lt;String,
+ * List&lt;Integer&gt;&gt;. By default the collection type is <code>ArrayList</code>, but it can be
+ * any collection, by overriding <code>getCollection</code>.
+ */
 public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
     private Set<Map.Entry<K, Collection<V>>> entrySet;
 
@@ -20,7 +25,6 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
         if (entrySet == null) {
             entrySet = new HashSet<Map.Entry<K, Collection<V>>>();
         }
-
         return entrySet;
     }
 
@@ -30,28 +34,22 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
 
     public Collection<V> put(K key, Collection<V> value) {
         Set<Map.Entry<K, Collection<V>>> entries = entrySet();
-
         for (Map.Entry<K, Collection<V>> entry : entries) {
             if (key == entry.getKey() || (key != null && key.equals(entry.getKey()))) {
                 return entry.setValue(value);
             }
         }
-
         entries.add(new MultiMapEntry<K, V>(key, value));
-
         return null;
     }
 
     public Collection<V> add(K key, V value) {
         Collection<V> coll = get(key);
-
         if (coll == null) {
             coll = getCollection();
             put(key, coll);
         }
-
-        coll.add(value);
-    
+        coll.add(value);    
         return coll;
     }        
 
@@ -61,7 +59,6 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
         for (V val : values) {
             coll = add(key, val);
         }
-    
         return coll;
     }
 

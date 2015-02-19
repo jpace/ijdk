@@ -74,7 +74,7 @@ public class StringExt {
 
     /**
      * Converts the (possibly quoted) string into a list, delimited by
-     * whitespace and commas..
+     * whitespace and commas.
      */
     public static List<String> toList(String str) {
         // strip leading/trailing single/double quotes
