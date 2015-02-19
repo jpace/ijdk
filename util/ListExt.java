@@ -50,4 +50,18 @@ public class ListExt extends CollectionExt {
         }
         return origFound;
     }
+
+    /**
+     * Returns a random element from the list, or null if the list is null or empty.
+     */
+    public static <Type> Type getRandomElement(List<Type> list) {
+        if (isEmpty(list)) {
+            return null;
+        }
+        else {
+            int sz = list.size();
+            int idx = (int)(Math.random() * sz);
+            return list.get(idx);
+        }
+    }
 }

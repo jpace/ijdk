@@ -3,8 +3,9 @@ package org.incava.ijdk.util;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import org.incava.ijdk.lang.ObjectExt;
 
-public class CollectionExt {
+public class CollectionExt extends ObjectExt {
     /**
      * Returns a list of the elements in common.
      */

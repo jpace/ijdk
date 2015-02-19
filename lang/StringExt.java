@@ -350,4 +350,13 @@ public class StringExt {
     public static String snip(String str, int len) {
         return len <= 0 ? "" : str.length() > len ? str.substring(0, len - 1) + '-' : str;
     }
+
+    /**
+     * Returns whether the string is null or of zero length.
+     *
+     * @see #isEmpty
+     */
+    public static boolean isEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
 }

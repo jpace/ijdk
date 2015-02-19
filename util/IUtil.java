@@ -1,5 +1,7 @@
 package org.incava.ijdk.util;
 
+import org.incava.ijdk.lang.ObjectExt;
+import org.incava.ijdk.lang.StringExt;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,7 +17,7 @@ public class IUtil {
      * @see #isFalse
      */
     public static boolean isTrue(Object obj) {
-        return !isEmpty(obj);
+        return ObjectExt.isTrue(obj);
     }
 
     /**
@@ -24,8 +26,8 @@ public class IUtil {
      * @see #isEmpty
      * @see #isFalse
      */
-    public static boolean isTrue(Object ... obj) {
-        return obj != null && obj.length > 0;
+    public static boolean isTrue(Object ... objs) {
+        return ObjectExt.isTrue(objs);
     }
 
     /**
@@ -34,7 +36,7 @@ public class IUtil {
      * @see #isEmpty
      */
     public static boolean isFalse(Object obj) {
-        return isEmpty(obj);
+        return ObjectExt.isFalse(obj);
     }
 
     /**
@@ -42,8 +44,8 @@ public class IUtil {
      *
      * @see #isEmpty
      */
-    public static boolean isFalse(Object ... obj) {
-        return obj == null || obj.length == 0;
+    public static boolean isFalse(Object ... objs) {
+        return ObjectExt.isFalse(objs);
     }
 
     /**
@@ -52,21 +54,7 @@ public class IUtil {
      * @see #isEmpty
      */
     public static boolean isEmpty(Object obj) {
-        if (obj == null) {
-            return true;
-        }
-        else if (obj instanceof String) {
-            return isEmpty((String)obj);
-        }
-        else if (obj instanceof Object[]) {
-            return ((Object[])obj).length == 0;
-        }
-        else if (obj instanceof Collection) {
-            return ((Collection<?>)obj).isEmpty();
-        }
-        else {
-            return false;
-        }
+        return ObjectExt.isEmpty(obj);
     }
 
     /**
@@ -75,7 +63,7 @@ public class IUtil {
      * @see #isEmpty
      */
     public static boolean isEmpty(String str) {
-        return str == null || str.isEmpty();
+        return StringExt.isEmpty(str);
     }
 
     /**
@@ -85,7 +73,7 @@ public class IUtil {
      * @see #isNotNull
      */
     public static boolean isNull(Object obj) {
-        return obj == null;
+        return ObjectExt.isNull(obj);
     }
 
     /**
@@ -95,7 +83,7 @@ public class IUtil {
      * @see #isNull
      */
     public static boolean isNotNull(Object obj) {
-        return obj != null;
+        return ObjectExt.isNotNull(obj);
     }
 
     /**
@@ -247,5 +235,9 @@ public class IUtil {
 
     public static void printf(String fmt, Object ... args) {
         System.out.printf(fmt, args);
+    }
+
+    public static void println(Object obj) {
+        System.out.println(obj);
     }
 }
