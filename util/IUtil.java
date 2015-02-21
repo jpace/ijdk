@@ -1,5 +1,6 @@
 package org.incava.ijdk.util;
 
+import org.incava.ijdk.lang.ArrayExt;
 import org.incava.ijdk.lang.ObjectExt;
 import org.incava.ijdk.lang.StringExt;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class IUtil {
      *
      * @see #isEmpty
      * @see #isFalse
+     * @see org.incava.ijdk.lang.ObjectExt#isTrue
      */
     public static boolean isTrue(Object obj) {
         return ObjectExt.isTrue(obj);
@@ -187,7 +189,7 @@ public class IUtil {
      * If <code>ary</code> is null, an "empty" iterator will be returned.
      */
     public static <T> Iterable<T> iter(T[] ary) {
-        return ary == null ? new EmptyIterable<T>() : Arrays.asList(ary);
+        return ArrayExt.iter(ary);
     }
 
     /**

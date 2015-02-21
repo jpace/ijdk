@@ -1,11 +1,11 @@
 package org.incava.ijdk.lang;
 
-import java.io.*;
-import java.util.*;
-
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
- * An array that allows insertion at any point, not within the set size.
+ * An array that allows insertion at any point, not within the set size. Similar to a SparseIntArray
+ * in the Android SDK.
  */
 public class IntegerArray {
     private TreeMap<Integer, Integer> data;

@@ -1,12 +1,20 @@
 package org.incava.ijdk.lang;
 
-
+/**
+ * Math extensions.
+ */
 public class MathExt {
-
+    /**
+     * Returns the minimum value in the array, which can be empty or null. Returns Integer.MIN_VALUE
+     * if not found.
+     */
     public static int min(int ... ary) {
-        int m = ary[0];
+        int m = Integer.MIN_VALUE;
+        if (ary == null) {
+            return m;
+        }
         for (int el : ary) {
-            if (el < m) {
+            if (m == Integer.MIN_VALUE || el < m) {
                 m = el;
             }
         }

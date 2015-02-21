@@ -1,5 +1,6 @@
 package org.incava.ijdk.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListExt extends CollectionExt {
@@ -60,8 +61,32 @@ public class ListExt extends CollectionExt {
         }
         else {
             int sz = list.size();
-            int idx = (int)(Math.random() * sz);
+            int idx = new java.util.Random().nextInt(sz);
             return list.get(idx);
         }
+    }
+
+    /**
+     * Returns a list (an ArrayList) initialized with the given elements. The
+     * list returned is of dynamic size (unlike <code>Arrays.asList(...)</code>,
+     * which returns a fixed-size array). The following two blocks are
+     * equivalent:
+     *
+     * <pre>
+     *     List<String> names = new ArrayList<String>(Arrays.asList("kevin", "jacob", "isaac"));
+     *     names.add("henry");
+     * </pre>
+     * <pre>
+     *     List<String> names = list("kevin", "jacob", "isaac");
+     *     names.add("henry");
+     * </pre>
+     */
+    @SafeVarargs
+    public static <T> List<T> create(T ... elements) {
+        List<T> ary = new ArrayList<T>();
+        for (T element : elements) {
+            ary.add(element);
+        }
+        return ary;
     }
 }
