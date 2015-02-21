@@ -1,13 +1,15 @@
 package org.incava.ijdk.util;
 
-import org.incava.ijdk.lang.ArrayExt;
-import org.incava.ijdk.lang.ObjectExt;
-import org.incava.ijdk.lang.StringExt;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import org.incava.ijdk.io.StdOut;
+import org.incava.ijdk.lang.ArrayExt;
+import org.incava.ijdk.lang.ObjectExt;
+import org.incava.ijdk.lang.StringExt;
 
 public class IUtil {
     /**
@@ -231,15 +233,24 @@ public class IUtil {
         return ary;
     }
 
-    public static void puts(Object obj) {
-        System.out.println(obj);
+    /**
+     * Writes to standard output. Returns true, so this can be used in conditionals.
+     */
+    public static boolean puts(Object obj) {
+        return StdOut.puts(obj);
     }
 
-    public static void printf(String fmt, Object ... args) {
-        System.out.printf(fmt, args);
+    /**
+     * Writes to standard output. Returns true, so this can be used in conditionals.
+     */
+    public static boolean printf(String fmt, Object ... args) {
+        return StdOut.printf(fmt, args);
     }
 
-    public static void println(Object obj) {
-        System.out.println(obj);
+    /**
+     * Writes to standard output. Returns true, so this can be used in conditionals.
+     */
+    public static boolean println(Object obj) {
+        return StdOut.println(obj);
     }
 }
