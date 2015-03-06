@@ -88,7 +88,7 @@ public class Logger {
         setVerbosity();
         
         if (System.getProperty("os.name").equals("Linux")) {
-            writer.setUseColor(true);
+            writer.getConfiguration().getColorConfig().setUseColor(true);
         }
         
         Boolean showFiles = PropertyExt.getBoolean(SHOW_FILES_PROPERTY_KEY);
@@ -143,56 +143,22 @@ public class Logger {
         writer.setOut(out);
     }
 
-    public static void setFileWidth(int fileWidth) {
-        writer.setFileWidth(fileWidth);
-    }
-
-    public static void setClassWidth(int classWidth) {
-        writer.setClassWidth(classWidth);
-    }
-
-    public static void setLineWidth(int lineWidth) {
-        writer.setLineWidth(lineWidth);
-    }
-
-    public static void setFunctionWidth(int functionWidth) {
-        writer.setFunctionWidth(functionWidth);
-    }
-
-    public static void setClassColor(String className, ANSIColor color) {
-        writer.setClassColor(className, color);
-    }
-
     public static void setClassColor(ANSIColor color) {
         StackTraceElement[] stack = getStack(3);
         String className = stack[2].getClassName();
-        setClassColor(className, color);
-    }
-
-    public static void setPackageColor(ANSIColor color) {
-    }
-
-    public static void setPackageColor(String pkg, ANSIColor color) {
+        // writer.setClassColor(className, color);
     }
 
     public static void setMethodColor(String methodName, ANSIColor color) {
         StackTraceElement[] stack = getStack(3);
         String className = stack[2].getClassName();
-        writer.setMethodColor(className, methodName, color);
-    }
-
-    public static void setMethodColor(String className, String methodName, ANSIColor color) {
-        writer.setMethodColor(className, methodName, color);
-    }
-
-    public static void setFileColor(String fileName, ANSIColor color) {
-        writer.setFileColor(fileName, color);
+        // writer.setMethodColor(className, methodName, color);
     }
 
     public static void setFileColor(ANSIColor color) {
         StackTraceElement[] stack = getStack(3);
         String fileName = stack[2].getFileName();
-        writer.setFileColor(fileName, color);
+        // writer.setFileColor(fileName, color);
     }
 
     public static void set(boolean columns, int fileWidth, int lineWidth, int classWidth, int funcWidth) {

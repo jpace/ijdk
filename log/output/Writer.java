@@ -12,6 +12,7 @@ import org.incava.ijdk.log.Configuration;
 import org.incava.ijdk.log.Filter;
 import org.incava.ijdk.log.Level;
 import org.incava.ijdk.log.Log;
+import org.incava.ijdk.log.config.ColorConfig;
 import org.incava.ijdk.log.types.LogElement;
 import org.incava.ijdk.log.types.LogElementFactory;
 import org.incava.ijdk.util.IUtil;
@@ -62,22 +63,6 @@ public class Writer {
         addFilter(new ClassFilter(cls, null));
     }
 
-    public void setClassColor(String className, ANSIColor color) {
-        config.setClassColor(className, color);
-    }
-
-    public void setPackageColor(String pkgName, ANSIColor color) {
-        config.setPackageColor(pkgName, color);
-    }
-
-    public void setMethodColor(String className, String methodName, ANSIColor color) {
-        config.setMethodColor(className, methodName, color);
-    }
-
-    public void setFileColor(String fileName, ANSIColor color) {
-        config.setFileColor(fileName, color);
-    }
-
     public void set(boolean columns, int fileWidth, int lineWidth, int classWidth, int functionWidth) {
         config.setFileWidth(fileWidth);
         config.setLineWidth(lineWidth);
@@ -91,7 +76,7 @@ public class Writer {
      */
     public void setOutput(OutputType type, Level level) {
         this.outputType = type;
-        this.level      = level;
+        this.level = level;
     }
 
     public boolean verbose() {
@@ -114,7 +99,8 @@ public class Writer {
      * Sets parameters to their defaults.
      */
     public void clear() {
-        this.config = new Configuration();
+        this.config = Configuration.DEFAULT;
+        
         this.prevStackElement = null;
         this.prevThread = null;
         this.level = Log.LEVEL9;
@@ -171,15 +157,18 @@ public class Writer {
     }
 
     public ANSIColor getFileColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        return or(elmtColors.getFileColor(), config.getFileColor(stackElement.getFileName()));
+        ColorConfig cc = config.getColorConfig();
+        return or(elmtColors.getFileColor(), cc.getFileColor(stackElement.getFileName()));
     }
 
     public ANSIColor getClassColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        return or(elmtColors.getClassColor(), config.getClassColor(stackElement.getClassName()));
+        ColorConfig cc = config.getColorConfig();
+        return or(elmtColors.getClassColor(), cc.getClassColor(stackElement.getClassName()));
     }
 
     public ANSIColor getMethodColor(ItemColors elmtColors, StackTraceElement stackElement) {
-        return or(elmtColors.getMethodColor(), config.getMethodColor(stackElement.getClassName(), stackElement.getMethodName()));
+        ColorConfig cc = config.getColorConfig();
+        return or(elmtColors.getMethodColor(), cc.getMethodColor(stackElement.getClassName(), stackElement.getMethodName()));
     }
 
     /**
@@ -220,17 +209,18 @@ public class Writer {
     }
 
     private ANSIColorList getMessageColors(ItemColors elmtColors, StackTraceElement ste) {
-        if (!config.useColor()) {
+        ColorConfig cc = config.getColorConfig();
+        if (!cc.useColor()) {
             return null;
         }
-        
+
         // the colors of the message part, not the whole line:
         ANSIColorList msgColors = elmtColors.getMessageColors();
 
         if (isEmpty(msgColors)) {
-            ANSIColor col = or(config.getMethodColor(ste.getClassName(), ste.getMethodName()),
-                               config.getClassColor(ste.getClassName()),
-                               config.getFileColor(ste.getFileName()));
+            ANSIColor col = or(cc.getMethodColor(ste.getClassName(), ste.getMethodName()),
+                               cc.getClassColor(ste.getClassName()),
+                               cc.getFileColor(ste.getFileName()));
 
             if (isTrue(col)) {
                 msgColors = new ANSIColorList(col);
@@ -249,10 +239,6 @@ public class Writer {
             }
         }
         return isLoggable;
-    }
-    
-    public void setUseColor(boolean useColor) {
-        config.setUseColor(useColor);
     }
 
     public void setLineWidth(int lnWidth) {
