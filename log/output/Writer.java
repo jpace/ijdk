@@ -31,7 +31,7 @@ public class Writer {
     // this writes to stdout even in Gradle and Ant, which redirect stdout:
     private PrintWriter out = new PrintWriter(new PrintStream(new FileOutputStream(FileDescriptor.out)), true);
 
-    private List<String> packagesSkipped = list("org.incava.ijdk.log", "org.incava.qualog");
+    private List<String> packagesSkipped = list("org.incava.ijdk.log", "org.incava.qualog", "org.qualog");
     private List<String> classesSkipped = list("tr.Ace");
     private List<String> methodsSkipped = IUtil.<String>list();
     
@@ -277,6 +277,14 @@ public class Writer {
 
     public void setShowFiles(boolean showFls) {
         config.setShowFiles(showFls);
+    }
+
+    public void setConfiguration(Configuration config) {
+        this.config = config;
+    }
+
+    public Configuration getConfiguration() {
+        return config;
     }
 
     protected static StackTraceElement[] getStack(int depth) {

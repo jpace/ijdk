@@ -25,15 +25,15 @@ public class Logger {
      */
     public final static String VERSION = "1.1.1";
     
-    public final static String CLASS_WIDTH_PROPERTY_KEY = "org.incava.ijdk.log.classwidth";
-    public final static String COLUMNAR_PROPERTY_KEY = "org.incava.ijdk.log.columnar";
-    public final static String FILE_WIDTH_PROPERTY_KEY = "org.incava.ijdk.log.filewidth";
-    public final static String LEVEL_PROPERTY_KEY = "org.incava.ijdk.log.level";
-    public final static String LINE_WIDTH_PROPERTY_KEY = "org.incava.ijdk.log.linewidth";
+    public final static String CLASS_WIDTH_PROPERTY_KEY  = "org.incava.ijdk.log.classwidth";
+    public final static String COLUMNAR_PROPERTY_KEY     = "org.incava.ijdk.log.columnar";
+    public final static String FILE_WIDTH_PROPERTY_KEY   = "org.incava.ijdk.log.filewidth";
+    public final static String LEVEL_PROPERTY_KEY        = "org.incava.ijdk.log.level";
+    public final static String LINE_WIDTH_PROPERTY_KEY   = "org.incava.ijdk.log.linewidth";
     public final static String METHOD_WIDTH_PROPERTY_KEY = "org.incava.ijdk.log.methodwidth";
     public final static String SHOW_CLASSES_PROPERTY_KEY = "org.incava.ijdk.log.showclasses";
-    public final static String SHOW_FILES_PROPERTY_KEY = "org.incava.ijdk.log.showfiles";
-    public final static String VERBOSE_PROPERTY_KEY = "org.incava.ijdk.log.verbose";
+    public final static String SHOW_FILES_PROPERTY_KEY   = "org.incava.ijdk.log.showfiles";
+    public final static String VERBOSE_PROPERTY_KEY      = "org.incava.ijdk.log.verbose";
     
     public final static Level LEVEL0 = new Level(0);
     public final static Level LEVEL1 = new Level(1);
@@ -47,16 +47,14 @@ public class Logger {
     public final static Level LEVEL9 = new Level(9);
 
     public static final OutputType NO_OUTPUT = OutputType.NONE;
-    public static final OutputType QUIET = OutputType.QUIET;    
-    public static final OutputType VERBOSE = OutputType.VERBOSE;
+    public static final OutputType QUIET     = OutputType.QUIET;    
+    public static final OutputType VERBOSE   = OutputType.VERBOSE;
     
     /**
      * The default number of stack trace elements to display in a stack.
      */
     protected static final int DEFAULT_STACK_DEPTH = 5;
-
     protected static Writer writer;
-
     protected static Timer timer;
 
     /**
@@ -199,6 +197,14 @@ public class Logger {
 
     public static void set(boolean columns, int fileWidth, int lineWidth, int classWidth, int funcWidth) {
         writer.set(columns, fileWidth, lineWidth, classWidth, funcWidth);
+    }
+
+    public static void setConfiguration(Configuration config) {
+        writer.setConfiguration(config);
+    }
+
+    public static Configuration getConfiguration() {
+        return writer.getConfiguration();
     }
 
     public static void setVerbose() {

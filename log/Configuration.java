@@ -10,10 +10,15 @@ import static org.incava.ijdk.util.IUtil.*;
  * System-wide settings for logging.
  */
 public class Configuration {
-    private int fileWidth = 25;
-    private int lineWidth = 5;
+    public static final Configuration WIDE = new Configuration(25, 5, 35, 25);
+    public static final Configuration MEDIUM = new Configuration(15, 4, 25, 15);
+    public static final Configuration NARROW = new Configuration(10, 4, 20, 10);
+    public static final Configuration DEFAULT = MEDIUM;
+
+    private int fileWidth = 15;
+    private int lineWidth = 4;
+    private int classWidth = 25;
     private int functionWidth = 25;
-    private int classWidth = 35;
     
     private boolean showFiles = true;
     private boolean showClasses = true;
@@ -32,6 +37,15 @@ public class Configuration {
         classColors = new HashMap<String, ANSIColor>();
         methodColors = new HashMap<String, ANSIColor>();
         fileColors = new HashMap<String, ANSIColor>();
+    }
+
+    public Configuration(int fileWidth, int lineWidth, int classWidth, int functionWidth) {
+        this();
+        
+        this.fileWidth = fileWidth;
+        this.lineWidth = lineWidth;
+        this.classWidth = classWidth;
+        this.functionWidth = functionWidth;
     }
 
     public void setUseColor(boolean useColor) {
