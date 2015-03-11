@@ -110,7 +110,7 @@ public class IUtil {
      * </pre>
      *
      * <pre>
-     *     String status = db.status() != null ? db.status : db.initialize());
+     *     String status = db.status() != null ? db.status() : db.initialize());
      * </pre>
      *
      * @see #elvis
@@ -212,8 +212,8 @@ public class IUtil {
     /**
      * Returns a list (an ArrayList) initialized with the given elements. The
      * list returned is of dynamic size (unlike <code>Arrays.asList(...)</code>,
-     * which returns a fixed-size array). The following two blocks are
-     * equivalent:
+     * which returns a fixed-size, immutable array). The following two blocks
+     * are equivalent:
      *
      * <pre>
      *     List<String> names = new ArrayList<String>(Arrays.asList("kevin", "jacob", "isaac"));
