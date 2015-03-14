@@ -19,10 +19,6 @@ allprojects {
     }
 }
 
-jar { 
-    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } 
-}
-
 test {
     excludes = [ '**/Abstract*' ]
     testLogging {
