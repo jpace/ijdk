@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import junit.framework.TestCase;
 
-public class TestCollectionExt extends TestCase {
+public class CollectionExtTest extends TestCase {
     public static final Collection<String> SOURCE = Arrays.asList(new String[] { "one", "two", "three", "four" });
     public static final Collection<String> IDENTICAL = Arrays.asList(new String[] { "one", "two", "three", "four" });
     public static final Collection<String> SUBSET = Arrays.asList(new String[] { "one" });
@@ -14,7 +14,7 @@ public class TestCollectionExt extends TestCase {
     public static final Collection<String> MISMATCH = Arrays.asList(new String[] { "five", "six" });
     public static final Collection<String> EMPTY = new ArrayList<String>();
 
-    public TestCollectionExt(String name) {
+    public CollectionExtTest(String name) {
         super(name);
     }
 
@@ -26,6 +26,11 @@ public class TestCollectionExt extends TestCase {
     public <T> void assertHasAll(boolean exp, Collection<T> src, Collection<T> tgt) {
         String msg = "CollectionExt.hasAll(src: '" + src + "', tgt: '" + tgt + "'";
         assertEquals(msg, exp, CollectionExt.hasAll(src, tgt));
+    }
+
+    public <T> void assertAny(boolean exp, Collection<T> coll) {
+        String msg = "CollectionExt.any(coll: '" + coll;
+        assertEquals(msg, exp, CollectionExt.any(coll));
     }
 
     public void testHasAny() {
@@ -60,5 +65,13 @@ public class TestCollectionExt extends TestCase {
         assertHasAll(false, null,   EMPTY);
         assertHasAll(false, null,   null);
         assertHasAll(false, null,   MISMATCH);
+    }
+
+    public void testAnyNonEmpty() {
+        assertAny(true, SOURCE);
+    }
+
+    public void testAnyIsEmpty() {
+        assertAny(false, EMPTY);
     }
 }

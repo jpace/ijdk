@@ -58,6 +58,13 @@ public class CollectionExt extends ObjectExt {
     }
 
     /**
+     * Returns whether there are any elements in <code>coll</code>, which can be null.
+     */
+    public static <Type> boolean any(Collection<Type> coll) {
+        return coll != null && !coll.isEmpty();
+    }
+
+    /**
      * Returns whether the elements in <code>tgt</code> are in <code>src</code>.
      * If <code>src</code> or <code>tgt</code> is null, false is returned. If
      * <code>forAll</code> is true, then this method returns true if all

@@ -9,7 +9,7 @@ import org.incava.ijdk.util.*;
 import static org.incava.ijdk.util.IUtil.*;
 
 public class Example {
-    public void map_from_key_to_collection() {
+    public void mapFromKeyToCollection() {
         String name = "Homer";
         String firstAddress = "742 Evergreen Terrace"; // home
         String secondAddress = "1000 Mammon Street";   // Burns'
@@ -61,7 +61,7 @@ public class Example {
         }
     }
 
-    public void simplified_list_creation() {
+    public void simplifiedListCreation() {
         // old way:
         {
             List<String> list = new ArrayList<String>();
@@ -84,7 +84,7 @@ public class Example {
     }
 
     // Datatypes
-    public void dataType_pair() {
+    public void dataTypePair() {
         // Pair - useful for returning two values from a method:
         Pair<Integer, Integer> maxIndexAndValue = new Pair<Integer, Integer>(14, 10000000);
         
@@ -96,7 +96,7 @@ public class Example {
     }
 
     // String processing:
-    public void stringProcessing_startsWith() {
+    public void stringProcessingStartsWith() {
         String s = "this is a test";
 
         // starts with, for characters
@@ -114,7 +114,7 @@ public class Example {
         }
     }
 
-    public void string_pad() {
+    public void stringPad() {
         // old way:
         {
             String padded = "testing";
@@ -132,7 +132,7 @@ public class Example {
         }
     }
 
-    public void string_padLeft() {
+    public void stringPadLeft() {
         // old way:
         {
             String padded = "testing";
@@ -150,7 +150,7 @@ public class Example {
         }
     }
 
-    public void string_left() {
+    public void stringLeft() {
         // get at most n characters from the string:
 
         String str = "testing";
@@ -168,7 +168,7 @@ public class Example {
         // ditto for StringExt.right
     }
 
-    public void string_join() {
+    public void stringJoin() {
         // get a collection in the form "a:b:c:d"
         // old way:
 
@@ -195,7 +195,7 @@ public class Example {
         }
     }
 
-    public void string_charAt() {
+    public void stringCharAt() {
         // guards against out of range (returning null)
         // allows negative index, for distance from end (-1 == last char)
 
@@ -229,7 +229,7 @@ public class Example {
         String substr2 = StringExt.substring(str, 16, 111); // "constructor"
     }
 
-    public void datatype_range() {
+    public void datatypeRange() {
         // useful for bound values (min, max)
 
         // old way:
@@ -252,7 +252,7 @@ public class Example {
         }   
     }
 
-    public void file_reading() {
+    public void fileReading() {
         // shortcut for reading a file
 
         // old way:
@@ -273,7 +273,7 @@ public class Example {
         }
     }
 
-    public void iterate_safely() {
+    public void iterateSafely() {
         // allows iteration against a null object
         
         // old way:
@@ -293,7 +293,7 @@ public class Example {
         }
     }
 
-    public void iterator_number() {
+    public void iteratorNumber() {
         // old way:
         for (int i = 0; i < 10; ++i) {
         }
@@ -303,7 +303,7 @@ public class Example {
         }
     }
 
-    public void or_instead_of_tertiary() {
+    public void orInsteadOfTertiary() {
         // old way:
         String s = null;
         {
@@ -340,7 +340,7 @@ public class Example {
         }
     }
 
-    public void safe_get_for_lists() {
+    public void safeGetForLists() {
         // old way:
         List<String> list = new ArrayList<String>();
         int idx = 4;
@@ -363,6 +363,6 @@ public class Example {
     }
 
     public static void main(String[] args) {
-        new Example().iterate_safely();
+        new Example().iterateSafely();
     }
 }

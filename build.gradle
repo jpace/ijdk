@@ -24,6 +24,7 @@ test {
     testLogging {
         exceptionFormat = "full"
     }
+    scanForTestClasses = true
 }
 
 logging.captureStandardOutput LogLevel.ERROR

@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 import org.incava.ijdk.util.IUtil;
 import static org.incava.ijdk.util.IUtil.list;
 
-public class TestDiffer extends TestCase {
+public class DifferTest extends TestCase {
     public static class TestAddDifference extends Difference {
         public TestAddDifference(Integer delStart, Integer delEnd, Integer addStart, Integer addEnd) {
             super(delStart, delEnd, addStart, addEnd);
@@ -24,7 +24,7 @@ public class TestDiffer extends TestCase {
         }
     }
 
-    public TestDiffer(String name) {
+    public DifferTest(String name) {
         super(name);
     }
 
