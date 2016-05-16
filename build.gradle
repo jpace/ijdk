@@ -2,6 +2,8 @@ apply plugin: 'java'
 
 group = 'org.incava.ijdk'
 version ='2.0.0'
+sourceCompatibility = 1.5
+sourceCompatibility = 1.5
 
 repositories {
     mavenCentral()
@@ -12,12 +14,14 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
 }
 
+/*
 allprojects {
     tasks.withType(Compile).all { Compile compile ->
         compile.options.debug = true
         compile.options.compilerArgs = ['-Xlint:all']
     }
 }
+*/
 
 test {
     excludes = [ '**/Abstract*' ]

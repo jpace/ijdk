@@ -357,6 +357,7 @@ public class StringExt {
      * @see #isEmpty
      */
     public static boolean isEmpty(String str) {
-        return str == null || str.isEmpty();
+        // return str == null || str.isEmpty();
+        return str == null || str.length() == 0;
     }
 }

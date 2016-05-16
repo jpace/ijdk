@@ -153,7 +153,6 @@ public class IUtil {
      * @see #or
      * @see #isTrue
      */
-    @SafeVarargs
     public static <T> T and(T ... operands) {
         if (isFalse(operands)) {
             return null;
@@ -173,7 +172,6 @@ public class IUtil {
      * @see #or
      * @see #isTrue
      */
-    @SafeVarargs
     public static <T> T or(T ... operands) {
         if (isFalse(operands)) {
             return null;
@@ -224,7 +222,6 @@ public class IUtil {
      *     names.add("henry");
      * </pre>
      */
-    @SafeVarargs
     public static <T> List<T> list(T ... elements) {
         List<T> ary = new ArrayList<T>();
         for (T element : elements) {

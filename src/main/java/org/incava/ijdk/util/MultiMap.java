@@ -53,7 +53,6 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
         return coll;
     }        
 
-    @SafeVarargs
     public final Collection<V> putEach(K key, V ... values) {
         Collection<V> coll = null;
         for (V val : values) {

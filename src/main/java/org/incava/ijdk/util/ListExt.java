@@ -81,7 +81,6 @@ public class ListExt extends CollectionExt {
      *     names.add("henry");
      * </pre>
      */
-    @SafeVarargs
     public static <T> List<T> create(T ... elements) {
         List<T> ary = new ArrayList<T>();
         for (T element : elements) {
