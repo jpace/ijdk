@@ -1,6 +1,5 @@
 package org.incava.ijdk.lang;
 
-
 public class LongArray {
     public static String[] toStringArray(long[] ary) {
         String[] strs = new String[ary.length];
