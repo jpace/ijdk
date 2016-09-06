@@ -2,9 +2,24 @@ package org.incava.ijdk.util;
 
 public class ANSI {
     protected static String makeColor(int n) {
-        // this behavior changed in Java 1.4.2-01, so this is a char, not a
-        // byte.
+        // this behavior changed in Java 1.4.2-01, so this is a char, not a byte.
+        // 27 == \e (escape)
         return "" + (char)27 + "[" + n + "m";
+    }
+
+    // red, green, blue values are between 0 and 255, inclusive
+    protected static String makeColor(int red, int green, int blue) {
+        int code = toCode(red, green, blue);
+        return makeColor(code);        
+    }
+
+    // red, green, blue values are between 0 and 255, inclusive
+    protected static int toCode(int red, int green, int blue) {
+        return 36 * toAnsi(red) + 6 * toAnsi(green) + toAnsi(blue);
+    }
+    
+    protected static int toAnsi(int value) {
+        return (int)(6.0 * (value / 256.0));
     }
 
     public final static String NONE = makeColor(0);
@@ -15,6 +30,7 @@ public class ANSI {
     public final static String BLINK = makeColor(5);
     public final static String REVERSE = makeColor(7);
     public final static String CONCEALED = makeColor(8);
+    
     public final static String BLACK = makeColor(30);
     public final static String RED = makeColor(31);
     public final static String GREEN = makeColor(32);
@@ -23,6 +39,7 @@ public class ANSI {
     public final static String MAGENTA = makeColor(35);
     public final static String CYAN = makeColor(36);
     public final static String WHITE = makeColor(37);
+    
     public final static String ON_BLACK = makeColor(40);
     public final static String ON_RED = makeColor(41);
     public final static String ON_GREEN = makeColor(42);
