@@ -18,18 +18,35 @@ public class IntArray extends IntegerArray {
         return getInt(index, 0);
     }
 
+    /**
+     * Returns an array of strings for the given int array, or an zero-length string array if the
+     * int array is null or empty.
+     */
     public static String[] toStringArray(int[] ary) {
-        String[] strs = new String[ary.length];
-        for (int ai = 0; ai < ary.length; ++ai) {
-            strs[ai] = String.valueOf(ary[ai]);
+        if (ary == null || ary.length == 0) {
+            return new String[0];
         }
-        return strs;
+        else {
+            String[] strs = new String[ary.length];
+            for (int idx = 0; idx < ary.length; ++idx) {
+                strs[idx] = String.valueOf(ary[idx]);
+            }
+            return strs;
+        }
     }
 
-    public static boolean contains(int[] array, int value) {
-        for (int i = 0; i < array.length; ++i) {
-            if (array[i] == value) {
-                return true;
+    /**
+     * Returns whether the given value equals any element in the array.
+     */
+    public static boolean contains(int[] ary, int value) {
+        if (ary == null) {
+            return false;
+        }
+        else {
+            for (int val : ary) {
+                if (val == value) {
+                    return true;
+                }
             }
         }
         return false;
@@ -38,7 +55,7 @@ public class IntArray extends IntegerArray {
     /**
      * Returns the maximum in the array, or Integer.MIN_VALUE if null.
      */
-    public static int getMax(int[] ary) {
+    public static int max(int[] ary) {
         int max = Integer.MIN_VALUE;
         if (ary != null) {
             for (int val : ary) {
@@ -49,4 +66,47 @@ public class IntArray extends IntegerArray {
         }
         return max;
     }
+
+    /**
+     * Returns the minimum in the array, or Integer.MAX_VALUE if null.
+     */
+    public static int min(int[] ary) {
+        int min = Integer.MAX_VALUE;
+        if (ary != null) {
+            for (int val : ary) {
+                if (val < min) {
+                    min = val;
+                }
+            }
+        }
+        return min;
+    }
+
+    /**
+     * Returns the sum (total) of array, or 0 if null.
+     */
+    public static int sum(int[] ary) {
+        int sum = 0;
+        if (ary != null) {
+            for (int val : ary) {
+                sum += val;
+            }
+        }
+        return sum;
+    }
+
+    /**
+     * Returns the number of elements in the array, or 0 if null.
+     */
+    public static int length(int[] ary) {
+        return ary == null ? 0 : ary.length;
+    }
+
+    /**
+     * Returns the average of the elements in array, or 0 if null or the number of elements is zero.
+     */
+    public static int average(int[] ary) {
+        int len = length(ary);
+        return len == 0 ? 0 : sum(ary) / len;
+    }    
 }
