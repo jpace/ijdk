@@ -107,12 +107,60 @@ public class TestANSI extends TestCase {
 
     public void testRgbToCode_0_0_0() {
         int code = ANSI.toCode(0, 0, 0);
-        assertEquals(0, code);
+        assertEquals(16, code);
     }
 
-    public void testRgbToColor_0_0_0() {
-        String color = ANSI.makeColor(0, 0, 0);
-        String expected = String.valueOf((char)27) + "[" + 0 + "m";
+    public void testRgbToForeground_0_0_0() {
+        String color = ANSI.foreground(0, 0, 0);
+        String expected = String.valueOf((char)27) + "[38;5;" + 16 + "m";
         assertEquals(expected, color);
+    }
+
+    public void testRgbToBackground_0_0_0() {
+        String color = ANSI.background(0, 0, 0);
+        String expected = String.valueOf((char)27) + "[48;5;" + 16 + "m";
+        assertEquals(expected, color);
+    }
+
+    public void testRgbToCode_127_0_0() {
+        int code = ANSI.toCode(127, 0, 0);
+        assertEquals(88, code);
+    }
+
+    public void testRgbToCode_0_127_0() {
+        int code = ANSI.toCode(0, 127, 0);
+        assertEquals(28, code);
+    }
+
+    // multiple RGBs map to single ANSI codes
+
+    public void testRgbToCode_0_0_127() {
+        int code = ANSI.toCode(0, 0, 127);
+        assertEquals(18, code);
+    }
+
+    public void testRgbToCode_0_0_86() {
+        int code = ANSI.toCode(0, 0, 86);
+        assertEquals(18, code);
+    }
+
+    public void testRgbToCode_0_0_95() {
+        int code = ANSI.toCode(0, 0, 95);
+        assertEquals(18, code);
+    }
+
+    public void testRgbClassToCode_0_0_127() {
+        int code = ANSI.toCode(new RGB(0, 0, 127));
+        assertEquals(18, code);
+    }
+
+    public void testRgbClassToCode_0_0_86() {
+        int code = ANSI.toCode(new RGB(0, 0, 86));
+        assertEquals(18, code);
+    }
+
+    public void testRgbClassToCode_0_0_95() {
+        int code = ANSI.toCode(new RGB(0, 0, 95));
+        assertEquals(18, code);
     }
 }

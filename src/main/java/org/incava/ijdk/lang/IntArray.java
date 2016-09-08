@@ -34,4 +34,19 @@ public class IntArray extends IntegerArray {
         }
         return false;
     }
+
+    /**
+     * Returns the maximum in the array, or Integer.MIN_VALUE if null.
+     */
+    public static int getMax(int[] ary) {
+        int max = Integer.MIN_VALUE;
+        if (ary != null) {
+            for (int val : ary) {
+                if (val > max) {
+                    max = val;
+                }
+            }
+        }
+        return max;
+    }
 }
