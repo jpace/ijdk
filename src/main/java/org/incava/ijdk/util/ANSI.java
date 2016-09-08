@@ -1,51 +1,120 @@
 package org.incava.ijdk.util;
 
 public class ANSI {
-    protected static String makeColor(int n) {
-        // this behavior changed in Java 1.4.2-01, so this is a char, not a byte.
-        // 27 == \e (escape)
-        return "" + (char)27 + "[" + n + "m";
+    // this behavior changed in Java 1.4.2-01, so this is a char, not a byte. 27 == \e (escape)
+    private static final char ESCAPE = (char)27;
+
+    /**
+     * Returns a string for one of the basic colors, as a foreground (text) color:
+     *
+     *     black: 0
+     *     red: 1
+     *     green: 2
+     *     yellow: 3
+     *     blue: 4
+     *     magenta: 5
+     *     cyan: 6
+     *     white: 7
+     */
+    public static String foreground(int sgrIndex) {
+        return asString(30 + sgrIndex);
     }
 
-    // red, green, blue values are between 0 and 255, inclusive
-    protected static String makeColor(int red, int green, int blue) {
+    /**
+     * Returns a string for one of the basic colors, as a background color:
+     *
+     *     black: 0
+     *     red: 1
+     *     green: 2
+     *     yellow: 3
+     *     blue: 4
+     *     magenta: 5
+     *     cyan: 6
+     *     white: 7
+     */
+    public static String background(int sgrIndex) {
+        return asString(40 + sgrIndex);
+    }
+    
+    /**
+     * Returns a string for a foreground, defined by an RGB value, where red, green, and blue are
+     * 0-255.
+     */
+    public static String foreground(int red, int green, int blue) {
         int code = toCode(red, green, blue);
-        return makeColor(code);        
+        return asString("38;5;" + code);
     }
 
-    // red, green, blue values are between 0 and 255, inclusive
+    /**
+     * Returns a string for a background, defined by an RGB value, where red, green, and blue are
+     * 0-255.
+     */
+    public static String background(int red, int green, int blue) {
+        int code = toCode(red, green, blue);
+        return asString("48;5;" + code);
+    }
+
+    /**
+     * Returns a string for an effect:
+     * 
+     *     none: 0
+     *     reset: 0
+     *     bold: 1
+     *     underscore: 4
+     *     underline: 4
+     *     blink: 5
+     *     reverse: 7
+     *     concealed: 8
+     */
+    public static String effect(int n) {
+        return asString(n);
+    }
+
+    protected static String asString(int code) {
+        return asString(String.valueOf(code));
+    }
+
+    protected static String asString(String code) {
+        return "" + ESCAPE + "[" + code + "m";
+    }    
+
+    // red, green, blue values are 0-255
     protected static int toCode(int red, int green, int blue) {
-        return 36 * toAnsi(red) + 6 * toAnsi(green) + toAnsi(blue);
+        return 16 + 36 * toAnsi(red) + 6 * toAnsi(green) + toAnsi(blue);
+    }    
+
+    protected static int toCode(RGB rgb) {
+        return toCode(rgb.getRed(), rgb.getGreen(), rgb.getBlue());
     }
     
     protected static int toAnsi(int value) {
         return (int)(6.0 * (value / 256.0));
     }
 
-    public final static String NONE = makeColor(0);
-    public final static String RESET = makeColor(0);
-    public final static String BOLD = makeColor(1);
-    public final static String UNDERSCORE = makeColor(4);
-    public final static String UNDERLINE = makeColor(4);
-    public final static String BLINK = makeColor(5);
-    public final static String REVERSE = makeColor(7);
-    public final static String CONCEALED = makeColor(8);
+    public final static String NONE = effect(0);
+    public final static String RESET = effect(0);
+    public final static String BOLD = effect(1);
+    public final static String UNDERSCORE = effect(4);
+    public final static String UNDERLINE = effect(4);
+    public final static String BLINK = effect(5);
+    public final static String REVERSE = effect(7);
+    public final static String CONCEALED = effect(8);
     
-    public final static String BLACK = makeColor(30);
-    public final static String RED = makeColor(31);
-    public final static String GREEN = makeColor(32);
-    public final static String YELLOW = makeColor(33);
-    public final static String BLUE = makeColor(34);
-    public final static String MAGENTA = makeColor(35);
-    public final static String CYAN = makeColor(36);
-    public final static String WHITE = makeColor(37);
+    public final static String BLACK = foreground(0);
+    public final static String RED = foreground(1);
+    public final static String GREEN = foreground(2);
+    public final static String YELLOW = foreground(3);
+    public final static String BLUE = foreground(4);
+    public final static String MAGENTA = foreground(5);
+    public final static String CYAN = foreground(6);
+    public final static String WHITE = foreground(7);
     
-    public final static String ON_BLACK = makeColor(40);
-    public final static String ON_RED = makeColor(41);
-    public final static String ON_GREEN = makeColor(42);
-    public final static String ON_YELLOW = makeColor(43);
-    public final static String ON_BLUE = makeColor(44);
-    public final static String ON_MAGENTA = makeColor(45);
-    public final static String ON_CYAN = makeColor(46);
-    public final static String ON_WHITE = makeColor(47);
+    public final static String ON_BLACK = background(0);
+    public final static String ON_RED = background(1);
+    public final static String ON_GREEN = background(2);
+    public final static String ON_YELLOW = background(3);
+    public final static String ON_BLUE = background(4);
+    public final static String ON_MAGENTA = background(5);
+    public final static String ON_CYAN = background(6);
+    public final static String ON_WHITE = background(7);
 }
