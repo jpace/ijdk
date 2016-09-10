@@ -113,10 +113,11 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
 
 # Installation
 
-The GitHub project [ijdk](http://github.com/jpace/ijdk "IJDK") has the core
-libraries.
+From the GitHub project [ijdk](http://github.com/jpace/ijdk "IJDK"), download and build the project
+with Gradle.
 
-IJDK is not yet available with Maven. (Volunteers for such effort are welcome and very appreciated.)
+IJDK is not yet available via a Maven repository. (Volunteers for such effort are welcome and very
+appreciated.)
 
 # Help
 
