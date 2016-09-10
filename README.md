@@ -9,26 +9,39 @@ Groovy (thus Ruby). For example, reading a file is this simple:
 
 Note the similarity to Ruby:
 
-```java
+```ruby
     lines = IO.readlines("foo.txt")
 ```
 
 # Usage
 
-IJDK has a very expansive (but growing) IO library, as an alternative to the JDK
-code.
+IJDK has a very expansive (but growing) library for Java I/O and collections, as an alternative to
+the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely as possible.
 
-Other notable components: 
+* shortcuts for list creation:
 
-### a Pair class
+```java
+   List<String> names = IUtil.list("bart", "lisa", "maggie");
+   List<Integer> ages = IUtil.list(10, 8, 1);
+```
+
+* classes for common Java collections of generics, such as:
+
+```java
+   // instead of List<String>; varargs constructor
+   StringList sl = new StringList("apple", "banana", "cherry");
+```
+
+* a Pair class
 
 ```java
     Pair<String, Integer> score = Pair.create("Bird", 33);
+    // score.getFirst() == "Bird", score.getSecond() == 33
 ```
 
-### a Range class
+* a Range class
 
-```
+```java
     Range r = new Range(3, 11);
     if (r.includes(4)) {
     }
@@ -41,7 +54,7 @@ Other notable components:
 
 * a MultiMap, for doing one-to-many mappings
 
-```
+```java
     MultiMap<String, String> firstToLastNames = new MultiMap<String, String>();
     firstToLastNames.put("James", "Gosling");
     firstToLastNames.put("James", "Rumbaugh");
@@ -53,23 +66,46 @@ Other notable components:
 * negative indices handled for List.get(n), so that get(-1) returns the last
   element in the list
 
+```java
     List<String> names = Arrays.asList("Bart", "Lisa", "Homer", "Marge");
     String m = ListExt.get(names, -1);
     // m == "Marge"
     String h = ListExt.get(names, -2);
     // h == "Homer"
+```
 
 * bounds checking for List.get(n), returning null when out of range instead of
   throwing an exception:
 
+```java
     String x = ListExt.get(names, 9);
     // x == null
+```
 
 * as above, for characters in Strings
 
 * "safe" iterators for arrays and collections, which might be null
 
-* and() and or() methods returning the last/first element that is not null/false
+```java
+    // executes zero times:
+    for (String str : IUtil.iter(new String[0])) {
+    }
+    // executes zero times:
+    for (String str : IUtil.iter(null)) {
+    }
+```
+
+* iterators to execute a given number of times, similar to Ruby:
+
+```ruby
+   3.times { puts "hello" }
+```
+
+```java
+   for (Integer : IUtil.iter(3)) {
+       System.out.println("hi");
+   }
+```
 
 * colorized strings (on ANSI terminals)
 
@@ -78,7 +114,9 @@ Other notable components:
 # Installation
 
 The GitHub project [ijdk](http://github.com/jpace/ijdk "IJDK") has the core
-libraries. This project, ijdkproj, includes the build files and the unit tests.
+libraries.
+
+IJDK is not yet available with Maven. (Volunteers for such effort are welcome and very appreciated.)
 
 # Help
 
@@ -92,4 +130,4 @@ they would like. Please email me at the above address.
 
 # Credits
 
-Much of this was inspired by Ruby, as well as Groovy and Gradle.
+Much of this was inspired by Ruby.
