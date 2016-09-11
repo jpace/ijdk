@@ -1,8 +1,21 @@
 package org.incava.ijdk.lang;
 
+/**
+ * A two-element tuple, for classes that are comparable. See NCPair for an alternative class, for
+ * non-comparable clases.
+ */
 public class Pair<FirstType extends Comparable<? super FirstType>, SecondType extends Comparable<? super SecondType>> 
     implements Comparable<Pair<FirstType, SecondType>> {
-    
+
+    /**
+     * Class method that allows inference of the parameterized type.
+     *
+     * <pre>
+     *     // compare:
+     *     Pair<String, Integer> pair = new Pair<String, Integer>("Homer", 34);
+     *     Pair<String, Integer> pair = Pair.create("Homer", 34);
+     * </pre>
+     */
     public static <X extends Comparable<? super X>, Y extends Comparable<? super Y>>
         Pair<X, Y> create(X first, Y second) {
         return new Pair<X, Y>(first, second);
@@ -16,11 +29,31 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
         this.second = second;
     }
 
+    /**
+     * Returns the first element.
+     */
     public FirstType getFirst() {
         return first;
     }
 
+    /**
+     * Returns the second element.
+     */
     public SecondType getSecond() {
+        return second;
+    }
+
+    /**
+     * Returns the first element, with a shorter method name than <code>getFirst</code>.
+     */
+    public FirstType first() {
+        return first;
+    }
+
+    /**
+     * Returns the second element, with a shorter method name than <code>getSecond~</code>.
+     */
+    public SecondType second() {
         return second;
     }
 

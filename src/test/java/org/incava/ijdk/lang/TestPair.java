@@ -32,14 +32,6 @@ public class TestPair extends TestCase {
         assertCompareToEquals(a, b);
         assertCompareToLessThan(a, c);
         assertCompareToLessThan(d, a);
-        
-        assertFalse(ac, a.equals(c));
-        assertTrue(ac, a.compareTo(c) < 0);
-        assertTrue(ac, c.compareTo(a) > 0);
-
-        assertFalse(ad, a.equals(d));
-        assertTrue(ad, a.compareTo(d) > 0);
-        assertTrue(ad, d.compareTo(a) < 0);
     }
 
     public void testCreate() {
@@ -54,5 +46,25 @@ public class TestPair extends TestCase {
         Pair<String, Integer> d = Pair.create("ha",    4);
 
         doComparableTest(a, b, c, d);
+    }
+
+    public void testGetFirstDefault() {
+        Pair<String, Integer> pair = Pair.create("abc", 123);
+        assertEquals("abc", pair.getFirst());
+    }
+
+    public void testFirstDefault() {
+        Pair<String, Integer> pair = Pair.create("abc", 123);
+        assertEquals("abc", pair.first());
+    }
+
+    public void testGetSecondDefault() {
+        Pair<String, Integer> pair = Pair.create("abc", 123);
+        assertEquals(Integer.valueOf(123), pair.getSecond());
+    }
+
+    public void testSecondDefault() {
+        Pair<String, Integer> pair = Pair.create("abc", 123);
+        assertEquals(Integer.valueOf(123), pair.second());
     }
 }
