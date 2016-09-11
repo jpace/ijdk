@@ -26,15 +26,13 @@ public class TestStringList extends TestCase {
     }
 
     public void testCtorVarArgsOne() {
-        List<String> list = Arrays.asList("one");
-        StringList sl = new StringList(list);
+        StringList sl = new StringList("one");
         assertEquals(1, sl.size());
         assertEquals("one", sl.get(0));
     }
 
     public void testCtorVarArgsTwo() {
-        List<String> list = Arrays.asList("one", "two");
-        StringList sl = new StringList(list);
+        StringList sl = new StringList("one", "two");
         assertEquals(2, sl.size());
         assertEquals("one", sl.get(0));
         assertEquals("two", sl.get(1));
