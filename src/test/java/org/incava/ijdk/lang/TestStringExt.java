@@ -9,6 +9,8 @@ public class TestStringExt extends AbstractTestCaseExt {
         super(name);
     }
 
+    // split
+
     public String[] assertSplit(String[] expected, String str, char delim, int max) {
         String[] result = StringExt.split(str, delim, max);
         Assert.assertArrayEquals("str: '" + str + "'; delim: '" + delim + "'; max: " + max, expected, result);
@@ -52,6 +54,8 @@ public class TestStringExt extends AbstractTestCaseExt {
     public void testSplitStringCharEmptyBlockMaxFour() {
         assertSplit(new String[] { "this", "is", "a", ";test" }, "this;is;a;;test", ';', 4);
     }
+
+    // toList
     
     public void assertToList(String[] exp, String str) {
         List<String> result = StringExt.toList(str);
@@ -78,6 +82,8 @@ public class TestStringExt extends AbstractTestCaseExt {
         assertToList(expected, "\'fee,\tfi,\nfoo,\rfum\'");
     }
 
+    // pad
+
     public String assertPad(String expected, String str, char ch, int length) {
         String result = StringExt.pad(str, ch, length);
         assertEquals("str: '" + str + "'; ch: " + ch + "; length: " + length, expected, result);
@@ -88,6 +94,10 @@ public class TestStringExt extends AbstractTestCaseExt {
         String result = StringExt.pad(str, length);
         assertEquals("str: '" + str + "'; length: " + length, expected, result);
         return result;
+    }
+
+    public void testPadCharNull() {
+        assertPad(null, null, '*', 8);
     }
     
     public void testPadCharDefault() {
@@ -105,6 +115,10 @@ public class TestStringExt extends AbstractTestCaseExt {
     public void testPadCharOneChar() {
         assertPad("abcd*", "abcd", '*', 5);
     }
+
+    public void testPadSpaceNull() {
+        assertPad(null, null, 8);
+    }    
     
     public void testPadSpaceDefault() {
         assertPad("abcd    ", "abcd", 8);
@@ -122,6 +136,8 @@ public class TestStringExt extends AbstractTestCaseExt {
         assertPad("abcd ", "abcd", 5);
     }
 
+    // padLeft
+
     public String assertPadLeft(String expected, String str, char ch, int length) {
         String result = StringExt.padLeft(str, ch, length);
         assertEquals("str: '" + str + "'; ch: " + ch + "; length: " + length, expected, result);
@@ -132,6 +148,10 @@ public class TestStringExt extends AbstractTestCaseExt {
         String result = StringExt.padLeft(str, length);
         assertEquals("str: '" + str + "'; length: " + length, expected, result);
         return result;
+    }
+    
+    public void testPadLeftCharNull() {
+        assertPadLeft(null, null, '*', 8);
     }
     
     public void testPadLeftCharDefault() {
@@ -150,6 +170,10 @@ public class TestStringExt extends AbstractTestCaseExt {
         assertPadLeft("*abcd", "abcd", '*', 5);
     }
     
+    public void testPadLeftSpaceNull() {
+        assertPadLeft(null, null, 8);
+    }
+    
     public void testPadLeftSpaceDefault() {
         assertPadLeft("    abcd", "abcd", 8);
     }
@@ -166,25 +190,118 @@ public class TestStringExt extends AbstractTestCaseExt {
        assertPadLeft(" abcd", "abcd", 5);
     }
 
-    public void testRepeat() {
-        assertEquals("abcdabcdabcdabcdabcd",                                    StringExt.repeat("abcd",  5));
-        assertEquals("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", StringExt.repeat('a',    55));
-        assertEquals("",                                                        StringExt.repeat('a',     0));
-        assertEquals("",                                                        StringExt.repeat('a',    -1));
+    // repeat
+
+    public String assertRepeat(String expected, String str, int length) {
+        String result = StringExt.repeat(str, length);
+        assertEquals("str: '" + str + "'; length: " + length, expected, result);
+        return result;
     }
 
-    public void testLeft() {
-        assertEquals("abcd", StringExt.left("abcdefgh",  4));
-        assertEquals("abcd", StringExt.left("abcd",      4));
-        assertEquals("abcd", StringExt.left("abcd",      5));
-        assertEquals("abcd", StringExt.left("abcd",      6));
+    public String assertRepeat(String expected, char ch, int length) {
+        String result = StringExt.repeat(ch, length);
+        assertEquals("ch: '" + ch + "'; length: " + length, expected, result);
+        return result;
     }
 
-    public void testRight() {
-        assertEquals("abcd", StringExt.right("zyxwabcd",  4));
-        assertEquals("abcd", StringExt.right("abcd",      4));
-        assertEquals("abcd", StringExt.right("abcd",      5));
-        assertEquals("abcd", StringExt.right("abcd",      6));
+    public void testRepeatStringNull() {
+        assertRepeat("", null,  0);
+    }
+
+    public void testRepeatStringNegative() {
+        assertRepeat("", "abcd",  -1);
+    }
+
+    public void testRepeatStringZero() {
+        assertRepeat("", "abcd",  0);
+    }
+
+    public void testRepeatStringOne() {
+        assertRepeat("abcd", "abcd",  1);
+    }
+
+    public void testRepeatStringTwo() {
+        assertRepeat("abcdabcd", "abcd",  2);
+    }
+
+    public void testRepeatCharNegative() {
+        assertRepeat("", 'a', -1);
+    }
+
+    public void testRepeatCharZero() {
+        assertRepeat("", 'a', 0);
+    }
+
+    public void testRepeatCharOne() {
+        assertRepeat("a", 'a', 1);
+    }
+
+    public void testRepeatCharTwo() {
+        assertRepeat("aa", 'a', 2);
+    }
+
+    // left
+
+    public String assertLeft(String expected, String str, int length) {
+        String result = StringExt.left(str, length);
+        assertEquals("str: '" + str + "'; length: " + length, expected, result);
+        return result;        
+    }
+
+    public void testLeftNull() {
+        assertLeft(null, null,  1);
+    }
+
+    public void testLeftLonger() {
+        assertLeft("abcd", "abcdefgh", 4);
+    }
+
+    public void testLeftAtLimit() {
+        assertLeft("abcd", "abcd", 4);
+    }
+
+    public void testLeftShorter() {
+        assertLeft("abcd", "abcd", 5);
+    }
+
+    public void testLeftZero() {
+        assertLeft("", "abcd", 0);
+    }
+
+    public void testLeftNegative() {
+        assertLeft("", "abcd", -1);
+    }
+
+    // right
+
+    public String assertRight(String expected, String str, int length) {
+        String result = StringExt.right(str, length);
+        assertEquals("str: '" + str + "'; length: " + length, expected, result);
+        return result;        
+    }
+
+    public void testRightNull() {
+        assertRight(null, null,  1);
+    }
+
+    public void testRightLonger() {
+        assertRight("efgh", "abcdefgh", 4);
+    }
+
+    public void testRightAtLimit() {
+        assertRight("abcd", "abcd", 4);
+    }
+
+    public void testRightShorter() {
+        assertRight("abcd", "abcd", 5);
+    }
+
+    public void testRightZero() {
+        assertRight("", "abcd", 0);
+    }
+
+    public void testRightNegative() {
+        assertRight("", "abcd", -1);
     }
 
     public void testJoin() {

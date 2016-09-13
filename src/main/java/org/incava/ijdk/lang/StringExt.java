@@ -93,15 +93,17 @@ public class StringExt {
     }
 
     /**
-     * Returns a string starting with the <code>str</code> parameter, with
-     * <code>ch</code>'s following the string to a length of
-     * <code>length</code>.
+     * Returns a string starting with the <code>str</code> parameter, with <code>ch</code>'s
+     * following the string to a length of <code>length</code>.
      *
      * Examples:
      *     pad("abcd", '*', 8) -> "abcd****"
      *     pad("abcd", '*', 3) -> "abcd"
      */
     public static String pad(String str, char ch, int length) {
+        if (str == null) {
+            return null;
+        }
         StringBuilder sb = new StringBuilder(str);
         while (sb.length() < length) {
             sb.append(ch);
@@ -110,8 +112,8 @@ public class StringExt {
     }
 
     /**
-     * Same as the <code>pad</code> method, but applies the padding to the
-     * left-hand (leading) side of the string.
+     * Same as the <code>pad</code> method, but applies the padding to the left-hand (leading) side
+     * of the string.
      *
      * Examples:
      * <pre>
@@ -120,7 +122,7 @@ public class StringExt {
      * </pre>
      */
     public static String padLeft(String str, char ch, int length) {
-        return repeat(ch, length - str.length()) + str;
+        return str == null ? null : repeat(ch, length - str.length()) + str;
     }
 
     /**
@@ -137,35 +139,50 @@ public class StringExt {
         return padLeft(str, ' ', length);
     }
 
-    public static String repeat(String str, int length) {
+    /**
+     * Returns the string, repeated <code>num</code> times.
+     */
+    public static String repeat(String str, int num) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; ++i) {
+        for (int i = 0; i < num; ++i) {
             sb.append(str);
         }
         return sb.toString();
     }
 
+    /**
+     * Returns the character, repeated <code>num</code> times.
+     */
     public static String repeat(char ch, int length) {
         return repeat(String.valueOf(ch), length);
     }
 
     /**
-     * Returns the leftmost n characters of the string, not exceeding the length
-     * of the string. Does not throw the annoying IndexOutOfBoundsException.
+     * Returns the leftmost <code>num</code> characters of the string, not exceeding the length of
+     * the string. Does not throw the annoying IndexOutOfBoundsException. Returns null if the input
+     * string is null. Returns an empty string if <code>num</code> is negative.
      */
-    public static String left(String str, int n) {
-        return get(str, 0, n - 1);
+    public static String left(String str, int num) {
+        return num <= 0 ? "" : get(str, 0, num - 1);
     }
 
     /**
-     * Returns the rightmost n characters of the string, not exceeding the
-     * length of the string. Does not throw the annoying
-     * IndexOutOfBoundsException.
+     * Returns the rightmost <code>num</code> characters of the string, not exceeding the length of
+     * the string. Does not throw the annoying IndexOutOfBoundsException. Returns null if the input
+     * string is null. Returns an empty string if <code>num</code> is negative.
      */
-    public static String right(String str, int n) {
-        return get(str, -Math.min(n, str.length()), -1);
+    public static String right(String str, int num) {
+        if (str == null) {
+            return null;
+        }
+        else {
+            return num <= 0 ? "" : get(str, -Math.min(num, str.length()), -1);
+        }
     }
 
+    /**
+     * Returns the collection, joined by <code>str</code>.
+     */
     public static String join(Collection<?> c, String str) {
         StringBuilder sb = new StringBuilder();
         boolean isFirst = true;
@@ -181,6 +198,9 @@ public class StringExt {
         return sb.toString();
     }
 
+    /**
+     * Returns the array, joined by <code>str</code>.
+     */
     public static String join(Object[] ary, String str) {
         return join(Arrays.asList(ary), str);
     }
