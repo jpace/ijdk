@@ -9,6 +9,8 @@ public class TestIntArray extends TestCase {
         super(name);
     }
 
+    // max
+
     protected void assertMax(int expected, int[] ary) {
         assertEquals("ary: " + ary, expected, IntArray.max(ary));
     }
@@ -39,7 +41,9 @@ public class TestIntArray extends TestCase {
 
     public void testMaxTwoElementsDescending() {
         assertMax(17, new int[] { 17, 3 });
-    }    
+    }
+
+    // min
 
     protected void assertMin(int expected, int[] ary) {
         assertEquals("ary: " + ary, expected, IntArray.min(ary));
@@ -73,6 +77,8 @@ public class TestIntArray extends TestCase {
         assertMin(3, new int[] { 17, 3 });
     }
 
+    // sum
+
     protected void assertSum(int expected, int[] ary) {
         assertEquals("ary: " + ary, expected, IntArray.sum(ary));
     }
@@ -103,7 +109,9 @@ public class TestIntArray extends TestCase {
 
     public void testSumTwoElementsDescending() {
         assertSum(20, new int[] { 17, 3 });
-    }    
+    }
+
+    // length
 
     protected void assertLength(int expected, int[] ary) {
         assertEquals("ary: " + ary, expected, IntArray.length(ary));
@@ -120,6 +128,8 @@ public class TestIntArray extends TestCase {
     public void testLengthTwoElements() {
         assertLength(2, new int[] { 3, 17 });
     }
+
+    // average
 
     protected void assertAverage(int expected, int[] ary) {
         assertEquals("ary: " + ary, expected, IntArray.average(ary));
@@ -153,6 +163,8 @@ public class TestIntArray extends TestCase {
         assertAverage(10, new int[] { 17, 4 });
     }
 
+    // contains
+
     protected void assertContains(boolean expected, int[] ary, int value) {
         assertEquals("ary: " + ary + "; value: " + value, expected, IntArray.contains(ary, value));
     }
@@ -180,6 +192,8 @@ public class TestIntArray extends TestCase {
     public void testContainsTwoElementsNoMatch() {
         assertContains(false, new int[] { 3, 17 }, 8);
     }
+
+    // toStringArray
 
     protected void assertToStringArray(String[] expected, int[] ary) {
         assertEquals("ary: " + ary, Arrays.asList(expected), Arrays.asList(IntArray.toStringArray(ary)));

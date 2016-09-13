@@ -1,13 +1,13 @@
 # Overview
 
 IJDK (Incava Java Development Kit) is a library of general-purposed code, much of it inspired by
-Groovy (thus Ruby). For example, reading a file is this simple:
+Ruby. For example, reading a file is this simple:
 
 ```java
     List<String> lines = IO.readLines("foo.txt");
 ```
 
-Note the similarity to Ruby:
+Note the similarity to idiomatic Ruby:
 
 ```ruby
     lines = IO.readlines("foo.txt")
@@ -23,6 +23,7 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
 ```java
    List<String> names = IUtil.list("bart", "lisa", "maggie");
    List<Integer> ages = IUtil.list(10, 8, 1);
+   List<Double> numbers = IUtil.list(3.14, 2.818, 1.414);
 ```
 
 * classes for common Java collections of generics, such as:
@@ -30,13 +31,19 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
 ```java
    // instead of List<String>; varargs constructor
    StringList sl = new StringList("apple", "banana", "cherry");
+   boolean result = sl.anyStartsWith("ba");  // true
+   boolean result = sl.anyStartsWith("do");  // false
+   
+   // instead of List<Integer>; varargs constructor
+   IntegerList il = new IntegerList(3, 6, 9);
+   int max = il.maximum();                 // max == 9
 ```
 
 * a Pair class
 
 ```java
     Pair<String, Integer> score = Pair.create("Bird", 33);
-    // score.getFirst() == "Bird", score.getSecond() == 33
+    // score.first() == "Bird", score.second() == 33
 ```
 
 * a Range class
@@ -48,8 +55,7 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
     for (Integer i : r) {
         // iterate from 3 to 11
     }
-    Integer[] ary = r.toExpandedArray();
-    // ary == [ 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+    Integer[] ary = r.toExpandedArray();  // ary == [ 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
 ```
 
 * a MultiMap, for doing one-to-many mappings
@@ -68,18 +74,15 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
 
 ```java
     List<String> names = Arrays.asList("Bart", "Lisa", "Homer", "Marge");
-    String m = ListExt.get(names, -1);
-    // m == "Marge"
-    String h = ListExt.get(names, -2);
-    // h == "Homer"
+    String m = ListExt.get(names, -1);   // m == "Marge"
+    String h = ListExt.get(names, -2);   // h == "Homer"
 ```
 
 * bounds checking for List.get(n), returning null when out of range instead of
   throwing an exception:
 
 ```java
-    String x = ListExt.get(names, 9);
-    // x == null
+    String x = ListExt.get(names, 9);   // x == null
 ```
 
 * as above, for characters in Strings
@@ -87,11 +90,9 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
 * "safe" iterators for arrays and collections, which might be null
 
 ```java
-    // executes zero times:
-    for (String str : IUtil.iter(new String[0])) {
-    }
-    // executes zero times:
-    for (String str : IUtil.iter(null)) {
+    for (String str : IUtil.iter(new String[0])) { // executes zero times
+    }    
+    for (String str : IUtil.iter(null)) {  // also executes zero times
     }
 ```
 
@@ -110,6 +111,15 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
 * colorized strings (on ANSI terminals)
 
 * an alternative "logging" (debugging output) module
+
+* alternate classes that shadow JDK ones, such as:
+
+```java
+   Integer num = Integerr.toInteger("1");   // num == 1
+   Integer num = Integerr.toInteger("");    // num == null
+   Integer num = Integerr.toInteger("xyz"); // num == null
+   Integer num = Integerr.toInteger(null);  // num == null
+```
 
 # Installation
 
