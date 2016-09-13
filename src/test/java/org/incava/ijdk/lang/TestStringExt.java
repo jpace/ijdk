@@ -1,59 +1,169 @@
 package org.incava.ijdk.lang;
 
-import org.incava.test.AbstractTestCaseExt;
 import java.util.*;
+import org.incava.test.AbstractTestCaseExt;
+import org.junit.Assert;
 
 public class TestStringExt extends AbstractTestCaseExt {
     public TestStringExt(String name) {
         super(name);
     }
 
-    public void testSplit() {
-        assertEquals(new String[] { "this", "is", "a",     "test"  }, StringExt.split("this;is;a;test", ';',         -1));
-        assertEquals(new String[] { "this", "is", "a",     "test"  }, StringExt.split("this;is;a;test", ";",         -1));
-        assertEquals(new String[] { "this", "is", "a",     "test"  }, StringExt.split("this ; is ; a ; test", " ; ", -1));
-        assertEquals(new String[] { "this", "is", "a", "", "test"  }, StringExt.split("this;is;a;;test", ';',        -1));
-    
-        assertEquals(new String[] { "this;is;a;;test"              }, StringExt.split("this;is;a;;test", ';',         1));
-        assertEquals(new String[] { "this", "is;a;;test"           }, StringExt.split("this;is;a;;test", ';',         2));
-        assertEquals(new String[] { "this", "is", "a;;test"        }, StringExt.split("this;is;a;;test", ';',         3));
-        assertEquals(new String[] { "this", "is", "a",     ";test" }, StringExt.split("this;is;a;;test", ';',         4));
+    public String[] assertSplit(String[] expected, String str, char delim, int max) {
+        String[] result = StringExt.split(str, delim, max);
+        Assert.assertArrayEquals("str: '" + str + "'; delim: '" + delim + "'; max: " + max, expected, result);
+        return result;
     }
 
+    public String[] assertSplit(String[] expected, String str, String delim, int max) {
+        String[] result = StringExt.split(str, delim, max);
+        Assert.assertArrayEquals("str: '" + str + "'; delim: '" + delim + "'; max: " + max, expected, result);
+        return result;
+    }
+
+    public void testSplitSingleChar() {
+        assertSplit(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ';', -1);
+    }
+
+    public void testSplitStringOneChar() {
+        assertSplit(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ";", -1);
+    }
+    
+    public void testSplitStringWithWhitespace() {
+        assertSplit(new String[] { "this", "is", "a", "test" }, "this ; is ; a ; test", " ; ", -1);
+    }
+
+    public void testSplitStringCharEmptyBlock() {
+        assertSplit(new String[] { "this", "is", "a", "", "test" }, "this;is;a;;test", ';', -1);
+    }
+
+    public void testSplitStringCharEmptyBlockMaxOne() {
+        assertSplit(new String[] { "this;is;a;;test" }, "this;is;a;;test", ';', 1);
+    }
+    
+    public void testSplitStringCharEmptyBlockMaxTwo() {
+        assertSplit(new String[] { "this", "is;a;;test" }, "this;is;a;;test", ';', 2);
+    }
+
+    public void testSplitStringCharEmptyBlockMaxThree() {   
+        assertSplit(new String[] { "this", "is", "a;;test" }, "this;is;a;;test", ';', 3);
+    }
+        
+    public void testSplitStringCharEmptyBlockMaxFour() {
+        assertSplit(new String[] { "this", "is", "a", ";test" }, "this;is;a;;test", ';', 4);
+    }
+    
     public void assertToList(String[] exp, String str) {
-        assertEquals(Arrays.asList(exp), StringExt.toList(str));
+        List<String> result = StringExt.toList(str);
+        assertEquals("str: '" + str + "'", Arrays.asList(exp), result);
     }
     
-    public void testToList() {
-        String[] expList = new String[] { "fee", "fi", "foo", "fum" };
-        assertToList(expList, "fee, fi, foo, fum");
-        assertToList(expList, "\"fee, fi, foo, fum\"");
-        assertToList(expList, "\'fee, fi, foo, fum\'");
-        assertToList(expList, "\'fee,\tfi,\nfoo,\rfum\'");
+    public void testToListDefault() {
+        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
+        assertToList(expected, "fee, fi, foo, fum");
     }
     
-    public void testPad() {
-        assertEquals("abcd****", StringExt.pad("abcd", '*', 8));
-        assertEquals("abcd",     StringExt.pad("abcd", '*', 3));
-        assertEquals("abcd",     StringExt.pad("abcd", '*', 4));
-        assertEquals("abcd*",    StringExt.pad("abcd", '*', 5));
-
-        assertEquals("abcd    ", StringExt.pad("abcd", 8));
-        assertEquals("abcd",     StringExt.pad("abcd", 3));
-        assertEquals("abcd",     StringExt.pad("abcd", 4));
-        assertEquals("abcd ",    StringExt.pad("abcd", 5));
+    public void testToListDoubleQuoted() {
+        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
+        assertToList(expected, "\"fee, fi, foo, fum\"");
+    }
+    
+    public void testToListSingleQuoted() {
+        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
+        assertToList(expected, "\'fee, fi, foo, fum\'");
+    }
+    
+    public void testToListWhitespaceChars() {
+        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
+        assertToList(expected, "\'fee,\tfi,\nfoo,\rfum\'");
     }
 
-    public void testPadLeft() {
-        assertEquals("****abcd", StringExt.padLeft("abcd", '*', 8));
-        assertEquals("abcd",     StringExt.padLeft("abcd", '*', 3));
-        assertEquals("abcd",     StringExt.padLeft("abcd", '*', 4));
-        assertEquals("*abcd",    StringExt.padLeft("abcd", '*', 5));
+    public String assertPad(String expected, String str, char ch, int length) {
+        String result = StringExt.pad(str, ch, length);
+        assertEquals("str: '" + str + "'; ch: " + ch + "; length: " + length, expected, result);
+        return result;
+    }
 
-        assertEquals("    abcd", StringExt.padLeft("abcd", 8));
-        assertEquals("abcd",     StringExt.padLeft("abcd", 3));
-        assertEquals("abcd",     StringExt.padLeft("abcd", 4));
-        assertEquals(" abcd",    StringExt.padLeft("abcd", 5));
+    public String assertPad(String expected, String str, int length) {
+        String result = StringExt.pad(str, length);
+        assertEquals("str: '" + str + "'; length: " + length, expected, result);
+        return result;
+    }
+    
+    public void testPadCharDefault() {
+        assertPad("abcd****", "abcd", '*', 8);
+    }
+    
+    public void testPadCharShorter() {
+        assertPad("abcd", "abcd", '*', 3);
+    }
+    
+    public void testPadCharAtLength() {
+        assertPad("abcd", "abcd", '*', 4);
+    }
+    
+    public void testPadCharOneChar() {
+        assertPad("abcd*", "abcd", '*', 5);
+    }
+    
+    public void testPadSpaceDefault() {
+        assertPad("abcd    ", "abcd", 8);
+    }
+    
+    public void testPadSpaceShorter() {
+        assertPad("abcd", "abcd", 3);
+    }
+    
+    public void testPadSpaceAtLength() {
+        assertPad("abcd", "abcd", 4);
+    }
+    
+    public void testPadSpaceOneChar() {
+        assertPad("abcd ", "abcd", 5);
+    }
+
+    public String assertPadLeft(String expected, String str, char ch, int length) {
+        String result = StringExt.padLeft(str, ch, length);
+        assertEquals("str: '" + str + "'; ch: " + ch + "; length: " + length, expected, result);
+        return result;
+    }
+
+    public String assertPadLeft(String expected, String str, int length) {
+        String result = StringExt.padLeft(str, length);
+        assertEquals("str: '" + str + "'; length: " + length, expected, result);
+        return result;
+    }
+    
+    public void testPadLeftCharDefault() {
+        assertPadLeft("****abcd", "abcd", '*', 8);
+    }
+    
+    public void testPadLeftCharShorter() {
+        assertPadLeft("abcd", "abcd", '*', 3);
+    }
+    
+    public void testPadLeftCharAtLength() {
+        assertPadLeft("abcd", "abcd", '*', 4);
+    }
+    
+    public void testPadLeftCharOneChar() {
+        assertPadLeft("*abcd", "abcd", '*', 5);
+    }
+    
+    public void testPadLeftSpaceDefault() {
+        assertPadLeft("    abcd", "abcd", 8);
+    }
+    
+    public void testPadLeftSpaceShorter() {
+        assertPadLeft("abcd", "abcd", 3);
+    }
+    
+    public void testPadLeftSpaceAtLength() {
+        assertPadLeft("abcd", "abcd", 4);
+     }
+    
+    public void testPadLeftSpaceOneChar() {
+       assertPadLeft(" abcd", "abcd", 5);
     }
 
     public void testRepeat() {

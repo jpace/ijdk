@@ -123,10 +123,16 @@ public class StringExt {
         return repeat(ch, length - str.length()) + str;
     }
 
+    /**
+     * Pads with spaces.
+     */
     public static String pad(String str, int length) {
         return pad(str, ' ', length);
     }
 
+    /**
+     * Left-pads with spaces.
+     */
     public static String padLeft(String str, int length) {
         return padLeft(str, ' ', length);
     }
