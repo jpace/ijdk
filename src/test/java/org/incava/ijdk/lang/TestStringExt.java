@@ -23,6 +23,10 @@ public class TestStringExt extends AbstractTestCaseExt {
         return result;
     }
 
+    public void testSplitNull() {
+        assertSplit(null, null, ';', -1);
+    }
+
     public void testSplitSingleChar() {
         assertSplit(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ';', -1);
     }
@@ -59,7 +63,11 @@ public class TestStringExt extends AbstractTestCaseExt {
     
     public void assertToList(String[] exp, String str) {
         List<String> result = StringExt.toList(str);
-        assertEquals("str: '" + str + "'", Arrays.asList(exp), result);
+        assertEquals("str: '" + str + "'", exp == null ? null : Arrays.asList(exp), result);
+    }
+    
+    public void testToListNull() {
+        assertToList(null, null);
     }
     
     public void testToListDefault() {
@@ -304,44 +312,105 @@ public class TestStringExt extends AbstractTestCaseExt {
         assertRight("", "abcd", -1);
     }
 
-    public void testJoin() {
-        String[] contents    = new String[] { "a", "b", "c", "d" };
-        String   commaJoined = "a,b,c,d";
-        String   xxxJoined   = "axxxbxxxcxxxd";
-        
-        assertEquals("string array", commaJoined, StringExt.join(contents, ","));
-        assertEquals("string array", xxxJoined,   StringExt.join(contents, "xxx"));
+    // join
 
-        List<String> contentList = Arrays.asList(contents);
-
-        Collection<Collection<String>> collections = new ArrayList<Collection<String>>();
-        collections.add(contentList);
-        collections.add(new TreeSet<String>(contentList));
-        collections.add(new Vector<String>(contentList));
-        
-        for (Collection<String> collection : collections) {
-            assertEquals("collection.type: " + collection.getClass().getName(), commaJoined, StringExt.join(collection, ","));
-            assertEquals("collection.type: " + collection.getClass().getName(), xxxJoined,   StringExt.join(collection, "xxx"));
-        }
+    public String assertJoin(String expected, String[] ary, String delim) {
+        String result = StringExt.join(ary, delim);
+        assertEquals(ary == null ? null : Arrays.asList(ary).toString(), expected, result);
+        return result;
     }
 
-    public void assertCharAt(Character exp, String str, int index) {
-        assertEquals(exp, StringExt.charAt(str, index));
+    public String assertJoin(String expected, Collection<String> coll, String delim) {
+        String result = StringExt.join(coll, delim);
+        assertEquals(coll == null ? null : coll.toString(), expected, result);
+        return result;
     }
 
-    public void testCharAt() {
+    public void testJoinArrayNull() {
+        assertJoin(null, (String[])null, ",");
+    }
+
+    public void testJoinArrayDelimNull() {
+        assertJoin("abcd", new String[] { "a", "b", "c", "d" }, null);
+    }
+
+    public void testJoinArrayDelimEmpty() {
+        assertJoin("abcd", new String[] { "a", "b", "c", "d" }, "");
+    }
+
+    public void testJoinArrayEmpty() {
+        assertJoin("", new String[] { "" }, ",");
+    }
+
+    public void testJoinArrayNotEmpty() {
+        assertJoin("a,b,c,d", new String[] { "a", "b", "c", "d" }, ",");
+    }
+
+    public void testJoinCollectionNull() {
+        assertJoin(null, (ArrayList<String>)null, ",");
+    }
+
+    public void testJoinCollectionDelimNull() {
+        assertJoin("abcd", ICore.list("a", "b", "c", "d"), null);
+    }
+
+    public void testJoinCollectionDelimEmpty() {
+        assertJoin("abcd", ICore.list("a", "b", "c", "d"), "");
+    }
+
+    public void testJoinCollectionEmpty() {
+        assertJoin("", new ArrayList<String>(), ",");
+    }
+
+    public void testJoinCollectionNotEmpty() {
+        assertJoin("a,b,c,d", ICore.list("a", "b", "c", "d"), ",");
+    }
+
+    // charAt
+
+    public Character assertCharAt(Character expected, String str, int index) {
+        Character result = StringExt.charAt(str, index);
+        assertEquals("str: '" + str + "'; index: " + index, expected, result);
+        return result;
+    }
+    
+    public void testCharAtNullString() {
+        assertCharAt(null, null, 0);
+    }
+    
+    public void testCharAtZero() {
         assertCharAt('a', "abc", 0);
+    }
+    
+    public void testCharAtOne() {
         assertCharAt('b', "abc", 1);
+    }
+    
+    public void testCharAtEnd() {
         assertCharAt('c', "abc", 2);
-
+    }
+    
+    public void testCharAtPastRange() {
         assertCharAt(null, "abc", 3);
-
+    }
+    
+    public void testCharAtNegativeOne() {
         assertCharAt('c', "abc", -1);
+    }
+    
+    public void testCharAtNegativeTwo() {
         assertCharAt('b', "abc", -2);
+    }
+    
+    public void testCharAtNegativeAtStart() {
         assertCharAt('a', "abc", -3);
-
+    }
+    
+    public void testCharAtNegativeBeforeRange() {
         assertCharAt(null, "abc", -4);
     }
+
+    // getIndex
 
     public void assertGetIndex(Integer exp, String str, int index) {
         assertEquals(exp, StringExt.getIndex(str, index));

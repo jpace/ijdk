@@ -13,17 +13,22 @@ import static org.incava.ijdk.util.IUtil.*;
  */
 public class StringExt {
     /**
-     * Returns an array of strings split at the character delimiter.
+     * Returns an array of strings split at the character delimiter. Returns null if
+     * <code>str</code> is null.
      */
     public static String[] split(String str, char delim, int max) {
         return split(str, String.valueOf(delim), max);
     }
 
     /**
-     * Returns an array of strings split at the string delimiter.
+     * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
+     * is null.
      */
     public static String[] split(String str, String delim, int max) {
-        if (max == 1) {
+        if (str == null) {
+            return null;
+        }
+        else if (max == 1) {
             return new String[] { str };
         }
         else {
@@ -59,24 +64,30 @@ public class StringExt {
     }
 
     /**
-     * Returns an array of strings split at the character delimiter.
+     * Returns an array of strings split at the character delimiter. Returns null if
+     * <code>str</code> is null.
      */
     public static String[] split(String str, char delim) {
         return split(str, String.valueOf(delim), -1);
     }
 
     /**
-     * Returns an array of strings split at the string delimiter.
+     * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
+     * is null.
      */
     public static String[] split(String str, String delim) {
         return split(str, delim, -1);
     }
 
     /**
-     * Converts the (possibly quoted) string into a list, delimited by
-     * whitespace and commas.
+     * Converts the (possibly quoted) string into a list, delimited by whitespace and commas.
+     * Returns null if <code>str</code> is null.
      */
     public static List<String> toList(String str) {
+        if (str == null) {
+            return null;
+        }
+        
         // strip leading/trailing single/double quotes
         if (str.charAt(0) == str.charAt(str.length() - 1) &&
             (str.charAt(0) == '"' || str.charAt(0) == '\'')) {
@@ -181,14 +192,18 @@ public class StringExt {
     }
 
     /**
-     * Returns the collection, joined by <code>str</code>.
+     * Returns the collection, joined by <code>str</code>. Returns null if <code>coll</code> is
+     * null. If <code>str</code> is null, it is treated as the empty string.
      */
-    public static String join(Collection<?> c, String str) {
+    public static String join(Collection<?> coll, String str) {
+        if (coll == null) {
+            return null;
+        }
         StringBuilder sb = new StringBuilder();
         boolean isFirst = true;
-        for (Object obj : c) {
+        for (Object obj : coll) {
             if (!isFirst) {
-                sb.append(str);
+                sb.append(str == null ? "" : str);
             }
             else {
                 isFirst = false;
@@ -199,10 +214,11 @@ public class StringExt {
     }
 
     /**
-     * Returns the array, joined by <code>str</code>.
+     * Returns the array, joined by <code>str</code>. Returns null if <code>ary</code> is null. If
+     * <code>str</code> is null, it is treated as the empty string.
      */
     public static String join(Object[] ary, String str) {
-        return join(Arrays.asList(ary), str);
+        return ary == null ? null : join(Arrays.asList(ary), str);
     }
 
     /**
