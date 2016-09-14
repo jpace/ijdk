@@ -20,10 +20,14 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
 
 * shortcuts for list creation:
 
+This is one of the most used pieces of code in IJDK, a shortcut for `new
+ArrayList<Type>(Arrays.asList(new Type[] { one, two, three }))`. The returned list is a
+dynamically-sized array, unllike `Arrays.asList`, which returns a fixed-size array.
+
 ```java
-   List<String> names = IUtil.list("bart", "lisa", "maggie");
-   List<Integer> ages = IUtil.list(10, 8, 1);
-   List<Double> numbers = IUtil.list(3.14, 2.818, 1.414);
+   List<String> names = ICore.list("bart", "lisa", "maggie");
+   List<Integer> ages = ICore.list(10, 8, 1);
+   List<Double> numbers = ICore.list(3.14, 2.818, 1.414);
 ```
 
 * classes for common Java collections of generics, such as:
@@ -37,6 +41,8 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
    // instead of List<Integer>; varargs constructor
    IntegerList il = new IntegerList(3, 6, 9);
    int max = il.maximum();                 // max == 9
+   int avg = il.average();                 // avg == 6
+   int min = il.minimum();                 // min == 3
 ```
 
 * a Pair class
@@ -47,6 +53,8 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
 ```
 
 * a Range class
+
+This converts easily to C-style arrays, and supports simple iteration:
 
 ```java
     Range r = new Range(3, 11);
@@ -69,8 +77,8 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
     }
 ```
 
-* negative indices handled for List.get(n), so that get(-1) returns the last
-  element in the list
+* negative indices handled for Array.get(n), so that get(-1) returns the last element in the list,
+  get(-2) the second to last, etc.
 
 ```java
     List<String> names = Arrays.asList("Bart", "Lisa", "Homer", "Marge");
@@ -87,12 +95,12 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
 
 * as above, for characters in Strings
 
-* "safe" iterators for arrays and collections, which might be null
+* "safe" iterators for arrays and collections, which handles the case when they are null
 
 ```java
-    for (String str : IUtil.iter(new String[0])) { // executes zero times
+    for (String str : ICore.iter(new String[0])) { // executes zero times
     }    
-    for (String str : IUtil.iter(null)) {  // also executes zero times
+    for (String str : ICore.iter(null)) {  // also executes zero times
     }
 ```
 
@@ -103,7 +111,7 @@ the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely 
 ```
 
 ```java
-   for (Integer : IUtil.iter(3)) {
+   for (Integer : ICore.iter(3)) {
        System.out.println("hi");
    }
 ```
