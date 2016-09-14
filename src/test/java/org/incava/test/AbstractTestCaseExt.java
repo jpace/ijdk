@@ -18,18 +18,23 @@ public class AbstractTestCaseExt extends TestCase {
     static public void assertEquals(String msg, Collection<?> expected, Collection<?> actual) {
         String m = toMessage(msg);
 
-        assertEquals(m + "collection sizes", expected.size(), actual.size());
+        if (expected == null) {
+            assertNull(msg, actual);
+        }
+        else {
+            assertEquals(m + "collection sizes", expected.size(), actual.size());
         
-        Iterator<?> eit = expected.iterator();
-        Iterator<?> ait = actual.iterator();
+            Iterator<?> eit = expected.iterator();
+            Iterator<?> ait = actual.iterator();
 
-        int ni = 0;
-        while (eit.hasNext() && ait.hasNext()) {
-            Object e = eit.next();
-            Object a = ait.next();
+            int ni = 0;
+            while (eit.hasNext() && ait.hasNext()) {
+                Object e = eit.next();
+                Object a = ait.next();
 
-            assertEquals(m + "collection[" + ni + "]", e, a);
-            ++ni;
+                assertEquals(m + "collection[" + ni + "]", e, a);
+                ++ni;
+            }
         }
     }
 
