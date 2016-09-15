@@ -815,4 +815,25 @@ public class TestStringExt extends AbstractTestCaseExt {
     public void testSnipAtLength() {
         assertSnip("abc", "abc", 3);
     }
+
+    // isEmpty
+
+    public boolean assertIsEmpty(boolean expected, String str) {
+        boolean result = StringExt.isEmpty(str);
+        String msg = "str: '" + str + "'";
+        assertEquals(msg, expected, result);
+        return result;
+    }
+
+    public void testIsEmptyNull() {
+        assertIsEmpty(true, null);
+    }
+
+    public void testIsEmptyEmpty() {
+        assertIsEmpty(true, "");
+    }
+
+    public void testIsEmptyNonEmpty() {
+        assertIsEmpty(false, "a");
+    }
 }

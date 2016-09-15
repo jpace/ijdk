@@ -423,8 +423,6 @@ public class StringExt {
 
     /**
      * Returns whether the string is null or of zero length.
-     *
-     * @see #isEmpty
      */
     public static boolean isEmpty(String str) {
         // return str == null || str.isEmpty();
