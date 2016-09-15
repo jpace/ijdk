@@ -413,21 +413,43 @@ public class TestStringExt extends AbstractTestCaseExt {
     // getIndex
 
     public void assertGetIndex(Integer exp, String str, int index) {
-        assertEquals(exp, StringExt.getIndex(str, index));
+        Integer result = StringExt.getIndex(str, index);
+        assertEquals("str: '" + str + "'; index: " + index, exp, result);
     }
 
-    public void testGetIndex() {
+    public void testGetIndexNull() {
+        assertGetIndex(null, null, 0);
+    }
+
+    public void testGetIndexZero() {
         assertGetIndex(0, "abcd", 0);
+    }
+
+    public void testGetIndexOne() {
         assertGetIndex(1, "abcd", 1);
-        assertGetIndex(2, "abcd", 2);
+    }
+
+    public void testGetIndexLast() {
         assertGetIndex(3, "abcd", 3);
+    }
+
+    public void testGetIndexOffEnd() {
         assertGetIndex(null, "abcd", 4);
+    }
 
+    public void testGetIndexNegativeOne() {
         assertGetIndex(3, "abcd", -1);
-        assertGetIndex(2, "abcd", -2);
-        assertGetIndex(1, "abcd", -3);
-        assertGetIndex(0, "abcd", -4);
+    }
 
+    public void testGetIndexNegativeTwo() {
+        assertGetIndex(2, "abcd", -2);
+    }
+
+    public void testGetIndexNegativeAtStart() {
+        assertGetIndex(1, "abcd", -3);
+    }
+
+    public void testGetIndexNegativeOffStart() {
         assertGetIndex(null, "abcd", -5);
     }
 
@@ -437,52 +459,58 @@ public class TestStringExt extends AbstractTestCaseExt {
         assertEquals(msg, exp, substr);
     }
 
-    public void testSubstring() {
+    public void testSubstringNull() {
         assertSubstring(null, null, 1, 0);
-        assertSubstring(null, null, 1, 1);
-        assertSubstring(null, null, 1, 2);
+    }
 
+    public void testSubstringPositiveFull() {
         assertSubstring("abcd", "abcd", 0, 3);
+    }
+
+    public void testSubstringPositiveFromLessThanTo() {
         assertSubstring("abc", "abcd", 0, 2);
-        assertSubstring("ab", "abcd", 0, 1);
+    }
+
+    public void testSubstringPositiveFromEqualsTo() {
         assertSubstring("a", "abcd", 0, 0);
+    }
 
-        assertSubstring("bcd", "abcd", 1, 3);
-        assertSubstring("bc", "abcd", 1, 2);
-        assertSubstring("b", "abcd", 1, 1);
+    public void testSubstringPositiveFromGreaterThanTo() {
+        // expect "", not null, per Ruby behavior
         assertSubstring("", "abcd", 1, 0);
+    }
 
-        assertSubstring("", "abcd", 1, 0);
-        assertSubstring("", "abcd", 5, 0);
+    public void testSubstringPositiveFromPastEnd() {
         assertSubstring("", "abcd", 4, 5);
-
+    }
+    
+    public void testSubstringNegativeFull() {
         assertSubstring("abcd", "abcd", -4, -1);
+    }
+    
+    public void testSubstringNegativeFromLessThanTo() {
         assertSubstring("abc", "abcd", -4, -2);
-        assertSubstring("ab", "abcd", -4, -3);
+    }    
+    
+    public void testSubstringNegativeFromEqualsTo() {
         assertSubstring("a", "abcd", -4, -4);
+    }
+    
+    public void testSubstringNegativeFromGreaterThanTo() {
+        // expect "", not null, per Ruby behavior
+        assertSubstring("", "abcd", -1, -2);
+    }
 
-        assertSubstring("bcd", "abcd", -3, -1);
-        assertSubstring("bc", "abcd", -3, -2);
-        assertSubstring("b", "abcd", -3, -3);
-        assertSubstring("", "abcd", -3, -4);
-
-        assertSubstring("a", "abcd", -4, 0);
-        assertSubstring("ab", "abcd", -4, 1);
-        assertSubstring("abc", "abcd", -4, 2);
-        assertSubstring("abcd", "abcd", -4, 3);
-        assertSubstring("abcd", "abcd", -4, 4);
-
-        assertSubstring("", "abcd", -3, 0);
-        assertSubstring("b", "abcd", -3, 1);
-        assertSubstring("bc", "abcd", -3, 2);
-        assertSubstring("bcd", "abcd", -3, 3);
-        assertSubstring("bcd", "abcd", -3, 4);
-
-        // this is like Ruby:
-        assertSubstring("", "abcd", -8, -1);
-
+    public void testSubstringNullFrom() {
+        // null == first in string
         assertSubstring("abc", "abcd", null, -2);
+    }
+
+    public void testSubstringNullTo() {
         assertSubstring("cd", "abcd", -2, null);
+    }
+
+    public void testSubstringNullFromNullTo() {
         assertSubstring("abcd", "abcd", null, null);
     }
 

@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 import org.incava.ijdk.util.ListExt;
+import org.incava.ijdk.util.Index;
 import static org.incava.ijdk.util.IUtil.*;
 
 /**
@@ -321,13 +322,13 @@ public class StringExt {
     }
     
     /**
-     * Converts the index, which can be positive or negative, to one within
-     * range for this string. A negative index will result in the distance from
-     * the end of the string, with index -1 meaning the last character in the
-     * string. Returns null if the resulting index is out of range.
+     * Converts the index, which can be positive or negative, to one within range for this string. A
+     * negative index will result in the distance from the end of the string, with index -1 meaning
+     * the last character in the string. Returns null if the resulting index is out of range. If
+     * <code>str</code> is null, null is returned.
      */
     protected static Integer getIndex(String str, Integer index) {
-        return isNull(str) ? null : ListExt.getIndex(str.length(), index);
+        return isNull(str) ? null : Index.getIndex(str.length(), index);
     }
 
     /**
