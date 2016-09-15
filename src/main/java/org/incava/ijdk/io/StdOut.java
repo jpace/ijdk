@@ -5,8 +5,7 @@ public class StdOut {
      * Writes to standard output. Returns true, so this can be used in conditionals.
      */
     public static boolean puts(Object obj) {
-        System.out.println(obj);
-        return true;
+        return println(obj);
     }
 
     /**
