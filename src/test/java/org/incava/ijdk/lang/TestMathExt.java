@@ -1,8 +1,8 @@
 package org.incava.ijdk.lang;
 
-import org.incava.test.AbstractTestCaseExt;
+import org.incava.test.TestCaseExt;
 
-public class TestMathExt extends AbstractTestCaseExt {
+public class TestMathExt extends TestCaseExt {
     public TestMathExt(String name) {
         super(name);
     }

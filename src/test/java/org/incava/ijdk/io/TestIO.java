@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
-import org.incava.test.AbstractTestCaseExt;
+import org.incava.test.TestCaseExt;
 
-public class TestIO extends AbstractTestCaseExt {
+public class TestIO extends TestCaseExt {
     private final String tmpdir = System.getProperty("java.io.tmpdir");
 
     public TestIO(String name) {

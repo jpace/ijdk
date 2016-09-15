@@ -24,7 +24,7 @@ allprojects {
 */
 
 test {
-    excludes = [ '**/Abstract*' ]
+    excludes = [ '**/test/TestCaseExt*' ]
     testLogging {
         exceptionFormat = "full"
     }

@@ -1,10 +1,10 @@
 package org.incava.ijdk.lang;
 
 import java.util.*;
-import org.incava.test.AbstractTestCaseExt;
+import org.incava.test.TestCaseExt;
 import org.junit.Assert;
 
-public class TestStringExt extends AbstractTestCaseExt {
+public class TestStringExt extends TestCaseExt {
     public TestStringExt(String name) {
         super(name);
     }

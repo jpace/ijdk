@@ -3,12 +3,12 @@ package org.incava.test;
 import junit.framework.TestCase;
 import java.util.*;
 
-public class AbstractTestCaseExt extends TestCase {
-    public AbstractTestCaseExt(String name) {
+public class TestCaseExt extends TestCase {
+    public TestCaseExt(String name) {
         super(name);
     }
 
-    public AbstractTestCaseExt() {
+    public TestCaseExt() {
     }
 
     static protected String toMessage(String msg) {

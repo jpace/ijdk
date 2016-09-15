@@ -1,8 +1,8 @@
 package org.incava.ijdk.lang;
 
-import org.incava.test.AbstractTestCaseExt;
+import org.incava.test.TestCaseExt;
 
-public class TestRange extends AbstractTestCaseExt {
+public class TestRange extends TestCaseExt {
     public TestRange(String name) {
         super(name);
     }
