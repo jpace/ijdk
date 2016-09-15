@@ -90,6 +90,14 @@ public class TestStringExt extends AbstractTestCaseExt {
         assertToList(expected, "\'fee,\tfi,\nfoo,\rfum\'");
     }
 
+    // assertions
+    
+    public String assertEquals(String expected, String result, String str, Character ch) {
+        String msg = "str: '" + str + "'; ch: '" + ch + "'";
+        assertEquals(msg, expected, result);
+        return result;
+    }
+
     // pad
 
     public String assertPad(String expected, String str, char ch, int length) {
@@ -412,9 +420,10 @@ public class TestStringExt extends AbstractTestCaseExt {
 
     // getIndex
 
-    public void assertGetIndex(Integer exp, String str, int index) {
+    public Integer assertGetIndex(Integer exp, String str, int index) {
         Integer result = StringExt.getIndex(str, index);
         assertEquals("str: '" + str + "'; index: " + index, exp, result);
+        return result;
     }
 
     public void testGetIndexNull() {
@@ -453,10 +462,11 @@ public class TestStringExt extends AbstractTestCaseExt {
         assertGetIndex(null, "abcd", -5);
     }
 
-    public void assertSubstring(String exp, String str, Integer fromIndex, Integer toIndex) {
-        String substr = StringExt.substring(str, fromIndex, toIndex);
+    public String assertSubstring(String expected, String str, Integer fromIndex, Integer toIndex) {
+        String result = StringExt.substring(str, fromIndex, toIndex);
         String msg    = "\"" + str + "\"[" + fromIndex + " ... " + toIndex + "]";
-        assertEquals(msg, exp, substr);
+        assertEquals(msg, expected, result);
+        return result;
     }
 
     public void testSubstringNull() {
@@ -514,124 +524,295 @@ public class TestStringExt extends AbstractTestCaseExt {
         assertSubstring("abcd", "abcd", null, null);
     }
 
-    public void assertStartsWith(boolean exp, String str, char ch) {
+    // startsWith
+
+    public boolean assertStartsWith(boolean expected, String str, char ch) {
+        boolean result = StringExt.startsWith(str, ch);
         String msg = "str: '" + str + "'; ch: '" + ch + "'";
-        assertEquals(msg, exp, StringExt.startsWith(str, ch));
+        assertEquals(msg, expected, result);
+        return result;
     }
 
-    public void testStartsWith() {
-        assertStartsWith(true, "java", 'j');
-        assertStartsWith(false, "java", 'a');
-        assertStartsWith(false, "java", 'J');
-
+    public void testStartsWithNull() {
         assertStartsWith(false, null, 'j');
     }
 
-    public void assertIndexOf(Integer exp, String str, Character ch) {
-        String msg = "str: '" + str + "'; ch: '" + ch + "'";
-        assertEquals(msg, exp, StringExt.indexOf(str, ch));
+    public void testStartsWithMatch() {
+        assertStartsWith(true, "java", 'j');
     }
 
-    public void testIndexOf() {
-        assertIndexOf(2,    "abc", 'c');
-        assertIndexOf(1   , "abc", 'b');
-        assertIndexOf(0,    "abc", 'a');
-        assertIndexOf(null, "abc", 'd');
+    public void testStartsWithNoMatch() {
+        assertStartsWith(false, "java", 'a');
+    }
 
-        assertIndexOf(2,    "abcdc", 'c');
+    public void testStartsWithMismatchedCase() {
+        assertStartsWith(false, "java", 'J');
+    }
 
+    // indexOf
+
+    public Integer assertIndexOf(Integer expected, String str, Character ch) {
+        Integer result = StringExt.indexOf(str, ch);
+        String msg = "str: '" + str + "'; ch: '" + ch + "'";
+        assertEquals(msg, expected, result);
+        return result;
+    }
+    
+    public void testIndexOfNullCharacter() {
         assertIndexOf(null, "abc", null);
+    }
+    
+    public void testIndexOfNullString() {
         assertIndexOf(null, null,  'a');
+    }
+    
+    public void testIndexOfBothNull() {
         assertIndexOf(null, null,  null);
     }
-
-    public void assertContains(boolean exp, String str, Character ch) {
-        String msg = "str: '" + str + "'; ch: '" + ch + "'";
-        assertEquals(msg, exp, StringExt.contains(str, ch));
+    
+    public void testIndexOfFirstChar() {
+        assertIndexOf(0, "abc", 'a');
+    }
+    
+    public void testIndexOfLastChar() {
+        assertIndexOf(2, "abc", 'c');
     }
 
-    public void testContains() {
-        assertContains(true, "abc", 'a');
-        assertContains(true, "abc", 'b');
-        assertContains(true, "abc", 'c');
-        assertContains(false, "abc", 'd');
-        assertContains(false, null, 'd');
+    public void testIndexOfNoMatch() {
+        assertIndexOf(null, "abc", 'd');
+    }
+
+    public void testIndexOfMismatchedCase() {
+        assertIndexOf(null, "abc", 'A');
+    }
+
+    // contains
+
+    public boolean assertContains(boolean expected, String str, Character ch) {
+        boolean result = StringExt.contains(str, ch);
+        String msg = "str: '" + str + "'; ch: '" + ch + "'";
+        assertEquals(msg, expected, result);
+        return result;
+    }
+    
+    public void testContainsNullCharacter() {
         assertContains(false, "abc", null);
-        assertContains(false, null, null);
+    }
+    
+    public void testContainsNullString() {
+        assertContains(false, null,  'a');
+    }
+    
+    public void testContainsBothNull() {
+        assertContains(false, null,  null);
+    }
+    
+    public void testContainsFirstChar() {
+        assertContains(true, "abc", 'a');
+    }
+    
+    public void testContainsLastChar() {
+        assertContains(true, "abc", 'c');
     }
 
-    public void assertSubstringAfter(String exp, String str, Character ch) {
+    public void testContainsNoMatch() {
+        assertContains(false, "abc", 'd');
+    }    
+
+    public void testContainsMismatchedCase() {
+        assertContains(false, "abc", 'A');
+    }
+
+    // substringAfter
+
+    public String assertSubstringAfter(String expected, String str, Character ch) {
+        String result = StringExt.substringAfter(str, ch);
         String msg = "str: '" + str + "'; ch: '" + ch + "'";
-        assertEquals(msg, exp, StringExt.substringAfter(str, ch));
+        assertEquals(msg, expected, result);
+        return result;
     }
-
-    public void testSubstringAfter() {
+    
+    public void testSubstringAfterNullCharacter() {
+        assertSubstringAfter(null, "abc", null);
+    }
+    
+    public void testSubstringAfterNullString() {
+        assertSubstringAfter(null, null,  'a');
+    }
+    
+    public void testSubstringAfterBothNull() {
+        assertSubstringAfter(null, null,  null);
+    }
+    
+    public void testSubstringAfterFirstChar() {
         assertSubstringAfter("bc", "abc", 'a');
-        assertSubstringAfter("c",  "abc", 'b');
-        assertSubstringAfter("",   "abc", 'c');
+    }
+    
+    public void testSubstringAfterLastChar() {
+        assertSubstringAfter("", "abc", 'c');
+    }
+
+    public void testSubstringAfterNoMatch() {
         assertSubstringAfter(null, "abc", 'd');
+    }    
 
-        assertSubstringAfter("ebeef", "cafebeef", 'f');
-        assertSubstringAfter("beef",  "cafebeef", 'e');
+    public void testSubstringAfterMismatchedCase() {
+        assertSubstringAfter(null, "abc", 'A');
     }
 
-    public void assertSubstringBefore(String exp, String str, Character ch) {
+    // substringBefore
+
+    public String assertSubstringBefore(String expected, String str, Character ch) {
+        String result = StringExt.substringBefore(str, ch);
         String msg = "str: '" + str + "'; ch: '" + ch + "'";
-        assertEquals(msg, exp, StringExt.substringBefore(str, ch));
+        assertEquals(msg, expected, result);
+        return result;
     }
 
-    public void testSubstringBefore() {
-        assertSubstringBefore("ab", "abc", 'c');
-        assertSubstringBefore("a",  "abc", 'b');
-        assertSubstringBefore("",   "abc", 'a');
-        assertSubstringBefore(null, "abc", 'd');
-
+    public void testSubstringBeforeNullCharacter() {
         assertSubstringBefore(null, "abc", null);
+    }
+    
+    public void testSubstringBeforeNullString() {
         assertSubstringBefore(null, null,  'a');
+    }
+    
+    public void testSubstringBeforeBothNull() {
         assertSubstringBefore(null, null,  null);
     }
-
-    public void assertEq(Boolean exp, String a, String b) {
-        String msg = "a: '" + a + "'; b: '" + b + "'";
-        assertEquals(msg, exp, StringExt.eq(a, b));
+    
+    public void testSubstringBeforeFirstChar() {
+        assertSubstringBefore("", "abc", 'a');
+    }
+    
+    public void testSubstringBeforeLastChar() {
+        assertSubstringBefore("ab", "abc", 'c');
     }
 
-    public void testEq() {
-        assertEq(true,  "a", "a");
-        assertEq(true,  "abc", "abc");
-        assertEq(false, "a", "b");
-        assertEq(false, "b", "a");
-        assertEq(false, "a", "A");
-        assertEq(false, "A", "a");
-        assertEq(false, "abC", "abc");
-        assertEq(false, "a", null);
+    public void testSubstringBeforeNoMatch() {
+        assertSubstringBefore(null, "abc", 'd');
+    }    
+
+    public void testSubstringBeforeMismatchedCase() {
+        assertSubstringBefore(null, "abc", 'A');
+    }
+
+    // eq
+
+    public Boolean assertEq(Boolean expected, String a, String b) {
+        Boolean result = StringExt.eq(a, b);
+        String msg = "a: '" + a + "'; b: '" + b + "'";
+        assertEquals(msg, expected, result);
+        return result;
+    }
+
+    public void testEqNullEmptyString() {
+        assertEq(false, null, "");
+    }
+
+    public void testEqEmptyStringNull() {
+        assertEq(false, "", null);
+    }
+
+    public void testEqNullNull() {
+        assertEq(true, null, null);
+    }
+
+    public void testEqNullNonEmptyString() {
         assertEq(false, null, "a");
-        assertEq(true,  null, null);
     }
 
-    public void assertEqi(Boolean exp, String a, String b) {
+    public void testEqNonEmptyStringNull() {
+        assertEq(false, "a", null);
+    }
+
+    public void testEqCharCharMatch() {
+        assertEq(true, "a", "a");
+    }
+
+    public void testEqCharCharNoMatch() {
+        assertEq(false, "a", "b");
+    }
+
+    public void testEqCharCharMismatchedCase() {
+        assertEq(false, "a", "A");
+    }
+
+    public void testEqDifferentLengths() {
+        assertEq(false, "a", "ab");
+    }
+
+    // eqi
+
+    public Boolean assertEqi(Boolean expected, String a, String b) {
+        Boolean result = StringExt.eqi(a, b);
         String msg = "a: '" + a + "'; b: '" + b + "'";
-        assertEquals(msg, exp, StringExt.eqi(a, b));
+        assertEquals(msg, expected, result);
+        return result;
     }
 
-    public void testEqi() {
-        assertEqi(true,  "a",  "a");
-        assertEqi(false, "a",  "b");
-        assertEqi(false, "b",  "a");
-        assertEqi(true,  "a",  "A");
-        assertEqi(false, "a",  null);
+    public void testEqiNullEmptyString() {
+        assertEqi(false, null, "");
+    }
+
+    public void testEqiEmptyStringNull() {
+        assertEqi(false, "", null);
+    }
+
+    public void testEqiNullNull() {
+        assertEqi(true, null, null);
+    }
+
+    public void testEqiNullNonEmptyString() {
         assertEqi(false, null, "a");
-        assertEqi(true,  null, null);
     }
 
-    public void assertSnip(String exp, String str, int len) {
-        String msg = "str: '" + str + "'; len: " + len;
-        assertEquals(msg, exp, StringExt.snip(str, len));
+    public void testEqiNonEmptyStringNull() {
+        assertEqi(false, "a", null);
     }
 
-    public void testSnip() {
-        assertSnip("this", "this", 5);
-        assertSnip("this-", "this is a test", 5);
-        assertSnip("", "this is a test", -1);
+    public void testEqiCharCharMatch() {
+        assertEqi(true, "a", "a");
+    }
+
+    public void testEqiCharCharNoMatch() {
+        assertEqi(false, "a", "b");
+    }
+
+    public void testEqiCharCharMismatchedCase() {
+        assertEqi(true, "A", "A");
+    }
+
+    public void testEqiDifferentLengths() {
+        assertEqi(false, "a", "ab");
+    }
+
+    // snip
+
+    public String assertSnip(String expected, String str, int length) {
+        String result = StringExt.snip(str, length);
+        String msg = "str: '" + str + "'; length: " + length;
+        assertEquals(msg, expected, result);
+        return result;
+    }
+
+    public void testSnipNull() {
+        assertSnip(null, null, 3);
+    }
+
+    public void testSnipEmpty() {
+        assertSnip("", "", 3);
+    }
+
+    public void testSnipLongerAtStart() {
+        assertSnip("a-", "abc", 1);
+    }
+
+    public void testSnipLongerAtEnd() {
+        assertSnip("ab-", "abc", 2);
+    }
+
+    public void testSnipAtLength() {
+        assertSnip("abc", "abc", 3);
     }
 }

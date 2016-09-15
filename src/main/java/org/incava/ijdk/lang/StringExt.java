@@ -252,13 +252,14 @@ public class StringExt {
     }
 
     /**
-     * Returns a substring from the string, with negatives indices applying to
-     * the distance from the end of the string. If fromIndex is null, the
-     * substring begins with the first character. If toIndex is null, the
-     * substring ends with the last character. If the indices are out of bounds,
-     * they will be restricted to the size of the string. The range is
-     * inclusive: "foobar"[2 .. 4] == "oba", which is unlike the JDK
-     * String#substring behavior.
+     * Returns a substring from the string, with negatives indices applying to the distance from the
+     * end of the string. If <code>fromIndex</code> is null, the substring begins with the first
+     * character. If <code>toIndex</code> is null, the substring ends with the last character. If
+     * the indices are out of bounds, they will be restricted to the size of the string. The range
+     * is inclusive: <code>"foobar"[2 .. 4] == "oba"</code>, which is unlike the JDK
+     * String#substring behavior, where the equivalent would be <code>str.substring(2, 5)</code>.
+     *
+     * If <code>str</code> is null, then null is returned.
      *
      * @see StringExt#get(String, int).
      */
@@ -286,9 +287,8 @@ public class StringExt {
         }
 
         if (frIdx > toIdx) {
-            // We could return null, but Ruby returns "" if the indices are
-            // within the length of the string, and null if not. We'll just go
-            // with empty.
+            // We could return null, but Ruby returns "" if the indices are within the length of the
+            // string, and null if not. We'll just go with empty.
             return "";
         }
         else {
@@ -297,8 +297,10 @@ public class StringExt {
     }
 
     /**
-     * Returns the substring after the nth <code>ch</code> character. If the
-     * string does not contain the given character, null is returned.
+     * Returns the substring from the <code>ch</code> character to the end of the string. If the
+     * string does not contain the given character, or if <code>str</code> or <code>ch</code> is
+     * null, then null is returned. If <code>ch</code> is the last character, then an empty string
+     * is returned.
      */
     public static String substringAfter(String str, Character ch) {
         Integer idx = indexOf(str, ch);
@@ -306,8 +308,9 @@ public class StringExt {
     }
 
     /**
-     * Returns the substring before the nth <code>ch</code> character. If the
-     * string does not contain the given character, null is returned.
+     * Returns the substring before the <code>ch</code> character. If the string does not contain
+     * the given character, , or if <code>str</code> or <code>ch</code> is null, then null is
+     * returned. If <code>ch</code> is the first character, then an empty string is returned.
      */
     public static String substringBefore(String str, Character ch) {
         Integer idx = indexOf(str, ch);
@@ -315,7 +318,8 @@ public class StringExt {
     }
 
     /**
-     * Same as StringExt#substring, but more like the syntax str[4 .. 8].
+     * Same as StringExt#substring, but with the indices inclusive, like the Ruby syntax <code>str[4
+     * .. 8]</code>. This method the same as <code>StringExt.substring</code>.
      */
     public static String get(String str, Integer fromIndex, Integer toIndex) {
         return substring(str, fromIndex, toIndex);
@@ -368,9 +372,8 @@ public class StringExt {
     }
     
     /**
-     * Returns the index of the first occurance of the character in the string,
-     * or null if either <code>str</code> or <code>ch</code> is null, or if the
-     * character is not in the string.
+     * Returns the index of the first occurance of the character in the string, or null if either
+     * <code>str</code> or <code>ch</code> is null, or if the character is not in the string.
      */
     public static Integer indexOf(String str, Character ch) {
         if (isNull(str) || isNull(ch)) {
@@ -382,16 +385,40 @@ public class StringExt {
         }
     }
 
+    /**
+     * Returns whether the two strings are equal. If both are null, then true is returned.
+     * Otherwise, if either is null, then false is returned.
+     */
     public static Boolean eq(String a, String b) {
         return ObjectExt.areEqual(a, b);
     }
 
+    /**
+     * Returns whether the two strings are equal, without regard to case. If both are null, then
+     * true is returned. Otherwise, if either is null, then false is returned.
+     */
     public static Boolean eqi(String a, String b) {
         return a == null && b == null ? true : a == null ? false : b == null ? false : a.equalsIgnoreCase(b);
     }
 
+    /**
+     * If <code>str</code> is longer than <code>length</code>, then the returned string is cut at
+     * the given length and appended with a dash, so <code>snip("foobar", 3) is "foo-. Returns null
+     * if <code>str</code> is null. Returns an empty string if <code>length</code> is zero or less.
+     */
     public static String snip(String str, int len) {
-        return len <= 0 ? "" : str.length() > len ? str.substring(0, len - 1) + '-' : str;
+        if (str == null) {
+            return null;
+        }
+        else if (len <= 0) {
+            return "";
+        }
+        else if (str.length() > len)  {
+            return get(str, 0, len - 1) + '-';
+        }
+        else {
+            return str;
+        }
     }
 
     /**
