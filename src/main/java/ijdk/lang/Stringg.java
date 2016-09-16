@@ -1,6 +1,5 @@
-package org.incava.ijdk.lang;
+package ijdk.lang;
 
-import ijdk.lang.Stringg;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,45 +12,136 @@ import static org.incava.ijdk.util.IUtil.*;
 /**
  * Extensions to the String class.
  */
-public class StringExt {
+public class Stringg extends Objectt {
+    /**
+     * Returns a new Stringg for the given character.
+     */
+    public static Stringg strg(char ch) {
+        return new Stringg(ch);
+    }
+    
+    private final String string;
+
+    /**
+     * Wraps the given string.
+     */
+    public Stringg(String string) {
+        super(string);
+        this.string = string;
+    }
+
+    /**
+     * Creates a new string from the character, and wraps that string.
+     */
+    public Stringg(char ch) {
+        this(String.valueOf(ch));
+    }
+
+    public String getString() {
+        return this.string;
+    }
+
+    /**
+     * Returns whether the given string is equal to this one.
+     */
+    public boolean equals(String other) {
+        return this.string == null ? other == null : this.string.equals(other);
+    }
+    
     /**
      * Returns an array of strings split at the character delimiter. Returns null if
      * <code>str</code> is null.
      */
-    public static String[] split(String str, char delim, int max) {
-        return new Stringg(str).split(String.valueOf(delim), max);
+    public String[] split(char delim, int max) {
+        return split(String.valueOf(delim), max);
     }
 
     /**
      * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
      * is null.
      */
-    public static String[] split(String str, String delim, int max) {
-        return new Stringg(str).split(delim, max);
+    public String[] split(String delim, int max) {
+        if (string == null) {
+            return null;
+        }
+        else if (max == 1) {
+            return new String[] { string };
+        }
+        else {
+            --max;              // adjust count between 0 and 1
+
+            List<String> splitList = new ArrayList<String>();
+
+            int  nFound = 0;
+            int  strlen = string.length();
+            int  end = 0;
+            int  beg = 0;
+            int  delimlen = delim.length();
+
+            for (int idx = 0; idx < strlen; ++idx) {
+                Stringg strg = new Stringg(string.substring(idx));
+                if (strg.left(delimlen).equals(delim)) {
+                    String substr = string.substring(beg, end);
+                    splitList.add(substr);
+                    beg = end + delimlen;
+                    if (max > 0 && ++nFound >= max) {
+                        break;
+                    }
+                }
+                ++end;
+            }
+
+            if (strlen > beg) {
+                String tmp = strlen == beg ? "" : string.substring(beg, strlen);
+                splitList.add(tmp);
+            }
+            
+            return splitList.toArray(new String[splitList.size()]);
+        }
     }
 
     /**
      * Returns an array of strings split at the character delimiter. Returns null if
      * <code>str</code> is null.
      */
-    public static String[] split(String str, char delim) {
-        return new Stringg(str).split(String.valueOf(delim), -1);
+    public String[] split(char delim) {
+        return split(String.valueOf(delim), -1);
     }
 
     /**
      * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
      * is null.
      */
-    public static String[] split(String str, String delim) {
-        return new Stringg(str).split(delim, -1);
+    public String[] split(String delim) {
+        return split(delim, -1);
     }
 
     /**
      * Converts the (possibly quoted) string into a list, delimited by whitespace and commas.
-     * Returns null if <code>str</code> is null.
+     * Returns null if this object is wrapping a null string.
+     *
+     * @deprecated I don't like the de-quoting behavior
      */
-    public static List<String> toList(String str) {
-        return new Stringg(str).toList();
+    public List<String> toList() {
+        if (this.string == null) {
+            return null;
+        }
+
+        String str = this.string;
+        
+        // strip leading/trailing single/double quotes
+        if (str.charAt(0) == str.charAt(str.length() - 1) &&
+            (str.charAt(0) == '"' || str.charAt(0) == '\'')) {
+            str = str.substring(1, str.length() - 1);
+        }
+        
+        List<String> list = new ArrayList<String>();
+        StringTokenizer st = new StringTokenizer(str, " \t\n\r\f,");
+        while (st.hasMoreTokens()) {
+            String tk = st.nextToken();
+            list.add(tk);
+        }
+        return list;
     }
 
     /**
@@ -62,8 +152,15 @@ public class StringExt {
      *     pad("abcd", '*', 8) -> "abcd****"
      *     pad("abcd", '*', 3) -> "abcd"
      */
-    public static String pad(String str, char ch, int length) {
-        return new Stringg(str).pad(ch, length);
+    public String pad(char ch, int length) {
+        if (this.string == null) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder(this.string);
+        while (sb.length() < length) {
+            sb.append(ch);
+        }
+        return sb.toString();
     }
 
     /**
@@ -76,36 +173,40 @@ public class StringExt {
      *     pad("1144", '*', 3) -> "1144"
      * </pre>
      */
-    public static String padLeft(String str, char ch, int length) {
-        return new Stringg(str).padLeft(ch, length);
+    public String padLeft(char ch, int length) {
+        return this.string == null ? null : repeat(ch, length - this.string.length()) + this.string;
     }
 
     /**
      * Pads with spaces.
      */
-    public static String pad(String str, int length) {
-        return new Stringg(str).pad(length);
+    public String pad(int length) {
+        return pad(' ', length);
     }
 
     /**
      * Left-pads with spaces.
      */
-    public static String padLeft(String str, int length) {
-        return new Stringg(str).padLeft(length);
+    public String padLeft(int length) {
+        return padLeft(' ', length);
     }
 
     /**
      * Returns the string, repeated <code>num</code> times.
      */
-    public static String repeat(String str, int num) {
-        return new Stringg(str).repeat(num);
+    public String repeat(int num) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < num; ++i) {
+            sb.append(this.string);
+        }
+        return sb.toString();
     }
 
     /**
      * Returns the character, repeated <code>num</code> times.
      */
-    public static String repeat(char ch, int length) {
-        return new Stringg(ch).repeat(length);
+    public String repeat(char ch, int length) {
+        return new Stringg(String.valueOf(ch)).repeat(length);
     }
 
     /**
@@ -113,8 +214,8 @@ public class StringExt {
      * the string. Does not throw the annoying IndexOutOfBoundsException. Returns null if the input
      * string is null. Returns an empty string if <code>num</code> is negative.
      */
-    public static String left(String str, int num) {
-        return new Stringg(str).left(num);
+    public String left(int num) {
+        return num <= 0 ? "" : get(this.string, 0, num - 1);
     }
 
     /**
@@ -258,7 +359,7 @@ public class StringExt {
 
     /**
      * Same as StringExt#substring, but with the indices inclusive, like the Ruby syntax <code>str[4
-     * .. 8]</code>. This method the same as <code>StringExt.substring</code>.
+     * .. 8]</code>. This method the same as <code>Stringg.substring</code>.
      */
     public static String get(String str, Integer fromIndex, Integer toIndex) {
         return substring(str, fromIndex, toIndex);
@@ -329,7 +430,7 @@ public class StringExt {
      * Otherwise, if either is null, then false is returned.
      */
     public static Boolean eq(String a, String b) {
-        return ObjectExt.areEqual(a, b);
+        return Objectt.areEqual(a, b);
     }
 
     /**

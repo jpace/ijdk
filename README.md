@@ -16,7 +16,8 @@ Note the similarity to idiomatic Ruby:
 # Usage
 
 IJDK has a very expansive (but growing) library for Java I/O and collections, as an alternative to
-the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely as possible.
+the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely as possible, moreso
+than the Apache Commons and Guava libraries.
 
 * shortcuts for list creation:
 
@@ -28,6 +29,7 @@ dynamically-sized array, unllike `Arrays.asList`, which returns a fixed-size arr
    List<String> names = ICore.list("bart", "lisa", "maggie");
    List<Integer> ages = ICore.list(10, 8, 1);
    List<Double> numbers = ICore.list(3.14, 2.818, 1.414);
+   numbers.add(3.17);
 ```
 
 * classes for common Java collections of generics, such as:
