@@ -7,8 +7,7 @@ import java.util.Collection;
  */
 public class ObjectExt {
     /**
-     * Returns whether the objects are equal, including whether they are both
-     * null.
+     * Returns whether the objects are equal, including whether they are both null.
      */
     public static boolean areEqual(Object x, Object y) {
         if (x == null) {
@@ -23,8 +22,7 @@ public class ObjectExt {
     }
 
     /**
-     * Returns whether the objects are equal, including whether they are both
-     * null.
+     * Returns whether the objects are equal, including whether they are both null.
      *
      * @see #areEqual
      */
@@ -48,8 +46,8 @@ public class ObjectExt {
     }
 
     /**
-     * Returns whether the object is non-null and, if it is a collection or a
-     * string, has a length greater than zero.
+     * Returns whether the object is non-null and, if it is a collection or a string, has a length
+     * greater than zero.
      *
      * @see #isEmpty
      * @see #isFalse
@@ -110,8 +108,8 @@ public class ObjectExt {
     }
 
     /**
-     * Returns whether the object is null. This method provides an alternative
-     * syntax than "if (obj == null)".
+     * Returns whether the object is null. This method provides an alternative syntax to "if (obj
+     * == null)".
      *
      * @see #isNotNull
      */
@@ -120,8 +118,8 @@ public class ObjectExt {
     }
 
     /**
-     * Returns whether the object is not null. This method provides an
-     * alternative syntax than "if (obj != null)".
+     * Returns whether the object is not null. This method provides an alternative syntax to "if
+     * (obj != null)".
      *
      * @see #isNull
      */
