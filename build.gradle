@@ -14,14 +14,12 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
 }
 
-/*
 allprojects {
     tasks.withType(JavaCompile).all { JavaCompile compile ->
         compile.options.debug = true
         compile.options.compilerArgs = ['-Xlint:all']
     }
 }
-*/
 
 test {
     excludes = [ '**/test/TestCaseExt*' ]
