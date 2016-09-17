@@ -780,7 +780,7 @@ public class TestStringExt extends TestCaseExt {
     }
 
     public void testEqiCharCharMismatchedCase() {
-        assertEqi(true, "A", "A");
+        assertEqi(true, "A", "a");
     }
 
     public void testEqiDifferentLengths() {
