@@ -3,7 +3,7 @@ package ijdk.lang;
 import java.util.Collection;
 
 /**
- * Extensions to the Object class.
+ * Extensions to the Object class, wrapping a Java Object with additional methods.
  */
 public class Objectt {
     private final Object object;
@@ -11,10 +11,23 @@ public class Objectt {
     public Objectt(Object object) {
         this.object = object;
     }
+
+    /**
+     * Returns the wrapped object.
+     */
+    public Object getObject() {
+        return this.object;
+    }
+
+    /**
+     * Returns the wrapped object.
+     */
+    public Object obj() {
+        return this.object;
+    }
     
     /**
-     * Returns whether the objects are equal, including whether they are both
-     * null.
+     * Returns whether the objects are equal, including whether they are both null.
      */
     public static boolean areEqual(Object x, Object y) {
         if (x == null) {
@@ -29,8 +42,7 @@ public class Objectt {
     }
 
     /**
-     * Returns whether the objects are equal, including whether they are both
-     * null.
+     * Returns whether the objects are equal, including whether they are both null.
      *
      * @see #areEqual
      */
@@ -117,7 +129,7 @@ public class Objectt {
 
     /**
      * Returns whether the object is null. This method provides an alternative
-     * syntax than "if (obj == null)".
+     * syntax to "if (obj == null)".
      *
      * @see #isNotNull
      */
@@ -127,7 +139,7 @@ public class Objectt {
 
     /**
      * Returns whether the object is not null. This method provides an
-     * alternative syntax than "if (obj != null)".
+     * alternative syntax to "if (obj != null)".
      *
      * @see #isNull
      */
