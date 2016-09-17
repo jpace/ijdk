@@ -12,6 +12,10 @@ import static org.incava.ijdk.util.IUtil.*;
 
 /**
  * Extensions to the String class.
+ *
+ * Alternatively, the static methods here are defined as instance objects of the Stringg class.
+ *
+ * @see ijdk.String
  */
 public class StringExt {
     /**
@@ -132,25 +136,11 @@ public class StringExt {
     }
 
     /**
-     * Returns the collection, joined by <code>str</code>. Returns null if <code>coll</code> is
-     * null. If <code>str</code> is null, it is treated as the empty string.
+     * Returns the collection, joined by <code>delim</code>. Returns null if <code>coll</code> is
+     * null. If <code>delim</code> is null, it is treated as the empty string.
      */
-    public static String join(Collection<?> coll, String str) {
-        if (coll == null) {
-            return null;
-        }
-        StringBuilder sb = new StringBuilder();
-        boolean isFirst = true;
-        for (Object obj : coll) {
-            if (!isFirst) {
-                sb.append(str == null ? "" : str);
-            }
-            else {
-                isFirst = false;
-            }
-            sb.append(obj.toString());
-        }
-        return sb.toString();
+    public static String join(Collection<?> coll, String delim) {
+        return Stringg.join(coll, delim).str();
     }
 
     /**
@@ -158,7 +148,7 @@ public class StringExt {
      * <code>str</code> is null, it is treated as the empty string.
      */
     public static String join(Object[] ary, String str) {
-        return ary == null ? null : join(Arrays.asList(ary), str);
+        return Stringg.join(ary, str).str();
     }
 
     /**
@@ -329,7 +319,7 @@ public class StringExt {
      * Otherwise, if either is null, then false is returned.
      */
     public static Boolean eq(String a, String b) {
-        return ObjectExt.areEqual(a, b);
+        return new Stringg(a).eq(b);
     }
 
     /**
@@ -337,7 +327,7 @@ public class StringExt {
      * true is returned. Otherwise, if either is null, then false is returned.
      */
     public static Boolean eqi(String a, String b) {
-        return a == null && b == null ? true : a == null ? false : b == null ? false : a.equalsIgnoreCase(b);
+        return new Stringg(a).eqi(b);
     }
 
     /**
@@ -346,25 +336,13 @@ public class StringExt {
      * if <code>str</code> is null. Returns an empty string if <code>length</code> is zero or less.
      */
     public static String snip(String str, int len) {
-        if (str == null) {
-            return null;
-        }
-        else if (len <= 0) {
-            return "";
-        }
-        else if (str.length() > len)  {
-            return get(str, 0, len - 1) + '-';
-        }
-        else {
-            return str;
-        }
+        return new Stringg(str).snip(len);
     }
 
     /**
      * Returns whether the string is null or of zero length.
      */
     public static boolean isEmpty(String str) {
-        // return str == null || str.isEmpty();
-        return str == null || str.length() == 0;
+        return new Stringg(str).isEmpty();
     }
 }

@@ -19,6 +19,38 @@ public class Stringg extends Objectt {
     public static Stringg strg(char ch) {
         return new Stringg(ch);
     }
+
+    /**
+     * Creates a string from the collection, joined by <code>delim</code>. If <code>coll</code> is
+     * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the
+     * empty string.
+     */
+    public static Stringg join(Collection<?> coll, String delim) {
+        if (coll == null) {
+            return new Stringg(null);
+        }
+        StringBuilder sb = new StringBuilder();
+        boolean isFirst = true;
+        for (Object obj : coll) {
+            if (!isFirst) {
+                sb.append(delim == null ? "" : delim);
+            }
+            else {
+                isFirst = false;
+            }
+            sb.append(obj.toString());
+        }
+        return new Stringg(sb.toString());
+    }
+
+    /**
+     * Creates a string from the array, joined by <code>delim</code>. If <code>ary</code> is null,
+     * then the wrapped string is null. If <code>delim</code> is null, it is treated as the empty
+     * string.
+     */
+    public static Stringg join(Object[] ary, String delim) {
+        return join(ary == null ? null : Arrays.asList(ary), delim);
+    }
     
     private final String string;
 
@@ -37,7 +69,17 @@ public class Stringg extends Objectt {
         this(String.valueOf(ch));
     }
 
+    /**
+     * Returns the wrapped string.
+     */
     public String getString() {
+        return this.string;
+    }
+
+    /**
+     * Returns the wrapped string.
+     */
+    public String str() {
         return this.string;
     }
 
@@ -211,8 +253,9 @@ public class Stringg extends Objectt {
 
     /**
      * Returns the leftmost <code>num</code> characters of the string, not exceeding the length of
-     * the string. Does not throw the annoying IndexOutOfBoundsException. Returns null if the input
-     * string is null. Returns an empty string if <code>num</code> is negative.
+     * the string. Unlike String#substring, does not throw the annoying IndexOutOfBoundsException.
+     * Returns null if the input string is null. Returns an empty string if <code>num</code> is
+     * negative.
      */
     public String left(int num) {
         return num <= 0 ? "" : get(this.string, 0, num - 1);
@@ -220,8 +263,9 @@ public class Stringg extends Objectt {
 
     /**
      * Returns the rightmost <code>num</code> characters of the string, not exceeding the length of
-     * the string. Does not throw the annoying IndexOutOfBoundsException. Returns null if the input
-     * string is null. Returns an empty string if <code>num</code> is negative.
+     * the string. Unlike String#substring, does not throw the annoying IndexOutOfBoundsException.
+     * Returns null if the input string is null. Returns an empty string if <code>num</code> is
+     * negative.
      */
     public static String right(String str, int num) {
         if (str == null) {
@@ -230,36 +274,6 @@ public class Stringg extends Objectt {
         else {
             return num <= 0 ? "" : get(str, -Math.min(num, str.length()), -1);
         }
-    }
-
-    /**
-     * Returns the collection, joined by <code>str</code>. Returns null if <code>coll</code> is
-     * null. If <code>str</code> is null, it is treated as the empty string.
-     */
-    public static String join(Collection<?> coll, String str) {
-        if (coll == null) {
-            return null;
-        }
-        StringBuilder sb = new StringBuilder();
-        boolean isFirst = true;
-        for (Object obj : coll) {
-            if (!isFirst) {
-                sb.append(str == null ? "" : str);
-            }
-            else {
-                isFirst = false;
-            }
-            sb.append(obj.toString());
-        }
-        return sb.toString();
-    }
-
-    /**
-     * Returns the array, joined by <code>str</code>. Returns null if <code>ary</code> is null. If
-     * <code>str</code> is null, it is treated as the empty string.
-     */
-    public static String join(Object[] ary, String str) {
-        return ary == null ? null : join(Arrays.asList(ary), str);
     }
 
     /**
@@ -426,19 +440,24 @@ public class Stringg extends Objectt {
     }
 
     /**
-     * Returns whether the two strings are equal. If both are null, then true is returned.
-     * Otherwise, if either is null, then false is returned.
+     * Returns whether the wrapped string is equal to the other. If both are null, then true is
+     * returned. Otherwise, if either is null, then false is returned.
      */
-    public static Boolean eq(String a, String b) {
-        return Objectt.areEqual(a, b);
+    public Boolean eq(String other) {
+        return Objectt.areEqual(this.string, other);
     }
 
     /**
-     * Returns whether the two strings are equal, without regard to case. If both are null, then
-     * true is returned. Otherwise, if either is null, then false is returned.
+     * Returns whether the wrapped string is equal to the other, without regard to case. If both are
+     * null, then true is returned. Otherwise, if either is null, then false is returned.
      */
-    public static Boolean eqi(String a, String b) {
-        return a == null && b == null ? true : a == null ? false : b == null ? false : a.equalsIgnoreCase(b);
+    public Boolean eqi(String other) {
+        if (this.string == null || other == null) {
+            return this.string == null && other == null;
+        }
+        else {
+            return this.string.equalsIgnoreCase(other);
+        }
     }
 
     /**
@@ -446,26 +465,26 @@ public class Stringg extends Objectt {
      * the given length and appended with a dash, so <code>snip("foobar", 3) is "foo-. Returns null
      * if <code>str</code> is null. Returns an empty string if <code>length</code> is zero or less.
      */
-    public static String snip(String str, int len) {
-        if (str == null) {
+    public String snip(int len) {
+        if (this.string == null) {
             return null;
         }
         else if (len <= 0) {
             return "";
         }
-        else if (str.length() > len)  {
-            return get(str, 0, len - 1) + '-';
+        else if (this.string.length() > len)  {
+            return get(this.string, 0, len - 1) + '-';
         }
         else {
-            return str;
+            return this.string;
         }
     }
 
     /**
-     * Returns whether the string is null or of zero length.
+     * Returns whether the wrapped string is null or of zero length.
      */
-    public static boolean isEmpty(String str) {
-        // return str == null || str.isEmpty();
-        return str == null || str.length() == 0;
+    public boolean isEmpty() {
+        // str.isEmpty() is JDK 1.6+, and IJDK is backward compatible with 1.5.
+        return this.string == null || this.string.length() == 0;
     }
 }
