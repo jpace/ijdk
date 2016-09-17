@@ -126,10 +126,30 @@ public class Objectt {
             return false;
         }
     }
+    
+    /**
+     * Returns whether the wrapped object is null. This method provides an alternative syntax to "if
+     * (obj == null)".
+     *
+     * @see #isNotNull
+     */
+    public boolean isNull() {
+        return this.object == null;
+    }
 
     /**
-     * Returns whether the object is null. This method provides an alternative
-     * syntax to "if (obj == null)".
+     * Returns whether the wrapped object is not null. This method provides an alternative syntax to
+     * "if (obj != null)".
+     *
+     * @see #isNull
+     */
+    public boolean isNotNull() {
+        return this.object != null;
+    }
+
+    /**
+     * Returns whether the wrapped object is null. This method provides an alternative syntax to "if
+     * (obj == null)".
      *
      * @see #isNotNull
      */
