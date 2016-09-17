@@ -131,6 +131,27 @@ This converts easily to C-style arrays, and supports simple iteration:
    Integer num = Integerr.toInteger(null);  // num == null
 ```
 
+* briefer package hierarchy
+
+A top-level package, `ijdk`, contains subpackages, such as `ijdk.lang`, making for briefer import
+statements.
+
+The older version of IJDK, with classes containing static methods around Java core classes:
+
+```java
+   import org.incava.ijdk.lang.StringExt;
+```
+
+The newer (3.0) version of IJDK, with classes whose instances wrap (shadow) Java core classes:
+
+```java
+   import lang.Stringg;
+```
+
+Note that the names of the shadow classes follow the convention of the class that they wrap,
+appended with an additional final character, such as Arrayy, Stringg and Integerr (this convention
+is not completely finalized).
+
 # Installation
 
 From the GitHub project [ijdk](http://github.com/jpace/ijdk "IJDK"), download and build the project
