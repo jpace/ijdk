@@ -10,7 +10,7 @@ public class TestIntegerList extends TestCase {
     }
 
     public void assertEquals(int expected, Integer value) {
-        super.assertEquals(Integer.valueOf(expected), value);
+        TestCase.assertEquals(Integer.valueOf(expected), value);
     }
 
     public void testCtorEmpty() {
