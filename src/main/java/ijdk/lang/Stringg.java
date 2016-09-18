@@ -383,20 +383,20 @@ public class Stringg extends Objectt {
     }
 
     /**
-     * Returns whether the string <code>str</code> begins with the character
-     * <code>ch</code>.
+     * Returns whether the string <code>str</code> begins with the character <code>ch</code>.
+     * Returns false if the wrapped string is null.
      */
-    public static boolean startsWith(String str, char ch) {
-        Character startChar = get(str, 0);
+    public boolean startsWith(char ch) {
+        Character startChar = get(this.string, 0);
         return startChar != null && startChar == ch;
     }
 
     /**
-     * Returns whether the string <code>str</code> begins with the string
-     * <code>prefix</code>. For consistency with String.
+     * Returns whether the string <code>str</code> begins with the string <code>prefix</code>. For
+     * consistency with String. Returns false if the wrapped string is null.
      */
-    public static boolean startsWith(String str, String pref) {
-        return str != null && str.startsWith(pref);
+    public boolean startsWith(String pref) {
+        return this.string != null && this.string.startsWith(pref);
     }
 
     /**

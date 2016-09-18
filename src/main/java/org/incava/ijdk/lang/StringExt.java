@@ -265,20 +265,19 @@ public class StringExt {
     }
 
     /**
-     * Returns whether the string <code>str</code> begins with the character
-     * <code>ch</code>.
+     * Returns whether the string <code>str</code> begins with the character <code>ch</code>.
+     * Returns false if <code>str</code> is null.
      */
     public static boolean startsWith(String str, char ch) {
-        Character startChar = get(str, 0);
-        return startChar != null && startChar == ch;
+        return new Stringg(str).startsWith(ch);
     }
 
     /**
-     * Returns whether the string <code>str</code> begins with the string
-     * <code>prefix</code>. For consistency with String.
+     * Returns whether the string <code>str</code> begins with the string <code>prefix</code>. For
+     * consistency with String. Returns false if <code>str</code> is null.
      */
     public static boolean startsWith(String str, String pref) {
-        return str != null && str.startsWith(pref);
+        return new Stringg(str).startsWith(pref);
     }
 
     /**
