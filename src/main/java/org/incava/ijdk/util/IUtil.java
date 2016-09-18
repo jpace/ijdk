@@ -1,6 +1,6 @@
 package org.incava.ijdk.util;
 
-import org.incava.ijdk.lang.ICore;
+import ijdk.lang.ICore;
 
 /**
  * This class exists for legacy reasons -- compatibility with older versions of IJDK, and its code

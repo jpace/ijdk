@@ -1,21 +1,16 @@
 package org.incava.ijdk.lang;
 
 import ijdk.lang.Stringg;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.StringTokenizer;
-import org.incava.ijdk.util.ListExt;
-import org.incava.ijdk.util.Index;
-import static org.incava.ijdk.util.IUtil.*;
 
 /**
  * Extensions to the String class.
+ * Alternatively, the static methods here are defined as instance objects of the Stringg class. This
+ * class exists for backward compatibility, and new string-related methods will be added to Stringg,
+ * and likely not this class.
  *
- * Alternatively, the static methods here are defined as instance objects of the Stringg class.
- *
- * @see ijdk.String
+ * @see ijdk.Stringg
  */
 public class StringExt {
     /**
@@ -127,12 +122,7 @@ public class StringExt {
      * string is null. Returns an empty string if <code>num</code> is negative.
      */
     public static String right(String str, int num) {
-        if (str == null) {
-            return null;
-        }
-        else {
-            return num <= 0 ? "" : get(str, -Math.min(num, str.length()), -1);
-        }
+        return new Stringg(str).right(num);
     }
 
     /**
@@ -162,13 +152,7 @@ public class StringExt {
      * @param index The index into the source string. Negative value goes from end backward.
      */
     public static Character charAt(String str, int index) {
-        if (str == null) {
-            return null;
-        }
-        else {
-            Integer idx = getIndex(str, index);
-            return isNull(idx) ? null : str.charAt(idx);
-        }
+        return new Stringg(str).charAt(index);
     }
 
     /**
@@ -177,7 +161,7 @@ public class StringExt {
      * @see StringExt#charAt(String, int).
      */
     public static Character get(String str, int index) {
-        return charAt(str, index);
+        return new Stringg(str).get(index);
     }
 
     /**
@@ -193,36 +177,7 @@ public class StringExt {
      * @see StringExt#get(String, int).
      */
     public static String substring(String str, Integer fromIndex, Integer toIndex) {
-        if (str == null) {
-            return null;
-        }
-
-        Integer frIdx = null;
-
-        if (fromIndex == null) {
-            frIdx = 0;
-        }
-        else {
-            frIdx = getIndex(str, fromIndex);
-            if (isNull(frIdx)) {
-                return "";
-            }
-        }
-
-        Integer toIdx = toIndex == null ? null : getIndex(str, toIndex);
-
-        if (isNull(toIdx)) {
-            toIdx = str.length() - 1;
-        }
-
-        if (frIdx > toIdx) {
-            // We could return null, but Ruby returns "" if the indices are within the length of the
-            // string, and null if not. We'll just go with empty.
-            return "";
-        }
-        else {
-            return str.substring(frIdx, 1 + toIdx);
-        }
+        return new Stringg(str).substring(fromIndex, toIndex);
     }
 
     /**
@@ -232,8 +187,7 @@ public class StringExt {
      * is returned.
      */
     public static String substringAfter(String str, Character ch) {
-        Integer idx = indexOf(str, ch);
-        return idx == null ? null : substring(str, idx + 1, null);
+        return new Stringg(str).substringAfter(ch);
     }
 
     /**
@@ -242,8 +196,7 @@ public class StringExt {
      * returned. If <code>ch</code> is the first character, then an empty string is returned.
      */
     public static String substringBefore(String str, Character ch) {
-        Integer idx = indexOf(str, ch);
-        return idx == null ? null : idx == 0 ? "" : substring(str, 0, idx - 1);
+        return new Stringg(str).substringBefore(ch);
     }
 
     /**
@@ -251,18 +204,8 @@ public class StringExt {
      * .. 8]</code>. This method the same as <code>StringExt.substring</code>.
      */
     public static String get(String str, Integer fromIndex, Integer toIndex) {
-        return substring(str, fromIndex, toIndex);
-    }
-    
-    /**
-     * Converts the index, which can be positive or negative, to one within range for this string. A
-     * negative index will result in the distance from the end of the string, with index -1 meaning
-     * the last character in the string. Returns null if the resulting index is out of range. If
-     * <code>str</code> is null, null is returned.
-     */
-    protected static Integer getIndex(String str, Integer index) {
-        return isNull(str) ? null : Index.getIndex(str.length(), index);
-    }
+        return new Stringg(str).get(fromIndex, toIndex);
+    }    
 
     /**
      * Returns whether the string <code>str</code> begins with the character <code>ch</code>.

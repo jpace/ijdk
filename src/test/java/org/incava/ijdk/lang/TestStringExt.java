@@ -1,5 +1,6 @@
 package org.incava.ijdk.lang;
 
+import ijdk.lang.ICore;
 import java.util.*;
 import org.incava.test.TestCaseExt;
 import org.junit.Assert;
@@ -418,49 +419,7 @@ public class TestStringExt extends TestCaseExt {
         assertCharAt(null, "abc", -4);
     }
 
-    // getIndex
-
-    public Integer assertGetIndex(Integer exp, String str, int index) {
-        Integer result = StringExt.getIndex(str, index);
-        assertEquals("str: '" + str + "'; index: " + index, exp, result);
-        return result;
-    }
-
-    public void testGetIndexNull() {
-        assertGetIndex(null, null, 0);
-    }
-
-    public void testGetIndexZero() {
-        assertGetIndex(0, "abcd", 0);
-    }
-
-    public void testGetIndexOne() {
-        assertGetIndex(1, "abcd", 1);
-    }
-
-    public void testGetIndexLast() {
-        assertGetIndex(3, "abcd", 3);
-    }
-
-    public void testGetIndexOffEnd() {
-        assertGetIndex(null, "abcd", 4);
-    }
-
-    public void testGetIndexNegativeOne() {
-        assertGetIndex(3, "abcd", -1);
-    }
-
-    public void testGetIndexNegativeTwo() {
-        assertGetIndex(2, "abcd", -2);
-    }
-
-    public void testGetIndexNegativeAtStart() {
-        assertGetIndex(1, "abcd", -3);
-    }
-
-    public void testGetIndexNegativeOffStart() {
-        assertGetIndex(null, "abcd", -5);
-    }
+    // substring
 
     public String assertSubstring(String expected, String str, Integer fromIndex, Integer toIndex) {
         String result = StringExt.substring(str, fromIndex, toIndex);

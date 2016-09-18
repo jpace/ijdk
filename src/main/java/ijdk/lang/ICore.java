@@ -1,4 +1,4 @@
-package org.incava.ijdk.lang;
+package ijdk.lang;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.incava.ijdk.io.StdOut;
+import org.incava.ijdk.lang.ArrayExt;
+import org.incava.ijdk.lang.ObjectExt;
+import org.incava.ijdk.lang.StringExt;
 import org.incava.ijdk.util.EmptyIterable;
 import org.incava.ijdk.util.NumIterable;
 

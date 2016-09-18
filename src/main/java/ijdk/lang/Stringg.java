@@ -251,51 +251,50 @@ public class Stringg extends Objectt {
      * negative.
      */
     public String left(int num) {
-        return num <= 0 ? "" : get(this.string, 0, num - 1);
+        return num <= 0 ? "" : get(0, num - 1);
     }
 
     /**
      * Returns the rightmost <code>num</code> characters of the string, not exceeding the length of
      * the string. Unlike String#substring, does not throw the annoying IndexOutOfBoundsException.
-     * Returns null if the input string is null. Returns an empty string if <code>num</code> is
+     * Returns null if the wrapped string is null. Returns an empty string if <code>num</code> is
      * negative.
      */
-    public static String right(String str, int num) {
-        if (str == null) {
+    public String right(int num) {
+        if (isNull()) {
             return null;
         }
         else {
-            return num <= 0 ? "" : get(str, -Math.min(num, str.length()), -1);
+            return num <= 0 ? "" : get(-Math.min(num, this.string.length()), -1);
         }
     }
 
     /**
-     * Returns the character at the given index, or null if <code>index</code>
-     * is out of range. If <code>index</code> is negative, the character is the
-     * nth character from the end of the string, where -1 is the last character
-     * in the string.
+     * Returns the character at the given index, or null if <code>index</code> is out of range. If
+     * <code>index</code> is negative, the character is the nth character from the end of the
+     * string, where -1 is the last character in the string. If the wrapped string is null, then
+     * null is returned.
      *
      * @return The character at the given index, or null if out of range.
-     * @param str The source string.
      * @param index The index into the source string. Negative value goes from end backward.
      */
-    public static Character charAt(String str, int index) {
-        if (str == null) {
+    public Character charAt(int index) {
+        if (isNull()) {
             return null;
         }
         else {
-            Integer idx = getIndex(str, index);
-            return isNull(idx) ? null : str.charAt(idx);
+            Integer idx = getIndex(index);
+            return isNull(idx) ? null : this.string.charAt(idx);
         }
     }
 
     /**
-     * An alias for StringExt#charAt.
+     * An alias for Stringg#charAt.
      *
-     * @see StringExt#charAt(String, int).
+     * @see Stringg#charAt(int).
      */
-    public static Character get(String str, int index) {
-        return charAt(str, index);
+    public Character get(int index) {
+        return charAt(index);
     }
 
     /**
@@ -310,8 +309,8 @@ public class Stringg extends Objectt {
      *
      * @see StringExt#get(String, int).
      */
-    public static String substring(String str, Integer fromIndex, Integer toIndex) {
-        if (str == null) {
+    public String substring(Integer fromIndex, Integer toIndex) {
+        if (isNull()) {
             return null;
         }
 
@@ -321,16 +320,17 @@ public class Stringg extends Objectt {
             frIdx = 0;
         }
         else {
-            frIdx = getIndex(str, fromIndex);
+            frIdx = getIndex(fromIndex);
             if (isNull(frIdx)) {
                 return "";
             }
         }
 
-        Integer toIdx = toIndex == null ? null : getIndex(str, toIndex);
+
+        Integer toIdx = toIndex == null ? null : getIndex(toIndex);
 
         if (isNull(toIdx)) {
-            toIdx = str.length() - 1;
+            toIdx = this.string.length() - 1;
         }
 
         if (frIdx > toIdx) {
@@ -339,7 +339,7 @@ public class Stringg extends Objectt {
             return "";
         }
         else {
-            return str.substring(frIdx, 1 + toIdx);
+            return this.string.substring(frIdx, 1 + toIdx);
         }
     }
 
@@ -351,7 +351,7 @@ public class Stringg extends Objectt {
      */
     public String substringAfter(Character ch) {
         Integer idx = indexOf(ch);
-        return idx == null ? null : substring(this.string, idx + 1, null);
+        return idx == null ? null : substring(idx + 1, null);
     }
 
     /**
@@ -359,27 +359,27 @@ public class Stringg extends Objectt {
      * the given character, , or if <code>str</code> or <code>ch</code> is null, then null is
      * returned. If <code>ch</code> is the first character, then an empty string is returned.
      */
-    public String substringBefore(String str, Character ch) {
+    public String substringBefore(Character ch) {
         Integer idx = indexOf(ch);
-        return idx == null ? null : idx == 0 ? "" : substring(this.string, 0, idx - 1);
+        return idx == null ? null : idx == 0 ? "" : substring(0, idx - 1);
     }
 
     /**
      * Same as StringExt#substring, but with the indices inclusive, like the Ruby syntax <code>str[4
      * .. 8]</code>. This method the same as <code>Stringg.substring</code>.
      */
-    public static String get(String str, Integer fromIndex, Integer toIndex) {
-        return substring(str, fromIndex, toIndex);
+    public String get(Integer fromIndex, Integer toIndex) {
+        return substring(fromIndex, toIndex);
     }
     
     /**
      * Converts the index, which can be positive or negative, to one within range for this string. A
      * negative index will result in the distance from the end of the string, with index -1 meaning
      * the last character in the string. Returns null if the resulting index is out of range. If
-     * <code>str</code> is null, null is returned.
+     * the wrapped string is null, then null is returned.
      */
-    protected static Integer getIndex(String str, Integer index) {
-        return isNull(str) ? null : Index.getIndex(str.length(), index);
+    protected Integer getIndex(Integer index) {
+        return isNull() || this.string.length() == 0 ? null : Index.getIndex(this.string.length(), index);
     }
 
     /**
@@ -387,7 +387,7 @@ public class Stringg extends Objectt {
      * Returns false if the wrapped string is null.
      */
     public boolean startsWith(char ch) {
-        Character startChar = get(this.string, 0);
+        Character startChar = get(0);
         return startChar != null && startChar == ch;
     }
 
@@ -410,13 +410,13 @@ public class Stringg extends Objectt {
             return null;
         }
         else {
-            Character lastChar = get(this.string, -1);
+            Character lastChar = get(-1);
             System.out.println("string: <<" + this.string + ">>; lastChar: <<" + lastChar + ">>");
             if (lastChar == null) {
                 return "";
             }
             else if ("\r\n".indexOf(lastChar) >= 0) {
-                return substring(this.string, 0, -2);
+                return substring(0, -2);
             }
             else {
                 return this.string;
@@ -501,7 +501,7 @@ public class Stringg extends Objectt {
             return "";
         }
         else if (this.string.length() > len)  {
-            return get(this.string, 0, len - 1) + '-';
+            return get(0, len - 1) + '-';
         }
         else {
             return this.string;
