@@ -14,13 +14,6 @@ import static org.incava.ijdk.util.IUtil.*;
  */
 public class Stringg extends Objectt {
     /**
-     * Returns a new Stringg for the given character.
-     */
-    public static Stringg strg(char ch) {
-        return new Stringg(ch);
-    }
-
-    /**
      * Creates a string from the collection, joined by <code>delim</code>. If <code>coll</code> is
      * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the
      * empty string.
@@ -356,9 +349,9 @@ public class Stringg extends Objectt {
      * null, then null is returned. If <code>ch</code> is the last character, then an empty string
      * is returned.
      */
-    public static String substringAfter(String str, Character ch) {
-        Integer idx = indexOf(str, ch);
-        return idx == null ? null : substring(str, idx + 1, null);
+    public String substringAfter(Character ch) {
+        Integer idx = indexOf(ch);
+        return idx == null ? null : substring(this.string, idx + 1, null);
     }
 
     /**
@@ -366,9 +359,9 @@ public class Stringg extends Objectt {
      * the given character, , or if <code>str</code> or <code>ch</code> is null, then null is
      * returned. If <code>ch</code> is the first character, then an empty string is returned.
      */
-    public static String substringBefore(String str, Character ch) {
-        Integer idx = indexOf(str, ch);
-        return idx == null ? null : idx == 0 ? "" : substring(str, 0, idx - 1);
+    public String substringBefore(String str, Character ch) {
+        Integer idx = indexOf(ch);
+        return idx == null ? null : idx == 0 ? "" : substring(this.string, 0, idx - 1);
     }
 
     /**
@@ -407,34 +400,68 @@ public class Stringg extends Objectt {
     }
 
     /**
-     * Removes end of line characters.
+     * Removes a single end of line character, either \\n or \\r. Even if there are multiple end of
+     * line characters, only one is removed. Returns null if the wrapped string is null.
+     *
+     * @see #chompAll
      */
-    public static String chomp(String str) {
-        int idx = str.length() - 1;
-        while (idx >= 0 && "\r\n".indexOf(str.charAt(idx)) != -1) {
-            --idx;
+    public String chomp() {
+        if (this.string == null) {
+            return null;
         }
-        return str.substring(0, idx + 1);
+        else {
+            Character lastChar = get(this.string, -1);
+            System.out.println("string: <<" + this.string + ">>; lastChar: <<" + lastChar + ">>");
+            if (lastChar == null) {
+                return "";
+            }
+            else if ("\r\n".indexOf(lastChar) >= 0) {
+                return substring(this.string, 0, -2);
+            }
+            else {
+                return this.string;
+            }
+        }
     }
+
+    /**
+     * Removes multiple end of line characters, either \\n or \\r. Returns null if the wrapped
+     * string is null.
+     *
+     * @see #chomp
+     */
+    public String chompAll() {
+        if (this.string == null) {
+            return null;
+        }
+        else {
+            int idx = this.string.length() - 1;
+            while (idx >= 0 && "\r\n".indexOf(this.string.charAt(idx)) != -1) {
+                --idx;
+            }
+            return this.string.substring(0, idx + 1);
+        }
+    }
+
 
     /**
      * Returns whether the string contains the character. If <code>str</code> or
      * <code>ch</code> is null, false is returned.
      */
-    public static boolean contains(String str, Character ch) {
-        return indexOf(str, ch) != null;
+    public boolean contains(Character ch) {
+        return indexOf(ch) != null;
     }
     
     /**
      * Returns the index of the first occurance of the character in the string, or null if either
      * <code>str</code> or <code>ch</code> is null, or if the character is not in the string.
      */
-    public static Integer indexOf(String str, Character ch) {
-        if (isNull(str) || isNull(ch)) {
+    public Integer indexOf(Character ch) {
+        if (isNull() || isNull(ch)) {
             return null;
         }
         else {
-            int idx = str.indexOf(ch);
+            int idx = this.string.indexOf(ch);
             return idx >= 0 ? Integer.valueOf(idx) : null;
         }
     }
@@ -462,8 +489,9 @@ public class Stringg extends Objectt {
 
     /**
      * If <code>str</code> is longer than <code>length</code>, then the returned string is cut at
-     * the given length and appended with a dash, so <code>snip("foobar", 3) is "foo-. Returns null
-     * if <code>str</code> is null. Returns an empty string if <code>length</code> is zero or less.
+     * the given length and appended with a dash, so <code>snip("foobar", 3)</code> is "foo-.
+     * Returns null if <code>str</code> is null. Returns an empty string if <code>length</code> is
+     * zero or less.
      */
     public String snip(int len) {
         if (this.string == null) {

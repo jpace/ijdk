@@ -282,14 +282,20 @@ public class StringExt {
     }
 
     /**
-     * Removes end of line characters.
+     * Removes a single end of line character, either \\n or \\r. Even if there are multiple end of
+     * line characters, only one is removed.
+     *
+     * @see #chompAll
      */
     public static String chomp(String str) {
-        int idx = str.length() - 1;
-        while (idx >= 0 && "\r\n".indexOf(str.charAt(idx)) != -1) {
-            --idx;
-        }
-        return str.substring(0, idx + 1);
+        return new Stringg(str).chomp();
+    }
+
+    /**
+     * Removes multiple end of line characters, either \\n or \\r.
+     */
+    public static String chompAll(String str) {
+        return new Stringg(str).chompAll();
     }
 
     /**
@@ -297,7 +303,7 @@ public class StringExt {
      * <code>ch</code> is null, false is returned.
      */
     public static boolean contains(String str, Character ch) {
-        return indexOf(str, ch) != null;
+        return new Stringg(str).contains(ch);
     }
     
     /**
@@ -305,13 +311,7 @@ public class StringExt {
      * <code>str</code> or <code>ch</code> is null, or if the character is not in the string.
      */
     public static Integer indexOf(String str, Character ch) {
-        if (isNull(str) || isNull(ch)) {
-            return null;
-        }
-        else {
-            int idx = str.indexOf(ch);
-            return idx >= 0 ? Integer.valueOf(idx) : null;
-        }
+        return new Stringg(str).indexOf(ch);
     }
 
     /**

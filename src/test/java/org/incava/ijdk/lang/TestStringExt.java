@@ -836,4 +836,86 @@ public class TestStringExt extends TestCaseExt {
     public void testIsEmptyNonEmpty() {
         assertIsEmpty(false, "a");
     }
+
+    // chomp
+
+    public String assertChomp(String expected, String str) {
+        String result = StringExt.chomp(str);
+        String msg = "str: '" + str + "'";
+        assertEquals(msg, expected, result);
+        return result;
+    }
+
+    public void testChompNull() {
+        assertChomp(null, null);
+    }
+
+    public void testChompEmpty() {
+        assertChomp("", "");
+    }
+
+    public void testChompNoEoln() {
+        assertChomp("a", "a");
+    }
+
+    public void testChompN() {
+        assertChomp("a", "a\n");
+    }
+
+    public void testChompNN() {
+        assertChomp("a\n", "a\n\n");
+    }
+
+    public void testChompR() {
+        assertChomp("a", "a\r");
+    }
+
+    public void testChompRR() {
+        assertChomp("a\r", "a\r\r");
+    }
+
+    public void testChompRN() {
+        assertChomp("a\r", "a\r\n");
+    }
+
+    // chompAll
+
+    public String assertChompAll(String expected, String str) {
+        String result = StringExt.chompAll(str);
+        String msg = "str: '" + str + "'";
+        assertEquals(msg, expected, result);
+        return result;
+    }
+
+    public void testChompAllNull() {
+        assertChompAll(null, null);
+    }
+
+    public void testChompAllEmpty() {
+        assertChompAll("", "");
+    }
+
+    public void testChompAllNoEoln() {
+        assertChompAll("a", "a");
+    }
+
+    public void testChompAllN() {
+        assertChompAll("a", "a\n");
+    }
+
+    public void testChompAllNN() {
+        assertChompAll("a", "a\n\n");
+    }
+
+    public void testChompAllR() {
+        assertChompAll("a", "a\r");
+    }
+
+    public void testChompAllRR() {
+        assertChompAll("a", "a\r\r");
+    }
+
+    public void testChompAllRN() {
+        assertChompAll("a", "a\r\n");
+    }    
 }
