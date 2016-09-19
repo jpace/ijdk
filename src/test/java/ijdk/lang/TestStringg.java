@@ -80,19 +80,9 @@ public class TestStringg extends TestCaseExt {
         assertToList(expected, "fee, fi, foo, fum");
     }
     
-    public void testToListDoubleQuoted() {
-        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
-        assertToList(expected, "\"fee, fi, foo, fum\"");
-    }
-    
-    public void testToListSingleQuoted() {
-        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
-        assertToList(expected, "\'fee, fi, foo, fum\'");
-    }
-    
     public void testToListWhitespaceChars() {
         String[] expected = new String[] { "fee", "fi", "foo", "fum" };
-        assertToList(expected, "\'fee,\tfi,\nfoo,\rfum\'");
+        assertToList(expected, "fee,\tfi,\nfoo,\rfum");
     }
 
     // assertions

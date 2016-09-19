@@ -48,9 +48,21 @@ public class StringExt {
     /**
      * Converts the (possibly quoted) string into a list, delimited by whitespace and commas.
      * Returns null if <code>str</code> is null.
+     *
+     * The unquoting behavior exists for pre-3.0 versions of IJDK.
+     *
+     * @see ijdk.Stringg#unquote
+     * @see ijdk.Stringg#toList
      */
     public static List<String> toList(String str) {
-        return new Stringg(str).toList();
+        Stringg strg = new Stringg(str);
+        if (strg.isNull()) {
+            return null;
+        }
+        else {
+            strg = new Stringg(strg.unquote());
+            return strg.toList();
+        }
     }
 
     /**

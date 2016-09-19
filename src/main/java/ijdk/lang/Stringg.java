@@ -152,26 +152,15 @@ public class Stringg extends Objectt {
     }
 
     /**
-     * Converts the (possibly quoted) string into a list, delimited by whitespace and commas.
-     * Returns null if this object is wrapping a null string.
-     *
-     * @deprecated I don't like the de-quoting behavior
+     * Converts the string into a list, delimited by whitespace and commas.
      */
     public List<String> toList() {
-        if (this.string == null) {
+        if (isNull()) {
             return null;
-        }
-
-        String str = this.string;
-        
-        // strip leading/trailing single/double quotes
-        if (str.charAt(0) == str.charAt(str.length() - 1) &&
-            (str.charAt(0) == '"' || str.charAt(0) == '\'')) {
-            str = str.substring(1, str.length() - 1);
         }
         
         List<String> list = new ArrayList<String>();
-        StringTokenizer st = new StringTokenizer(str, " \t\n\r\f,");
+        StringTokenizer st = new StringTokenizer(this.string, " \t\n\r\f,");
         while (st.hasMoreTokens()) {
             String tk = st.nextToken();
             list.add(tk);
