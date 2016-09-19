@@ -515,4 +515,32 @@ public class Stringg extends Objectt {
         // str.isEmpty() is JDK 1.6+, and IJDK is backward compatible with 1.5.
         return this.string == null || this.string.length() == 0;
     }
+
+    /**
+     * Returns the length of the string, returning 0 if the wrapped string is null.
+     */
+    public int length() {
+        return isNull() ? 0 : this.string.length();
+    }
+
+    /**
+     * Unquotes the string, removing leading and trailing single or double quotes, if both of either
+     * type wraps the string. Returns the wrapped string if neither case is true. Returns null if
+     * the wrapped string is null.
+     */
+    public String unquote() {
+        if (length() >= 2 && get(0) == get(-1) && (get(0) == '"' || get(0) == '\'')) {
+            return get(1, -2);
+        }
+        else {
+            return this.string;
+        }
+    }    
+
+    /**
+     * Quotes the string, using double quotes. Returns null if the wrapped string is null.
+     */
+    public String quote() {
+        return isNull() ? null : "\"" + this.string + "\"";
+    }    
 }

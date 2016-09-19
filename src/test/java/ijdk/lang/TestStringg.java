@@ -64,7 +64,7 @@ public class TestStringg extends TestCaseExt {
         assertSplit(new String[] { "this", "is", "a", ";test" }, "this;is;a;;test", ';', 4);
     }
 
-    // // toList
+    // toList
     
     public void assertToList(String[] exp, String str) {
         List<String> result = new Stringg(str).toList();
@@ -842,5 +842,82 @@ public class TestStringg extends TestCaseExt {
 
     public void testIsEmptyNonEmpty() {
         assertIsEmpty(false, "a");
+    }
+
+    // length
+
+    public int assertLength(int expected, String str) {
+        int result = new Stringg(str).length();
+        String msg = "str: '" + str + "'";
+        assertEquals(msg, expected, result);
+        return result;
+    }
+
+    public void testLengthNull() {
+        assertLength(0, null);
+    }
+
+    public void testLengthEmpty() {
+        assertLength(0, "");
+    }
+
+    public void testLengthNonEmpty() {
+        assertLength(1, "a");
+    }
+
+    // unquote
+    
+    public String assertUnquote(String expected, String str) {
+        String result = new Stringg(str).unquote();
+        assertEquals("str: '" + str + "'", expected, result);
+        return result;
+    }
+    
+    public void testUnquoteNull() {
+        assertUnquote(null, null);
+    }
+    
+    public void testUnquoteEmpty() {
+        assertUnquote("", "");
+    }
+    
+    public void testUnquoteNeitherQuote() {
+        assertUnquote("abc", "abc");
+    }
+    
+    public void testUnquoteSingleDouble() {
+        assertUnquote("\'abc\"", "\'abc\"");
+    }
+    
+    public void testUnquoteDoubleSingle() {
+        assertUnquote("\"abc\'", "\"abc\'");
+    }
+    
+    public void testUnquoteSingleSingle() {
+        assertUnquote("abc", "\'abc\'");
+    }
+    
+    public void testUnquoteDoubleDouble() {
+        assertUnquote("abc", "\"abc\"");
+    }
+
+    // quote
+    
+    public String assertQuote(String expected, String str) {
+        String result = new Stringg(str).quote();
+        assertEquals("str: '" + str + "'", expected, result);
+        return result;
+    }
+    
+    public void testQuoteNull() {
+        assertQuote(null, null);
+    }
+    
+    public void testQuoteEmpty() {
+        assertQuote("\"\"", "");
+    }
+    
+    public void testQuoteNotEmpty() {
+        assertQuote("\"abc\"", "abc");
     }
 }
