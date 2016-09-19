@@ -7,7 +7,9 @@ import java.util.Collection;
  * Collects a collection into a collection. That is, applies quasi-closures to
  * the collection to transform it into a new one.
  */
-public abstract class Collect<FromType, ToType> extends ArrayList<ToType> {    
+public abstract class Collect<FromType, ToType> extends ArrayList<ToType> {
+    private static final long serialVersionUID = 9151352237292973573L;
+    
     /**
      * Creates a new collection, where the condition passes the condition.
      *

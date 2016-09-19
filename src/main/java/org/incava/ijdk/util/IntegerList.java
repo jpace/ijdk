@@ -5,6 +5,8 @@ import org.incava.ijdk.lang.Closure;
 import org.incava.ijdk.lang.Pair;
 
 public class IntegerList extends ArrayList<Integer> {
+    private static final long serialVersionUID = 1405764141608264794L;
+    
     /**
      * Creates an empty IntegerList.
      */

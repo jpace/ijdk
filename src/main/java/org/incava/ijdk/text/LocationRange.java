@@ -41,4 +41,8 @@ public class LocationRange implements Comparable<LocationRange> {
         }
         return cmp;
     }
+
+    public int hashCode() {
+        return this.start.hashCode() * 17 + this.end.hashCode();
+    }
 }
