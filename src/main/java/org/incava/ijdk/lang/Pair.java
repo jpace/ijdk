@@ -78,10 +78,10 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
     }
 
     public String toString() {
-        return getFirst().toString() + ", " + getSecond().toString();
+        return String.valueOf(first) + ", " + String.valueOf(second);
     }
 
     public int hashCode() {
-        return getFirst().hashCode() * 31 + getSecond().hashCode();
+        return (first == null ? 1 : first.hashCode()) * 31 + second == null ? 1 : second.hashCode();
     }
 }
