@@ -22,7 +22,8 @@ public class ObjectExt {
     }
 
     /**
-     * Returns whether the objects are equal, including whether they are both null.
+     * Returns whether the objects are equal, including whether they are both null. This is the same
+     * as <code>areEqual</code>, only more concise.
      *
      * @see #areEqual
      */
