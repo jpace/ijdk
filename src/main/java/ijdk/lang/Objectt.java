@@ -5,7 +5,27 @@ import java.util.Collection;
 /**
  * Extensions to the Object class, wrapping a Java Object with additional methods.
  */
-public class Objectt {
+public class Objectt {        
+    /**
+     * Returns whether the object is null. This method provides an alternative syntax to "if (obj ==
+     * null)".
+     *
+     * @see #isNotNull
+     */
+    public static boolean isNull(Object obj) {
+        return obj == null;
+    }
+
+    /**
+     * Returns whether the object is not null. This method provides an alternative syntax to "if
+     * (obj != null)".
+     *
+     * @see #isNull
+     */
+    public static boolean isNotNull(Object obj) {
+        return obj != null;
+    }
+
     private final Object object;
 
     public Objectt(Object object) {
@@ -27,100 +47,65 @@ public class Objectt {
     }
     
     /**
-     * Returns whether the objects are equal, including whether they are both null.
+     * Returns whether the other object is equal to the wrapped object, including whether they are
+     * both null.
      */
-    public static boolean areEqual(Object x, Object y) {
-        if (x == null) {
-            return y == null;
+    public boolean equals(Object other) {
+        if (isNull()) {
+            return other == null;
         }
-        else if (y == null) {
+        else if (other == null) {
             return false;
         }
         else {
-            return x.equals(y);
+            return obj().equals(other);
         }
     }
 
     /**
-     * Returns whether the objects are equal, including whether they are both null.
-     *
-     * @see #areEqual
+     * Returns the hash code for the wrapped object.
      */
-    public static boolean equal(Object x, Object y) {
-        return areEqual(x, y);
+    public int hashCode() {
+        return isNull() ? 0 : obj().hashCode();
     }
 
     /**
-     * Compares the two objects, including testing for null.
-     */
-    public static<A extends Comparable<A>> int compare(A x, A y) {
-        if (x == null) {
-            return y == null ? 0 : -1;
-        }
-        else if (y == null) {
-            return 1;
-        }
-        else {
-            return x.compareTo(y);
-        }
-    }
-
-    /**
-     * Returns whether the object is non-null and, if it is a collection or a
-     * string, has a length greater than zero.
+     * Returns whether the wrapped object is non-null and, if it is a collection or a string, has a
+     * length greater than zero.
      *
      * @see #isEmpty
      * @see #isFalse
      */
-    public static boolean isTrue(Object obj) {
-        return !isEmpty(obj);
+    public boolean isTrue() {
+        return !isEmpty();
     }
 
     /**
-     * Returns whether the array is not null and is not of zero length.
+     * Returns whether the wrapped object is null or is a string or collection of zero length.
      *
      * @see #isEmpty
-     * @see #isFalse
      */
-    public static boolean isTrue(Object ... obj) {
-        return obj != null && obj.length > 0;
+    public boolean isFalse() {
+        return isEmpty();
     }
 
     /**
-     * Returns whether the object is null or is a string or collection of zero length.
+     * Returns whether the wrapped object is null or is a string or collection of zero length.
      *
      * @see #isEmpty
      */
-    public static boolean isFalse(Object obj) {
-        return isEmpty(obj);
-    }
-
-    /**
-     * Returns whether the array is not null and is not of zero length.
-     *
-     * @see #isEmpty
-     */
-    public static boolean isFalse(Object ... obj) {
-        return obj == null || obj.length == 0;
-    }
-
-    /**
-     * Returns whether the object is null or is a string or collection of zero length.
-     *
-     * @see #isEmpty
-     */
-    public static boolean isEmpty(Object obj) {
-        if (obj == null) {
+    public boolean isEmpty() {
+        if (isNull()) {
             return true;
         }
-        else if (obj instanceof String) {
-            return Stringg.isEmpty((String)obj);
+        else if (obj() instanceof String) {
+            return new Stringg((String)obj()).isEmpty();
         }
-        else if (obj instanceof Object[]) {
-            return ((Object[])obj).length == 0;
+        else if (obj() instanceof Object[]) {
+            return ((Object[])obj()).length == 0;
         }
-        else if (obj instanceof Collection) {
-            return ((Collection<?>)obj).isEmpty();
+        else if (obj() instanceof Collection) {
+            return ((Collection<?>)obj()).isEmpty();
         }
         else {
             return false;
@@ -134,7 +119,7 @@ public class Objectt {
      * @see #isNotNull
      */
     public boolean isNull() {
-        return this.object == null;
+        return obj() == null;
     }
 
     /**
@@ -144,26 +129,6 @@ public class Objectt {
      * @see #isNull
      */
     public boolean isNotNull() {
-        return this.object != null;
-    }
-
-    /**
-     * Returns whether the wrapped object is null. This method provides an alternative syntax to "if
-     * (obj == null)".
-     *
-     * @see #isNotNull
-     */
-    public static boolean isNull(Object obj) {
-        return obj == null;
-    }
-
-    /**
-     * Returns whether the object is not null. This method provides an
-     * alternative syntax to "if (obj != null)".
-     *
-     * @see #isNull
-     */
-    public static boolean isNotNull(Object obj) {
-        return obj != null;
+        return obj() != null;
     }
 }
