@@ -460,7 +460,7 @@ public class Stringg extends Objectt {
      * returned. Otherwise, if either is null, then false is returned.
      */
     public Boolean eq(String other) {
-        return Objectt.areEqual(this.string, other);
+        return equals(other);
     }
 
     /**
