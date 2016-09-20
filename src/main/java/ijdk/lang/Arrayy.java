@@ -1,28 +1,29 @@
 package ijdk.lang;
 
 import java.util.*;
+import org.incava.ijdk.util.EmptyIterable;
 
 /**
- * Wraps C-style arrays with common behavior.
+ * Wraps C-style arrays with common behavior. The wrapped array can be null.
  */
-public class Arrayy {
-    private final Object[] ary;
+public class Arrayy<T extends Object> {
+    private final T[] ary;
     
-    public Arrayy(Object ... ary) {
+    public Arrayy(T ... ary) {
         this.ary = ary;
     }
 
     /**
      * Returns the wrapped array.
      */
-    public Object[] getArray() {
+    public T[] getArray() {
         return this.ary;
     }
 
     /**
      * Returns the wrapped array.
      */
-    public Object[] ary() {
+    public T[] ary() {
         return this.ary;
     }
 
@@ -30,8 +31,8 @@ public class Arrayy {
      * Returns the wrapped array, as an ArrayList. If the wrapped array is null, then null is
      * returned.
      */
-    public ArrayList<Object> asList() {
-        return this.ary == null ? null : new ArrayList<Object>(Arrays.asList(ary));
+    public ArrayList<T> asList() {
+        return this.ary == null ? null : new ArrayList<T>(Arrays.asList(ary));
     }
 
     /**
@@ -43,7 +44,7 @@ public class Arrayy {
             return false;
         }
         else {
-            for (Object obj : ary) {
+            for (T obj : ary) {
                 if (obj != null) {
                     return false;
                 }
@@ -61,7 +62,7 @@ public class Arrayy {
             return false;
         }
         else {
-            for (Object obj : ary) {
+            for (T obj : ary) {
                 if (obj == null) {
                     return true;
                 }
@@ -69,5 +70,12 @@ public class Arrayy {
             return false;
         }
     }
-}
 
+    /**
+     * Returns an Iterable (iterator) for the wrapped array, which can be null. If the wrapped array
+     * is null, an "empty" iterator will be returned.
+     */
+    public Iterable<T> iter() {
+        return this.ary == null ? new EmptyIterable<T>() : Arrays.asList(this.ary);
+    }    
+}
