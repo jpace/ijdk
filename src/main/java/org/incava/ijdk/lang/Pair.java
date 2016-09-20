@@ -82,6 +82,6 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
     }
 
     public int hashCode() {
-        return (first == null ? 1 : first.hashCode()) * 31 + second == null ? 1 : second.hashCode();
+        return (first == null ? 1 : first.hashCode()) * 31 + (second == null ? 1 : second.hashCode());
     }
 }
