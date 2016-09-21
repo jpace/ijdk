@@ -6,10 +6,11 @@ import org.incava.ijdk.util.EmptyIterable;
 /**
  * Wraps C-style arrays with common behavior. The wrapped array can be null.
  */
-public class Arrayy<T extends Object> {
+public class Arrayy<T extends Object> extends Objectt {
     private final T[] ary;
     
     public Arrayy(T ... ary) {
+        super(ary);
         this.ary = ary;
     }
 
@@ -32,7 +33,7 @@ public class Arrayy<T extends Object> {
      * returned.
      */
     public ArrayList<T> asList() {
-        return this.ary == null ? null : new ArrayList<T>(Arrays.asList(ary));
+        return isNull() ? null : new ArrayList<T>(Arrays.asList(ary));
     }
 
     /**
@@ -40,7 +41,7 @@ public class Arrayy<T extends Object> {
      * array is null.
      */
     public boolean areAllNull() {
-        if (this.ary == null) {
+        if (isNull()) {
             return false;
         }
         else {
@@ -58,7 +59,7 @@ public class Arrayy<T extends Object> {
      * array is null.
      */
     public boolean isAnyNull() {
-        if (this.ary == null) {
+        if (isNull()) {
             return false;
         }
         else {
@@ -76,6 +77,6 @@ public class Arrayy<T extends Object> {
      * is null, an "empty" iterator will be returned.
      */
     public Iterable<T> iter() {
-        return this.ary == null ? new EmptyIterable<T>() : Arrays.asList(this.ary);
+        return isNull() ? new EmptyIterable<T>() : Arrays.asList(this.ary);
     }    
 }
