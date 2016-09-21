@@ -1,11 +1,11 @@
 package org.incava.ijdk.lang;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * A range of integers, inclusive. Supports iteration and array expansion.
+ *
+ * This class has been moved to ijdk.lang.Range
+ *
+ * @see ijdk.lang.Range
  */
 public class Range extends ijdk.lang.Range {
     /**
