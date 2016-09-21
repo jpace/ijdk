@@ -1,4 +1,4 @@
-package org.incava.ijdk.lang;
+package ijdk.lang;
 
 import org.incava.test.TestCaseExt;
 
