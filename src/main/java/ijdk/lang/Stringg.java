@@ -400,7 +400,6 @@ public class Stringg extends Objectt {
         }
         else {
             Character lastChar = get(-1);
-            System.out.println("string: <<" + this.string + ">>; lastChar: <<" + lastChar + ">>");
             if (lastChar == null) {
                 return "";
             }
