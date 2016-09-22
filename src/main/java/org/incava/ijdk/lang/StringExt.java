@@ -10,7 +10,7 @@ import java.util.List;
  * class exists for backward compatibility, and new string-related methods will be added to Stringg,
  * and likely not this class.
  *
- * @see ijdk.Stringg
+ * @see ijdk.lang.Stringg
  */
 public class StringExt {
     /**
@@ -51,8 +51,8 @@ public class StringExt {
      *
      * The unquoting behavior exists for pre-3.0 versions of IJDK.
      *
-     * @see ijdk.Stringg#unquote
-     * @see ijdk.Stringg#toList
+     * @see ijdk.lang.Stringg#unquote
+     * @see ijdk.lang.Stringg#toList
      */
     public static List<String> toList(String str) {
         Stringg strg = new Stringg(str);
@@ -70,8 +70,8 @@ public class StringExt {
      * following the string to a length of <code>length</code>.
      *
      * Examples:
-     *     pad("abcd", '*', 8) -> "abcd****"
-     *     pad("abcd", '*', 3) -> "abcd"
+     *     pad("abcd", '*', 8) -&gt; "abcd****"
+     *     pad("abcd", '*', 3) -&gt; "abcd"
      */
     public static String pad(String str, char ch, int length) {
         return new Stringg(str).pad(ch, length);
@@ -83,8 +83,8 @@ public class StringExt {
      *
      * Examples:
      * <pre>
-     *     pad("420", '*', 8) -> "*****420"
-     *     pad("1144", '*', 3) -> "1144"
+     *     pad("420", '*', 8)  -&gt; "*****420"
+     *     pad("1144", '*', 3) -&gt; "1144"
      * </pre>
      */
     public static String padLeft(String str, char ch, int length) {
@@ -170,7 +170,7 @@ public class StringExt {
     /**
      * An alias for StringExt#charAt.
      *
-     * @see StringExt#charAt(String, int).
+     * @see #charAt(String, int)
      */
     public static Character get(String str, int index) {
         return new Stringg(str).get(index);
@@ -186,7 +186,7 @@ public class StringExt {
      *
      * If <code>str</code> is null, then null is returned.
      *
-     * @see StringExt#get(String, int).
+     * @see #get(String, Integer, Integer)
      */
     public static String substring(String str, Integer fromIndex, Integer toIndex) {
         return new Stringg(str).substring(fromIndex, toIndex);
@@ -286,8 +286,9 @@ public class StringExt {
 
     /**
      * If <code>str</code> is longer than <code>length</code>, then the returned string is cut at
-     * the given length and appended with a dash, so <code>snip("foobar", 3) is "foo-. Returns null
-     * if <code>str</code> is null. Returns an empty string if <code>length</code> is zero or less.
+     * the given length and appended with a dash, so <code>snip("foobar", 3)</code> is "foo-.
+     * Returns null if <code>str</code> is null. Returns an empty string if <code>length</code> is
+     * zero or less.
      */
     public static String snip(String str, int len) {
         return new Stringg(str).snip(len);

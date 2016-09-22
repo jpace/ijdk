@@ -173,8 +173,8 @@ public class Stringg extends Objectt {
      * following the string to a length of <code>length</code>.
      *
      * Examples:
-     *     pad("abcd", '*', 8) -> "abcd****"
-     *     pad("abcd", '*', 3) -> "abcd"
+     *     pad("abcd", '*', 8) -&gt; "abcd****"
+     *     pad("abcd", '*', 3) -&gt; "abcd"
      */
     public String pad(char ch, int length) {
         if (this.string == null) {
@@ -193,8 +193,8 @@ public class Stringg extends Objectt {
      *
      * Examples:
      * <pre>
-     *     pad("420", '*', 8) -> "*****420"
-     *     pad("1144", '*', 3) -> "1144"
+     *     pad("420", '*', 8)  -&gt; "*****420"
+     *     pad("1144", '*', 3) -&gt; "1144"
      * </pre>
      */
     public String padLeft(char ch, int length) {
@@ -280,7 +280,7 @@ public class Stringg extends Objectt {
     /**
      * An alias for Stringg#charAt.
      *
-     * @see Stringg#charAt(int).
+     * @see Stringg#charAt(int)
      */
     public Character get(int index) {
         return charAt(index);
@@ -296,7 +296,7 @@ public class Stringg extends Objectt {
      *
      * If <code>str</code> is null, then null is returned.
      *
-     * @see StringExt#get(String, int).
+     * @see Stringg#get(Integer, Integer)
      */
     public String substring(Integer fromIndex, Integer toIndex) {
         if (isNull()) {

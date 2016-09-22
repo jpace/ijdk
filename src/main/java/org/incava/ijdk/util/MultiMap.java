@@ -9,8 +9,8 @@ import java.util.Set;
 
 /**
  * Maps from a single key to a collection of values, the equivalent of <code>Map&lt;String,
- * List&lt;Integer&gt;&gt;. By default the collection type is <code>ArrayList</code>, but it can be
- * any collection, by overriding <code>getCollection</code>.
+ * List&lt;Integer&gt;&gt;</code>. By default the collection type is <code>ArrayList</code>, but it
+ * can be any collection, by overriding <code>getCollection</code>.
  */
 public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
     private Set<Map.Entry<K, Collection<V>>> entrySet;

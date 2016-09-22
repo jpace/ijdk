@@ -16,6 +16,7 @@ public class IO {
      *
      * @param fileName the file to read.
      * @param options denotes special options when reading.
+     * @return the lines, as a list of strings
      *
      * @see ReadOptionType
      */
@@ -26,7 +27,8 @@ public class IO {
     /**
      * Returns a list of Strings read the given file.
      *
-     * @param fileName the file to read.
+     * @param fileName the file to read
+     * @return the lines, as a list of strings
      *
      * @see ReadOptionType
      */
@@ -36,6 +38,9 @@ public class IO {
 
     /**
      * Prints the lines (with println).
+     *
+     * @param fileName the file to read
+     * @param lines the lines to print
      */
     public static void printLines(String fileName, List<String> lines) {
         FileExt.printLines(new File(fileName), lines);

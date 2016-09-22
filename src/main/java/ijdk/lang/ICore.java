@@ -127,7 +127,7 @@ public class ICore {
      * second value is returned. This results in code such as:
      * 
      * <pre>
-     *    String statusName = userName != null && lastName != null ? lastName : null;
+     *    String statusName = userName != null &amp;&amp; lastName != null ? lastName : null;
      *    String statusName = IUtil.and(userName, lastName);
      * </pre>
      *
@@ -216,11 +216,11 @@ public class ICore {
      * are equivalent:
      *
      * <pre>
-     *     List<String> names = new ArrayList<String>(Arrays.asList("kevin", "jacob", "isaac"));
+     *     List&lt;String&gt; names = new ArrayList&lt;String&gt;(Arrays.asList("kevin", "jacob", "isaac"));
      *     names.add("henry");
      * </pre>
      * <pre>
-     *     List<String> names = list("kevin", "jacob", "isaac");
+     *     List&lt;String&gt; names = list("kevin", "jacob", "isaac");
      *     names.add("henry");
      * </pre>
      */

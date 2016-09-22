@@ -22,6 +22,9 @@ public class FSDirectory extends File {
      * Returns a list of files, with directories processed recursively,
      * collecting files with the suffix of <code>suffix</code> (or all files if
      * <code>suffix</code> is null.
+     *
+     * @return the list of files, as strings representing file names
+     * @param suffix the suffix to which to limit the find, such as ".rb"
      */
     public List<String> find(final String suffix) {
         List<String> matches = new ArrayList<String>();
@@ -52,6 +55,8 @@ public class FSDirectory extends File {
 
     /**
      * Returns a list of files and directories in the given directory.
+     *
+     * @return the list of files in the directory
      */
     public List<File> listAll() {
         return Arrays.asList(listFiles());

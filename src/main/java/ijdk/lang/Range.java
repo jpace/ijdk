@@ -35,7 +35,7 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
     }
     
     /**
-     * Creates a range of <code>first</code> through <code>last<code> (i.e., inclusive). First can
+     * Creates a range of <code>first</code> through <code>last</code> (i.e., inclusive). First can
      * be less than, equal to, or greater than, last.
      */
     public Range(Integer first, Integer last) {

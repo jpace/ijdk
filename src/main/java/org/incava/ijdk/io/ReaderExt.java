@@ -16,6 +16,9 @@ public class ReaderExt {
     /**
      * Reads lines from the given reader, applying options.
      *
+     * @param rdr the reader from which to read lines
+     * @param options how to handle whitespace only lines, eolns, and exceptions
+     * @return the lines, as a list
      * @see ReadOptionType
      */
     public static List<String> readLines(Reader rdr, EnumSet<ReadOptionType> options) {
@@ -40,12 +43,16 @@ public class ReaderExt {
     }
 
     /**
-     * Returns the file as a string, optionally with end-of-line characters
-     * (sequences).
+     * Returns the file as a singl string, optionally with end-of-line characters (sequences).
+     *
+     * @param rdr the reader from which to read lines
+     * @param options how to handle whitespace only lines, eolns, and exceptions
+     * @return the lines, as a single string
+     * @see ReadOptionType
      */
-    public static String readAsString(Reader fr, EnumSet<ReadOptionType> options) {
+    public static String readAsString(Reader rdr, EnumSet<ReadOptionType> options) {
         StringBuilder sb = new StringBuilder();
-        List<String> lines = readLines(fr, EnumSet.noneOf(ReadOptionType.class));
+        List<String> lines = readLines(rdr, EnumSet.noneOf(ReadOptionType.class));
         boolean addEoln = CollectionExt.contains(options, ReadOptionType.ADD_EOLNS);
         for (String line : lines) {
             sb.append(line);

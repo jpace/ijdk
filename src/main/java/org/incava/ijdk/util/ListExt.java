@@ -73,11 +73,11 @@ public class ListExt extends CollectionExt {
      * equivalent:
      *
      * <pre>
-     *     List<String> names = new ArrayList<String>(Arrays.asList("kevin", "jacob", "isaac"));
+     *     List&lt;String&gt; names = new ArrayList&lt;String&gt;(Arrays.asList("kevin", "jacob", "isaac"));
      *     names.add("henry");
      * </pre>
      * <pre>
-     *     List<String> names = list("kevin", "jacob", "isaac");
+     *     List&lt;String&gt; names = list("kevin", "jacob", "isaac");
      *     names.add("henry");
      * </pre>
      */

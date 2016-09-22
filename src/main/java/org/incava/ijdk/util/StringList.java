@@ -4,7 +4,7 @@ import java.util.*;
 import org.incava.ijdk.lang.Closure;
 
 /**
- * An extension of List<String>, with a constructor for varargs, and selectors that use closures.
+ * An extension of List&lt;String&gt;, with a constructor for varargs, and selectors that use closures.
  */
 public class StringList extends ArrayList<String> {
     private static final long serialVersionUID = -5489075883851520676L;

@@ -12,8 +12,8 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
      *
      * <pre>
      *     // compare:
-     *     Pair<String, Integer> pair = new Pair<String, Integer>("Homer", 34);
-     *     Pair<String, Integer> pair = Pair.create("Homer", 34);
+     *     Pair&lt;String, Integer&gt; pair = new Pair&lt;String, Integer&gt;("Homer", 34);
+     *     Pair&lt;String, Integer&gt; pair = Pair.create("Homer", 34);
      * </pre>
      */
     public static <X extends Comparable<? super X>, Y extends Comparable<? super Y>>
