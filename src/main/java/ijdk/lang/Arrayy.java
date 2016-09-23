@@ -75,6 +75,8 @@ public class Arrayy<T extends Object> extends Objectt {
     /**
      * Returns an Iterable (iterator) for the wrapped array, which can be null. If the wrapped array
      * is null, an "empty" iterator will be returned.
+     *
+     * @return an interable, wrapping the array
      */
     public Iterable<T> iter() {
         return isNull() ? new EmptyIterable<T>() : Arrays.asList(this.ary);
