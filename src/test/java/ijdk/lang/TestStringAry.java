@@ -15,84 +15,84 @@ public class TestStringAry extends TestCase {
         assertEquals("ary: " + strAry.toString(), expected, strAry.isEmpty());
     }
 
-    public void testNull() {
+    public void testIsEmptyNull() {
         assertIsEmpty(true, null);
     }    
 
-    public void testEmpty() {
+    public void testIsEmptyEmpty() {
         assertIsEmpty(true, new String[0]);
     }    
 
-    public void testHasElement() {
+    public void testIsEmptyHasElement() {
         assertIsEmpty(false, new String[] { "x" });
     }
 
     // areEqual
 
-    public void assertAreEqual(boolean expected, String[] x, String[] y) {
+    public void assertStringAryEquals(boolean expected, String[] x, String[] y) {
         StringAry xa = new StringAry(x);
         StringAry ya = new StringAry(y);
         
         assertEquals("x: " + xa.toString() + "; y: " + ya.toString(), expected, xa.equals(y));
     }
 
-    public void testBothNull() {
-        assertAreEqual(true, null, null);
+    public void testEqualsBothNull() {
+        assertStringAryEquals(true, null, null);
     }    
 
-    public void testNullEmpty() {
-        assertAreEqual(true, null, new String[0]);
+    public void testEqualsNullEmpty() {
+        assertStringAryEquals(true, null, new String[0]);
     }    
 
-    public void testEmptyNull() {
-        assertAreEqual(true, new String[0], null);
+    public void testEqualsEmptyNull() {
+        assertStringAryEquals(true, new String[0], null);
     }    
 
-    public void testEmptyEmpty() {
-        assertAreEqual(true, new String[0], new String[0]);
+    public void testEqualsEmptyEmpty() {
+        assertStringAryEquals(true, new String[0], new String[0]);
     } 
 
-    public void testElementEmpty() {
-        assertAreEqual(false, new String[] { "x" }, new String[0]);
+    public void testEqualsElementEmpty() {
+        assertStringAryEquals(false, new String[] { "x" }, new String[0]);
     }
 
-    public void testEmptyElement() {
-        assertAreEqual(false, new String[0], new String[] { "x" });
+    public void testEqualsEmptyElement() {
+        assertStringAryEquals(false, new String[0], new String[] { "x" });
     }
 
-    public void testElementNull() {
-        assertAreEqual(false, new String[] { "x" }, null);
+    public void testEqualsElementNull() {
+        assertStringAryEquals(false, new String[] { "x" }, null);
     }
 
-    public void testNullElement() {
-        assertAreEqual(false, null, new String[] { "x" });
+    public void testEqualsNullElement() {
+        assertStringAryEquals(false, null, new String[] { "x" });
     }
 
-    public void testSingleElementMatch() {
-        assertAreEqual(true, new String[] { "x" }, new String[] { "x" });
+    public void testEqualsSingleElementMatch() {
+        assertStringAryEquals(true, new String[] { "x" }, new String[] { "x" });
     }
 
-    public void testSingleElementNoMatch() {
-        assertAreEqual(false, new String[] { "x" }, new String[] { "y" });
+    public void testEqualsSingleElementNoMatch() {
+        assertStringAryEquals(false, new String[] { "x" }, new String[] { "y" });
     }
 
-    public void testTwoOneElements() {
-        assertAreEqual(false, new String[] { "x", "y" }, new String[] { "x" });
+    public void testEqualsTwoOneElements() {
+        assertStringAryEquals(false, new String[] { "x", "y" }, new String[] { "x" });
     }
 
-    public void testOneTwoElements() {
-        assertAreEqual(false, new String[] { "x" }, new String[] { "x", "y" });
+    public void testEqualsOneTwoElements() {
+        assertStringAryEquals(false, new String[] { "x" }, new String[] { "x", "y" });
     }
 
-    public void testTwoElementsMatch() {
-        assertAreEqual(true, new String[] { "x", "y" }, new String[] { "x", "y" });
+    public void testEqualsTwoElementsMatch() {
+        assertStringAryEquals(true, new String[] { "x", "y" }, new String[] { "x", "y" });
     }
 
-    public void testTwoElementsNoMatch() {
-        assertAreEqual(false, new String[] { "x", "y" }, new String[] { "x", "z" });
+    public void testEqualsTwoElementsNoMatch() {
+        assertStringAryEquals(false, new String[] { "x", "y" }, new String[] { "x", "z" });
     }
 
-    public void testTwoElementsMisordered() {
-        assertAreEqual(false, new String[] { "x", "y" }, new String[] { "y", "x" });
+    public void testEqualsTwoElementsMisordered() {
+        assertStringAryEquals(false, new String[] { "x", "y" }, new String[] { "y", "x" });
     }    
 }
