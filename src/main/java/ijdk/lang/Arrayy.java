@@ -80,5 +80,5 @@ public class Arrayy<T extends Object> extends Objectt {
      */
     public Iterable<T> iter() {
         return isNull() ? new EmptyIterable<T>() : Arrays.asList(this.ary);
-    }    
+    }
 }

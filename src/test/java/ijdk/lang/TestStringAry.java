@@ -1,17 +1,18 @@
-package org.incava.ijdk.lang;
+package ijdk.lang;
 
 import java.util.*;
 import junit.framework.TestCase;
 
-public class TestStringArray extends TestCase {
-    public TestStringArray(String name) {
+public class TestStringAry extends TestCase {
+    public TestStringAry(String name) {
         super(name);
     }
 
     // isEmpty
 
     public void assertIsEmpty(boolean expected, String[] ary) {
-        assertEquals("ary: " + StringArray.toString(ary), expected, StringArray.isEmpty(ary));
+        StringAry strAry = new StringAry(ary);
+        assertEquals("ary: " + strAry.toString(), expected, strAry.isEmpty());
     }
 
     public void testNull() {
@@ -29,7 +30,10 @@ public class TestStringArray extends TestCase {
     // areEqual
 
     public void assertAreEqual(boolean expected, String[] x, String[] y) {
-        assertEquals("x: " + StringArray.toString(x) + "; y: " + StringArray.toString(y), expected, StringArray.areEqual(x, y));
+        StringAry xa = new StringAry(x);
+        StringAry ya = new StringAry(y);
+        
+        assertEquals("x: " + xa.toString() + "; y: " + ya.toString(), expected, xa.equals(y));
     }
 
     public void testBothNull() {
@@ -46,7 +50,7 @@ public class TestStringArray extends TestCase {
 
     public void testEmptyEmpty() {
         assertAreEqual(true, new String[0], new String[0]);
-    }    
+    } 
 
     public void testElementEmpty() {
         assertAreEqual(false, new String[] { "x" }, new String[0]);
@@ -90,5 +94,5 @@ public class TestStringArray extends TestCase {
 
     public void testTwoElementsMisordered() {
         assertAreEqual(false, new String[] { "x", "y" }, new String[] { "y", "x" });
-    }
+    }    
 }
