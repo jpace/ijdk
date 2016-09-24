@@ -1,12 +1,12 @@
 package ijdk.lang;
 
-import java.io.*;
-import java.util.*;
+import java.io.StringWriter;
+import java.io.PrintWriter;
 
-public class Throwablee {
+public class Thrw {
     private final Throwable thr;
     
-    public Throwablee(Throwable thr) {
+    public Thrw(Throwable thr) {
         this.thr = thr;
     }
 

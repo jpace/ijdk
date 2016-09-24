@@ -1,18 +1,16 @@
 package ijdk.lang;
 
-import java.io.*;
-import java.util.*;
 import junit.framework.TestCase;
 
-public class TestComparablee extends TestCase {
-    public TestComparablee(String name) {
+public class TestComp extends TestCase {
+    public TestComp(String name) {
         super(name);
     }
 
     // compare
 
     public<T extends Comparable<T>> int assertCompare(int expected, T x, T y) {
-        int result = Comparablee.compare(x, y);
+        int result = Comp.compare(x, y);
         assertEquals("x: " + x + "; y: " + y, expected, result);
         return result;
     }

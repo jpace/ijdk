@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Extensions to Integer.
  */
-public class Integerr extends Obj {
+public class Int extends Obj {
     /**
      * Returns the str as an integer, or null if it is null or is not an integer.
      */
@@ -27,14 +27,14 @@ public class Integerr extends Obj {
      * Converts the given string to an integer, if it is a valid value. Otherwise the wrapped
      * integer will be null.
      */
-    public Integerr(String string) {
+    public Int(String string) {
         this(toInteger(string));
     }
 
     /**
      * Wraps the given integer, which can be null.
      */
-    public Integerr(Integer in) {
+    public Int(Integer in) {
         super(in);
         this.integer = in;
     }

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Extensions to the Comparable interface.
  */
-public class Comparablee {
+public class Comp {
     /**
      * Compares the two objects, including testing for null.
      */

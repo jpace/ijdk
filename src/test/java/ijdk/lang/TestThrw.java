@@ -1,18 +1,16 @@
 package ijdk.lang;
 
-import java.io.*;
-import java.util.*;
 import junit.framework.TestCase;
 
-public class TestThrowablee extends TestCase {
-    public TestThrowablee(String name) {
+public class TestThrw extends TestCase {
+    public TestThrw(String name) {
         super(name);
     }
     
     public void testGetStackTraceStringNPE() {
         Throwable t = new NullPointerException("nope");
         String expected = "java.lang.NullPointerException: nope\n" +
-            "\tat ijdk.lang.TestThrowablee.testGetStackTraceStringNPE(TestThrowablee.java:13)\n" + 
+            "\tat ijdk.lang.TestThrw.testGetStackTraceStringNPE(TestThrw.java:11)\n" + 
             "\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)";
         assertGetStackTraceString(expected, t);
     }
@@ -22,7 +20,7 @@ public class TestThrowablee extends TestCase {
     }
 
     public String assertGetStackTraceString(String expected, Throwable t) {
-        String result = new Throwablee(t).getStackTraceString();
+        String result = new Thrw(t).getStackTraceString();
         System.out.println("result: " + result);
         if (expected == null) {
             assertEquals("t: " + t, expected, result);
