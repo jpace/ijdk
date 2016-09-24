@@ -68,12 +68,4 @@ public class StringAry extends Arrayy<String> {
             return true;
         }
     }
-
-    public String get(int idx) {
-        return ary()[idx];
-    }
-
-    public int length() {
-        return isEmpty() ? 0 : ary().length;
-    }
 }

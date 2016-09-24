@@ -94,5 +94,5 @@ public class TestStringAry extends TestCase {
 
     public void testEqualsTwoElementsMisordered() {
         assertStringAryEquals(false, new String[] { "x", "y" }, new String[] { "y", "x" });
-    }    
+    }
 }

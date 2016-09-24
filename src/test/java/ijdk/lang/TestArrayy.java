@@ -74,7 +74,7 @@ public class TestArrayy extends TestCase {
         assertAreAllNull(false, ary);
     }
 
-    // areAllNull
+    // isAnyNull
 
     public <T> Arrayy<T> assertIsAnyNull(boolean expected, Arrayy<T> ary) {
         assertEquals(expected, ary.isAnyNull());
@@ -97,4 +97,82 @@ public class TestArrayy extends TestCase {
         Arrayy<String> ary = new Arrayy<String>("a", "b", "c");
         assertIsAnyNull(false, ary);
     }
+
+    // length
+
+    public <T> int assertLength(int expected, Arrayy<T> ary) {
+        int result = ary.length();
+        assertEquals("ary: " + ary, expected, result);
+        return result;
+    }
+
+    public void testLengthNullArray() {
+        assertLength(0, new Arrayy<Object>());
+    }
+
+    public void testLengthOne() {
+        assertLength(1, new Arrayy<String>("a"));
+    }
+
+    public void testLengthTwo() {
+        assertLength(2, new Arrayy<String>("a", "b"));
+    }
+    
+    // get
+
+    public Object assertGet(Object expected, int idx, Object ... elmts) {
+        Arrayy<Object> ary = new Arrayy<Object>(elmts);
+        Object result = ary.get(idx);
+        assertEquals("ary: " + ary.toString(), expected, result);
+        return result;
+    }
+
+    public void testGetEmptyZero() {
+        assertGet(null, 0);
+    }
+
+    public void testGetEmptyOne() {
+        assertGet(null, 1);
+    }
+
+    public void testGetEmptyNegative() {
+        assertGet(null, -1);
+    }
+
+    public void testGetEmptyOneElementZero() {
+        assertGet("a", 0, "a");
+    }
+
+    public void testGetEmptyOneElementPastRange() {
+        assertGet(null, 1, "a");
+    }
+
+    public void testGetEmptyOneElementPreRange() {
+        assertGet("a", -1, "a");
+    }
+
+    public void testGetEmptyTwoElementsZero() {
+        assertGet("a", 0, "a", "b");
+    }
+
+    public void testGetEmptyTwoElementsOne() {
+        assertGet("b", 1, "a", "b");
+    }
+
+    public void testGetEmptyTwoElementsTwo() {
+        assertGet(null, 2, "a", "b");
+    }
+
+    public void testGetEmptyTwoElementsNegativeOne() {
+        assertGet("b", -1, "a", "b");
+    }
+
+    public void testGetEmptyTwoElementsNegativeTwo() {
+        assertGet("a", -2, "a", "b");
+    }
+
+    public void testGetEmptyTwoElementsNegativeThree() {
+        assertGet(null, -3, "a", "b");
+    }
+
 }

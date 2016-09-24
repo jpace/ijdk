@@ -2,6 +2,7 @@ package ijdk.lang;
 
 import java.util.*;
 import org.incava.ijdk.util.EmptyIterable;
+import org.incava.ijdk.util.Index;
 
 /**
  * Wraps C-style arrays with common behavior. The wrapped array can be null.
@@ -26,6 +27,23 @@ public class Arrayy<T extends Object> extends Objectt {
      */
     public T[] ary() {
         return this.ary;
+    }
+
+    /**
+     * Returns the length, or zero if null.
+     */
+    public int length() {
+        return isEmpty() ? 0 : ary().length;
+    }
+
+    /**
+     * Returns the element at the given index. If the index is negative, then -1 means the last
+     * element in the array, -2 is the second to last, etc. If the index is out of range, then null
+     * is returned.
+     */
+    public T get(int index) {
+        Integer idx = Index.getIndex(length(), index);
+        return idx == null ? null : this.ary[idx];
     }
 
     /**
