@@ -3,7 +3,7 @@ package ijdk.lang;
 import org.incava.ijdk.lang.ObjectExt;
 import java.util.Arrays;
 
-public class StringAry extends Arrayy<String> {
+public class StringAry extends Ary<String> {
     public StringAry(String ... ary) {
         super(ary);
     }

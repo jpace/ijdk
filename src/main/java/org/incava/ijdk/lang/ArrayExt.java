@@ -1,6 +1,6 @@
 package org.incava.ijdk.lang;
 
-import ijdk.lang.Arrayy;
+import ijdk.lang.Ary;
 import java.util.Arrays;
 import org.incava.ijdk.util.EmptyIterable;
 
@@ -17,6 +17,6 @@ public class ArrayExt {
      * @return an interable, wrapping the array
      */
     public static <T> Iterable<T> iter(T[] ary) {
-        return new Arrayy<T>(ary).iter();
+        return new Ary<T>(ary).iter();
     }
 }

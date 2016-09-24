@@ -3,32 +3,32 @@ package ijdk.lang;
 import java.util.*;
 import junit.framework.TestCase;
 
-public class TestArrayy extends TestCase {
-    public TestArrayy(String name) {
+public class TestAry extends TestCase {
+    public TestAry(String name) {
         super(name);
     }
 
     // ctor
 
-    public <T> Arrayy<T> assertAccessors(Object value, int index, Arrayy<T> ary) {
+    public <T> Ary<T> assertAccessors(Object value, int index, Ary<T> ary) {
         assertEquals(value, ary.getArray()[index]);
         assertEquals(value, ary.ary()[index]);
         return ary;
     }
 
     public void testCtorNullArray() {
-        Arrayy<Object> ary = new Arrayy<Object>((Object[])null);
+        Ary<Object> ary = new Ary<Object>((Object[])null);
         assertEquals(null, ary.getArray());
         assertEquals(null, ary.ary());
     }
 
     public void testCtorNullObject() {
-        Arrayy<Object> ary = new Arrayy<Object>((Object)null);
+        Ary<Object> ary = new Ary<Object>((Object)null);
         assertAccessors(null, 0, ary);
     }
 
     public void testCtorNotEmpty() {
-        Arrayy<String> ary = new Arrayy<String>("a", "b", "c");
+        Ary<String> ary = new Ary<String>("a", "b", "c");
         assertAccessors("a", 0, ary);
         assertAccessors("b", 1, ary);
         assertAccessors("c", 2, ary);
@@ -36,92 +36,92 @@ public class TestArrayy extends TestCase {
 
     // asList
 
-    public <T extends Object> Arrayy<T> assertAsList(ArrayList<T> expected, Arrayy<T> ary) {
+    public <T extends Object> Ary<T> assertAsList(ArrayList<T> expected, Ary<T> ary) {
         assertEquals(expected, ary.asList());
         return ary;
     }
 
     public void testAsListNullArray() {
-        assertAsList(null, new Arrayy<Object>((Object[])null));
+        assertAsList(null, new Ary<Object>((Object[])null));
     }
 
     public void testAsListNullObject() {
-        assertAsList(new ArrayList<Object>(Arrays.asList(new Object[] { null })), new Arrayy<Object>((Object)null));
+        assertAsList(new ArrayList<Object>(Arrays.asList(new Object[] { null })), new Ary<Object>((Object)null));
     }
 
     public void testAsListNotEmpty() {
-        Arrayy<String> ary = new Arrayy<String>("a", "b", "c");
+        Ary<String> ary = new Ary<String>("a", "b", "c");
         assertAsList(new ArrayList<String>(Arrays.asList(new String[] { "a", "b", "c" })), ary);
     }
 
     // areAllNull
 
-    public <T> Arrayy<T> assertAreAllNull(boolean expected, Arrayy<T> ary) {
+    public <T> Ary<T> assertAreAllNull(boolean expected, Ary<T> ary) {
         assertEquals(expected, ary.areAllNull());
         return ary;
     }
 
     public void testAreAllNullNullArray() {
-        assertAreAllNull(false, new Arrayy<Object>((Object[])null));
+        assertAreAllNull(false, new Ary<Object>((Object[])null));
     }
 
     public void testAreAllNullNullObject() {
-        assertAreAllNull(true, new Arrayy<Object>((Object)null));
+        assertAreAllNull(true, new Ary<Object>((Object)null));
     }
 
     public void testAreAllNullNotEmpty() {
-        Arrayy<String > ary = new Arrayy<String>("a", "b", "c");
+        Ary<String > ary = new Ary<String>("a", "b", "c");
         assertAreAllNull(false, ary);
     }
 
     // isAnyNull
 
-    public <T> Arrayy<T> assertIsAnyNull(boolean expected, Arrayy<T> ary) {
+    public <T> Ary<T> assertIsAnyNull(boolean expected, Ary<T> ary) {
         assertEquals(expected, ary.isAnyNull());
         return ary;
     }
 
     public void testIsAnyNullNullArray() {
-        assertIsAnyNull(false, new Arrayy<Object>((Object[])null));
+        assertIsAnyNull(false, new Ary<Object>((Object[])null));
     }
 
     public void testIsAnyNullOnlyNullObject() {
-        assertIsAnyNull(true, new Arrayy<Object>((Object)null));
+        assertIsAnyNull(true, new Ary<Object>((Object)null));
     }
 
     public void testIsAnyNullOneNullObject() {
-        assertIsAnyNull(true, new Arrayy<String>("a", null));
+        assertIsAnyNull(true, new Ary<String>("a", null));
     }
 
     public void testIsAnyNullNotEmpty() {
-        Arrayy<String> ary = new Arrayy<String>("a", "b", "c");
+        Ary<String> ary = new Ary<String>("a", "b", "c");
         assertIsAnyNull(false, ary);
     }
 
     // length
 
-    public <T> int assertLength(int expected, Arrayy<T> ary) {
+    public <T> int assertLength(int expected, Ary<T> ary) {
         int result = ary.length();
         assertEquals("ary: " + ary, expected, result);
         return result;
     }
 
     public void testLengthNullArray() {
-        assertLength(0, new Arrayy<Object>());
+        assertLength(0, new Ary<Object>());
     }
 
     public void testLengthOne() {
-        assertLength(1, new Arrayy<String>("a"));
+        assertLength(1, new Ary<String>("a"));
     }
 
     public void testLengthTwo() {
-        assertLength(2, new Arrayy<String>("a", "b"));
+        assertLength(2, new Ary<String>("a", "b"));
     }
     
     // get
 
     public Object assertGet(Object expected, int idx, Object ... elmts) {
-        Arrayy<Object> ary = new Arrayy<Object>(elmts);
+        Ary<Object> ary = new Ary<Object>(elmts);
         Object result = ary.get(idx);
         assertEquals("ary: " + ary.toString(), expected, result);
         return result;
