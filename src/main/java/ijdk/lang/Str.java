@@ -12,15 +12,15 @@ import static org.incava.ijdk.util.IUtil.*;
 /**
  * Extensions to the String class.
  */
-public class Stringg extends Obj {
+public class Str extends Obj {
     /**
      * Creates a string from the collection, joined by <code>delim</code>. If <code>coll</code> is
      * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the
      * empty string.
      */
-    public static Stringg join(Collection<?> coll, String delim) {
+    public static Str join(Collection<?> coll, String delim) {
         if (coll == null) {
-            return new Stringg(null);
+            return new Str(null);
         }
         StringBuilder sb = new StringBuilder();
         boolean isFirst = true;
@@ -33,7 +33,7 @@ public class Stringg extends Obj {
             }
             sb.append(obj.toString());
         }
-        return new Stringg(sb.toString());
+        return new Str(sb.toString());
     }
 
     /**
@@ -41,7 +41,7 @@ public class Stringg extends Obj {
      * then the wrapped string is null. If <code>delim</code> is null, it is treated as the empty
      * string.
      */
-    public static Stringg join(Object[] ary, String delim) {
+    public static Str join(Object[] ary, String delim) {
         return join(ary == null ? null : Arrays.asList(ary), delim);
     }
     
@@ -50,7 +50,7 @@ public class Stringg extends Obj {
     /**
      * Wraps the given string.
      */
-    public Stringg(String string) {
+    public Str(String string) {
         super(string);
         this.string = string;
     }
@@ -58,7 +58,7 @@ public class Stringg extends Obj {
     /**
      * Creates a new string from the character, and wraps that string.
      */
-    public Stringg(char ch) {
+    public Str(char ch) {
         this(String.valueOf(ch));
     }
 
@@ -114,7 +114,7 @@ public class Stringg extends Obj {
             int  delimlen = delim.length();
 
             for (int idx = 0; idx < strlen; ++idx) {
-                Stringg strg = new Stringg(string.substring(idx));
+                Str strg = new Str(string.substring(idx));
                 if (strg.left(delimlen).equals(delim)) {
                     String substr = string.substring(beg, end);
                     splitList.add(substr);
@@ -230,7 +230,7 @@ public class Stringg extends Obj {
      * Returns the character, repeated <code>num</code> times.
      */
     public String repeat(char ch, int length) {
-        return new Stringg(String.valueOf(ch)).repeat(length);
+        return new Str(String.valueOf(ch)).repeat(length);
     }
 
     /**
@@ -278,9 +278,9 @@ public class Stringg extends Obj {
     }
 
     /**
-     * An alias for Stringg#charAt.
+     * An alias for Str#charAt.
      *
-     * @see Stringg#charAt(int)
+     * @see Str#charAt(int)
      */
     public Character get(int index) {
         return charAt(index);
@@ -296,7 +296,7 @@ public class Stringg extends Obj {
      *
      * If <code>str</code> is null, then null is returned.
      *
-     * @see Stringg#get(Integer, Integer)
+     * @see Str#get(Integer, Integer)
      */
     public String substring(Integer fromIndex, Integer toIndex) {
         if (isNull()) {
@@ -355,7 +355,7 @@ public class Stringg extends Obj {
 
     /**
      * Same as StringExt#substring, but with the indices inclusive, like the Ruby syntax <code>str[4
-     * .. 8]</code>. This method the same as <code>Stringg.substring</code>.
+     * .. 8]</code>. This method the same as <code>Str.substring</code>.
      */
     public String get(Integer fromIndex, Integer toIndex) {
         return substring(fromIndex, toIndex);

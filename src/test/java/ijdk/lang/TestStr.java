@@ -5,8 +5,8 @@ import java.util.*;
 import org.incava.test.TestCaseExt;
 import org.junit.Assert;
 
-public class TestStringg extends TestCaseExt {
-    public TestStringg(String name) {
+public class TestStr extends TestCaseExt {
+    public TestStr(String name) {
         super(name);
     }
 
@@ -17,13 +17,13 @@ public class TestStringg extends TestCaseExt {
     // split
 
     public String[] assertSplit(String[] expected, String str, char delim, int max) {
-        String[] result = new Stringg(str).split(delim, max);
+        String[] result = new Str(str).split(delim, max);
         Assert.assertArrayEquals("str: '" + str + "'; delim: '" + delim + "'; max: " + max, expected, result);
         return result;
     }
 
     public String[] assertSplit(String[] expected, String str, String delim, int max) {
-        String[] result = new Stringg(str).split(delim, max);
+        String[] result = new Str(str).split(delim, max);
         Assert.assertArrayEquals("str: '" + str + "'; delim: '" + delim + "'; max: " + max, expected, result);
         return result;
     }
@@ -67,7 +67,7 @@ public class TestStringg extends TestCaseExt {
     // toList
     
     public void assertToList(String[] exp, String str) {
-        List<String> result = new Stringg(str).toList();
+        List<String> result = new Str(str).toList();
         assertEquals("str: '" + str + "'", exp == null ? null : Arrays.asList(exp), result);
     }
     
@@ -96,13 +96,13 @@ public class TestStringg extends TestCaseExt {
     // pad
 
     public String assertPad(String expected, String str, char ch, int length) {
-        String result = new Stringg(str).pad(ch, length);
+        String result = new Str(str).pad(ch, length);
         assertEquals("str: '" + str + "'; ch: " + ch + "; length: " + length, expected, result);
         return result;
     }
 
     public String assertPad(String expected, String str, int length) {
-        String result = new Stringg(str).pad(length);
+        String result = new Str(str).pad(length);
         assertEquals("str: '" + str + "'; length: " + length, expected, result);
         return result;
     }
@@ -150,13 +150,13 @@ public class TestStringg extends TestCaseExt {
     // padLeft
 
     public String assertPadLeft(String expected, String str, char ch, int length) {
-        String result = new Stringg(str).padLeft(ch, length);
+        String result = new Str(str).padLeft(ch, length);
         assertEquals("str: '" + str + "'; ch: " + ch + "; length: " + length, expected, result);
         return result;
     }
 
     public String assertPadLeft(String expected, String str, int length) {
-        String result = new Stringg(str).padLeft(length);
+        String result = new Str(str).padLeft(length);
         assertEquals("str: '" + str + "'; length: " + length, expected, result);
         return result;
     }
@@ -204,13 +204,13 @@ public class TestStringg extends TestCaseExt {
     // repeat
 
     public String assertRepeat(String expected, String str, int length) {
-        String result = new Stringg(str).repeat(length);
+        String result = new Str(str).repeat(length);
         assertEquals("str: '" + str + "'; length: " + length, expected, result);
         return result;
     }
 
     public String assertRepeat(String expected, char ch, int length) {
-        String result = new Stringg(ch).repeat(length);
+        String result = new Str(ch).repeat(length);
         assertEquals("ch: '" + ch + "'; length: " + length, expected, result);
         return result;
     }
@@ -254,7 +254,7 @@ public class TestStringg extends TestCaseExt {
     // left
 
     public String assertLeft(String expected, String str, int length) {
-        String result = new Stringg(str).left(length);
+        String result = new Str(str).left(length);
         assertEquals("str: '" + str + "'; length: " + length, expected, result);
         return result;        
     }
@@ -286,7 +286,7 @@ public class TestStringg extends TestCaseExt {
     // right
 
     public String assertRight(String expected, String str, int length) {
-        String result = new Stringg(str).right(length);
+        String result = new Str(str).right(length);
         assertEquals("str: '" + str + "'; length: " + length, expected, result);
         return result;        
     }
@@ -318,13 +318,13 @@ public class TestStringg extends TestCaseExt {
     // join
 
     public String assertJoin(String expected, String[] ary, String delim) {
-        String result = Stringg.join(ary, delim).str();
+        String result = Str.join(ary, delim).str();
         assertEquals(ary == null ? null : Arrays.asList(ary).toString(), expected, result);
         return result;
     }
 
     public String assertJoin(String expected, Collection<String> coll, String delim) {
-        String result = Stringg.join(coll, delim).str();
+        String result = Str.join(coll, delim).str();
         assertEquals(coll == null ? null : coll.toString(), expected, result);
         return result;
     }
@@ -372,7 +372,7 @@ public class TestStringg extends TestCaseExt {
     // charAt
 
     public Character assertCharAt(Character expected, String str, int index) {
-        Character result = new Stringg(str).charAt(index);
+        Character result = new Str(str).charAt(index);
         assertEquals("str: '" + str + "'; index: " + index, expected, result);
         return result;
     }
@@ -416,7 +416,7 @@ public class TestStringg extends TestCaseExt {
     // getIndex
 
     public Integer assertGetIndex(Integer exp, String str, int index) {
-        Integer result = new Stringg(str).getIndex(index);
+        Integer result = new Str(str).getIndex(index);
         assertEquals("str: '" + str + "'; index: " + index, exp, result);
         return result;
     }
@@ -460,7 +460,7 @@ public class TestStringg extends TestCaseExt {
     // substring
 
     public String assertSubstring(String expected, String str, Integer fromIndex, Integer toIndex) {
-        String result = new Stringg(str).substring(fromIndex, toIndex);
+        String result = new Str(str).substring(fromIndex, toIndex);
         String msg    = "\"" + str + "\"[" + fromIndex + " ... " + toIndex + "]";
         assertEquals(msg, expected, result);
         return result;
@@ -524,7 +524,7 @@ public class TestStringg extends TestCaseExt {
     // startsWith
 
     public boolean assertStartsWith(boolean expected, String str, char ch) {
-        boolean result = new Stringg(str).startsWith(ch);
+        boolean result = new Str(str).startsWith(ch);
         String msg = "str: '" + str + "'; ch: '" + ch + "'";
         assertEquals(msg, expected, result);
         return result;
@@ -549,7 +549,7 @@ public class TestStringg extends TestCaseExt {
     // indexOf
 
     public Integer assertIndexOf(Integer expected, String str, Character ch) {
-        Integer result = new Stringg(str).indexOf(ch);
+        Integer result = new Str(str).indexOf(ch);
         String msg = "str: '" + str + "'; ch: '" + ch + "'";
         assertEquals(msg, expected, result);
         return result;
@@ -586,7 +586,7 @@ public class TestStringg extends TestCaseExt {
     // contains
 
     public boolean assertContains(boolean expected, String str, Character ch) {
-        boolean result = new Stringg(str).contains(ch);
+        boolean result = new Str(str).contains(ch);
         String msg = "str: '" + str + "'; ch: '" + ch + "'";
         assertEquals(msg, expected, result);
         return result;
@@ -623,7 +623,7 @@ public class TestStringg extends TestCaseExt {
     // substringAfter
 
     public String assertSubstringAfter(String expected, String str, Character ch) {
-        String result = new Stringg(str).substringAfter(ch);
+        String result = new Str(str).substringAfter(ch);
         String msg = "str: '" + str + "'; ch: '" + ch + "'";
         assertEquals(msg, expected, result);
         return result;
@@ -660,7 +660,7 @@ public class TestStringg extends TestCaseExt {
     // substringBefore
 
     public String assertSubstringBefore(String expected, String str, Character ch) {
-        String result = new Stringg(str).substringBefore(ch);
+        String result = new Str(str).substringBefore(ch);
         String msg = "str: '" + str + "'; ch: '" + ch + "'";
         assertEquals(msg, expected, result);
         return result;
@@ -697,7 +697,7 @@ public class TestStringg extends TestCaseExt {
     // eq
 
     public Boolean assertEq(Boolean expected, String a, String b) {
-        Boolean result = new Stringg(a).eq(b);
+        Boolean result = new Str(a).eq(b);
         String msg = "a: '" + a + "'; b: '" + b + "'";
         assertEquals(msg, expected, result);
         return result;
@@ -742,7 +742,7 @@ public class TestStringg extends TestCaseExt {
     // eqi
 
     public Boolean assertEqi(Boolean expected, String a, String b) {
-        Boolean result = new Stringg(a).eqi(b);
+        Boolean result = new Str(a).eqi(b);
         String msg = "a: '" + a + "'; b: '" + b + "'";
         assertEquals(msg, expected, result);
         return result;
@@ -787,7 +787,7 @@ public class TestStringg extends TestCaseExt {
     // snip
 
     public String assertSnip(String expected, String str, int length) {
-        String result = new Stringg(str).snip(length);
+        String result = new Str(str).snip(length);
         String msg = "str: '" + str + "'; length: " + length;
         assertEquals(msg, expected, result);
         return result;
@@ -816,7 +816,7 @@ public class TestStringg extends TestCaseExt {
     // isEmpty
 
     public boolean assertIsEmpty(boolean expected, String str) {
-        boolean result = new Stringg(str).isEmpty();
+        boolean result = new Str(str).isEmpty();
         String msg = "str: '" + str + "'";
         assertEquals(msg, expected, result);
         return result;
@@ -837,7 +837,7 @@ public class TestStringg extends TestCaseExt {
     // length
 
     public int assertLength(int expected, String str) {
-        int result = new Stringg(str).length();
+        int result = new Str(str).length();
         String msg = "str: '" + str + "'";
         assertEquals(msg, expected, result);
         return result;
@@ -858,7 +858,7 @@ public class TestStringg extends TestCaseExt {
     // unquote
     
     public String assertUnquote(String expected, String str) {
-        String result = new Stringg(str).unquote();
+        String result = new Str(str).unquote();
         assertEquals("str: '" + str + "'", expected, result);
         return result;
     }
@@ -894,7 +894,7 @@ public class TestStringg extends TestCaseExt {
     // quote
     
     public String assertQuote(String expected, String str) {
-        String result = new Stringg(str).quote();
+        String result = new Str(str).quote();
         assertEquals("str: '" + str + "'", expected, result);
         return result;
     }

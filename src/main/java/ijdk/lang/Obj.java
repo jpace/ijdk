@@ -99,7 +99,7 @@ public class Obj {
             return true;
         }
         else if (obj() instanceof String) {
-            return new Stringg((String)obj()).isEmpty();
+            return new Str((String)obj()).isEmpty();
         }
         else if (obj() instanceof Object[]) {
             return ((Object[])obj()).length == 0;

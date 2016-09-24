@@ -1,16 +1,16 @@
 package org.incava.ijdk.lang;
 
-import ijdk.lang.Stringg;
+import ijdk.lang.Str;
 import java.util.Collection;
 import java.util.List;
 
 /**
  * Extensions to the String class.
- * Alternatively, the static methods here are defined as instance objects of the Stringg class. This
- * class exists for backward compatibility, and new string-related methods will be added to Stringg,
+ * Alternatively, the static methods here are defined as instance objects of the Str class. This
+ * class exists for backward compatibility, and new string-related methods will be added to Str,
  * and likely not this class.
  *
- * @see ijdk.lang.Stringg
+ * @see ijdk.lang.Str
  */
 public class StringExt {
     /**
@@ -18,7 +18,7 @@ public class StringExt {
      * <code>str</code> is null.
      */
     public static String[] split(String str, char delim, int max) {
-        return new Stringg(str).split(String.valueOf(delim), max);
+        return new Str(str).split(String.valueOf(delim), max);
     }
 
     /**
@@ -26,7 +26,7 @@ public class StringExt {
      * is null.
      */
     public static String[] split(String str, String delim, int max) {
-        return new Stringg(str).split(delim, max);
+        return new Str(str).split(delim, max);
     }
 
     /**
@@ -34,7 +34,7 @@ public class StringExt {
      * <code>str</code> is null.
      */
     public static String[] split(String str, char delim) {
-        return new Stringg(str).split(String.valueOf(delim), -1);
+        return new Str(str).split(String.valueOf(delim), -1);
     }
 
     /**
@@ -42,7 +42,7 @@ public class StringExt {
      * is null.
      */
     public static String[] split(String str, String delim) {
-        return new Stringg(str).split(delim, -1);
+        return new Str(str).split(delim, -1);
     }
 
     /**
@@ -51,16 +51,16 @@ public class StringExt {
      *
      * The unquoting behavior exists for pre-3.0 versions of IJDK.
      *
-     * @see ijdk.lang.Stringg#unquote
-     * @see ijdk.lang.Stringg#toList
+     * @see ijdk.lang.Str#unquote
+     * @see ijdk.lang.Str#toList
      */
     public static List<String> toList(String str) {
-        Stringg strg = new Stringg(str);
+        Str strg = new Str(str);
         if (strg.isNull()) {
             return null;
         }
         else {
-            strg = new Stringg(strg.unquote());
+            strg = new Str(strg.unquote());
             return strg.toList();
         }
     }
@@ -74,7 +74,7 @@ public class StringExt {
      *     pad("abcd", '*', 3) -&gt; "abcd"
      */
     public static String pad(String str, char ch, int length) {
-        return new Stringg(str).pad(ch, length);
+        return new Str(str).pad(ch, length);
     }
 
     /**
@@ -88,35 +88,35 @@ public class StringExt {
      * </pre>
      */
     public static String padLeft(String str, char ch, int length) {
-        return new Stringg(str).padLeft(ch, length);
+        return new Str(str).padLeft(ch, length);
     }
 
     /**
      * Pads with spaces.
      */
     public static String pad(String str, int length) {
-        return new Stringg(str).pad(length);
+        return new Str(str).pad(length);
     }
 
     /**
      * Left-pads with spaces.
      */
     public static String padLeft(String str, int length) {
-        return new Stringg(str).padLeft(length);
+        return new Str(str).padLeft(length);
     }
 
     /**
      * Returns the string, repeated <code>num</code> times.
      */
     public static String repeat(String str, int num) {
-        return new Stringg(str).repeat(num);
+        return new Str(str).repeat(num);
     }
 
     /**
      * Returns the character, repeated <code>num</code> times.
      */
     public static String repeat(char ch, int length) {
-        return new Stringg(ch).repeat(length);
+        return new Str(ch).repeat(length);
     }
 
     /**
@@ -125,7 +125,7 @@ public class StringExt {
      * string is null. Returns an empty string if <code>num</code> is negative.
      */
     public static String left(String str, int num) {
-        return new Stringg(str).left(num);
+        return new Str(str).left(num);
     }
 
     /**
@@ -134,7 +134,7 @@ public class StringExt {
      * string is null. Returns an empty string if <code>num</code> is negative.
      */
     public static String right(String str, int num) {
-        return new Stringg(str).right(num);
+        return new Str(str).right(num);
     }
 
     /**
@@ -142,7 +142,7 @@ public class StringExt {
      * null. If <code>delim</code> is null, it is treated as the empty string.
      */
     public static String join(Collection<?> coll, String delim) {
-        return Stringg.join(coll, delim).str();
+        return Str.join(coll, delim).str();
     }
 
     /**
@@ -150,7 +150,7 @@ public class StringExt {
      * <code>str</code> is null, it is treated as the empty string.
      */
     public static String join(Object[] ary, String str) {
-        return Stringg.join(ary, str).str();
+        return Str.join(ary, str).str();
     }
 
     /**
@@ -164,7 +164,7 @@ public class StringExt {
      * @param index The index into the source string. Negative value goes from end backward.
      */
     public static Character charAt(String str, int index) {
-        return new Stringg(str).charAt(index);
+        return new Str(str).charAt(index);
     }
 
     /**
@@ -173,7 +173,7 @@ public class StringExt {
      * @see #charAt(String, int)
      */
     public static Character get(String str, int index) {
-        return new Stringg(str).get(index);
+        return new Str(str).get(index);
     }
 
     /**
@@ -189,7 +189,7 @@ public class StringExt {
      * @see #get(String, Integer, Integer)
      */
     public static String substring(String str, Integer fromIndex, Integer toIndex) {
-        return new Stringg(str).substring(fromIndex, toIndex);
+        return new Str(str).substring(fromIndex, toIndex);
     }
 
     /**
@@ -199,7 +199,7 @@ public class StringExt {
      * is returned.
      */
     public static String substringAfter(String str, Character ch) {
-        return new Stringg(str).substringAfter(ch);
+        return new Str(str).substringAfter(ch);
     }
 
     /**
@@ -208,7 +208,7 @@ public class StringExt {
      * returned. If <code>ch</code> is the first character, then an empty string is returned.
      */
     public static String substringBefore(String str, Character ch) {
-        return new Stringg(str).substringBefore(ch);
+        return new Str(str).substringBefore(ch);
     }
 
     /**
@@ -216,7 +216,7 @@ public class StringExt {
      * .. 8]</code>. This method the same as <code>StringExt.substring</code>.
      */
     public static String get(String str, Integer fromIndex, Integer toIndex) {
-        return new Stringg(str).get(fromIndex, toIndex);
+        return new Str(str).get(fromIndex, toIndex);
     }    
 
     /**
@@ -224,7 +224,7 @@ public class StringExt {
      * Returns false if <code>str</code> is null.
      */
     public static boolean startsWith(String str, char ch) {
-        return new Stringg(str).startsWith(ch);
+        return new Str(str).startsWith(ch);
     }
 
     /**
@@ -232,7 +232,7 @@ public class StringExt {
      * consistency with String. Returns false if <code>str</code> is null.
      */
     public static boolean startsWith(String str, String pref) {
-        return new Stringg(str).startsWith(pref);
+        return new Str(str).startsWith(pref);
     }
 
     /**
@@ -242,14 +242,14 @@ public class StringExt {
      * @see #chompAll
      */
     public static String chomp(String str) {
-        return new Stringg(str).chomp();
+        return new Str(str).chomp();
     }
 
     /**
      * Removes multiple end of line characters, either \\n or \\r.
      */
     public static String chompAll(String str) {
-        return new Stringg(str).chompAll();
+        return new Str(str).chompAll();
     }
 
     /**
@@ -257,7 +257,7 @@ public class StringExt {
      * <code>ch</code> is null, false is returned.
      */
     public static boolean contains(String str, Character ch) {
-        return new Stringg(str).contains(ch);
+        return new Str(str).contains(ch);
     }
     
     /**
@@ -265,7 +265,7 @@ public class StringExt {
      * <code>str</code> or <code>ch</code> is null, or if the character is not in the string.
      */
     public static Integer indexOf(String str, Character ch) {
-        return new Stringg(str).indexOf(ch);
+        return new Str(str).indexOf(ch);
     }
 
     /**
@@ -273,7 +273,7 @@ public class StringExt {
      * Otherwise, if either is null, then false is returned.
      */
     public static Boolean eq(String a, String b) {
-        return new Stringg(a).eq(b);
+        return new Str(a).eq(b);
     }
 
     /**
@@ -281,7 +281,7 @@ public class StringExt {
      * true is returned. Otherwise, if either is null, then false is returned.
      */
     public static Boolean eqi(String a, String b) {
-        return new Stringg(a).eqi(b);
+        return new Str(a).eqi(b);
     }
 
     /**
@@ -291,13 +291,13 @@ public class StringExt {
      * zero or less.
      */
     public static String snip(String str, int len) {
-        return new Stringg(str).snip(len);
+        return new Str(str).snip(len);
     }
 
     /**
      * Returns whether the string is null or of zero length.
      */
     public static boolean isEmpty(String str) {
-        return new Stringg(str).isEmpty();
+        return new Str(str).isEmpty();
     }
 }
