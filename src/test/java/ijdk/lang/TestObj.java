@@ -3,12 +3,12 @@ package ijdk.lang;
 import java.util.*;
 import junit.framework.TestCase;
 
-public class TestObjectt extends TestCase {
-    public TestObjectt(String name) {
+public class TestObj extends TestCase {
+    public TestObj(String name) {
         super(name);
     }
 
-    public Objectt assertAccessors(Object expected, Objectt objt) {
+    public Obj assertAccessors(Object expected, Obj objt) {
         assertEquals(expected, objt.getObject());
         assertEquals(expected, objt.obj());
         return objt;
@@ -17,18 +17,18 @@ public class TestObjectt extends TestCase {
     // ctor
 
     public void testCtorNull() {
-        assertAccessors(null, new Objectt(null));
+        assertAccessors(null, new Obj(null));
     }
 
     public void testCtorNotNull() {
         Object obj = new Object();
-        assertAccessors(obj, new Objectt(obj));
+        assertAccessors(obj, new Obj(obj));
     }
 
     // equals
 
     public boolean assertEquals(boolean expected, Object x, Object y) {
-        boolean result = new Objectt(x).equals(y);
+        boolean result = new Obj(x).equals(y);
         assertEquals("x: " + x + "; y: " + y, expected, result);
         return result;
     }
@@ -56,7 +56,7 @@ public class TestObjectt extends TestCase {
     // isTrue
 
     public boolean assertIsTrue(boolean expected, Object obj) {
-        boolean result = new Objectt(obj).isTrue();
+        boolean result = new Obj(obj).isTrue();
         assertEquals("obj: " + obj, expected, result);
         return result;
     }
@@ -96,7 +96,7 @@ public class TestObjectt extends TestCase {
     // isFalse
 
     public boolean assertIsFalse(boolean expected, Object obj) {
-        boolean result = new Objectt(obj).isFalse();
+        boolean result = new Obj(obj).isFalse();
         assertEquals("obj: " + obj, expected, result);
         return result;
     }
@@ -136,7 +136,7 @@ public class TestObjectt extends TestCase {
     // isEmpty
 
     public boolean assertIsEmpty(boolean expected, Object obj) {
-        boolean result = new Objectt(obj).isEmpty();
+        boolean result = new Obj(obj).isEmpty();
         assertEquals("obj: " + obj, expected, result);
         return result;
     }
@@ -176,7 +176,7 @@ public class TestObjectt extends TestCase {
     // isNull
 
     public boolean assertIsNull(boolean expected, Object obj) {
-        boolean result = new Objectt(obj).isNull();
+        boolean result = new Obj(obj).isNull();
         assertEquals("obj: " + obj, expected, result);
         return result;
     }
@@ -192,7 +192,7 @@ public class TestObjectt extends TestCase {
     // isNotNull
 
     public boolean assertIsNotNull(boolean expected, Object obj) {
-        boolean result = new Objectt(obj).isNotNull();
+        boolean result = new Obj(obj).isNotNull();
         assertEquals("obj: " + obj, expected, result);
         return result;
     }

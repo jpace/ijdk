@@ -5,7 +5,7 @@ import java.util.Collection;
 /**
  * Extensions to the Object class, wrapping a Java Object with additional methods.
  */
-public class Objectt {        
+public class Obj {        
     /**
      * Returns whether the object is null. This method provides an alternative syntax to "if (obj ==
      * null)".
@@ -28,7 +28,7 @@ public class Objectt {
 
     private final Object object;
 
-    public Objectt(Object object) {
+    public Obj(Object object) {
         this.object = object;
     }
 

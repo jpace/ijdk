@@ -9,7 +9,7 @@ import org.incava.ijdk.util.Index;
  *
  * @see Array
  */
-public class Ary<T extends Object> extends Objectt {
+public class Ary<T extends Object> extends Obj {
     private final T[] ary;
     
     public Ary(T ... ary) {

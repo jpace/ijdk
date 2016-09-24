@@ -12,7 +12,7 @@ import static org.incava.ijdk.util.IUtil.*;
 /**
  * Extensions to the String class.
  */
-public class Stringg extends Objectt {
+public class Stringg extends Obj {
     /**
      * Creates a string from the collection, joined by <code>delim</code>. If <code>coll</code> is
      * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the

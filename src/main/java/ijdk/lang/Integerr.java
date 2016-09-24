@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Extensions to Integer.
  */
-public class Integerr extends Objectt {
+public class Integerr extends Obj {
     /**
      * Returns the str as an integer, or null if it is null or is not an integer.
      */

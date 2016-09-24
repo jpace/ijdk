@@ -1,7 +1,7 @@
 package org.incava.ijdk.lang;
 
 import ijdk.lang.Comparablee;
-import ijdk.lang.Objectt;
+import ijdk.lang.Obj;
 
 /**
  * Extensions to the Object class.
@@ -11,7 +11,7 @@ public class ObjectExt {
      * Returns whether the objects are equal, including whether they are both null.
      */
     public static boolean areEqual(Object x, Object y) {
-        return new Objectt(x).equals(y);
+        return new Obj(x).equals(y);
     }
 
     /**
@@ -21,7 +21,7 @@ public class ObjectExt {
      * @see #areEqual
      */
     public static boolean equal(Object x, Object y) {
-        return new Objectt(x).equals(y);
+        return new Obj(x).equals(y);
     }
 
     /**
@@ -39,7 +39,7 @@ public class ObjectExt {
      * @see #isFalse
      */
     public static boolean isTrue(Object obj) {
-        return new Objectt(obj).isTrue();
+        return new Obj(obj).isTrue();
     }
 
     /**
@@ -48,7 +48,7 @@ public class ObjectExt {
      * @see #isEmpty
      */
     public static boolean isFalse(Object obj) {
-        return new Objectt(obj).isFalse();
+        return new Obj(obj).isFalse();
     }
 
     /**
@@ -57,7 +57,7 @@ public class ObjectExt {
      * @see #isEmpty
      */
     public static boolean isEmpty(Object obj) {
-        return new Objectt(obj).isEmpty();
+        return new Obj(obj).isEmpty();
     }
 
     /**
@@ -67,7 +67,7 @@ public class ObjectExt {
      * @see #isNotNull
      */
     public static boolean isNull(Object obj) {
-        return new Objectt(obj).isNull();
+        return new Obj(obj).isNull();
     }
 
     /**
@@ -77,6 +77,6 @@ public class ObjectExt {
      * @see #isNull
      */
     public static boolean isNotNull(Object obj) {
-        return new Objectt(obj).isNotNull();
+        return new Obj(obj).isNotNull();
     }
 }
