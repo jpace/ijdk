@@ -61,7 +61,9 @@ public class StringAry extends Ary<String> {
         }
         else {
             for (int idx = 0; idx < length(); ++idx) {
-                if (!ObjectExt.areEqual(get(idx), otherAry.get(idx))) {
+                Str x = new Str(get(idx));
+                Str y = new Str(otherAry.get(idx));
+                if (!x.equals(y)) {
                     return false;
                 }
             }

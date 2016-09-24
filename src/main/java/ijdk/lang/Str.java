@@ -82,6 +82,13 @@ public class Str extends Obj {
     public boolean equals(String other) {
         return this.string == null ? other == null : this.string.equals(other);
     }
+
+    /**
+     * Returns whether the given string is equal to this one.
+     */
+    public boolean equals(Object obj) {
+        return obj instanceof Str ? equals(((Str)obj).str()) : false;
+    }
     
     /**
      * Returns an array of strings split at the character delimiter. Returns null if

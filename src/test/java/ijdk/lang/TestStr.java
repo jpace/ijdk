@@ -10,10 +10,6 @@ public class TestStr extends TestCaseExt {
         super(name);
     }
 
-    public void testDummy() {
-        
-    }
-
     // split
 
     public String[] assertSplit(String[] expected, String str, char delim, int max) {
@@ -910,4 +906,94 @@ public class TestStr extends TestCaseExt {
     public void testQuoteNotEmpty() {
         assertQuote("\"abc\"", "abc");
     }
+
+    // equals
+
+    public Boolean assertEqualsString(Boolean expected, String a, String b) {
+        Boolean result = new Str(a).equals(b);
+        String msg = "a: '" + a + "'; b: '" + b + "'";
+        assertEquals(msg, expected, result);
+        return result;
+    }
+
+    public void testEqualsStringNullEmptyString() {
+        assertEqualsString(false, null, "");
+    }
+
+    public void testEqualsStringEmptyStringNull() {
+        assertEqualsString(false, "", null);
+    }
+
+    public void testEqualsStringNullNull() {
+        assertEqualsString(true, null, null);
+    }
+
+    public void testEqualsStringNullNonEmptyString() {
+        assertEqualsString(false, null, "a");
+    }
+
+    public void testEqualsStringNonEmptyStringNull() {
+        assertEqualsString(false, "a", null);
+    }
+
+    public void testEqualsStringCharCharMatch() {
+        assertEqualsString(true, "a", "a");
+    }
+
+    public void testEqualsStringCharCharNoMatch() {
+        assertEqualsString(false, "a", "b");
+    }
+
+    public void testEqualsStringCharCharMismatchedCase() {
+        assertEqualsString(false, "a", "A");
+    }
+
+    public void testEqualsStringDifferentLengths() {
+        assertEqualsString(false, "a", "ab");
+    }    
+
+    // equals
+
+    public Boolean assertEqualsStr(Boolean expected, String a, String b) {
+        Boolean result = new Str(a).equals(new Str(b));
+        String msg = "a: '" + a + "'; b: '" + b + "'";
+        assertEquals(msg, expected, result);
+        return result;
+    }
+
+    public void testEqualsStrNullEmptyString() {
+        assertEqualsStr(false, null, "");
+    }
+
+    public void testEqualsStrEmptyStringNull() {
+        assertEqualsStr(false, "", null);
+    }
+
+    public void testEqualsStrNullNull() {
+        assertEqualsStr(true, null, null);
+    }
+
+    public void testEqualsStrNullNonEmptyString() {
+        assertEqualsStr(false, null, "a");
+    }
+
+    public void testEqualsStrNonEmptyStringNull() {
+        assertEqualsStr(false, "a", null);
+    }
+
+    public void testEqualsStrCharCharMatch() {
+        assertEqualsStr(true, "a", "a");
+    }
+
+    public void testEqualsStrCharCharNoMatch() {
+        assertEqualsStr(false, "a", "b");
+    }
+
+    public void testEqualsStrCharCharMismatchedCase() {
+        assertEqualsStr(false, "a", "A");
+    }
+
+    public void testEqualsStrDifferentLengths() {
+        assertEqualsStr(false, "a", "ab");
+    }    
 }
