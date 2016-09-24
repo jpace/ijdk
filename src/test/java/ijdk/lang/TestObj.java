@@ -28,30 +28,10 @@ public class TestObj extends ObjectTest {
 
     // equals
 
-    public boolean assertEquals(boolean expected, Object x, Object y) {
+    public boolean assertObjectsEqual(boolean expected, Object x, Object y) {
         boolean result = new Obj(x).equals(y);
         assertEquals("x: " + x + "; y: " + y, expected, result);
         return result;
-    }
-
-    public void testEqualsNullNull() {
-        assertEquals(true, null, null);
-    }
-
-    public void testEqualsNullNotNull() {
-        assertEquals(false, null, "x");
-    }
-
-    public void testEqualsNotNullNotNull() {
-        assertEquals(false, "x", null);
-    }
-
-    public void testEqualsMatch() {
-        assertEquals(true, "x", "x");
-    }
-
-    public void testEqualsNoMatch() {
-        assertEquals(false, "x", "y");
     }
 
     // isTrue

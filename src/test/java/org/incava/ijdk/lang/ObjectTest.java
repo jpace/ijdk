@@ -8,6 +8,35 @@ public abstract class ObjectTest extends TestCase {
         super(name);
     }
 
+    // ObjectExt: equal, Obj: equals
+
+    public abstract boolean assertObjectsEqual(boolean expected, Object x, Object y);
+
+    public void testObjectsEqualNullNull() {
+        assertObjectsEqual(true, null, null);
+    }
+
+    public void testObjectsEqualNullObject() {
+        assertObjectsEqual(false, null, new Object());
+    }
+
+    public void testObjectsEqualObjectNull() {
+        assertObjectsEqual(false, new Object(), null);
+    }
+
+    public void testObjectsEqualSameObject() {
+        Object obj = new Object();
+        assertObjectsEqual(true, obj, obj);
+    }
+
+    public void testObjectsEqualDifferentObject() {
+        assertObjectsEqual(false, new Object(), new Object());
+    }
+
+    public void testObjectsEqualEquivalentObject() {
+        assertObjectsEqual(true, new String("abc"), new String("abc"));
+    }
+    
     // isTrue
 
     public abstract boolean assertIsTrue(boolean expected, Object obj);

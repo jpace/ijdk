@@ -8,70 +8,16 @@ public class TestObjectExt extends ObjectTest {
         super(name);
     }
 
-    // areEqual
+    // areEqual, equal
 
-    public boolean assertAreEqual(boolean expected, Object x, Object y) {
-        boolean result = ObjectExt.areEqual(x, y);
-        assertEquals("x: " + x + "; y: " + y, expected, result);
-        return result;
-    }
-
-    public void testAreEqualNullNull() {
-        assertAreEqual(true, null, null);
-    }
-
-    public void testAreEqualNullObject() {
-        assertAreEqual(false, null, new Object());
-    }
-
-    public void testAreEqualObjectNull() {
-        assertAreEqual(false, new Object(), null);
-    }
-
-    public void testAreEqualSameObject() {
-        Object obj = new Object();
-        assertAreEqual(true, obj, obj);
-    }
-
-    public void testAreEqualDifferentObject() {
-        assertAreEqual(false, new Object(), new Object());
-    }
-
-    public void testAreEqualEquivalentObject() {
-        assertAreEqual(true, new String("abc"), new String("abc"));
-    }
-
-    // equal
-
-    public boolean assertEqual(boolean expected, Object x, Object y) {
+    public boolean assertObjectsEqual(boolean expected, Object x, Object y) {
         boolean result = ObjectExt.equal(x, y);
         assertEquals("x: " + x + "; y: " + y, expected, result);
+
+        result = ObjectExt.areEqual(x, y);
+        assertEquals("x: " + x + "; y: " + y, expected, result);
+        
         return result;
-    }
-
-    public void testEqualNullNull() {
-        assertEqual(true, null, null);
-    }
-
-    public void testEqualNullObject() {
-        assertEqual(false, null, new Object());
-    }
-
-    public void testEqualObjectNull() {
-        assertEqual(false, new Object(), null);
-    }
-
-    public void testEqualSameObject() {
-        Object obj = new Object();
-        assertEqual(true, obj, obj);
-    }
-
-    public void testEqualDifferentObject() {
-        assertEqual(false, new Object(), new Object());
-    }
-
-    public void testEqualEquivalentObject() {
-        assertEqual(true, new String("abc"), new String("abc"));
     }
 
     // compare
