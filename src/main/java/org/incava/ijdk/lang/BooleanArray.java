@@ -1,6 +1,5 @@
 package org.incava.ijdk.lang;
 
-
 /**
  * Wraps boolean[] and Boolean[].
  */

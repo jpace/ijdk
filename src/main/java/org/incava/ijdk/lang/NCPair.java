@@ -2,6 +2,8 @@ package org.incava.ijdk.lang;
 
 /**
  * A pair of objects that do not implement Comparable.
+ *
+ * @see Pair
  */
 public class NCPair<FirstType, SecondType> {
     public static <X, Y> NCPair<X, Y> create(X first, Y second) {

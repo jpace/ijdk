@@ -1,6 +1,5 @@
 package org.incava.ijdk.lang;
 
-
 public class ShortArray {
     public static String[] toStringArray(short[] ary) {
         String[] strs = new String[ary.length];

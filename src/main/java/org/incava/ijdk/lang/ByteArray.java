@@ -1,6 +1,5 @@
 package org.incava.ijdk.lang;
 
-
 public class ByteArray {
     public static String[] toStringArray(byte[] ary) {
         String[] strs = new String[ary.length];

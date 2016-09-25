@@ -1,8 +1,6 @@
 package org.incava.ijdk.lang;
 
 import ijdk.lang.Ary;
-import java.util.Arrays;
-import org.incava.ijdk.util.EmptyIterable;
 
 /**
  * Extensions for C-style arrays (e.g., Foo[]).
