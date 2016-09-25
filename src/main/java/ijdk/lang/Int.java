@@ -3,7 +3,7 @@ package ijdk.lang;
 import java.util.*;
 
 /**
- * Extensions to Integer.
+ * Extensions to Integer, wrapping a possibly-null Integer with better null checking.
  */
 public class Int extends Obj {
     /**
