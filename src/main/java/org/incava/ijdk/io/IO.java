@@ -3,7 +3,6 @@ package org.incava.ijdk.io;
 import java.io.File;
 import java.util.List;
 import java.util.EnumSet;
-import static org.incava.ijdk.util.IUtil.*;
 
 public class IO {
     /**

@@ -1,5 +1,7 @@
 package org.incava.ijdk.io;
 
+import ijdk.lang.Output;
+
 public class StdOut {
     /**
      * Writes to standard output. Returns true, so this can be used in conditionals.
@@ -8,7 +10,7 @@ public class StdOut {
      * @return always returns true
      */
     public static boolean puts(Object obj) {
-        return println(obj);
+        return Output.puts(obj);
     }
 
     /**
@@ -21,8 +23,7 @@ public class StdOut {
      * @see java.lang.String#format
      */
     public static boolean printf(String fmt, Object ... args) {
-        System.out.printf(fmt, args);
-        return true;
+        return Output.printf(fmt, args);
     }
 
     /**
@@ -32,7 +33,6 @@ public class StdOut {
      * @return always returns true
      */
     public static boolean println(Object obj) {
-        System.out.println(obj);
-        return true;
+        return Output.println(obj);
     }
 }
