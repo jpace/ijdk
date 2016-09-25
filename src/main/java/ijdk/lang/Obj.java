@@ -73,6 +73,7 @@ public class Obj {
      * Returns whether the wrapped object is non-null and, if it is a collection or a string, has a
      * length greater than zero.
      *
+     * @return whether the wrapped object is not null and is true for that object type
      * @see #isEmpty
      * @see #isFalse
      */
@@ -83,7 +84,9 @@ public class Obj {
     /**
      * Returns whether the wrapped object is null or is a string or collection of zero length.
      *
+     * @return whether the wrapped object is null or is false for that object type
      * @see #isEmpty
+     * @see #isTrue
      */
     public boolean isFalse() {
         return isEmpty();
@@ -92,7 +95,9 @@ public class Obj {
     /**
      * Returns whether the wrapped object is null or is a string or collection of zero length.
      *
+     * @return whether the wrapped object is null or is empty for that object type
      * @see #isEmpty
+     * @see #isFalse
      */
     public boolean isEmpty() {
         if (isNull()) {
@@ -116,6 +121,7 @@ public class Obj {
      * Returns whether the wrapped object is null. This method provides an alternative syntax to "if
      * (obj == null)".
      *
+     * @return whether the wrapped object is null
      * @see #isNotNull
      */
     public boolean isNull() {
@@ -126,6 +132,7 @@ public class Obj {
      * Returns whether the wrapped object is not null. This method provides an alternative syntax to
      * "if (obj != null)".
      *
+     * @return whether the wrapped object is not null
      * @see #isNull
      */
     public boolean isNotNull() {

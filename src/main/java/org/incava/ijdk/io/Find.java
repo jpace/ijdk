@@ -43,10 +43,11 @@ public class Find {
     }
 
     /**
-     * Returns an array of files, collected from the <code>names</code> list. 
-     * Directories are processed recursively, collecting files with
-     * <code>suffix</code>. If <code>name</code> refers to a file, it is simply
-     * added to the list.
+     * Returns an array of files, collected from the <code>names</code> list. Directories are
+     * processed recursively, collecting files ending with <code>suffix</code>.
+     *
+     * @param names the input file/directory names
+     * @param suffix the extension to match
      */
     public static String[] getFileList(String[] names, String suffix) {
         List<String> fileList = new ArrayList<String>();

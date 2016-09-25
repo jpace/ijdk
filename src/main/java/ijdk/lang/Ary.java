@@ -6,8 +6,6 @@ import org.incava.ijdk.util.Index;
 
 /**
  * Wraps C-style arrays with common behavior. The wrapped array can be null.
- *
- * @see Array
  */
 public class Ary<T extends Object> extends Obj {
     private final T[] ary;

@@ -21,6 +21,9 @@ public class IntArray extends IntegerArray {
     /**
      * Returns an array of strings for the given int array, or an zero-length string array if the
      * int array is null or empty.
+     *
+     * @param ary the array to convert
+     * @return an array of zero length or more, the int array converted to strings
      */
     public static String[] toStringArray(int[] ary) {
         if (ary == null || ary.length == 0) {
@@ -37,6 +40,10 @@ public class IntArray extends IntegerArray {
 
     /**
      * Returns whether the given value equals any element in the array.
+     *
+     * @param ary the array to search
+     * @param value the value to match an element against
+     * @return whether an element matched <code>value</code>
      */
     public static boolean contains(int[] ary, int value) {
         if (ary == null) {
@@ -54,6 +61,9 @@ public class IntArray extends IntegerArray {
 
     /**
      * Returns the maximum in the array, or Integer.MIN_VALUE if null.
+     *
+     * @param ary the array of which to find the maximum
+     * @return the maximum of the array, or Integer.MIN_VALUE if null
      */
     public static int max(int[] ary) {
         int max = Integer.MIN_VALUE;
@@ -69,6 +79,9 @@ public class IntArray extends IntegerArray {
 
     /**
      * Returns the minimum in the array, or Integer.MAX_VALUE if null.
+     *
+     * @param ary the array of which to find the minimum
+     * @return the minimum of the array, or Integer.MAX_VALUE if null
      */
     public static int min(int[] ary) {
         int min = Integer.MAX_VALUE;
@@ -84,6 +97,9 @@ public class IntArray extends IntegerArray {
 
     /**
      * Returns the sum (total) of array, or 0 if null.
+     *
+     * @param ary the array to sum
+     * @return the sum of the array, or 0 if null
      */
     public static int sum(int[] ary) {
         int sum = 0;
@@ -97,6 +113,9 @@ public class IntArray extends IntegerArray {
 
     /**
      * Returns the number of elements in the array, or 0 if null.
+     *
+     * @param ary the array
+     * @return the length of the array, or 0 if null
      */
     public static int length(int[] ary) {
         return ary == null ? 0 : ary.length;
