@@ -1,6 +1,5 @@
 package org.incava.ijdk.lang;
 
-
 public class DoubleArray {
     public static String[] toStringArray(double[] ary) {
         String[] strs = new String[ary.length];

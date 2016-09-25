@@ -1,6 +1,6 @@
 package org.incava.ijdk.lang;
 
-import ijdk.lang.Comparablee;
+import ijdk.lang.Comp;
 import ijdk.lang.Obj;
 
 /**
@@ -28,7 +28,7 @@ public class ObjectExt {
      * Compares the two objects, including testing for null.
      */
     public static<A extends Comparable<A>> int compare(A x, A y) {
-        return Comparablee.compare(x, y);
+        return Comp.compare(x, y);
     }
 
     /**

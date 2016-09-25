@@ -1,6 +1,5 @@
 package org.incava.ijdk.lang;
 
-
 public class FloatArray {
     public static String[] toStringArray(float[] ary) {
         String[] strs = new String[ary.length];
