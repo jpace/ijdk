@@ -5,6 +5,8 @@ import ijdk.lang.Obj;
 
 /**
  * Extensions to the Object class.
+ *
+ * @see ijdk.lang.Obj
  */
 public class ObjectExt {
     /**

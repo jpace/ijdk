@@ -123,6 +123,9 @@ public class IntArray extends IntegerArray {
 
     /**
      * Returns the average of the elements in array, or 0 if null or the number of elements is zero.
+     *
+     * @param ary the array of integers to take the average of
+     * @return the average
      */
     public static int average(int[] ary) {
         int len = length(ary);
