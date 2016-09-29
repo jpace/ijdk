@@ -1,7 +1,8 @@
 package org.incava.ijdk.lang;
 
 import ijdk.lang.ICore;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import junit.framework.TestCase;
 
 public abstract class StringTest extends TestCase {
@@ -68,7 +69,6 @@ public abstract class StringTest extends TestCase {
         String[] expected = new String[] { "fee", "fi", "foo", "fum" };
         assertToList(expected, "fee,\tfi,\nfoo,\rfum");
     }
-
     
     // pad
 
@@ -344,6 +344,46 @@ public abstract class StringTest extends TestCase {
     
     public void testCharAtNegativeBeforeRange() {
         assertCharAt(null, "abc", -4);
+    }
+
+    // get
+
+    public abstract Character assertGet(Character expected, String str, int index);
+    
+    public void testGetNullString() {
+        assertGet(null, null, 0);
+    }
+    
+    public void testGetZero() {
+        assertGet('a', "abc", 0);
+    }
+    
+    public void testGetOne() {
+        assertGet('b', "abc", 1);
+    }
+    
+    public void testGetEnd() {
+        assertGet('c', "abc", 2);
+    }
+    
+    public void testGetPastRange() {
+        assertGet(null, "abc", 3);
+    }
+    
+    public void testGetNegativeOne() {
+        assertGet('c', "abc", -1);
+    }
+    
+    public void testGetNegativeTwo() {
+        assertGet('b', "abc", -2);
+    }
+    
+    public void testGetNegativeAtStart() {
+        assertGet('a', "abc", -3);
+    }
+    
+    public void testGetNegativeBeforeRange() {
+        assertGet(null, "abc", -4);
     }
 
     // substring
@@ -672,5 +712,140 @@ public abstract class StringTest extends TestCase {
     public void testIsEmptyNonEmpty() {
         assertIsEmpty(false, "a");
     }
+
+    // length
+
+    public abstract int assertLength(int expected, String str);
+
+    public void testLengthNull() {
+        assertLength(0, null);
+    }
+
+    public void testLengthEmpty() {
+        assertLength(0, "");
+    }
+
+    public void testLengthNonEmpty() {
+        assertLength(1, "a");
+    }
+
+    // chomp
+
+    public abstract String assertChomp(String expected, String str);
+
+    public void testChompNull() {
+        assertChomp(null, null);
+    }
+
+    public void testChompEmpty() {
+        assertChomp("", "");
+    }
+
+    public void testChompNoEoln() {
+        assertChomp("a", "a");
+    }
+
+    public void testChompN() {
+        assertChomp("a", "a\n");
+    }
+
+    public void testChompNN() {
+        assertChomp("a\n", "a\n\n");
+    }
+
+    public void testChompR() {
+        assertChomp("a", "a\r");
+    }
+
+    public void testChompRR() {
+        assertChomp("a\r", "a\r\r");
+    }
+
+    public void testChompRN() {
+        assertChomp("a\r", "a\r\n");
+    }
+
+    // chompAll
+
+    public abstract String assertChompAll(String expected, String str);
+
+    public void testChompAllNull() {
+        assertChompAll(null, null);
+    }
+
+    public void testChompAllEmpty() {
+        assertChompAll("", "");
+    }
+
+    public void testChompAllNoEoln() {
+        assertChompAll("a", "a");
+    }
+
+    public void testChompAllN() {
+        assertChompAll("a", "a\n");
+    }
+
+    public void testChompAllNN() {
+        assertChompAll("a", "a\n\n");
+    }
+
+    public void testChompAllR() {
+        assertChompAll("a", "a\r");
+    }
+
+    public void testChompAllRR() {
+        assertChompAll("a", "a\r\r");
+    }
+
+    public void testChompAllRN() {
+        assertChompAll("a", "a\r\n");
+    }    
     
+    // unquote
+    
+    public abstract String assertUnquote(String expected, String str);
+    
+    public void testUnquoteNull() {
+        assertUnquote(null, null);
+    }
+    
+    public void testUnquoteEmpty() {
+        assertUnquote("", "");
+    }
+    
+    public void testUnquoteNeitherQuote() {
+        assertUnquote("abc", "abc");
+    }
+    
+    public void testUnquoteSingleDouble() {
+        assertUnquote("\'abc\"", "\'abc\"");
+    }
+    
+    public void testUnquoteDoubleSingle() {
+        assertUnquote("\"abc\'", "\"abc\'");
+    }
+    
+    public void testUnquoteSingleSingle() {
+        assertUnquote("abc", "\'abc\'");
+    }
+    
+    public void testUnquoteDoubleDouble() {
+        assertUnquote("abc", "\"abc\"");
+    }
+    
+    // quote
+    
+    public abstract String assertQuote(String expected, String str);
+    
+    public void testQuoteNull() {
+        assertQuote(null, null);
+    }
+    
+    public void testQuoteEmpty() {
+        assertQuote("\"\"", "");
+    }
+    
+    public void testQuoteNotEmpty() {
+        assertQuote("\"abc\"", "abc");
+    }
 }

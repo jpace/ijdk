@@ -1,7 +1,9 @@
 package ijdk.lang;
 
 import ijdk.lang.ICore;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import org.incava.ijdk.lang.StringTest;
 import org.junit.Assert;
 
@@ -115,6 +117,14 @@ public class TestStr extends StringTest {
 
     public Character assertCharAt(Character expected, String str, int index) {
         Character result = new Str(str).charAt(index);
+        assertEquals("str: '" + str + "'; index: " + index, expected, result);
+        return result;
+    }    
+
+    // get
+
+    public Character assertGet(Character expected, String str, int index) {
+        Character result = new Str(str).get(index);
         assertEquals("str: '" + str + "'; index: " + index, expected, result);
         return result;
     }
@@ -262,52 +272,30 @@ public class TestStr extends StringTest {
         return result;
     }
 
-    public void testLengthNull() {
-        assertLength(0, null);
+    // chomp
+
+    public String assertChomp(String expected, String str) {
+        String result = new Str(str).chomp();
+        String msg = "str: '" + str + "'";
+        assertEquals(msg, expected, result);
+        return result;
     }
 
-    public void testLengthEmpty() {
-        assertLength(0, "");
-    }
+    // chompAll
 
-    public void testLengthNonEmpty() {
-        assertLength(1, "a");
+    public String assertChompAll(String expected, String str) {
+        String result = new Str(str).chompAll();
+        String msg = "str: '" + str + "'";
+        assertEquals(msg, expected, result);
+        return result;
     }
-
+    
     // unquote
     
     public String assertUnquote(String expected, String str) {
         String result = new Str(str).unquote();
         assertEquals("str: '" + str + "'", expected, result);
         return result;
-    }
-    
-    public void testUnquoteNull() {
-        assertUnquote(null, null);
-    }
-    
-    public void testUnquoteEmpty() {
-        assertUnquote("", "");
-    }
-    
-    public void testUnquoteNeitherQuote() {
-        assertUnquote("abc", "abc");
-    }
-    
-    public void testUnquoteSingleDouble() {
-        assertUnquote("\'abc\"", "\'abc\"");
-    }
-    
-    public void testUnquoteDoubleSingle() {
-        assertUnquote("\"abc\'", "\"abc\'");
-    }
-    
-    public void testUnquoteSingleSingle() {
-        assertUnquote("abc", "\'abc\'");
-    }
-    
-    public void testUnquoteDoubleDouble() {
-        assertUnquote("abc", "\"abc\"");
     }
 
     // quote
@@ -317,20 +305,8 @@ public class TestStr extends StringTest {
         assertEquals("str: '" + str + "'", expected, result);
         return result;
     }
-    
-    public void testQuoteNull() {
-        assertQuote(null, null);
-    }
-    
-    public void testQuoteEmpty() {
-        assertQuote("\"\"", "");
-    }
-    
-    public void testQuoteNotEmpty() {
-        assertQuote("\"abc\"", "abc");
-    }
 
-    // equals
+    // equals String
 
     public Boolean assertEqualsString(Boolean expected, String a, String b) {
         Boolean result = new Str(a).equals(b);
@@ -375,7 +351,7 @@ public class TestStr extends StringTest {
         assertEqualsString(false, "a", "ab");
     }    
 
-    // equals
+    // equals Str
 
     public Boolean assertEqualsStr(Boolean expected, String a, String b) {
         Boolean result = new Str(a).equals(new Str(b));

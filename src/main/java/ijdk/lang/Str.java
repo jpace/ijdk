@@ -519,9 +519,9 @@ public class Str extends Obj {
     }
 
     /**
-     * Unquotes the string, removing leading and trailing single or double quotes, if both of either
-     * type wraps the string. Returns the wrapped string if neither case is true. Returns null if
-     * the wrapped string is null.
+     * Unquotes the string, removing matching leading and trailing single or double quotes, if both
+     * of either type wraps the string. Returns the wrapped string if neither case is true. Returns
+     * null if the wrapped string is null.
      */
     public String unquote() {
         if (length() >= 2 && get(0) == get(-1) && (get(0) == '"' || get(0) == '\'')) {

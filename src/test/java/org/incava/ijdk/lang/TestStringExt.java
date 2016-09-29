@@ -1,8 +1,8 @@
 package org.incava.ijdk.lang;
 
-import ijdk.lang.ICore;
-import java.util.*;
-import org.incava.test.TestCaseExt;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import org.junit.Assert;
 
 public class TestStringExt extends StringTest {
@@ -30,6 +30,8 @@ public class TestStringExt extends StringTest {
         List<String> result = StringExt.toList(str);
         assertEquals("str: '" + str + "'", exp == null ? null : Arrays.asList(exp), result);
     }
+
+    // the unquoting functionality is in StringExt, but not Str:
     
     public void testToListDoubleQuoted() {
         String[] expected = new String[] { "fee", "fi", "foo", "fum" };
@@ -134,6 +136,14 @@ public class TestStringExt extends StringTest {
         return result;
     }
 
+    // get
+
+    public Character assertGet(Character expected, String str, int index) {
+        Character result = StringExt.get(str, index);
+        assertEquals("str: '" + str + "'; index: " + index, expected, result);
+        return result;
+    }
+
     // substring
 
     public String assertSubstring(String expected, String str, Integer fromIndex, Integer toIndex) {
@@ -224,6 +234,15 @@ public class TestStringExt extends StringTest {
         return result;
     }
 
+    // length
+
+    public int assertLength(int expected, String str) {
+        int result = StringExt.length(str);
+        String msg = "str: '" + str + "'";
+        assertEquals(msg, expected, result);
+        return result;
+    }
+
     // chomp
 
     public String assertChomp(String expected, String str) {
@@ -231,38 +250,6 @@ public class TestStringExt extends StringTest {
         String msg = "str: '" + str + "'";
         assertEquals(msg, expected, result);
         return result;
-    }
-
-    public void testChompNull() {
-        assertChomp(null, null);
-    }
-
-    public void testChompEmpty() {
-        assertChomp("", "");
-    }
-
-    public void testChompNoEoln() {
-        assertChomp("a", "a");
-    }
-
-    public void testChompN() {
-        assertChomp("a", "a\n");
-    }
-
-    public void testChompNN() {
-        assertChomp("a\n", "a\n\n");
-    }
-
-    public void testChompR() {
-        assertChomp("a", "a\r");
-    }
-
-    public void testChompRR() {
-        assertChomp("a\r", "a\r\r");
-    }
-
-    public void testChompRN() {
-        assertChomp("a\r", "a\r\n");
     }
 
     // chompAll
@@ -273,36 +260,20 @@ public class TestStringExt extends StringTest {
         assertEquals(msg, expected, result);
         return result;
     }
-
-    public void testChompAllNull() {
-        assertChompAll(null, null);
+    
+    // unquote
+    
+    public String assertUnquote(String expected, String str) {
+        String result = StringExt.unquote(str);
+        assertEquals("str: '" + str + "'", expected, result);
+        return result;
     }
 
-    public void testChompAllEmpty() {
-        assertChompAll("", "");
-    }
-
-    public void testChompAllNoEoln() {
-        assertChompAll("a", "a");
-    }
-
-    public void testChompAllN() {
-        assertChompAll("a", "a\n");
-    }
-
-    public void testChompAllNN() {
-        assertChompAll("a", "a\n\n");
-    }
-
-    public void testChompAllR() {
-        assertChompAll("a", "a\r");
-    }
-
-    public void testChompAllRR() {
-        assertChompAll("a", "a\r\r");
-    }
-
-    public void testChompAllRN() {
-        assertChompAll("a", "a\r\n");
+    // quote
+    
+    public String assertQuote(String expected, String str) {
+        String result = StringExt.quote(str);
+        assertEquals("str: '" + str + "'", expected, result);
+        return result;
     }    
 }
