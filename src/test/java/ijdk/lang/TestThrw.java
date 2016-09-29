@@ -21,7 +21,6 @@ public class TestThrw extends TestCase {
 
     public String assertGetStackTraceString(String expected, Throwable t) {
         String result = new Thrw(t).getStackTraceString();
-        System.out.println("result: " + result);
         if (expected == null) {
             assertEquals("t: " + t, expected, result);
         }
