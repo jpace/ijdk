@@ -8,13 +8,18 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
     implements Comparable<Pair<FirstType, SecondType>> {
 
     /**
-     * Class method that allows inference of the parameterized type.
+     * Class method that allows inference of the parameterized type. The parameters must implement
+     * Comparable.
      *
      * <pre>
      *     // compare:
      *     Pair&lt;String, Integer&gt; pair = new Pair&lt;String, Integer&gt;("Homer", 34);
      *     Pair&lt;String, Integer&gt; pair = Pair.create("Homer", 34);
      * </pre>
+     *
+     * @param first the first value in the pair
+     * @param second the second value in the pair
+     * @return the created pair
      */
     public static <X extends Comparable<? super X>, Y extends Comparable<? super Y>>
         Pair<X, Y> create(X first, Y second) {
@@ -24,6 +29,10 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
     private final FirstType first;    
     private final SecondType second;
     
+    /**
+     * @param first the first value in the pair
+     * @param second the second value in the pair
+     */
     public Pair(FirstType first, SecondType second) {
         this.first  = first;
         this.second = second;
@@ -31,6 +40,8 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
 
     /**
      * Returns the first element.
+     *
+     * @return the first elememt
      */
     public FirstType getFirst() {
         return first;
@@ -38,6 +49,8 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
 
     /**
      * Returns the second element.
+     *
+     * @return the second elememt
      */
     public SecondType getSecond() {
         return second;
@@ -45,6 +58,8 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
 
     /**
      * Returns the first element, with a shorter method name than <code>getFirst</code>.
+     *
+     * @return the first elememt
      */
     public FirstType first() {
         return first;
@@ -52,11 +67,20 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
 
     /**
      * Returns the second element, with a shorter method name than <code>getSecond~</code>.
+     *
+     * @return the second elememt
      */
     public SecondType second() {
         return second;
     }
 
+    /**
+     * Compares this pair to the object, which should be of type <code>Pair</code>, or otherwise
+     * false is returned.
+     *
+     * @param obj the object to compare to; can be null
+     * @return whether the object equals this pair
+     */
     public boolean equals(Object obj) {
         if (obj instanceof Pair) {
             Pair<?, ?> other = (Pair<?, ?>)obj;
@@ -67,6 +91,9 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
         }
     }
 
+    /**
+     * Compares this pair to the other.
+     */
     public int compareTo(Pair<FirstType, SecondType> other) {
         int cmp = getFirst().compareTo(other.getFirst());
 
@@ -77,10 +104,20 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
         return cmp;
     }
 
+    /**
+     * Returns the pair as a string in the form "first, second".
+     *
+     * @return the pair in the form "first, second".
+     */
     public String toString() {
         return String.valueOf(first) + ", " + String.valueOf(second);
     }
 
+    /**
+     * Returns a hash code for the pair.
+     * 
+     * @return the hash code
+     */
     public int hashCode() {
         return (first == null ? 1 : first.hashCode()) * 31 + (second == null ? 1 : second.hashCode());
     }

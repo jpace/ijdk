@@ -5,10 +5,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Extensions to the String class.
- * Alternatively, the static methods here are defined as instance objects of the Str class. This
- * class exists for backward compatibility, and new string-related methods will be added to Str,
- * and likely not this class.
+ * Extensions to the String class. Alternatively, the static methods here are defined as instance
+ * objects of the Str class.
  *
  * @see ijdk.lang.Str
  */
@@ -70,8 +68,10 @@ public class StringExt {
      * following the string to a length of <code>length</code>.
      *
      * Examples:
+     * <pre>
      *     pad("abcd", '*', 8) -&gt; "abcd****"
      *     pad("abcd", '*', 3) -&gt; "abcd"
+     * </pre>
      */
     public static String pad(String str, char ch, int length) {
         return new Str(str).pad(ch, length);
@@ -92,7 +92,7 @@ public class StringExt {
     }
 
     /**
-     * Pads with spaces.
+     * Pads with trailing spaces.
      */
     public static String pad(String str, int length) {
         return new Str(str).pad(length);
@@ -154,10 +154,9 @@ public class StringExt {
     }
 
     /**
-     * Returns the character at the given index, or null if <code>index</code>
-     * is out of range. If <code>index</code> is negative, the character is the
-     * nth character from the end of the string, where -1 is the last character
-     * in the string.
+     * Returns the character at the given index, or null if <code>index</code> is out of range. If
+     * <code>index</code> is negative, the character is the nth character from the end of the
+     * string, where -1 is the last character in the string.
      *
      * @return The character at the given index, or null if out of range.
      * @param str The source string.
@@ -253,8 +252,8 @@ public class StringExt {
     }
 
     /**
-     * Returns whether the string contains the character. If <code>str</code> or
-     * <code>ch</code> is null, false is returned.
+     * Returns whether the string contains the character. If <code>str</code> or <code>ch</code> is
+     * null, false is returned.
      */
     public static boolean contains(String str, Character ch) {
         return new Str(str).contains(ch);
@@ -300,4 +299,27 @@ public class StringExt {
     public static boolean isEmpty(String str) {
         return new Str(str).isEmpty();
     }
+
+    /**
+     * Returns the length of the string, returning 0 if the string is null.
+     */
+    public static int length(String str) {
+        return new Str(str).length();
+    }
+
+    /**
+     * Unquotes the string, removing matching leading and trailing single or double quotes, if both
+     * of either type wraps the string. Returns the string if neither case is true. Returns null if
+     * the string is null.
+     */
+    public static String unquote(String str) {
+        return new Str(str).unquote();
+    }    
+
+    /**
+     * Quotes the string, using double quotes. Returns null if the string is null.
+     */
+    public static String quote(String str) {
+        return new Str(str).quote();
+    }    
 }
