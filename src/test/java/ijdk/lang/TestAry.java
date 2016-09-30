@@ -175,4 +175,22 @@ public class TestAry extends TestCase {
         assertGet(null, -3, "a", "b");
     }
 
+    // isEmpty
+
+    public void assertIsEmpty(boolean expected, Object[] args) {
+        Ary<Object> ary = new Ary<Object>(args);
+        assertEquals("ary: " + ary.toString(), expected, ary.isEmpty());
+    }
+
+    public void testIsEmptyNull() {
+        assertIsEmpty(true, null);
+    }    
+
+    public void testIsEmptyEmpty() {
+        assertIsEmpty(true, new String[0]);
+    }    
+
+    public void testIsEmptyHasElement() {
+        assertIsEmpty(false, new String[] { "x" });
+    }    
 }
