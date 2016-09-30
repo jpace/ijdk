@@ -100,17 +100,18 @@ public class Obj {
      * @see #isFalse
      */
     public boolean isEmpty() {
-        if (isNull()) {
+        Object obj = obj();
+        if (obj == null) {
             return true;
         }
-        else if (obj() instanceof String) {
-            return new Str((String)obj()).isEmpty();
+        else if (obj instanceof String) {
+            return new Str((String)obj).isEmpty();
         }
-        else if (obj() instanceof Object[]) {
-            return ((Object[])obj()).length == 0;
+        else if (obj instanceof Object[]) {
+            return ((Object[])obj).length == 0;
         }
-        else if (obj() instanceof Collection) {
-            return ((Collection<?>)obj()).isEmpty();
+        else if (obj instanceof Collection) {
+            return ((Collection<?>)obj).isEmpty();
         }
         else {
             return false;
