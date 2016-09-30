@@ -108,7 +108,6 @@ public abstract class ObjectTest extends TestCase {
     public void testIsFalseNotEmptyArray() {
         assertIsFalse(false, new Integer[] { 1 });
     }    
-    
 
     // isEmpty
 

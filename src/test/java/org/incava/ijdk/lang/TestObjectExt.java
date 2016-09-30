@@ -1,8 +1,5 @@
 package org.incava.ijdk.lang;
 
-import java.util.*;
-import junit.framework.TestCase;
-
 public class TestObjectExt extends ObjectTest {
     public TestObjectExt(String name) {
         super(name);

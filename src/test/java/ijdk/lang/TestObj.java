@@ -1,7 +1,5 @@
 package ijdk.lang;
 
-import java.util.*;
-import junit.framework.TestCase;
 import org.incava.ijdk.lang.ObjectTest;
 
 public class TestObj extends ObjectTest {
