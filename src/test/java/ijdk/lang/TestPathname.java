@@ -56,4 +56,34 @@ public class TestPathname extends TestCase {
         Pathname expected = new Pathname(new File("foo.txt"));
         assertCtor(expected, new File("foo.txt"));
     }
+
+    // name
+
+    public Pathname assertName(String expected, Pathname pn) {
+        assertEquals(expected, pn.name());
+        return pn;
+    }
+
+    public void testNameFileName() {
+        assertName("foo.txt", new Pathname("foo.txt"));
+    }
+
+    public void testNameFile() {
+        assertName(null, new Pathname(new File("foo.txt")));
+    }
+
+    // file
+
+    public Pathname assertFile(File expected, Pathname pn) {
+        assertEquals(expected, pn.file());
+        return pn;
+    }
+
+    public void testFileFileName() {
+        assertFile(null, new Pathname("foo.txt"));
+    }
+
+    public void testFileFile() {
+        assertFile(new File("foo.txt"), new Pathname(new File("foo.txt")));
+    }
 }
