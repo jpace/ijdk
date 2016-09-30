@@ -1,7 +1,5 @@
 package org.incava.ijdk.util;
 
-import java.io.*;
-import java.util.*;
 import junit.framework.TestCase;
 
 public class TestIndex extends TestCase {
@@ -48,8 +46,12 @@ public class TestIndex extends TestCase {
         assertGetIndex(2, 4, -2);
     }
 
-    public void testGetIndexNegativeAtStart() {
+    public void testGetIndexNegativeAtSecond() {
         assertGetIndex(1, 4, -3);
+    }
+
+    public void testGetIndexNegativeAtFirst() {
+        assertGetIndex(0, 4, -4);
     }
 
     public void testGetIndexNegativeOffStart() {

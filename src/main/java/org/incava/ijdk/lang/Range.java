@@ -9,8 +9,9 @@ package org.incava.ijdk.lang;
  */
 public class Range extends ijdk.lang.Range {
     /**
-     * Creates a range of <code>first</code> through <code>last</code> (i.e., inclusive). First can
-     * be less than, equal to, or greater than, last.
+     * Creates a range of <code>first</code> through <code>last</code> (i.e., inclusive).
+     * <code>first</code> can be less than, equal to, or greater than, <code>last</code>, although
+     * iteration will work only when <code>first</code> is less than or equal to <code>last</code>.
      */
     public Range(Integer first, Integer last) {
         super(first, last);

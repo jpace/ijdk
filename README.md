@@ -16,14 +16,14 @@ Note the similarity to idiomatic Ruby:
 # Usage
 
 IJDK has a very expansive (but growing) library for Java I/O and collections, as an alternative to
-the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely as possible, moreso
-than the Apache Commons and Guava libraries.
+the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely as possible, usually
+moreso than the Apache Commons and Guava libraries.
 
 * shortcuts for list creation:
 
 This is one of the most used pieces of code in IJDK, a shortcut for `new
 ArrayList<Type>(Arrays.asList(new Type[] { one, two, three }))`. The returned list is a
-dynamically-sized array, unllike `Arrays.asList`, which returns a fixed-size array.
+dynamically-sized array, unlike `Arrays.asList`, which returns a fixed-size array.
 
 ```java
    List<String> names = ICore.list("bart", "lisa", "maggie");
@@ -80,7 +80,13 @@ This converts easily to C-style arrays, and supports simple iteration:
 ```
 
 * negative indices handled for Array.get(n), so that get(-1) returns the last element in the list,
-  get(-2) the second to last, etc.
+  get(-2) the second to last, etc., similar to Ruby:
+
+```ruby
+   names = %w{ Bart Lisa Homer Marge }
+   m = names[-1]
+   h = names[-2]
+```
 
 ```java
     List<String> names = Arrays.asList("Bart", "Lisa", "Homer", "Marge");
@@ -114,7 +120,7 @@ This converts easily to C-style arrays, and supports simple iteration:
 
 ```java
    for (Integer : ICore.iter(3)) {
-       System.out.println("hi");
+       ICore.puts("hi");
    }
 ```
 
@@ -125,16 +131,22 @@ This converts easily to C-style arrays, and supports simple iteration:
 * alternate classes that shadow JDK ones, such as:
 
 ```java
-   Integer num = Integerr.toInteger("1");   // num == 1
-   Integer num = Integerr.toInteger("");    // num == null
-   Integer num = Integerr.toInteger("xyz"); // num == null
-   Integer num = Integerr.toInteger(null);  // num == null
+   Integer num = Int.toInteger("1");   // num == 1
+   Integer num = Int.toInteger("");    // num == null
+   Integer num = Int.toInteger("xyz"); // num == null
+   Integer num = Int.toInteger(null);  // num == null
 ```
 
 * briefer package hierarchy
 
 A top-level package, `ijdk`, contains subpackages, such as `ijdk.lang`, making for briefer import
-statements.
+statements. This breaks with normal Java conventions, given that IJDK is more for brevity and
+clarity than convention. All IJDK commonly used classes are in `ijdk.lang`, making for more concise
+imports:
+
+```java
+   import ijdk.lang.*;
+```
 
 The older version of IJDK, with classes containing static methods around Java core classes:
 
@@ -145,12 +157,11 @@ The older version of IJDK, with classes containing static methods around Java co
 The newer (3.0) version of IJDK, with classes whose instances wrap (shadow) Java core classes:
 
 ```java
-   import lang.Stringg;
+   import ijdk.lang.Str;
 ```
 
-Note that the names of the shadow classes follow the convention of the class that they wrap,
-appended with an additional final character, such as Arrayy, Stringg and Integerr (this convention
-is not completely finalized).
+Note that the names of the shadow classes follow the convention of the class that they wrap, with
+shorter names, such as Str (String), Int (Integer), Obj (Object), etc.
 
 # Installation
 
@@ -162,13 +173,12 @@ appreciated.)
 
 # Help
 
-Please email me at jeugenepace at gmail dot com if you have questions about
-IJDK.
+Please email me at jeugenepace at gmail dot com if you have questions about IJDK.
 
 # Contributing
 
-I'm eager to learn how others use this library, and what additional features
-they would like. Please email me at the above address.
+I'm eager to learn how others use this library, and what additional features they would like. Please
+email me at the above address.
 
 # Credits
 
