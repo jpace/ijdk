@@ -83,12 +83,14 @@ This converts easily to C-style arrays, and supports simple iteration:
   get(-2) the second to last, etc., similar to Ruby:
 
 ```ruby
+    # Ruby
     names = %w{ Bart Lisa Homer Marge }
     m = names[-1]
     h = names[-2]
 ```
 
 ```java
+    // Java
     List<String> names = Arrays.asList("Bart", "Lisa", "Homer", "Marge");
     String m = ListExt.get(names, -1);   // m == "Marge"
     String h = ListExt.get(names, -2);   // h == "Homer"
@@ -106,9 +108,11 @@ This converts easily to C-style arrays, and supports simple iteration:
 * "safe" iterators for arrays and collections, which handles the case when they are null
 
 ```java
-    for (String str : ICore.iter(new String[0])) { // executes zero times
-    }    
-    for (String str : ICore.iter(null)) {  // also executes zero times
+    String[] ary = new String[0];
+    for (String str : ICore.iter(ary)) { // executes zero times
+    }
+    String[] ary = null;
+    for (String str : ICore.iter(ary)) {  // also executes zero times
     }
 ```
 
