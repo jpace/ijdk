@@ -54,7 +54,7 @@ dynamically-sized array, unlike `Arrays.asList`, which returns a fixed-size arra
     // score.first() == "Bird", score.second() == 33
 ```
 
-* a Range class
+* a **Range** class
 
 This converts easily to C-style arrays, and supports simple iteration:
 
@@ -83,9 +83,9 @@ This converts easily to C-style arrays, and supports simple iteration:
   get(-2) the second to last, etc., similar to Ruby:
 
 ```ruby
-   names = %w{ Bart Lisa Homer Marge }
-   m = names[-1]
-   h = names[-2]
+    names = %w{ Bart Lisa Homer Marge }
+    m = names[-1]
+    h = names[-2]
 ```
 
 ```java
@@ -115,13 +115,13 @@ This converts easily to C-style arrays, and supports simple iteration:
 * iterators to execute a given number of times, similar to Ruby:
 
 ```ruby
-   3.times { puts "hello" }
+    3.times { puts "hello" }
 ```
 
 ```java
-   for (Integer : ICore.iter(3)) {
-       ICore.puts("hi");
-   }
+    for (Integer : ICore.iter(3)) {
+        ICore.puts("hi");
+    }
 ```
 
 * colorized strings (on ANSI terminals)
@@ -131,10 +131,10 @@ This converts easily to C-style arrays, and supports simple iteration:
 * alternate classes that shadow JDK ones, such as:
 
 ```java
-   Integer num = Int.toInteger("1");   // num == 1
-   Integer num = Int.toInteger("");    // num == null
-   Integer num = Int.toInteger("xyz"); // num == null
-   Integer num = Int.toInteger(null);  // num == null
+    Integer num = Int.toInteger("1");   // num == 1
+    Integer num = Int.toInteger("");    // num == null
+    Integer num = Int.toInteger("xyz"); // num == null
+    Integer num = Int.toInteger(null);  // num == null
 ```
 
 * briefer package hierarchy
@@ -145,19 +145,19 @@ clarity than convention. All IJDK commonly used classes are in `ijdk.lang`, maki
 imports:
 
 ```java
-   import ijdk.lang.*;
+    import ijdk.lang.*;
 ```
 
 The older version of IJDK, with classes containing static methods around Java core classes:
 
 ```java
-   import org.incava.ijdk.lang.StringExt;
+    import org.incava.ijdk.lang.StringExt;
 ```
 
 The newer (3.0) version of IJDK, with classes whose instances wrap (shadow) Java core classes:
 
 ```java
-   import ijdk.lang.Str;
+    import ijdk.lang.Str;
 ```
 
 Note that the names of the shadow classes follow the convention of the class that they wrap, with
