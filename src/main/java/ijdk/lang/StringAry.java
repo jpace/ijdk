@@ -15,14 +15,6 @@ public class StringAry extends Ary<String> {
     }
 
     /**
-     * Returns whether the array is null or empty.
-     */
-    public boolean isEmpty() {
-        String[] ary = ary();
-        return ary == null || ary.length == 0;
-    }
-
-    /**
      * Returns whether the two arrays are equal in content or both are empty.
      *
      * @see #isEmpty
