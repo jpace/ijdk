@@ -52,7 +52,8 @@ public class Pathname extends File {
     }
 
     /**
-     * Returns the extension, the segment trailing the final dot, or null if none.
+     * Returns the extension, the segment trailing the final dot, or null if there is no dot in the
+     * basename.
      *
      * <pre>
      *     new Pathname("abc/def.txt").extension();    // == "txt"

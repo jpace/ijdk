@@ -9,7 +9,7 @@ public class TestPathname extends TestCase {
         super(name);
     }
 
-    // shortcut
+    // shortcut used within this test
 
     public Pathname pnName(String fileName) {
         return new Pathname(fileName);
