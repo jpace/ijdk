@@ -2,6 +2,7 @@ package ijdk.lang;
 
 import java.io.File;
 import java.util.*;
+import org.incava.ijdk.io.FileExt;
 import org.incava.ijdk.io.IO;
 import org.incava.ijdk.lang.ObjectExt;
 
@@ -150,6 +151,13 @@ public class Pathname extends File {
      */
     public List<String> readLines() {
         return IO.readLines(relativePath());
+    }
+
+    /**
+     * Reads the file as an array of bytes.
+     */
+    public byte[] readBytes() {
+        return FileExt.readBytes(this);
     }
 
     /**
