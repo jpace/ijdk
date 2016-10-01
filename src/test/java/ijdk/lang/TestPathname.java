@@ -9,6 +9,28 @@ public class TestPathname extends TestCase {
         super(name);
     }
 
+    // shortcut
+
+    public Pathname pnName(String fileName) {
+        return new Pathname(fileName);
+    }
+
+    public Pathname pnFile(File file) {
+        return new Pathname(file);
+    }
+
+    public void testPnName() {
+        String fileName = "abc.txt";
+        Pathname pn = pnName(fileName);
+        assertEquals(new Pathname(fileName), pn);
+    }
+
+    public void testPnFile() {
+        File file = new File("abc.txt");
+        Pathname pn = pnFile(file);
+        assertEquals(new Pathname(file), pn);
+    }
+
     // equals
 
     public boolean assertEquals(boolean expected, Pathname x, Pathname y) {
@@ -18,19 +40,19 @@ public class TestPathname extends TestCase {
     }
 
     public void testEqualsFileNamesTrue() {
-        assertEquals(true, new Pathname("abc.txt"), new Pathname("abc.txt"));
+        assertEquals(true, pnName("abc.txt"), pnName("abc.txt"));
     }
 
     public void testEqualsFilesTrue() {
-        assertEquals(true, new Pathname(new File("abc.txt")), new Pathname(new File("abc.txt")));
+        assertEquals(true, pnFile(new File("abc.txt")), pnFile(new File("abc.txt")));
     }
 
     public void testEqualsFileNamesFalse() {
-        assertEquals(false, new Pathname("abc.txt"), new Pathname("def.txt"));
+        assertEquals(false, pnName("abc.txt"), pnName("def.txt"));
     }
 
     public void testEqualsFilesFalse() {
-        assertEquals(false, new Pathname(new File("abc.txt")), new Pathname(new File("def.txt")));
+        assertEquals(false, pnFile(new File("abc.txt")), pnFile(new File("def.txt")));
     }
 
     // ctor
@@ -48,59 +70,69 @@ public class TestPathname extends TestCase {
     }
 
     public void testCtorFileName() {
-        Pathname expected = new Pathname("foo.txt");
+        Pathname expected = pnName("foo.txt");
         assertCtor(expected, "foo.txt");
     }
 
     public void testCtorFile() {
-        Pathname expected = new Pathname(new File("foo.txt"));
+        Pathname expected = pnFile(new File("foo.txt"));
         assertCtor(expected, new File("foo.txt"));
     }
 
-    // name
+    public void testCtorFileNamePath() {
+        Pathname expected = pnName("abc/foo.txt");
+        assertCtor(expected, "abc/foo.txt");
+    }
 
-    public Pathname assertName(String expected, Pathname pn) {
-        assertEquals(expected, pn.name());
+    public void testCtorFilePath() {
+        Pathname expected = pnFile(new File("abc/foo.txt"));
+        assertCtor(expected, new File("abc/foo.txt"));
+    }
+
+    // baseName
+
+    public Pathname assertBaseName(String expected, Pathname pn) {
+        assertEquals(expected, pn.baseName());
         return pn;
     }
 
     public void testNameFileName() {
-        assertName("foo.txt", new Pathname("foo.txt"));
+        assertBaseName("foo.txt", pnName("foo.txt"));
     }
 
     public void testNameFile() {
-        assertName("foo.txt", new Pathname(new File("foo.txt")));
+        assertBaseName("foo.txt", pnFile(new File("foo.txt")));
     }
 
     public void testNameFileNamePath() {
-        assertName("foo.txt", new Pathname("abc/foo.txt"));
+        assertBaseName("foo.txt", pnName("abc/foo.txt"));
     }
 
     public void testNameFilePath() {
-        assertName("foo.txt", new Pathname(new File("abc/foo.txt")));
+        assertBaseName("foo.txt", pnFile(new File("abc/foo.txt")));
     }
 
-    // fullName
+    // relativePath
 
-    public Pathname assertFullName(String expected, Pathname pn) {
-        assertEquals(expected, pn.fullName());
+    public Pathname assertRelativePath(String expected, Pathname pn) {
+        assertEquals(expected, pn.relativePath());
         return pn;
     }
 
-    public void testFullNameFileName() {
-        assertFullName("foo.txt", new Pathname("foo.txt"));
+    public void testRelativePathFileName() {
+        assertRelativePath("foo.txt", pnName("foo.txt"));
     }
 
-    public void testFullNameFile() {
-        assertFullName("foo.txt", new Pathname(new File("foo.txt")));
+    public void testRelativePathFile() {
+        assertRelativePath("foo.txt", pnFile(new File("foo.txt")));
     }
 
-    public void testFullNameFileNamePath() {
-        assertFullName("abc/foo.txt", new Pathname("abc/foo.txt"));
+    public void testRelativePathFileNamePath() {
+        assertRelativePath("abc/foo.txt", pnName("abc/foo.txt"));
     }
 
-    public void testFullNameFilePath() {
-        assertFullName("abc/foo.txt", new Pathname(new File("abc/foo.txt")));
+    public void testRelativePathFilePath() {
+        assertRelativePath("abc/foo.txt", pnFile(new File("abc/foo.txt")));
     }
 
     // file
@@ -111,10 +143,34 @@ public class TestPathname extends TestCase {
     }
 
     public void testFileFileName() {
-        assertFile(new File("foo.txt"), new Pathname("foo.txt"));
+        assertFile(new File("foo.txt"), pnName("foo.txt"));
     }
 
     public void testFileFile() {
-        assertFile(new File("foo.txt"), new Pathname(new File("foo.txt")));
+        assertFile(new File("foo.txt"), pnFile(new File("foo.txt")));
     }
+
+    // extension
+
+    public Pathname assertExtension(String expected, Pathname pn) {
+        assertEquals(expected, pn.extension());
+        return pn;
+    }
+
+    public void testExtensionSingle() {
+        assertExtension("txt", pnName("abc.txt"));
+    }
+
+    public void testExtensionMultiple() {
+        assertExtension("gz", pnName("abc.tar.gz"));
+    }
+
+    public void testExtensionEmpty() {
+        assertExtension("", pnName("abc."));
+    }
+
+    public void testExtensionNone() {
+        assertExtension(null, pnFile(new File("abc")));
+    }
+    
 }
