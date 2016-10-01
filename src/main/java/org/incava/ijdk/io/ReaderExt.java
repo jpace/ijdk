@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import org.incava.ijdk.util.CollectionExt;
-import static org.incava.ijdk.util.IUtil.*;
+
+import static ijdk.lang.ICore.isEmpty;
 
 /**
  * Wraps java.io.Reader.
