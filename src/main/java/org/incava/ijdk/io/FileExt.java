@@ -1,14 +1,14 @@
 package org.incava.ijdk.io;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.EnumSet;
 import java.util.List;
-
-import org.apache.commons.io.FileUtils;
 
 public class FileExt {
     /**
@@ -74,7 +74,15 @@ public class FileExt {
      */
     public static byte[] readBytes(File file) throws IORuntimeException {
         try {
-            return FileUtils.readFileToByteArray(file);
+            FileInputStream fis = new FileInputStream(file);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buf = new byte[4096];
+            int nBytes = 0;
+            while ((nBytes = fis.read(buf)) != -1) {
+                baos.write(buf, 0, nBytes);
+            }
+            fis.close();
+            return baos.toByteArray();
         }
         catch (IOException ex) {
             throw new IORuntimeException(ex);
