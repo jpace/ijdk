@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.jar.*;
 
-import org.apache.commons.io.FileUtils;
 import org.incava.ijdk.util.IUtil;
 
 public class JarFile {
