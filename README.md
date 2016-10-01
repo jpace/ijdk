@@ -141,6 +141,15 @@ This converts easily to C-style arrays, and supports simple iteration:
     Integer num = Int.toInteger(null);  // num == null
 ```
 
+* a *Pathname* class, which extends java.io.File with Ruby-like functionality
+
+```java
+    Pathname pn = new Pathname("abc/def.txt");
+    pn.baseName();     // == "def.txt"
+    pn.relativePath(); // == "abc/def.txt"
+    pn.extension();    // == "txt"
+```
+
 * briefer package hierarchy
 
 A top-level package, `ijdk`, contains subpackages, such as `ijdk.lang`, making for briefer import

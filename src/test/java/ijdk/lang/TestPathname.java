@@ -1,3 +1,4 @@
+
 package ijdk.lang;
 
 import java.io.*;
@@ -20,13 +21,13 @@ public class TestPathname extends TestCase {
     }
 
     public void testPnName() {
-        String fileName = "abc.txt";
+        String fileName = "f.x";
         Pathname pn = pnName(fileName);
         assertEquals(new Pathname(fileName), pn);
     }
 
     public void testPnFile() {
-        File file = new File("abc.txt");
+        File file = new File("f.x");
         Pathname pn = pnFile(file);
         assertEquals(new Pathname(file), pn);
     }
@@ -40,19 +41,19 @@ public class TestPathname extends TestCase {
     }
 
     public void testEqualsFileNamesTrue() {
-        assertEquals(true, pnName("abc.txt"), pnName("abc.txt"));
+        assertEquals(true, pnName("f.x"), pnName("f.x"));
     }
 
     public void testEqualsFilesTrue() {
-        assertEquals(true, pnFile(new File("abc.txt")), pnFile(new File("abc.txt")));
+        assertEquals(true, pnFile(new File("f.x")), pnFile(new File("f.x")));
     }
 
     public void testEqualsFileNamesFalse() {
-        assertEquals(false, pnName("abc.txt"), pnName("def.txt"));
+        assertEquals(false, pnName("f.x"), pnName("g.x"));
     }
 
     public void testEqualsFilesFalse() {
-        assertEquals(false, pnFile(new File("abc.txt")), pnFile(new File("def.txt")));
+        assertEquals(false, pnFile(new File("f.x")), pnFile(new File("g.x")));
     }
 
     // ctor
@@ -70,23 +71,23 @@ public class TestPathname extends TestCase {
     }
 
     public void testCtorFileName() {
-        Pathname expected = pnName("foo.txt");
-        assertCtor(expected, "foo.txt");
+        Pathname expected = pnName("f.x");
+        assertCtor(expected, "f.x");
     }
 
     public void testCtorFile() {
-        Pathname expected = pnFile(new File("foo.txt"));
-        assertCtor(expected, new File("foo.txt"));
+        Pathname expected = pnFile(new File("f.x"));
+        assertCtor(expected, new File("f.x"));
     }
 
     public void testCtorFileNamePath() {
-        Pathname expected = pnName("abc/foo.txt");
-        assertCtor(expected, "abc/foo.txt");
+        Pathname expected = pnName("d/f.x");
+        assertCtor(expected, "d/f.x");
     }
 
     public void testCtorFilePath() {
-        Pathname expected = pnFile(new File("abc/foo.txt"));
-        assertCtor(expected, new File("abc/foo.txt"));
+        Pathname expected = pnFile(new File("d/f.x"));
+        assertCtor(expected, new File("d/f.x"));
     }
 
     // baseName
@@ -96,20 +97,55 @@ public class TestPathname extends TestCase {
         return pn;
     }
 
-    public void testNameFileName() {
-        assertBaseName("foo.txt", pnName("foo.txt"));
+    public void testBaseNameFileName() {
+        assertBaseName("f.x", pnName("f.x"));
     }
 
-    public void testNameFile() {
-        assertBaseName("foo.txt", pnFile(new File("foo.txt")));
+    public void testBaseNameFile() {
+        assertBaseName("f.x", pnFile(new File("f.x")));
     }
 
-    public void testNameFileNamePath() {
-        assertBaseName("foo.txt", pnName("abc/foo.txt"));
+    public void testBaseNameFileNamePath() {
+        assertBaseName("f.x", pnName("d/f.x"));
     }
 
-    public void testNameFilePath() {
-        assertBaseName("foo.txt", pnFile(new File("abc/foo.txt")));
+    public void testBaseNameFilePath() {
+        assertBaseName("f.x", pnFile(new File("d/f.x")));
+    }
+
+    public void testBaseNameDot() {
+        assertBaseName(".", pnName("."));
+    }
+
+    // rootName
+
+    public Pathname assertRootName(String expected, Pathname pn) {
+        assertEquals(expected, pn.rootName());
+        return pn;
+    }
+
+    public void testRootNameFileName() {
+        assertRootName("f", pnName("f.x"));
+    }
+
+    public void testRootNameFileNamePath() {
+        assertRootName("f", pnName("d/f.x"));
+    }
+
+    public void testRootNameNoExtension() {
+        assertRootName("f", pnName("d/f"));
+    }
+
+    public void testRootNameMultipleExtensions() {
+        assertRootName("f.x", pnName("d/f.x.y"));
+    }
+
+    public void testRootNameEndingDot() {
+        assertRootName("f", pnName("d/f."));
+    }
+
+    public void testRootNameDot() {
+        assertRootName(".", pnName("."));
     }
 
     // relativePath
@@ -120,19 +156,19 @@ public class TestPathname extends TestCase {
     }
 
     public void testRelativePathFileName() {
-        assertRelativePath("foo.txt", pnName("foo.txt"));
+        assertRelativePath("f.x", pnName("f.x"));
     }
 
     public void testRelativePathFile() {
-        assertRelativePath("foo.txt", pnFile(new File("foo.txt")));
+        assertRelativePath("f.x", pnFile(new File("f.x")));
     }
 
     public void testRelativePathFileNamePath() {
-        assertRelativePath("abc/foo.txt", pnName("abc/foo.txt"));
+        assertRelativePath("d/f.x", pnName("d/f.x"));
     }
 
     public void testRelativePathFilePath() {
-        assertRelativePath("abc/foo.txt", pnFile(new File("abc/foo.txt")));
+        assertRelativePath("d/f.x", pnFile(new File("d/f.x")));
     }
 
     // file
@@ -143,11 +179,11 @@ public class TestPathname extends TestCase {
     }
 
     public void testFileFileName() {
-        assertFile(new File("foo.txt"), pnName("foo.txt"));
+        assertFile(new File("f.x"), pnName("f.x"));
     }
 
     public void testFileFile() {
-        assertFile(new File("foo.txt"), pnFile(new File("foo.txt")));
+        assertFile(new File("f.x"), pnFile(new File("f.x")));
     }
 
     // extension
@@ -158,19 +194,88 @@ public class TestPathname extends TestCase {
     }
 
     public void testExtensionSingle() {
-        assertExtension("txt", pnName("abc.txt"));
+        assertExtension("x", pnName("f.x"));
     }
 
     public void testExtensionMultiple() {
-        assertExtension("gz", pnName("abc.tar.gz"));
+        assertExtension("y", pnName("f.x.y"));
     }
 
     public void testExtensionEmpty() {
-        assertExtension("", pnName("abc."));
+        assertExtension("", pnName("f."));
     }
 
     public void testExtensionNone() {
-        assertExtension(null, pnFile(new File("abc")));
+        assertExtension(null, pnFile(new File("f")));
+    }
+
+    // parent
+
+    public Pathname assertParent(Pathname expected, Pathname pn) {
+        Pathname result = pn.parent();
+        assertEquals("pn: " + pn, expected, result);
+        return result;
+    }
+
+    public void testParentOneLevelToCurrentDirectory() {
+        assertParent(pnName("."), pnName("a"));
+    }
+
+    public void testParentOneLevelToSuper() {
+        assertParent(pnName(".."), pnName("."));
+    }
+
+    public void testParentOneLevelFromDots() {
+        assertParent(pnName("../.."), pnName(".."));
+    }
+
+    public void testParentTwoLevelsToParent() {
+        assertParent(pnName("d"), pnName("d/f"));
+    }
+
+    public void testParentTwoLevelsIncludesDot() {
+        assertParent(pnName("d"), pnName("d/./f"));
+    }
+
+    public void testParentTwoLevelsIncludesDots() {
+        assertParent(pnName("d"), pnName("d/././f"));
+    }
+
+    public void testParentTwoLevelsIncludesDoubleDots() {
+        assertParent(pnName("d/.."), pnName("d/../f"));
+    }
+
+    // expand path
+
+    public String assertExpandPath(String expected, Pathname pn) {
+        String result = pn.expandPath();
+        assertEquals("pn: " + pn, expected, result);
+        return result;
+    }
+
+    public void testExpandPathOneLevelToSuper() {
+        String userDir = System.getProperty("user.dir");
+        String separator = "/";
+        assertExpandPath(userDir + separator + "a", pnName("a"));
+    }
+
+    public void testExpandPathTwoLevels() {
+        String userDir = System.getProperty("user.dir");
+        String separator = "/";
+        assertExpandPath(userDir + separator + "a/b", pnName("a/b"));
+    }
+
+    public void testExpandPathContainsSingleDot() {
+        String userDir = System.getProperty("user.dir");
+        String separator = "/";
+        assertExpandPath(userDir + separator + "a/./b", pnName("a/./b"));
+    }
+    
+
+    public void testExpandPathContainsDoubleDots() {
+        String userDir = System.getProperty("user.dir");
+        String separator = "/";
+        assertExpandPath(userDir + separator + "a/../b", pnName("a/../b"));
     }
     
 }
