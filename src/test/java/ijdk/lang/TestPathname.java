@@ -69,7 +69,38 @@ public class TestPathname extends TestCase {
     }
 
     public void testNameFile() {
-        assertName(null, new Pathname(new File("foo.txt")));
+        assertName("foo.txt", new Pathname(new File("foo.txt")));
+    }
+
+    public void testNameFileNamePath() {
+        assertName("foo.txt", new Pathname("abc/foo.txt"));
+    }
+
+    public void testNameFilePath() {
+        assertName("foo.txt", new Pathname(new File("abc/foo.txt")));
+    }
+
+    // fullName
+
+    public Pathname assertFullName(String expected, Pathname pn) {
+        assertEquals(expected, pn.fullName());
+        return pn;
+    }
+
+    public void testFullNameFileName() {
+        assertFullName("foo.txt", new Pathname("foo.txt"));
+    }
+
+    public void testFullNameFile() {
+        assertFullName("foo.txt", new Pathname(new File("foo.txt")));
+    }
+
+    public void testFullNameFileNamePath() {
+        assertFullName("abc/foo.txt", new Pathname("abc/foo.txt"));
+    }
+
+    public void testFullNameFilePath() {
+        assertFullName("abc/foo.txt", new Pathname(new File("abc/foo.txt")));
     }
 
     // file
@@ -80,7 +111,7 @@ public class TestPathname extends TestCase {
     }
 
     public void testFileFileName() {
-        assertFile(null, new Pathname("foo.txt"));
+        assertFile(new File("foo.txt"), new Pathname("foo.txt"));
     }
 
     public void testFileFile() {

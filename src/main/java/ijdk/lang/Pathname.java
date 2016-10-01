@@ -4,39 +4,29 @@ import java.io.File;
 import java.util.*;
 import org.incava.ijdk.lang.ObjectExt;
 
-public class Pathname {
-    private final File file;
-    private final String fileName;
+/**
+ * Extends java.io.File with Ruby-ish functionality.
+ */
+public class Pathname extends File {
+    private static final long serialVersionUID = -4936465396173432030L;
     
     public Pathname(File file) {
-        this.file = file;
-        this.fileName = null;
+        super(file.getPath());
     }
 
-    public Pathname(String fileName) {
-        this.file = null;
-        this.fileName = fileName;
+    public Pathname(String pathName) {
+        super(pathName);
+    }
+
+    public String fullName() {
+        return toString();
     }
 
     public String name() {
-        return fileName;
+        return getName();
     }
 
     public File file() {
-        return file;
-    }
-
-    public boolean equals(Object obj) {
-        if (obj instanceof Pathname) {
-            Pathname other = (Pathname)obj;
-            return ObjectExt.areEqual(fileName, other.name()) && ObjectExt.areEqual(file, other.file());
-        }
-        else {
-            return false;
-        }
-    }
-
-    public int hashCode() {
-        return (file == null ? 1 : file.hashCode()) * 37 + (fileName == null ? 1 : fileName.hashCode());
+        return this;
     }
 }
