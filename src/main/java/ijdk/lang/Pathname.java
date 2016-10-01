@@ -2,6 +2,7 @@ package ijdk.lang;
 
 import java.io.File;
 import java.util.*;
+import org.incava.ijdk.io.IO;
 import org.incava.ijdk.lang.ObjectExt;
 
 /**
@@ -143,4 +144,20 @@ public class Pathname extends File {
     public String expandPath() {
         return getAbsolutePath();
     }
+
+    /**
+     * Reads the file, returning a list of lines, which do not include end of line characters.
+     */
+    public List<String> readLines() {
+        return IO.readLines(relativePath());
+    }
+
+    /**
+     * Writes the lines to the file.
+     *
+     * @param lines the lines to print
+     */
+    public void printLines(List<String> lines) {
+        IO.printLines(relativePath(), lines);
+    }    
 }

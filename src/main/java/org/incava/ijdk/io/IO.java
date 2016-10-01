@@ -11,7 +11,7 @@ public class IO {
     public final static String EOLN = System.getProperty("line.separator");
 
     /**
-     * Returns a list of Strings for the given file.
+     * Returns a list of Strings read from the given file.
      *
      * @param fileName the file to read.
      * @param options denotes special options when reading.
@@ -24,7 +24,7 @@ public class IO {
     }
 
     /**
-     * Returns a list of Strings read the given file.
+     * Returns a list of Strings read from the given file.
      *
      * @param fileName the file to read
      * @return the lines, as a list of strings

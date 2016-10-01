@@ -11,7 +11,6 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
-    compile group: 'commons-io', name: 'commons-io', version: '2.4'
 }
 
 allprojects {
