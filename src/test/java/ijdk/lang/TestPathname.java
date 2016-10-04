@@ -1,8 +1,6 @@
-
 package ijdk.lang;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
 import junit.framework.TestCase;
 
 public class TestPathname extends TestCase {
@@ -245,6 +243,10 @@ public class TestPathname extends TestCase {
         assertParent(pnName("d/.."), pnName("d/../f"));
     }
 
+    public void testParentEmpty() {
+        assertParent(pnName(".."), pnName(""));
+    }
+
     // expand path
 
     public String assertExpandPath(String expected, Pathname pn) {
@@ -269,13 +271,18 @@ public class TestPathname extends TestCase {
         String userDir = System.getProperty("user.dir");
         String separator = "/";
         assertExpandPath(userDir + separator + "a/./b", pnName("a/./b"));
-    }
-    
+    }    
 
     public void testExpandPathContainsDoubleDots() {
         String userDir = System.getProperty("user.dir");
         String separator = "/";
         assertExpandPath(userDir + separator + "a/../b", pnName("a/../b"));
+    }    
+
+    public void testExpandPathEmpty() {
+        String userDir = System.getProperty("user.dir");
+        String separator = "/";
+        assertExpandPath(userDir, pnName(""));
     }
     
 }

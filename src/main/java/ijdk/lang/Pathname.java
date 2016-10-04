@@ -109,7 +109,10 @@ public class Pathname extends File {
         String[] components = new Str(relativePath()).split(separator);
         
         String parentPath = null;
-        if (components.length == 1) {
+        if (components.length == 0) {
+            parentPath = "..";
+        }
+        else if (components.length == 1) {
             if (components[0].equals(".")) {
                 parentPath = "..";
             }
