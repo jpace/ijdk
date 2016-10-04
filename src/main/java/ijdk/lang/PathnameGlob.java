@@ -1,25 +1,29 @@
 package ijdk.lang;
 
-import java.util.*;
+import java.io.File;
+import java.util.List;
 
 public class PathnameGlob {
-    public PathnameGlob() {
-    }
+    public static final String SEPARATOR = File.separator;
 
     public static String toPattern(String glob) {
-        String separator = "/";
-        String[] components = new Str(glob).split(separator);
-        List<String> patList = new ArrayList<String>();
+        String[] components = new Str(glob).split(SEPARATOR);
+        List<String> patList = ICore.<String>list();
         for (String comp : components) {
-            if (comp.equals("**")) {
-                patList.add(".*");
-            }
-            else {
-                String pat = comp.replaceAll("\\*", "[^\\" + separator + "]*").replaceAll("\\.", "\\\\.");
-                patList.add(pat);
-            }
+            patList.add(elementToPattern(comp));
         }
-        String pattern = Str.join(patList, separator).str();
-        return pattern;
+        return Str.join(patList, SEPARATOR).str();
+    }
+
+    /**
+     * Converts an element within a glob, to a pattern.
+     */
+    protected static String elementToPattern(String element) {
+        if (element.equals("**")) {
+            return ".*";
+        }
+        else {
+            return element.replaceAll("\\*", "[^\\" + SEPARATOR + "]*").replaceAll("\\.", "\\\\.");
+        }
     }
 }
