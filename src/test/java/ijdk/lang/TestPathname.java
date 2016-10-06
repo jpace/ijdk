@@ -284,5 +284,13 @@ public class TestPathname extends TestCase {
         String separator = "/";
         assertExpandPath(userDir, pnName(""));
     }
+
+    public void testExpandPathFullPathOneElement() {
+        assertExpandPath("/a", pnName("/a"));
+    }
+
+    public void testExpandPathFullPathRelative() {
+        assertExpandPath("/a/../b/c", pnName("/a/../b/c"));
+    }
     
 }
