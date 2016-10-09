@@ -9,9 +9,9 @@ public class TestIndex extends TestCase {
     
     // getIndex
 
-    public void assertGetIndex(Integer exp, Integer size, int index) {
+    public void assertGetIndex(Integer expected, Integer size, int index) {
         Integer result = Index.getIndex(size, index);
-        assertEquals("size: '" + size + "'; index: " + index, exp, result);
+        assertEquals("size: '" + size + "'; index: " + index, expected, result);
     }
 
     public void testGetIndexNull() {

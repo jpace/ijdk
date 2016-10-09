@@ -6,9 +6,9 @@ import java.util.List;
 import junit.framework.TestCase;
 
 public class TestListExt extends TestCase {
-    public static final List<Integer> NUMS = java.util.Arrays.asList(new Integer[] { 2, 4, 6, 8 });
-    public static final List<String> WORDS  = java.util.Arrays.asList(new String[] { "the", "whole", "kit", "and", "caboodle" });
-    public static final List<String> EMPTY  = new java.util.ArrayList<String>();
+    public static final List<Integer> NUMS = Arrays.asList(new Integer[] { 2, 4, 6, 8 });
+    public static final List<String> WORDS  = Arrays.asList(new String[] { "the", "whole", "kit", "and", "caboodle" });
+    public static final List<String> EMPTY  = new ArrayList<String>();
 
     public TestListExt(String name) {
         super(name);

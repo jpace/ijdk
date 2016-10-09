@@ -29,10 +29,11 @@ public class ListExt extends CollectionExt {
      * result in the distance from the end of the list, with index -1 meaning
      * the last element in the list. Returns null if the resulting index is out
      * of range.
+     *
+     * @see Index#getIndex
      */
     public static Integer getIndex(Integer size, Integer index) {
-        int idx = index < 0 ? size + index : index;
-        return idx < 0 || idx >= size ? null : idx;
+        return Index.getIndex(size, index);
     }
 
     /**
