@@ -5,6 +5,13 @@ import java.util.List;
 
 public class ListExt extends CollectionExt {
     /**
+     * Returns the first element in the list.
+     */
+    public static <T> T first(List<T> list) {
+        return list == null ? null : get(list, 0);
+    }
+
+    /**
      * Returns the last element in the list.
      */
     public static <T> T last(List<T> list) {
