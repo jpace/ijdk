@@ -115,5 +115,20 @@ public class StringList extends ArrayList<String> {
             }
         }
         return matching;
-    }    
+    }
+
+    /**
+     * Pops the <em>last</em> element off the list and returns it, or null if the list is empty.
+     * This is consistent with Ruby and Perl, but other languages 
+     */
+    public String pop() {
+        return isEmpty() ? null : remove(size() - 1);
+    }
+
+    /**
+     * Removes (shifts) the first element off the list and returns it, or null if the list is empty.
+     */
+    public String shift() {
+        return isEmpty() ? null : remove(0);
+    }
 }
