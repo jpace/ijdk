@@ -15,6 +15,21 @@ import org.incava.ijdk.lang.ObjectExt;
  *  - clearer method names: relativePath(), fullPath(), baseName(), rootName(), extension()
  */
 public class Pathname extends File {
+    public static List<Pathname> glob(String glob) {
+        String pattern = PathnameGlob.toPattern(glob);
+        List<Pathname> all = findAll();
+        return all;
+    }
+
+    public static List<Pathname> findAll() {
+        Pathname root = new Pathname();
+        List<Pathname> all = new ArrayList<Pathname>();
+        for (Pathname child : root.children()) {
+            all.add(child);
+        }
+        return all;
+    }
+    
     private static final long serialVersionUID = -4936465396173432030L;
 
     /**
@@ -29,6 +44,13 @@ public class Pathname extends File {
      */
     public Pathname(String pathName) {
         super(pathName);
+    }
+
+    /**
+     * Creates a Pathname from the current directory (user.dir).
+     */
+    public Pathname() {
+        this(new File(System.getProperty("user.dir")));
     }
 
     /**
@@ -170,5 +192,16 @@ public class Pathname extends File {
      */
     public void printLines(List<String> lines) {
         IO.printLines(relativePath(), lines);
-    }    
+    }
+
+    /**
+     * Returns the immediate subelements of this pathname.
+     */
+    public List<Pathname> children() {
+        List<Pathname> children = new ArrayList<Pathname>();
+        for (File child : listFiles()) {
+            children.add(new Pathname(child));
+        }
+        return children;
+    }
 }

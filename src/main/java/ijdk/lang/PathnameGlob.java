@@ -17,13 +17,18 @@ public class PathnameGlob {
 
     /**
      * Converts an element within a glob, to a pattern.
+     * 
+     * Roughly based on Dir#glob: http://ruby-doc.org/core-1.9.3/Dir.html
      */
     protected static String elementToPattern(String element) {
         if (element.equals("**")) {
             return ".*";
         }
         else {
-            return element.replaceAll("\\*", "[^\\" + SEPARATOR + "]*").replaceAll("\\.", "\\\\.");
+            String elmt = element;
+            elmt = elmt.replaceAll("\\*", "[^\\" + SEPARATOR + "]*");
+            elmt = elmt.replaceAll("\\.", "\\\\.");
+            return elmt;
         }
     }
 }

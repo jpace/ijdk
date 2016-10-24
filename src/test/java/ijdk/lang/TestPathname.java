@@ -1,7 +1,10 @@
 package ijdk.lang;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import junit.framework.TestCase;
+import static ijdk.lang.ICore.list;
 
 public class TestPathname extends TestCase {
     public TestPathname(String name) {
@@ -56,15 +59,20 @@ public class TestPathname extends TestCase {
 
     // ctor
 
+    public Pathname assertCtor(Pathname expected, Pathname pn) {
+        assertEquals(expected, pn);
+        return pn;
+    }
+
     public Pathname assertCtor(Pathname expected, String fileName) {
         Pathname pn = new Pathname(fileName);
-        assertEquals(expected, pn);
+        assertEquals("fileName: " + fileName, expected, pn);
         return pn;
     }
 
     public Pathname assertCtor(Pathname expected, File file) {
         Pathname pn = new Pathname(file);
-        assertEquals(expected, pn);
+        assertEquals("file: " + file, expected, pn);
         return pn;
     }
 
@@ -86,6 +94,11 @@ public class TestPathname extends TestCase {
     public void testCtorFilePath() {
         Pathname expected = pnFile(new File("d/f.x"));
         assertCtor(expected, new File("d/f.x"));
+    }
+
+    public void testCtorUserDir() {
+        Pathname expected = pnName(System.getProperty("user.dir"));
+        assertCtor(expected, new Pathname(System.getProperty("user.dir")));
     }
 
     // baseName
@@ -284,5 +297,41 @@ public class TestPathname extends TestCase {
         String separator = "/";
         assertExpandPath(userDir, pnName(""));
     }
-    
+
+    public void testExpandPathFullPathOneElement() {
+        assertExpandPath("/a", pnName("/a"));
+    }
+
+    public void testExpandPathFullPathRelative() {
+        assertExpandPath("/a/../b/c", pnName("/a/../b/c"));
+    }
+
+    // glob
+
+    public List<Pathname> assertGlob(List<Pathname> expected, String glob) {
+        String msg = "glob: " + glob;
+        List<Pathname> result = Pathname.glob(glob);
+        System.out.println("glob: " + glob);
+        System.out.println("result: " + result);
+        assertEquals(msg, expected, result);
+        return result;
+    }
+
+    // public void testSingleDirectory() {
+    //     assertGlob(list(new Pathname("main")), "main");
+    // }
+
+    // children
+
+    public List<Pathname> assertChildren(List<Pathname> expected, Pathname dir) {
+        List<Pathname> result = dir.children();
+        assertEquals("dir: " + dir, expected, result);
+        return result;
+    }
+
+    // public void testChildrenUserDir() {
+    //     Pathname dir = new Pathname();
+    //     List<Pathname> expected = new ArrayList<Pathname>();
+    //     assertChildren(expected, dir);
+    // }
 }
