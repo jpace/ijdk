@@ -685,16 +685,20 @@ public abstract class StringTest extends TestCase {
         assertSnip("", "", 3);
     }
 
-    public void testSnipLongerAtStart() {
-        assertSnip("a-", "abc", 1);
+    public void testSnipToEmpty() {
+        assertSnip("-", "abc", 1);
     }
 
     public void testSnipLongerAtEnd() {
-        assertSnip("ab-", "abc", 2);
+        assertSnip("a-", "abc", 2);
     }
 
     public void testSnipAtLength() {
         assertSnip("abc", "abc", 3);
+    }
+
+    public void testSnipTwoLonger() {
+        assertSnip("ab-", "abcd", 3);
     }
 
     // isEmpty
