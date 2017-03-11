@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeMap;
 
 import org.incava.ijdk.io.StdOut;
 import org.incava.ijdk.lang.ArrayExt;
@@ -251,5 +252,38 @@ public class ICore {
      */
     public static boolean println(Object obj) {
         return StdOut.println(obj);
+    }
+
+    /**
+     * Creates an empty tree map.
+     */
+    public static <KeyType, ValueType> TreeMap<KeyType, ValueType> map() {
+        return new TreeMap<KeyType, ValueType>();
+    }
+
+    /**
+     * Creates a map with one key/value pair.
+     */
+    public static <KeyType, ValueType> TreeMap<KeyType, ValueType> map(KeyType k1, ValueType v1) {
+        TreeMap<KeyType, ValueType> map = map();
+        map.put(k1, v1);
+        return map;
+    }
+
+    /**
+     * Creates a map with two key/value pairs.
+     */
+    public static <KeyType, ValueType> TreeMap<KeyType, ValueType> map(KeyType k1, ValueType v1, KeyType k2, ValueType v2) {
+        TreeMap<KeyType, ValueType> map = map(k1, v1);
+        map.put(k2, v2);
+        return map;
+    }
+
+    /**
+     * Converts varargs to T[]. <code>ary("one", 1)</code> is shorter than <code>new Object[] {
+     * "one", 1 }</code>
+     */
+    public static <T> T[] ary(T ... args) {
+        return args;
     }
 }

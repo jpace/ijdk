@@ -49,7 +49,7 @@ public class CollectionExt extends ObjectExt {
     }   
 
     /**
-     * Returns whether any elements in <code>tgt</code> is in <code>src</code>.
+     * Returns whether any element in <code>tgt</code> is in <code>src</code>.
      * If <code>src</code> or <code>tgt</code> is null, false is returned.
      */
     public static <Type> boolean hasAny(Collection<Type> src, Collection<Type> tgt) {

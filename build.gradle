@@ -1,7 +1,7 @@
 apply plugin: 'java'
 
 group = 'org.incava.ijdk'
-version ='3.0.1'
+version ='3.0.2'
 sourceCompatibility = 1.5
 sourceCompatibility = 1.5
 
@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
+    testCompile group: 'pl.pragmatists', name: 'JUnitParams', version: '1.0.6'
 }
 
 allprojects {
