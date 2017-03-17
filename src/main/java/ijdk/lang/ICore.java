@@ -234,6 +234,22 @@ public class ICore {
     }
 
     /**
+     * Returns an string list, which can be empty. This exists as an internate to
+     * <code>ICore.<String>list()</code> for empty string lists.
+     */
+    public static List<String> strlist(String ... elements) {
+        return ICore.<String>list(elements);
+    }
+
+    /**
+     * Returns an integer list, which can be empty. This exists as an internate to
+     * <code>ICore.<Integer>list()</code> for empty integer lists.
+     */
+    public static List<Integer> intlist(Integer ... elements) {
+        return ICore.<Integer>list(elements);
+    }
+
+    /**
      * Writes to standard output. Returns true, so this can be used inside conditionals.
      */
     public static boolean puts(Object obj) {

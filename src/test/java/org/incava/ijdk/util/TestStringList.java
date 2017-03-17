@@ -246,4 +246,27 @@ public class TestStringList extends TestCase {
     public void testShiftTwoElements() {
         assertShift("a", new StringList("a", "b"));
     }
+
+    // anyEqualsIgnoreCase
+
+    public void assertAnyEqualsIgnoreCase(boolean expected, String substr, String ... args) {
+        StringList sl = new StringList(args);
+        assertEquals("sl: " + sl + "; substr: " + substr, expected, sl.anyEqualsIgnoreCase(substr));
+    }
+
+    public void testAnyEqualsIgnoreCaseEmpty() {
+        assertAnyEqualsIgnoreCase(false, "o");
+    }
+
+    public void testAnyEqualsIgnoreCaseExactOne() {
+        assertAnyEqualsIgnoreCase(true, "one", "one");
+    }
+
+    public void testAnyEqualsIgnoreCaseMultiple() {
+        assertAnyEqualsIgnoreCase(true, "one", "one", "two");
+    }
+
+    public void testAnyEqualsIgnoreCaseMixedCase() {
+        assertAnyEqualsIgnoreCase(true, "one", "One");
+    }
 }

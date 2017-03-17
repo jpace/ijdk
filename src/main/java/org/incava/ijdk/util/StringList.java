@@ -81,6 +81,21 @@ public class StringList extends ArrayList<String> {
     }
 
     /**
+     * Returns whether any element matches the given one, without regard to case.
+     */
+    public boolean anyEqualsIgnoreCase(String str) {
+        if (str == null) {
+            return false;
+        }
+        for (String s : this) {
+            if (s.equalsIgnoreCase(str)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Returns the first string in the list for which the closure returns true. Returns null if the
      * criteria is null or the criteria is not matched.
      *

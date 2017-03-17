@@ -1,6 +1,7 @@
 package ijdk.lang;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import junitparams.JUnitParamsRunner;
@@ -36,4 +37,16 @@ public class TestICore {
     public void ary() {
         Assert.assertEquals(Arrays.asList(new String[] { "one", "two" }), Arrays.asList(ICore.ary("one", "two")));
     }
+
+    @Test
+    public void strlist() {
+        List<String> expected = new ArrayList<String>();
+        Assert.assertEquals(expected, ICore.strlist());
+    }
+
+    @Test
+    public void intlist() {
+        List<Integer> expected = new ArrayList<Integer>();
+        Assert.assertEquals(expected, ICore.intlist());
+    }    
 }
