@@ -1,6 +1,7 @@
 package ijdk.lang;
 
 import java.util.Collection;
+import java.util.Arrays;
 
 /**
  * Extensions to the Object class, wrapping a Java Object with additional methods.
@@ -139,4 +140,21 @@ public class Obj {
     public boolean isNotNull() {
         return obj() != null;
     }
+
+    /**
+     * Returns the wrapped object as a string. C style arrays (e.g., Double[]) are run through the
+     * toString for java.util.List, giving them better output.
+     */
+    public String toString() {
+        Object obj = obj();
+        if (obj == null) {
+            return "null";
+        }
+        else if (obj instanceof Object[]) {
+            return Arrays.asList((Object[])obj).toString();
+        }
+        else {
+            return obj.toString();
+        }
+    }    
 }
