@@ -15,15 +15,15 @@ import org.incava.ijdk.lang.ObjectExt;
  *  - clearer method names: relativePath(), fullPath(), baseName(), rootName(), extension()
  */
 public class Pathname extends File {
-    public static List<Pathname> glob(String glob) {
+    public static java.util.List<Pathname> glob(String glob) {
         String pattern = PathnameGlob.toPattern(glob);
-        List<Pathname> all = findAll();
+        java.util.List<Pathname> all = findAll();
         return all;
     }
 
-    public static List<Pathname> findAll() {
+    public static java.util.List<Pathname> findAll() {
         Pathname root = new Pathname();
-        List<Pathname> all = new ArrayList<Pathname>();
+        java.util.List<Pathname> all = new ArrayList<Pathname>();
         for (Pathname child : root.children()) {
             all.add(child);
         }
@@ -147,7 +147,7 @@ public class Pathname extends File {
         }
         else {
             // reduce single dots
-            List<String> comps = new ArrayList<String>();
+            java.util.List<String> comps = new ArrayList<String>();
             for (String c : components) {
                 if (!c.equals(".")) {
                     comps.add(c);
@@ -174,7 +174,7 @@ public class Pathname extends File {
     /**
      * Reads the file, returning a list of lines, which do not include end of line characters.
      */
-    public List<String> readLines() {
+    public java.util.List<String> readLines() {
         return IO.readLines(relativePath());
     }
 
@@ -197,8 +197,8 @@ public class Pathname extends File {
     /**
      * Returns the immediate subelements of this pathname.
      */
-    public List<Pathname> children() {
-        List<Pathname> children = new ArrayList<Pathname>();
+    public java.util.List<Pathname> children() {
+        java.util.List<Pathname> children = new ArrayList<Pathname>();
         for (File child : listFiles()) {
             children.add(new Pathname(child));
         }

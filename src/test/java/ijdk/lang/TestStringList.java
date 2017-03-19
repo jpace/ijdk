@@ -1,6 +1,6 @@
-package org.incava.ijdk.util;
+package ijdk.lang;
 
-import java.util.*;
+import java.util.Arrays;
 import junit.framework.TestCase;
 import org.incava.ijdk.lang.Closure;
 
@@ -22,7 +22,7 @@ public class TestStringList extends TestCase {
     }
 
     public void testCtorCollection() {
-        List<String> list = Arrays.asList(new String[] { "one", "two", "three" });
+        java.util.List<String> list = Arrays.asList(new String[] { "one", "two", "three" });
         StringList sl = new StringList(list);
         assertEquals(3, sl.size());
     }
