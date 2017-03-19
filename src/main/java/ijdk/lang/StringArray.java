@@ -2,8 +2,8 @@ package ijdk.lang;
 
 import java.util.Arrays;
 
-public class StringAry extends Ary<String> {
-    public StringAry(String ... ary) {
+public class StringArray extends Array<String> {
+    public StringArray(String ... ary) {
         super(ary);
     }
     
@@ -20,8 +20,8 @@ public class StringAry extends Ary<String> {
      * @see #isEmpty
      */
     public boolean equals(Object other) {
-        if (other instanceof StringAry) {
-            return equals(((StringAry)other).ary());
+        if (other instanceof StringArray) {
+            return equals(((StringArray)other).ary());
         }
         else if (other instanceof String[]) {
             return equals((String[])other);
@@ -40,20 +40,20 @@ public class StringAry extends Ary<String> {
      * @see #isEmpty
      */
     public boolean equals(String[] other) {
-        StringAry otherAry = new StringAry(other);
+        StringArray otherArray = new StringArray(other);
         if (isEmpty()) {
-            return otherAry.isEmpty();
+            return otherArray.isEmpty();
         }
-        else if (otherAry.isEmpty()) {
+        else if (otherArray.isEmpty()) {
             return false;
         }
-        else if (length() != otherAry.length()) {
+        else if (length() != otherArray.length()) {
             return false;
         }
         else {
             for (int idx = 0; idx < length(); ++idx) {
                 Str x = new Str(get(idx));
-                Str y = new Str(otherAry.get(idx));
+                Str y = new Str(otherArray.get(idx));
                 if (!x.equals(y)) {
                     return false;
                 }

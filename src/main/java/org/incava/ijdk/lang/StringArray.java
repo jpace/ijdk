@@ -1,21 +1,18 @@
 package org.incava.ijdk.lang;
 
-import ijdk.lang.StringAry;
-import java.util.Arrays;
-
 public class StringArray {
     /**
      * Returns a string of the form "[foo, bar]", or "[]" if the array is null or empty.
      */
     public static String toString(String[] ary) {
-        return new StringAry(ary).toString();
+        return new ijdk.lang.StringArray(ary).toString();
     }
 
     /**
      * Returns whether the array is null or empty.
      */
     public static boolean isEmpty(String[] ary) {
-        return new StringAry(ary).isEmpty();
+        return new ijdk.lang.StringArray(ary).isEmpty();
     }
 
     /**
@@ -24,6 +21,6 @@ public class StringArray {
      * @see #isEmpty
      */
     public static boolean areEqual(String[] x, String[] y) {
-        return new StringAry(x).equals(y);
+        return new ijdk.lang.StringArray(x).equals(y);
     }
 }

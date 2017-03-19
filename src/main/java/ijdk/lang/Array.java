@@ -7,10 +7,10 @@ import org.incava.ijdk.util.Index;
 /**
  * Wraps C-style arrays with common behavior. The wrapped array can be null.
  */
-public class Ary<T extends Object> extends Obj {
+public class Array<T extends Object> extends Obj {
     private final T[] ary;
     
-    public Ary(T ... ary) {
+    public Array(T ... ary) {
         super(ary);
         this.ary = ary;
     }
@@ -19,7 +19,7 @@ public class Ary<T extends Object> extends Obj {
      * Returns the wrapped array.
      */
     public T[] getArray() {
-        return this.ary;
+        return ary();
     }
 
     /**
@@ -47,11 +47,11 @@ public class Ary<T extends Object> extends Obj {
     }
 
     /**
-     * Returns the wrapped array, as an ArrayList. If the wrapped array is null, then null is
-     * returned.
+     * Returns the wrapped array, as a List (dynamically sized collection, with a copy of the
+     * wrapped array). If the wrapped array is null, then null is returned.
      */
-    public ArrayList<T> asList() {
-        return isNull() ? null : new ArrayList<T>(Arrays.asList(ary));
+    public List<T> asList() {
+        return isNull() ? null : new List<T>(Arrays.asList(ary));
     }
 
     /**

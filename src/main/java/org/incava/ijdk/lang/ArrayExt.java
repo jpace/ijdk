@@ -1,9 +1,9 @@
 package org.incava.ijdk.lang;
 
-import ijdk.lang.Ary;
+import ijdk.lang.Array;
 
 /**
- * Extensions for C-style arrays (e.g., Foo[]).
+ * Extensions for C-style arrays (e.g., Foo[]). Use <code>ijdk.lang.Array</code> instead.
  */
 public class ArrayExt {
     /**
@@ -15,6 +15,6 @@ public class ArrayExt {
      * @return an interable, wrapping the array
      */
     public static <T> Iterable<T> iter(T[] ary) {
-        return new Ary<T>(ary).iter();
+        return new Array<T>(ary).iter();
     }
 }
