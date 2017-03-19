@@ -48,4 +48,20 @@ public class TestList {
 
         Assert.assertEquals(expected, numbers.toStringList());
     }
+
+    @Test
+    public void containsAnyCollection() {
+        Assert.assertEquals(true,  new List<Integer>(1, 2, 3).containsAny(Common.list(1)));
+        Assert.assertEquals(true,  new List<Integer>(1, 2, 3).containsAny(Common.list(2, 4)));
+        Assert.assertEquals(false, new List<Integer>(1, 2, 3).containsAny(Common.list(4)));
+        Assert.assertEquals(false, new List<Integer>(1, 2, 3).containsAny(Common.list(4, 5)));
+    }
+
+    @Test
+    public void containsAnyArray() {
+        Assert.assertEquals(true,  new List<Integer>(1, 2, 3).containsAny(1));
+        Assert.assertEquals(true,  new List<Integer>(1, 2, 3).containsAny(4, 3));
+        Assert.assertEquals(false, new List<Integer>(1, 2, 3).containsAny());
+        Assert.assertEquals(false, new List<Integer>(1, 2, 3).containsAny(4));
+    }
 }
