@@ -8,6 +8,10 @@ import org.incava.ijdk.util.StringCriteria;
  * An extension of List&lt;String&gt;, with a constructor for varargs, and selectors that use closures.
  */
 public class StringList extends List<String> {
+    public static StringList of(String ... args) {
+        return new StringList(args);
+    }
+    
     private static final long serialVersionUID = -5489075883851520676L;
     
     /**
@@ -85,15 +89,7 @@ public class StringList extends List<String> {
      * Returns whether any element matches the given one, without regard to case.
      */
     public boolean anyEqualsIgnoreCase(String str) {
-        if (str == null) {
-            return false;
-        }
-        for (String s : this) {
-            if (s.equalsIgnoreCase(str)) {
-                return true;
-            }
-        }
-        return false;
+        return findFirst(StringCriteria.equalsIgnoreCase(str)) != null;
     }
 
     /**

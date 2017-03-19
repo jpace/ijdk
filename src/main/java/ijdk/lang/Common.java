@@ -1,7 +1,7 @@
 package ijdk.lang;
 
 /**
- * The most commonly used methods in ijdk, suitable for static import.
+ * The most commonly used methods in ijdk, suitable for static import and replete with name collisions.
  */
 public class Common extends ICore {
     /**

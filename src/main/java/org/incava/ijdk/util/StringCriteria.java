@@ -38,4 +38,15 @@ public class StringCriteria {
             }
         };
     }
+    
+    /**
+     * Returns true if an element equals the given string, without regard to case.
+     */
+    public static Closure<Boolean, String> equalsIgnoreCase(final String other) {
+        return new Closure<Boolean, String>() {
+            public Boolean execute(String str) {
+                return str != null && str.equalsIgnoreCase(other);
+            }
+        };
+    }
 }
