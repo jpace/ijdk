@@ -50,18 +50,32 @@ public class TestList {
     }
 
     @Test
-    public void containsAnyCollection() {
-        Assert.assertEquals(true,  new List<Integer>(1, 2, 3).containsAny(Common.list(1)));
-        Assert.assertEquals(true,  new List<Integer>(1, 2, 3).containsAny(Common.list(2, 4)));
-        Assert.assertEquals(false, new List<Integer>(1, 2, 3).containsAny(Common.list(4)));
-        Assert.assertEquals(false, new List<Integer>(1, 2, 3).containsAny(Common.list(4, 5)));
+    @Parameters
+    public void containsAnyCollection(Boolean expected, List<Integer> list, List<Integer> coll) {
+        Assert.assertEquals(expected, list.containsAny(coll));
     }
 
+    public List<Object[]> parametersForContainsAnyCollection() {
+        return Common.<Object[]>list(Common.ary(true,  new List<Integer>(1, 2, 3), Common.list(1)),
+                                     Common.ary(true,  new List<Integer>(1, 2, 3), Common.list(2, 4)),
+                                     Common.ary(false, new List<Integer>(1, 2, 3), Common.list(4)),
+                                     Common.ary(false, new List<Integer>(1, 2, 3), Common.list(4, 5)));
+    }
+    
     @Test
-    public void containsAnyArray() {
-        Assert.assertEquals(true,  new List<Integer>(1, 2, 3).containsAny(1));
-        Assert.assertEquals(true,  new List<Integer>(1, 2, 3).containsAny(4, 3));
+    @Parameters
+    public void containsAnyArray(Boolean expected, List<Integer> list, Integer ... args) {
+        Assert.assertEquals(expected, list.containsAny(args));
+    }
+    
+    @Test
+    public void containsAnyArrayEmpty() {
         Assert.assertEquals(false, new List<Integer>(1, 2, 3).containsAny());
-        Assert.assertEquals(false, new List<Integer>(1, 2, 3).containsAny(4));
+    }
+
+    public List<Object[]> parametersForContainsAnyArray() {
+        return Common.<Object[]>list(Common.ary(true,  new List<Integer>(1, 2, 3), 1),
+                                     Common.ary(true,  new List<Integer>(1, 2, 3), 4, 3),
+                                     Common.ary(false, new List<Integer>(1, 2, 3), 4));
     }
 }

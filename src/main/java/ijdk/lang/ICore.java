@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.TreeMap;
 
 import org.incava.ijdk.io.StdOut;
@@ -226,19 +225,15 @@ public class ICore {
      * </pre>
      */
     public static <T> List<T> list(T ... elements) {
-        List<T> ary = new ArrayList<T>();
-        for (T element : elements) {
-            ary.add(element);
-        }
-        return ary;
+        return List.of(elements);
     }
 
     /**
      * Returns an string list, which can be empty. This exists as an internate to
      * <code>ICore.<String>list()</code> for empty string lists.
      */
-    public static List<String> strlist(String ... elements) {
-        return ICore.<String>list(elements);
+    public static StringList strlist(String ... elements) {
+        return new StringList(elements);
     }
 
     /**
@@ -301,5 +296,13 @@ public class ICore {
      */
     public static <T> T[] ary(T ... args) {
         return args;
+    }
+
+    /**
+     * Converts varargs to T[]. <code>ary("one", 1)</code> is shorter than <code>new Object[] {
+     * "one", 1 }</code>
+     */
+    public static <T> Array<T> array(T ... args) {
+        return new Array<T>(args);
     }
 }
