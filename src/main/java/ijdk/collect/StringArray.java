@@ -1,5 +1,6 @@
-package ijdk.lang;
+package ijdk.collect;
 
+import ijdk.lang.Str;
 import java.util.Arrays;
 
 public class StringArray extends Array<String> {

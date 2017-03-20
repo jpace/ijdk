@@ -1,9 +1,11 @@
-package ijdk.lang;
+package ijdk.collect;
 
+import ijdk.lang.Common;
 import java.util.Arrays;
 import java.util.Collection;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import org.incava.test.Assertions;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +15,7 @@ public class TestList {
     // ctor
 
     public <T> List<T> assertCtor(List<T> expected, List<T> actual) {
-        Assert.assertEquals(expected, actual);
-        return expected;
+        return Assertions.assertEqual(expected, actual);
     }
 
     @Test
@@ -51,11 +52,11 @@ public class TestList {
 
     @Test
     @Parameters
-    public void containsAnyCollection(Boolean expected, List<Integer> list, List<Integer> coll) {
+    public void containsAnyCollection(Boolean expected, List<Integer> list, java.util.List<Integer> coll) {
         Assert.assertEquals(expected, list.containsAny(coll));
     }
 
-    public List<Object[]> parametersForContainsAnyCollection() {
+    public java.util.List<Object[]> parametersForContainsAnyCollection() {
         return Common.<Object[]>list(Common.ary(true,  new List<Integer>(1, 2, 3), Common.list(1)),
                                      Common.ary(true,  new List<Integer>(1, 2, 3), Common.list(2, 4)),
                                      Common.ary(false, new List<Integer>(1, 2, 3), Common.list(4)),
@@ -73,7 +74,7 @@ public class TestList {
         Assert.assertEquals(false, new List<Integer>(1, 2, 3).containsAny());
     }
 
-    public List<Object[]> parametersForContainsAnyArray() {
+    public java.util.List<Object[]> parametersForContainsAnyArray() {
         return Common.<Object[]>list(Common.ary(true,  new List<Integer>(1, 2, 3), 1),
                                      Common.ary(true,  new List<Integer>(1, 2, 3), 4, 3),
                                      Common.ary(false, new List<Integer>(1, 2, 3), 4));

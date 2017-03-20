@@ -1,12 +1,12 @@
 package org.incava.ijdk.util;
 
-import java.util.*;
-import org.incava.ijdk.lang.Closure;
+import java.util.Collection;
 
 /**
- * An extension of List&lt;String&gt;, with a constructor for varargs, and selectors that use closures.
+ * An extension of List&lt;String&gt;, with a constructor for varargs, and selectors that use
+ * closures. Use <code>ijdk.collect.StringList</code> instead.
  */
-public class StringList extends ijdk.lang.StringList {
+public class StringList extends ijdk.collect.StringList {
     private static final long serialVersionUID = -5489075883851520676L;
     
     /**
