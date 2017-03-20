@@ -78,4 +78,29 @@ public class List<T extends Object> extends ArrayList<T> {
     public boolean containsAny(T ... args) {
         return containsAny(new List<T>(args));
     }
+
+    /**
+     * Returns the first element in the list, or null if the list is empty.
+     */
+    public T first() {
+        return isEmpty() ? null : get(0);
+    }
+
+    /**
+     * Returns the last element in the list, or null if the list is empty.
+     */
+    public T last() {
+        return isEmpty() ? null : get(size() - 1);
+    }
+
+    /**
+     * Returns the <code>n</code>th element in the list. If <code>n</code> is negative, then the
+     * index is the offset from the end, where <code>-1</code> is the last element, <code>-2</code>
+     * is the second to last element, and so on and so forth. If <code>n</code> is out of range,
+     * then null is returned.
+     */
+    public T get(int index) {
+        Integer idx = org.incava.ijdk.util.Index.getIndex(size(), index);
+        return idx == null ? null : super.get(idx);
+    }
 }

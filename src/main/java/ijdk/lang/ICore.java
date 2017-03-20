@@ -6,6 +6,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeMap;
 
+import ijdk.collect.Array;
+import ijdk.collect.List;
+import ijdk.collect.StringList;
+
 import org.incava.ijdk.io.StdOut;
 import org.incava.ijdk.lang.ArrayExt;
 import org.incava.ijdk.lang.ObjectExt;

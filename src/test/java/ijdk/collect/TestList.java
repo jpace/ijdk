@@ -5,17 +5,18 @@ import java.util.Arrays;
 import java.util.Collection;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.incava.test.Assertions;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.incava.test.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestList {
     // ctor
 
     public <T> List<T> assertCtor(List<T> expected, List<T> actual) {
-        return Assertions.assertEqual(expected, actual);
+        return assertEqual(expected, actual);
     }
 
     @Test
@@ -78,5 +79,52 @@ public class TestList {
         return Common.<Object[]>list(Common.ary(true,  new List<Integer>(1, 2, 3), 1),
                                      Common.ary(true,  new List<Integer>(1, 2, 3), 4, 3),
                                      Common.ary(false, new List<Integer>(1, 2, 3), 4));
+    }
+
+    @Test
+    @Parameters
+    public void first(Object expected, List<Object> list) {
+        System.out.println("list: " + list);
+        assertEqual(expected, list.first(), message("list", list));
+    }
+
+    public java.util.List<Object[]> parametersForFirst() {
+        return Common.<Object[]>list(Common.ary(new Integer(6), List.of(6)),
+                                     Common.ary(new Integer(6), List.of(6, 7)),
+                                     Common.ary((Integer)null,  List.<Integer>of()));
+    }
+
+    @Test
+    @Parameters
+    public void last(Object expected, List<Object> list) {
+        System.out.println("list: " + list);
+        assertEqual(expected, list.last(), message("list", list));
+    }
+
+    public java.util.List<Object[]> parametersForLast() {
+        return Common.<Object[]>list(Common.ary(new Integer(6), List.of(6)),
+                                     Common.ary(new Integer(7), List.of(6, 7)),
+                                     Common.ary((Integer)null,  List.<Integer>of()));
+    }
+
+    @Test
+    @Parameters
+    public void get(Object expected, List<Object> list, int idx) {
+        System.out.println("list: " + list);
+        assertEqual(expected, list.get(idx), message("list", list));
+    }
+
+    public java.util.List<Object[]> parametersForGet() {
+        return Common.<Object[]>list(Common.ary(new Integer(6), List.of(6), 0),
+                                     Common.ary(null,           List.of(6), 1),
+                                     Common.ary(new Integer(6), List.of(6), -1),
+                                     Common.ary(new Integer(7), List.of(6, 7), -1),
+                                     Common.ary(new Integer(6), List.of(6, 7), -2),
+                                     Common.ary(null,           List.of(6, 7),  2),
+                                     Common.ary(null,           List.of(6, 7), -3),
+                                     Common.ary(null,           List.<Integer>of(), 0),
+                                     Common.ary(null,           List.<Integer>of(), -1),
+                                     Common.ary(null,           List.<Integer>of(), 1));
+                                     
     }
 }
