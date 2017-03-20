@@ -1,6 +1,7 @@
-package ijdk.lang;
+package ijdk.collect;
 
-import java.util.*;
+import ijdk.lang.Obj;
+import java.util.Arrays;
 import org.incava.ijdk.util.EmptyIterable;
 import org.incava.ijdk.util.Index;
 
@@ -52,6 +53,13 @@ public class Array<T extends Object> extends Obj {
      */
     public List<T> asList() {
         return isNull() ? null : new List<T>(Arrays.asList(ary));
+    }
+
+    /**
+     * Returns the wrapped array, as a fixed-size list. If the wrapped array is null, then null is returned.
+     */
+    public java.util.List<T> asFixedSizeList() {
+        return isNull() ? null : Arrays.asList(ary);
     }
 
     /**

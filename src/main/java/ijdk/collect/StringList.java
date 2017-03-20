@@ -1,6 +1,6 @@
-package ijdk.lang;
+package ijdk.collect;
 
-import java.util.*;
+import java.util.Collection;
 import org.incava.ijdk.lang.Closure;
 import org.incava.ijdk.util.StringCriteria;
 

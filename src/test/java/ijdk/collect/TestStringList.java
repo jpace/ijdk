@@ -1,4 +1,4 @@
-package ijdk.lang;
+package ijdk.collect;
 
 import java.util.Arrays;
 import junit.framework.TestCase;

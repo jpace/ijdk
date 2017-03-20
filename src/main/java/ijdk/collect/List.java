@@ -1,4 +1,4 @@
-package ijdk.lang;
+package ijdk.collect;
 
 import java.util.Collection;
 import java.util.ArrayList;
@@ -7,6 +7,10 @@ import java.util.ArrayList;
  * A dynamically-sized collection, wrapping ArrayList.
  */
 public class List<T extends Object> extends ArrayList<T> {
+    public static <T extends Object> List<T> of(T ... ary) {
+        return new List<T>(ary);
+    }
+    
     public static final long serialVersionUID = 1L;
     
     /**
