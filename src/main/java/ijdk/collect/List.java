@@ -7,6 +7,9 @@ import java.util.ArrayList;
  * A dynamically-sized collection, wrapping ArrayList.
  */
 public class List<T extends Object> extends ArrayList<T> {
+    /**
+     * Creates a list from the given array.
+     */
     public static <T extends Object> List<T> of(T ... ary) {
         return new List<T>(ary);
     }
@@ -15,6 +18,8 @@ public class List<T extends Object> extends ArrayList<T> {
     
     /**
      * Creates a List with the given initial capacity.
+     *
+     * @deprecated this may be removed because of collisions with <code>new List<Integer>(3)</code>.
      */
     public List(int capacity) {
         super(capacity);
@@ -61,7 +66,7 @@ public class List<T extends Object> extends ArrayList<T> {
     }
 
     /**
-     * Returns whewther this list contains any element in the given collection.
+     * Returns whether this list contains any element in the given collection.
      */
     public boolean containsAny(Collection<T> coll) {
         for (Object obj : coll) {
@@ -73,7 +78,7 @@ public class List<T extends Object> extends ArrayList<T> {
     }
 
     /**
-     * Returns whewther this list contains any element in the given array.
+     * Returns whether this list contains any element in the given array.
      */
     public boolean containsAny(T ... args) {
         return containsAny(new List<T>(args));
@@ -102,5 +107,20 @@ public class List<T extends Object> extends ArrayList<T> {
     public T get(int index) {
         Integer idx = org.incava.ijdk.util.Index.getIndex(size(), index);
         return idx == null ? null : super.get(idx);
+    }
+
+    /**
+     * Adds the element to the list, and returns the list, so this method can be chained:
+     *
+     * <pre>
+     *    List<Integer> nums = List.of(1, 2, 3);
+     *    nums.append(4).append(5);
+     * </pre>
+     *
+     * @see java.util.List#add
+     */
+    public List<T> append(T obj) {
+        add(obj);
+        return this;
     }
 }

@@ -30,10 +30,9 @@ public class TestList {
     @Test
     public void ctorCollection() {
         Collection<String> coll = Arrays.asList(new String[] { "a", "b", "c" });
-        List<Object> expected = new List<Object>(coll);
         List<Object> actual = new List<Object>(coll);
 
-        assertCtor(expected, actual);
+        assertEqual(Arrays.asList(new Object[] { "a", "b", "c" }), actual);
     }
 
     @Test
@@ -84,7 +83,6 @@ public class TestList {
     @Test
     @Parameters
     public void first(Object expected, List<Object> list) {
-        System.out.println("list: " + list);
         assertEqual(expected, list.first(), message("list", list));
     }
 
@@ -97,7 +95,6 @@ public class TestList {
     @Test
     @Parameters
     public void last(Object expected, List<Object> list) {
-        System.out.println("list: " + list);
         assertEqual(expected, list.last(), message("list", list));
     }
 
@@ -110,7 +107,6 @@ public class TestList {
     @Test
     @Parameters
     public void get(Object expected, List<Object> list, int idx) {
-        System.out.println("list: " + list);
         assertEqual(expected, list.get(idx), message("list", list));
     }
 
@@ -125,6 +121,21 @@ public class TestList {
                                      Common.ary(null,           List.<Integer>of(), 0),
                                      Common.ary(null,           List.<Integer>of(), -1),
                                      Common.ary(null,           List.<Integer>of(), 1));
+                                     
+    }
+
+    @Test
+    @Parameters
+    public void append(List<Object> expected, List<Object> list, Object obj) {
+        // the returned value is also the list
+        assertEqual(expected, list.append(obj), message("list", list, "obj", obj));
+        assertEqual(expected, list, message("list", list, "obj", obj));
+    }
+
+    public java.util.List<Object[]> parametersForAppend() {
+        return Common.<Object[]>list(Common.ary(List.of(6, 7),     List.of(6), 7),
+                                     Common.ary(List.<Integer>of(6, null),  List.<Integer>of(6), (Integer)null),
+                                     Common.ary(List.of(7),        List.<Integer>of(), 7));
                                      
     }
 }

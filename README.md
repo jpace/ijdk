@@ -32,6 +32,18 @@ dynamically-sized array, unlike `Arrays.asList`, which returns a fixed-size arra
    numbers.add(3.17);
 ```
 
+* Enhanced collections of those in the JDK.
+
+```java
+   List<Integer> nums = List.of(1, 3, 5, 7);
+   nums.get(0);    // == 1
+   nums.get(-1);   // == 7
+   nums.append(9).append(11).append(13);
+   nums.get(-3);   // == 9
+   nums.first();   // == 1
+   nums.last();    // == 13
+```
+
 * classes for common Java collections of generics, such as:
 
 ```java
