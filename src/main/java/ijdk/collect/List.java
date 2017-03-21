@@ -21,6 +21,7 @@ public class List<T extends Object> extends ArrayList<T> {
      *
      * @deprecated this may be removed because of collisions with <code>new List<Integer>(3)</code>.
      */
+    @Deprecated
     public List(int capacity) {
         super(capacity);
     }
@@ -101,8 +102,8 @@ public class List<T extends Object> extends ArrayList<T> {
     /**
      * Returns the <code>n</code>th element in the list. If <code>n</code> is negative, then the
      * index is the offset from the end, where <code>-1</code> is the last element, <code>-2</code>
-     * is the second to last element, and so on and so forth. If <code>n</code> is out of range,
-     * then null is returned.
+     * is the second to last element, and so on and so forth. If <code>n</code> is out of range (not
+     * within <code>0 ... size()</code>), then null is returned.
      */
     public T get(int index) {
         Integer idx = org.incava.ijdk.util.Index.getIndex(size(), index);
@@ -123,4 +124,30 @@ public class List<T extends Object> extends ArrayList<T> {
         add(obj);
         return this;
     }
+
+    /**
+     * Sets the <code>n</code>th element in the list. If <code>n</code> is negative, then the index
+     * is the offset from the end, where <code>-1</code> is the last element, <code>-2</code> is the
+     * second to last element. Unlike <code>ArrayList#set</code>, this method honors the dynamically
+     * sized aspect of the list, and resizes it accordingly when <code>set(index, obj) &amp;&amp;
+     * index > size()</code>. However, <code>set(-index, obj)</code> (a negative index value) will
+     * result in an IllegalArgumentException when <code>-index < -size()</code>.
+     */
+    public T set(int index, T value) {
+        if (index < 0) {
+            if (-index > size()) {
+                throw new IllegalArgumentException("index: " + index + " is below the minimum " + -size());
+            }
+            else {
+                index = size() + index;
+            }
+        }
+        
+        T val = get(index);
+        while (size() - 1 < index) {
+            add(null);
+        }
+        super.set(index, value);
+        return val;
+    }    
 }

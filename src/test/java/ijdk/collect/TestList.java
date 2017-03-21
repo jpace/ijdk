@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.*;
+import static ijdk.lang.Common.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestList {
@@ -57,10 +58,10 @@ public class TestList {
     }
 
     public java.util.List<Object[]> parametersForContainsAnyCollection() {
-        return Common.<Object[]>list(Common.ary(true,  new List<Integer>(1, 2, 3), Common.list(1)),
-                                     Common.ary(true,  new List<Integer>(1, 2, 3), Common.list(2, 4)),
-                                     Common.ary(false, new List<Integer>(1, 2, 3), Common.list(4)),
-                                     Common.ary(false, new List<Integer>(1, 2, 3), Common.list(4, 5)));
+        return Common.<Object[]>list(ary(true,  new List<Integer>(1, 2, 3), Common.list(1)),
+                                     ary(true,  new List<Integer>(1, 2, 3), Common.list(2, 4)),
+                                     ary(false, new List<Integer>(1, 2, 3), Common.list(4)),
+                                     ary(false, new List<Integer>(1, 2, 3), Common.list(4, 5)));
     }
     
     @Test
@@ -75,9 +76,9 @@ public class TestList {
     }
 
     public java.util.List<Object[]> parametersForContainsAnyArray() {
-        return Common.<Object[]>list(Common.ary(true,  new List<Integer>(1, 2, 3), 1),
-                                     Common.ary(true,  new List<Integer>(1, 2, 3), 4, 3),
-                                     Common.ary(false, new List<Integer>(1, 2, 3), 4));
+        return Common.<Object[]>list(ary(true,  new List<Integer>(1, 2, 3), 1),
+                                     ary(true,  new List<Integer>(1, 2, 3), 4, 3),
+                                     ary(false, new List<Integer>(1, 2, 3), 4));
     }
 
     @Test
@@ -87,9 +88,9 @@ public class TestList {
     }
 
     public java.util.List<Object[]> parametersForFirst() {
-        return Common.<Object[]>list(Common.ary(new Integer(6), List.of(6)),
-                                     Common.ary(new Integer(6), List.of(6, 7)),
-                                     Common.ary((Integer)null,  List.<Integer>of()));
+        return Common.<Object[]>list(ary(new Integer(6), List.of(6)),
+                                     ary(new Integer(6), List.of(6, 7)),
+                                     ary((Integer)null,  List.<Integer>of()));
     }
 
     @Test
@@ -99,9 +100,9 @@ public class TestList {
     }
 
     public java.util.List<Object[]> parametersForLast() {
-        return Common.<Object[]>list(Common.ary(new Integer(6), List.of(6)),
-                                     Common.ary(new Integer(7), List.of(6, 7)),
-                                     Common.ary((Integer)null,  List.<Integer>of()));
+        return Common.<Object[]>list(ary(new Integer(6), List.of(6)),
+                                     ary(new Integer(7), List.of(6, 7)),
+                                     ary((Integer)null,  List.<Integer>of()));
     }
 
     @Test
@@ -111,16 +112,16 @@ public class TestList {
     }
 
     public java.util.List<Object[]> parametersForGet() {
-        return Common.<Object[]>list(Common.ary(new Integer(6), List.of(6), 0),
-                                     Common.ary(null,           List.of(6), 1),
-                                     Common.ary(new Integer(6), List.of(6), -1),
-                                     Common.ary(new Integer(7), List.of(6, 7), -1),
-                                     Common.ary(new Integer(6), List.of(6, 7), -2),
-                                     Common.ary(null,           List.of(6, 7),  2),
-                                     Common.ary(null,           List.of(6, 7), -3),
-                                     Common.ary(null,           List.<Integer>of(), 0),
-                                     Common.ary(null,           List.<Integer>of(), -1),
-                                     Common.ary(null,           List.<Integer>of(), 1));
+        return Common.<Object[]>list(ary(new Integer(6), List.of(6), 0),
+                                     ary(null,           List.of(6), 1),
+                                     ary(new Integer(6), List.of(6), -1),
+                                     ary(new Integer(7), List.of(6, 7), -1),
+                                     ary(new Integer(6), List.of(6, 7), -2),
+                                     ary(null,           List.of(6, 7),  2),
+                                     ary(null,           List.of(6, 7), -3),
+                                     ary(null,           List.<Integer>of(), 0),
+                                     ary(null,           List.<Integer>of(), -1),
+                                     ary(null,           List.<Integer>of(), 1));
                                      
     }
 
@@ -133,9 +134,35 @@ public class TestList {
     }
 
     public java.util.List<Object[]> parametersForAppend() {
-        return Common.<Object[]>list(Common.ary(List.of(6, 7),     List.of(6), 7),
-                                     Common.ary(List.<Integer>of(6, null),  List.<Integer>of(6), (Integer)null),
-                                     Common.ary(List.of(7),        List.<Integer>of(), 7));
-                                     
+        return Common.<Object[]>list(ary(List.of(6, 7),     List.of(6), 7),
+                                     ary(List.of(6, null),  List.of(6), (Integer)null),
+                                     ary(List.of(7),        List.<Integer>of(), 7));                                     
+    }
+
+    @Test
+    @Parameters
+    public void set(List<Object> expected, List<Object> list, int index, Object obj) {
+        if (expected == null) {
+            try {
+                list.set(index, obj);
+                Assert.fail("expected IllegalArgumentException exception");
+            }
+            catch (IllegalArgumentException iae) {
+                // good
+            }
+        }
+        else {
+            list.set(index, obj);
+            assertEqual(expected, list, message("index", index, "obj", obj));
+        }
+    }
+
+    public java.util.List<Object[]> parametersForSet() {
+        return Common.<Object[]>list(ary(List.of(6, 7),     List.of(6),           1, 7),
+                                     ary(List.of(6, null),  List.<Integer>of(6),  1, (Integer)null),
+                                     ary(List.of(7),        List.<Integer>of(),   0, 7),
+                                     ary(null,              List.<Integer>of(),  -1, 7),
+                                     ary(List.of(7),        List.<Integer>of(6), -1, 7),
+                                     ary(null,              List.<Integer>of(6), -2, 7));
     }
 }

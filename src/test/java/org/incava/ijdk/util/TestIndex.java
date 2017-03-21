@@ -1,60 +1,34 @@
 package org.incava.ijdk.util;
 
-import junit.framework.TestCase;
+import ijdk.lang.Common;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class TestIndex extends TestCase {
-    public TestIndex(String name) {
-        super(name);
-    }
-    
-    // getIndex
+import static org.incava.test.Assertions.*;
+import static ijdk.lang.Common.*;
 
-    public void assertGetIndex(Integer expected, Integer size, int index) {
+@RunWith(JUnitParamsRunner.class)
+public class TestIndex {
+    @Test
+    @Parameters
+    public void getIndex(Integer expected, Integer size, int index) {
         Integer result = Index.getIndex(size, index);
-        assertEquals("size: '" + size + "'; index: " + index, expected, result);
+        assertEqual(expected, result, message("size", size, "index", index));
     }
 
-    public void testGetIndexNull() {
-        assertGetIndex(null, null, 0);
-    }
-
-    public void testGetIndexZeroLength() {
-        assertGetIndex(null, 0, 0);
-    }
-
-    public void testGetIndexZero() {
-        assertGetIndex(0, 4, 0);
-    }
-
-    public void testGetIndexOne() {
-        assertGetIndex(1, 4, 1);
-    }
-
-    public void testGetIndexLast() {
-        assertGetIndex(3, 4, 3);
-    }
-
-    public void testGetIndexOffEnd() {
-        assertGetIndex(null, 4, 4);
-    }
-
-    public void testGetIndexNegativeOne() {
-        assertGetIndex(3, 4, -1);
-    }
-
-    public void testGetIndexNegativeTwo() {
-        assertGetIndex(2, 4, -2);
-    }
-
-    public void testGetIndexNegativeAtSecond() {
-        assertGetIndex(1, 4, -3);
-    }
-
-    public void testGetIndexNegativeAtFirst() {
-        assertGetIndex(0, 4, -4);
-    }
-
-    public void testGetIndexNegativeOffStart() {
-        assertGetIndex(null, 4, -5);
-    }
+    public java.util.List<Object[]> parametersForGetIndex() {
+        return Common.<Object[]>list(ary(null, null, 0),
+                                     ary(null, 0, 0),
+                                     ary(0, 4, 0),
+                                     ary(1, 4, 1),
+                                     ary(3, 4, 3),
+                                     ary(null, 4, 4),
+                                     ary(3, 4, -1),
+                                     ary(2, 4, -2),
+                                     ary(1, 4, -3),
+                                     ary(0, 4, -4),
+                                     ary(null, 4, -5));
+    }            
 }
