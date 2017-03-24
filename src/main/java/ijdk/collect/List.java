@@ -33,10 +33,12 @@ public class List<T extends Object> extends ArrayList<T> {
     }
 
     /**
-     * Creates a list from the collection, copying its elements.
+     * Creates a list from the collection, copying its elements. <code>coll</code> can be null.
      */
     public List(Collection<? extends T> coll) {
-        super(coll);
+        if (coll != null) {
+            addAll(coll);
+        }
     }
 
     /**
@@ -149,5 +151,32 @@ public class List<T extends Object> extends ArrayList<T> {
         }
         super.set(index, value);
         return val;
+    }
+    
+    /**
+     * Removes all occurrances of <code>element</code> from <code>list</code>, returning whether any
+     * were found.
+     */
+    public boolean removeAll(T element) {
+        boolean found = remove(element);
+        boolean origFound = found;
+        while (found) {
+            found = remove(element);
+        }
+        return origFound;
+    }
+
+    /**
+     * Returns a random element from the list, or null if the list is empty.
+     */
+    public T getRandomElement() {
+        if (isEmpty()) {
+            return null;
+        }
+        else {
+            int sz = size();
+            int idx = new java.util.Random().nextInt(sz);
+            return get(idx);
+        }
     }    
 }

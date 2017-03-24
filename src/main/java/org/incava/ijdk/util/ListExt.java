@@ -8,14 +8,14 @@ public class ListExt extends CollectionExt {
      * Returns the first element in the list.
      */
     public static <T> T first(List<T> list) {
-        return list == null ? null : get(list, 0);
+        return new ijdk.collect.List<T>(list).first();
     }
 
     /**
      * Returns the last element in the list.
      */
     public static <T> T last(List<T> list) {
-        return list == null ? null : get(list, -1);
+        return new ijdk.collect.List<T>(list).last();
     }
 
     /**
@@ -23,11 +23,7 @@ public class ListExt extends CollectionExt {
      * from the end of the list. Returns null if out of bounds.
      */
     public static <T> T get(List<T> list, int index) {
-        if (list == null) {
-            return null;
-        }
-        Integer idx = getIndex(list.size(), index);
-        return idx == null ? null : list.get(idx);
+        return new ijdk.collect.List<T>(list).get(index);
     }
 
     /**
@@ -44,9 +40,8 @@ public class ListExt extends CollectionExt {
     }
 
     /**
-     * Removes all occurrances of <code>element</code> from <code>list</code>,
-     * returning whether any were found. Returns null if <code>list</code> is
-     * false.
+     * Removes all occurrances of <code>element</code> from <code>list</code>, returning whether any
+     * were found. Returns false if <code>list</code> is null.
      */
     public static <T> boolean removeAll(List<T> list, T element) {
         if (list == null) {

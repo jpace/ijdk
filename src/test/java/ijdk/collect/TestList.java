@@ -37,6 +37,15 @@ public class TestList {
     }
 
     @Test
+    public void ctorNull() {
+        java.util.Collection<Object> nullColl = null;
+        List<Object> expected = new List<Object>();
+        List<Object> actual = new List<Object>(nullColl);
+
+        assertCtor(expected, actual);
+    }
+    
+    @Test
     public void toStringList() {
         List<String> expected = new List<String>();
         expected.add("1");
@@ -164,5 +173,34 @@ public class TestList {
                                      ary(null,              List.<Integer>of(),  -1, 7),
                                      ary(List.of(7),        List.<Integer>of(6), -1, 7),
                                      ary(null,              List.<Integer>of(6), -2, 7));
+    }
+
+    @Test
+    @Parameters
+    public void removeAll(Boolean expReturned, List<Object> expected, List<Object> list, Object toRemove) {
+        Boolean result = list.removeAll(toRemove);
+        assertEqual(expReturned, result, message("list", list, "toRemove", toRemove));
+        assertEqual(expected,    list,   message("list", list, "toRemove", toRemove));
+    }
+
+    public java.util.List<Object[]> parametersForRemoveAll() {
+        return Common.<Object[]>list(ary(true,   List.of(1),         List.of(1, 2),       2),
+                                     ary(true,   List.of(1),         List.of(1, 2, 2),    2),
+                                     ary(true,   List.<Integer>of(), List.of(2, 2),       2),
+                                     ary(false,  List.<Integer>of(), List.<Integer>of(),  2),
+                                     ary(false,  List.of(1),         List.of(1), 2));
+    }
+
+    @Test
+    @Parameters
+    public void getRandomElement(Boolean exp, List<Object> list) {
+        Object result = list.getRandomElement();
+        assertEqual(exp, result != null, message("list", list, "exp", exp, "result", result));
+    }
+
+    public java.util.List<Object[]> parametersForGetRandomElement() {
+        return Common.<Object[]>list(ary(true,   List.of(1)),
+                                     ary(true,   List.of(1, 2)),
+                                     ary(false,  List.<Integer>of()));
     }
 }
