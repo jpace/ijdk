@@ -34,7 +34,11 @@ dynamically-sized array, unlike `Arrays.asList`, which returns a fixed-size arra
 
 ## Enhanced collections of those in the JDK.
 
-### List<T>, an extension of ArrayList.
+These collections are being considered for being branched into a separate project from IJDK.
+
+### List<T>
+
+An extension of ArrayList, with Ruby-like methods.
 
 ```java
    List<Integer> nums = List.of(1, 3, 5, 7);
@@ -49,7 +53,9 @@ dynamically-sized array, unlike `Arrays.asList`, which returns a fixed-size arra
    nums.takeLast();   // == 13
 ```
 
-* classes for common Java collections of generics, such as:
+### Collections
+
+Classes for common Java collections of generics, such as:
 
 ```java
    // instead of List<String>; varargs constructor
@@ -64,28 +70,39 @@ dynamically-sized array, unlike `Arrays.asList`, which returns a fixed-size arra
    int min = il.minimum();                 // min == 3
 ```
 
-* a Pair class
+### Pair and KeyValue
 
 ```java
     Pair<String, Integer> score = Pair.create("Bird", 33);
     // score.first() == "Bird", score.second() == 33
 ```
 
-* a **Range** class
+Similarly, the nearly identical KeyValue:
+
+```java
+    KeyValue<String, Double> kv = KeyValue.of("one", 1.23);
+    // kv.key() == "one", kv.value() == 1.23
+```
+
+### Range
 
 This converts easily to C-style arrays, and supports simple iteration:
 
 ```java
     Range r = new Range(3, 11);
-    if (r.includes(4)) {
+    if (r.includes(4)) { // true
+    }
+    if (r.includes(2)) { // false
     }
     for (Integer i : r) {
-        // iterate from 3 to 11
+        // iterate from 3 through 11
     }
     Integer[] ary = r.toExpandedArray();  // ary == [ 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
 ```
 
-* a MultiMap, for doing one-to-many mappings
+### MultiMap
+
+Does one-to-many mappings.
 
 ```java
     MultiMap<String, String> firstToLastNames = new MultiMap<String, String>();
