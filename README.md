@@ -19,7 +19,7 @@ IJDK has a very expansive (but growing) library for Java I/O and collections, as
 the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely as possible, usually
 moreso than the Apache Commons and Guava libraries.
 
-* shortcuts for list creation:
+## shortcuts for list creation:
 
 This is one of the most used pieces of code in IJDK, a shortcut for `new
 ArrayList<Type>(Arrays.asList(new Type[] { one, two, three }))`. The returned list is a
@@ -32,9 +32,9 @@ dynamically-sized array, unlike `Arrays.asList`, which returns a fixed-size arra
    numbers.add(3.17);
 ```
 
-* Enhanced collections of those in the JDK.
+## Enhanced collections of those in the JDK.
 
-** List<T>, an extension of ArrayList.
+### List<T>, an extension of ArrayList.
 
 ```java
    List<Integer> nums = List.of(1, 3, 5, 7);

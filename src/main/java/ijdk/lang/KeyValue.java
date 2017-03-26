@@ -1,10 +1,7 @@
 package ijdk.lang;
 
-import java.util.*;
-
 /**
- * Otherwise known as a Pair (which is already defined in IJDK). An immutable object with public
- * fields for more concise access.
+ * Otherwise known as a Pair (which is already defined in IJDK).
  */
 public class KeyValue<K, V> {
     /**
