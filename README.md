@@ -32,7 +32,9 @@ dynamically-sized array, unlike `Arrays.asList`, which returns a fixed-size arra
    numbers.add(3.17);
 ```
 
-## Enhanced collections of those in the JDK.
+## Enhanced collections
+
+IJDK contains collection classes that extend those in the JDK.
 
 These collections are being considered for being branched into a separate project from IJDK.
 
@@ -53,7 +55,7 @@ An extension of ArrayList, with Ruby-like methods.
    nums.takeLast();   // == 13
 ```
 
-### Collections
+### Common Collections
 
 Classes for common Java collections of generics, such as:
 
