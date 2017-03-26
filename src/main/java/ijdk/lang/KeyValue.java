@@ -14,18 +14,34 @@ public class KeyValue<K, V> {
         return new KeyValue<K, V>(key, value);
     }
     
-    public final K key;
-    public final V value;
+    private final K key;
+    private final V value;
     
     public KeyValue(K key, V value) {
         this.key = key;
         this.value = value;
     }
 
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+
+    public K key() {
+        return key;
+    }
+
+    public V value() {
+        return value;
+    }
+
     public boolean equals(Object obj) {
         if (obj instanceof KeyValue) {
             KeyValue<?, ?> other = (KeyValue<?, ?>)obj;
-            return new Obj(key).equals(other.key) && new Obj(value).equals(other.value);
+            return new Obj(key).equals(other.key()) && new Obj(value).equals(other.value());
         }
         else {
             return false;
