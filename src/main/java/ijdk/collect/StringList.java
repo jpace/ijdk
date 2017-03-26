@@ -5,7 +5,8 @@ import org.incava.ijdk.lang.Closure;
 import org.incava.ijdk.util.StringCriteria;
 
 /**
- * An extension of List&lt;String&gt;, with a constructor for varargs, and selectors that use closures.
+ * An extension of ijdk.collect.List&lt;String&gt;, with a constructor for varargs, and selectors
+ * that use closures.
  */
 public class StringList extends List<String> {
     public static StringList of(String ... args) {
@@ -13,13 +14,6 @@ public class StringList extends List<String> {
     }
     
     private static final long serialVersionUID = -5489075883851520676L;
-    
-    /**
-     * Creates a StringList with the given initial capacity.
-     */
-    public StringList(int capacity) {
-        super(capacity);
-    }
 
     /**
      * Creates an empty StringList.
@@ -127,20 +121,5 @@ public class StringList extends List<String> {
             }
         }
         return matching;
-    }
-
-    /**
-     * Pops the <em>last</em> element off the list and returns it, or null if the list is empty.
-     * This is consistent with Ruby and Perl, but other languages 
-     */
-    public String pop() {
-        return isEmpty() ? null : remove(size() - 1);
-    }
-
-    /**
-     * Removes (shifts) the first element off the list and returns it, or null if the list is empty.
-     */
-    public String shift() {
-        return isEmpty() ? null : remove(0);
     }
 }

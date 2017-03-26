@@ -16,11 +16,6 @@ public class TestStringList extends TestCase {
         assertEquals(0, sl.size());
     }
 
-    public void testCtorSize() {
-        StringList sl = new StringList(10);
-        assertEquals(0, sl.size());
-    }
-
     public void testCtorCollection() {
         java.util.List<String> list = Arrays.asList(new String[] { "one", "two", "three" });
         StringList sl = new StringList(list);
@@ -197,54 +192,6 @@ public class TestStringList extends TestCase {
                 }
             };
         assertFindAll(new StringList(), criteria, "one", "two");
-    }
-
-    // pop
-
-    public String assertPop(String expected, StringList sl) {
-        String result = sl.pop();
-        assertEquals(expected, result);
-        return result;
-    }
-
-    public void testPopEmpty() {
-        assertPop(null, new StringList());
-    }
-
-    public void testPopNullElement() {
-        assertPop(null, new StringList((String)null));
-    }
-
-    public void testPopOneElement() {
-        assertPop("a", new StringList("a"));
-    }
-
-    public void testPopTwoElements() {
-        assertPop("b", new StringList("a", "b"));
-    }
-
-    // shift
-
-    public String assertShift(String expected, StringList sl) {
-        String result = sl.shift();
-        assertEquals(expected, result);
-        return result;
-    }
-
-    public void testShiftEmpty() {
-        assertShift(null, new StringList());
-    }
-
-    public void testShiftNullElement() {
-        assertShift(null, new StringList((String)null));
-    }
-
-    public void testShiftOneElement() {
-        assertShift("a", new StringList("a"));
-    }
-
-    public void testShiftTwoElements() {
-        assertShift("a", new StringList("a", "b"));
     }
 
     // anyEqualsIgnoreCase

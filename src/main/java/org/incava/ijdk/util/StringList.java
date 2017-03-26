@@ -10,13 +10,6 @@ public class StringList extends ijdk.collect.StringList {
     private static final long serialVersionUID = -5489075883851520676L;
     
     /**
-     * Creates a StringList with the given initial capacity.
-     */
-    public StringList(int capacity) {
-        super(capacity);
-    }
-
-    /**
      * Creates an empty StringList.
      */
     public StringList() {

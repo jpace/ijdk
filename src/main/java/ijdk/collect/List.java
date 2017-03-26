@@ -178,5 +178,33 @@ public class List<T extends Object> extends ArrayList<T> {
             int idx = new java.util.Random().nextInt(sz);
             return get(idx);
         }
-    }    
+    }
+
+    /**
+     * Removes and returns the first element in the list. Returns null if empty.
+     */
+    public T takeFirst() {
+        return isEmpty() ? null : remove(0);
+    }
+
+    /**
+     * Removes and returns the last element in the list. Returns null if empty.
+     */
+    public T takeLast() {
+        return isEmpty() ? null : remove(size() - 1);
+    }
+
+    /**
+     * Returns a list containing unique elements from the list, in the order in which they occur in
+     * the list.
+     */
+    public List<T> unique() {
+        List<T> uniqueList = new List<T>();
+        for (T obj : this) {
+            if (!uniqueList.contains(obj)) {
+                uniqueList.append(obj);
+            }
+        }
+        return uniqueList;
+    }
 }

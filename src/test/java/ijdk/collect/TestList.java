@@ -203,4 +203,58 @@ public class TestList {
                                      ary(true,   List.of(1, 2)),
                                      ary(false,  List.<Integer>of()));
     }
+
+    @Test
+    @Parameters
+    public void takeFirst(Object expReturn, List<Object> expList, List<Object> list) {
+        List<Object> origList = new List<Object>(list);
+        Object result = list.takeFirst();
+        assertEqual(true, expReturn == result, message("origList", origList, "expReturn", expReturn, "result", result));
+        assertEqual(expList, list, message("origList", origList));
+    }
+
+    public java.util.List<Object[]> parametersForTakeFirst() {
+        return Common.<Object[]>list(ary(1, List.<Integer>of(), List.of(1)),
+                                     ary(1, List.of(2), List.of(1, 2)),
+                                     ary("a", List.<String>of(), List.of("a")),
+                                     ary("a", List.of("b"), List.of("a", "b")),
+                                     ary((Integer)null, List.<Integer>of(), List.<Integer>of()));
+    }    
+
+    @Test
+    @Parameters
+    public void takeLast(Object expReturn, List<Object> expList, List<Object> list) {
+        List<Object> origList = new List<Object>(list);
+        Object result = list.takeLast();
+        assertEqual(true, expReturn == result, message("origList", origList, "expReturn", expReturn, "result", result));
+        assertEqual(expList, list, message("origList", origList));
+    }
+
+    public java.util.List<Object[]> parametersForTakeLast() {
+        return Common.<Object[]>list(ary(1, List.<Integer>of(), List.of(1)),
+                                     ary(2, List.of(1), List.of(1, 2)),
+                                     ary("a", List.<String>of(), List.of("a")),
+                                     ary("b", List.of("a"), List.of("a", "b")),
+                                     ary((Integer)null, List.<Integer>of(), List.<Integer>of()));
+    }
+    
+
+    @Test
+    @Parameters
+    public void unique(List<Object> expected, List<Object> list) {
+        List<Object> origList = new List<Object>(list);
+        List<Object> result = list.unique();
+        assertEqual(expected, result, message("origList", origList));
+        assertEqual(origList, list, message("origList", origList));
+    }
+
+    public java.util.List<Object[]> parametersForUnique() {
+        return Common.<Object[]>list(Common.<Object>ary(List.of(1), List.of(1)),
+                                     Common.<Object>ary(List.of(1), List.of(1, 1)),
+                                     Common.<Object>ary(List.of(1, 2), List.of(1, 2)),
+                                     Common.<Object>ary(List.of(2, 1), List.of(2, 1)),
+                                     Common.<Object>ary(List.of(1, 2), List.of(1, 2, 1)),
+                                     Common.<Object>ary(List.<Integer>of(), List.<Integer>of()));
+    }
+    
 }
