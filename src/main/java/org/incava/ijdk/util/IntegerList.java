@@ -1,6 +1,7 @@
 package org.incava.ijdk.util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import org.incava.ijdk.lang.Closure;
 import org.incava.ijdk.lang.Pair;
 
