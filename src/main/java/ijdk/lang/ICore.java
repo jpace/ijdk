@@ -296,7 +296,8 @@ public class ICore {
 
     /**
      * Converts varargs to T[]. <code>ary("one", 1)</code> is shorter than <code>new Object[] {
-     * "one", 1 }</code>
+     * "one", 1 }</code>. For Object arrays (i.e., to work around the "unchecked generic array
+     * creation" warning), use <code>Common#objary</code>.
      */
     public static <T> T[] ary(T ... args) {
         return args;

@@ -30,5 +30,9 @@ public class TestCommon {
     public void list() {
         Assert.assertEquals(Arrays.asList(new String[] { "a", "b", "c" }), Common.list("a", "b", "c"));
     }
-    
+
+    @Test
+    public void objary() {
+        Assert.assertArrayEquals(new Object[] { Boolean.TRUE, "b", new Integer(1) }, Common.objary(Boolean.TRUE, "b", new Integer(1)));
+    }
 }

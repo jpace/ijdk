@@ -18,5 +18,13 @@ public class Common extends ICore {
      */
     public static String toString(Object obj) {
         return new Obj(obj).toString();
-    }   
+    }
+
+    /**
+     * Converts varargs to Object[]. <code>ary("one", 1)</code> is shorter than <code>new Object[] {
+     * "one", 1 }</code>
+     */
+    public static Object[] objary(Object ... args) {
+        return args;
+    }    
 }
