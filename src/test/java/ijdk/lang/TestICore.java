@@ -37,7 +37,7 @@ public class TestICore {
     public void ary() {
         Assert.assertEquals(Arrays.asList(new String[] { "one", "two" }), Arrays.asList(ICore.ary("one", "two")));
         // results in warnings; use Common.objary instead:
-        Assert.assertEquals(Arrays.asList(new Object[] { Boolean.TRUE, "two" }), Arrays.asList(ICore.ary(Boolean.TRUE, "two")));
+        Assert.assertEquals(Arrays.asList(new Object[] { Boolean.TRUE, "two" }), Arrays.asList(ICore.<Object>ary(Boolean.TRUE, "two")));
     }
 
     @Test

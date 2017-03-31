@@ -388,11 +388,28 @@ public class Str extends Obj {
     }
 
     /**
-     * Returns whether the string <code>str</code> begins with the string <code>prefix</code>. For
+     * Returns whether the string <code>str</code> begins with the string <code>str</code>. For
      * consistency with String. Returns false if the wrapped string is null.
      */
-    public boolean startsWith(String pref) {
-        return this.string != null && this.string.startsWith(pref);
+    public boolean startsWith(String str) {
+        return this.string != null && this.string.startsWith(str);
+    }
+
+    /**
+     * Returns whether the string <code>str</code> ends with the character <code>ch</code>.
+     * Returns false if the wrapped string is null.
+     */
+    public boolean endsWith(char ch) {
+        Character startChar = get(-1);
+        return startChar != null && startChar == ch;
+    }
+
+    /**
+     * Returns whether the string <code>str</code> ends with the string <code>str</code>. For
+     * consistency with String. Returns false if the wrapped string is null.
+     */
+    public boolean endsWith(String str) {
+        return this.string != null && str.endsWith(get(-str.length(), -1));
     }
 
     /**

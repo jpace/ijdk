@@ -1,19 +1,18 @@
 package org.incava.ijdk.lang;
 
-import junit.framework.TestCase;
-import java.util.*;
+import java.util.TreeMap;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class TestNCPair extends TestCase {
-    public TestNCPair(String name) {
-        super(name);
-    }
-
+public class TestNCPair {
+    @Test
     public void testCreate() {
         // StringBuffers are not comparable
         NCPair<StringBuffer, String> sbStrPair = NCPair.create(new StringBuffer("thirty-four"), "thirty-four");
-        assertTrue(sbStrPair instanceof NCPair);
+        Assert.assertTrue(sbStrPair instanceof NCPair);
     }
 
+    @Test    
     public void testNonComparable() {
         NCPair<StringBuffer, Integer> a = NCPair.create(new StringBuffer("hello"), 4);
         NCPair<StringBuffer, Integer> b = NCPair.create(new StringBuffer("hello"), 4);
@@ -23,7 +22,7 @@ public class TestNCPair extends TestCase {
         TreeMap<StringBuffer, Integer> tm = new TreeMap<StringBuffer, Integer>();
 
         // StringBuffers are not Comparable, nor do they define equals.
-        assertFalse(a.equals(b));
-        assertFalse(a.equals(c));
+        Assert.assertFalse(a.equals(b));
+        Assert.assertFalse(a.equals(c));
     }
 }

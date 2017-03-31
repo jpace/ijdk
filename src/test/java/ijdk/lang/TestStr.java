@@ -6,6 +6,9 @@ import java.util.Collection;
 import java.util.List;
 import org.incava.ijdk.lang.StringTest;
 import org.junit.Assert;
+import org.junit.Test;
+
+import static org.incava.test.Assertions.*;
 
 public class TestStr extends StringTest {
     public TestStr(String name) {
@@ -394,5 +397,20 @@ public class TestStr extends StringTest {
 
     public void testEqualsStrDifferentLengths() {
         assertEqualsStr(false, "a", "ab");
-    }    
+    }
+
+    public void testEndsWith() {
+        assertEqual(true, new Str("abc").endsWith("c"));
+        assertEqual(true, new Str("abc").endsWith("bc"));
+        assertEqual(true, new Str("abc").endsWith("abc"));
+        //$$$ fix this -- it's inconsistent with String#endsWith:
+        assertEqual(false, new Str("abc").endsWith(""));
+        assertEqual(false, new Str(null).endsWith(""));
+        assertEqual(false, new Str("abc").endsWith("d"));
+
+        assertEqual(true, new Str("abc").endsWith('c'));
+        assertEqual(false, new Str("abc").endsWith(' '));
+        assertEqual(false, new Str(null).endsWith('c'));
+        assertEqual(false, new Str("abc").endsWith('d'));
+    }
 }
