@@ -31,7 +31,7 @@ public class Str extends Obj {
             else {
                 isFirst = false;
             }
-            sb.append(obj.toString());
+            sb.append(String.valueOf(obj));
         }
         return new Str(sb.toString());
     }

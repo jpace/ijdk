@@ -1,50 +1,74 @@
 package ijdk.lang;
 
-import junit.framework.TestCase;
+import ijdk.collect.List;
+import java.util.Arrays;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class TestComp extends TestCase {
-    public TestComp(String name) {
-        super(name);
-    }
+import static ijdk.lang.Common.objary;
+import static org.incava.test.Assertions.*;
 
-    // compare
-
-    public<T extends Comparable<T>> int assertCompare(int expected, T x, T y) {
+@RunWith(JUnitParamsRunner.class)
+public class TestComp {
+    @Test
+    @Parameters
+    public <T extends Comparable<T>> void compare(int expected, T x, T y) {
         int result = Comp.compare(x, y);
-        assertEquals("x: " + x + "; y: " + y, expected, result);
-        return result;
+        assertEqual(expected, result, message("x", x, "y", y));
     }
 
-    public void testCompareNullNull() {
-        assertCompare(0, null, null);
-    }
-
-    public void testCompareNullObject() {
-        assertCompare(-1, null, new String());
-    }
-
-    public void testCompareObjectNull() {
-        assertCompare(1, new String(), null);
-    }
-
-    public void testCompareSameObject() {
+    public List<Object[]> parametersForCompare() {
         String obj = new String();
-        assertCompare(0, obj, obj);
+        
+        return Common.<Object[]>list(objary(0,  null, null),
+                                     objary(-1, null, new String()),
+                                     objary(1,  new String(), null),
+                                     objary(0,  obj, obj),
+                                     objary(0,  new String(), new String()),
+                                     objary(0,  new String("abc"), new String("abc")),
+                                     objary(-3, new String("abc"), new String("def")),
+                                     objary(3,  new String("def"), new String("abc")));
     }
 
-    public void testCompareDifferentObject() {
-        assertCompare(0, new String(), new String());
+    @Test
+    @Parameters
+    public <T extends Comparable<T>> void lessThan(boolean expected, T x, T y) {
+        boolean result = Comp.lessThan(x, y);
+        assertEqual(expected, result, message("x", x, "y", y));
     }
 
-    public void testCompareEquivalentObject() {
-        assertCompare(0, new String("abc"), new String("abc"));
-    }
-
-    public void testCompareLesserObject() {
-        assertCompare(-3, new String("abc"), new String("def"));
-    }
-
-    public void testCompareGreaterObject() {
-        assertCompare(3, new String("def"), new String("abc"));
+    public List<Object[]> parametersForLessThan() {
+        String obj = new String();
+        
+        return Common.<Object[]>list(objary(false, null, null),
+                                     objary(true,  null, new String()),
+                                     objary(false, new String(), null),
+                                     objary(false, obj, obj),
+                                     objary(false, new String(), new String()),
+                                     objary(false, new String("abc"), new String("abc")),
+                                     objary(true,  new String("abc"), new String("def")),
+                                     objary(false, new String("def"), new String("abc")));
     }    
+
+    @Test
+    @Parameters
+    public <T extends Comparable<T>> void greaterThan(boolean expected, T x, T y) {
+        boolean result = Comp.greaterThan(x, y);
+        assertEqual(expected, result, message("x", x, "y", y));
+    }
+
+    public List<Object[]> parametersForGreaterThan() {
+        String obj = new String();
+        
+        return Common.<Object[]>list(objary(false, null, null),
+                                     objary(false, null, new String()),
+                                     objary(true,  new String(), null),
+                                     objary(false, obj, obj),
+                                     objary(false, new String(), new String()),
+                                     objary(false, new String("abc"), new String("abc")),
+                                     objary(false, new String("abc"), new String("def")),
+                                     objary(true,  new String("def"), new String("abc")));
+    }
 }

@@ -1,9 +1,10 @@
 package org.incava.ijdk.util;
 
+import ijdk.collect.List;
+import ijdk.lang.Comp;
 import ijdk.lang.Obj;
-import java.util.*;
 
-public class Version implements Comparable<Version> {
+public class Version {
     private final Integer major;
     private final Integer minor;
     private final Integer build;
@@ -45,24 +46,7 @@ public class Version implements Comparable<Version> {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        append(sb, major, false);
-        append(sb, minor, true);
-        append(sb, build, true);
-        return append(sb, revision, true).toString();
-    }
-
-    public boolean equals(Object obj) {
-        if (obj instanceof Version) {
-            Version other = (Version)obj;
-            return new Obj(major).equals(other.major) &&
-                new Obj(minor).equals(other.minor) &&
-                new Obj(build).equals(other.build) &&
-                new Obj(revision).equals(other.revision);
-        }
-        else {
-            return false;
-        }
+        return List.of(major, minor, build, revision).compact().join(".");
     }
 
     public int hashCode() {
@@ -73,13 +57,16 @@ public class Version implements Comparable<Version> {
         return hash;
     }
 
+    public boolean equals(Object obj) {
+        return obj instanceof Version && compareTo((Version)obj) == 0;
+    }
+
     public int compareTo(Version other) {
         int cmp = compareField(major, other.major);
         if (cmp == 0) {
             if ((cmp = compareField(minor, other.minor)) == 0) {
                 if ((cmp = compareField(build, other.build)) == 0) {
                     cmp = compareField(revision, other.revision);
-
                 }
             }
         }
@@ -87,15 +74,7 @@ public class Version implements Comparable<Version> {
     }
 
     static int compareField(Integer x, Integer y) {
-        if (x == null) {
-            return y == null ? 0 : x;
-        }
-        else if (y == null) {
-            return -x;
-        }
-        else {
-            return x.compareTo(y);
-        }
+        return Comp.compare(x, y);
     }
 
     static Integer getNumber(String[] strs, Integer index, Integer defValue) {

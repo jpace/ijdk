@@ -238,7 +238,6 @@ public class TestList {
                                      ary((Integer)null, List.<Integer>of(), List.<Integer>of()));
     }
     
-
     @Test
     @Parameters
     public void unique(List<Object> expected, List<Object> list) {
@@ -249,12 +248,52 @@ public class TestList {
     }
 
     public java.util.List<Object[]> parametersForUnique() {
-        return Common.<Object[]>list(Common.<Object>ary(List.of(1), List.of(1)),
-                                     Common.<Object>ary(List.of(1), List.of(1, 1)),
-                                     Common.<Object>ary(List.of(1, 2), List.of(1, 2)),
-                                     Common.<Object>ary(List.of(2, 1), List.of(2, 1)),
-                                     Common.<Object>ary(List.of(1, 2), List.of(1, 2, 1)),
-                                     Common.<Object>ary(List.<Integer>of(), List.<Integer>of()));
+        return Common.<Object[]>list(objary(List.of(1), List.of(1)),
+                                     objary(List.of(1), List.of(1, 1)),
+                                     objary(List.of(1, 2), List.of(1, 2)),
+                                     objary(List.of(2, 1), List.of(2, 1)),
+                                     objary(List.of(1, 2), List.of(1, 2, 1)),
+                                     objary(List.<Integer>of(), List.<Integer>of()));
+    }    
+
+    @Test
+    @Parameters
+    public void compact(List<Object> expected, List<Object> list) {
+        List<Object> origList = new List<Object>(list);
+        List<Object> result = list.compact();
+        assertEqual(expected, result, message("origList", origList));
+        assertEqual(origList, list, message("origList", origList));
     }
-    
+
+    public java.util.List<Object[]> parametersForCompact() {
+        List<Integer> emptyList = List.<Integer>of();
+        return Common.<Object[]>list(objary(emptyList, emptyList),
+                                     objary(List.of(1), List.of(1)),
+                                     objary(emptyList, List.<Integer>of((Integer)null)),
+                                     objary(List.of(1), List.of(1, null)),
+                                     objary(List.of(1), List.of(1, null, null)),
+                                     objary(List.of(1), List.of(null, 1)),
+                                     objary(List.of(1), List.of(null, 1, null)),
+                                     objary(List.of(1, 1), List.of(1, 1, null)),
+                                     objary(List.of(1, 2), List.of(1, 2, null)),
+                                     objary(List.of(2, 1), List.of(2, 1, null)));
+    }
+
+
+    @Test
+    @Parameters
+    public void join(String expected, List<Object> list, String delimiter) {
+        String result = list.join(delimiter);
+        assertEqual(expected, result, message("list", list, "delimiter", delimiter));
+    }
+
+    public java.util.List<Object[]> parametersForJoin() {
+        List<Integer> emptyList = List.<Integer>of();
+        return Common.<Object[]>list(objary("", emptyList, ""),
+                                     objary("", emptyList, "x"),
+                                     objary("1", List.of(1), ""),
+                                     objary("1null", List.of(1, null), ""),
+                                     objary("1", List.of(1), "x"),
+                                     objary("1x2", List.of(1, 2), "x"));
+    }    
 }

@@ -1,7 +1,8 @@
 package ijdk.collect;
 
-import java.util.Collection;
+import ijdk.lang.Str;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * A dynamically-sized collection, wrapping ArrayList.
@@ -206,5 +207,25 @@ public class List<T extends Object> extends ArrayList<T> {
             }
         }
         return uniqueList;
+    }
+
+    /**
+     * Returns a new list, containing the non-null elements from this list, in the same order.
+     */
+    public List<T> compact() {
+        List<T> compactList = new List<T>();
+        for (T obj : this) {
+            if (obj != null) {
+                compactList.append(obj);
+            }
+        }
+        return compactList;
+    }
+
+    /**
+     * Returns the list, joined by the delimiter.
+     */
+    public String join(String delimeter) {
+        return Str.join(this, delimeter).toString();
     }
 }
