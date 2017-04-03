@@ -136,6 +136,28 @@ public class TestList {
 
     @Test
     @Parameters
+    public void getRange(List<Object> expected, List<Object> list, int from, int to) {
+        assertEqual(expected, list.get(from, to), message("list", list, "from", from, "to", to));
+    }
+
+    public java.util.List<Object[]> parametersForGetRange() {
+        return Common.<Object[]>list(ary(List.of(),     List.of(),  0, 0),
+                                     ary(List.of(6),    List.of(6), 0, 0),
+                                     ary(List.of(6),    List.of(6), 0, 1),
+                                     ary(List.of(6),    List.of(6), 0, 2),
+                                     ary(List.of(6),    List.of(6, 7), 0, 0),
+                                     ary(List.of(6, 7), List.of(6, 7), 0, 1),
+                                     ary(List.of(7),    List.of(6, 7), 1, 1),
+                                     ary(List.of(),     List.of(6, 7), 1, 0),
+                                     ary(List.of(6, 7), List.of(6, 7), 0, -1),
+                                     ary(List.of(6),    List.of(6, 7), 0, -2),
+                                     ary(List.of(7),    List.of(6, 7), 1, -1),
+                                     ary(List.of(),     List.of(6, 7), 1, -2));
+                                     
+    }
+
+    @Test
+    @Parameters
     public void append(List<Object> expected, List<Object> list, Object obj) {
         // the returned value is also the list
         assertEqual(expected, list.append(obj), message("list", list, "obj", obj));

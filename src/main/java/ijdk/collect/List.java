@@ -114,6 +114,26 @@ public class List<T extends Object> extends ArrayList<T> {
     }
 
     /**
+     * Returns a List containing the <code>m</code>th element through the <code>n</code>th element
+     * in the list, both inclusive. If <code>m</code> <code>n</code> is negative, then the index is
+     * the offset from the end, where <code>-1</code> is the last element, <code>-2</code> is the
+     * second to last element, and so on and so forth. If <code>m</code> or <code>n</code> is out of
+     * range (not within <code>0 ... size()</code>), then an empty set is returned.
+     */
+    public List<T> get(int fromIndex, int toIndex) {
+        Integer fromIdx = org.incava.ijdk.util.Index.getIndex(size(), fromIndex);
+        Integer toIdx   = toIndex < 0 ? org.incava.ijdk.util.Index.getIndex(size(), toIndex) : toIndex;
+        List<T> list = new List<T>();
+        if (fromIdx != null && toIdx != null) {
+            while (fromIdx <= toIdx && fromIdx < size()) {
+                list.add(get(fromIdx));
+                ++fromIdx;
+            }
+        }
+        return list;
+    }
+
+    /**
      * Adds the element to the list, and returns the list, so this method can be chained:
      *
      * <pre>
