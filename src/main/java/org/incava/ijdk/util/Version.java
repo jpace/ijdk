@@ -4,7 +4,7 @@ import ijdk.collect.List;
 import ijdk.lang.Comp;
 import ijdk.lang.Obj;
 
-public class Version {
+public class Version implements Comparable<Version> {
     private final Integer major;
     private final Integer minor;
     private final Integer build;

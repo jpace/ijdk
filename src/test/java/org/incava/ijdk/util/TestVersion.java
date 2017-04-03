@@ -103,4 +103,10 @@ public class TestVersion {
                                      Common.<Object>ary(1,  new Version(1, 2, 4), new Version(1, 2, 3)),
                                      Common.<Object>ary(1,  new Version(1, 2, 3, 5), new Version(1, 2, 3, 4)));
     }
+
+    @Test
+    public void isComparable() {
+        Version v = new Version();
+        assertEqual(true, v instanceof Comparable);
+    }
 }
