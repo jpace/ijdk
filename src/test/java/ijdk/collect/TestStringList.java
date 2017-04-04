@@ -1,219 +1,193 @@
 package ijdk.collect;
 
 import java.util.Arrays;
-import junit.framework.TestCase;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.incava.ijdk.lang.Closure;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class TestStringList extends TestCase {
-    public TestStringList(String name) {
-        super(name);
-    }
+import static ijdk.lang.Common.*;
+import static org.incava.test.Assertions.*;
 
+@RunWith(JUnitParamsRunner.class)
+public class TestStringList {
     // ctor
 
-    public void testCtorEmpty() {
+    @Test
+    public void ctorEmpty() {
         StringList sl = new StringList();
-        assertEquals(0, sl.size());
+        assertEqual(0, sl.size());
     }
 
-    public void testCtorCollection() {
+    @Test
+    public void ctorCollection() {
         java.util.List<String> list = Arrays.asList(new String[] { "one", "two", "three" });
         StringList sl = new StringList(list);
-        assertEquals(3, sl.size());
+        assertEqual(3, sl.size());
     }
 
-    public void testCtorVarArgsOne() {
+    @Test
+    public void ctorVarArgsOne() {
         StringList sl = new StringList("one");
-        assertEquals(1, sl.size());
-        assertEquals("one", sl.get(0));
+        assertEqual(1, sl.size());
+        assertEqual("one", sl.get(0));
     }
 
-    public void testCtorVarArgsTwo() {
+    @Test
+    public void ctorVarArgsTwo() {
         StringList sl = new StringList("one", "two");
-        assertEquals(2, sl.size());
-        assertEquals("one", sl.get(0));
-        assertEquals("two", sl.get(1));
+        assertEqual(2, sl.size());
+        assertEqual("one", sl.get(0));
+        assertEqual("two", sl.get(1));
     }
 
-    // startsWith
+    // anyStartsWith
 
-    public void assertAnyStartsWith(boolean expected, String substr, String ... args) {
+    @Test
+    @Parameters
+    public void startsWith(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
-        assertEquals("sl: " + sl + "; substr: " + substr, expected, sl.anyStartsWith(substr));
+        assertEqual(expected, sl.anyStartsWith(substr), message("sl", sl, "substr", substr));
+        
+    }
+    
+    private List<Object[]> parametersForStartsWith() {
+        return List.<Object[]>of(objary(false, "o", new String[0]),
+                                 objary(true, "o", "one"),
+                                 objary(false, "n", "one"));
     }
 
-    public void testAnyStartsWithEmpty() {
-        assertAnyStartsWith(false, "o");
-    }
+    // anyContains
 
-    public void testAnyStartsWithMatch() {
-        assertAnyStartsWith(true, "o", "one");
-    }
-
-    public void testAnyStartsWithNoMatch() {
-        assertAnyStartsWith(false, "n", "one");
-    }
-
-    // contains
-
-    public void assertAnyContains(boolean expected, String substr, String ... args) {
+    @Test
+    @Parameters
+    public void anyContains(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
-        assertEquals("sl: " + sl + "; substr: " + substr, expected, sl.anyContains(substr));
+        assertEqual(expected, sl.anyContains(substr), message("sl", sl, "substr", substr));
+    }
+    
+    private List<Object[]> parametersForAnyContains() {
+        return List.<Object[]>of(objary(false, "o", new String[0]),
+                                 objary(true, "o", "one"),
+                                 objary(true, "n", "one"),
+                                 objary(false, "z", "one"));
     }
 
-    public void testAnyContainsEmpty() {
-        assertAnyContains(false, "o");
-    }
+    // anyEndsWith
 
-    public void testAnyContainsFirstChar() {
-        assertAnyContains(true, "o", "one");
-    }
-
-    public void testAnyContainsSecondChar() {
-        assertAnyContains(true, "n", "one");
-    }
-
-    public void testAnyContainsNoMatch() {
-        assertAnyContains(false, "z", "one");
-    }
-
-    // ends with
-
-    public void assertAnyEndsWith(boolean expected, String substr, String ... args) {
+    @Test
+    @Parameters
+    public void anyEndsWith(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
-        assertEquals("sl: " + sl + "; substr: " + substr, expected, sl.anyEndsWith(substr));
+        assertEqual(expected, sl.anyEndsWith(substr), message("sl", sl, "substr", substr));
     }
-
-    public void testAnyEndsWithEmpty() {
-        assertAnyEndsWith(false, "o");
-    }
-
-    public void testAnyEndsWithMatch() {
-        assertAnyEndsWith(true, "e", "one");
-    }
-
-    public void testAnyEndsWithNoMatch() {
-        assertAnyEndsWith(false, "n", "one");
+    
+    private List<Object[]> parametersForAnyEndsWith() {
+        return List.<Object[]>of(objary(false, "o", new String[0]),
+                                 objary(true, "e", "one"),
+                                 objary(false, "n", "one"));
     }
 
     // findFirst
 
-    public String assertFindFirst(String expected, Closure<Boolean, String> criteria, String ... args) {
+    @Test
+    @Parameters
+    public void findFirst(String expected, Closure<Boolean, String> criteria, String ... args) {
         StringList sl = new StringList(args);
         String result = sl.findFirst(criteria);
-        assertEquals("sl: " + sl + "; criteria: " + criteria, expected, result);
-        return result;
+        assertEqual(expected, result, message("sl", sl, "criteria", criteria));
     }
+    
+    private List<Object[]> parametersForFindFirst() {
+        List<Object[]> params = List.<Object[]>of();
 
-    public void testFindFirstNull() {
-        assertFindFirst(null, null);
-    }    
+        params.add(objary(null, null, new String[0]));
 
-    public void testFindFirstFirstMatching() {
-        Closure<Boolean, String> criteria = new Closure<Boolean, String>() {
+        Closure<Boolean, String> critOne = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "one".equals(str);
                 }
             };
-        assertFindFirst("one", criteria, "one", "two");
-    }    
+        params.add(objary("one", critOne, "one", "two"));
 
-    public void testFindFirstSecondMatching() {
-        Closure<Boolean, String> criteria = new Closure<Boolean, String>() {
+        Closure<Boolean, String> critTwo = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "two".equals(str);
                 }
             };
-        assertFindFirst("two", criteria, "one", "two");
-    }
-
-    public void testFindFirstNoMatching() {
-        Closure<Boolean, String> criteria = new Closure<Boolean, String>() {
+        params.add(objary("two", critTwo, "one", "two"));
+        
+        Closure<Boolean, String> critThree = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "three".equals(str);
                 }
             };
-        assertFindFirst(null, criteria, "one", "two");
+        params.add(objary(null, critThree, "one", "two"));
+        
+        return params;
     }
 
     // findAll
 
-    public StringList assertFindAll(StringList expected, Closure<Boolean, String> criteria, String ... args) {
+    @Test
+    @Parameters
+    public void findAll(StringList expected, Closure<Boolean, String> criteria, String ... args) {
         StringList sl = new StringList(args);
         StringList result = sl.findAll(criteria);
-        assertEquals("sl: " + sl + "; criteria: " + criteria, expected, result);
-        return result;
+        assertEqual(expected, result, message("sl", sl, "criteria", criteria));
     }
+    
+    private List<Object[]> parametersForFindAll() {
+        List<Object[]> params = List.<Object[]>of();
 
-    public void testFindAllNull() {
-        assertFindAll(new StringList(), null);
-    }    
+        params.add(objary(new StringList(), null, new String[0]));
 
-    public void testFindAllFirstMatching() {
-        Closure<Boolean, String> criteria = new Closure<Boolean, String>() {
+        Closure<Boolean, String> critOne = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "one".equals(str);
                 }
             };
-        assertFindAll(new StringList("one"), criteria, "one", "two");
-    }    
+        params.add(objary(new StringList("one"), critOne, "one", "two"));
 
-    public void testFindAllSecondMatching() {
-        Closure<Boolean, String> criteria = new Closure<Boolean, String>() {
+        Closure<Boolean, String> critTwo = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "two".equals(str);
                 }
             };
-        assertFindAll(new StringList("two"), criteria, "one", "two");
-    }
+        params.add(objary(new StringList("two"), critTwo, "one", "two"));
 
-    public void testFindAllTwoElementsMatching() {
-        Closure<Boolean, String> criteria = new Closure<Boolean, String>() {
+        Closure<Boolean, String> critContO = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return str.contains("o");
                 }
             };
-        assertFindAll(new StringList("one", "two"), criteria, "one", "two", "three");
-    }
+        params.add(objary(new StringList("one", "two"), critContO, "one", "two", "three"));
 
-    public void testFindAllAllMatching() {
-        Closure<Boolean, String> criteria = new Closure<Boolean, String>() {
-                public Boolean execute(String str) {
-                    return str.contains("o");
-                }
-            };
-        assertFindAll(new StringList("one", "two"), criteria, "one", "two");
-    }
-
-    public void testFindAllNoMatching() {
-        Closure<Boolean, String> criteria = new Closure<Boolean, String>() {
+        Closure<Boolean, String> critThree = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "three".equals(str);
                 }
             };
-        assertFindAll(new StringList(), criteria, "one", "two");
+        params.add(objary(new StringList(), critThree, "one", "two"));
+        
+        return params;
     }
 
     // anyEqualsIgnoreCase
 
-    public void assertAnyEqualsIgnoreCase(boolean expected, String substr, String ... args) {
+    @Test
+    @Parameters
+    public void anyEqualsIgnoreCase(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
-        assertEquals("sl: " + sl + "; substr: " + substr, expected, sl.anyEqualsIgnoreCase(substr));
+        assertEqual(expected, sl.anyEqualsIgnoreCase(substr), message("sl", sl, "substr", substr));
+        
     }
-
-    public void testAnyEqualsIgnoreCaseEmpty() {
-        assertAnyEqualsIgnoreCase(false, "o");
-    }
-
-    public void testAnyEqualsIgnoreCaseExactOne() {
-        assertAnyEqualsIgnoreCase(true, "one", "one");
-    }
-
-    public void testAnyEqualsIgnoreCaseMultiple() {
-        assertAnyEqualsIgnoreCase(true, "one", "one", "two");
-    }
-
-    public void testAnyEqualsIgnoreCaseMixedCase() {
-        assertAnyEqualsIgnoreCase(true, "one", "One");
+    
+    private List<Object[]> parametersForAnyEqualsIgnoreCase() {
+        return List.<Object[]>of(objary(false, "o", new String[0]),
+                                 objary(true, "one", "one"),
+                                 objary(true, "one", "one", "two"),
+                                 objary(true, "one", "One"));
     }
 }
