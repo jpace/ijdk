@@ -122,7 +122,7 @@ public class List<T extends Object> extends ArrayList<T> {
      */
     public List<T> get(int fromIndex, int toIndex) {
         Integer fromIdx = org.incava.ijdk.util.Index.getIndex(size(), fromIndex);
-        Integer toIdx   = toIndex < 0 ? org.incava.ijdk.util.Index.getIndex(size(), toIndex) : toIndex;
+        Integer toIdx   = toIndex < 0 ? org.incava.ijdk.util.Index.getIndex(size(), toIndex) : Integer.valueOf(toIndex);
         List<T> list = new List<T>();
         if (fromIdx != null && toIdx != null) {
             while (fromIdx <= toIdx && fromIdx < size()) {

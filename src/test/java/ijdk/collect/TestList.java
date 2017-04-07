@@ -152,7 +152,8 @@ public class TestList {
                                      ary(List.of(6, 7), List.of(6, 7), 0, -1),
                                      ary(List.of(6),    List.of(6, 7), 0, -2),
                                      ary(List.of(7),    List.of(6, 7), 1, -1),
-                                     ary(List.of(),     List.of(6, 7), 1, -2));
+                                     ary(List.of(),     List.of(6, 7), 1, -2),
+                                     ary(List.of(),     List.of(), 0, -1));
                                      
     }
 
