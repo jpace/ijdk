@@ -1,166 +1,97 @@
 package org.incava.ijdk.util;
 
+import ijdk.collect.List;
+import java.util.Collection;
 import junit.framework.TestCase;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class TestANSI extends TestCase {
-    public TestANSI(String name) {
-        super(name);
-    }
+import static ijdk.lang.Common.*;
+import static org.incava.test.Assertions.*;
 
-    public String assertANSI(int code, String ansiName) {
+@RunWith(JUnitParamsRunner.class)
+public class TestANSI {
+    @Test
+    @Parameters
+    public String test(int code, String ansiName) {
         String expected = String.valueOf((char)27) + "[" + code + "m";
-        assertEquals(expected, ansiName);
+        assertEqual(expected, ansiName);
         return ansiName;
     }
 
-    public void testNone() {
-        assertANSI(0, ANSI.NONE);
+    private List<Object[]> parametersForTest() {
+        return List.<Object[]>of(
+            objary(0, ANSI.NONE),
+            objary(0, ANSI.RESET),
+            objary(4, ANSI.UNDERSCORE),
+            objary(4, ANSI.UNDERLINE),
+            objary(5, ANSI.BLINK),
+            objary(7, ANSI.REVERSE),
+            objary(8, ANSI.CONCEALED),
+            objary(30, ANSI.BLACK),
+            objary(31, ANSI.RED),
+            objary(32, ANSI.GREEN),
+            objary(33, ANSI.YELLOW),
+            objary(34, ANSI.BLUE),
+            objary(35, ANSI.MAGENTA),
+            objary(36, ANSI.CYAN),
+            objary(37, ANSI.WHITE),
+            objary(40, ANSI.ON_BLACK),
+            objary(41, ANSI.ON_RED),
+            objary(42, ANSI.ON_GREEN),
+            objary(43, ANSI.ON_YELLOW),
+            objary(44, ANSI.ON_BLUE),
+            objary(45, ANSI.ON_MAGENTA),
+            objary(46, ANSI.ON_CYAN),
+            objary(47, ANSI.ON_WHITE));
     }
 
-    public void testReset() {
-        assertANSI(0, ANSI.RESET);
-    }
-
-    public void testUnderscore() {
-        assertANSI(4, ANSI.UNDERSCORE);
-    }
-    
-    public void testUnderline() {
-        assertANSI(4, ANSI.UNDERLINE);
-    }
-    
-    public void testBlink() {
-        assertANSI(5, ANSI.BLINK);
-    }
-    
-    public void testReverse() {
-        assertANSI(7, ANSI.REVERSE);
-    }
-    
-    public void testConcealed() {
-        assertANSI(8, ANSI.CONCEALED);
-    }    
-    
-    public void testBlack() {
-        assertANSI(30, ANSI.BLACK);
-    }
-    
-    public void testRed() {
-        assertANSI(31, ANSI.RED);
-    }
-    
-    public void testGreen() {
-        assertANSI(32, ANSI.GREEN);
-    }
-    
-    public void testYellow() {
-        assertANSI(33, ANSI.YELLOW);
-    }
-    
-    public void testBlue() {
-        assertANSI(34, ANSI.BLUE);
-    }
-    
-    public void testMagenta() {
-        assertANSI(35, ANSI.MAGENTA);
-    }
-    
-    public void testCyan() {
-        assertANSI(36, ANSI.CYAN);
-    }
-    
-    public void testWhite() {
-        assertANSI(37, ANSI.WHITE);
-    }
-    
-    public void testOnBlack() {
-        assertANSI(40, ANSI.ON_BLACK);
-    }
-    
-    public void testOnRed() {
-        assertANSI(41, ANSI.ON_RED);
-    }
-    
-    public void testOnGreen() {
-        assertANSI(42, ANSI.ON_GREEN);
-    }
-    
-    public void testOnYellow() {
-        assertANSI(43, ANSI.ON_YELLOW);
-    }
-    
-    public void testOnBlue() {
-        assertANSI(44, ANSI.ON_BLUE);
-    }
-    
-    public void testOnMagenta() {
-        assertANSI(45, ANSI.ON_MAGENTA);
-    }
-    
-    public void testOnCyan() {
-        assertANSI(46, ANSI.ON_CYAN);
-    }
-    
-    public void testOnWhite() {
-        assertANSI(47, ANSI.ON_WHITE);
-    }
-
-    public void testRgbToCode_0_0_0() {
-        int code = ANSI.toCode(0, 0, 0);
-        assertEquals(16, code);
-    }
-
-    public void testRgbToForeground_0_0_0() {
+    @Test
+    public void rgbToForeground_0_0_0() {
         String color = ANSI.foreground(0, 0, 0);
         String expected = String.valueOf((char)27) + "[38;5;" + 16 + "m";
-        assertEquals(expected, color);
+        assertEqual(expected, color);
     }
 
-    public void testRgbToBackground_0_0_0() {
+    @Test
+    public void rgbToBackground_0_0_0() {
         String color = ANSI.background(0, 0, 0);
         String expected = String.valueOf((char)27) + "[48;5;" + 16 + "m";
-        assertEquals(expected, color);
+        assertEqual(expected, color);
     }
 
-    public void testRgbToCode_127_0_0() {
-        int code = ANSI.toCode(127, 0, 0);
-        assertEquals(88, code);
+    @Test
+    @Parameters
+    public void rgbToCode(int expected, int r, int g, int b) {
+        int code = ANSI.toCode(r, g, b);
+        assertEqual(expected, code);
     }
 
-    public void testRgbToCode_0_127_0() {
-        int code = ANSI.toCode(0, 127, 0);
-        assertEquals(28, code);
+    private List<Object[]> parametersForRgbToCode() {
+        return List.<Object[]>of(
+            objary(16, 0, 0, 0),
+            objary(88, 127, 0, 0),
+            objary(28, 0, 127, 0),
+            // multiple RGBs map to single ANSI codes:
+            objary(18, 0, 0, 127),
+            objary(18, 0, 0, 86),
+            objary(18, 0, 0, 95));
     }
 
-    // multiple RGBs map to single ANSI codes
-
-    public void testRgbToCode_0_0_127() {
-        int code = ANSI.toCode(0, 0, 127);
-        assertEquals(18, code);
+    @Test
+    @Parameters
+    public void newRgbToCode(int expected, int r, int g, int b) {
+        int code = ANSI.toCode(new RGB(r, g, b));
+        assertEqual(expected, code);
     }
 
-    public void testRgbToCode_0_0_86() {
-        int code = ANSI.toCode(0, 0, 86);
-        assertEquals(18, code);
-    }
-
-    public void testRgbToCode_0_0_95() {
-        int code = ANSI.toCode(0, 0, 95);
-        assertEquals(18, code);
-    }
-
-    public void testRgbClassToCode_0_0_127() {
-        int code = ANSI.toCode(new RGB(0, 0, 127));
-        assertEquals(18, code);
-    }
-
-    public void testRgbClassToCode_0_0_86() {
-        int code = ANSI.toCode(new RGB(0, 0, 86));
-        assertEquals(18, code);
-    }
-
-    public void testRgbClassToCode_0_0_95() {
-        int code = ANSI.toCode(new RGB(0, 0, 95));
-        assertEquals(18, code);
+    private List<Object[]> parametersForNewRgbToCode() {
+        return List.<Object[]>of(
+            // multiple RGBs map to single ANSI codes:
+            objary(18, 0, 0, 127),
+            objary(18, 0, 0, 86),
+            objary(18, 0, 0, 95));
     }
 }

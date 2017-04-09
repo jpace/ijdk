@@ -15,15 +15,22 @@ import org.junit.Assert;
 public class Assertions {
     // assertEqual (not assertEquals, for distinction from JUnit methods)
 
+    // deny* == opposite of assert*
+
     // more like Ruby (imperative; message as last parameter)
     public static <T> T assertEqual(T expected, T actual, String field, Object obj) {
         String msg = field + ": " + obj;
         return assertEqual(expected, actual, msg);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T assertEqual(T expected, T actual, String msg) {
+        // make conditional on running a single test:
+        // tr.Ace.bold("msg", msg);
+        // tr.Ace.bold("expected", expected);
+        // tr.Ace.bold("actual  ", actual);
         if (expected != null && expected.getClass().isArray() && actual != null && actual.getClass().isArray()) {
-            assertEqual((Object[])expected, (Object[])actual, msg);
+            assertEqual((T[])expected, (T[])actual, msg);
             return null;        // cannot cast T[] to T, of course
         }
         else {
@@ -32,9 +39,10 @@ public class Assertions {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T assertEqual(T expected, T actual) {
         if (expected != null && expected.getClass().isArray() && actual != null && actual.getClass().isArray()) {
-            assertEqual((Object[])expected, (Object[])actual);
+            assertEqual((T[])expected, (T[])actual);
             return null;
         }
         else {
@@ -44,19 +52,62 @@ public class Assertions {
     }
 
     public static <T> T[] assertEqual(T[] expected, T[] actual, String msg) {
+        // tr.Ace.bold("expected", expected);
+        // tr.Ace.bold("actual  ", actual);
         assertEqual(expected == null ? null : Arrays.asList(expected), actual == null ? null : Arrays.asList(actual), msg);
         return actual;
     }
 
     public static <T> T[] assertEqual(T[] expected, T[] actual) {
+        // tr.Ace.bold("expected", expected);
+        // tr.Ace.bold("actual  ", actual);
         assertEqual(expected == null ? null : Arrays.asList(expected), actual == null ? null : Arrays.asList(actual));
         return actual;
     }
+
+    // object same as other (same reference/pointer)
+
+    public static <T> T assertSame(T expected, T actual) {
+        Assert.assertSame(expected, actual);
+        return actual;
+    }
+
+    public static <T> T assertSame(T expected, T actual, String message) {
+        Assert.assertSame(message, expected, actual);
+        return actual;
+    }
+
+    // object == or != null
+
+    public static <T> T assertNull(T obj, String message) {
+        Assert.assertEquals(message, true, obj == null);
+        return obj;
+    }
+    
+    public static <T> T assertNull(T obj) {
+        Assert.assertEquals(true, obj == null);
+        return obj;
+    }
+
+    public static <T> T denyNull(T obj, String message) {
+        Assert.assertEquals(message, true, obj != null);
+        return obj;
+    }
+    
+    public static <T> T denyNull(T obj) {
+        Assert.assertEquals(true, obj != null);
+        return obj;
+    }    
     
     public static <T> T assertNotNull(boolean isExpected, T obj) {
         Assert.assertEquals(isExpected, obj != null);
         return obj;
     }
+
+    public static <T> T assertNotNull(T obj, String message) {
+        Assert.assertEquals(message, true, obj != null);
+        return obj;
+    }    
     
     public static <T> T assertNotNull(T obj) {
         Assert.assertEquals(true, obj != null);
@@ -66,12 +117,19 @@ public class Assertions {
     public static <T> T assertIsNull(boolean isExpected, T obj) {
         Assert.assertEquals(isExpected, obj == null);
         return obj;
+    }    
+    
+    public static <T> T assertIsNull(T obj, String message) {
+        Assert.assertEquals(message, true, obj == null);
+        return obj;
     }
     
     public static <T> T assertIsNull(T obj) {
         Assert.assertEquals(true, obj == null);
         return obj;
     }
+
+    // collection == collection
 
     public static <C extends Collection<T>, T> C assertEqual(C expected, C actual) {
         if (expected == null) {
@@ -114,7 +172,7 @@ public class Assertions {
         return assertEqual(expected, cmp, "x: " + x + "; y: " + y + "; result: " + result);
     }
 
-    // better messages
+    // better messages (message("name", value) => "name: #{value}")
 
     public static String message(String key, Object value) {
         return Common.keyValue(key, value);

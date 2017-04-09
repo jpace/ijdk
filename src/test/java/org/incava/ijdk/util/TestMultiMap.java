@@ -1,17 +1,21 @@
 package org.incava.ijdk.util;
 
+import java.util.Collection;
 import junit.framework.TestCase;
-import java.util.*;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class TestMultiMap extends TestCase {
+import static org.incava.test.Assertions.*;
+
+@RunWith(JUnitParamsRunner.class)
+public class TestMultiMap {
     public static final Collection<Integer> EVENS = java.util.Arrays.asList(new Integer[] { 2, 4, 6, 8 });
     public static final Collection<Integer> ODDS  = java.util.Arrays.asList(new Integer[] { 1, 3, 5, 7, 9 });
 
-    public TestMultiMap(String name) {
-        super(name);
-    }
-
-    public void testPutGetCollection() {
+    @Test
+    public void putGetCollection() {
         MultiMap<String, Integer> numMap = new MultiMap<String, Integer>();
 
         Object prevEven = numMap.put("evens", EVENS);
@@ -21,13 +25,14 @@ public class TestMultiMap extends TestCase {
         assertNull(prevOdd);
 
         assertNotNull(numMap.get("evens"));
-        assertEquals(EVENS, numMap.get("evens"));
+        assertEqual(EVENS, numMap.get("evens"));
 
         assertNotNull(numMap.get("odds"));
-        assertEquals(ODDS, numMap.get("odds"));
+        assertEqual(ODDS, numMap.get("odds"));
     }
 
-    public void testPutScalar() {
+    @Test
+    public void putScalar() {
         MultiMap<String, Integer> numMap = new MultiMap<String, Integer>();
 
         for (Integer num : EVENS) {
@@ -39,13 +44,14 @@ public class TestMultiMap extends TestCase {
         }
 
         assertNotNull(numMap.get("evens"));
-        assertEquals(EVENS, numMap.get("evens"));
+        assertEqual(EVENS, numMap.get("evens"));
 
         assertNotNull(numMap.get("odds"));
-        assertEquals(ODDS, numMap.get("odds"));
+        assertEqual(ODDS, numMap.get("odds"));
     }
 
-    public void testPutCollection() {
+    @Test
+    public void putCollection() {
         MultiMap<String, Integer> numMap = new MultiMap<String, Integer>();
 
         for (Integer num : EVENS) {
@@ -57,9 +63,9 @@ public class TestMultiMap extends TestCase {
         }
 
         assertNotNull(numMap.get("evens"));
-        assertEquals(EVENS, numMap.get("evens"));
+        assertEqual(EVENS, numMap.get("evens"));
 
         assertNotNull(numMap.get("odds"));
-        assertEquals(ODDS, numMap.get("odds"));
+        assertEqual(ODDS, numMap.get("odds"));
     }
 }
