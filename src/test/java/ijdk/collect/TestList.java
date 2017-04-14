@@ -318,5 +318,46 @@ public class TestList {
                                      objary("1null", List.of(1, null), ""),
                                      objary("1", List.of(1), "x"),
                                      objary("1x2", List.of(1, 2), "x"));
-    }    
+    }
+
+    @Test
+    @Parameters
+    public void plus(List<Object> expected, List<Object> list, List<Object> other) {
+        List<Object> result = list.plus(other);
+        assertEqual(expected, result);
+    }
+    
+    private List<Object[]> parametersForPlus() {
+        List<Object[]> params = List.<Object[]>of();
+
+        params.add(objary(List.<Integer>of(1, 2, 3, 4), List.<Integer>of(1, 2), List.<Integer>of(3, 4)));
+        params.add(objary(List.<Integer>of(1, 2, 3), List.<Integer>of(1, 2), List.<Integer>of(3)));
+        params.add(objary(List.<Integer>of(1, 2), List.<Integer>of(1, 2), List.<Integer>of()));
+        params.add(objary(List.<Integer>of(1, 2, 3, 3), List.<Integer>of(1, 2, 3), List.<Integer>of(3)));
+        params.add(objary(List.<Integer>of(1, 2, 3, 1), List.<Integer>of(1, 2, 3), List.<Integer>of(1)));
+        
+        return params;
+    }
+
+    @Test
+    @Parameters
+    public void minus(List<Object> expected, List<Object> list, List<Object> other) {
+        List<Object> result = list.minus(other);
+        assertEqual(expected, result);
+    }
+    
+    private List<Object[]> parametersForMinus() {
+        List<Object[]> params = List.<Object[]>of();
+
+        params.add(objary(List.<Integer>of(2), List.<Integer>of(1, 2), List.<Integer>of(1)));
+        params.add(objary(List.<Integer>of(1), List.<Integer>of(1, 2), List.<Integer>of(2)));
+        params.add(objary(List.<Integer>of(1, 1), List.<Integer>of(1, 1), List.<Integer>of(2)));
+        params.add(objary(List.<Integer>of(1, 1), List.<Integer>of(1, 2, 1), List.<Integer>of(2)));
+        
+        params.add(objary(List.<Integer>of(), List.<Integer>of(), List.<Integer>of()));
+        params.add(objary(List.<Integer>of(), List.<Integer>of(), List.<Integer>of(1)));
+        params.add(objary(List.<Integer>of(1), List.<Integer>of(1), List.<Integer>of()));
+        
+        return params;
+    }
 }

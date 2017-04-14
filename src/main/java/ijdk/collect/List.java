@@ -248,4 +248,30 @@ public class List<T extends Object> extends ArrayList<T> {
     public String join(String delimeter) {
         return Str.join(this, delimeter).toString();
     }
+
+    /**
+     * Returns a new list, concatenating the other list with this one. Elements will be in the order
+     * of this list, then the elements of the other.
+     */
+    public List<T> plus(List<T> other) {
+        List<T> newList = new List<T>(this);
+        for (T obj : other) {
+            newList.append(obj);
+        }
+        return newList;
+    }
+
+    /**
+     * Returns a new list, containing the elements of this list that are not in the other. The
+     * retained elements are in the same order as they are in this list.
+     */
+    public List<T> minus(List<T> other) {
+        List<T> newList = new List<T>();
+        for (T obj : this) {
+            if (!other.contains(obj)) {
+                newList.append(obj);
+            }
+        }
+        return newList;
+    }
 }
