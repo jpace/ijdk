@@ -159,6 +159,7 @@ public class ICore {
      * @see #or
      * @see #isTrue
      */
+    @SafeVarargs
     public static <T> T and(T ... operands) {
         if (isFalse(operands)) {
             return null;
@@ -178,6 +179,7 @@ public class ICore {
      * @see #or
      * @see #isTrue
      */
+    @SafeVarargs
     public static <T> T or(T ... operands) {
         if (isFalse(operands)) {
             return null;
@@ -228,6 +230,8 @@ public class ICore {
      *     names.add("henry");
      * </pre>
      */
+    @SafeVarargs
+    @SuppressWarnings("varargs")
     public static <T> List<T> list(T ... elements) {
         return List.of(elements);
     }
@@ -299,6 +303,8 @@ public class ICore {
      * "one", 1 }</code>. For Object arrays (i.e., to work around the "unchecked generic array
      * creation" warning), use <code>Common#objary</code>.
      */
+    @SafeVarargs
+    @SuppressWarnings("varargs")
     public static <T> T[] ary(T ... args) {
         return args;
     }
@@ -307,6 +313,8 @@ public class ICore {
      * Converts varargs to T[]. <code>ary("one", 1)</code> is shorter than <code>new Object[] {
      * "one", 1 }</code>
      */
+    @SafeVarargs
+    @SuppressWarnings("varargs")
     public static <T> Array<T> array(T ... args) {
         return new Array<T>(args);
     }

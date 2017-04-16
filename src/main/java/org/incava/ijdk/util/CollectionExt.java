@@ -18,6 +18,7 @@ public class CollectionExt extends ObjectExt {
     /**
      * Returns a list of the elements in common.
      */
+    @SafeVarargs
     public static <Type> Set<Type> intersection(Collection<Type> ... colls) {
         Set<Type> intSet = null;
 

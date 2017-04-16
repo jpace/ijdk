@@ -11,6 +11,8 @@ import org.incava.ijdk.util.Index;
 public class Array<T extends Object> extends Obj {
     private final T[] ary;
     
+    @SafeVarargs
+    @SuppressWarnings("varargs")
     public Array(T ... ary) {
         super(ary);
         this.ary = ary;

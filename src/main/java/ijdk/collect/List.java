@@ -11,6 +11,8 @@ public class List<T extends Object> extends ArrayList<T> {
     /**
      * Creates a list from the given array.
      */
+    @SafeVarargs
+    @SuppressWarnings("varargs")
     public static <T extends Object> List<T> of(T ... ary) {
         return new List<T>(ary);
     }
@@ -45,6 +47,8 @@ public class List<T extends Object> extends ArrayList<T> {
     /**
      * Creates the list from a varargs array.
      */
+    @SafeVarargs
+    @SuppressWarnings("varargs")
     public List(T ... ary) {
         for (T el : ary) {
             add(el);
@@ -84,7 +88,8 @@ public class List<T extends Object> extends ArrayList<T> {
     /**
      * Returns whether this list contains any element in the given array.
      */
-    public boolean containsAny(T ... args) {
+    @SafeVarargs
+    final public boolean containsAny(T ... args) {
         return containsAny(new List<T>(args));
     }
 
