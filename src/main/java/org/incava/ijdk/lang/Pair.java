@@ -1,8 +1,7 @@
 package org.incava.ijdk.lang;
 
 /**
- * A two-element tuple, for classes that are comparable. See NCPair for an alternative class, for
- * non-comparable clases.
+ * A two-element tuple, for classes that are comparable.
  */
 public class Pair<FirstType extends Comparable<? super FirstType>, SecondType extends Comparable<? super SecondType>> 
     implements Comparable<Pair<FirstType, SecondType>> {
