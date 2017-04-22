@@ -1,6 +1,6 @@
 package org.incava.test;
 
-import ijdk.lang.Common;
+import ijdk.lang.KeyValue;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -175,7 +175,7 @@ public class Assertions {
     // better messages (message("name", value) => "name: #{value}")
 
     public static String message(String key, Object value) {
-        return Common.keyValue(key, value);
+        return KeyValue.of(key, value).toString();
     }
 
     public static String message(String k1, Object v1, String k2, Object v2) {
