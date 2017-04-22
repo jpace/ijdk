@@ -1,9 +1,9 @@
 package ijdk.lang;
 
 /**
- * Otherwise known as a Pair (which is already defined in IJDK).
+ * Otherwise known as a Pair.
  */
-public class KeyValue<K, V> {
+public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
     /**
      * Shorter syntax than the default constructor, allowing the compiler to discern the object types.
      */
@@ -56,5 +56,29 @@ public class KeyValue<K, V> {
     public int hashCode() {
         return (key == null ? 1 : key.hashCode()) * 119 + (value == null ? 1 : value.hashCode());
     }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public int compareTo(KeyValue<K, V> other) {
+        if (this.key instanceof Comparable) {
+            Comparable ctk = (Comparable)this.key;
+            Comparable cok = (Comparable)other.key;
+            int cmp = Comp.compare(ctk, cok);
+            if (cmp == 0) {
+                if (this.value instanceof Comparable) {
+                    Comparable ctv = (Comparable)this.value;
+                    Comparable cov = (Comparable)other.value;
+                    return Comp.compare(ctv, cov);
+                }
+                else {
+                    return -1;
+                }
+            }
+            else {
+                return cmp;
+            }
+        }
+        else {
+            return -1;
+        }
+    }
 }
- 

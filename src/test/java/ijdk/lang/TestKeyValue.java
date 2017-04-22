@@ -1,12 +1,12 @@
 package ijdk.lang;
 
+import java.util.Arrays;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.*;
-import static ijdk.lang.Common.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestKeyValue {
@@ -65,7 +65,35 @@ public class TestKeyValue {
 
     private java.util.List<Object[]> parametersForToString_test() {
         KeyValue<String, Double> kv = KeyValue.of("one", 1.23);
-        return list(ary("one => 1.23", kv, null),
-                    ary("one: 1.23", kv, ": "));
-    }    
+        return Arrays.asList(new Object[][] {
+                new Object[] { "one => 1.23", kv, null },
+                new Object[] { "one: 1.23", kv, ": " }
+            });
+    }
+
+    @Test
+    @Parameters
+    public <K, V> void compareTo(Integer expected, KeyValue<K, V> x, KeyValue<K, V> y) {
+        int result = x.compareTo(y);
+        assertEqual(result, expected, message("x", x, "y", y));        
+    }
+    
+    private java.util.List<Object[]> parametersForCompareTo() {
+        KeyValue<String, Double> x = KeyValue.of("one", 1.2);
+        KeyValue<String, Double> y = KeyValue.of("two", 1.2);
+        KeyValue<String, Double> z = KeyValue.of("one", 2.4);
+        return Arrays.asList(new Object[][] {
+                new Object[] { 0, x, x },
+                new Object[] { 0, x, KeyValue.of("one", 1.2) },
+                new Object[] { 0, KeyValue.of("one", 1.2), x },
+                new Object[] { -5, x, y },
+                new Object[] { 5,  y, x },
+                new Object[] { -5, x, y },
+                new Object[] { -1, x, z },
+                new Object[] {  1, z, x },
+                // not comparable:
+                new Object[] { -1, KeyValue.of(new StringBuilder("one"), 1.2), KeyValue.of(new StringBuilder("one"), 1.2) },
+                new Object[] { -1, KeyValue.of(1.2, new StringBuilder("one")), KeyValue.of(1.2, new StringBuilder("one")) } 
+            });
+    }
 }
