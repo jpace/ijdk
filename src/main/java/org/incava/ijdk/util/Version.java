@@ -73,6 +73,34 @@ public class Version implements Comparable<Version> {
         return cmp;
     }
 
+    /**
+     * Returns whether this version is less than the other.
+     */
+    public boolean lt(Version other) {
+        return Comp.lt(this, other);
+    }
+
+    /**
+     * Returns whether this version is less than or equal to the other.
+     */
+    public boolean lte(Version other) {
+        return Comp.lte(this, other);
+    }
+
+    /**
+     * Returns whether this version is greater than the other.
+     */
+    public boolean gt(Version other) {
+        return Comp.gt(this, other);
+    }
+
+    /**
+     * Returns whether this version is greater than or equal to the other.
+     */
+    public boolean gte(Version other) {
+        return Comp.gte(this, other);
+    }    
+
     static int compareField(Integer x, Integer y) {
         return Comp.compare(x, y);
     }
