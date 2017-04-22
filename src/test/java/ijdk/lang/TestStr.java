@@ -1,6 +1,5 @@
 package ijdk.lang;
 
-import ijdk.lang.ICore;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;

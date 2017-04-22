@@ -5,9 +5,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
-import org.incava.ijdk.util.ListExt;
-import org.incava.ijdk.util.Index;
-import static org.incava.ijdk.util.IUtil.*;
 
 /**
  * Extensions to the String class.
@@ -44,7 +41,17 @@ public class Str extends Obj {
     public static Str join(Object[] ary, String delim) {
         return join(ary == null ? null : Arrays.asList(ary), delim);
     }
-    
+
+    private static Integer getIndex(Integer size, Integer index) {
+        if (size == null || index == null) {
+            return null;
+        }
+        else {
+            int idx = index < 0 ? size + index : index;
+            return idx < 0 || idx >= size ? null : idx;
+        }
+    }
+
     private final String string;
 
     /**
@@ -375,7 +382,7 @@ public class Str extends Obj {
      * the wrapped string is null, then null is returned.
      */
     protected Integer getIndex(Integer index) {
-        return isNull() || this.string.length() == 0 ? null : Index.getIndex(this.string.length(), index);
+        return isNull() || this.string.length() == 0 ? null : getIndex(this.string.length(), index);
     }
 
     /**
