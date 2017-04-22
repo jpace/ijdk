@@ -1,7 +1,7 @@
 package org.incava.ijdk.lang;
 
-import ijdk.lang.ICore;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import junit.framework.TestCase;
 
@@ -291,11 +291,11 @@ public abstract class StringTest extends TestCase {
     }
 
     public void testJoinCollectionDelimNull() {
-        assertJoin("abcd", ICore.list("a", "b", "c", "d"), null);
+        assertJoin("abcd", Arrays.asList("a", "b", "c", "d"), null);
     }
 
     public void testJoinCollectionDelimEmpty() {
-        assertJoin("abcd", ICore.list("a", "b", "c", "d"), "");
+        assertJoin("abcd", Arrays.asList("a", "b", "c", "d"), "");
     }
 
     public void testJoinCollectionEmpty() {
@@ -303,7 +303,7 @@ public abstract class StringTest extends TestCase {
     }
 
     public void testJoinCollectionNotEmpty() {
-        assertJoin("a,b,c,d", ICore.list("a", "b", "c", "d"), ",");
+        assertJoin("a,b,c,d", Arrays.asList("a", "b", "c", "d"), ",");
     }
 
     // charAt
