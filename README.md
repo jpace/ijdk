@@ -23,12 +23,13 @@ moreso than the Apache Commons and Guava libraries.
 
 This is one of the most used pieces of code in IJDK, a shortcut for `new
 ArrayList<Type>(Arrays.asList(new Type[] { one, two, three }))`. The returned list is a
-dynamically-sized array, unlike `Arrays.asList`, which returns a fixed-size array.
+dynamically-sized array (extending ArrayList), unlike `Arrays.asList`, which returns a fixed-size
+array.
 
 ```java
-   List<String> names = ICore.list("bart", "lisa", "maggie");
-   List<Integer> ages = ICore.list(10, 8, 1);
-   List<Double> numbers = ICore.list(3.14, 2.818, 1.414);
+   List<String> names = List.of("bart", "lisa", "maggie");
+   List<Integer> ages = List.of(10, 8, 1);
+   List<Double> numbers = List.of(3.14, 2.818, 1.414);
    numbers.add(3.17);
 ```
 
