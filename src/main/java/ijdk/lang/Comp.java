@@ -29,9 +29,37 @@ public class Comp {
     }
 
     /**
+     * Returns whether x is less than y.
+     */
+    public static <Type extends Comparable<Type>> boolean lt(Type x, Type y) {
+        return compare(x, y) < 0;
+    }
+
+    /**
+     * Returns whether x is less than or equal to y.
+     */
+    public static <Type extends Comparable<Type>> boolean lte(Type x, Type y) {
+        return compare(x, y) <= 0;
+    }
+
+    /**
      * Returns whether x is greater than y.
      */
     public static <Type extends Comparable<Type>> boolean greaterThan(Type x, Type y) {
         return compare(x, y) > 0;
+    }
+
+    /**
+     * Returns whether x is greater than y.
+     */
+    public static <Type extends Comparable<Type>> boolean gt(Type x, Type y) {
+        return compare(x, y) > 0;
+    }
+
+    /**
+     * Returns whether x is greater than or equal to y.
+     */
+    public static <Type extends Comparable<Type>> boolean gte(Type x, Type y) {
+        return compare(x, y) >= 0;
     }
 }
