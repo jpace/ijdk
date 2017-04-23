@@ -3,177 +3,163 @@ package org.incava.ijdk.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import junit.framework.TestCase;
+import java.util.TreeMap;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class TestListExt extends TestCase {
+import static org.incava.test.Assertions.*;
+
+@RunWith(JUnitParamsRunner.class)
+public class TestListExt {
     public static final List<Integer> NUMS = Arrays.asList(new Integer[] { 2, 4, 6, 8 });
     public static final List<String> WORDS  = Arrays.asList(new String[] { "the", "whole", "kit", "and", "caboodle" });
     public static final List<String> EMPTY  = new ArrayList<String>();
 
-    public TestListExt(String name) {
-        super(name);
+    private static Object[] objary(Object ... args) {
+        return args;
+    }    
+
+    @Test
+    @Parameters
+    public <T> void get(T expected, List<T> list, int idx) {
+        T result = ListExt.get(list, idx);
+        assertEqual(expected, result, message("list", list, "idx", idx));
     }
-
-    public <T> void assertListExtGet(T exp, List<T> list, int idx) {
-        String msg = "ListExt.get of '" + idx + "' in list: '" + list + "'";
-        assertEquals(msg, exp, ListExt.get(list, idx));
-    }
-
-    public void testGet() {
-        assertListExtGet(2,    NUMS, 0);
-        assertListExtGet(4,    NUMS, 1);
-        assertListExtGet(6,    NUMS, 2);
-        assertListExtGet(8,    NUMS, 3);
-        assertListExtGet(null, NUMS, 4);
-
-        assertListExtGet(8,    NUMS, -1);
-        assertListExtGet(6,    NUMS, -2);
-        assertListExtGet(4,    NUMS, -3);
-        assertListExtGet(2,    NUMS, -4);
-        assertListExtGet(null, NUMS, -5);
-
-        assertListExtGet(null, EMPTY,  0);
-        assertListExtGet(null, EMPTY,  1);
-        assertListExtGet(null, EMPTY, -1);
-
-        assertListExtGet(null, null,  0);
-        assertListExtGet(null, null,  1);
-        assertListExtGet(null, null, -1);
-    }
-
-    // first
     
-    public <T> void assertFirst(T exp, List<T> list) {
-        String msg = "ListExt.first of list: '" + list + "'";
-        assertEquals(msg, exp, ListExt.first(list));
+    private List<Object[]> parametersForGet() {
+        return Arrays.asList(
+            objary(2,    NUMS, 0),
+            objary(4,    NUMS, 1),
+            objary(6,    NUMS, 2),
+            objary(8,    NUMS, 3),
+            objary(null, NUMS, 4),
+
+            objary(8,    NUMS, -1),
+            objary(6,    NUMS, -2),
+            objary(4,    NUMS, -3),
+            objary(2,    NUMS, -4),
+            objary(null, NUMS, -5),
+
+            objary(null, EMPTY,  0),
+            objary(null, EMPTY,  1),
+            objary(null, EMPTY, -1),
+
+            objary(null, null,  0),
+            objary(null, null,  1),
+            objary(null, null, -1));
     }
 
-    public void testFirstNull() {
-        assertFirst(null, null);
+    @Test
+    @Parameters
+    public <T> void first(T expected, List<T> list) {
+        T result = ListExt.first(list);
+        assertEqual(expected, result);
     }
-
-    public void testFirstEmpty() {
-        assertFirst(null, EMPTY);
-    }
-
-    public void testFirstValue() {
-        assertFirst("the", WORDS);
-    }
-
-    // last
     
-    public <T> void assertLast(T exp, List<T> list) {
-        String msg = "ListExt.last of list: '" + list + "'";
-        assertEquals(msg, exp, ListExt.last(list));
+    private List<Object[]> parametersForFirst() {
+        return Arrays.asList(
+            objary(null, null),
+            objary(null, EMPTY),
+            objary("the", WORDS));
     }
 
-    public void testLastNull() {
-        assertLast(null, null);
+    @Test
+    @Parameters
+    public <T> void last(T expected, List<T> list) {
+        T result = ListExt.last(list);
+        assertEqual(expected, result);        
+    }
+    
+    private List<Object[]> parametersForLast() {
+        return Arrays.asList(
+            objary(null, null),
+            objary(null, EMPTY),
+            objary("caboodle", WORDS));
     }
 
-    public void testLastEmpty() {
-        assertLast(null, EMPTY);
+    @Test
+    @Parameters
+    public <T> void removeAll(List<T> expected, List<T> list, T element) {
+        ListExt.removeAll(list, element);
+        assertEqual(expected, list);
     }
-            
-    public void testLastValid() {
-        assertLast("caboodle", WORDS);
-    }
-
-    // removeAll
-
-    public void testRemoveAll() {
-        List<String> list = new ArrayList<String>();
-        list.add("a");
-        list.add("a");
-        list.add("b");
-        list.add("b");
-        list.add("b");
-        list.add("c");
-
-        ListExt.removeAll(list, "c");
-        List<String> expectedAB = Arrays.asList("a", "a", "b", "b", "b");
-        assertEquals(expectedAB, list);
-
-        ListExt.removeAll(list, "a");
-        List<String> expectedB = Arrays.asList("b", "b", "b");
-        assertEquals(expectedB, list);
+    
+    private List<Object[]> parametersForRemoveAll() {
+        List<String> letters = Arrays.asList("a", "a", "b", "b", "b", "c");
         
-        ListExt.removeAll(list, "b");
-        assertTrue(list.isEmpty());
+        return Arrays.asList(objary(Arrays.asList("a", "a", "b", "b", "b"), new ArrayList<String>(letters), "c"),
+                             objary(Arrays.asList("b", "b", "b", "c"), new ArrayList<String>(letters), "a"),
+                             objary(letters, new ArrayList<String>(letters), "d"));
     }
 
-    // getIndex
-
-    public void assertGetIndex(Integer exp, Integer size, Integer index) {
-        assertEquals("index: " + index + " within size: " + size, exp, ListExt.getIndex(size, index));
-    }
-
-    public void testGetIndex() {
-        assertGetIndex(0,    4,  0);
-        assertGetIndex(1,    4,  1);
-        assertGetIndex(null, 4,  4);
-        assertGetIndex(null, 4,  5);
-
-        assertGetIndex(3,    4, -1);
-        assertGetIndex(2,    4, -2);
-        assertGetIndex(1,    4, -3);
-        assertGetIndex(0,    4, -4);
-        assertGetIndex(null, 4, -5);
-        assertGetIndex(null, 4, -6);
-
-        assertGetIndex(null, 0,  0);
-        assertGetIndex(null, 0,  1);
-        assertGetIndex(null, 0, -1);
-    }
-
-    // contains
-
-    public <T> void assertContains(boolean exp, List<T> list, T val) {
-        assertEquals("list: " + list + "; contains: '" + val + "'", exp, ListExt.contains(list, val));
+    @Test
+    @Parameters
+    public void getIndex(Integer expected, Integer size, Integer index) {
+        Integer result = ListExt.getIndex(size, index);
+        assertEqual(expected, result, message("size", size, "index", index));
     }
     
-    public void testContains() {
-        List<String> strList = new ArrayList<String>();
-        strList.add("one");
-        strList.add("two");
-        strList.add("three");
+    private List<Object[]> parametersForGetIndex() {
+        return Arrays.asList(
+            objary(0,    4,  0),
+            objary(1,    4,  1),
+            objary(null, 4,  4),
+            objary(null, 4,  5),
 
-        assertContains(true, strList, "one");
-        assertContains(true, strList, "three");
-        assertContains(false, strList, "four");
-        assertContains(false, strList, "ONE");
+            objary(3,    4, -1),
+            objary(2,    4, -2),
+            objary(1,    4, -3),
+            objary(0,    4, -4),
+            objary(null, 4, -5),
+            objary(null, 4, -6),
 
-        assertContains(false, null, null);
-
-        List<Integer> intList = new ArrayList<Integer>();
-        intList.add(1);
-        intList.add(2);
-        intList.add(3);
-
-        assertContains(true, intList, 1);
-        assertContains(true, intList, 3);
-        assertContains(false, intList, 4);
+            objary(null, 0,  0),
+            objary(null, 0,  1),
+            objary(null, 0, -1));
     }
 
-    // getRandomElement
+    @Test
+    @Parameters
+    public <T> void contains(Boolean expected, List<T> list, T value) {
+        Boolean result = ListExt.contains(list, value);
+        assertEqual(expected, result, message("list", list, "value", value));
+    }
+    
+    private List<Object[]> parametersForContains() {
+        List<Object[]> params = new ArrayList<Object[]>();
 
-    public <T> void assertRandomElement(List<T> list) {
-        T elmt = ListExt.getRandomElement(list);
-        assertNotNull(elmt);
+        List<String> strList = Arrays.asList("one", "two", "three");
+        
+        params.add(objary(true, strList, "one"));
+        params.add(objary(true, strList, "three"));
+        params.add(objary(false, strList, "four"));
+        params.add(objary(false, strList, "ONE"));
+        
+        params.add(objary(false, null, null));
+
+        List<Integer> intList = Arrays.asList(1, 2, 3);
+        
+        params.add(objary(true, intList, 1));
+        params.add(objary(true, intList, 3));
+        params.add(objary(false, intList, 4));
+
+        return params;
     }
 
-    public void testRandomElementNonEmpty() {
-        String elmt = ListExt.getRandomElement(WORDS);
-        assertNotNull(elmt);
+    @Test
+    @Parameters
+    public <T> void getRandomElement(Boolean expObject, List<T> list) {
+        T result = ListExt.getRandomElement(list);
+        assertEqual(expObject, result != null, message("list", list, "result", result));
     }
-
-    public void testRandomElementNull() {
-        String elmt = ListExt.getRandomElement(null);
-        assertNull(elmt);
-    }
-
-    public void testRandomElementEmpty() {
-        String elmt = ListExt.getRandomElement(EMPTY);
-        assertNull(elmt);
+    
+    private List<Object[]> parametersForGetRandomElement() {
+        return Arrays.asList(
+            objary(true, WORDS),
+            objary(false, null),
+            objary(false, EMPTY));
     }
 }
