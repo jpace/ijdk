@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 /**
  * Extensions to the String class.
  */
-public class Str extends Obj {
+public class Str extends Obj implements Comparable<Str> {
     /**
      * Creates a string from the collection, joined by <code>delim</code>. If <code>coll</code> is
      * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the
@@ -562,5 +562,50 @@ public class Str extends Obj {
      */
     public String quote() {
         return isNull() ? null : "\"" + this.string + "\"";
+    }
+
+    public int compareTo(Str other) {
+        if (isNull()) {
+            return other == null || other.isNull() ? 0 : -1;
+        }
+        else if (other.isNull()) {
+            return 1;
+        }
+        else {
+            return string.compareTo(other.string);
+        }
+    }
+
+    public int hashCode() {
+        return isNull() ? 0 : this.string.hashCode();
+    }
+
+    /**
+     * Returns whether this string is less than the other.
+     */
+    public boolean lt(Str other) {
+        return Comp.lt(this, other);
+    }
+
+    /**
+     * Returns whether this string is less than or equal to the other.
+     */
+    public boolean lte(Str other) {
+        return Comp.lte(this, other);
+    }
+
+    /**
+     * Returns whether this string is greater than the other.
+     */
+    public boolean gt(Str other) {
+        return Comp.gt(this, other);
+    }
+
+    /**
+     * Returns whether this string is greater than or equal to the other.
+     */
+    public boolean gte(Str other) {
+        return Comp.gte(this, other);
     }    
+    
 }

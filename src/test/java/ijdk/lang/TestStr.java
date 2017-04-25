@@ -412,4 +412,18 @@ public class TestStr extends StringTest {
         assertEqual(false, new Str(null).endsWith('c'));
         assertEqual(false, new Str("abc").endsWith('d'));
     }
+
+    public void testCompareTo() {
+        assertEqual(true, new Str("abc").compareTo(new Str("abc")) == 0);
+        assertEqual(true, new Str("abc").compareTo(new Str("def")) < 0);
+        assertEqual(true, new Str("def").compareTo(new Str("abc")) > 0);
+        assertEqual(true, new Str("abc").compareTo(new Str(null)) > 0);
+        assertEqual(true, new Str(null).compareTo(new Str(null)) == 0);
+        assertEqual(true, new Str(null).compareTo(new Str("abc")) < 0);
+    }
+
+    public void testHashCode() {
+        assertEqual("abc".hashCode(), new Str("abc").hashCode());
+        assertEqual(0, new Str(null).hashCode());
+    }
 }
