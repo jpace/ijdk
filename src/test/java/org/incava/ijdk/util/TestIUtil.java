@@ -5,124 +5,147 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import junit.framework.TestCase;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class TestIUtil extends TestCase {
-    public TestIUtil(String name) {
-        super(name);
+import static org.incava.test.Assertions.*;
+import static org.junit.Assert.*;
+
+@RunWith(JUnitParamsRunner.class)
+public class TestIUtil {
+    private static Object[] objary(Object ... args) {
+        return args;
+    }    
+
+    @Test
+    @Parameters
+    public void isTrue(boolean expected, Object input) {
+        assertEqual(expected, IUtil.isTrue(input));
+    }
+    
+    private List<Object[]> parametersForIsTrue() {
+        return Arrays.asList(new Object[][] {
+                objary(true, "foo"),
+                objary(true, new Integer(17)),
+                objary(true, 0),
+                objary(true, Arrays.asList(new String[] { "foo" })),
+                
+                objary(false, ""),
+                objary(false, null),
+                objary(false, new ArrayList<String>())
+            });
     }
 
-    public void assertIsTrue(boolean exp, Object input) {
-        assertEquals(exp, IUtil.isTrue(input));
+    @Test
+    @Parameters
+    public void isFalse(boolean expected, Object input) {
+        assertEqual(expected, IUtil.isFalse(input));
+    }
+    
+    private List<Object[]> parametersForIsFalse() {
+        return Arrays.asList(new Object[][] {
+                objary(true, null),
+                objary(true, ""),
+                objary(true, new ArrayList<Double>()),
+                objary(false, new Integer(317)),
+                objary(false, Arrays.asList(new String[] { "ord" }))
+            });
     }
 
-    public void assertIsFalse(boolean exp, Object input) {
-        assertEquals(exp, IUtil.isFalse(input));
+    @Test
+    @Parameters
+    public void elvis(Object expected, Object x, Object y) {
+        assertEqual(expected, IUtil.elvis(x, y));
     }
-
-    public void assertElvis(Object exp, Object a, Object b) {
-        assertEquals(exp, IUtil.elvis(a, b));
-    }
-
-    public void assertAnd(Object exp, Object a, Object b) {
-        assertEquals(exp, IUtil.and(a, b));
-    }
-
-    public void assertOr(Object exp, Object a, Object b) {
-        assertEquals(exp, IUtil.or(a, b));
-    }
-
-    public void testIsTrue() {
-        assertIsTrue(true, "foo");
-        assertIsTrue(true, new Integer(17));
-        assertIsTrue(true, 0);
-        assertIsTrue(true, Arrays.asList(new String[] { "foo" }));
-        
-        assertIsTrue(false, "");
-        assertIsTrue(false, null);
-        assertIsTrue(false, new ArrayList<String>());
-    }
-
-    public void testIsFalse() {
-        assertIsFalse(true, null);
-        assertIsFalse(true, "");
-        assertIsFalse(true, new ArrayList<Double>());
-
-        assertIsFalse(false, new Integer(317));
-        assertIsFalse(false, Arrays.asList(new String[] { "ord" }));
-    }
-
-    public void testElvis() {
-        assertElvis("foo", "foo", "bar");
-        assertElvis("foo", "foo", null);
-        assertElvis("foo", null,  "foo");
-
+    
+    private List<Object[]> parametersForElvis() {
         Object collOne = Arrays.asList(new String[] { "foo", "bar" });
         Object collTwo = Arrays.asList(new String[] { "BAR", "FOO" });
-
-        assertElvis(collOne, collOne, collTwo);
-        assertElvis(collOne, null, collOne);
-        assertElvis(collOne, collOne, null);
+        
+        return Arrays.asList(new Object[][] {
+                objary("foo", "foo", "bar"),
+                objary("foo", "foo", null),
+                objary("foo", null,  "foo"),
+                objary(collOne, collOne, collTwo),
+                objary(collOne, null, collOne),
+                objary(collOne, collOne, null)
+            });
     }
-
-    public void testAnd() {
-        assertAnd("bar", "foo", "bar");
-        assertAnd(null, "foo", null);
-        assertAnd(null, null, "bar");
-        assertAnd("bar", "bar", "bar");
-        assertAnd(null, null, null);
-
+    
+    @Test
+    @Parameters
+    public void and(Object expected, Object x, Object y) {
+        assertEqual(expected, IUtil.and(x, y));
+    }
+    
+    private List<Object[]> parametersForAnd() {
         ArrayList<String> one = new ArrayList<String>(Arrays.asList(new String[] { "one", "eine" }));
         ArrayList<String> two = new ArrayList<String>(Arrays.asList(new String[] { "two", "dos" }));
         ArrayList<String> three = new ArrayList<String>(Arrays.asList(new String[] { "three", "san" }));
         ArrayList<String> empty = new ArrayList<String>();
 
-        assertAnd(two, one, two);
-        assertAnd(three, one, three);
-        assertAnd(three, two, three);
-
-        assertAnd(null, one, empty);
-        assertAnd(null, one, null);
-
-        assertAnd(null, empty, one);
-        assertAnd(null, null, one);                                      
+        return Arrays.asList(new Object[][] {
+                objary("bar", "foo", "bar"),
+                objary(null, "foo", null),
+                objary(null, null, "bar"),
+                objary("bar", "bar", "bar"),
+                objary(null, null, null),
+                objary(two, one, two),
+                objary(three, one, three),
+                objary(three, two, three),
+                objary(null, one, empty),
+                objary(null, one, null),
+                objary(null, empty, one),
+                objary(null, null, one)
+            });
     }
 
-    public void testOr() {
-        assertOr("foo", "foo", "bar");
-        assertOr("foo", "foo", null);
-        assertOr("bar", null, "bar");
-        assertOr("bar", "bar", "bar");
-        assertOr(null, null, null);
-
+    @Test
+    @Parameters
+    public void or(Object expected, Object x, Object y) {
+        assertEqual(expected, IUtil.or(x, y));
+    }
+    
+    private List<Object[]> parametersForOr() {
         ArrayList<String> one = new ArrayList<String>(Arrays.asList(new String[] { "one", "eine" }));
         ArrayList<String> two = new ArrayList<String>(Arrays.asList(new String[] { "two", "dos" }));
         ArrayList<String> three = new ArrayList<String>(Arrays.asList(new String[] { "three", "san" }));
         ArrayList<String> empty = new ArrayList<String>();
 
-        assertOr(one, one, two);
-        assertOr(one, one, three);
-        assertOr(two, two, three);
+        return Arrays.asList(new Object[][] {
+                objary("foo", "foo", "bar"),
+                objary("foo", "foo", null),
+                objary("bar", null, "bar"),
+                objary("bar", "bar", "bar"),
+                objary(null, null, null),
 
-        assertOr(one, one, empty);
-        assertOr(one, one, null);
-
-        assertOr(one, empty, one);
-        assertOr(one, null, one);
-
-        assertOr(null, empty, null);
-        assertOr(null, null, empty);
+                objary(one, one, two),
+                objary(one, one, three),
+                objary(two, two, three),
+                
+                objary(one, one, empty),
+                objary(one, one, null),
+                
+                objary(one, empty, one),
+                objary(one, null, one),
+                
+                objary(null, empty, null),
+                objary(null, null, empty)
+            });
     }
-
-    public void testIterArray() {
+    
+    @Test
+    public void iterArray() {
         String[] listOne = new String[] { "one", "eine" };
         String[] listEmpty = new String[0];
         String[] listNull = null;
 
         Iterator<String> litOne = IUtil.iter(listOne).iterator();
         assertTrue(litOne.hasNext());
-        assertEquals("one", litOne.next());
-        assertEquals("eine", litOne.next());
+        assertEqual("one", litOne.next());
+        assertEqual("eine", litOne.next());
         assertFalse(litOne.hasNext());        
 
         Iterator<String> litEmpty = IUtil.iter(listEmpty).iterator();
@@ -132,15 +155,16 @@ public class TestIUtil extends TestCase {
         assertFalse(litNull.hasNext());
     }
 
-    public void testIterCollection() {
+    @Test
+    public void iterCollection() {
         ArrayList<String> aryOne = new ArrayList<String>(Arrays.asList(new String[] { "one", "eine" }));
         ArrayList<String> aryEmpty = new ArrayList<String>();
         ArrayList<String> aryNull = null;
 
         Iterator<String> aitOne = IUtil.iter(aryOne).iterator();
         assertTrue(aitOne.hasNext());
-        assertEquals("one", aitOne.next());
-        assertEquals("eine", aitOne.next());
+        assertEqual("one", aitOne.next());
+        assertEqual("eine", aitOne.next());
         assertFalse(aitOne.hasNext());        
 
         Iterator<String> aitEmpty = IUtil.iter(aryEmpty).iterator();
@@ -151,14 +175,15 @@ public class TestIUtil extends TestCase {
     }
 
     public void assertHasNext(boolean exp, Iterator<Integer> it) {
-        assertEquals(exp, it.hasNext());
+        assertEqual(exp, it.hasNext());
     }
 
     public void assertNext(Integer exp, Iterator<Integer> it) {
-        assertEquals(exp, it.next());
+        assertEqual(exp, it.next());
     }
 
-    public void testIterNumber() {
+    @Test
+    public void iterNumber() {
         Iterator<Integer> it = IUtil.iter(3).iterator();
         assertHasNext(true, it);
         assertNext(0, it);
@@ -175,17 +200,18 @@ public class TestIUtil extends TestCase {
             fail("exception expected");
         }
         catch (NoSuchElementException e) {
-            assertEquals("limit: " + 3, e.getMessage());
+            assertEqual("limit: " + 3, e.getMessage());
         }
     }
 
     @SuppressWarnings("varargs")
     @SafeVarargs
     public final <T> void assertList(List<T> expected, T ... elements) {
-        assertEquals(expected, IUtil.list(elements));
+        assertEqual(expected, IUtil.list(elements));
     }
 
-    public void testList() {
+    @Test
+    public void list() {
         String[] listOne = new String[] { "one", "eine" };
         assertList(new ArrayList<String>(Arrays.asList(listOne)), "one", "eine");
 

@@ -1,7 +1,6 @@
 package org.incava.ijdk.util;
 
 import java.util.Collection;
-import junit.framework.TestCase;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
