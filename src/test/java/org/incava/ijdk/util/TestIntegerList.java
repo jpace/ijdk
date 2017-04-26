@@ -1,89 +1,86 @@
 package org.incava.ijdk.util;
 
-import java.util.*;
-import junit.framework.TestCase;
-import org.incava.ijdk.lang.Closure;
+import java.util.Arrays;
+import java.util.List;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class TestIntegerList extends TestCase {
-    public TestIntegerList(String name) {
-        super(name);
-    }
+import static org.incava.test.Assertions.*;
+import static org.junit.Assert.*;
+import static ijdk.lang.Common.objary;
 
-    public void assertEquals(int expected, Integer value) {
-        TestCase.assertEquals(Integer.valueOf(expected), value);
-    }
-
-    public void testCtorEmpty() {
+@RunWith(JUnitParamsRunner.class)
+public class TestIntegerList {
+    @Test
+    public void ctorEmpty() {
         IntegerList sl = new IntegerList();
-        assertEquals(0, sl.size());
+        assertEqual(0, sl.size());
     }
 
-    public void testCtorCollection() {
+    @Test
+    public void ctorCollection() {
         List<Integer> list = Arrays.asList(new Integer[] { 1, 2, 3 });
         IntegerList sl = new IntegerList(list);
-        assertEquals(3, sl.size());
+        assertEqual(3, sl.size());
     }
 
-    public void testCtorOneArg() {
+    @Test
+    public void ctorOneArg() {
         IntegerList sl = new IntegerList(1);
-        assertEquals(1, sl.size());
-        assertEquals(1, sl.get(0));
+        assertEqual(1, sl.size());
+        assertEqual(1, sl.get(0));
     }
 
-    public void testCtorTwoArgs() {
+    @Test
+    public void ctorTwoArgs() {
         IntegerList sl = new IntegerList(1, 2);
-        assertEquals(2, sl.size());
-        assertEquals(1, sl.get(0));
-        assertEquals(2, sl.get(1));
+        assertEqual(2, sl.size());
+        assertEqual(1, sl.get(0));
+        assertEqual(2, sl.get(1));
     }
 
-    public void testCtorThreeArgs() {
+    @Test
+    public void ctorThreeArgs() {
         IntegerList sl = new IntegerList(1, 2, 3);
-        assertEquals(3, sl.size());
-        assertEquals(1, sl.get(0));
-        assertEquals(2, sl.get(1));
-        assertEquals(3, sl.get(2));
+        assertEqual(3, sl.size());
+        assertEqual(1, sl.get(0));
+        assertEqual(2, sl.get(1));
+        assertEqual(3, sl.get(2));
     }
 
-    public void assertMinimum(Integer expected, Integer ... values) {
+    @Test
+    @Parameters
+    public void minimum(Integer expected, Integer ... values) {
         IntegerList sl = new IntegerList(values);
-        assertEquals("values: " + Arrays.asList(values), expected, sl.minimum());
+        Integer min = sl.minimum();
+        assertEqual(expected, min, message("values", Arrays.asList(values)));
+    }
+    
+    private List<Object[]> parametersForMinimum() {
+        return Arrays.asList(new Object[][] {
+                objary(null, new Integer[0]),
+                objary(1, 1),
+                objary(1, 1, 2),
+                objary(1, 2, 1)
+            });
     }
 
-    public void testMinEmpty() {
-        assertMinimum(null);
-    }
-
-    public void testMinOneElement() {
-        assertMinimum(1, 1);
-    }
-
-    public void testMinTwoElementsOrdered() {
-        assertMinimum(1, 1, 2);
-    }
-
-    public void testMinTwoElementsReversed() {
-        assertMinimum(1, 2, 1);
-    }
-
-    public void assertMaximum(Integer expected, Integer ... values) {
+    @Test
+    @Parameters
+    public void maximum(Integer expected, Integer ... values) {
         IntegerList sl = new IntegerList(values);
-        assertEquals("values: " + Arrays.asList(values), expected, sl.maximum());
+        Integer max = sl.maximum();
+        assertEqual(expected, max, message("values", Arrays.asList(values)));        
     }
-
-    public void testMaxEmpty() {
-        assertMaximum(null);
-    }
-
-    public void testMaxOneElement() {
-        assertMaximum(1, 1);
-    }
-
-    public void testMaxTwoElementsOrdered() {
-        assertMaximum(2, 1, 2);
-    }
-
-    public void testMaxTwoElementsReversed() {
-        assertMaximum(2, 2, 1);
+    
+    private List<Object[]> parametersForMaximum() {
+        return Arrays.asList(new Object[][] {
+                objary(null, new Integer[0]),
+                objary(1, 1),
+                objary(2, 1, 2),
+                objary(2, 2, 1)
+            });
     }
 }

@@ -12,13 +12,10 @@ import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.*;
 import static org.junit.Assert.*;
+import static ijdk.lang.Common.objary;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestIUtil {
-    private static Object[] objary(Object ... args) {
-        return args;
-    }    
-
     @Test
     @Parameters
     public void isTrue(boolean expected, Object input) {
