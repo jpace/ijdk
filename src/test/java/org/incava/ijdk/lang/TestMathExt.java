@@ -7,14 +7,11 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static ijdk.lang.Common.objary;
 import static org.incava.test.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestMathExt {
-    private static Object[] objary(Object ... args) {
-        return args;
-    }    
-    
     @Test
     @Parameters
     public void min(int expected, int[] nums) {
