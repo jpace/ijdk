@@ -7,7 +7,7 @@ import java.util.*;
  */
 public class Comp {
     /**
-     * Compares the two objects, including testing for null.
+     * Compares the two objects, including testing for null. Returns only -1, 0, or 1.
      */
     public static <Type extends Comparable<Type>> int compare(Type x, Type y) {
         if (x == null) {
@@ -17,9 +17,10 @@ public class Comp {
             return 1;
         }
         else {
-            return x.compareTo(y);
+            int cmp = x.compareTo(y);
+            return cmp == 0 ? 0 : (cmp < 0 ? -1 : 1);
         }
-    }
+    }    
 
     /**
      * Returns whether x is less than y.

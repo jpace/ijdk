@@ -51,11 +51,11 @@ public class TestObjectExt extends ObjectTest {
     }
 
     public void testCompareLesserObject() {
-        assertCompare(-3, new String("abc"), new String("def"));
+        assertCompare(-1, new String("abc"), new String("def"));
     }
 
     public void testCompareGreaterObject() {
-        assertCompare(3, new String("def"), new String("abc"));
+        assertCompare(1, new String("def"), new String("abc"));
     }
 
     // isTrue

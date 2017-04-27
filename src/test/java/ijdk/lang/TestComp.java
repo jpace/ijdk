@@ -6,14 +6,11 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static ijdk.lang.Common.objary;
 import static org.incava.test.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestComp {
-    private static Object[] objary(Object ... args) {
-        return args;
-    }
-    
     @Test
     @Parameters
     public <T extends Comparable<T>> void compare(int expected, T x, T y) {
@@ -32,8 +29,8 @@ public class TestComp {
         params.add(objary(0,  obj, obj));
         params.add(objary(0,  new String(), new String()));
         params.add(objary(0,  new String("abc"), new String("abc")));
-        params.add(objary(-3, new String("abc"), new String("def")));
-        params.add(objary(3,  new String("def"), new String("abc")));
+        params.add(objary(-1, new String("abc"), new String("def")));
+        params.add(objary(1,  new String("def"), new String("abc")));
         
         return params;
     }

@@ -187,6 +187,17 @@ Does one-to-many mappings.
     pn.extension();    // == "txt"
 ```
 
+* Comp instead of Comparable
+
+ijdk.lang.Comp extends and replaces Comparable (compareTo) usage, normalizing the result to be
+simply -1, 0, or 1. Comp also contains lt, lte, gt, and gte, for simpler comparisons:
+
+```java
+   if (Comp.gte("abc", "bbc")) {
+   }
+   if (Comp.lt("def", "fed")) {
+   }
+
 * briefer package hierarchy
 
 A top-level package, `ijdk`, contains subpackages, such as `ijdk.lang`, making for briefer import

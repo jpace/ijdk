@@ -6,6 +6,7 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static ijdk.lang.Common.objary;
 import static org.incava.test.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)
@@ -79,18 +80,18 @@ public class TestKeyValue {
     }
     
     private java.util.List<Object[]> parametersForCompareTo() {
-        KeyValue<String, Double> x = KeyValue.of("one", 1.2);
-        KeyValue<String, Double> y = KeyValue.of("two", 1.2);
-        KeyValue<String, Double> z = KeyValue.of("one", 2.4);
+        KeyValue<String, Double> aa = KeyValue.of("one", 1.2);
+        KeyValue<String, Double> ab = KeyValue.of("one", 2.4);
+        KeyValue<String, Double> ba = KeyValue.of("two", 1.2);
         return Arrays.asList(new Object[][] {
-                new Object[] { 0, x, x },
-                new Object[] { 0, x, KeyValue.of("one", 1.2) },
-                new Object[] { 0, KeyValue.of("one", 1.2), x },
-                new Object[] { -5, x, y },
-                new Object[] { 5,  y, x },
-                new Object[] { -5, x, y },
-                new Object[] { -1, x, z },
-                new Object[] {  1, z, x },
+                new Object[] { 0, aa, aa },
+                new Object[] { 0, aa, KeyValue.of("one", 1.2) },
+                new Object[] { 0, KeyValue.of("one", 1.2), aa },
+                new Object[] { -1, aa, ba },
+                new Object[] {  1, ba, aa },
+                new Object[] { -1, aa, ba },
+                new Object[] { -1, aa, ab },
+                new Object[] {  1, ab, aa },
                 // not comparable:
                 new Object[] { -1, KeyValue.of(new StringBuilder("one"), 1.2), KeyValue.of(new StringBuilder("one"), 1.2) },
                 new Object[] { -1, KeyValue.of(1.2, new StringBuilder("one")), KeyValue.of(1.2, new StringBuilder("one")) } 
