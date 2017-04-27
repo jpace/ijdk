@@ -2,21 +2,16 @@ package org.incava.ijdk.lang;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.TreeMap;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static ijdk.lang.Common.objary;
 import static org.incava.test.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestIntArray {
-    private static Object[] objary(Object ... args) {
-        return args;
-    }
-    
     @Test
     @Parameters
     public void max(int expected, int[] nums) {
