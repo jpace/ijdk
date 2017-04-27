@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static ijdk.lang.Common.objary;
 import static org.incava.test.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)
@@ -17,10 +18,6 @@ public class TestListExt {
     public static final List<Integer> NUMS = Arrays.asList(new Integer[] { 2, 4, 6, 8 });
     public static final List<String> WORDS  = Arrays.asList(new String[] { "the", "whole", "kit", "and", "caboodle" });
     public static final List<String> EMPTY  = new ArrayList<String>();
-
-    private static Object[] objary(Object ... args) {
-        return args;
-    }    
 
     @Test
     @Parameters
