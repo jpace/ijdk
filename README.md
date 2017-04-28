@@ -16,44 +16,91 @@ Note the similarity to idiomatic Ruby:
 # Usage
 
 IJDK has a very expansive (but growing) library for Java I/O and collections, as an alternative to
-the JDK code. It is mostly inspired by Ruby, and parallels Ruby code as closely as possible, usually
-moreso than the Apache Commons and Guava libraries.
-
-## shortcuts for list creation:
-
-This is one of the most used pieces of code in IJDK, a shortcut for `new
-ArrayList<Type>(Arrays.asList(new Type[] { one, two, three }))`. The returned list is a
-dynamically-sized array (extending ArrayList), unlike `Arrays.asList`, which returns a fixed-size
-array.
-
-```java
-   List<String> names = List.of("bart", "lisa", "maggie");
-   List<Integer> ages = List.of(10, 8, 1);
-   List<Double> numbers = List.of(3.14, 2.818, 1.414);
-   numbers.add(3.17);
-```
+the JDK code. It is mostly inspired by Ruby, and parallels Ruby classes (such as Hash and Array)
+closely, usually moreso than it does the Apache Commons and Guava libraries.
 
 ## Enhanced collections
 
-IJDK contains collection classes that extend those in the JDK.
-
-These collections are being considered for being branched into a separate project from IJDK.
+IJDK contains collection classes that extend the List (ArrayList) and Map (TreeMap) classes from the
+JDK.
 
 ### List<T>
 
 An extension of ArrayList, with Ruby-like methods.
 
 ```java
-   List<Integer> nums = List.of(1, 3, 5, 7);
-   nums.get(0);    // == 1
-   nums.get(-1);   // == 7
-   nums.append(9).append(11).append(13);
-   nums.get(-3);   // == 9
-   nums.first();   // == 1
-   nums.last();    // == 13
-   nums.takeFirst();  // == 1
-   nums.takeFirst();  // == 3
-   nums.takeLast();   // == 13
+    Integer x = null;
+    List<Integer> nums = List.of(1, 3, 5, 7);
+    x = nums.get(0);
+    assertEqual(1, x);
+    
+    x = nums.get(-1);
+    assertEqual(7, x);
+    
+    nums.append(9).append(11).append(13);
+    assertEqual(List.of(1, 3, 5, 7, 9, 11, 13), nums);
+
+    x = nums.get(-3);
+    assertEqual(9, x);
+    
+    x = nums.first();
+    assertEqual(1, x);
+
+    x = nums.last();
+    assertEqual(13, x);
+    
+    x = nums.takeFirst();
+    assertEqual(1, x);
+    assertEqual(List.of(3, 5, 7, 9, 11, 13), nums);
+    
+    x = nums.takeFirst();
+    assertEqual(3, x);
+    assertEqual(List.of(5, 7, 9, 11, 13), nums);
+
+    x = nums.takeLast();
+    assertEqual(13, x);
+    assertEqual(List.of(5, 7, 9, 11), nums);
+
+    StringList strList = nums.toStringList();
+    assertEqual(StringList.of("5", "7", "9", "11"), strList);
+
+    nums.append(2).append(2).append(2);
+    assertEqual(List.of(5, 7, 9, 11, 2, 2, 2), nums);
+
+    List<Integer> uniq = nums.unique();
+    assertEqual(List.of(5, 7, 9, 11, 2), uniq);
+
+    assertEqual(true, nums.containsAny(2, 3));
+    assertEqual(false, nums.containsAny(3, 4));
+
+    nums.removeAll(2);
+    assertEqual(List.of(5, 7, 9, 11), nums);
+
+    nums.set(0, 4);
+    assertEqual(List.of(4, 7, 9, 11), nums);
+
+    nums.set(-1, 10);
+    assertEqual(List.of(4, 7, 9, 10), nums);
+
+    nums.set(-2, 8);
+    assertEqual(List.of(4, 7, 8, 10), nums);
+
+    nums.set(1, 6);
+    assertEqual(List.of(4, 6, 8, 10), nums);
+
+    x = nums.getRandomElement();
+    assertEqual(true, List.of(4, 6, 8, 10).contains(x));
+
+    String str = nums.join(" + ");
+    assertEqual("4 + 6 + 8 + 10", str);
+
+    List<Integer> odds = List.of(1, 3, 5);
+    List<Integer> evens = List.of(2, 4, 6);
+    List<Integer> numbers = odds.plus(evens);
+    assertEqual(List.of(1, 3, 5, 2, 4, 6), numbers);
+    
+    List<Integer> squares = numbers.minus(List.of(2, 3, 5, 6));
+    assertEqual(List.of(1, 4), squares);
 ```
 
 ### Common Collections

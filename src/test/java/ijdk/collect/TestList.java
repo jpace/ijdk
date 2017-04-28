@@ -14,25 +14,21 @@ import static ijdk.lang.Common.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestList {
-    // ctor
-
-    public <T> List<T> assertCtor(List<T> expected, List<T> actual) {
-        return assertEqual(expected, actual);
+    private List<Integer> emptyIntegerList() {
+        return List.<Integer>of();
     }
-
+    
     @Test
     public void ctorEmpty() {
         List<Object> expected = new List<Object>();
         List<Object> actual = new List<Object>();
-
-        assertCtor(expected, actual);
+        assertEqual(expected, actual);
     }
 
     @Test
     public void ctorCollection() {
         Collection<String> coll = Arrays.asList(new String[] { "a", "b", "c" });
         List<Object> actual = new List<Object>(coll);
-
         assertEqual(Arrays.asList(new Object[] { "a", "b", "c" }), actual);
     }
 
@@ -41,8 +37,7 @@ public class TestList {
         java.util.Collection<Object> nullColl = null;
         List<Object> expected = new List<Object>();
         List<Object> actual = new List<Object>(nullColl);
-
-        assertCtor(expected, actual);
+        assertEqual(expected, actual);
     }
     
     @Test
@@ -57,13 +52,13 @@ public class TestList {
         numbers.add(2);
         numbers.add(3);
 
-        Assert.assertEquals(expected, numbers.toStringList());
+        assertEqual(expected, numbers.toStringList());
     }
 
     @Test
     @Parameters
     public void containsAnyCollection(Boolean expected, List<Integer> list, java.util.List<Integer> coll) {
-        Assert.assertEquals(expected, list.containsAny(coll));
+        assertEqual(expected, list.containsAny(coll));
     }
 
     public java.util.List<Object[]> parametersForContainsAnyCollection() {
@@ -76,12 +71,12 @@ public class TestList {
     @Test
     @Parameters
     public void containsAnyArray(Boolean expected, List<Integer> list, Integer ... args) {
-        Assert.assertEquals(expected, list.containsAny(args));
+        assertEqual(expected, list.containsAny(args));
     }
     
     @Test
     public void containsAnyArrayEmpty() {
-        Assert.assertEquals(false, new List<Integer>(1, 2, 3).containsAny());
+        assertEqual(false, new List<Integer>(1, 2, 3).containsAny());
     }
 
     public java.util.List<Object[]> parametersForContainsAnyArray() {
@@ -99,7 +94,7 @@ public class TestList {
     public java.util.List<Object[]> parametersForFirst() {
         return Common.<Object[]>list(ary(new Integer(6), List.of(6)),
                                      ary(new Integer(6), List.of(6, 7)),
-                                     ary((Integer)null,  List.<Integer>of()));
+                                     ary((Integer)null,  emptyIntegerList()));
     }
 
     @Test
@@ -111,7 +106,7 @@ public class TestList {
     public java.util.List<Object[]> parametersForLast() {
         return Common.<Object[]>list(ary(new Integer(6), List.of(6)),
                                      ary(new Integer(7), List.of(6, 7)),
-                                     ary((Integer)null,  List.<Integer>of()));
+                                     ary((Integer)null,  emptyIntegerList()));
     }
 
     @Test
@@ -128,9 +123,9 @@ public class TestList {
                                      ary(new Integer(6), List.of(6, 7), -2),
                                      ary(null,           List.of(6, 7),  2),
                                      ary(null,           List.of(6, 7), -3),
-                                     ary(null,           List.<Integer>of(), 0),
-                                     ary(null,           List.<Integer>of(), -1),
-                                     ary(null,           List.<Integer>of(), 1));
+                                     ary(null,           emptyIntegerList(), 0),
+                                     ary(null,           emptyIntegerList(), -1),
+                                     ary(null,           emptyIntegerList(), 1));
                                      
     }
 
@@ -160,15 +155,16 @@ public class TestList {
     @Test
     @Parameters
     public void append(List<Object> expected, List<Object> list, Object obj) {
+        String msg = message("list", list, "obj", obj);
         // the returned value is also the list
-        assertEqual(expected, list.append(obj), message("list", list, "obj", obj));
-        assertEqual(expected, list, message("list", list, "obj", obj));
+        assertEqual(expected, list.append(obj), msg);
+        assertEqual(expected, list,             msg);
     }
 
     public java.util.List<Object[]> parametersForAppend() {
         return Common.<Object[]>list(ary(List.of(6, 7),     List.of(6), 7),
                                      ary(List.of(6, null),  List.of(6), (Integer)null),
-                                     ary(List.of(7),        List.<Integer>of(), 7));                                     
+                                     ary(List.of(7),        emptyIntegerList(), 7));                                     
     }
 
     @Test
@@ -190,12 +186,12 @@ public class TestList {
     }
 
     public java.util.List<Object[]> parametersForSet() {
-        return Common.<Object[]>list(ary(List.of(6, 7),     List.of(6),           1, 7),
-                                     ary(List.of(6, null),  List.<Integer>of(6),  1, (Integer)null),
-                                     ary(List.of(7),        List.<Integer>of(),   0, 7),
-                                     ary(null,              List.<Integer>of(),  -1, 7),
-                                     ary(List.of(7),        List.<Integer>of(6), -1, 7),
-                                     ary(null,              List.<Integer>of(6), -2, 7));
+        return Common.<Object[]>list(ary(List.of(6, 7),     List.of(6),          1, 7),
+                                     ary(List.of(6, null),  List.of(6),          1, (Integer)null),
+                                     ary(List.of(7),        emptyIntegerList(),  0, 7),
+                                     ary(null,              emptyIntegerList(), -1, 7),
+                                     ary(List.of(7),        List.of(6),         -1, 7),
+                                     ary(null,              List.of(6),         -2, 7));
     }
 
     @Test
@@ -209,8 +205,8 @@ public class TestList {
     public java.util.List<Object[]> parametersForRemoveAll() {
         return Common.<Object[]>list(ary(true,   List.of(1),         List.of(1, 2),       2),
                                      ary(true,   List.of(1),         List.of(1, 2, 2),    2),
-                                     ary(true,   List.<Integer>of(), List.of(2, 2),       2),
-                                     ary(false,  List.<Integer>of(), List.<Integer>of(),  2),
+                                     ary(true,   emptyIntegerList(), List.of(2, 2),       2),
+                                     ary(false,  emptyIntegerList(), emptyIntegerList(),  2),
                                      ary(false,  List.of(1),         List.of(1), 2));
     }
 
@@ -224,7 +220,7 @@ public class TestList {
     public java.util.List<Object[]> parametersForGetRandomElement() {
         return Common.<Object[]>list(ary(true,   List.of(1)),
                                      ary(true,   List.of(1, 2)),
-                                     ary(false,  List.<Integer>of()));
+                                     ary(false,  emptyIntegerList()));
     }
 
     @Test
@@ -237,11 +233,11 @@ public class TestList {
     }
 
     public java.util.List<Object[]> parametersForTakeFirst() {
-        return Common.<Object[]>list(ary(1, List.<Integer>of(), List.of(1)),
+        return Common.<Object[]>list(ary(1, emptyIntegerList(), List.of(1)),
                                      ary(1, List.of(2), List.of(1, 2)),
                                      ary("a", List.<String>of(), List.of("a")),
                                      ary("a", List.of("b"), List.of("a", "b")),
-                                     ary((Integer)null, List.<Integer>of(), List.<Integer>of()));
+                                     ary((Integer)null, emptyIntegerList(), emptyIntegerList()));
     }    
 
     @Test
@@ -254,11 +250,11 @@ public class TestList {
     }
 
     public java.util.List<Object[]> parametersForTakeLast() {
-        return Common.<Object[]>list(ary(1, List.<Integer>of(), List.of(1)),
+        return Common.<Object[]>list(ary(1, emptyIntegerList(), List.of(1)),
                                      ary(2, List.of(1), List.of(1, 2)),
                                      ary("a", List.<String>of(), List.of("a")),
                                      ary("b", List.of("a"), List.of("a", "b")),
-                                     ary((Integer)null, List.<Integer>of(), List.<Integer>of()));
+                                     ary((Integer)null, emptyIntegerList(), emptyIntegerList()));
     }
     
     @Test
@@ -276,7 +272,7 @@ public class TestList {
                                      objary(List.of(1, 2), List.of(1, 2)),
                                      objary(List.of(2, 1), List.of(2, 1)),
                                      objary(List.of(1, 2), List.of(1, 2, 1)),
-                                     objary(List.<Integer>of(), List.<Integer>of()));
+                                     objary(emptyIntegerList(), emptyIntegerList()));
     }    
 
     @Test
@@ -289,7 +285,7 @@ public class TestList {
     }
 
     public java.util.List<Object[]> parametersForCompact() {
-        List<Integer> emptyList = List.<Integer>of();
+        List<Integer> emptyList = emptyIntegerList();
         return Common.<Object[]>list(objary(emptyList, emptyList),
                                      objary(List.of(1), List.of(1)),
                                      objary(emptyList, List.<Integer>of((Integer)null)),
@@ -311,7 +307,7 @@ public class TestList {
     }
 
     public java.util.List<Object[]> parametersForJoin() {
-        List<Integer> emptyList = List.<Integer>of();
+        List<Integer> emptyList = emptyIntegerList();
         return Common.<Object[]>list(objary("", emptyList, ""),
                                      objary("", emptyList, "x"),
                                      objary("1", List.of(1), ""),
@@ -330,11 +326,11 @@ public class TestList {
     private List<Object[]> parametersForPlus() {
         List<Object[]> params = List.<Object[]>of();
 
-        params.add(objary(List.<Integer>of(1, 2, 3, 4), List.<Integer>of(1, 2), List.<Integer>of(3, 4)));
-        params.add(objary(List.<Integer>of(1, 2, 3), List.<Integer>of(1, 2), List.<Integer>of(3)));
-        params.add(objary(List.<Integer>of(1, 2), List.<Integer>of(1, 2), List.<Integer>of()));
-        params.add(objary(List.<Integer>of(1, 2, 3, 3), List.<Integer>of(1, 2, 3), List.<Integer>of(3)));
-        params.add(objary(List.<Integer>of(1, 2, 3, 1), List.<Integer>of(1, 2, 3), List.<Integer>of(1)));
+        params.add(objary(List.of(1, 2, 3, 4), List.of(1, 2), List.of(3, 4)));
+        params.add(objary(List.of(1, 2, 3), List.of(1, 2), List.of(3)));
+        params.add(objary(List.of(1, 2), List.of(1, 2), emptyIntegerList()));
+        params.add(objary(List.of(1, 2, 3, 3), List.of(1, 2, 3), List.of(3)));
+        params.add(objary(List.of(1, 2, 3, 1), List.of(1, 2, 3), List.of(1)));
         
         return params;
     }
@@ -349,15 +345,91 @@ public class TestList {
     private List<Object[]> parametersForMinus() {
         List<Object[]> params = List.<Object[]>of();
 
-        params.add(objary(List.<Integer>of(2), List.<Integer>of(1, 2), List.<Integer>of(1)));
-        params.add(objary(List.<Integer>of(1), List.<Integer>of(1, 2), List.<Integer>of(2)));
-        params.add(objary(List.<Integer>of(1, 1), List.<Integer>of(1, 1), List.<Integer>of(2)));
-        params.add(objary(List.<Integer>of(1, 1), List.<Integer>of(1, 2, 1), List.<Integer>of(2)));
+        params.add(objary(List.of(2), List.of(1, 2), List.of(1)));
+        params.add(objary(List.of(1), List.of(1, 2), List.of(2)));
+        params.add(objary(List.of(1, 1), List.of(1, 1), List.of(2)));
+        params.add(objary(List.of(1, 1), List.of(1, 2, 1), List.of(2)));
         
-        params.add(objary(List.<Integer>of(), List.<Integer>of(), List.<Integer>of()));
-        params.add(objary(List.<Integer>of(), List.<Integer>of(), List.<Integer>of(1)));
-        params.add(objary(List.<Integer>of(1), List.<Integer>of(1), List.<Integer>of()));
+        params.add(objary(emptyIntegerList(), emptyIntegerList(), emptyIntegerList()));
+        params.add(objary(emptyIntegerList(), emptyIntegerList(), List.of(1)));
+        params.add(objary(List.of(1), List.of(1), emptyIntegerList()));
         
         return params;
+    }
+
+    @Test
+    public void demo() {
+        Integer x = null;
+        List<Integer> nums = List.of(1, 3, 5, 7);
+        x = nums.get(0);
+        assertEqual(1, x);
+        
+        x = nums.get(-1);
+        assertEqual(7, x);
+        
+        nums.append(9).append(11).append(13);
+        assertEqual(List.of(1, 3, 5, 7, 9, 11, 13), nums);
+
+        x = nums.get(-3);
+        assertEqual(9, x);
+        
+        x = nums.first();
+        assertEqual(1, x);
+
+        x = nums.last();
+        assertEqual(13, x);
+        
+        x = nums.takeFirst();
+        assertEqual(1, x);
+        assertEqual(List.of(3, 5, 7, 9, 11, 13), nums);
+        
+        x = nums.takeFirst();
+        assertEqual(3, x);
+        assertEqual(List.of(5, 7, 9, 11, 13), nums);
+
+        x = nums.takeLast();
+        assertEqual(13, x);
+        assertEqual(List.of(5, 7, 9, 11), nums);
+
+        StringList strList = nums.toStringList();
+        assertEqual(StringList.of("5", "7", "9", "11"), strList);
+
+        nums.append(2).append(2).append(2);
+        assertEqual(List.of(5, 7, 9, 11, 2, 2, 2), nums);
+
+        List<Integer> uniq = nums.unique();
+        assertEqual(List.of(5, 7, 9, 11, 2), uniq);
+
+        assertEqual(true, nums.containsAny(2, 3));
+        assertEqual(false, nums.containsAny(3, 4));
+
+        nums.removeAll(2);
+        assertEqual(List.of(5, 7, 9, 11), nums);
+
+        nums.set(0, 4);
+        assertEqual(List.of(4, 7, 9, 11), nums);
+
+        nums.set(-1, 10);
+        assertEqual(List.of(4, 7, 9, 10), nums);
+
+        nums.set(-2, 8);
+        assertEqual(List.of(4, 7, 8, 10), nums);
+
+        nums.set(1, 6);
+        assertEqual(List.of(4, 6, 8, 10), nums);
+
+        x = nums.getRandomElement();
+        assertEqual(true, List.of(4, 6, 8, 10).contains(x));
+
+        String str = nums.join(" + ");
+        assertEqual("4 + 6 + 8 + 10", str);
+        
+        List<Integer> odds = List.of(1, 3, 5);
+        List<Integer> evens = List.of(2, 4, 6);
+        List<Integer> numbers = odds.plus(evens);
+        assertEqual(List.of(1, 3, 5, 2, 4, 6), numbers);
+        
+        List<Integer> squares = numbers.minus(List.of(2, 3, 5, 6));
+        assertEqual(List.of(1, 4), squares);
     }
 }
