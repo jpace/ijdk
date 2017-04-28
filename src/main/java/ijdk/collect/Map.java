@@ -1,8 +1,8 @@
 package ijdk.collect;
 
-import java.util.*;
+import org.incava.ijdk.tuple.Pair;
 
-public class Map<K, V> extends TreeMap<K, V> implements Iterable<java.util.Map.Entry<K, V>> {
+public class Map<K, V> extends java.util.TreeMap<K, V> implements Iterable<java.util.Map.Entry<K, V>> {
     /**
      * Creates an empty tree map.
      */
@@ -37,7 +37,36 @@ public class Map<K, V> extends TreeMap<K, V> implements Iterable<java.util.Map.E
         return map;
     }
 
-    public static final long serialVersionUID = 1L;    
+    /**
+     * Creates a tree map from a list of pairs.
+     */
+    public static <KeyType, ValueType> Map<KeyType, ValueType> of(List<Pair<KeyType, ValueType>> list) {
+        return new Map<KeyType, ValueType>(list);
+    }    
+
+    public static final long serialVersionUID = 1L;
+
+    /**
+     * Creates a IJDK map from a list of pairs.
+     */
+    public Map(List<Pair<K, V>> elements) {
+        for (Pair<K, V> element : elements) {
+            put(element.first(), element.second());
+        }
+    }
+
+    /**
+     * Creates a IJDK map from a JDK one.
+     */
+    public Map(java.util.Map<K, V> other) {
+        putAll(other);
+    }
+
+    /**
+     * Creates a IJDK map.
+     */
+    public Map() {
+    }
 
     /**
      * Adds or replaces the value for the given key, either of which can be null. Returns the map,
@@ -51,21 +80,21 @@ public class Map<K, V> extends TreeMap<K, V> implements Iterable<java.util.Map.E
     /**
      * Returns the keys, the same as <code>keySet</code>.
      */
-    public Set<K> keys() {
+    public java.util.Set<K> keys() {
         return keySet();
     }
 
     /**
      * Returns the entries, the same as <code>entrySet</code>.
      */
-    public Set<java.util.Map.Entry<K, V>> entries() {
+    public java.util.Set<java.util.Map.Entry<K, V>> entries() {
         return entrySet();
     }
 
     /**
      * Returns an iterator over the entries.
      */
-    public Iterator<java.util.Map.Entry<K, V>> iterator() {
+    public java.util.Iterator<java.util.Map.Entry<K, V>> iterator() {
         return entrySet().iterator();
     }
 }

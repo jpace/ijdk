@@ -4,14 +4,36 @@ import ijdk.collect.List;
 import ijdk.lang.Common;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import org.incava.ijdk.tuple.Pair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.test.Assertions.*;
 import static ijdk.lang.Common.*;
+import static org.incava.test.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestMap {
+    @Test
+    public void init() {
+        java.util.Map<String, Integer> jdkMap = new java.util.TreeMap<String, Integer>();
+        jdkMap.put("one", 1);
+        jdkMap.put("two", 2);
+
+        Map<String, Integer> ijdkMap = new Map<String, Integer>(jdkMap);
+        assertEqual(ijdkMap, jdkMap);
+    }   
+    
+    @Test
+    public void initFromList() {
+        List<Pair<String, Integer>> list = List.of(Pair.of("one", 1), Pair.of("two", 2));
+
+        java.util.TreeMap<String, Integer> expected = new java.util.TreeMap<String, Integer>();
+        expected.put("one", 1);
+        expected.put("two", 2);
+
+        assertEqual(expected, Map.of(list));
+    }   
+    
     @Test
     @Parameters
     public <K, V> void of(java.util.TreeMap<K, V> expected, Map<K, V> result) {
