@@ -11,21 +11,12 @@ public class List<T extends Object> extends ArrayList<T> {
     /**
      * Creates a list from the given array.
      */
+    @SuppressWarnings("unchecked")
     public static <T extends Object> List<T> of(T ... ary) {
         return new List<T>(ary);
     }
     
     public static final long serialVersionUID = 1L;
-    
-    /**
-     * Creates a List with the given initial capacity.
-     *
-     * @deprecated this may be removed because of collisions with <code>new List<Integer>(3)</code>.
-     */
-    @Deprecated
-    public List(int capacity) {
-        super(capacity);
-    }
 
     /**
      * Creates an empty list.
@@ -45,6 +36,7 @@ public class List<T extends Object> extends ArrayList<T> {
     /**
      * Creates the list from a varargs array.
      */
+    @SuppressWarnings("unchecked")
     public List(T ... ary) {
         for (T el : ary) {
             add(el);
@@ -84,6 +76,7 @@ public class List<T extends Object> extends ArrayList<T> {
     /**
      * Returns whether this list contains any element in the given array.
      */
+    @SuppressWarnings("unchecked")
     public boolean containsAny(T ... args) {
         return containsAny(new List<T>(args));
     }

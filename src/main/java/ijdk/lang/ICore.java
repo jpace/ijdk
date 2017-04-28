@@ -159,6 +159,7 @@ public class ICore {
      * @see #or
      * @see #isTrue
      */
+    @SuppressWarnings("unchecked")
     public static <T> T and(T ... operands) {
         if (isFalse(operands)) {
             return null;
@@ -178,6 +179,7 @@ public class ICore {
      * @see #or
      * @see #isTrue
      */
+    @SuppressWarnings("unchecked")
     public static <T> T or(T ... operands) {
         if (isFalse(operands)) {
             return null;
@@ -228,6 +230,7 @@ public class ICore {
      *     names.add("henry");
      * </pre>
      */
+    @SuppressWarnings("unchecked")
     public static <T> List<T> list(T ... elements) {
         return List.of(elements);
     }
@@ -236,6 +239,7 @@ public class ICore {
      * Returns an string list, which can be empty. This exists as an internate to
      * <code>ICore.<String>list()</code> for empty string lists.
      */
+    @SuppressWarnings("unchecked")
     public static StringList strlist(String ... elements) {
         return new StringList(elements);
     }
@@ -244,6 +248,7 @@ public class ICore {
      * Returns an integer list, which can be empty. This exists as an internate to
      * <code>ICore.<Integer>list()</code> for empty integer lists.
      */
+    @SuppressWarnings("unchecked")
     public static List<Integer> intlist(Integer ... elements) {
         return ICore.<Integer>list(elements);
     }
@@ -299,6 +304,7 @@ public class ICore {
      * "one", 1 }</code>. For Object arrays (i.e., to work around the "unchecked generic array
      * creation" warning), use <code>Common#objary</code>.
      */
+    @SuppressWarnings("unchecked")
     public static <T> T[] ary(T ... args) {
         return args;
     }
@@ -307,6 +313,7 @@ public class ICore {
      * Converts varargs to T[]. <code>ary("one", 1)</code> is shorter than <code>new Object[] {
      * "one", 1 }</code>
      */
+    @SuppressWarnings("unchecked")
     public static <T> Array<T> array(T ... args) {
         return new Array<T>(args);
     }

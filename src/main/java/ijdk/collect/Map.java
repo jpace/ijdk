@@ -2,7 +2,7 @@ package ijdk.collect;
 
 import java.util.*;
 
-public class Map<K, V> extends TreeMap<K, V> {
+public class Map<K, V> extends TreeMap<K, V> implements Iterable<java.util.Map.Entry<K, V>> {
     /**
      * Creates an empty tree map.
      */
@@ -46,5 +46,26 @@ public class Map<K, V> extends TreeMap<K, V> {
     public Map<K, V> set(K key, V value) {
         put(key, value);
         return this;
+    }
+
+    /**
+     * Returns the keys, the same as <code>keySet</code>.
+     */
+    public Set<K> keys() {
+        return keySet();
+    }
+
+    /**
+     * Returns the entries, the same as <code>entrySet</code>.
+     */
+    public Set<java.util.Map.Entry<K, V>> entries() {
+        return entrySet();
+    }
+
+    /**
+     * Returns an iterator over the entries.
+     */
+    public Iterator<java.util.Map.Entry<K, V>> iterator() {
+        return entrySet().iterator();
     }
 }

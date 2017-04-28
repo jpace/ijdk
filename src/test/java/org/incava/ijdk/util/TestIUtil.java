@@ -179,7 +179,7 @@ public class TestIUtil extends TestCase {
         }
     }
 
-    @SuppressWarnings("varargs")
+    @SuppressWarnings("unchecked")
     public final <T> void assertList(List<T> expected, T ... elements) {
         assertEquals(expected, IUtil.list(elements));
     }

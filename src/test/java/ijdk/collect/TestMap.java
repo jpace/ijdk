@@ -55,4 +55,32 @@ public class TestMap {
 
         assertEqual(expected, m);
     }
+
+    @Test
+    public void keys() {
+        Map<String, Integer> map = Map.<String, Integer>of("one", 1, "two", 2);
+        java.util.Set<String> expected = new java.util.TreeSet<String>();
+        expected.add("one");
+        expected.add("two");
+        assertEqual(expected, map.keys());
+    }
+
+    @Test
+    public void entries() {
+        Map<String, Integer> map = Map.<String, Integer>of("one", 1, "two", 2);
+        java.util.Set<java.util.Map.Entry<String, Integer>> expected = new java.util.HashSet<java.util.Map.Entry<String, Integer>>();
+        expected.add(new java.util.AbstractMap.SimpleEntry<String, Integer>("one", 1));
+        expected.add(new java.util.AbstractMap.SimpleEntry<String, Integer>("two", 2));
+        assertEqual(expected, map.entries());
+    }
+
+    @Test
+    public void iterator() {
+        Map<String, Integer> map = Map.<String, Integer>of("one", 1, "two", 2);
+        java.util.Iterator<java.util.Map.Entry<String, Integer>> it = map.iterator();
+        assertEqual(true, it.hasNext());
+        assertEqual(new java.util.AbstractMap.SimpleEntry<String, Integer>("one", 1), it.next());
+        assertEqual(new java.util.AbstractMap.SimpleEntry<String, Integer>("two", 2), it.next());
+        assertEqual(false, it.hasNext());
+    }
 }

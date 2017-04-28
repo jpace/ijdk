@@ -11,6 +11,7 @@ import org.incava.ijdk.util.Index;
 public class Array<T extends Object> extends Obj {
     private final T[] ary;
     
+    @SuppressWarnings("unchecked")
     public Array(T ... ary) {
         super(ary);
         this.ary = ary;
