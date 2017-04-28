@@ -18,16 +18,6 @@ public class List<T extends Object> extends ArrayList<T> {
     }
     
     public static final long serialVersionUID = 1L;
-    
-    /**
-     * Creates a List with the given initial capacity.
-     *
-     * @deprecated this may be removed because of collisions with <code>new List<Integer>(3)</code>.
-     */
-    @Deprecated
-    public List(int capacity) {
-        super(capacity);
-    }
 
     /**
      * Creates an empty list.

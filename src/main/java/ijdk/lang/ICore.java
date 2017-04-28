@@ -240,6 +240,7 @@ public class ICore {
      * Returns an string list, which can be empty. This exists as an internate to
      * <code>ICore.<String>list()</code> for empty string lists.
      */
+    @SuppressWarnings("unchecked")
     public static StringList strlist(String ... elements) {
         return new StringList(elements);
     }
@@ -248,6 +249,7 @@ public class ICore {
      * Returns an integer list, which can be empty. This exists as an internate to
      * <code>ICore.<Integer>list()</code> for empty integer lists.
      */
+    @SuppressWarnings("unchecked")
     public static List<Integer> intlist(Integer ... elements) {
         return ICore.<Integer>list(elements);
     }
