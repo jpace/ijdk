@@ -269,4 +269,16 @@ public class List<T extends Object> extends ArrayList<T> {
         }
         return newList;
     }
-}
+
+    /**
+     * Returns a list of the elements at the given indices. As with <code>get</code>, negative
+     * indices are treated as offsets from the last element.
+     */
+    public List<T> elements(int ... indices) {
+        List<T> elmts = new List<T>();
+        for (int idx : indices) {
+            elmts.append(get(idx));
+        }
+        return elmts;
+    }
+}    

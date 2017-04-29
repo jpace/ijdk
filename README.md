@@ -101,6 +101,9 @@ An extension of ArrayList, with Ruby-like methods.
     
     List<Integer> squares = numbers.minus(List.of(2, 3, 5, 6));
     assertEqual(List.of(1, 4), squares);
+
+    List<Integer> elements = numbers.elements(1, 0, -2, 0, -4);
+    assertEqual(List.of(3, 1, 4, 1, 5), elements);
 ```
 
 ### Common Collections
