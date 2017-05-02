@@ -17,6 +17,13 @@ public class List<T extends Object> extends ArrayList<T> {
         return new List<T>(ary);
     }
     
+    /**
+     * Creates an empty list from the given array.
+     */
+    public static <T extends Object> List<T> empty() {
+        return new List<T>();
+    }
+    
     public static final long serialVersionUID = 1L;
 
     /**

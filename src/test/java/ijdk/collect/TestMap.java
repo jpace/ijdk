@@ -24,7 +24,7 @@ public class TestMap {
     }   
     
     @Test
-    public void initFromList() {
+    public void ofList() {
         List<Pair<String, Integer>> list = List.of(Pair.of("one", 1), Pair.of("two", 2));
 
         java.util.TreeMap<String, Integer> expected = new java.util.TreeMap<String, Integer>();
@@ -32,6 +32,11 @@ public class TestMap {
         expected.put("two", 2);
 
         assertEqual(expected, Map.of(list));
+    }   
+    
+    @Test
+    public void empty() {
+        assertEqual(new Map<String, Integer>(), Map.<String, Integer>empty());
     }   
     
     @Test
@@ -73,9 +78,10 @@ public class TestMap {
         expected.put("two", 2);
 
         Map<String, Integer> m = Map.<String, Integer>of();
-        m.set("one", 1).set("two", 2);
+        Map<String, Integer> result = m.set("one", 1).set("two", 2);
 
         assertEqual(expected, m);
+        assertSame(result, m);
     }
 
     @Test

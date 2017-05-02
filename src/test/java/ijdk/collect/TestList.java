@@ -39,6 +39,13 @@ public class TestList {
         List<Object> actual = new List<Object>(nullColl);
         assertEqual(expected, actual);
     }
+
+    @Test
+    public void empty() {
+        List<Object> expected = new List<Object>();
+        List<Object> actual = List.<Object>empty();
+        assertEqual(expected, actual);
+    }    
     
     @Test
     public void toStringList() {

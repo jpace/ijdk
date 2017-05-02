@@ -11,6 +11,13 @@ public class Map<K, V> extends java.util.TreeMap<K, V> implements Iterable<java.
     }
 
     /**
+     * Creates an empty tree map.
+     */
+    public static <KeyType, ValueType> Map<KeyType, ValueType> empty() {
+        return new Map<KeyType, ValueType>();
+    }
+
+    /**
      * Creates a map with one key/value pair.
      */
     public static <KeyType, ValueType> Map<KeyType, ValueType> of(KeyType k1, ValueType v1) {
