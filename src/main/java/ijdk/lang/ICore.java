@@ -238,7 +238,7 @@ public class ICore {
 
     /**
      * Returns an string list, which can be empty. This exists as an internate to
-     * <code>ICore.<String>list()</code> for empty string lists.
+     * <code>ICore.&lt;String&gt;list()</code> for empty string lists.
      */
     @SuppressWarnings("unchecked")
     public static StringList strlist(String ... elements) {
@@ -247,7 +247,7 @@ public class ICore {
 
     /**
      * Returns an integer list, which can be empty. This exists as an internate to
-     * <code>ICore.<Integer>list()</code> for empty integer lists.
+     * <code>ICore.&lt;Integer&gt;list()</code> for empty integer lists.
      */
     @SuppressWarnings("unchecked")
     public static List<Integer> intlist(Integer ... elements) {

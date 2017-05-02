@@ -139,7 +139,7 @@ public class List<T extends Object> extends ArrayList<T> {
      * Adds the element to the list, and returns the list, so this method can be chained:
      *
      * <pre>
-     *    List<Integer> nums = List.of(1, 2, 3);
+     *    List&lt;Integer&gt; nums = List.of(1, 2, 3);
      *    nums.append(4).append(5);
      * </pre>
      *
@@ -155,8 +155,8 @@ public class List<T extends Object> extends ArrayList<T> {
      * is the offset from the end, where <code>-1</code> is the last element, <code>-2</code> is the
      * second to last element. Unlike <code>ArrayList#set</code>, this method honors the dynamically
      * sized aspect of the list, and resizes it accordingly when <code>set(index, obj) &amp;&amp;
-     * index > size()</code>. However, <code>set(-index, obj)</code> (a negative index value) will
-     * result in an IllegalArgumentException when <code>-index < -size()</code>.
+     * index &gt; size()</code>. However, <code>set(-index, obj)</code> (a negative index value) will
+     * result in an IllegalArgumentException when <code>-index &gt; -size()</code>.
      */
     public T set(int index, T value) {
         if (index < 0) {
