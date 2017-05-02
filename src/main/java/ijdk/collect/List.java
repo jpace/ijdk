@@ -247,8 +247,8 @@ public class List<T extends Object> extends ArrayList<T> {
     /**
      * Returns the list, joined by the delimiter.
      */
-    public String join(String delimeter) {
-        return Str.join(this, delimeter).toString();
+    public String join(String delimiter) {
+        return Str.join(this, delimiter).toString();
     }
 
     /**
