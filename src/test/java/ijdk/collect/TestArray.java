@@ -1,195 +1,134 @@
 package ijdk.collect;
 
-import junit.framework.TestCase;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class TestArray extends TestCase {
-    public TestArray(String name) {
-        super(name);
-    }
+import static org.incava.test.Assertions.*;
+import static ijdk.lang.Common.*;
 
-    // ctor
-
+@RunWith(JUnitParamsRunner.class)
+public class TestArray {
     public <T> Array<T> assertAccessors(Object value, int index, Array<T> ary) {
-        assertEquals(value, ary.getArray()[index]);
-        assertEquals(value, ary.ary()[index]);
+        assertEqual(value, ary.getArray()[index]);
+        assertEqual(value, ary.ary()[index]);
         return ary;
     }
 
-    public void testCtorNullArray() {
+    @Test
+    public void ctorNullArray() {
         Array<Object> ary = new Array<Object>((Object[])null);
-        assertEquals(null, ary.getArray());
-        assertEquals(null, ary.ary());
+        assertEqual(null, ary.getArray());
+        assertEqual(null, ary.ary());
     }
 
-    public void testCtorNullObject() {
+    @Test
+    public void ctorNullObject() {
         Array<Object> ary = new Array<Object>((Object)null);
         assertAccessors(null, 0, ary);
     }
 
-    public void testCtorNotEmpty() {
+    @Test
+    public void ctorNotEmpty() {
         Array<String> ary = new Array<String>("a", "b", "c");
         assertAccessors("a", 0, ary);
         assertAccessors("b", 1, ary);
         assertAccessors("c", 2, ary);
     }
 
-    // asList
-
-    public <T extends Object> Array<T> assertAsList(java.util.ArrayList<T> expected, Array<T> ary) {
-        assertEquals(expected, ary.asList());
-        return ary;
-    }
-
-    public void testAsListNullArray() {
-        assertAsList(null, new Array<Object>((Object[])null));
-    }
-
-    public void testAsListNullObject() {
-        assertAsList(new java.util.ArrayList<Object>(java.util.Arrays.asList(new Object[] { null })), new Array<Object>((Object)null));
-    }
-
-    public void testAsListNotEmpty() {
-        Array<String> ary = new Array<String>("a", "b", "c");
-        assertAsList(new java.util.ArrayList<String>(java.util.Arrays.asList(new String[] { "a", "b", "c" })), ary);
-    }
-
-    // areAllNull
-
-    public <T> Array<T> assertAreAllNull(boolean expected, Array<T> ary) {
-        assertEquals(expected, ary.areAllNull());
-        return ary;
-    }
-
-    public void testAreAllNullNullArray() {
-        assertAreAllNull(false, new Array<Object>((Object[])null));
-    }
-
-    public void testAreAllNullNullObject() {
-        assertAreAllNull(true, new Array<Object>((Object)null));
-    }
-
-    public void testAreAllNullNotEmpty() {
-        Array<String > ary = new Array<String>("a", "b", "c");
-        assertAreAllNull(false, ary);
-    }
-
-    // isAnyNull
-
-    public <T> Array<T> assertIsAnyNull(boolean expected, Array<T> ary) {
-        assertEquals(expected, ary.isAnyNull());
-        return ary;
-    }
-
-    public void testIsAnyNullNullArray() {
-        assertIsAnyNull(false, new Array<Object>((Object[])null));
-    }
-
-    public void testIsAnyNullOnlyNullObject() {
-        assertIsAnyNull(true, new Array<Object>((Object)null));
-    }
-
-    public void testIsAnyNullOneNullObject() {
-        assertIsAnyNull(true, new Array<String>("a", null));
-    }
-
-    public void testIsAnyNullNotEmpty() {
-        Array<String> ary = new Array<String>("a", "b", "c");
-        assertIsAnyNull(false, ary);
-    }
-
-    // length
-
-    public <T> int assertLength(int expected, Array<T> ary) {
-        int result = ary.length();
-        assertEquals("ary: " + ary, expected, result);
-        return result;
-    }
-
-    public void testLengthNullArray() {
-        assertLength(0, new Array<Object>());
-    }
-
-    public void testLengthOne() {
-        assertLength(1, new Array<String>("a"));
-    }
-
-    public void testLengthTwo() {
-        assertLength(2, new Array<String>("a", "b"));
+    @Test
+    @Parameters
+    public <T> void asList(java.util.ArrayList<T> expected, Array<T> ary) {
+        java.util.ArrayList<T> result = ary.asList();
+        assertEqual(expected, result, message("ary", ary));
     }
     
-    // get
+    private List<Object[]> parametersForAsList() {
+        return List.<Object[]>of(objary(null, new Array<Object>((Object[])null)),
+                                 objary(new java.util.ArrayList<Object>(java.util.Arrays.asList(new Object[] { null })), new Array<Object>((Object)null)),
+                                 objary(new java.util.ArrayList<String>(java.util.Arrays.asList(new String[] { "a", "b", "c" })), new Array<String>("a", "b", "c")));
+    }
 
-    public Object assertGet(Object expected, int idx, Object ... elmts) {
+    @Test
+    @Parameters
+    public <T> void areAllNull(boolean expected, Array<T> ary) {
+        boolean result = ary.areAllNull();
+        assertEqual(expected, result, message("ary", ary));
+    }
+    
+    private List<Object[]> parametersForAreAllNull() {
+        return List.<Object[]>of(objary(false, new Array<Object>((Object[])null)),
+                                 objary(true, new Array<Object>((Object)null)),
+                                 objary(false, new Array<String>("a", null)),
+                                 objary(false, new Array<String>("a", "b", "c")));
+    }
+
+    @Test
+    @Parameters
+    public <T> void isAnyNull(boolean expected, Array<T> ary) {
+        boolean result = ary.isAnyNull();
+        assertEqual(expected, result, message("ary", ary));
+    }
+    
+    private List<Object[]> parametersForIsAnyNull() {
+        return List.<Object[]>of(objary(false, new Array<Object>((Object[])null)),
+                                 objary(true, new Array<Object>((Object)null)),
+                                 objary(true, new Array<String>("a", null)),
+                                 objary(false, new Array<String>("a", "b", "c")));
+    }
+
+    @Test
+    @Parameters
+    public <T> void length(int expected, Array<T> ary) {
+        int result = ary.length();
+        assertEqual(expected, result);
+    }
+    
+    private List<Object[]> parametersForLength() {
+        return List.<Object[]>of(objary(0, new Array<Object>()),
+                                 objary(1, new Array<String>("a")),
+                                 objary(2, new Array<String>("a", "b")));
+    }
+
+    @Test
+    @Parameters
+    public void get(Object expected, int idx, Object ... elmts) {
         Array<Object> ary = new Array<Object>(elmts);
         Object result = ary.get(idx);
-        assertEquals("ary: " + ary.toString(), expected, result);
-        return result;
+        assertEqual(expected, result, message("ary", ary));
+    }
+    
+    private List<Object[]> parametersForGet() {
+        Object[] emptyAry = new Object[0];
+        Object[] oneElementAry = new Object[] { "a" };
+        Object[] twoElementAry = new Object[] { "a", "b" };
+        
+        return List.<Object[]>of(objary(null, 0, emptyAry),
+                                 objary(null, 1, emptyAry),
+                                 objary(null, -1, emptyAry),
+                                 objary("a", 0, oneElementAry),
+                                 objary(null, 1, oneElementAry),
+                                 objary("a", -1, oneElementAry),
+                                 objary("a", 0, twoElementAry),
+                                 objary("b", 1, twoElementAry),
+                                 objary(null, 2, twoElementAry),
+                                 objary("b", -1, twoElementAry),
+                                 objary("a", -2, twoElementAry),
+                                 objary(null, -3, twoElementAry));
     }
 
-    public void testGetEmptyZero() {
-        assertGet(null, 0);
+    @Test
+    @Parameters
+    public void isEmpty(boolean expected, Object[] args) {
+        Array<Object> obj = new Array<Object>(args);
+        boolean result = obj.isEmpty();
+        assertEqual(expected, result, message("args", args));
     }
-
-    public void testGetEmptyOne() {
-        assertGet(null, 1);
-    }
-
-    public void testGetEmptyNegative() {
-        assertGet(null, -1);
-    }
-
-    public void testGetEmptyOneElementZero() {
-        assertGet("a", 0, "a");
-    }
-
-    public void testGetEmptyOneElementPastRange() {
-        assertGet(null, 1, "a");
-    }
-
-    public void testGetEmptyOneElementPreRange() {
-        assertGet("a", -1, "a");
-    }
-
-    public void testGetEmptyTwoElementsZero() {
-        assertGet("a", 0, "a", "b");
-    }
-
-    public void testGetEmptyTwoElementsOne() {
-        assertGet("b", 1, "a", "b");
-    }
-
-    public void testGetEmptyTwoElementsTwo() {
-        assertGet(null, 2, "a", "b");
-    }
-
-    public void testGetEmptyTwoElementsNegativeOne() {
-        assertGet("b", -1, "a", "b");
-    }
-
-    public void testGetEmptyTwoElementsNegativeTwo() {
-        assertGet("a", -2, "a", "b");
-    }
-
-    public void testGetEmptyTwoElementsNegativeThree() {
-        assertGet(null, -3, "a", "b");
-    }
-
-    // isEmpty
-
-    public void assertIsEmpty(boolean expected, Object[] args) {
-        Array<Object> ary = new Array<Object>(args);
-        assertEquals("ary: " + ary.toString(), expected, ary.isEmpty());
-    }
-
-    public void testIsEmptyNull() {
-        assertIsEmpty(true, null);
-    }    
-
-    public void testIsEmptyEmpty() {
-        assertIsEmpty(true, new String[0]);
-    }    
-
-    public void testIsEmptyHasElement() {
-        assertIsEmpty(false, new String[] { "x" });
+    
+    private List<Object[]> parametersForIsEmpty() {
+        return List.<Object[]>of(objary(true, null),
+                                 objary(true, new String[0]),
+                                 objary(false, new String[] { "x" }));
     }    
 }
