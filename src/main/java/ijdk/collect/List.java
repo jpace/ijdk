@@ -10,6 +10,13 @@ import java.util.Collection;
 public class List<T extends Object> extends ArrayList<T> {
     /**
      * Creates a list from the given array.
+     *
+     * <pre>
+     * List&lt;Integer&gt; list = List.&lt;Integer&gt;of();
+     * List&lt;Integer&gt; list = List.of(6);
+     * List&lt;Integer&gt; list = List.of(6, 7);
+     * List&lt;Integer&gt; list = List.of(6, 7, 8);
+     * </pre>
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
@@ -18,7 +25,12 @@ public class List<T extends Object> extends ArrayList<T> {
     }
     
     /**
-     * Creates an empty list from the given array.
+     * Creates an empty list from the given array. The syntax <code>List.&lt;Type&gt;empty()</code>
+     * is used to denote the generic type.
+     *
+     * <pre>
+     * List&lt;String&gt; list = List.&lt;String&gt;empty();
+     * </pre>
      */
     public static <T extends Object> List<T> empty() {
         return new List<T>();
@@ -53,7 +65,10 @@ public class List<T extends Object> extends ArrayList<T> {
     }
 
     /**
-     * Returns the list as a StringList.
+     * Returns the list as a StringList, with each element converted via <code>toString()</code>.
+     *
+     * @see #toStringArrayList
+     * @see ijdk.collect.StringList
      */
     public StringList toStringList() {
         StringList list = new StringList();
@@ -64,7 +79,9 @@ public class List<T extends Object> extends ArrayList<T> {
     }
 
     /**
-     * Returns the list as a list of strings.
+     * Returns the list as a list of strings, with each element converted via <code>toString()</code>.
+     *
+     * @see #toStringList
      */
     public ArrayList<String> toStringArrayList() {
         return toStringList();
@@ -105,10 +122,15 @@ public class List<T extends Object> extends ArrayList<T> {
     }
 
     /**
-     * Returns the <code>n</code>th element in the list. If <code>n</code> is negative, then the
-     * index is the offset from the end, where <code>-1</code> is the last element, <code>-2</code>
-     * is the second to last element, and so on and so forth. If <code>n</code> is out of range (not
-     * within <code>0 ... size()</code>), then null is returned.
+     * Returns the <code>n</code>th element in the list.
+     *
+     * <p>Unlike <code>java.util.ArrayList#get</code>, <code>ijdk.collect.List#get</code> supports
+     * negative indices, as do languages such as Perl and Ruby.</p>
+     *
+     * <p>If <code>n</code> is negative, then the index is the offset from the end, where
+     * <code>-1</code> is the last element, <code>-2</code> is the second to last element, and so on
+     * and so forth. If <code>n</code> is out of range (not within <code>0 ... size()</code>), then
+     * null is returned.</p>
      */
     public T get(int index) {
         Integer idx = org.incava.ijdk.util.Index.getIndex(size(), index);
@@ -117,10 +139,12 @@ public class List<T extends Object> extends ArrayList<T> {
 
     /**
      * Returns a List containing the <code>m</code>th element through the <code>n</code>th element
-     * in the list, both inclusive. If <code>m</code> <code>n</code> is negative, then the index is
-     * the offset from the end, where <code>-1</code> is the last element, <code>-2</code> is the
-     * second to last element, and so on and so forth. If <code>m</code> or <code>n</code> is out of
-     * range (not within <code>0 ... size()</code>), then an empty set is returned.
+     * in the list, both inclusive.
+     *
+     * <p> If <code>m</code> <code>n</code> is negative, then the index is the offset from the end,
+     * where <code>-1</code> is the last element, <code>-2</code> is the second to last element, and
+     * so on and so forth. If <code>m</code> or <code>n</code> is out of range (not within <code>0
+     * ... size()</code>), then an empty set is returned.</p>
      */
     public List<T> get(int fromIndex, int toIndex) {
         Integer fromIdx = org.incava.ijdk.util.Index.getIndex(size(), fromIndex);
@@ -136,7 +160,8 @@ public class List<T extends Object> extends ArrayList<T> {
     }
 
     /**
-     * Adds the element to the list, and returns the list, so this method can be chained:
+     * Adds the element to the list, similar to <code>java.util.ArrayList#add</code>, and returns
+     * the list, so this method can be chained:
      *
      * <pre>
      *    List&lt;Integer&gt; nums = List.of(1, 2, 3);
@@ -151,12 +176,14 @@ public class List<T extends Object> extends ArrayList<T> {
     }
 
     /**
-     * Sets the <code>n</code>th element in the list. If <code>n</code> is negative, then the index
-     * is the offset from the end, where <code>-1</code> is the last element, <code>-2</code> is the
-     * second to last element. Unlike <code>ArrayList#set</code>, this method honors the dynamically
-     * sized aspect of the list, and resizes it accordingly when <code>set(index, obj) &amp;&amp;
-     * index &gt; size()</code>. However, <code>set(-index, obj)</code> (a negative index value) will
-     * result in an IllegalArgumentException when <code>-index &gt; -size()</code>.
+     * Sets the <code>n</code>th element in the list.
+     *
+     * <p>If <code>n</code> is negative, then the index is the offset from the end, where
+     * <code>-1</code> is the last element, <code>-2</code> is the second to last element. Unlike
+     * <code>ArrayList#set</code>, this method honors the dynamically sized aspect of the list, and
+     * resizes it accordingly when <code>set(index, obj) &amp;&amp; index &gt; size()</code>.
+     * However, <code>set(-index, obj)</code> (a negative index value) will result in an
+     * IllegalArgumentException when <code>-index &gt; -size()</code>.</p>
      */
     public T set(int index, T value) {
         if (index < 0) {
@@ -204,22 +231,22 @@ public class List<T extends Object> extends ArrayList<T> {
     }
 
     /**
-     * Removes and returns the first element in the list. Returns null if empty.
+     * Removes and returns the first element in the list. Returns null if the list is empty.
      */
     public T takeFirst() {
         return isEmpty() ? null : remove(0);
     }
 
     /**
-     * Removes and returns the last element in the list. Returns null if empty.
+     * Removes and returns the last element in the list. Returns null if the list is empty.
      */
     public T takeLast() {
         return isEmpty() ? null : remove(size() - 1);
     }
 
     /**
-     * Returns a list containing unique elements from the list, in the order in which they occur in
-     * the list.
+     * Returns a new list that contains unique elements from the list, in the same order as in this
+     * list.
      */
     public List<T> unique() {
         List<T> uniqueList = new List<T>();
@@ -232,7 +259,8 @@ public class List<T extends Object> extends ArrayList<T> {
     }
 
     /**
-     * Returns a new list, containing the non-null elements from this list, in the same order.
+     * Returns a new list that contains only the non-null elements from this list, in the same
+     * order as in this list.
      */
     public List<T> compact() {
         List<T> compactList = new List<T>();
@@ -245,7 +273,7 @@ public class List<T extends Object> extends ArrayList<T> {
     }
 
     /**
-     * Returns the list, joined by the delimiter.
+     * Returns the list as a String, joined by the delimiter.
      */
     public String join(String delimiter) {
         return Str.join(this, delimiter).toString();
@@ -280,6 +308,16 @@ public class List<T extends Object> extends ArrayList<T> {
     /**
      * Returns a list of the elements at the given indices. As with <code>get</code>, negative
      * indices are treated as offsets from the last element.
+
+     * <pre>
+     *     List&lt;Integer&gt; list = List.of(6, 7, 8);
+     *     List&lt;Integer&gt; l2 = list.elements(0);         // [ 6 ]
+     *     List&lt;Integer&gt; l3 = list.elements(0, 1);      // [ 6, 7 ]
+     *     List&lt;Integer&gt; l4 = list.elements(1, 0);      // [ 7, 6 ]
+     *     List&lt;Integer&gt; l5 = list.elements(-1, -2, 1); // [ 8, 7, 7 ]
+     * </pre>
+     *
+     * @see List#get
      */
     public List<T> elements(int ... indices) {
         List<T> elmts = new List<T>();

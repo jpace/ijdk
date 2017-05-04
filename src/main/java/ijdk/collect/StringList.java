@@ -39,6 +39,8 @@ public class StringList extends List<String> {
 
     /**
      * Returns whether any string in this list starts with the given one.
+     *
+     * @return whether any string in this list starts with the given one.
      */
     public boolean anyStartsWith(String substr) {
         return hasMatch(Criteria.startsWith(substr));
@@ -46,6 +48,8 @@ public class StringList extends List<String> {
 
     /**
      * Returns whether any string in this list contains the given one.
+     *
+     * @return whether any string in this list contains the given one.
      */
     public boolean anyContains(String substr) {
         return hasMatch(Criteria.contains(substr));
@@ -53,6 +57,8 @@ public class StringList extends List<String> {
 
     /**
      * Returns whether any string in this list ends with the given one.
+     *
+     * @return whether any string in this list ends with the given one.
      */
     public boolean anyEndsWith(String substr) {
         return hasMatch(Criteria.endsWith(substr));
@@ -60,6 +66,8 @@ public class StringList extends List<String> {
 
     /**
      * Returns whether any element matches the given one, without regard to case.
+     *
+     * @return whether any element matches the given one, without regard to case.
      */
     public boolean anyEqualsIgnoreCase(String str) {
         return hasMatch(Criteria.equalsIgnoreCase(str));
@@ -67,6 +75,8 @@ public class StringList extends List<String> {
 
     /**
      * Returns all strings in this list starting with the given one.
+     *
+     * @return all strings in this list starting with the given one.
      */
     public StringList allStartingWith(String substr) {
         return findAll(Criteria.startsWith(substr));
@@ -74,6 +84,8 @@ public class StringList extends List<String> {
 
     /**
      * Returns all strings in this list containing the given one.
+     *
+     * @return all strings in this list containing the given one.
      */
     public StringList allContaining(String substr) {
         return findAll(Criteria.contains(substr));
@@ -81,6 +93,8 @@ public class StringList extends List<String> {
 
     /**
      * Returns all strings in this list ending with the given one.
+     *
+     * @return all strings in this list ending with the given one.
      */
     public StringList allEndingWith(String substr) {
         return findAll(Criteria.endsWith(substr));
@@ -90,6 +104,7 @@ public class StringList extends List<String> {
      * Returns the first string in the list for which the closure returns true. Returns null if the
      * criteria is null or the criteria is not matched.
      *
+     * @return the first string in the list for which the closure returns true.
      * @see org.incava.ijdk.str.Criteria
      * @see org.incava.ijdk.lang.Closure
      */
@@ -108,6 +123,7 @@ public class StringList extends List<String> {
     /**
      * Returns whether the given criteria matches any element in the list.
      *
+     * @return whether the given criteria matches any element in the list.
      * @see org.incava.ijdk.str.Criteria
      * @see org.incava.ijdk.lang.Closure
      */
@@ -119,6 +135,7 @@ public class StringList extends List<String> {
      * Returns all strings in the list for which the closure returns true. Returns an empty list if
      * the criteria is null or the criteria is not matched.
      *
+     * @return all strings in the list for which the closure returns true.
      * @see org.incava.ijdk.str.Criteria
      */
     public StringList findAll(Closure<Boolean, String> criteria) {
