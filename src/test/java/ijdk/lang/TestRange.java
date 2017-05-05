@@ -16,8 +16,9 @@ public class TestRange {
     @Parameters
     public void firstLast(Integer expFirst, Integer expLast, Integer first, Integer last) {
         Range rg = new Range(first, last);
-        assertEqual(expFirst, rg.getFirst(), message("rg", rg));
-        assertEqual(expLast, rg.getLast(), message("rg", rg));
+        String msg = message("rg", rg);
+        assertEqual(expFirst, rg.getFirst(), msg);
+        assertEqual(expLast, rg.getLast(), msg);
 
     }
     
@@ -94,6 +95,18 @@ public class TestRange {
         return Arrays.asList(objary(new Integer[] { 3, 4, 5, 6, 7 }, new Range(3, 7)),
                              objary(new Integer[] { 3 }, new Range(3, 3)),
                              objary(new Integer[] { }, new Range(7, 3)));
+    }
+
+    @Test
+    @Parameters
+    public void toExpandedList(List<Integer> expected, Range rg) {
+        assertEqual(expected, rg.toExpandedList(), message("rg", rg));
+    }
+    
+    private List<Object[]> parametersForToExpandedList() {
+        return Arrays.asList(objary(Arrays.asList(3, 4, 5, 6, 7), new Range(3, 7)),
+                            objary(Arrays.asList(3), new Range(3, 3)),
+                            objary(Arrays.asList(), new Range(7, 3)));
     }
 
     @Test

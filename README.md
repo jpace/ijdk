@@ -139,18 +139,18 @@ Similarly, the nearly identical KeyValue:
 
 ### Range
 
-This converts easily to C-style arrays, and supports simple iteration:
+A Range is a pair of integers. It converts easily to arrays and lists, and supports iteration:
 
 ```java
-    Range r = new Range(3, 11);
-    if (r.includes(4)) { // true
-    }
-    if (r.includes(2)) { // false
-    }
+    Range r = new Range(3, 7);
+    r.includes(4); // true
+    r.includes(2); // false
+
     for (Integer i : r) {
-        // iterate from 3 through 11
+        // iterate from 3 *through* 7
     }
-    Integer[] ary = r.toExpandedArray();  // ary == [ 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+    Integer[] ary = r.toExpandedArray();     // ary == [ 3, 4, 5, 6, 7 ]
+    List<Integer> list = r.toExpandedList(); // list == [ 3, 4, 5, 6, 7 ]
 ```
 
 ### MultiMap

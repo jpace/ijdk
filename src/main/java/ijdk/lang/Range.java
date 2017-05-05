@@ -1,8 +1,7 @@
 package ijdk.lang;
 
-import java.util.ArrayList;
+import ijdk.collect.List;
 import java.util.Iterator;
-import java.util.List;
 import org.incava.ijdk.lang.ObjectExt;
 
 /**
@@ -104,11 +103,29 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      * @see toArray
      */
     public Integer[] toExpandedArray() {
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> list = List.<Integer>empty();
         for (Integer num = first; num <= last; ++num) {
             list.add(num);
         }
         return list.toArray(new Integer[list.size()]);
+    }
+
+    /**
+     * Returns the range as a list of elements for each number within the range. For example:
+     *
+     * <pre>
+     *  Range rg = new Range(3, 7);
+     *  List&lt;Integer&gt; ary = rg.toExpandedList(); // ary == [ 3, 4, 5, 6, 7 ]
+     * </pre>
+     *
+     * @see toExpandedArray
+     */
+    public List<Integer> toExpandedList() {
+        List<Integer> list = List.<Integer>empty();
+        for (Integer num = first; num <= last; ++num) {
+            list.append(num);
+        }
+        return list;
     }
 
     /**
