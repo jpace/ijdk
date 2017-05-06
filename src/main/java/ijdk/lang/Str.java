@@ -329,7 +329,6 @@ public class Str extends Obj implements Comparable<Str> {
             }
         }
 
-
         Integer toIdx = toIndex == null ? null : getIndex(toIndex);
 
         if (isNull(toIdx)) {
@@ -368,8 +367,8 @@ public class Str extends Obj implements Comparable<Str> {
     }
 
     /**
-     * Same as StringExt#substring, but with the indices inclusive, like the Ruby syntax <code>str[4
-     * .. 8]</code>. This method the same as <code>Str.substring</code>.
+     * Same as <code>String#substring</code>, but with the indices <em>inclusive</em>, like the Ruby syntax
+     * <code>str[4 .. 8]</code>. This method the same as <code>Str.substring</code>.
      */
     public String get(Integer fromIndex, Integer toIndex) {
         return substring(fromIndex, toIndex);

@@ -2,175 +2,160 @@ package ijdk.lang;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.incava.ijdk.lang.StringTest;
-import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import static ijdk.lang.Common.objary;
 import static org.incava.test.Assertions.*;
 
+@RunWith(JUnitParamsRunner.class)
 public class TestStr extends StringTest {
-    public TestStr(String name) {
-        super(name);
-    }
-
     // split
 
     public String[] assertSplit(String[] expected, String str, char delim, int max) {
         String[] result = new Str(str).split(delim, max);
-        Assert.assertArrayEquals("str: '" + str + "'; delim: '" + delim + "'; max: " + max, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
     }
 
     public String[] assertSplit(String[] expected, String str, String delim, int max) {
         String[] result = new Str(str).split(delim, max);
-        Assert.assertArrayEquals("str: '" + str + "'; delim: '" + delim + "'; max: " + max, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
     }
 
     // toList
     
     public void assertToList(String[] exp, String str) {
-        List<String> result = new Str(str).toList();
-        assertEquals("str: '" + str + "'", exp == null ? null : Arrays.asList(exp), result);
-    }
-
-    // assertions
-    
-    public String assertEquals(String expected, String result, String str, Character ch) {
-        String msg = "str: '" + str + "'; ch: '" + ch + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        java.util.List<String> result = new Str(str).toList();
+        assertEqual(exp == null ? null : Arrays.asList(exp), result, message("str", str));
     }
 
     // pad
 
     public String assertPad(String expected, String str, char ch, int length) {
         String result = new Str(str).pad(ch, length);
-        assertEquals("str: '" + str + "'; ch: " + ch + "; length: " + length, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
     }
 
     public String assertPad(String expected, String str, int length) {
         String result = new Str(str).pad(length);
-        assertEquals("str: '" + str + "'; length: " + length, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "length", length));
     }
 
     // padLeft
 
     public String assertPadLeft(String expected, String str, char ch, int length) {
         String result = new Str(str).padLeft(ch, length);
-        assertEquals("str: '" + str + "'; ch: " + ch + "; length: " + length, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
     }
 
     public String assertPadLeft(String expected, String str, int length) {
         String result = new Str(str).padLeft(length);
-        assertEquals("str: '" + str + "'; length: " + length, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "length", length));
     }
 
     // repeat
 
     public String assertRepeat(String expected, String str, int length) {
         String result = new Str(str).repeat(length);
-        assertEquals("str: '" + str + "'; length: " + length, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "length", length));
     }
 
     public String assertRepeat(String expected, char ch, int length) {
         String result = new Str(ch).repeat(length);
-        assertEquals("ch: '" + ch + "'; length: " + length, expected, result);
-        return result;
+        return assertEqual(expected, result, message("ch", ch, "length", length));
     }
 
     // left
 
     public String assertLeft(String expected, String str, int length) {
         String result = new Str(str).left(length);
-        assertEquals("str: '" + str + "'; length: " + length, expected, result);
-        return result;        
+        return assertEqual(expected, result, message("str", str, "length", length));
     }
 
     // right
 
     public String assertRight(String expected, String str, int length) {
         String result = new Str(str).right(length);
-        assertEquals("str: '" + str + "'; length: " + length, expected, result);
-        return result;        
+        return assertEqual(expected, result, message("str", str, "length", length));
     }
 
     // join
 
     public String assertJoin(String expected, String[] ary, String delim) {
         String result = Str.join(ary, delim).str();
-        assertEquals(ary == null ? null : Arrays.asList(ary).toString(), expected, result);
-        return result;
+        return assertEqual(expected, result, message("ary", ary, "delim", delim));
     }
 
     public String assertJoin(String expected, Collection<String> coll, String delim) {
         String result = Str.join(coll, delim).str();
-        assertEquals(coll == null ? null : coll.toString(), expected, result);
-        return result;
+        return assertEqual(expected, result, message("coll", coll, "delim", delim));
     }
 
     // charAt
 
     public Character assertCharAt(Character expected, String str, int index) {
         Character result = new Str(str).charAt(index);
-        assertEquals("str: '" + str + "'; index: " + index, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "index", index));
     }    
 
     // get
 
     public Character assertGet(Character expected, String str, int index) {
         Character result = new Str(str).get(index);
-        assertEquals("str: '" + str + "'; index: " + index, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "index", index));
     }
     
     // getIndex
 
-    public Integer assertGetIndex(Integer exp, String str, int index) {
+    public Integer assertGetIndex(Integer expected, String str, int index) {
         Integer result = new Str(str).getIndex(index);
-        assertEquals("str: '" + str + "'; index: " + index, exp, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "index", index));
     }
 
+    @Test
     public void testGetIndexNull() {
         assertGetIndex(null, null, 0);
     }
 
+    @Test
     public void testGetIndexZero() {
         assertGetIndex(0, "abcd", 0);
     }
 
+    @Test
     public void testGetIndexOne() {
         assertGetIndex(1, "abcd", 1);
     }
 
+    @Test
     public void testGetIndexLast() {
         assertGetIndex(3, "abcd", 3);
     }
 
+    @Test
     public void testGetIndexOffEnd() {
         assertGetIndex(null, "abcd", 4);
     }
 
+    @Test
     public void testGetIndexNegativeOne() {
         assertGetIndex(3, "abcd", -1);
     }
 
+    @Test
     public void testGetIndexNegativeTwo() {
         assertGetIndex(2, "abcd", -2);
     }
 
+    @Test
     public void testGetIndexNegativeAtStart() {
         assertGetIndex(1, "abcd", -3);
     }
 
+    @Test
     public void testGetIndexNegativeOffStart() {
         assertGetIndex(null, "abcd", -5);
     }
@@ -179,225 +164,212 @@ public class TestStr extends StringTest {
 
     public String assertSubstring(String expected, String str, Integer fromIndex, Integer toIndex) {
         String result = new Str(str).substring(fromIndex, toIndex);
-        String msg    = "\"" + str + "\"[" + fromIndex + " ... " + toIndex + "]";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "fromIndex", fromIndex, "toIndex", toIndex));
     }
 
     // startsWith
 
     public boolean assertStartsWith(boolean expected, String str, char ch) {
         boolean result = new Str(str).startsWith(ch);
-        String msg = "str: '" + str + "'; ch: '" + ch + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "ch", ch));
     }
 
     // indexOf
 
     public Integer assertIndexOf(Integer expected, String str, Character ch) {
         Integer result = new Str(str).indexOf(ch);
-        String msg = "str: '" + str + "'; ch: '" + ch + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "ch", ch));
     }    
 
     // contains
 
     public boolean assertContains(boolean expected, String str, Character ch) {
         boolean result = new Str(str).contains(ch);
-        String msg = "str: '" + str + "'; ch: '" + ch + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "ch", ch));
     }
 
     // substringAfter
 
     public String assertSubstringAfter(String expected, String str, Character ch) {
         String result = new Str(str).substringAfter(ch);
-        String msg = "str: '" + str + "'; ch: '" + ch + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "ch", ch));
     }
 
     // substringBefore
 
     public String assertSubstringBefore(String expected, String str, Character ch) {
         String result = new Str(str).substringBefore(ch);
-        String msg = "str: '" + str + "'; ch: '" + ch + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "ch", ch));
     }
 
     // eq
 
     public Boolean assertEq(Boolean expected, String a, String b) {
         Boolean result = new Str(a).eq(b);
-        String msg = "a: '" + a + "'; b: '" + b + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("a", a, "b", b));
     }
 
     // eqi
 
     public Boolean assertEqi(Boolean expected, String a, String b) {
         Boolean result = new Str(a).eqi(b);
-        String msg = "a: '" + a + "'; b: '" + b + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("a", a, "b", b));
     }
 
     // snip
 
     public String assertSnip(String expected, String str, int length) {
         String result = new Str(str).snip(length);
-        String msg = "str: '" + str + "'; length: " + length;
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str, "length", length));
     }
 
     // isEmpty
 
     public boolean assertIsEmpty(boolean expected, String str) {
         boolean result = new Str(str).isEmpty();
-        String msg = "str: '" + str + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str));
     }
 
     // length
 
     public int assertLength(int expected, String str) {
         int result = new Str(str).length();
-        String msg = "str: '" + str + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str));
     }
 
     // chomp
 
     public String assertChomp(String expected, String str) {
         String result = new Str(str).chomp();
-        String msg = "str: '" + str + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str));
     }
 
     // chompAll
 
     public String assertChompAll(String expected, String str) {
         String result = new Str(str).chompAll();
-        String msg = "str: '" + str + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str));
     }
     
     // unquote
     
     public String assertUnquote(String expected, String str) {
         String result = new Str(str).unquote();
-        assertEquals("str: '" + str + "'", expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str));
     }
 
     // quote
     
     public String assertQuote(String expected, String str) {
         String result = new Str(str).quote();
-        assertEquals("str: '" + str + "'", expected, result);
-        return result;
+        return assertEqual(expected, result, message("str", str));
     }
 
     // equals String
 
-    public Boolean assertEqualsString(Boolean expected, String a, String b) {
+    public Boolean assertEqualString(Boolean expected, String a, String b) {
         Boolean result = new Str(a).equals(b);
-        String msg = "a: '" + a + "'; b: '" + b + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("a", a, "b", b));
     }
 
+    @Test
     public void testEqualsStringNullEmptyString() {
-        assertEqualsString(false, null, "");
+        assertEqualString(false, null, "");
     }
 
+    @Test
     public void testEqualsStringEmptyStringNull() {
-        assertEqualsString(false, "", null);
+        assertEqualString(false, "", null);
     }
 
+    @Test
     public void testEqualsStringNullNull() {
-        assertEqualsString(true, null, null);
+        assertEqualString(true, null, null);
     }
 
+    @Test
     public void testEqualsStringNullNonEmptyString() {
-        assertEqualsString(false, null, "a");
+        assertEqualString(false, null, "a");
     }
 
+    @Test
     public void testEqualsStringNonEmptyStringNull() {
-        assertEqualsString(false, "a", null);
+        assertEqualString(false, "a", null);
     }
 
+    @Test
     public void testEqualsStringCharCharMatch() {
-        assertEqualsString(true, "a", "a");
+        assertEqualString(true, "a", "a");
     }
 
+    @Test
     public void testEqualsStringCharCharNoMatch() {
-        assertEqualsString(false, "a", "b");
+        assertEqualString(false, "a", "b");
     }
 
+    @Test
     public void testEqualsStringCharCharMismatchedCase() {
-        assertEqualsString(false, "a", "A");
+        assertEqualString(false, "a", "A");
     }
 
+    @Test
     public void testEqualsStringDifferentLengths() {
-        assertEqualsString(false, "a", "ab");
+        assertEqualString(false, "a", "ab");
     }    
 
     // equals Str
 
-    public Boolean assertEqualsStr(Boolean expected, String a, String b) {
+    public Boolean assertEqualStr(Boolean expected, String a, String b) {
         Boolean result = new Str(a).equals(new Str(b));
-        String msg = "a: '" + a + "'; b: '" + b + "'";
-        assertEquals(msg, expected, result);
-        return result;
+        return assertEqual(expected, result, message("a", a, "b", b));
     }
 
+    @Test
     public void testEqualsStrNullEmptyString() {
-        assertEqualsStr(false, null, "");
+        assertEqualStr(false, null, "");
     }
 
+    @Test
     public void testEqualsStrEmptyStringNull() {
-        assertEqualsStr(false, "", null);
+        assertEqualStr(false, "", null);
     }
 
+    @Test
     public void testEqualsStrNullNull() {
-        assertEqualsStr(true, null, null);
+        assertEqualStr(true, null, null);
     }
 
+    @Test
     public void testEqualsStrNullNonEmptyString() {
-        assertEqualsStr(false, null, "a");
+        assertEqualStr(false, null, "a");
     }
 
+    @Test
     public void testEqualsStrNonEmptyStringNull() {
-        assertEqualsStr(false, "a", null);
+        assertEqualStr(false, "a", null);
     }
 
+    @Test
     public void testEqualsStrCharCharMatch() {
-        assertEqualsStr(true, "a", "a");
+        assertEqualStr(true, "a", "a");
     }
 
+    @Test
     public void testEqualsStrCharCharNoMatch() {
-        assertEqualsStr(false, "a", "b");
+        assertEqualStr(false, "a", "b");
     }
 
+    @Test
     public void testEqualsStrCharCharMismatchedCase() {
-        assertEqualsStr(false, "a", "A");
+        assertEqualStr(false, "a", "A");
     }
 
+    @Test
     public void testEqualsStrDifferentLengths() {
-        assertEqualsStr(false, "a", "ab");
+        assertEqualStr(false, "a", "ab");
     }
 
+    @Test
     public void testEndsWith() {
         assertEqual(true, new Str("abc").endsWith("c"));
         assertEqual(true, new Str("abc").endsWith("bc"));
@@ -413,6 +385,7 @@ public class TestStr extends StringTest {
         assertEqual(false, new Str("abc").endsWith('d'));
     }
 
+    @Test
     public void testCompareTo() {
         assertEqual(true, new Str("abc").compareTo(new Str("abc")) == 0);
         assertEqual(true, new Str("abc").compareTo(new Str("def")) < 0);
@@ -422,6 +395,7 @@ public class TestStr extends StringTest {
         assertEqual(true, new Str(null).compareTo(new Str("abc")) < 0);
     }
 
+    @Test
     public void testHashCode() {
         assertEqual("abc".hashCode(), new Str("abc").hashCode());
         assertEqual(0, new Str(null).hashCode());
