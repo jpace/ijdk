@@ -1,13 +1,14 @@
 package ijdk.collect;
 
 import ijdk.lang.Str;
+import ijdk.lang.Sequence;
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * A dynamically-sized collection, wrapping ArrayList.
  */
-public class List<T extends Object> extends ArrayList<T> {
+public class List<T extends Object> extends ArrayList<T> implements Sequence<T> {
     /**
      * Creates a list from the given array.
      *
