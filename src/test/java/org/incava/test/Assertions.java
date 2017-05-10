@@ -178,6 +178,10 @@ public class Assertions {
         return KeyValue.of(key, value).toString();
     }
 
+    public static String message(String key, Object[] ary) {
+        return KeyValue.of(key, ary == null ? null : Arrays.asList(value)).toString();
+    }
+
     public static String message(String k1, Object v1, String k2, Object v2) {
         return message(k1, v1) + "; " + message(k2, v2);
     }
