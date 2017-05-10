@@ -16,8 +16,8 @@ Note the similarity to idiomatic Ruby:
 # Usage
 
 IJDK has a very expansive (but growing) library for Java I/O and collections, as an alternative to
-the JDK code. It is mostly inspired by Ruby, and parallels Ruby classes (such as Hash and Array)
-closely, usually moreso than it does the Apache Commons and Guava libraries.
+the JDK. IJDK is mostly inspired by Ruby, and parallels Ruby classes (such as Map/Hash and
+List/Array) closely, usually moreso than it does the Apache Commons and Guava libraries.
 
 ## Enhanced collections
 
@@ -31,6 +31,7 @@ An extension of ArrayList, with Ruby-like methods.
 ```java
     Integer x = null;
     List<Integer> nums = List.of(1, 3, 5, 7);
+    
     x = nums.get(0);
     assertEqual(1, x);
     
@@ -166,33 +167,11 @@ Does one-to-many mappings.
     }
 ```
 
-* negative indices handled for Array.get(n), so that get(-1) returns the last element in the list,
-  get(-2) the second to last, etc., similar to Ruby:
-
-```ruby
-    # Ruby
-    names = %w{ Bart Lisa Homer Marge }
-    m = names[-1]
-    h = names[-2]
-```
-
-```java
-    // Java
-    List<String> names = Arrays.asList("Bart", "Lisa", "Homer", "Marge");
-    String m = ListExt.get(names, -1);   // m == "Marge"
-    String h = ListExt.get(names, -2);   // h == "Homer"
-```
-
-* bounds checking for List.get(n), returning null when out of range instead of
-  throwing an exception:
-
-```java
-    String x = ListExt.get(names, 9);   // x == null
-```
-
 * as above, for characters in Strings
 
-* "safe" iterators for arrays and collections, which handles the case when they are null
+### Iterators
+
+"Safe" iterators for arrays and collections, which handles the case when they are null
 
 ```java
     String[] ary = new String[0];
@@ -203,23 +182,21 @@ Does one-to-many mappings.
     }
 ```
 
-* iterators to execute a given number of times, similar to Ruby:
+Execute a given number of times, similar to Ruby:
 
 ```ruby
     3.times { puts "hello" }
 ```
 
 ```java
-    for (Integer : ICore.iter(3)) {
+    for (Integer i : ICore.iter(3)) {
         ICore.puts("hi");
     }
 ```
 
-* colorized strings (on ANSI terminals)
+### Int
 
-* an alternative "logging" (debugging output) module
-
-* alternate classes that shadow JDK ones, such as:
+An lternate class to Integer:
 
 ```java
     Integer num = Int.toInteger("1");   // num == 1
@@ -228,7 +205,9 @@ Does one-to-many mappings.
     Integer num = Int.toInteger(null);  // num == null
 ```
 
-* a *Pathname* class, which extends java.io.File with Ruby-like functionality
+### Pathname
+
+Pathname extends java.io.File with Ruby-like functionality:
 
 ```java
     Pathname pn = new Pathname("abc/def.txt");
@@ -237,7 +216,7 @@ Does one-to-many mappings.
     pn.extension();    // == "txt"
 ```
 
-* Comp instead of Comparable
+### Comp
 
 ijdk.lang.Comp extends and replaces Comparable (compareTo) usage, normalizing the result to be
 simply -1, 0, or 1. Comp also contains lt, lte, gt, and gte, for simpler comparisons:
@@ -248,12 +227,18 @@ simply -1, 0, or 1. Comp also contains lt, lte, gt, and gte, for simpler compari
    if (Comp.lt("def", "fed")) {
    }
 
+### Miscellaneous
+
+* colorized strings (on ANSI terminals)
+
+* an alternative "logging" (debugging output) module
+
 * briefer package hierarchy
 
 A top-level package, `ijdk`, contains subpackages, such as `ijdk.lang`, making for briefer import
 statements. This breaks with normal Java conventions, given that IJDK is more for brevity and
-clarity than convention. All IJDK commonly used classes are in `ijdk.lang`, making for more concise
-imports:
+clarity than convention. All IJDK commonly used classes are in `ijdk.lang` and `ijdk.collect`,
+making for more concise imports:
 
 ```java
     import ijdk.lang.*;
@@ -269,6 +254,7 @@ The newer (3.0) version of IJDK, with classes whose instances wrap (shadow) Java
 
 ```java
     import ijdk.lang.Str;
+    import ijdk.collect.List;
 ```
 
 Note that the names of the shadow classes follow the convention of the class that they wrap, with
