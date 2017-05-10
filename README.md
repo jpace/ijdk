@@ -107,6 +107,19 @@ An extension of ArrayList, with Ruby-like methods.
     assertEqual(List.of(3, 1, 4, 1, 5), elements);
 ```
 
+## MultiMap
+
+Does one-to-many mappings.
+
+```java
+    MultiMap<String, String> firstToLastNames = new MultiMap<String, String>();
+    firstToLastNames.put("James", "Gosling");
+    firstToLastNames.put("James", "Rumbaugh");
+    firstToLastNames.put("James", "Foley");
+    for (String lastName : firstToLastNames.get("James")) {
+    }
+```
+
 ### Common Collections
 
 Classes for common Java collections of generics, such as:
@@ -124,7 +137,7 @@ Classes for common Java collections of generics, such as:
    int min = il.minimum();                 // min == 3
 ```
 
-### Pair and KeyValue
+## Pair and KeyValue
 
 ```java
     Pair<String, Integer> score = Pair.create("Bird", 33);
@@ -138,7 +151,7 @@ Similarly, the nearly identical KeyValue:
     // kv.key() == "one", kv.value() == 1.23
 ```
 
-### Range
+## Range
 
 A Range is a pair of integers. It converts easily to arrays and lists, and supports iteration:
 
@@ -154,22 +167,7 @@ A Range is a pair of integers. It converts easily to arrays and lists, and suppo
     List<Integer> list = r.toExpandedList(); // list == [ 3, 4, 5, 6, 7 ]
 ```
 
-### MultiMap
-
-Does one-to-many mappings.
-
-```java
-    MultiMap<String, String> firstToLastNames = new MultiMap<String, String>();
-    firstToLastNames.put("James", "Gosling");
-    firstToLastNames.put("James", "Rumbaugh");
-    firstToLastNames.put("James", "Foley");
-    for (String lastName : firstToLastNames.get("James")) {
-    }
-```
-
-* as above, for characters in Strings
-
-### Iterators
+## Iterators
 
 "Safe" iterators for arrays and collections, which handles the case when they are null
 
@@ -194,7 +192,7 @@ Execute a given number of times, similar to Ruby:
     }
 ```
 
-### Int
+## Int
 
 An lternate class to Integer:
 
@@ -205,7 +203,7 @@ An lternate class to Integer:
     Integer num = Int.toInteger(null);  // num == null
 ```
 
-### Pathname
+## Pathname
 
 Pathname extends java.io.File with Ruby-like functionality:
 
@@ -216,7 +214,7 @@ Pathname extends java.io.File with Ruby-like functionality:
     pn.extension();    // == "txt"
 ```
 
-### Comp
+## Comp
 
 ijdk.lang.Comp extends and replaces Comparable (compareTo) usage, normalizing the result to be
 simply -1, 0, or 1. Comp also contains lt, lte, gt, and gte, for simpler comparisons:
@@ -226,8 +224,9 @@ simply -1, 0, or 1. Comp also contains lt, lte, gt, and gte, for simpler compari
    }
    if (Comp.lt("def", "fed")) {
    }
+```
 
-### Miscellaneous
+## Miscellaneous
 
 * colorized strings (on ANSI terminals)
 
@@ -236,9 +235,9 @@ simply -1, 0, or 1. Comp also contains lt, lte, gt, and gte, for simpler compari
 * briefer package hierarchy
 
 A top-level package, `ijdk`, contains subpackages, such as `ijdk.lang`, making for briefer import
-statements. This breaks with normal Java conventions, given that IJDK is more for brevity and
-clarity than convention. All IJDK commonly used classes are in `ijdk.lang` and `ijdk.collect`,
-making for more concise imports:
+statements. This breaks with normal Java conventions, given that IJDK is more for brevity,
+consistency, and clarity than convention. IJDK commonly used classes are in `ijdk.lang` and
+`ijdk.collect`, making for more concise imports:
 
 ```java
     import ijdk.lang.*;

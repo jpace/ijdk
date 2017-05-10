@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 
 import static ijdk.lang.Common.objary;
 import static org.incava.test.Assertions.*;
+import static org.incava.test.Parameters.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestStr extends StringTest {
@@ -106,58 +107,25 @@ public class TestStr extends StringTest {
     public Character assertGet(Character expected, String str, int index) {
         Character result = new Str(str).get(index);
         return assertEqual(expected, result, message("str", str, "index", index));
+    }    
+
+    @Test
+    @Parameters
+    public void getIndex(Integer expected, String str, int index) {
+        Integer result = new Str(str).getIndex(index);
+        assertEqual(expected, result, message("str", str, "index", index));
     }
     
-    // getIndex
-
-    public Integer assertGetIndex(Integer expected, String str, int index) {
-        Integer result = new Str(str).getIndex(index);
-        return assertEqual(expected, result, message("str", str, "index", index));
-    }
-
-    @Test
-    public void testGetIndexNull() {
-        assertGetIndex(null, null, 0);
-    }
-
-    @Test
-    public void testGetIndexZero() {
-        assertGetIndex(0, "abcd", 0);
-    }
-
-    @Test
-    public void testGetIndexOne() {
-        assertGetIndex(1, "abcd", 1);
-    }
-
-    @Test
-    public void testGetIndexLast() {
-        assertGetIndex(3, "abcd", 3);
-    }
-
-    @Test
-    public void testGetIndexOffEnd() {
-        assertGetIndex(null, "abcd", 4);
-    }
-
-    @Test
-    public void testGetIndexNegativeOne() {
-        assertGetIndex(3, "abcd", -1);
-    }
-
-    @Test
-    public void testGetIndexNegativeTwo() {
-        assertGetIndex(2, "abcd", -2);
-    }
-
-    @Test
-    public void testGetIndexNegativeAtStart() {
-        assertGetIndex(1, "abcd", -3);
-    }
-
-    @Test
-    public void testGetIndexNegativeOffStart() {
-        assertGetIndex(null, "abcd", -5);
+    private java.util.List<Object[]> parametersForGetIndex() {
+        return paramsList(params(null, null, 0),
+                          params(0, "abcd", 0),
+                          params(1, "abcd", 1),
+                          params(3, "abcd", 3),
+                          params(null, "abcd", 4),
+                          params(3, "abcd", -1),
+                          params(2, "abcd", -2),
+                          params(1, "abcd", -3),
+                          params(null, "abcd", -5));
     }
 
     // substring
@@ -265,57 +233,25 @@ public class TestStr extends StringTest {
         return assertEqual(expected, result, message("str", str));
     }
 
-    // equals String
-
-    public Boolean assertEqualString(Boolean expected, String a, String b) {
-        Boolean result = new Str(a).equals(b);
-        return assertEqual(expected, result, message("a", a, "b", b));
-    }
-
     @Test
-    public void testEqualsStringNullEmptyString() {
-        assertEqualString(false, null, "");
+    @Parameters
+    public void equalsString(boolean expected, String a, String b) {
+        Str sa = new Str(a);
+        boolean result = sa.equals(b);
+        assertEqual(expected, result);
     }
-
-    @Test
-    public void testEqualsStringEmptyStringNull() {
-        assertEqualString(false, "", null);
+    
+    private java.util.List<Object[]> parametersForEqualsString() {
+        return paramsList(params(false, null, ""),
+                          params(false, "", null),
+                          params(true, null, null),
+                          params(false, null, "a"),
+                          params(false, "a", null),
+                          params(true, "a", "a"),
+                          params(false, "a", "b"),
+                          params(false, "a", "A"),
+                          params(false, "a", "ab"));
     }
-
-    @Test
-    public void testEqualsStringNullNull() {
-        assertEqualString(true, null, null);
-    }
-
-    @Test
-    public void testEqualsStringNullNonEmptyString() {
-        assertEqualString(false, null, "a");
-    }
-
-    @Test
-    public void testEqualsStringNonEmptyStringNull() {
-        assertEqualString(false, "a", null);
-    }
-
-    @Test
-    public void testEqualsStringCharCharMatch() {
-        assertEqualString(true, "a", "a");
-    }
-
-    @Test
-    public void testEqualsStringCharCharNoMatch() {
-        assertEqualString(false, "a", "b");
-    }
-
-    @Test
-    public void testEqualsStringCharCharMismatchedCase() {
-        assertEqualString(false, "a", "A");
-    }
-
-    @Test
-    public void testEqualsStringDifferentLengths() {
-        assertEqualString(false, "a", "ab");
-    }    
 
     // equals Str
 

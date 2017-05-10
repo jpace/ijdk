@@ -605,6 +605,19 @@ public class Str extends Obj implements Comparable<Str> {
      */
     public boolean gte(Str other) {
         return Comp.gte(this, other);
-    }    
-    
+    }
+
+    /**
+     * Returns the first character in the string, or null if the string is null or empty.
+     */
+    public Character first() {
+        return get(0);
+    }
+
+    /**
+     * Returns the first character in the string, or null if the string is null or empty.
+     */
+    public Character last() {
+        return get(-1);
+    }
 }
