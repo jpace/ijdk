@@ -179,7 +179,7 @@ public class Assertions {
     }
 
     public static String message(String key, Object[] ary) {
-        return KeyValue.of(key, ary == null ? null : Arrays.asList(value)).toString();
+        return KeyValue.of(key, ary == null ? null : Arrays.asList(ary)).toString();
     }
 
     public static String message(String k1, Object v1, String k2, Object v2) {
