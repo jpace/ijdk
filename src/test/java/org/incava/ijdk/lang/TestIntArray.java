@@ -7,8 +7,9 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.ijdk.lang.Common.objary;
 import static org.incava.test.Assertions.*;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestIntArray {
@@ -19,13 +20,13 @@ public class TestIntArray {
     }
     
     private List<Object[]> parametersForMax() {
-        return Arrays.asList(objary(Integer.MIN_VALUE, null),
-                             objary(Integer.MIN_VALUE, new int[] { }),
-                             objary(3, new int[] { 3 }),
-                             objary(-17, new int[] { -17 }),
-                             objary(0, new int[] { 0 }),
-                             objary(17, new int[] { 3, 17 }),
-                             objary(17, new int[] { 17, 3 }));
+        return paramsList(params(Integer.MIN_VALUE, null),
+                          params(Integer.MIN_VALUE, new int[] { }),
+                          params(3, new int[] { 3 }),
+                          params(-17, new int[] { -17 }),
+                          params(0, new int[] { 0 }),
+                          params(17, new int[] { 3, 17 }),
+                          params(17, new int[] { 17, 3 }));
     }
 
     @Test
@@ -35,13 +36,13 @@ public class TestIntArray {
     }
     
     private List<Object[]> parametersForMin() {
-        return Arrays.asList(objary(Integer.MAX_VALUE, null),
-                             objary(Integer.MAX_VALUE, new int[] { }),
-                             objary(3, new int[] { 3 }),
-                             objary(-17, new int[] { -17 }),
-                             objary(0, new int[] { 0 }),
-                             objary(3, new int[] { 3, 17 }),
-                             objary(3, new int[] { 17, 3 }));
+        return paramsList(params(Integer.MAX_VALUE, null),
+                          params(Integer.MAX_VALUE, new int[] { }),
+                          params(3, new int[] { 3 }),
+                          params(-17, new int[] { -17 }),
+                          params(0, new int[] { 0 }),
+                          params(3, new int[] { 3, 17 }),
+                          params(3, new int[] { 17, 3 }));
     }
 
     @Test
@@ -52,13 +53,13 @@ public class TestIntArray {
     }
     
     private List<Object[]> parametersForSum() {
-        return Arrays.asList(objary(0, null),
-                             objary(0, new int[] { }),
-                             objary(3, new int[] { 3 }),
-                             objary(-17, new int[] { -17 }),
-                             objary(0, new int[] { 0 }),
-                             objary(20, new int[] { 3, 17 }),
-                             objary(20, new int[] { 17, 3 }));
+        return paramsList(params(0, null),
+                          params(0, new int[] { }),
+                          params(3, new int[] { 3 }),
+                          params(-17, new int[] { -17 }),
+                          params(0, new int[] { 0 }),
+                          params(20, new int[] { 3, 17 }),
+                          params(20, new int[] { 17, 3 }));
     }
 
     @Test
@@ -69,9 +70,9 @@ public class TestIntArray {
     }
     
     private List<Object[]> parametersForLength() {
-        return Arrays.asList(objary(0, null),
-                             objary(1, new int[] { 3 }),
-                             objary(2, new int[] { 3, 17 }));
+        return paramsList(params(0, null),
+                          params(1, new int[] { 3 }),
+                          params(2, new int[] { 3, 17 }));
     }
 
     @Test
@@ -81,13 +82,13 @@ public class TestIntArray {
     }
     
     private List<Object[]> parametersForAverage() {
-        return Arrays.asList(objary(0, null),
-                             objary(0, new int[] { }),
-                             objary(3, new int[] { 3 }),
-                             objary(-17, new int[] { -17 }),
-                             objary(0, new int[] { 0 }),
-                             objary(10, new int[] { 3, 17 }),
-                             objary(10, new int[] { 17, 4 }));
+        return paramsList(params(0, null),
+                          params(0, new int[] { }),
+                          params(3, new int[] { 3 }),
+                          params(-17, new int[] { -17 }),
+                          params(0, new int[] { 0 }),
+                          params(10, new int[] { 3, 17 }),
+                          params(10, new int[] { 17, 4 }));
     }
 
     @Test
@@ -97,12 +98,12 @@ public class TestIntArray {
     }
     
     private List<Object[]> parametersForContains() {
-        return Arrays.asList(objary(false, null, 3),
-                             objary(false, new int[] { }, 3),
-                             objary(true, new int[] { 3 }, 3),
-                             objary(false, new int[] { 3 }, 4),
-                             objary(true, new int[] { 3, 17 }, 17),
-                             objary(false, new int[] { 3, 17 }, 8));
+        return paramsList(params(false, null, 3),
+                          params(false, new int[] { }, 3),
+                          params(true, new int[] { 3 }, 3),
+                          params(false, new int[] { 3 }, 4),
+                          params(true, new int[] { 3, 17 }, 17),
+                          params(false, new int[] { 3, 17 }, 8));
     }
 
     @Test
@@ -113,9 +114,9 @@ public class TestIntArray {
     }
     
     private List<Object[]> parametersForToStringArray() {
-        return Arrays.asList(objary(new String[] { }, null),
-                             objary(new String[] { }, new int[] { }),
-                             objary(new String[] { "3" }, new int[] { 3 }),
-                             objary(new String[] { "3", "17" }, new int[] { 3, 17 }));
+        return paramsList(params(new String[] { }, null),
+                          params(new String[] { }, new int[] { }),
+                          params(new String[] { "3" }, new int[] { 3 }),
+                          params(new String[] { "3", "17" }, new int[] { 3, 17 }));
     }    
 }

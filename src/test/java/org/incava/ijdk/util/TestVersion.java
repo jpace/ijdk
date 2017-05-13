@@ -1,14 +1,16 @@
 package org.incava.ijdk.util;
 
-import org.incava.ijdk.collect.List;
-import org.incava.ijdk.lang.Common;
+import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import org.incava.ijdk.lang.Common;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.incava.ijdk.lang.Common.*;
 import static org.incava.test.Assertions.*;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestVersion {
@@ -24,10 +26,10 @@ public class TestVersion {
     }
     
     private List<Object[]> parametersForInitFromString() {
-        return Common.<Object[]>list(Common.<Object>ary(1, null, null, null, "1"),
-                                     Common.<Object>ary(1, 2,    null, null, "1.2"),
-                                     Common.<Object>ary(1, 2,       3, null, "1.2.3"),
-                                     Common.<Object>ary(1, 2,       3,    4, "1.2.3.4"));
+        return paramsList(params(1, null, null, null, "1"),
+                          params(1, 2,    null, null, "1.2"),
+                          params(1, 2,       3, null, "1.2.3"),
+                          params(1, 2,       3,    4, "1.2.3.4"));
     }
 
     @Test
@@ -42,10 +44,10 @@ public class TestVersion {
     }
     
     private List<Object[]> parametersForInitFromIntegers() {
-        return Common.<Object[]>list(Common.<Object>ary(1, null, null, null, new Integer[] { 1 }),
-                                     Common.<Object>ary(1, 2,    null, null, new Integer[] { 1, 2 }),
-                                     Common.<Object>ary(1, 2,       3, null, new Integer[] { 1, 2, 3 }),
-                                     Common.<Object>ary(1, 2,       3, 4,    new Integer[] { 1, 2, 3, 4 }));
+        return paramsList(params(1, null, null, null, new Integer[] { 1 }),
+                          params(1, 2,    null, null, new Integer[] { 1, 2 }),
+                          params(1, 2,       3, null, new Integer[] { 1, 2, 3 }),
+                          params(1, 2,       3, 4,    new Integer[] { 1, 2, 3, 4 }));
     }
 
     @Test
@@ -55,11 +57,11 @@ public class TestVersion {
     }
     
     private List<Object[]> parametersForToString() {
-        return Common.<Object[]>list(ary("1.2.3.4", "1.2.3.4"),
-                                     ary("1.2.3", "1.2.3"),
-                                     ary("1.2", "1.2"),
-                                     ary("1", "1"),
-                                     ary("1.0", "1.0"));
+        return paramsList(params("1.2.3.4", "1.2.3.4"),
+                          params("1.2.3", "1.2.3"),
+                          params("1.2", "1.2"),
+                          params("1", "1"),
+                          params("1.0", "1.0"));
     }
 
     @Test
@@ -69,15 +71,15 @@ public class TestVersion {
     }
     
     private List<Object[]> parametersForEquals() {
-        return Common.<Object[]>list(Common.<Object>ary(true,  new Version(), new Version()),
-                                     Common.<Object>ary(true,  new Version(1), new Version(1)),
-                                     Common.<Object>ary(true,  new Version(1, 2), new Version(1, 2)),
-                                     Common.<Object>ary(true,  new Version(1, 2, 3), new Version(1, 2, 3)),
-                                     Common.<Object>ary(true,  new Version(1, 2, 3, 4), new Version(1, 2, 3, 4)),
-                                     Common.<Object>ary(false, new Version(1), new Version(2)),
-                                     Common.<Object>ary(false, new Version(1), new Version(1, 2)),
-                                     Common.<Object>ary(false, new Version(1, 2), new Version(1, 2, 3)),
-                                     Common.<Object>ary(false, new Version(1, 2, 3), new Version(1, 2, 3, 4)));
+        return paramsList(params(true,  new Version(), new Version()),
+                          params(true,  new Version(1), new Version(1)),
+                          params(true,  new Version(1, 2), new Version(1, 2)),
+                          params(true,  new Version(1, 2, 3), new Version(1, 2, 3)),
+                          params(true,  new Version(1, 2, 3, 4), new Version(1, 2, 3, 4)),
+                          params(false, new Version(1), new Version(2)),
+                          params(false, new Version(1), new Version(1, 2)),
+                          params(false, new Version(1, 2), new Version(1, 2, 3)),
+                          params(false, new Version(1, 2, 3), new Version(1, 2, 3, 4)));
     }
 
     @Test
@@ -87,21 +89,21 @@ public class TestVersion {
     }
     
     private List<Object[]> parametersForCompareTo() {
-        return Common.<Object[]>list(Common.<Object>ary(0,  new Version(), new Version()),
-                                     Common.<Object>ary(0,  new Version(1), new Version(1)),
-                                     Common.<Object>ary(0,  new Version(1, 2), new Version(1, 2)),
-                                     Common.<Object>ary(0,  new Version(1, 2, 3), new Version(1, 2, 3)),
-                                     Common.<Object>ary(0,  new Version(1, 2, 3, 4), new Version(1, 2, 3, 4)),
+        return paramsList(params(0,  new Version(), new Version()),
+                          params(0,  new Version(1), new Version(1)),
+                          params(0,  new Version(1, 2), new Version(1, 2)),
+                          params(0,  new Version(1, 2, 3), new Version(1, 2, 3)),
+                          params(0,  new Version(1, 2, 3, 4), new Version(1, 2, 3, 4)),
                                      
-                                     Common.<Object>ary(-1,  new Version(1), new Version(2)),
-                                     Common.<Object>ary(-1,  new Version(1, 2), new Version(1, 3)),
-                                     Common.<Object>ary(-1,  new Version(1, 2, 3), new Version(1, 2, 4)),
-                                     Common.<Object>ary(-1,  new Version(1, 2, 3, 4), new Version(1, 2, 3, 5)),
+                          params(-1,  new Version(1), new Version(2)),
+                          params(-1,  new Version(1, 2), new Version(1, 3)),
+                          params(-1,  new Version(1, 2, 3), new Version(1, 2, 4)),
+                          params(-1,  new Version(1, 2, 3, 4), new Version(1, 2, 3, 5)),
                                      
-                                     Common.<Object>ary(1,  new Version(2), new Version(1)),
-                                     Common.<Object>ary(1,  new Version(1, 3), new Version(1, 2)),
-                                     Common.<Object>ary(1,  new Version(1, 2, 4), new Version(1, 2, 3)),
-                                     Common.<Object>ary(1,  new Version(1, 2, 3, 5), new Version(1, 2, 3, 4)));
+                          params(1,  new Version(2), new Version(1)),
+                          params(1,  new Version(1, 3), new Version(1, 2)),
+                          params(1,  new Version(1, 2, 4), new Version(1, 2, 3)),
+                          params(1,  new Version(1, 2, 3, 5), new Version(1, 2, 3, 4)));
     }
 
     @Test

@@ -5,10 +5,10 @@ import org.incava.ijdk.lang.Closure;
 import org.incava.ijdk.str.Criteria;
 
 /**
- * An extension of ijdk.collect.List&lt;String&gt;, with a constructor for varargs, and selectors
- * that use closures.
+ * An extension of org.incava.ijdk.collect.DynamicArray&lt;String&gt;, with a constructor for
+ * varargs, and selectors that use closures.
  */
-public class StringList extends List<String> {
+public class StringList extends DynamicArray<String> {
     public static StringList of(String ... args) {
         return new StringList(args);
     }

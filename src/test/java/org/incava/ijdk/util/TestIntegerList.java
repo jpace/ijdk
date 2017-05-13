@@ -7,9 +7,10 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.ijdk.lang.Common.objary;
-import static org.incava.test.Assertions.*;
-import static org.junit.Assert.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestIntegerList {
@@ -59,12 +60,10 @@ public class TestIntegerList {
     }
     
     private List<Object[]> parametersForMinimum() {
-        return Arrays.asList(new Object[][] {
-                objary(null, new Integer[0]),
-                objary(1, 1),
-                objary(1, 1, 2),
-                objary(1, 2, 1)
-            });
+        return paramsList(params(null, new Integer[0]),
+                          params(1, 1),
+                          params(1, 1, 2),
+                          params(1, 2, 1));
     }
 
     @Test
@@ -76,11 +75,9 @@ public class TestIntegerList {
     }
     
     private List<Object[]> parametersForMaximum() {
-        return Arrays.asList(new Object[][] {
-                objary(null, new Integer[0]),
-                objary(1, 1),
-                objary(2, 1, 2),
-                objary(2, 2, 1)
-            });
+        return paramsList(params(null, new Integer[0]),
+                          params(1, 1),
+                          params(2, 1, 2),
+                          params(2, 2, 1));
     }
 }

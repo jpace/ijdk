@@ -1,17 +1,18 @@
 package org.incava.test;
 
-import org.incava.ijdk.collect.List;
-import org.incava.ijdk.lang.Common;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * For usage in parameterized tests.
  */
 public class Parameters {
     public static List<Object[]> paramsList(Object[] ... args) {
-        return List.<Object[]>of(args);
+        return new ArrayList<Object[]>(Arrays.asList(args));
     }
 
     public static Object[] params(Object ... args) {
-        return Common.objary(args);
+        return args;
     }    
 }

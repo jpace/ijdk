@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.*;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 import static org.incava.ijdk.lang.Common.*;
 
 @RunWith(JUnitParamsRunner.class)
@@ -44,10 +46,10 @@ public class TestArray {
         assertEqual(expected, result, message("ary", ary));
     }
     
-    private List<Object[]> parametersForAsList() {
-        return List.<Object[]>of(objary(null, new Array<Object>((Object[])null)),
-                                 objary(new java.util.ArrayList<Object>(java.util.Arrays.asList(new Object[] { null })), new Array<Object>((Object)null)),
-                                 objary(new java.util.ArrayList<String>(java.util.Arrays.asList(new String[] { "a", "b", "c" })), new Array<String>("a", "b", "c")));
+    private java.util.List<Object[]> parametersForAsList() {
+        return paramsList(params(null, new Array<Object>((Object[])null)),
+                          params(new java.util.ArrayList<Object>(java.util.Arrays.asList(new Object[] { null })), new Array<Object>((Object)null)),
+                          params(new java.util.ArrayList<String>(java.util.Arrays.asList(new String[] { "a", "b", "c" })), new Array<String>("a", "b", "c")));
     }
 
     @Test
@@ -57,11 +59,11 @@ public class TestArray {
         assertEqual(expected, result, message("ary", ary));
     }
     
-    private List<Object[]> parametersForAreAllNull() {
-        return List.<Object[]>of(objary(false, new Array<Object>((Object[])null)),
-                                 objary(true, new Array<Object>((Object)null)),
-                                 objary(false, new Array<String>("a", null)),
-                                 objary(false, new Array<String>("a", "b", "c")));
+    private java.util.List<Object[]> parametersForAreAllNull() {
+        return paramsList(params(false, new Array<Object>((Object[])null)),
+                          params(true, new Array<Object>((Object)null)),
+                          params(false, new Array<String>("a", null)),
+                          params(false, new Array<String>("a", "b", "c")));
     }
 
     @Test
@@ -71,11 +73,11 @@ public class TestArray {
         assertEqual(expected, result, message("ary", ary));
     }
     
-    private List<Object[]> parametersForIsAnyNull() {
-        return List.<Object[]>of(objary(false, new Array<Object>((Object[])null)),
-                                 objary(true, new Array<Object>((Object)null)),
-                                 objary(true, new Array<String>("a", null)),
-                                 objary(false, new Array<String>("a", "b", "c")));
+    private java.util.List<Object[]> parametersForIsAnyNull() {
+        return paramsList(params(false, new Array<Object>((Object[])null)),
+                          params(true, new Array<Object>((Object)null)),
+                          params(true, new Array<String>("a", null)),
+                          params(false, new Array<String>("a", "b", "c")));
     }
 
     @Test
@@ -85,10 +87,10 @@ public class TestArray {
         assertEqual(expected, result);
     }
     
-    private List<Object[]> parametersForLength() {
-        return List.<Object[]>of(objary(0, new Array<Object>()),
-                                 objary(1, new Array<String>("a")),
-                                 objary(2, new Array<String>("a", "b")));
+    private java.util.List<Object[]> parametersForLength() {
+        return paramsList(params(0, new Array<Object>()),
+                          params(1, new Array<String>("a")),
+                          params(2, new Array<String>("a", "b")));
     }
 
     @Test
@@ -99,23 +101,23 @@ public class TestArray {
         assertEqual(expected, result, message("ary", ary));
     }
     
-    private List<Object[]> parametersForGet() {
+    private java.util.List<Object[]> parametersForGet() {
         Object[] emptyAry = new Object[0];
         Object[] oneElementAry = new Object[] { "a" };
         Object[] twoElementAry = new Object[] { "a", "b" };
         
-        return List.<Object[]>of(objary(null, 0, emptyAry),
-                                 objary(null, 1, emptyAry),
-                                 objary(null, -1, emptyAry),
-                                 objary("a", 0, oneElementAry),
-                                 objary(null, 1, oneElementAry),
-                                 objary("a", -1, oneElementAry),
-                                 objary("a", 0, twoElementAry),
-                                 objary("b", 1, twoElementAry),
-                                 objary(null, 2, twoElementAry),
-                                 objary("b", -1, twoElementAry),
-                                 objary("a", -2, twoElementAry),
-                                 objary(null, -3, twoElementAry));
+        return paramsList(params(null, 0, emptyAry),
+                          params(null, 1, emptyAry),
+                          params(null, -1, emptyAry),
+                          params("a", 0, oneElementAry),
+                          params(null, 1, oneElementAry),
+                          params("a", -1, oneElementAry),
+                          params("a", 0, twoElementAry),
+                          params("b", 1, twoElementAry),
+                          params(null, 2, twoElementAry),
+                          params("b", -1, twoElementAry),
+                          params("a", -2, twoElementAry),
+                          params(null, -3, twoElementAry));
     }
 
     @Test
@@ -126,9 +128,9 @@ public class TestArray {
         assertEqual(expected, result, message("args", args));
     }
     
-    private List<Object[]> parametersForIsEmpty() {
-        return List.<Object[]>of(objary(true, null),
-                                 objary(true, new String[0]),
-                                 objary(false, new String[] { "x" }));
+    private java.util.List<Object[]> parametersForIsEmpty() {
+        return paramsList(params(true, null),
+                          params(true, new String[0]),
+                          params(false, new String[] { "x" }));
     }    
 }

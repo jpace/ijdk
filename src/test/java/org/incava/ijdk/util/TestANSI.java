@@ -1,6 +1,6 @@
 package org.incava.ijdk.util;
 
-import org.incava.ijdk.collect.List;
+import org.incava.ijdk.collect.DynamicArray;
 import java.util.Collection;
 import junit.framework.TestCase;
 import junitparams.JUnitParamsRunner;
@@ -21,8 +21,8 @@ public class TestANSI {
         return ansiName;
     }
 
-    private List<Object[]> parametersForTest() {
-        return List.<Object[]>of(
+    private DynamicArray<Object[]> parametersForTest() {
+        return DynamicArray.<Object[]>of(
             objary(0, ANSI.NONE),
             objary(0, ANSI.RESET),
             objary(4, ANSI.UNDERSCORE),
@@ -69,8 +69,8 @@ public class TestANSI {
         assertEqual(expected, code);
     }
 
-    private List<Object[]> parametersForRgbToCode() {
-        return List.<Object[]>of(
+    private DynamicArray<Object[]> parametersForRgbToCode() {
+        return DynamicArray.<Object[]>of(
             objary(16, 0, 0, 0),
             objary(88, 127, 0, 0),
             objary(28, 0, 127, 0),
@@ -87,8 +87,8 @@ public class TestANSI {
         assertEqual(expected, code);
     }
 
-    private List<Object[]> parametersForNewRgbToCode() {
-        return List.<Object[]>of(
+    private DynamicArray<Object[]> parametersForNewRgbToCode() {
+        return DynamicArray.<Object[]>of(
             // multiple RGBs map to single ANSI codes:
             objary(18, 0, 0, 127),
             objary(18, 0, 0, 86),

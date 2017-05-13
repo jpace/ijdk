@@ -1,6 +1,6 @@
 package org.incava.ijdk.str;
 
-import org.incava.ijdk.collect.List;
+import org.incava.ijdk.collect.DynamicArray;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
@@ -22,8 +22,8 @@ public class TestCriteria {
         assertEqual(expected, crit.execute(x));
     }
     
-    private List<Object[]> parametersForInit() {
-        return List.<Object[]>of(objary(true, "abc", "a"),
+    private DynamicArray<Object[]> parametersForInit() {
+        return DynamicArray.<Object[]>of(objary(true, "abc", "a"),
                                  objary(false, "def", "a"),
                                  objary(null, null, "a"));
     }
@@ -36,8 +36,8 @@ public class TestCriteria {
         
     }
     
-    private List<Object[]> parametersForStartsWith() {
-        return List.<Object[]>of(objary(true, "abc", "a"),
+    private DynamicArray<Object[]> parametersForStartsWith() {
+        return DynamicArray.<Object[]>of(objary(true, "abc", "a"),
                                  objary(false, "def", "a"),
                                  objary(null, null, "a"));
     }
@@ -50,8 +50,8 @@ public class TestCriteria {
         
     }
     
-    private List<Object[]> parametersForContains() {
-        return List.<Object[]>of(objary(true, "abc", "b"),
+    private DynamicArray<Object[]> parametersForContains() {
+        return DynamicArray.<Object[]>of(objary(true, "abc", "b"),
                                  objary(false, "def", "b"),
                                  objary(null, null, "b"));
     }
@@ -64,8 +64,8 @@ public class TestCriteria {
         
     }
     
-    private List<Object[]> parametersForEndsWith() {
-        return List.<Object[]>of(objary(true, "abc", "c"),
+    private DynamicArray<Object[]> parametersForEndsWith() {
+        return DynamicArray.<Object[]>of(objary(true, "abc", "c"),
                                  objary(false, "abc", "a"),
                                  objary(null, null, "a"));
     }
@@ -77,8 +77,8 @@ public class TestCriteria {
         assertEqual(expected, crit.execute(x));        
     }
     
-    private List<Object[]> parametersForEqualsIgnoreCase() {
-        return List.<Object[]>of(objary(true, "abc", "abc"),
+    private DynamicArray<Object[]> parametersForEqualsIgnoreCase() {
+        return DynamicArray.<Object[]>of(objary(true, "abc", "abc"),
                                  objary(true, "abc", "ABC"),
                                  objary(false, "def", "b"),
                                  objary(null, null, "b"),
@@ -93,8 +93,8 @@ public class TestCriteria {
         assertEqual(expected, crit.execute(x));        
     }
     
-    private List<Object[]> parametersForEquals() {
-        return List.<Object[]>of(objary(true, "abc", "abc"),
+    private DynamicArray<Object[]> parametersForEquals() {
+        return DynamicArray.<Object[]>of(objary(true, "abc", "abc"),
                                  objary(false, "abc", "ABC"),
                                  objary(false, "def", "b"),
                                  objary(null, null, "b"),

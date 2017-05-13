@@ -1,6 +1,6 @@
 package org.incava.ijdk.util;
 
-import org.incava.ijdk.collect.List;
+import org.incava.ijdk.collect.DynamicArray;
 import org.incava.ijdk.lang.Comp;
 import org.incava.ijdk.lang.Obj;
 
@@ -46,7 +46,7 @@ public class Version implements Comparable<Version> {
     }
 
     public String toString() {
-        return List.of(major, minor, build, revision).compact().join(".");
+        return DynamicArray.of(major, minor, build, revision).compact().join(".");
     }
 
     public int hashCode() {
@@ -62,8 +62,8 @@ public class Version implements Comparable<Version> {
     }
 
     public int compareTo(Version other) {
-        int cmp = compareField(major, other.major);
-        if (cmp == 0) {
+        int cmp;
+        if ((cmp = compareField(major, other.major)) == 0) {
             if ((cmp = compareField(minor, other.minor)) == 0) {
                 if ((cmp = compareField(build, other.build)) == 0) {
                     cmp = compareField(revision, other.revision);

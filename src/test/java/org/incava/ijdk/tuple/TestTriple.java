@@ -1,6 +1,5 @@
 package org.incava.ijdk.tuple;
 
-import org.incava.ijdk.collect.List;
 import java.util.Arrays;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
@@ -9,6 +8,8 @@ import org.junit.runner.RunWith;
 
 import static org.incava.ijdk.lang.Common.*;
 import static org.incava.test.Assertions.*;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestTriple {
@@ -44,19 +45,17 @@ public class TestTriple {
 
         StringBuilder notComparable = new StringBuilder("one");
 
-        return Arrays.asList(new Object[][] {
-                new Object[] {  0, aaa, aaa },
-                new Object[] {  0, aaa, Triple.of("one", 1.2, 1) },
-                new Object[] {  0, Triple.of("one", 1.2, 1), aaa },
-                new Object[] { -1, aaa, aab },
-                new Object[] {  1, baa, aaa },
-                new Object[] { -1, aaa, aba },
-                new Object[] {  1, aba, aaa },
-                new Object[] {  1, baa, aaa },
-                // StringBuilder is not comparable:
-                new Object[] { -1, Triple.of(new StringBuilder("sb"), 1.2, 0), Triple.of(new StringBuilder("sb"), 1.2, 0) },
-                new Object[] { -1, Triple.of(1.2, new StringBuilder("sb"), 0), Triple.of(1.2, new StringBuilder("sb"), 0) } ,
-                new Object[] { -1, Triple.of(1.2, 0, new StringBuilder("sb")), Triple.of(1.2, 0, new StringBuilder("sb")) } 
-            });
+        return paramsList(params(0, aaa, aaa),
+                          params(0, aaa, Triple.of("one", 1.2, 1)),
+                          params(0, Triple.of("one", 1.2, 1), aaa),
+                          params(-1, aaa, aab),
+                          params(1, baa, aaa),
+                          params(-1, aaa, aba),
+                          params(1, aba, aaa),
+                          params(1, baa, aaa),
+                          // StringBuilder is not comparable:
+                          params(-1, Triple.of(new StringBuilder("sb"), 1.2, 0), Triple.of(new StringBuilder("sb"), 1.2, 0)),
+                          params(-1, Triple.of(1.2, new StringBuilder("sb"), 0), Triple.of(1.2, new StringBuilder("sb"), 0)),
+                          params(-1, Triple.of(1.2, 0, new StringBuilder("sb")), Triple.of(1.2, 0, new StringBuilder("sb"))));
     }    
 }

@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.test.Assertions.*;
-import static org.junit.Assert.*;
-import static org.incava.ijdk.lang.Common.objary;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestIUtil {
@@ -23,18 +25,16 @@ public class TestIUtil {
     }
     
     private List<Object[]> parametersForIsTrue() {
-        return Arrays.asList(new Object[][] {
-                objary(true, "foo"),
-                objary(true, new Integer(17)),
-                objary(true, 0),
-                objary(true, Arrays.asList(new String[] { "foo" })),
-                
-                objary(false, ""),
-                objary(false, null),
-                objary(false, new ArrayList<String>())
-            });
+        return paramsList(params(true, "foo"),
+                          params(true, new Integer(17)),
+                          params(true, 0),
+                          params(true, Arrays.asList(new String[] { "foo" })),
+                          
+                          params(false, ""),
+                          params(false, null),
+                          params(false, new ArrayList<String>()));
     }
-
+    
     @Test
     @Parameters
     public void isFalse(boolean expected, Object input) {
@@ -42,13 +42,11 @@ public class TestIUtil {
     }
     
     private List<Object[]> parametersForIsFalse() {
-        return Arrays.asList(new Object[][] {
-                objary(true, null),
-                objary(true, ""),
-                objary(true, new ArrayList<Double>()),
-                objary(false, new Integer(317)),
-                objary(false, Arrays.asList(new String[] { "ord" }))
-            });
+        return paramsList(params(true, null),
+                          params(true, ""),
+                          params(true, new ArrayList<Double>()),
+                          params(false, new Integer(317)),
+                          params(false, Arrays.asList(new String[] { "ord" })));
     }
 
     @Test
@@ -61,14 +59,12 @@ public class TestIUtil {
         Object collOne = Arrays.asList(new String[] { "foo", "bar" });
         Object collTwo = Arrays.asList(new String[] { "BAR", "FOO" });
         
-        return Arrays.asList(new Object[][] {
-                objary("foo", "foo", "bar"),
-                objary("foo", "foo", null),
-                objary("foo", null,  "foo"),
-                objary(collOne, collOne, collTwo),
-                objary(collOne, null, collOne),
-                objary(collOne, collOne, null)
-            });
+        return paramsList(params("foo", "foo", "bar"),
+                          params("foo", "foo", null),
+                          params("foo", null,  "foo"),
+                          params(collOne, collOne, collTwo),
+                          params(collOne, null, collOne),
+                          params(collOne, collOne, null));
     }
     
     @Test
@@ -83,22 +79,20 @@ public class TestIUtil {
         ArrayList<String> three = new ArrayList<String>(Arrays.asList(new String[] { "three", "san" }));
         ArrayList<String> empty = new ArrayList<String>();
 
-        return Arrays.asList(new Object[][] {
-                objary("bar", "foo", "bar"),
-                objary(null, "foo", null),
-                objary(null, null, "bar"),
-                objary("bar", "bar", "bar"),
-                objary(null, null, null),
-                objary(two, one, two),
-                objary(three, one, three),
-                objary(three, two, three),
-                objary(null, one, empty),
-                objary(null, one, null),
-                objary(null, empty, one),
-                objary(null, null, one)
-            });
+        return paramsList(params("bar", "foo", "bar"),
+                          params(null, "foo", null),
+                          params(null, null, "bar"),
+                          params("bar", "bar", "bar"),
+                          params(null, null, null),
+                          params(two, one, two),
+                          params(three, one, three),
+                          params(three, two, three),
+                          params(null, one, empty),
+                          params(null, one, null),
+                          params(null, empty, one),
+                          params(null, null, one));
     }
-
+    
     @Test
     @Parameters
     public void or(Object expected, Object x, Object y) {
@@ -111,26 +105,24 @@ public class TestIUtil {
         ArrayList<String> three = new ArrayList<String>(Arrays.asList(new String[] { "three", "san" }));
         ArrayList<String> empty = new ArrayList<String>();
 
-        return Arrays.asList(new Object[][] {
-                objary("foo", "foo", "bar"),
-                objary("foo", "foo", null),
-                objary("bar", null, "bar"),
-                objary("bar", "bar", "bar"),
-                objary(null, null, null),
+        return paramsList(params("foo", "foo", "bar"),
+                          params("foo", "foo", null),
+                          params("bar", null, "bar"),
+                          params("bar", "bar", "bar"),
+                          params(null, null, null),
 
-                objary(one, one, two),
-                objary(one, one, three),
-                objary(two, two, three),
+                          params(one, one, two),
+                          params(one, one, three),
+                          params(two, two, three),
                 
-                objary(one, one, empty),
-                objary(one, one, null),
+                          params(one, one, empty),
+                          params(one, one, null),
                 
-                objary(one, empty, one),
-                objary(one, null, one),
+                          params(one, empty, one),
+                          params(one, null, one),
                 
-                objary(null, empty, null),
-                objary(null, null, empty)
-            });
+                          params(null, empty, null),
+                          params(null, null, empty));
     }
     
     @Test
@@ -140,16 +132,16 @@ public class TestIUtil {
         String[] listNull = null;
 
         Iterator<String> litOne = IUtil.iter(listOne).iterator();
-        assertTrue(litOne.hasNext());
+        assertEqual(true, litOne.hasNext());
         assertEqual("one", litOne.next());
         assertEqual("eine", litOne.next());
-        assertFalse(litOne.hasNext());        
+        assertEqual(false, litOne.hasNext());        
 
         Iterator<String> litEmpty = IUtil.iter(listEmpty).iterator();
-        assertFalse(litEmpty.hasNext());
+        assertEqual(false, litEmpty.hasNext());
 
         Iterator<String> litNull = IUtil.iter(listNull).iterator();
-        assertFalse(litNull.hasNext());
+        assertEqual(false, litNull.hasNext());
     }
 
     @Test
@@ -159,16 +151,16 @@ public class TestIUtil {
         ArrayList<String> aryNull = null;
 
         Iterator<String> aitOne = IUtil.iter(aryOne).iterator();
-        assertTrue(aitOne.hasNext());
+        assertEqual(true, aitOne.hasNext());
         assertEqual("one", aitOne.next());
         assertEqual("eine", aitOne.next());
-        assertFalse(aitOne.hasNext());        
+        assertEqual(false, aitOne.hasNext());        
 
         Iterator<String> aitEmpty = IUtil.iter(aryEmpty).iterator();
-        assertFalse(aitEmpty.hasNext());
+        assertEqual(false, aitEmpty.hasNext());
 
         Iterator<String> aitNull = IUtil.iter(aryNull).iterator();
-        assertFalse(aitNull.hasNext());
+        assertEqual(false, aitNull.hasNext());
     }
 
     public void assertHasNext(boolean exp, Iterator<Integer> it) {
@@ -185,16 +177,16 @@ public class TestIUtil {
         assertHasNext(true, it);
         assertNext(0, it);
 
-        assertTrue(it.hasNext());
+        assertEqual(true, it.hasNext());
         assertNext(1, it);
 
-        assertTrue(it.hasNext());
+        assertEqual(true, it.hasNext());
         assertNext(2, it);
 
-        assertFalse(it.hasNext());
+        assertEqual(false, it.hasNext());
         try {
             assertNext(null, it);
-            fail("exception expected");
+            Assert.fail("exception expected");
         }
         catch (NoSuchElementException e) {
             assertEqual("limit: " + 3, e.getMessage());

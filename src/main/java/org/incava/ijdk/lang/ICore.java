@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.TreeMap;
 
 import org.incava.ijdk.collect.Array;
-import org.incava.ijdk.collect.List;
+import org.incava.ijdk.collect.DynamicArray;
 import org.incava.ijdk.collect.StringList;
 
 import org.incava.ijdk.io.StdOut;
@@ -232,8 +232,8 @@ public class ICore {
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    public static <T> List<T> list(T ... elements) {
-        return List.of(elements);
+    public static <T> DynamicArray<T> list(T ... elements) {
+        return DynamicArray.of(elements);
     }
 
     /**
@@ -250,7 +250,7 @@ public class ICore {
      * <code>ICore.&lt;Integer&gt;list()</code> for empty integer lists.
      */
     @SuppressWarnings("unchecked")
-    public static List<Integer> intlist(Integer ... elements) {
+    public static DynamicArray<Integer> intlist(Integer ... elements) {
         return ICore.<Integer>list(elements);
     }
 

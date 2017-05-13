@@ -53,8 +53,8 @@ public class Array<T extends Object> extends Obj {
      * Returns the wrapped array, as a List (dynamically sized collection, with a copy of the
      * wrapped array). If the wrapped array is null, then null is returned.
      */
-    public List<T> asList() {
-        return isNull() ? null : new List<T>(Arrays.asList(ary));
+    public DynamicArray<T> asList() {
+        return isNull() ? null : new DynamicArray<T>(Arrays.asList(ary));
     }
 
     /**

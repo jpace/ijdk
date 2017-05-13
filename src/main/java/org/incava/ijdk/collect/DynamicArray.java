@@ -8,33 +8,33 @@ import java.util.Collection;
 /**
  * A dynamically-sized collection, wrapping ArrayList.
  */
-public class List<T extends Object> extends ArrayList<T> implements Sequence<T> {
+public class DynamicArray<T extends Object> extends ArrayList<T> implements Sequence<T> {
     /**
      * Creates a list from the given array.
      *
      * <pre>
-     * List&lt;Integer&gt; list = List.&lt;Integer&gt;of();
-     * List&lt;Integer&gt; list = List.of(6);
-     * List&lt;Integer&gt; list = List.of(6, 7);
-     * List&lt;Integer&gt; list = List.of(6, 7, 8);
+     * DynamicArray&lt;Integer&gt; list = DynamicArray.&lt;Integer&gt;of();
+     * DynamicArray&lt;Integer&gt; list = DynamicArray.of(6);
+     * DynamicArray&lt;Integer&gt; list = DynamicArray.of(6, 7);
+     * DynamicArray&lt;Integer&gt; list = DynamicArray.of(6, 7, 8);
      * </pre>
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    public static <T extends Object> List<T> of(T ... ary) {
-        return new List<T>(ary);
+    public static <T extends Object> DynamicArray<T> of(T ... ary) {
+        return new DynamicArray<T>(ary);
     }
     
     /**
-     * Creates an empty list from the given array. The syntax <code>List.&lt;Type&gt;empty()</code>
+     * Creates an empty list from the given array. The syntax <code>DynamicArray.&lt;Type&gt;empty()</code>
      * is used to denote the generic type.
      *
      * <pre>
-     * List&lt;String&gt; list = List.&lt;String&gt;empty();
+     * DynamicArray&lt;String&gt; list = DynamicArray.&lt;String&gt;empty();
      * </pre>
      */
-    public static <T extends Object> List<T> empty() {
-        return new List<T>();
+    public static <T extends Object> DynamicArray<T> empty() {
+        return new DynamicArray<T>();
     }
     
     public static final long serialVersionUID = 1L;
@@ -42,13 +42,13 @@ public class List<T extends Object> extends ArrayList<T> implements Sequence<T> 
     /**
      * Creates an empty list.
      */
-    public List() {
+    public DynamicArray() {
     }
 
     /**
      * Creates a list from the collection, copying its elements. <code>coll</code> can be null.
      */
-    public List(Collection<? extends T> coll) {
+    public DynamicArray(Collection<? extends T> coll) {
         if (coll != null) {
             addAll(coll);
         }
@@ -59,7 +59,7 @@ public class List<T extends Object> extends ArrayList<T> implements Sequence<T> 
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    public List(T ... ary) {
+    public DynamicArray(T ... ary) {
         for (T el : ary) {
             add(el);
         }
@@ -105,7 +105,7 @@ public class List<T extends Object> extends ArrayList<T> implements Sequence<T> 
      */
     @SafeVarargs
     final public boolean containsAny(T ... args) {
-        return containsAny(new List<T>(args));
+        return containsAny(new DynamicArray<T>(args));
     }
 
     /**
@@ -125,7 +125,7 @@ public class List<T extends Object> extends ArrayList<T> implements Sequence<T> 
     /**
      * Returns the <code>n</code>th element in the list.
      *
-     * <p>Unlike <code>java.util.ArrayList#get</code>, <code>ijdk.collect.List#get</code> supports
+     * <p>Unlike <code>java.util.ArrayList#get</code>, <code>ijdk.collect.DynamicArray#get</code> supports
      * negative indices, as do languages such as Perl and Ruby.</p>
      *
      * <p>If <code>n</code> is negative, then the index is the offset from the end, where
@@ -139,7 +139,7 @@ public class List<T extends Object> extends ArrayList<T> implements Sequence<T> 
     }
 
     /**
-     * Returns a List containing the <code>m</code>th element through the <code>n</code>th element
+     * Returns a DynamicArray containing the <code>m</code>th element through the <code>n</code>th element
      * in the list, both inclusive.
      *
      * <p> If <code>m</code> <code>n</code> is negative, then the index is the offset from the end,
@@ -147,10 +147,10 @@ public class List<T extends Object> extends ArrayList<T> implements Sequence<T> 
      * so on and so forth. If <code>m</code> or <code>n</code> is out of range (not within <code>0
      * ... size()</code>), then an empty set is returned.</p>
      */
-    public List<T> get(int fromIndex, int toIndex) {
+    public DynamicArray<T> get(int fromIndex, int toIndex) {
         Integer fromIdx = org.incava.ijdk.util.Index.getIndex(size(), fromIndex);
         Integer toIdx   = toIndex < 0 ? org.incava.ijdk.util.Index.getIndex(size(), toIndex) : Integer.valueOf(toIndex);
-        List<T> list = new List<T>();
+        DynamicArray<T> list = new DynamicArray<T>();
         if (fromIdx != null && toIdx != null) {
             while (fromIdx <= toIdx && fromIdx < size()) {
                 list.add(get(fromIdx));
@@ -165,13 +165,13 @@ public class List<T extends Object> extends ArrayList<T> implements Sequence<T> 
      * the list, so this method can be chained:
      *
      * <pre>
-     *    List&lt;Integer&gt; nums = List.of(1, 2, 3);
+     *    DynamicArray&lt;Integer&gt; nums = DynamicArray.of(1, 2, 3);
      *    nums.append(4).append(5);
      * </pre>
      *
-     * @see java.util.List#add
+     * @see java.util.DynamicArray#add
      */
-    public List<T> append(T obj) {
+    public DynamicArray<T> append(T obj) {
         add(obj);
         return this;
     }
@@ -249,8 +249,8 @@ public class List<T extends Object> extends ArrayList<T> implements Sequence<T> 
      * Returns a new list that contains unique elements from the list, in the same order as in this
      * list.
      */
-    public List<T> unique() {
-        List<T> uniqueList = new List<T>();
+    public DynamicArray<T> unique() {
+        DynamicArray<T> uniqueList = new DynamicArray<T>();
         for (T obj : this) {
             if (!uniqueList.contains(obj)) {
                 uniqueList.append(obj);
@@ -263,8 +263,8 @@ public class List<T extends Object> extends ArrayList<T> implements Sequence<T> 
      * Returns a new list that contains only the non-null elements from this list, in the same
      * order as in this list.
      */
-    public List<T> compact() {
-        List<T> compactList = new List<T>();
+    public DynamicArray<T> compact() {
+        DynamicArray<T> compactList = new DynamicArray<T>();
         for (T obj : this) {
             if (obj != null) {
                 compactList.append(obj);
@@ -284,8 +284,8 @@ public class List<T extends Object> extends ArrayList<T> implements Sequence<T> 
      * Returns a new list, concatenating the other list with this one. Elements will be in the order
      * of this list, then the elements of the other.
      */
-    public List<T> plus(List<T> other) {
-        List<T> newList = new List<T>(this);
+    public DynamicArray<T> plus(DynamicArray<T> other) {
+        DynamicArray<T> newList = new DynamicArray<T>(this);
         for (T obj : other) {
             newList.append(obj);
         }
@@ -296,8 +296,8 @@ public class List<T extends Object> extends ArrayList<T> implements Sequence<T> 
      * Returns a new list, containing the elements of this list that are not in the other. The
      * retained elements are in the same order as they are in this list.
      */
-    public List<T> minus(List<T> other) {
-        List<T> newList = new List<T>();
+    public DynamicArray<T> minus(DynamicArray<T> other) {
+        DynamicArray<T> newList = new DynamicArray<T>();
         for (T obj : this) {
             if (!other.contains(obj)) {
                 newList.append(obj);
@@ -311,17 +311,17 @@ public class List<T extends Object> extends ArrayList<T> implements Sequence<T> 
      * indices are treated as offsets from the last element.
 
      * <pre>
-     *     List&lt;Integer&gt; list = List.of(6, 7, 8);
-     *     List&lt;Integer&gt; l2 = list.elements(0);         // [ 6 ]
-     *     List&lt;Integer&gt; l3 = list.elements(0, 1);      // [ 6, 7 ]
-     *     List&lt;Integer&gt; l4 = list.elements(1, 0);      // [ 7, 6 ]
-     *     List&lt;Integer&gt; l5 = list.elements(-1, -2, 1); // [ 8, 7, 7 ]
+     *     DynamicArray&lt;Integer&gt; list = DynamicArray.of(6, 7, 8);
+     *     DynamicArray&lt;Integer&gt; l2 = list.elements(0);         // [ 6 ]
+     *     DynamicArray&lt;Integer&gt; l3 = list.elements(0, 1);      // [ 6, 7 ]
+     *     DynamicArray&lt;Integer&gt; l4 = list.elements(1, 0);      // [ 7, 6 ]
+     *     DynamicArray&lt;Integer&gt; l5 = list.elements(-1, -2, 1); // [ 8, 7, 7 ]
      * </pre>
      *
-     * @see List#get
+     * @see DynamicArray#get
      */
-    public List<T> elements(int ... indices) {
-        List<T> elmts = new List<T>();
+    public DynamicArray<T> elements(int ... indices) {
+        DynamicArray<T> elmts = new DynamicArray<T>();
         for (int idx : indices) {
             elmts.append(get(idx));
         }

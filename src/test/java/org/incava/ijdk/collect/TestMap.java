@@ -1,6 +1,6 @@
 package org.incava.ijdk.collect;
 
-import org.incava.ijdk.collect.List;
+import org.incava.ijdk.collect.DynamicArray;
 import org.incava.ijdk.lang.Common;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 
 import static org.incava.ijdk.lang.Common.*;
 import static org.incava.test.Assertions.*;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestMap {
@@ -25,7 +27,7 @@ public class TestMap {
     
     @Test
     public void ofList() {
-        List<Pair<String, Integer>> list = List.of(Pair.of("one", 1), Pair.of("two", 2));
+        java.util.List<Pair<String, Integer>> list = DynamicArray.of(Pair.of("one", 1), Pair.of("two", 2));
 
         java.util.TreeMap<String, Integer> expected = new java.util.TreeMap<String, Integer>();
         expected.put("one", 1);
@@ -45,28 +47,28 @@ public class TestMap {
         assertEqual(expected, result);        
     }
     
-    private List<Object[]> parametersForOf() {
+    private java.util.List<Object[]> parametersForOf() {
         java.util.TreeMap<String, Integer> expected;
         
-        List<Object[]> params = Common.<Object[]>list();
+        java.util.List<Object[]> params = paramsList();
 
         expected = new java.util.TreeMap<String, Integer>();
-        params.add(objary(expected, Map.<String, Integer>of()));
+        params.add(params(expected, Map.<String, Integer>of()));
 
         expected = new java.util.TreeMap<String, Integer>();
         expected.put("one", 1);
-        params.add(objary(expected, Map.of("one", 1)));
+        params.add(params(expected, Map.of("one", 1)));
 
         expected = new java.util.TreeMap<String, Integer>();
         expected.put("two", 2);
         expected.put("three", 3);
-        params.add(objary(expected, Map.of("two", 2, "three", 3)));
+        params.add(params(expected, Map.of("two", 2, "three", 3)));
 
         expected = new java.util.TreeMap<String, Integer>();
         expected.put("four", 4);
         expected.put("five", 5);
         expected.put("six", 6);
-        params.add(objary(expected, Map.of("four", 4, "five", 5, "six", 6)));
+        params.add(params(expected, Map.of("four", 4, "five", 5, "six", 6)));
         
         return params;
     }

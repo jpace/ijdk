@@ -7,8 +7,10 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.ijdk.lang.Common.objary;
-import static org.incava.test.Assertions.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestMathExt {
@@ -20,8 +22,8 @@ public class TestMathExt {
     }
     
     private List<Object[]> parametersForMin() {
-        return Arrays.asList(objary(Integer.MIN_VALUE, new int[] { }),
-                             objary(4, new int[] { 4 }),
-                             objary(1, new int[] { 3, 5, 1, 9 }));
+        return paramsList(params(Integer.MIN_VALUE, new int[] { }),
+                          params(4, new int[] { 4 }),
+                          params(1, new int[] { 3, 5, 1, 9 }));
     }
 }

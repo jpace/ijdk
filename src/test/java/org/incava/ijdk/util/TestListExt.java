@@ -3,15 +3,15 @@ package org.incava.ijdk.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.TreeMap;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.ijdk.lang.Common.objary;
-import static org.incava.test.Assertions.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestListExt {
@@ -27,26 +27,25 @@ public class TestListExt {
     }
     
     private List<Object[]> parametersForGet() {
-        return Arrays.asList(
-            objary(2,    NUMS, 0),
-            objary(4,    NUMS, 1),
-            objary(6,    NUMS, 2),
-            objary(8,    NUMS, 3),
-            objary(null, NUMS, 4),
+        return paramsList(params(2,    NUMS, 0),
+                          params(4,    NUMS, 1),
+                          params(6,    NUMS, 2),
+                          params(8,    NUMS, 3),
+                          params(null, NUMS, 4),
 
-            objary(8,    NUMS, -1),
-            objary(6,    NUMS, -2),
-            objary(4,    NUMS, -3),
-            objary(2,    NUMS, -4),
-            objary(null, NUMS, -5),
+                          params(8,    NUMS, -1),
+                          params(6,    NUMS, -2),
+                          params(4,    NUMS, -3),
+                          params(2,    NUMS, -4),
+                          params(null, NUMS, -5),
 
-            objary(null, EMPTY,  0),
-            objary(null, EMPTY,  1),
-            objary(null, EMPTY, -1),
+                          params(null, EMPTY,  0),
+                          params(null, EMPTY,  1),
+                          params(null, EMPTY, -1),
 
-            objary(null, null,  0),
-            objary(null, null,  1),
-            objary(null, null, -1));
+                          params(null, null,  0),
+                          params(null, null,  1),
+                          params(null, null, -1));
     }
 
     @Test
@@ -57,10 +56,9 @@ public class TestListExt {
     }
     
     private List<Object[]> parametersForFirst() {
-        return Arrays.asList(
-            objary(null, null),
-            objary(null, EMPTY),
-            objary("the", WORDS));
+        return paramsList(params(null, null),
+                          params(null, EMPTY),
+                          params("the", WORDS));
     }
 
     @Test
@@ -71,10 +69,9 @@ public class TestListExt {
     }
     
     private List<Object[]> parametersForLast() {
-        return Arrays.asList(
-            objary(null, null),
-            objary(null, EMPTY),
-            objary("caboodle", WORDS));
+        return paramsList(params(null, null),
+                          params(null, EMPTY),
+                          params("caboodle", WORDS));
     }
 
     @Test
@@ -87,9 +84,9 @@ public class TestListExt {
     private List<Object[]> parametersForRemoveAll() {
         List<String> letters = Arrays.asList("a", "a", "b", "b", "b", "c");
         
-        return Arrays.asList(objary(Arrays.asList("a", "a", "b", "b", "b"), new ArrayList<String>(letters), "c"),
-                             objary(Arrays.asList("b", "b", "b", "c"), new ArrayList<String>(letters), "a"),
-                             objary(letters, new ArrayList<String>(letters), "d"));
+        return paramsList(params(Arrays.asList("a", "a", "b", "b", "b"), new ArrayList<String>(letters), "c"),
+                          params(Arrays.asList("b", "b", "b", "c"), new ArrayList<String>(letters), "a"),
+                          params(letters, new ArrayList<String>(letters), "d"));
     }
 
     @Test
@@ -100,22 +97,21 @@ public class TestListExt {
     }
     
     private List<Object[]> parametersForGetIndex() {
-        return Arrays.asList(
-            objary(0,    4,  0),
-            objary(1,    4,  1),
-            objary(null, 4,  4),
-            objary(null, 4,  5),
+        return paramsList(params(0,    4,  0),
+                          params(1,    4,  1),
+                          params(null, 4,  4),
+                          params(null, 4,  5),
 
-            objary(3,    4, -1),
-            objary(2,    4, -2),
-            objary(1,    4, -3),
-            objary(0,    4, -4),
-            objary(null, 4, -5),
-            objary(null, 4, -6),
+                          params(3,    4, -1),
+                          params(2,    4, -2),
+                          params(1,    4, -3),
+                          params(0,    4, -4),
+                          params(null, 4, -5),
+                          params(null, 4, -6),
 
-            objary(null, 0,  0),
-            objary(null, 0,  1),
-            objary(null, 0, -1));
+                          params(null, 0,  0),
+                          params(null, 0,  1),
+                          params(null, 0, -1));
     }
 
     @Test
@@ -126,24 +122,17 @@ public class TestListExt {
     }
     
     private List<Object[]> parametersForContains() {
-        List<Object[]> params = new ArrayList<Object[]>();
-
         List<String> strList = Arrays.asList("one", "two", "three");
-        
-        params.add(objary(true, strList, "one"));
-        params.add(objary(true, strList, "three"));
-        params.add(objary(false, strList, "four"));
-        params.add(objary(false, strList, "ONE"));
-        
-        params.add(objary(false, null, null));
-
         List<Integer> intList = Arrays.asList(1, 2, 3);
         
-        params.add(objary(true, intList, 1));
-        params.add(objary(true, intList, 3));
-        params.add(objary(false, intList, 4));
-
-        return params;
+        return paramsList(params(true, strList, "one"),
+                          params(true, strList, "three"),
+                          params(false, strList, "four"),
+                          params(false, strList, "ONE"),
+                          params(false, null, null),
+                          params(true, intList, 1),
+                          params(true, intList, 3),
+                          params(false, intList, 4));
     }
 
     @Test
@@ -154,9 +143,8 @@ public class TestListExt {
     }
     
     private List<Object[]> parametersForGetRandomElement() {
-        return Arrays.asList(
-            objary(true, WORDS),
-            objary(false, null),
-            objary(false, EMPTY));
+        return paramsList(params(true, WORDS),
+                          params(false, null),
+                          params(false, EMPTY));
     }
 }

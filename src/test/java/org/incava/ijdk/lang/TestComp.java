@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 
 import static org.incava.ijdk.lang.Common.objary;
 import static org.incava.test.Assertions.*;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestComp {
@@ -19,7 +21,7 @@ public class TestComp {
     }
 
     public java.util.List<Object[]> parametersForCompare() {
-        java.util.List<Object[]> params = new java.util.ArrayList<Object[]>();
+        java.util.List<Object[]> params = paramsList();
         
         String obj = new String();
         
@@ -57,7 +59,7 @@ public class TestComp {
     }
 
     public java.util.List<Object[]> lessThanParams() {
-        java.util.List<Object[]> params = new java.util.ArrayList<Object[]>();        
+        java.util.List<Object[]> params = paramsList();        
         String obj = new String();
         
         params.add(objary(false, null, null));
@@ -94,7 +96,7 @@ public class TestComp {
     }
 
     public java.util.List<Object[]> greaterThanParams() {
-        java.util.List<Object[]> params = new java.util.ArrayList<Object[]>();        
+        java.util.List<Object[]> params = paramsList();        
         
         String obj = new String();
         
@@ -111,16 +113,11 @@ public class TestComp {
     }
 
     public java.util.List<Object[]> equalParams() {
-        java.util.List<Object[]> params = new java.util.ArrayList<Object[]>();
-        
         String obj = new String();
         
-        params.add(objary(true, null, null));
-        params.add(objary(true, obj, obj));
-        params.add(objary(true, new String(), new String()));
-        params.add(objary(true, new String("abc"), new String("abc")));
-        
-        return params;
-    }
-    
+        return paramsList(params(true, null, null),
+                          params(true, obj, obj),
+                          params(true, new String(), new String()),
+                          params(true, new String("abc"), new String("abc")));
+    }    
 }

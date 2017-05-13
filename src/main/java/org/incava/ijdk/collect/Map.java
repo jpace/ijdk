@@ -47,7 +47,7 @@ public class Map<K, V> extends java.util.TreeMap<K, V> implements Iterable<java.
     /**
      * Creates a tree map from a list of pairs.
      */
-    public static <KeyType, ValueType> Map<KeyType, ValueType> of(List<Pair<KeyType, ValueType>> list) {
+    public static <KeyType, ValueType> Map<KeyType, ValueType> of(java.util.List<Pair<KeyType, ValueType>> list) {
         return new Map<KeyType, ValueType>(list);
     }    
 
@@ -56,7 +56,7 @@ public class Map<K, V> extends java.util.TreeMap<K, V> implements Iterable<java.
     /**
      * Creates a IJDK map from a list of pairs.
      */
-    public Map(List<Pair<K, V>> elements) {
+    public Map(java.util.List<Pair<K, V>> elements) {
         for (Pair<K, V> element : elements) {
             put(element.first(), element.second());
         }

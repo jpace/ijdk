@@ -12,8 +12,6 @@ import static org.incava.test.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestStringList {
-    // ctor
-
     @Test
     public void ctorEmpty() {
         StringList sl = new StringList();
@@ -42,23 +40,19 @@ public class TestStringList {
         assertEqual("two", sl.get(1));
     }
 
-    // anyStartsWith
-
     @Test
     @Parameters
-    public void startsWith(boolean expected, String substr, String ... args) {
+    public void anyStartsWith(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
         assertEqual(expected, sl.anyStartsWith(substr), message("sl", sl, "substr", substr));
         
     }
     
-    private List<Object[]> parametersForStartsWith() {
-        return List.<Object[]>of(objary(false, "o", new String[0]),
-                                 objary(true, "o", "one"),
-                                 objary(false, "n", "one"));
+    private DynamicArray<Object[]> parametersForAnyStartsWith() {
+        return DynamicArray.<Object[]>of(objary(false, "o", new String[0]),
+                                         objary(true, "o", "one"),
+                                         objary(false, "n", "one"));
     }
-
-    // anyContains
 
     @Test
     @Parameters
@@ -67,14 +61,12 @@ public class TestStringList {
         assertEqual(expected, sl.anyContains(substr), message("sl", sl, "substr", substr));
     }
     
-    private List<Object[]> parametersForAnyContains() {
-        return List.<Object[]>of(objary(false, "o", new String[0]),
-                                 objary(true, "o", "one"),
-                                 objary(true, "n", "one"),
-                                 objary(false, "z", "one"));
+    private DynamicArray<Object[]> parametersForAnyContains() {
+        return DynamicArray.<Object[]>of(objary(false, "o", new String[0]),
+                                         objary(true, "o", "one"),
+                                         objary(true, "n", "one"),
+                                         objary(false, "z", "one"));
     }
-
-    // anyEndsWith
 
     @Test
     @Parameters
@@ -83,13 +75,11 @@ public class TestStringList {
         assertEqual(expected, sl.anyEndsWith(substr), message("sl", sl, "substr", substr));
     }
     
-    private List<Object[]> parametersForAnyEndsWith() {
-        return List.<Object[]>of(objary(false, "o", new String[0]),
-                                 objary(true, "e", "one"),
-                                 objary(false, "n", "one"));
+    private DynamicArray<Object[]> parametersForAnyEndsWith() {
+        return DynamicArray.<Object[]>of(objary(false, "o", new String[0]),
+                                         objary(true, "e", "one"),
+                                         objary(false, "n", "one"));
     }
-
-    // findFirst
 
     @Test
     @Parameters
@@ -99,8 +89,8 @@ public class TestStringList {
         assertEqual(expected, result, message("sl", sl, "criteria", criteria));
     }
     
-    private List<Object[]> parametersForFindFirst() {
-        List<Object[]> params = List.<Object[]>of();
+    private DynamicArray<Object[]> parametersForFindFirst() {
+        DynamicArray<Object[]> params = DynamicArray.<Object[]>of();
 
         params.add(objary(null, null, new String[0]));
 
@@ -128,8 +118,6 @@ public class TestStringList {
         return params;
     }
 
-    // findAll
-
     @Test
     @Parameters
     public void findAll(StringList expected, Closure<Boolean, String> criteria, String ... args) {
@@ -138,8 +126,8 @@ public class TestStringList {
         assertEqual(expected, result, message("sl", sl, "criteria", criteria));
     }
     
-    private List<Object[]> parametersForFindAll() {
-        List<Object[]> params = List.<Object[]>of();
+    private DynamicArray<Object[]> parametersForFindAll() {
+        DynamicArray<Object[]> params = DynamicArray.<Object[]>of();
 
         params.add(objary(new StringList(), null, new String[0]));
 
@@ -174,8 +162,6 @@ public class TestStringList {
         return params;
     }
 
-    // anyEqualsIgnoreCase
-
     @Test
     @Parameters
     public void anyEqualsIgnoreCase(boolean expected, String substr, String ... args) {
@@ -184,10 +170,10 @@ public class TestStringList {
         
     }
     
-    private List<Object[]> parametersForAnyEqualsIgnoreCase() {
-        return List.<Object[]>of(objary(false, "o", new String[0]),
-                                 objary(true, "one", "one"),
-                                 objary(true, "one", "one", "two"),
-                                 objary(true, "one", "One"));
+    private DynamicArray<Object[]> parametersForAnyEqualsIgnoreCase() {
+        return DynamicArray.<Object[]>of(objary(false, "o", new String[0]),
+                                         objary(true, "one", "one"),
+                                         objary(true, "one", "one", "two"),
+                                         objary(true, "one", "One"));
     }
 }

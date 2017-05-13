@@ -1,8 +1,7 @@
 package org.incava.ijdk.lang;
 
-import org.incava.ijdk.collect.List;
+import org.incava.ijdk.collect.DynamicArray;
 import java.util.Iterator;
-import org.incava.ijdk.lang.ObjectExt;
 
 /**
  * A range of integers, inclusive. Supports iteration and array expansion.
@@ -103,7 +102,7 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      * @see toArray
      */
     public Integer[] toExpandedArray() {
-        List<Integer> list = List.<Integer>empty();
+        java.util.List<Integer> list = DynamicArray.<Integer>empty();
         for (Integer num = first; num <= last; ++num) {
             list.add(num);
         }
@@ -120,8 +119,8 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      *
      * @see toExpandedArray
      */
-    public List<Integer> toExpandedList() {
-        List<Integer> list = List.<Integer>empty();
+    public java.util.List<Integer> toExpandedList() {
+        DynamicArray<Integer> list = DynamicArray.<Integer>empty();
         for (Integer num = first; num <= last; ++num) {
             list.append(num);
         }

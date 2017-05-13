@@ -1,13 +1,14 @@
 package org.incava.ijdk.lang;
 
-import java.util.Arrays;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.ijdk.lang.Common.objary;
-import static org.incava.test.Assertions.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestKeyValue {
@@ -66,10 +67,8 @@ public class TestKeyValue {
 
     private java.util.List<Object[]> parametersForToString_test() {
         KeyValue<String, Double> kv = KeyValue.of("one", 1.23);
-        return Arrays.asList(new Object[][] {
-                new Object[] { "one => 1.23", kv, null },
-                new Object[] { "one: 1.23", kv, ": " }
-            });
+        return paramsList(params("one => 1.23", kv, null),
+                          params("one: 1.23", kv, ": "));
     }
 
     @Test
@@ -83,18 +82,17 @@ public class TestKeyValue {
         KeyValue<String, Double> aa = KeyValue.of("one", 1.2);
         KeyValue<String, Double> ab = KeyValue.of("one", 2.4);
         KeyValue<String, Double> ba = KeyValue.of("two", 1.2);
-        return Arrays.asList(new Object[][] {
-                new Object[] { 0, aa, aa },
-                new Object[] { 0, aa, KeyValue.of("one", 1.2) },
-                new Object[] { 0, KeyValue.of("one", 1.2), aa },
-                new Object[] { -1, aa, ba },
-                new Object[] {  1, ba, aa },
-                new Object[] { -1, aa, ba },
-                new Object[] { -1, aa, ab },
-                new Object[] {  1, ab, aa },
-                // not comparable:
-                new Object[] { -1, KeyValue.of(new StringBuilder("one"), 1.2), KeyValue.of(new StringBuilder("one"), 1.2) },
-                new Object[] { -1, KeyValue.of(1.2, new StringBuilder("one")), KeyValue.of(1.2, new StringBuilder("one")) } 
-            });
+        
+        return paramsList(params(0, aa, aa),
+                          params(0, aa, KeyValue.of("one", 1.2)),
+                          params(0, KeyValue.of("one", 1.2), aa),
+                          params(-1, aa, ba),
+                          params(1, ba, aa),
+                          params(-1, aa, ba),
+                          params(-1, aa, ab),
+                          params(1, ab, aa),
+                          // not comparable:
+                          params(-1, KeyValue.of(new StringBuilder("one"), 1.2), KeyValue.of(new StringBuilder("one"), 1.2)),
+                          params(-1, KeyValue.of(1.2, new StringBuilder("one")), KeyValue.of(1.2, new StringBuilder("one"))));
     }
 }

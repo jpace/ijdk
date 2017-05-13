@@ -1,11 +1,8 @@
 package org.incava.ijdk.tuple;
 
-import org.incava.ijdk.collect.List;
-import org.incava.ijdk.lang.Common;
 import org.junit.Test;
 
-import static org.incava.test.Assertions.*;
-import static org.incava.ijdk.lang.Common.*;
+import static org.incava.test.Assertions.assertEqual;
 
 public class TestPair {
     @Test
