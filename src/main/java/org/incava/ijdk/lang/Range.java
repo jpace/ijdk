@@ -77,49 +77,14 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
     }
 
     /**
-     * Returns the range as an array. For example:
-     *
-     * <pre>
-     *  Range rg = new Range(11, 14);
-     *  Integer[] ary = rg.toArray(); // ary == new Integer[] { 11, 14 }
-     * </pre>
-     *
-     * @see toExpandedArray
-     */
-    public Integer[] toArray() {
-        return new Integer[] { first, last };
-    }
-
-    /**
-     * Returns the range as an expanded array, with elements for each number
-     * within the range. For example:
-     *
-     * <pre>
-     *  Range rg = new Range(3, 7);
-     *  Integer[] ary = rg.toExpandedArray(); // ary == new Integer[] { 3, 4, 5, 6, 7 }
-     * </pre>
-     *
-     * @see toArray
-     */
-    public Integer[] toExpandedArray() {
-        java.util.List<Integer> list = Array.<Integer>empty();
-        for (Integer num = first; num <= last; ++num) {
-            list.add(num);
-        }
-        return list.toArray(new Integer[list.size()]);
-    }
-
-    /**
      * Returns the range as a list of elements for each number within the range. For example:
      *
      * <pre>
      *  Range rg = new Range(3, 7);
      *  List&lt;Integer&gt; ary = rg.toExpandedList(); // ary == [ 3, 4, 5, 6, 7 ]
      * </pre>
-     *
-     * @see toExpandedArray
      */
-    public java.util.List<Integer> toExpandedList() {
+    public Array<Integer> toArray() {
         Array<Integer> list = Array.<Integer>empty();
         for (Integer num = first; num <= last; ++num) {
             list.append(num);

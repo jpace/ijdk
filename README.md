@@ -24,13 +24,13 @@ List/Array) closely, usually moreso than it does the Apache Commons and Guava li
 IJDK contains collection classes that extend the List (ArrayList) and Map (TreeMap) classes from the
 JDK.
 
-### List<T>
+### Array<T>
 
-An extension of ArrayList, with Ruby-like methods.
+An extension of ArrayList, with Ruby-like methods (thus the name matching Array in Ruby).
 
 ```java
     Integer x = null;
-    List<Integer> nums = List.of(1, 3, 5, 7);
+    Array<Integer> nums = Array.of(1, 3, 5, 7);
     
     x = nums.get(0);
     assertEqual(1, x);
@@ -39,7 +39,7 @@ An extension of ArrayList, with Ruby-like methods.
     assertEqual(7, x);
     
     nums.append(9).append(11).append(13);
-    assertEqual(List.of(1, 3, 5, 7, 9, 11, 13), nums);
+    assertEqual(Array.of(1, 3, 5, 7, 9, 11, 13), nums);
 
     x = nums.get(-3);
     assertEqual(9, x);
@@ -52,72 +52,59 @@ An extension of ArrayList, with Ruby-like methods.
     
     x = nums.takeFirst();
     assertEqual(1, x);
-    assertEqual(List.of(3, 5, 7, 9, 11, 13), nums);
+    assertEqual(Array.of(3, 5, 7, 9, 11, 13), nums);
     
     x = nums.takeFirst();
     assertEqual(3, x);
-    assertEqual(List.of(5, 7, 9, 11, 13), nums);
+    assertEqual(Array.of(5, 7, 9, 11, 13), nums);
 
     x = nums.takeLast();
     assertEqual(13, x);
-    assertEqual(List.of(5, 7, 9, 11), nums);
+    assertEqual(Array.of(5, 7, 9, 11), nums);
 
-    StringList strList = nums.toStringList();
-    assertEqual(StringList.of("5", "7", "9", "11"), strList);
+    StringArray strArray = nums.toStringArray();
+    assertEqual(StringArray.of("5", "7", "9", "11"), strArray);
 
     nums.append(2).append(2).append(2);
-    assertEqual(List.of(5, 7, 9, 11, 2, 2, 2), nums);
+    assertEqual(Array.of(5, 7, 9, 11, 2, 2, 2), nums);
 
-    List<Integer> uniq = nums.unique();
-    assertEqual(List.of(5, 7, 9, 11, 2), uniq);
+    Array<Integer> uniq = nums.unique();
+    assertEqual(Array.of(5, 7, 9, 11, 2), uniq);
 
     assertEqual(true, nums.containsAny(2, 3));
     assertEqual(false, nums.containsAny(3, 4));
 
     nums.removeAll(2);
-    assertEqual(List.of(5, 7, 9, 11), nums);
+    assertEqual(Array.of(5, 7, 9, 11), nums);
 
     nums.set(0, 4);
-    assertEqual(List.of(4, 7, 9, 11), nums);
+    assertEqual(Array.of(4, 7, 9, 11), nums);
 
     nums.set(-1, 10);
-    assertEqual(List.of(4, 7, 9, 10), nums);
+    assertEqual(Array.of(4, 7, 9, 10), nums);
 
     nums.set(-2, 8);
-    assertEqual(List.of(4, 7, 8, 10), nums);
+    assertEqual(Array.of(4, 7, 8, 10), nums);
 
     nums.set(1, 6);
-    assertEqual(List.of(4, 6, 8, 10), nums);
+    assertEqual(Array.of(4, 6, 8, 10), nums);
 
     x = nums.getRandomElement();
-    assertEqual(true, List.of(4, 6, 8, 10).contains(x));
+    assertEqual(true, Array.of(4, 6, 8, 10).contains(x));
 
     String str = nums.join(" + ");
     assertEqual("4 + 6 + 8 + 10", str);
 
-    List<Integer> odds = List.of(1, 3, 5);
-    List<Integer> evens = List.of(2, 4, 6);
-    List<Integer> numbers = odds.plus(evens);
-    assertEqual(List.of(1, 3, 5, 2, 4, 6), numbers);
+    Array<Integer> odds = Array.of(1, 3, 5);
+    Array<Integer> evens = Array.of(2, 4, 6);
+    Array<Integer> numbers = odds.plus(evens);
+    assertEqual(Array.of(1, 3, 5, 2, 4, 6), numbers);
     
-    List<Integer> squares = numbers.minus(List.of(2, 3, 5, 6));
-    assertEqual(List.of(1, 4), squares);
+    Array<Integer> squares = numbers.minus(Array.of(2, 3, 5, 6));
+    assertEqual(Array.of(1, 4), squares);
 
-    List<Integer> elements = numbers.elements(1, 0, -2, 0, -4);
-    assertEqual(List.of(3, 1, 4, 1, 5), elements);
-```
-
-## MultiMap
-
-Does one-to-many mappings.
-
-```java
-    MultiMap<String, String> firstToLastNames = new MultiMap<String, String>();
-    firstToLastNames.put("James", "Gosling");
-    firstToLastNames.put("James", "Rumbaugh");
-    firstToLastNames.put("James", "Foley");
-    for (String lastName : firstToLastNames.get("James")) {
-    }
+    Array<Integer> elements = numbers.elements(1, 0, -2, 0, -4);
+    assertEqual(Array.of(3, 1, 4, 1, 5), elements);
 ```
 
 ### Common Collections
@@ -125,13 +112,13 @@ Does one-to-many mappings.
 Classes for common Java collections of generics, such as:
 
 ```java
-   // instead of List<String>; varargs constructor
-   StringList sl = new StringList("apple", "banana", "cherry");
+   // instead of Array<String>; varargs constructor
+   StringArray sl = new StringArray("apple", "banana", "cherry");
    boolean result = sl.anyStartsWith("ba");  // true
    boolean result = sl.anyStartsWith("do");  // false
    
-   // instead of List<Integer>; varargs constructor
-   IntegerList il = new IntegerList(3, 6, 9);
+   // instead of Array<Integer>; varargs constructor
+   IntegerArray il = new IntegerArray(3, 6, 9);
    int max = il.maximum();                 // max == 9
    int avg = il.average();                 // avg == 6
    int min = il.minimum();                 // min == 3
@@ -163,8 +150,7 @@ A Range is a pair of integers. It converts easily to arrays and lists, and suppo
     for (Integer i : r) {
         // iterate from 3 *through* 7
     }
-    Integer[] ary = r.toExpandedArray();     // ary == [ 3, 4, 5, 6, 7 ]
-    List<Integer> list = r.toExpandedList(); // list == [ 3, 4, 5, 6, 7 ]
+    Array<Integer> list = r.toExpandedArray(); // list == [ 3, 4, 5, 6, 7 ]
 ```
 
 ## Iterators
@@ -189,6 +175,19 @@ Execute a given number of times, similar to Ruby:
 ```java
     for (Integer i : ICore.iter(3)) {
         ICore.puts("hi");
+    }
+```
+
+## MultiMap
+
+Does one-to-many mappings.
+
+```java
+    MultiMap<String, String> firstToLastNames = new MultiMap<String, String>();
+    firstToLastNames.put("James", "Gosling");
+    firstToLastNames.put("James", "Rumbaugh");
+    firstToLastNames.put("James", "Foley");
+    for (String lastName : firstToLastNames.get("James")) {
     }
 ```
 

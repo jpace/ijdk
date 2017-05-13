@@ -1,5 +1,6 @@
 package org.incava.ijdk.lang;
 
+import org.incava.ijdk.collect.Array;
 import org.incava.test.TestCaseExt;
 
 public class TestRange extends TestCaseExt {
@@ -122,40 +123,21 @@ public class TestRange extends TestCaseExt {
 
     // toArray
 
-    public Range assertToArray(Integer[] expected, Range rg) {
+    public Range assertToArray(Array<Integer> expected, Range rg) {
         assertEquals("range: " + rg, expected, rg.toArray());
         return rg;
     }    
 
     public void testToArrayFirstLessThanLast() {
-        assertToArray(new Integer[] { 3, 7 }, new Range(3, 7));
+        assertToArray(Array.of(3, 4, 5, 6, 7), new Range(3, 7));
     }
 
     public void testToArrayFirstEqualsLast() {
-        assertToArray(new Integer[] { 3, 3 }, new Range(3, 3));
+        assertToArray(Array.of(3), new Range(3, 3));
     }
 
     public void testToArrayFirstGreaterThanLast() {
-        assertToArray(new Integer[] { 7, 3 }, new Range(7, 3));
-    }
-
-    // toExpandedArray
-
-    public Range assertToExpandedArray(Integer[] expected, Range rg) {
-        assertEquals("range: " + rg, expected, rg.toExpandedArray());
-        return rg;
-    }    
-
-    public void testToExpandedArrayFirstLessThanLast() {
-        assertToExpandedArray(new Integer[] { 3, 4, 5, 6, 7 }, new Range(3, 7));
-    }
-
-    public void testToExpandedArrayFirstEqualsLast() {
-        assertToExpandedArray(new Integer[] { 3 }, new Range(3, 3));
-    }
-
-    public void testToExpandedArrayFirstGreaterThanLast() {
-        assertToExpandedArray(new Integer[] { }, new Range(7, 3));
+        assertToArray(Array.<Integer>empty(), new Range(7, 3));
     }
 
     // iterator
