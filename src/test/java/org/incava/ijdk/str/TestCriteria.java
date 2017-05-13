@@ -1,13 +1,14 @@
 package org.incava.ijdk.str;
 
-import org.incava.ijdk.collect.DynamicArray;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.test.Assertions.*;
-import static org.incava.ijdk.lang.Common.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestCriteria {
@@ -22,10 +23,10 @@ public class TestCriteria {
         assertEqual(expected, crit.execute(x));
     }
     
-    private DynamicArray<Object[]> parametersForInit() {
-        return DynamicArray.<Object[]>of(objary(true, "abc", "a"),
-                                 objary(false, "def", "a"),
-                                 objary(null, null, "a"));
+    private java.util.List<Object[]> parametersForInit() {
+        return paramsList(params(true, "abc", "a"),
+                          params(false, "def", "a"),
+                          params(null, null, "a"));
     }
 
     @Test
@@ -36,10 +37,10 @@ public class TestCriteria {
         
     }
     
-    private DynamicArray<Object[]> parametersForStartsWith() {
-        return DynamicArray.<Object[]>of(objary(true, "abc", "a"),
-                                 objary(false, "def", "a"),
-                                 objary(null, null, "a"));
+    private java.util.List<Object[]> parametersForStartsWith() {
+        return paramsList(params(true, "abc", "a"),
+                          params(false, "def", "a"),
+                          params(null, null, "a"));
     }
 
     @Test
@@ -50,10 +51,10 @@ public class TestCriteria {
         
     }
     
-    private DynamicArray<Object[]> parametersForContains() {
-        return DynamicArray.<Object[]>of(objary(true, "abc", "b"),
-                                 objary(false, "def", "b"),
-                                 objary(null, null, "b"));
+    private java.util.List<Object[]> parametersForContains() {
+        return paramsList(params(true, "abc", "b"),
+                          params(false, "def", "b"),
+                          params(null, null, "b"));
     }
 
     @Test
@@ -64,10 +65,10 @@ public class TestCriteria {
         
     }
     
-    private DynamicArray<Object[]> parametersForEndsWith() {
-        return DynamicArray.<Object[]>of(objary(true, "abc", "c"),
-                                 objary(false, "abc", "a"),
-                                 objary(null, null, "a"));
+    private java.util.List<Object[]> parametersForEndsWith() {
+        return paramsList(params(true, "abc", "c"),
+                          params(false, "abc", "a"),
+                          params(null, null, "a"));
     }
 
     @Test
@@ -77,13 +78,13 @@ public class TestCriteria {
         assertEqual(expected, crit.execute(x));        
     }
     
-    private DynamicArray<Object[]> parametersForEqualsIgnoreCase() {
-        return DynamicArray.<Object[]>of(objary(true, "abc", "abc"),
-                                 objary(true, "abc", "ABC"),
-                                 objary(false, "def", "b"),
-                                 objary(null, null, "b"),
-                                 // since null is filtered out, the comparison isn't done:
-                                 objary(null, null, null));
+    private java.util.List<Object[]> parametersForEqualsIgnoreCase() {
+        return paramsList(params(true, "abc", "abc"),
+                          params(true, "abc", "ABC"),
+                          params(false, "def", "b"),
+                          params(null, null, "b"),
+                          // since null is filtered out, the comparison isn't done:
+                          params(null, null, null));
     }
 
     @Test
@@ -93,12 +94,12 @@ public class TestCriteria {
         assertEqual(expected, crit.execute(x));        
     }
     
-    private DynamicArray<Object[]> parametersForEquals() {
-        return DynamicArray.<Object[]>of(objary(true, "abc", "abc"),
-                                 objary(false, "abc", "ABC"),
-                                 objary(false, "def", "b"),
-                                 objary(null, null, "b"),
-                                 // since null is filtered out, the comparison isn't done:
-                                 objary(null, null, null));
+    private java.util.List<Object[]> parametersForEquals() {
+        return paramsList(params(true, "abc", "abc"),
+                          params(false, "abc", "ABC"),
+                          params(false, "def", "b"),
+                          params(null, null, "b"),
+                          // since null is filtered out, the comparison isn't done:
+                          params(null, null, null));
     }    
 }

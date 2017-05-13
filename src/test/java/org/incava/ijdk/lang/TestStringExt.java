@@ -9,8 +9,8 @@ import org.incava.ijdk.lang.StringTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.ijdk.lang.Common.objary;
-import static org.incava.test.Assertions.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestStringExt extends StringTest {

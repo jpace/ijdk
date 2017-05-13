@@ -1,15 +1,15 @@
 package org.incava.ijdk.util;
 
-import org.incava.ijdk.collect.DynamicArray;
-import java.util.Collection;
 import junit.framework.TestCase;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.ijdk.lang.Common.*;
-import static org.incava.test.Assertions.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestANSI {
@@ -21,31 +21,31 @@ public class TestANSI {
         return ansiName;
     }
 
-    private DynamicArray<Object[]> parametersForTest() {
-        return DynamicArray.<Object[]>of(
-            objary(0, ANSI.NONE),
-            objary(0, ANSI.RESET),
-            objary(4, ANSI.UNDERSCORE),
-            objary(4, ANSI.UNDERLINE),
-            objary(5, ANSI.BLINK),
-            objary(7, ANSI.REVERSE),
-            objary(8, ANSI.CONCEALED),
-            objary(30, ANSI.BLACK),
-            objary(31, ANSI.RED),
-            objary(32, ANSI.GREEN),
-            objary(33, ANSI.YELLOW),
-            objary(34, ANSI.BLUE),
-            objary(35, ANSI.MAGENTA),
-            objary(36, ANSI.CYAN),
-            objary(37, ANSI.WHITE),
-            objary(40, ANSI.ON_BLACK),
-            objary(41, ANSI.ON_RED),
-            objary(42, ANSI.ON_GREEN),
-            objary(43, ANSI.ON_YELLOW),
-            objary(44, ANSI.ON_BLUE),
-            objary(45, ANSI.ON_MAGENTA),
-            objary(46, ANSI.ON_CYAN),
-            objary(47, ANSI.ON_WHITE));
+    private java.util.List<Object[]> parametersForTest() {
+        return paramsList(
+            params(0, ANSI.NONE),
+            params(0, ANSI.RESET),
+            params(4, ANSI.UNDERSCORE),
+            params(4, ANSI.UNDERLINE),
+            params(5, ANSI.BLINK),
+            params(7, ANSI.REVERSE),
+            params(8, ANSI.CONCEALED),
+            params(30, ANSI.BLACK),
+            params(31, ANSI.RED),
+            params(32, ANSI.GREEN),
+            params(33, ANSI.YELLOW),
+            params(34, ANSI.BLUE),
+            params(35, ANSI.MAGENTA),
+            params(36, ANSI.CYAN),
+            params(37, ANSI.WHITE),
+            params(40, ANSI.ON_BLACK),
+            params(41, ANSI.ON_RED),
+            params(42, ANSI.ON_GREEN),
+            params(43, ANSI.ON_YELLOW),
+            params(44, ANSI.ON_BLUE),
+            params(45, ANSI.ON_MAGENTA),
+            params(46, ANSI.ON_CYAN),
+            params(47, ANSI.ON_WHITE));
     }
 
     @Test
@@ -69,15 +69,15 @@ public class TestANSI {
         assertEqual(expected, code);
     }
 
-    private DynamicArray<Object[]> parametersForRgbToCode() {
-        return DynamicArray.<Object[]>of(
-            objary(16, 0, 0, 0),
-            objary(88, 127, 0, 0),
-            objary(28, 0, 127, 0),
+    private java.util.List<Object[]> parametersForRgbToCode() {
+        return paramsList(
+            params(16, 0, 0, 0),
+            params(88, 127, 0, 0),
+            params(28, 0, 127, 0),
             // multiple RGBs map to single ANSI codes:
-            objary(18, 0, 0, 127),
-            objary(18, 0, 0, 86),
-            objary(18, 0, 0, 95));
+            params(18, 0, 0, 127),
+            params(18, 0, 0, 86),
+            params(18, 0, 0, 95));
     }
 
     @Test
@@ -87,11 +87,11 @@ public class TestANSI {
         assertEqual(expected, code);
     }
 
-    private DynamicArray<Object[]> parametersForNewRgbToCode() {
-        return DynamicArray.<Object[]>of(
+    private java.util.List<Object[]> parametersForNewRgbToCode() {
+        return paramsList(
             // multiple RGBs map to single ANSI codes:
-            objary(18, 0, 0, 127),
-            objary(18, 0, 0, 86),
-            objary(18, 0, 0, 95));
+            params(18, 0, 0, 127),
+            params(18, 0, 0, 86),
+            params(18, 0, 0, 95));
     }
 }

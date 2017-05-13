@@ -1,6 +1,6 @@
 package org.incava.ijdk.collect;
 
-import org.incava.ijdk.collect.DynamicArray;
+import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.lang.Common;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
@@ -27,7 +27,7 @@ public class TestMap {
     
     @Test
     public void ofList() {
-        java.util.List<Pair<String, Integer>> list = DynamicArray.of(Pair.of("one", 1), Pair.of("two", 2));
+        java.util.List<Pair<String, Integer>> list = Array.of(Pair.of("one", 1), Pair.of("two", 2));
 
         java.util.TreeMap<String, Integer> expected = new java.util.TreeMap<String, Integer>();
         expected.put("one", 1);

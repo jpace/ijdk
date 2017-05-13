@@ -7,11 +7,9 @@ import java.util.Iterator;
 import java.util.TreeMap;
 
 import org.incava.ijdk.collect.Array;
-import org.incava.ijdk.collect.DynamicArray;
 import org.incava.ijdk.collect.StringList;
 
 import org.incava.ijdk.io.StdOut;
-import org.incava.ijdk.lang.ArrayExt;
 import org.incava.ijdk.lang.ObjectExt;
 import org.incava.ijdk.lang.StringExt;
 import org.incava.ijdk.util.EmptyIterable;
@@ -197,7 +195,7 @@ public class ICore {
      * If <code>ary</code> is null, an "empty" iterator will be returned.
      */
     public static <T> Iterable<T> iter(T[] ary) {
-        return ArrayExt.iter(ary);
+        return ary == null ? new EmptyIterable<T>() : Array.of(ary);
     }
 
     /**
@@ -216,13 +214,12 @@ public class ICore {
     }
 
     /**
-     * Returns a list (an ArrayList) initialized with the given elements. The
-     * list returned is of dynamic size (unlike <code>Arrays.asList(...)</code>,
-     * which returns a fixed-size, immutable array). The following two blocks
-     * are equivalent:
+     * Returns a list (a Array) initialized with the given elements. The list returned is of
+     * dynamic size (unlike <code>Arrays.asList(...)</code>, which returns a fixed-size, immutable
+     * array). The following two blocks are equivalent:
      *
      * <pre>
-     *     List&lt;String&gt; names = new ArrayList&lt;String&gt;(Arrays.asList("kevin", "jacob", "isaac"));
+     *     List&lt;String&gt; names = new Array&lt;String&gt;(Arrays.asList("kevin", "jacob", "isaac"));
      *     names.add("henry");
      * </pre>
      * <pre>
@@ -232,8 +229,8 @@ public class ICore {
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    public static <T> DynamicArray<T> list(T ... elements) {
-        return DynamicArray.of(elements);
+    public static <T> Array<T> list(T ... elements) {
+        return Array.of(elements);
     }
 
     /**
@@ -250,7 +247,7 @@ public class ICore {
      * <code>ICore.&lt;Integer&gt;list()</code> for empty integer lists.
      */
     @SuppressWarnings("unchecked")
-    public static DynamicArray<Integer> intlist(Integer ... elements) {
+    public static Array<Integer> intlist(Integer ... elements) {
         return ICore.<Integer>list(elements);
     }
 
@@ -309,15 +306,5 @@ public class ICore {
     @SuppressWarnings("varargs")
     public static <T> T[] ary(T ... args) {
         return args;
-    }
-
-    /**
-     * Converts varargs to T[]. <code>ary("one", 1)</code> is shorter than <code>new Object[] {
-     * "one", 1 }</code>
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public static <T> Array<T> array(T ... args) {
-        return new Array<T>(args);
     }
 }

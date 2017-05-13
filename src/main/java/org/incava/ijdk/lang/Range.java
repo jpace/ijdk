@@ -1,6 +1,6 @@
 package org.incava.ijdk.lang;
 
-import org.incava.ijdk.collect.DynamicArray;
+import org.incava.ijdk.collect.Array;
 import java.util.Iterator;
 
 /**
@@ -102,7 +102,7 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      * @see toArray
      */
     public Integer[] toExpandedArray() {
-        java.util.List<Integer> list = DynamicArray.<Integer>empty();
+        java.util.List<Integer> list = Array.<Integer>empty();
         for (Integer num = first; num <= last; ++num) {
             list.add(num);
         }
@@ -120,7 +120,7 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      * @see toExpandedArray
      */
     public java.util.List<Integer> toExpandedList() {
-        DynamicArray<Integer> list = DynamicArray.<Integer>empty();
+        Array<Integer> list = Array.<Integer>empty();
         for (Integer num = first; num <= last; ++num) {
             list.append(num);
         }

@@ -8,9 +8,10 @@ import org.incava.ijdk.lang.StringTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.ijdk.lang.Common.objary;
-import static org.incava.test.Assertions.*;
-import static org.incava.test.Parameters.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestStr extends StringTest {

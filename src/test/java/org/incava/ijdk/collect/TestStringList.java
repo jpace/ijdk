@@ -7,8 +7,10 @@ import org.incava.ijdk.lang.Closure;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.ijdk.lang.Common.*;
-import static org.incava.test.Assertions.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestStringList {
@@ -48,10 +50,10 @@ public class TestStringList {
         
     }
     
-    private DynamicArray<Object[]> parametersForAnyStartsWith() {
-        return DynamicArray.<Object[]>of(objary(false, "o", new String[0]),
-                                         objary(true, "o", "one"),
-                                         objary(false, "n", "one"));
+    private java.util.List<Object[]> parametersForAnyStartsWith() {
+        return paramsList(params(false, "o", new String[0]),
+                          params(true, "o", "one"),
+                          params(false, "n", "one"));
     }
 
     @Test
@@ -61,11 +63,11 @@ public class TestStringList {
         assertEqual(expected, sl.anyContains(substr), message("sl", sl, "substr", substr));
     }
     
-    private DynamicArray<Object[]> parametersForAnyContains() {
-        return DynamicArray.<Object[]>of(objary(false, "o", new String[0]),
-                                         objary(true, "o", "one"),
-                                         objary(true, "n", "one"),
-                                         objary(false, "z", "one"));
+    private java.util.List<Object[]> parametersForAnyContains() {
+        return paramsList(params(false, "o", new String[0]),
+                          params(true, "o", "one"),
+                          params(true, "n", "one"),
+                          params(false, "z", "one"));
     }
 
     @Test
@@ -75,10 +77,10 @@ public class TestStringList {
         assertEqual(expected, sl.anyEndsWith(substr), message("sl", sl, "substr", substr));
     }
     
-    private DynamicArray<Object[]> parametersForAnyEndsWith() {
-        return DynamicArray.<Object[]>of(objary(false, "o", new String[0]),
-                                         objary(true, "e", "one"),
-                                         objary(false, "n", "one"));
+    private java.util.List<Object[]> parametersForAnyEndsWith() {
+        return paramsList(params(false, "o", new String[0]),
+                          params(true, "e", "one"),
+                          params(false, "n", "one"));
     }
 
     @Test
@@ -89,31 +91,31 @@ public class TestStringList {
         assertEqual(expected, result, message("sl", sl, "criteria", criteria));
     }
     
-    private DynamicArray<Object[]> parametersForFindFirst() {
-        DynamicArray<Object[]> params = DynamicArray.<Object[]>of();
+    private java.util.List<Object[]> parametersForFindFirst() {
+        java.util.List<Object[]> params = paramsList();
 
-        params.add(objary(null, null, new String[0]));
+        params.add(params(null, null, new String[0]));
 
         Closure<Boolean, String> critOne = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "one".equals(str);
                 }
             };
-        params.add(objary("one", critOne, "one", "two"));
+        params.add(params("one", critOne, "one", "two"));
 
         Closure<Boolean, String> critTwo = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "two".equals(str);
                 }
             };
-        params.add(objary("two", critTwo, "one", "two"));
+        params.add(params("two", critTwo, "one", "two"));
         
         Closure<Boolean, String> critThree = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "three".equals(str);
                 }
             };
-        params.add(objary(null, critThree, "one", "two"));
+        params.add(params(null, critThree, "one", "two"));
         
         return params;
     }
@@ -126,38 +128,38 @@ public class TestStringList {
         assertEqual(expected, result, message("sl", sl, "criteria", criteria));
     }
     
-    private DynamicArray<Object[]> parametersForFindAll() {
-        DynamicArray<Object[]> params = DynamicArray.<Object[]>of();
+    private java.util.List<Object[]> parametersForFindAll() {
+        java.util.List<Object[]> params = paramsList();
 
-        params.add(objary(new StringList(), null, new String[0]));
+        params.add(params(new StringList(), null, new String[0]));
 
         Closure<Boolean, String> critOne = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "one".equals(str);
                 }
             };
-        params.add(objary(new StringList("one"), critOne, "one", "two"));
+        params.add(params(new StringList("one"), critOne, "one", "two"));
 
         Closure<Boolean, String> critTwo = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "two".equals(str);
                 }
             };
-        params.add(objary(new StringList("two"), critTwo, "one", "two"));
+        params.add(params(new StringList("two"), critTwo, "one", "two"));
 
         Closure<Boolean, String> critContO = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return str.contains("o");
                 }
             };
-        params.add(objary(new StringList("one", "two"), critContO, "one", "two", "three"));
+        params.add(params(new StringList("one", "two"), critContO, "one", "two", "three"));
 
         Closure<Boolean, String> critThree = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "three".equals(str);
                 }
             };
-        params.add(objary(new StringList(), critThree, "one", "two"));
+        params.add(params(new StringList(), critThree, "one", "two"));
         
         return params;
     }
@@ -170,10 +172,10 @@ public class TestStringList {
         
     }
     
-    private DynamicArray<Object[]> parametersForAnyEqualsIgnoreCase() {
-        return DynamicArray.<Object[]>of(objary(false, "o", new String[0]),
-                                         objary(true, "one", "one"),
-                                         objary(true, "one", "one", "two"),
-                                         objary(true, "one", "One"));
+    private java.util.List<Object[]> parametersForAnyEqualsIgnoreCase() {
+        return paramsList(params(false, "o", new String[0]),
+                          params(true, "one", "one"),
+                          params(true, "one", "one", "two"),
+                          params(true, "one", "One"));
     }
 }

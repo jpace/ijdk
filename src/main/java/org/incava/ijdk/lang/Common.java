@@ -26,5 +26,7 @@ public class Common extends ICore {
      */
     public static Object[] objary(Object ... args) {
         return args;
-    }    
+    }
+
+    
 }
