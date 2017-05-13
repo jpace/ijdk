@@ -1,7 +1,7 @@
 package org.incava.test;
 
-import ijdk.collect.List;
-import ijdk.lang.Common;
+import org.incava.ijdk.collect.List;
+import org.incava.ijdk.lang.Common;
 
 /**
  * For usage in parameterized tests.

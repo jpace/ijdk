@@ -8,14 +8,14 @@ public class ListExt extends CollectionExt {
      * Returns the first element in the list.
      */
     public static <T> T first(List<T> list) {
-        return new ijdk.collect.List<T>(list).first();
+        return new org.incava.ijdk.collect.List<T>(list).first();
     }
 
     /**
      * Returns the last element in the list.
      */
     public static <T> T last(List<T> list) {
-        return new ijdk.collect.List<T>(list).last();
+        return new org.incava.ijdk.collect.List<T>(list).last();
     }
 
     /**
@@ -23,7 +23,7 @@ public class ListExt extends CollectionExt {
      * from the end of the list. Returns null if out of bounds.
      */
     public static <T> T get(List<T> list, int index) {
-        return new ijdk.collect.List<T>(list).get(index);
+        return new org.incava.ijdk.collect.List<T>(list).get(index);
     }
 
     /**
@@ -59,7 +59,7 @@ public class ListExt extends CollectionExt {
      * Returns a random element from the list, or null if the list is null or empty.
      */
     public static <Type> Type getRandomElement(List<Type> list) {
-        return new ijdk.collect.List<Type>(list).getRandomElement();
+        return new org.incava.ijdk.collect.List<Type>(list).getRandomElement();
     }
 
     /**

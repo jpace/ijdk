@@ -1,6 +1,6 @@
 package org.incava.ijdk.tuple;
 
-import ijdk.lang.Comp;
+import org.incava.ijdk.lang.Comp;
 
 /**
  * A set of three objects.

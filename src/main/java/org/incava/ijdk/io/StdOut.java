@@ -1,6 +1,6 @@
 package org.incava.ijdk.io;
 
-import ijdk.lang.Output;
+import org.incava.ijdk.lang.Output;
 
 public class StdOut {
     /**

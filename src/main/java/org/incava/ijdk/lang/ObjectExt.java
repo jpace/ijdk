@@ -1,7 +1,7 @@
 package org.incava.ijdk.lang;
 
-import ijdk.lang.Comp;
-import ijdk.lang.Obj;
+import org.incava.ijdk.lang.Comp;
+import org.incava.ijdk.lang.Obj;
 
 /**
  * Extensions to the Object class.

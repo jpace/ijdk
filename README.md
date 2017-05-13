@@ -15,7 +15,7 @@ Note the similarity to idiomatic Ruby:
 
 # Usage
 
-IJDK has a very expansive (but growing) library for Java I/O and collections, as an alternative to
+IJDK has a very expansive (and growing) library for Java I/O and collections, as an alternative to
 the JDK. IJDK is mostly inspired by Ruby, and parallels Ruby classes (such as Map/Hash and
 List/Array) closely, usually moreso than it does the Apache Commons and Guava libraries.
 
@@ -232,32 +232,13 @@ simply -1, 0, or 1. Comp also contains lt, lte, gt, and gte, for simpler compari
 
 * an alternative "logging" (debugging output) module
 
-* briefer package hierarchy
+* logical package structure
 
-A top-level package, `ijdk`, contains subpackages, such as `ijdk.lang`, making for briefer import
-statements. This breaks with normal Java conventions, given that IJDK is more for brevity,
-consistency, and clarity than convention. IJDK commonly used classes are in `ijdk.lang` and
-`ijdk.collect`, making for more concise imports:
+The primary classes are in org.incava.ijdk.lang (roughly equivalent of java.lang) and
+org.incava.ijdk.collect. 
 
-```java
-    import ijdk.lang.*;
-```
-
-The older version of IJDK, with classes containing static methods around Java core classes:
-
-```java
-    import org.incava.ijdk.lang.StringExt;
-```
-
-The newer (3.0) version of IJDK, with classes whose instances wrap (shadow) Java core classes:
-
-```java
-    import ijdk.lang.Str;
-    import ijdk.collect.List;
-```
-
-Note that the names of the shadow classes follow the convention of the class that they wrap, with
-shorter names, such as Str (String), Int (Integer), Obj (Object), etc.
+The names of the shadow classes follow the convention of the class that they wrap, with shorter
+names, such as Str (String), Int (Integer), Obj (Object), etc.
 
 # Installation
 

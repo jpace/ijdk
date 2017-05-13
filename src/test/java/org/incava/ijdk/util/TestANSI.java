@@ -1,6 +1,6 @@
 package org.incava.ijdk.util;
 
-import ijdk.collect.List;
+import org.incava.ijdk.collect.List;
 import java.util.Collection;
 import junit.framework.TestCase;
 import junitparams.JUnitParamsRunner;
@@ -8,7 +8,7 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static ijdk.lang.Common.*;
+import static org.incava.ijdk.lang.Common.*;
 import static org.incava.test.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)

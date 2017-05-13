@@ -7,7 +7,7 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static ijdk.lang.Common.objary;
+import static org.incava.ijdk.lang.Common.objary;
 import static org.incava.test.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)

@@ -4,9 +4,9 @@ import java.util.Collection;
 
 /**
  * An extension of List&lt;String&gt;, with a constructor for varargs, and selectors that use
- * closures. Use <code>ijdk.collect.StringList</code> instead.
+ * closures. Use <code>org.incava.ijdk.collect.StringList</code> instead.
  */
-public class StringList extends ijdk.collect.StringList {
+public class StringList extends org.incava.ijdk.collect.StringList {
     private static final long serialVersionUID = -5489075883851520676L;
     
     /**

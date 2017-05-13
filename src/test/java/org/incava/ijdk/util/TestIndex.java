@@ -1,13 +1,13 @@
 package org.incava.ijdk.util;
 
-import ijdk.lang.Common;
+import org.incava.ijdk.lang.Common;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.*;
-import static ijdk.lang.Common.*;
+import static org.incava.ijdk.lang.Common.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestIndex {

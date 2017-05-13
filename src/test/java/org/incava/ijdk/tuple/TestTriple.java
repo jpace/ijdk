@@ -1,13 +1,13 @@
 package org.incava.ijdk.tuple;
 
-import ijdk.collect.List;
+import org.incava.ijdk.collect.List;
 import java.util.Arrays;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static ijdk.lang.Common.*;
+import static org.incava.ijdk.lang.Common.*;
 import static org.incava.test.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)

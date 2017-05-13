@@ -1,11 +1,11 @@
 package org.incava.ijdk.tuple;
 
-import ijdk.collect.List;
-import ijdk.lang.Common;
+import org.incava.ijdk.collect.List;
+import org.incava.ijdk.lang.Common;
 import org.junit.Test;
 
 import static org.incava.test.Assertions.*;
-import static ijdk.lang.Common.*;
+import static org.incava.ijdk.lang.Common.*;
 
 public class TestPair {
     @Test

@@ -1,6 +1,6 @@
 package org.incava.ijdk.lang;
 
-import ijdk.lang.Str;
+import org.incava.ijdk.lang.Str;
 import java.util.Collection;
 import java.util.List;
 

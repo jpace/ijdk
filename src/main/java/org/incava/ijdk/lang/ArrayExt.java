@@ -1,6 +1,6 @@
 package org.incava.ijdk.lang;
 
-import ijdk.collect.Array;
+import org.incava.ijdk.collect.Array;
 
 /**
  * Extensions for C-style arrays (e.g., Foo[]). Use <code>ijdk.collect.Array</code> instead.

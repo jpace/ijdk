@@ -1,8 +1,8 @@
 package org.incava.ijdk.util;
 
-import ijdk.collect.List;
-import ijdk.lang.Comp;
-import ijdk.lang.Obj;
+import org.incava.ijdk.collect.List;
+import org.incava.ijdk.lang.Comp;
+import org.incava.ijdk.lang.Obj;
 
 public class Version implements Comparable<Version> {
     private final Integer major;

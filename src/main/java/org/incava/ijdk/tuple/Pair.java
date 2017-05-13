@@ -1,6 +1,6 @@
 package org.incava.ijdk.tuple;
 
-import ijdk.lang.KeyValue;
+import org.incava.ijdk.lang.KeyValue;
 
 /**
  * A pair of objects.

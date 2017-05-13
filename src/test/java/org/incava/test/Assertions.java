@@ -1,6 +1,6 @@
 package org.incava.test;
 
-import ijdk.lang.KeyValue;
+import org.incava.ijdk.lang.KeyValue;
 
 import java.util.Arrays;
 import java.util.Collection;
