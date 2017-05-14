@@ -2,26 +2,29 @@ package org.incava.ijdk.collect;
 
 import org.incava.ijdk.tuple.Pair;
 
-public class Map<K, V> extends java.util.TreeMap<K, V> implements Iterable<java.util.Map.Entry<K, V>> {
+/**
+ * A mapping from keys, via <code>hashCode</code> to values.
+ */
+public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java.util.Map.Entry<K, V>> {
     /**
      * Creates an empty tree map.
      */
-    public static <KeyType, ValueType> Map<KeyType, ValueType> of() {
-        return new Map<KeyType, ValueType>();
+    public static <KeyType, ValueType> Hash<KeyType, ValueType> of() {
+        return new Hash<KeyType, ValueType>();
     }
 
     /**
      * Creates an empty tree map.
      */
-    public static <KeyType, ValueType> Map<KeyType, ValueType> empty() {
-        return new Map<KeyType, ValueType>();
+    public static <KeyType, ValueType> Hash<KeyType, ValueType> empty() {
+        return new Hash<KeyType, ValueType>();
     }
 
     /**
      * Creates a map with one key/value pair.
      */
-    public static <KeyType, ValueType> Map<KeyType, ValueType> of(KeyType k1, ValueType v1) {
-        Map<KeyType, ValueType> map = of();
+    public static <KeyType, ValueType> Hash<KeyType, ValueType> of(KeyType k1, ValueType v1) {
+        Hash<KeyType, ValueType> map = of();
         map.put(k1, v1);
         return map;
     }
@@ -29,8 +32,8 @@ public class Map<K, V> extends java.util.TreeMap<K, V> implements Iterable<java.
     /**
      * Creates a map with two key/value pairs.
      */
-    public static <KeyType, ValueType> Map<KeyType, ValueType> of(KeyType k1, ValueType v1, KeyType k2, ValueType v2) {
-        Map<KeyType, ValueType> map = of(k1, v1);
+    public static <KeyType, ValueType> Hash<KeyType, ValueType> of(KeyType k1, ValueType v1, KeyType k2, ValueType v2) {
+        Hash<KeyType, ValueType> map = of(k1, v1);
         map.put(k2, v2);
         return map;
     }
@@ -38,17 +41,17 @@ public class Map<K, V> extends java.util.TreeMap<K, V> implements Iterable<java.
     /**
      * Creates a map with three key/value pairs.
      */
-    public static <KeyType, ValueType> Map<KeyType, ValueType> of(KeyType k1, ValueType v1, KeyType k2, ValueType v2, KeyType k3, ValueType v3) {
-        Map<KeyType, ValueType> map = of(k1, v1, k2, v2);
+    public static <KeyType, ValueType> Hash<KeyType, ValueType> of(KeyType k1, ValueType v1, KeyType k2, ValueType v2, KeyType k3, ValueType v3) {
+        Hash<KeyType, ValueType> map = of(k1, v1, k2, v2);
         map.put(k3, v3);
         return map;
     }
 
     /**
-     * Creates a tree map from a list of pairs.
+     * Creates a map from a list of pairs.
      */
-    public static <KeyType, ValueType> Map<KeyType, ValueType> of(java.util.List<Pair<KeyType, ValueType>> list) {
-        return new Map<KeyType, ValueType>(list);
+    public static <KeyType, ValueType> Hash<KeyType, ValueType> of(java.util.List<Pair<KeyType, ValueType>> list) {
+        return new Hash<KeyType, ValueType>(list);
     }    
 
     public static final long serialVersionUID = 1L;
@@ -56,7 +59,7 @@ public class Map<K, V> extends java.util.TreeMap<K, V> implements Iterable<java.
     /**
      * Creates a IJDK map from a list of pairs.
      */
-    public Map(java.util.List<Pair<K, V>> elements) {
+    public Hash(java.util.List<Pair<K, V>> elements) {
         for (Pair<K, V> element : elements) {
             put(element.first(), element.second());
         }
@@ -65,21 +68,21 @@ public class Map<K, V> extends java.util.TreeMap<K, V> implements Iterable<java.
     /**
      * Creates a IJDK map from a JDK one.
      */
-    public Map(java.util.Map<K, V> other) {
+    public Hash(java.util.Map<K, V> other) {
         putAll(other);
     }
 
     /**
      * Creates a IJDK map.
      */
-    public Map() {
+    public Hash() {
     }
 
     /**
      * Adds or replaces the value for the given key, either of which can be null. Returns the map,
      * so this can be chained, in the form <code>m.set("x", 1).set("y", 2).set("z", 3)</code>.
      */
-    public Map<K, V> set(K key, V value) {
+    public Hash<K, V> set(K key, V value) {
         put(key, value);
         return this;
     }

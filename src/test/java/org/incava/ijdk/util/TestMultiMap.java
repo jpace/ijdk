@@ -1,5 +1,6 @@
 package org.incava.ijdk.util;
 
+import java.util.Arrays;
 import java.util.Collection;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
@@ -10,8 +11,8 @@ import static org.incava.test.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestMultiMap {
-    public static final Collection<Integer> EVENS = java.util.Arrays.asList(new Integer[] { 2, 4, 6, 8 });
-    public static final Collection<Integer> ODDS  = java.util.Arrays.asList(new Integer[] { 1, 3, 5, 7, 9 });
+    public static final Collection<Integer> EVENS = Arrays.asList(new Integer[] { 2, 4, 6, 8 });
+    public static final Collection<Integer> ODDS  = Arrays.asList(new Integer[] { 1, 3, 5, 7, 9 });
 
     @Test
     public void putGetCollection() {
@@ -31,7 +32,7 @@ public class TestMultiMap {
     }
 
     @Test
-    public void putScalar() {
+    public void add() {
         MultiMap<String, Integer> numMap = new MultiMap<String, Integer>();
 
         for (Integer num : EVENS) {
@@ -53,13 +54,8 @@ public class TestMultiMap {
     public void putCollection() {
         MultiMap<String, Integer> numMap = new MultiMap<String, Integer>();
 
-        for (Integer num : EVENS) {
-            numMap.add("evens", num);
-        }
-
-        for (Integer num : ODDS) {
-            numMap.add("odds", num);
-        }
+        numMap.put("evens", EVENS);
+        numMap.put("odds", ODDS);
 
         assertNotNull(numMap.get("evens"));
         assertEqual(EVENS, numMap.get("evens"));
