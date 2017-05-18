@@ -32,6 +32,8 @@ public class Array<T extends Object> extends ArrayList<T> implements Sequence<T>
      * <pre>
      * Array&lt;String&gt; list = Array.&lt;String&gt;empty();
      * </pre>
+     *
+     * @return an empty array
      */
     public static <T extends Object> Array<T> empty() {
         return new Array<T>();
@@ -69,7 +71,8 @@ public class Array<T extends Object> extends ArrayList<T> implements Sequence<T>
      * Returns the list as a StringList, with each element converted via <code>toString()</code>.
      *
      * @see #toStringArrayList
-     * @see ijdk.collect.StringList
+     * @see org.incava.ijdk.collect.StringList
+     * @return this array, as an array of strings.
      */
     public StringList toStringList() {
         StringList list = new StringList();
@@ -125,8 +128,8 @@ public class Array<T extends Object> extends ArrayList<T> implements Sequence<T>
     /**
      * Returns the <code>n</code>th element in the list.
      *
-     * <p>Unlike <code>java.util.ArrayList#get</code>, <code>ijdk.collect.Array#get</code> supports
-     * negative indices, as do languages such as Perl and Ruby.</p>
+     * <p>Unlike <code>java.util.ArrayList#get</code>, <code>org.incavaijdk.collect.Array#get</code>
+     * supports negative indices, as do languages such as Perl and Ruby.</p>
      *
      * <p>If <code>n</code> is negative, then the index is the offset from the end, where
      * <code>-1</code> is the last element, <code>-2</code> is the second to last element, and so on
@@ -169,7 +172,7 @@ public class Array<T extends Object> extends ArrayList<T> implements Sequence<T>
      *    nums.append(4).append(5);
      * </pre>
      *
-     * @see java.util.Array#add
+     * @see java.util.List#add
      */
     public Array<T> append(T obj) {
         add(obj);

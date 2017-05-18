@@ -150,7 +150,7 @@ A Range is a pair of integers. It converts easily to arrays and lists, and suppo
     for (Integer i : r) {
         // iterate from 3 *through* 7
     }
-    Array<Integer> list = r.toExpandedArray(); // list == [ 3, 4, 5, 6, 7 ]
+    Array<Integer> list = r.toArray(); // list == [ 3, 4, 5, 6, 7 ]
 ```
 
 ## Iterators

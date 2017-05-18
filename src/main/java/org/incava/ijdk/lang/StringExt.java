@@ -8,7 +8,7 @@ import java.util.List;
  * Extensions to the String class. Alternatively, the static methods here are defined as instance
  * objects of the Str class.
  *
- * @see ijdk.lang.Str
+ * @see org.incava.ijdk.lang.Str
  */
 public class StringExt {
     /**
@@ -49,8 +49,8 @@ public class StringExt {
      *
      * The unquoting behavior exists for pre-3.0 versions of IJDK.
      *
-     * @see ijdk.lang.Str#unquote
-     * @see ijdk.lang.Str#toList
+     * @see org.incava.ijdk.lang.Str#unquote
+     * @see org.incava.ijdk.lang.Str#toList
      */
     public static List<String> toList(String str) {
         Str strg = new Str(str);

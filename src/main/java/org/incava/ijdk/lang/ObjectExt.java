@@ -6,7 +6,7 @@ import org.incava.ijdk.lang.Obj;
 /**
  * Extensions to the Object class.
  *
- * @see ijdk.lang.Obj
+ * @see org.incava.ijdk.lang.Obj
  */
 public class ObjectExt {
     /**
@@ -52,7 +52,7 @@ public class ObjectExt {
      * @return whether the object is not null and is true for that object type
      * @see #isEmpty
      * @see #isFalse
-     * @see ijdk.lang.Obj#isTrue
+     * @see org.incava.ijdk.lang.Obj#isTrue
      */
     public static boolean isTrue(Object obj) {
         return new Obj(obj).isTrue();
@@ -65,7 +65,7 @@ public class ObjectExt {
      * @return whether the object is null or is false for that object type
      * @see #isEmpty
      * @see #isFalse
-     * @see ijdk.lang.Obj#isFalse
+     * @see org.incava.ijdk.lang.Obj#isFalse
      */
     public static boolean isFalse(Object obj) {
         return new Obj(obj).isFalse();
@@ -78,7 +78,7 @@ public class ObjectExt {
      * @return whether the object is null or is empty for that object type
      * @see #isEmpty
      * @see #isFalse
-     * @see ijdk.lang.Obj#isEmpty
+     * @see org.incava.ijdk.lang.Obj#isEmpty
      */
     public static boolean isEmpty(Object obj) {
         return new Obj(obj).isEmpty();

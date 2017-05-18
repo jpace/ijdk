@@ -15,6 +15,7 @@ public class FileExt {
      * Reads the file into a string array, returning an empty array if there is
      * an error.
      *
+     * @param file the file to read from
      * @see #readLines(File, EnumSet)
      */
     public static List<String> readLines(File file) {
@@ -26,6 +27,8 @@ public class FileExt {
      * (sequences). Returns empty array on error, unless <code>options</code>
      * contains <code>ReadOptionType.WITH_EXCEPTION</code>.
      *
+     * @param file the file to read from
+     * @param options options for reading
      * @see ReaderExt#readLines
      */
     public static List<String> readLines(File file, EnumSet<ReadOptionType> options) throws IORuntimeException {
@@ -40,6 +43,7 @@ public class FileExt {
     /**
      * Prints the file as lines, using writer.println.
      *
+     * @param file the file to read from
      * @see #printLines(File, List, EnumSet)
      */
     public static void printLines(File file, List<String> lines) {
@@ -49,6 +53,7 @@ public class FileExt {
     /**
      * Prints the file as lines, using writer.println.
      *
+     * @param file the file to write to
      * @exception IORuntimeException Thrown if <code>options</code> contains
      * <code>WriteOptionType.WITH_EXCEPTION</code>.
      */
@@ -71,6 +76,8 @@ public class FileExt {
 
     /**
      * Returns the contents of the file, as a byte array.
+     *
+     * @param file the file to read from
      */
     public static byte[] readBytes(File file) throws IORuntimeException {
         try {
