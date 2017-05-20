@@ -3,135 +3,107 @@ package org.incava.ijdk.lang;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import junit.framework.TestCase;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
+
+@RunWith(JUnitParamsRunner.class)
 public abstract class StringTest {
-    // split
+    public abstract String[] split(String str, char delim, int max);
 
-    public abstract String[] assertSplit(String[] expected, String str, char delim, int max);
-
-    public abstract String[] assertSplit(String[] expected, String str, String delim, int max);
-
-    public void testSplitNull() {
-        assertSplit(null, null, ';', -1);
-    }
+    public abstract String[] split(String str, String delim, int max);    
 
     @Test
-    public void testSplitSingleChar() {
-        assertSplit(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ';', -1);
-    }
-
-    @Test
-    public void testSplitStringOneChar() {
-        assertSplit(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ";", -1);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void splitCharDelim(String[] expected, String str, char delim, int max) {
+        String[] result = split(str, delim, max);
+        assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
     }
     
-    @Test
-    public void testSplitStringWithWhitespace() {
-        assertSplit(new String[] { "this", "is", "a", "test" }, "this ; is ; a ; test", " ; ", -1);
+    private List<Object[]> parametersForSplitCharDelim() {
+        return paramsList(params(null, null, ';', -1),
+                          params(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ';', -1),
+                          params(new String[] { "this", "is", "a", "", "test" }, "this;is;a;;test", ';', -1),
+                          params(new String[] { "this", "is;a;;test" }, "this;is;a;;test", ';', 2),
+                          params(new String[] { "this", "is", "a;;test" }, "this;is;a;;test", ';', 3),
+                          params(new String[] { "this", "is", "a", ";test" }, "this;is;a;;test", ';', 4));
     }
 
     @Test
-    public void testSplitStringCharEmptyBlock() {
-        assertSplit(new String[] { "this", "is", "a", "", "test" }, "this;is;a;;test", ';', -1);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void splitStringDelim(String[] expected, String str, String delim, int max) {
+        String[] result = split(str, delim, max);
+        assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
+    }
+    
+    private List<Object[]> parametersForSplitStringDelim() {
+        return paramsList(params(null, null, ";", -1),
+                          params(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ";", -1),
+                          params(new String[] { "this", "is", "a", "test" }, "this ; is ; a ; test", " ; ", -1));
     }
 
-    @Test
-    public void testSplitStringCharEmptyBlockMaxOne() {
-        assertSplit(new String[] { "this;is;a;;test" }, "this;is;a;;test", ';', 1);
-    }
-    
-    @Test
-    public void testSplitStringCharEmptyBlockMaxTwo() {
-        assertSplit(new String[] { "this", "is;a;;test" }, "this;is;a;;test", ';', 2);
-    }
+    public abstract List<String> toList(String str);
 
     @Test
-    public void testSplitStringCharEmptyBlockMaxThree() {   
-        assertSplit(new String[] { "this", "is", "a;;test" }, "this;is;a;;test", ';', 3);
-    }
-        
-    @Test
-    public void testSplitStringCharEmptyBlockMaxFour() {
-        assertSplit(new String[] { "this", "is", "a", ";test" }, "this;is;a;;test", ';', 4);
-    }
-
-    // toList
-    
-    public abstract void assertToList(String[] exp, String str);
-        
-    @Test
-    public void testToListNull() {
-        assertToList(null, null);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void toList(String[] expected, String str) {
+        List<String> result = toList(str);
+        assertEqual(expected == null ? null : Arrays.asList(expected), result, message("str", str));
     }
     
-    @Test
-    public void testToListDefault() {
-        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
-        assertToList(expected, "fee, fi, foo, fum");
-    }
-    
-    @Test
-    public void testToListWhitespaceChars() {
-        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
-        assertToList(expected, "fee,\tfi,\nfoo,\rfum");
+    private List<Object[]> parametersForToList() {
+        return paramsList(params(null, null),
+                          params(new String[] { "fee", "fi", "foo", "fum" }, "fee, fi, foo, fum"),
+                          params(new String[] { "fee", "fi", "foo", "fum" }, "fee,\tfi,\nfoo,\rfum"));
     }
     
     // pad
 
-    public abstract String assertPad(String expected, String str, char ch, int length);
+    public abstract String pad(String str, char ch, int length);
 
-    public abstract String assertPad(String expected, String str, int length);
-
-    @Test
-    public void testPadCharNull() {
-        assertPad(null, null, '*', 8);
-    }
-    
-    @Test
-    public void testPadCharDefault() {
-        assertPad("abcd****", "abcd", '*', 8);
-    }
-    
-    @Test
-    public void testPadCharShorter() {
-        assertPad("abcd", "abcd", '*', 3);
-    }
-    
-    @Test
-    public void testPadCharAtLength() {
-        assertPad("abcd", "abcd", '*', 4);
-    }
-    
-    @Test
-    public void testPadCharOneChar() {
-        assertPad("abcd*", "abcd", '*', 5);
-    }
+    public abstract String pad(String str, int length);
 
     @Test
-    public void testPadSpaceNull() {
-        assertPad(null, null, 8);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void padWithChar(String expected, String str, char ch, int length) {
+        String result = pad(str, ch, length);
+        assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
+    }
+    
+    private List<Object[]> parametersForPadWithChar() {
+        return paramsList(params(null, null, '*', 8),
+                          params("abcd****", "abcd", '*', 8),
+                          params("abcd", "abcd", '*', 3),
+                          params("abcd", "abcd", '*', 4),
+                          params("abcd*", "abcd", '*', 5));
     }    
-    
+
     @Test
-    public void testPadSpaceDefault() {
-        assertPad("abcd    ", "abcd", 8);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void padWithoutChar(String expected, String str, int length) {
+        String result = pad(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
     
-    @Test
-    public void testPadSpaceShorter() {
-        assertPad("abcd", "abcd", 3);
-    }
-    
-    @Test
-    public void testPadSpaceAtLength() {
-        assertPad("abcd", "abcd", 4);
-    }
-    
-    @Test
-    public void testPadSpaceOneChar() {
-        assertPad("abcd ", "abcd", 5);
+    private List<Object[]> parametersForPadWithoutChar() {
+        return paramsList(params("abcd    ", "abcd", 8),
+                          params("abcd", "abcd", 3),
+                          params("abcd", "abcd", 4),
+                          params("abcd ", "abcd", 5));
     }
 
     // padLeft

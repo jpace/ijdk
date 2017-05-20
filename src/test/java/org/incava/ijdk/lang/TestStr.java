@@ -2,6 +2,7 @@ package org.incava.ijdk.lang;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.incava.ijdk.lang.StringTest;
@@ -15,36 +16,28 @@ import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestStr extends StringTest {
-    // split
-
-    public String[] assertSplit(String[] expected, String str, char delim, int max) {
-        String[] result = new Str(str).split(delim, max);
-        return assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
+    public String[] split(String str, char delim, int max) {
+        return new Str(str).split(delim, max);
     }
 
-    public String[] assertSplit(String[] expected, String str, String delim, int max) {
-        String[] result = new Str(str).split(delim, max);
-        return assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
+    public String[] split(String str, String delim, int max) {
+        return new Str(str).split(delim, max);
     }
 
-    // toList
-    
-    public void assertToList(String[] exp, String str) {
-        java.util.List<String> result = new Str(str).toList();
-        assertEqual(exp == null ? null : Arrays.asList(exp), result, message("str", str));
+    public List<String> toList(String str) {
+        return new Str(str).toList();
     }
 
     // pad
 
-    public String assertPad(String expected, String str, char ch, int length) {
-        String result = new Str(str).pad(ch, length);
-        return assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
+
+    public String pad(String str, char ch, int length) {
+        return new Str(str).pad(ch, length);
     }
 
-    public String assertPad(String expected, String str, int length) {
-        String result = new Str(str).pad(length);
-        return assertEqual(expected, result, message("str", str, "length", length));
-    }
+    public String pad(String str, int length) {
+        return new Str(str).pad(length);
+    }    
 
     // padLeft
 

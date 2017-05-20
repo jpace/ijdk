@@ -5,65 +5,52 @@ import java.util.Collection;
 import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.incava.ijdk.lang.StringTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class TestStringExt extends StringTest {
-    // split
-
-    public String[] assertSplit(String[] expected, String str, char delim, int max) {
-        String[] result = StringExt.split(str, delim, max);
-        return assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
-    }
-
-    public String[] assertSplit(String[] expected, String str, String delim, int max) {
-        String[] result = StringExt.split(str, delim, max);
-        return assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
-    }
-
-    // toList
-    
-    public void assertToList(String[] exp, String str) {
-        List<String> result = StringExt.toList(str);
-        assertEqual(exp == null ? null : Arrays.asList(exp), result, message("str", str));
-    }
-
     // the unquoting functionality is in StringExt, but not Str:
-
     @Test
-    public void testToListDoubleQuoted() {
-        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
-        assertToList(expected, "\"fee, fi, foo, fum\"");
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void toListQuoted(String[] expected, String str) {
+        List<String> result = toList(str);
+        assertEqual(expected == null ? null : Arrays.asList(expected), result, message("str", str));
     }
     
-    @Test
-    public void testToListSingleQuoted() {
-        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
-        assertToList(expected, "\'fee, fi, foo, fum\'");
+    private List<Object[]> parametersForToList() {
+        return paramsList(params(new String[] { "fee", "fi", "foo", "fum" }, "\"fee, fi, foo, fum\""),
+                          params(new String[] { "fee", "fi", "foo", "fum" }, "\'fee, fi, foo, fum\'"),
+                          params(new String[] { "fee", "fi", "foo", "fum" }, "\'fee,\tfi,\nfoo,\rfum\'"));
     }
     
-    @Test
-    public void testToListSingleQuotedWhitespaceChars() {
-        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
-        assertToList(expected, "\'fee,\tfi,\nfoo,\rfum\'");
-    }
-    
-    // pad
-
-    public String assertPad(String expected, String str, char ch, int length) {
-        String result = StringExt.pad(str, ch, length);
-        return assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
+    public String[] split(String str, char delim, int max) {
+        return StringExt.split(str, delim, max);
     }
 
-    public String assertPad(String expected, String str, int length) {
-        String result = StringExt.pad(str, length);
-        return assertEqual(expected, result, message("str", str, "length", length));
+    public String[] split(String str, String delim, int max) {
+        return StringExt.split(str, delim, max);
     }
+
+    public List<String> toList(String str) {
+        return StringExt.toList(str);
+    }
+
+    public String pad(String str, char ch, int length) {
+        return StringExt.pad(str, ch, length);
+    }
+
+    public String pad(String str, int length) {
+        return StringExt.pad(str, length);
+    }    
 
     // padLeft
 
