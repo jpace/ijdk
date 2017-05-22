@@ -1,75 +1,50 @@
 package org.incava.ijdk.lang;
 
-import org.incava.ijdk.lang.ObjectTest;
-
 public class TestCaseObj extends ObjectTest {
     public TestCaseObj(String name) {
         super(name);
     }
 
-    public Obj assertAccessors(Object expected, Obj objt) {
-        assertEquals(expected, objt.getObject());
+    public <T> NullableObject<T> assertAccessors(T expected, NullableObject<T> objt) {
+        assertEquals(expected, objt.get());
         assertEquals(expected, objt.obj());
         return objt;
     }
 
-    // ctor
+    private <T> NullableObject<T> newObj(T obj) {
+        return new NullableObject<T>(obj);
+    }
 
     public void testCtorNull() {
-        assertAccessors(null, new Obj(null));
+        assertAccessors(null, newObj(null));
     }
 
     public void testCtorNotNull() {
         Object obj = new Object();
-        assertAccessors(obj, new Obj(obj));
+        assertAccessors(obj, newObj(obj));
     }
 
-    // equals
-
-    public boolean assertObjectsEqual(boolean expected, Object x, Object y) {
-        boolean result = new Obj(x).equals(y);
-        assertEquals("x: " + x + "; y: " + y, expected, result);
-        return result;
+    public boolean objectsEqual(Object x, Object y) {
+        return newObj(x).equals(y);
     }
 
-    // isTrue
-
-    public boolean assertIsTrue(boolean expected, Object obj) {
-        boolean result = new Obj(obj).isTrue();
-        assertEquals("obj: " + obj, expected, result);
-        return result;
+    public boolean isTrue(Object obj) {
+        return newObj(obj).isTrue();
     }
 
-    // isFalse
-
-    public boolean assertIsFalse(boolean expected, Object obj) {
-        boolean result = new Obj(obj).isFalse();
-        assertEquals("obj: " + obj, expected, result);
-        return result;
+    public boolean isFalse(Object obj) {
+        return newObj(obj).isFalse();
     }
 
-    // isEmpty
+    public boolean isEmpty(Object obj) {
+        return newObj(obj).isEmpty();
+    }    
 
-    public boolean assertIsEmpty(boolean expected, Object obj) {
-        boolean result = new Obj(obj).isEmpty();
-        assertEquals("obj: " + obj, expected, result);
-        return result;
+    public boolean isNull(Object obj) {
+        return newObj(obj).isNull();
+    }    
+    
+    public boolean isNotNull(Object obj) {
+        return newObj(obj).isNotNull();
     }
-
-    // isNull
-
-    public boolean assertIsNull(boolean expected, Object obj) {
-        boolean result = new Obj(obj).isNull();
-        assertEquals("obj: " + obj, expected, result);
-        return result;
-    }
-
-    // isNotNull
-
-    public boolean assertIsNotNull(boolean expected, Object obj) {
-        boolean result = new Obj(obj).isNotNull();
-        assertEquals("obj: " + obj, expected, result);
-        return result;
-    }
-
 }

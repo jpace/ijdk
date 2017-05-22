@@ -1,7 +1,7 @@
 package org.incava.ijdk.lang;
 
 import org.incava.ijdk.lang.Comp;
-import org.incava.ijdk.lang.Obj;
+import org.incava.ijdk.lang.NullableObject;
 
 /**
  * Extensions to the Object class.
@@ -17,7 +17,7 @@ public class ObjectExt {
      * @return whether the objects are equal or both are null
      */
     public static boolean areEqual(Object x, Object y) {
-        return new Obj(x).equals(y);
+        return NullableObject.of(x).equals(y);
     }
 
     /**
@@ -30,7 +30,7 @@ public class ObjectExt {
      * @see #areEqual
      */
     public static boolean equal(Object x, Object y) {
-        return new Obj(x).equals(y);
+        return NullableObject.of(x).equals(y);
     }
 
     /**
@@ -55,7 +55,7 @@ public class ObjectExt {
      * @see org.incava.ijdk.lang.Obj#isTrue
      */
     public static boolean isTrue(Object obj) {
-        return new Obj(obj).isTrue();
+        return NullableObject.of(obj).isTrue();
     }
 
     /**
@@ -68,7 +68,7 @@ public class ObjectExt {
      * @see org.incava.ijdk.lang.Obj#isFalse
      */
     public static boolean isFalse(Object obj) {
-        return new Obj(obj).isFalse();
+        return NullableObject.of(obj).isFalse();
     }
 
     /**
@@ -81,7 +81,7 @@ public class ObjectExt {
      * @see org.incava.ijdk.lang.Obj#isEmpty
      */
     public static boolean isEmpty(Object obj) {
-        return new Obj(obj).isEmpty();
+        return NullableObject.of(obj).isEmpty();
     }
 
     /**
@@ -93,7 +93,7 @@ public class ObjectExt {
      * @see #isNotNull
      */
     public static boolean isNull(Object obj) {
-        return new Obj(obj).isNull();
+        return NullableObject.of(obj).isNull();
     }
 
     /**
@@ -105,6 +105,6 @@ public class ObjectExt {
      * @see #isNull
      */
     public static boolean isNotNull(Object obj) {
-        return new Obj(obj).isNotNull();
+        return NullableObject.of(obj).isNotNull();
     }
 }

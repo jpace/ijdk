@@ -225,6 +225,37 @@ simply -1, 0, or 1. Comp also contains lt, lte, gt, and gte, for simpler compari
    }
 ```
 
+## Assertions
+
+`org.incava.test.Assertions` (this may be repackaged to `org.incava.ijdk.test`) contains
+alternatives to JUnit4 org.junit.Assert. Consistent with the test/unit and minitest libraries in
+Ruby, the primary assertion method is of the form:
+
+```java
+   public static <T> T assertEqual(T expected, T actual, String msg);
+```
+
+The message is the last parameter, in comparision to it being the first parameter in JUnit4
+`Assert.assertEquals`. That's because the message is considered of lesser importance than the
+expected value and the result. In a later version, this method will have varargs arguments as the
+message components (but see below for an alternative).
+
+In comparision to `Assert.assertEquals`, which has a void return type, `assertEqual` returns the
+`actual` value. That supports a more concise and elegant style of instantiating objects "inside" the
+call to `assertEqual`.
+
+```java
+   Type expected = new Type(expArgs);
+   Type value = assertEqual(expected, new Type(args));
+   // do stuff with value
+```
+
+Among the variations of `assertEqual`, one supports assertions of C-style arrays (Object[]),
+including with better output on failure.
+
+
+
+
 ## Miscellaneous
 
 * colorized strings (on ANSI terminals)

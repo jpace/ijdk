@@ -1,7 +1,13 @@
 package org.incava.ijdk.lang;
 
-import java.util.*;
 import junit.framework.TestCase;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 public abstract class ObjectTest extends TestCase {
     public ObjectTest(String name) {
@@ -10,7 +16,11 @@ public abstract class ObjectTest extends TestCase {
 
     // ObjectExt: equal, Obj: equals
 
-    public abstract boolean assertObjectsEqual(boolean expected, Object x, Object y);
+    public boolean assertObjectsEqual(boolean expected, Object x, Object y) {
+        return assertEqual(expected, objectsEqual(x, y), message("x", x, "y", y));
+    }
+
+    public abstract boolean objectsEqual(Object x, Object y);
 
     public void testObjectsEqualNullNull() {
         assertObjectsEqual(true, null, null);
@@ -39,7 +49,11 @@ public abstract class ObjectTest extends TestCase {
     
     // isTrue
 
-    public abstract boolean assertIsTrue(boolean expected, Object obj);
+    public boolean assertIsTrue(boolean expected, Object obj) {
+        return assertEqual(expected, isTrue(obj), message("obj", obj));
+    }
+
+    public abstract boolean isTrue(Object obj);
 
     public void testIsTrueNull() {
         assertIsTrue(false, null);
@@ -75,7 +89,11 @@ public abstract class ObjectTest extends TestCase {
 
     // isFalse
 
-    public abstract boolean assertIsFalse(boolean expected, Object obj);
+    public boolean assertIsFalse(boolean expected, Object obj) {
+        return assertEqual(expected, isFalse(obj), message("obj", obj));
+    }
+    
+    public abstract boolean isFalse(Object obj);
 
     public void testIsFalseNull() {
         assertIsFalse(true, null);
@@ -111,7 +129,11 @@ public abstract class ObjectTest extends TestCase {
 
     // isEmpty
 
-    public abstract boolean assertIsEmpty(boolean expected, Object obj);
+    public boolean assertIsEmpty(boolean expected, Object obj) {
+        return assertEqual(expected, isEmpty(obj), message("obj", obj));
+    }    
+
+    public abstract boolean isEmpty(Object obj);
 
     public void testIsEmptyNull() {
         assertIsEmpty(true, null);
@@ -147,7 +169,11 @@ public abstract class ObjectTest extends TestCase {
 
     // isNull
 
-    public abstract boolean assertIsNull(boolean expected, Object obj);
+    public boolean assertIsNull(boolean expected, Object obj) {
+        return assertEqual(expected, isNull(obj), message("obj", obj));
+    }    
+
+    public abstract boolean isNull(Object obj);    
 
     public void testIsNullNull() {
         assertIsNull(true, null);
@@ -157,10 +183,14 @@ public abstract class ObjectTest extends TestCase {
         assertIsNull(false, new Object());
     }
 
-    // isNotNull
+    // isNotNull    
 
-    public abstract boolean assertIsNotNull(boolean expected, Object obj);
+    public boolean assertIsNotNull(boolean expected, Object obj) {
+        return assertEqual(expected, isNotNull(obj), message("obj", obj));
+    }
 
+    public abstract boolean isNotNull(Object obj);
+    
     public void testIsNotNullNull() {
         assertIsNotNull(false, null);
     }

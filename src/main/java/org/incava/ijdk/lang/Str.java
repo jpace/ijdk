@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 /**
  * Extensions to the String class.
  */
-public class Str extends Obj implements Comparable<Str> {
+public class Str extends NullableObject<String> implements Comparable<Str> {
     /**
      * Creates a string from the collection, joined by <code>delim</code>. If <code>coll</code> is
      * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the

@@ -8,7 +8,7 @@ public class TestInt extends TestCase {
     }
 
     public Int assertAccessors(Integer expected, Int intr) {
-        assertEquals(expected, intr.getInteger());
+        assertEquals(expected, intr.get());
         assertEquals(expected, intr.integer());
         return intr;
     }

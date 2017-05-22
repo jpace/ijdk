@@ -17,7 +17,7 @@ public class Common extends ICore {
      * for java.util.List, giving them better output.
      */
     public static String toString(Object obj) {
-        return new Obj(obj).toString();
+        return NullableObject.of(obj).toString();
     }
 
     /**
@@ -27,6 +27,4 @@ public class Common extends ICore {
     public static Object[] objary(Object ... args) {
         return args;
     }
-
-    
 }

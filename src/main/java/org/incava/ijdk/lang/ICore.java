@@ -81,7 +81,7 @@ public class ICore {
      * @see #isNotNull
      */
     public static boolean isNull(Object obj) {
-        return Obj.isNull(obj);
+        return obj == null;
     }
 
     /**
@@ -91,7 +91,7 @@ public class ICore {
      * @see #isNull
      */
     public static boolean isNotNull(Object obj) {
-        return Obj.isNotNull(obj);
+        return obj != null;
     }
 
     /**

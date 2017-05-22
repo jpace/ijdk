@@ -6,7 +6,11 @@ import java.util.Arrays;
 /**
  * Extensions to the Object class, wrapping a Java Object with additional methods.
  */
-public class Obj {        
+public class NullableObject<T> {
+    public static <T> NullableObject<T> of(T obj) {
+        return new NullableObject<T>(obj);
+    }
+    
     /**
      * Returns whether the object is null. This method provides an alternative syntax to "if (obj ==
      * null)".
@@ -27,23 +31,23 @@ public class Obj {
         return obj != null;
     }
 
-    private final Object object;
+    private final T object;
 
-    public Obj(Object object) {
+    public NullableObject(T object) {
         this.object = object;
     }
 
     /**
      * Returns the wrapped object.
      */
-    public Object getObject() {
+    public T get() {
         return this.object;
     }
 
     /**
      * Returns the wrapped object.
      */
-    public Object obj() {
+    public T obj() {
         return this.object;
     }
     

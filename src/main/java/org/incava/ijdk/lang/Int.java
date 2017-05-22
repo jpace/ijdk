@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Extensions to Integer, wrapping a possibly-null Integer with better null checking.
  */
-public class Int extends Obj {
+public class Int extends NullableObject<Integer> {
     /**
      * Returns the str as an integer, or null if it is null or is not an integer.
      */
@@ -37,13 +37,6 @@ public class Int extends Obj {
     public Int(Integer in) {
         super(in);
         this.integer = in;
-    }
-
-    /**
-     * Returns the wrapped integer.
-     */
-    public Integer getInteger() {
-        return this.integer;
     }
 
     /**

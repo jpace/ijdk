@@ -1,5 +1,13 @@
 package org.incava.ijdk.lang;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
+
 public class TestObjectExt extends ObjectTest {
     public TestObjectExt(String name) {
         super(name);
@@ -7,14 +15,8 @@ public class TestObjectExt extends ObjectTest {
 
     // areEqual, equal
 
-    public boolean assertObjectsEqual(boolean expected, Object x, Object y) {
-        boolean result = ObjectExt.equal(x, y);
-        assertEquals("x: " + x + "; y: " + y, expected, result);
-
-        result = ObjectExt.areEqual(x, y);
-        assertEquals("x: " + x + "; y: " + y, expected, result);
-        
-        return result;
+    public boolean objectsEqual(Object x, Object y) {
+        return ObjectExt.equal(x, y);
     }
 
     // compare
@@ -60,10 +62,24 @@ public class TestObjectExt extends ObjectTest {
 
     // isTrue
 
-    public boolean assertIsTrue(boolean expected, Object obj) {
-        boolean result = ObjectExt.isTrue(obj);
-        assertEquals("obj: " + obj, expected, result);
-        return result;
+    public boolean isTrue(Object obj) {
+        return ObjectExt.isTrue(obj);
+    }
+
+    public boolean isFalse(Object obj) {
+        return ObjectExt.isFalse(obj);
+    }
+
+    public boolean isEmpty(Object obj) {
+        return ObjectExt.isEmpty(obj);
+    }
+
+    public boolean isNull(Object obj) {
+        return ObjectExt.isNull(obj);
+    }
+
+    public boolean isNotNull(Object obj) {
+        return ObjectExt.isNotNull(obj);
     }
 
     // isFalse
@@ -78,22 +94,6 @@ public class TestObjectExt extends ObjectTest {
 
     public boolean assertIsEmpty(boolean expected, Object obj) {
         boolean result = ObjectExt.isEmpty(obj);
-        assertEquals("obj: " + obj, expected, result);
-        return result;
-    }
-
-    // isNull
-
-    public boolean assertIsNull(boolean expected, Object obj) {
-        boolean result = ObjectExt.isNull(obj);
-        assertEquals("obj: " + obj, expected, result);
-        return result;
-    }
-
-    // isNotNull
-
-    public boolean assertIsNotNull(boolean expected, Object obj) {
-        boolean result = ObjectExt.isNotNull(obj);
         assertEquals("obj: " + obj, expected, result);
         return result;
     }
