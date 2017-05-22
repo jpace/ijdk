@@ -26,7 +26,7 @@ public class TestStringExt extends StringTest {
         assertEqual(expected == null ? null : Arrays.asList(expected), result, message("str", str));
     }
     
-    private List<Object[]> parametersForToList() {
+    private List<Object[]> parametersForToListQuoted() {
         return paramsList(params(new String[] { "fee", "fi", "foo", "fum" }, "\"fee, fi, foo, fum\""),
                           params(new String[] { "fee", "fi", "foo", "fum" }, "\'fee, fi, foo, fum\'"),
                           params(new String[] { "fee", "fi", "foo", "fum" }, "\'fee,\tfi,\nfoo,\rfum\'"));
