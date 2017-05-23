@@ -193,6 +193,8 @@ public class ICore {
     /**
      * Returns an Iterable (iterator) for the C-style array, which can be null.
      * If <code>ary</code> is null, an "empty" iterator will be returned.
+     *
+     * @return an iterator for the array
      */
     public static <T> Iterable<T> iter(T[] ary) {
         return ary == null ? new EmptyIterable<T>() : Array.of(ary);
@@ -201,6 +203,8 @@ public class ICore {
     /**
      * Returns an Iterable (iterator) for the collection, which can be null. If
      * <code>coll</code> is null, an "empty" iterator will be returned.
+     *
+     * @return an iterator for the collection
      */
     public static <T> Iterable<T> iter(Iterable<T> coll) {
         return coll == null ? new EmptyIterable<T>() : coll;
@@ -208,6 +212,8 @@ public class ICore {
 
     /**
      * Returns an iterator to be executed <code>num</code> times.
+     *
+     * @return an iterator
      */
     public static NumIterable iter(int num) {
         return new NumIterable(num);
@@ -253,6 +259,8 @@ public class ICore {
 
     /**
      * Writes to standard output. Returns true, so this can be used inside conditionals.
+     *
+     * @return true always
      */
     public static boolean puts(Object obj) {
         return StdOut.puts(obj);
@@ -260,6 +268,8 @@ public class ICore {
 
     /**
      * Writes to standard output. Returns true, so this can be used inside conditionals.
+     *
+     * @return true always
      */
     public static boolean printf(String fmt, Object ... args) {
         return StdOut.printf(fmt, args);
@@ -267,6 +277,8 @@ public class ICore {
 
     /**
      * Writes to standard output. Returns true, so this can be used inside conditionals.
+     *
+     * @return true always
      */
     public static boolean println(Object obj) {
         return StdOut.println(obj);

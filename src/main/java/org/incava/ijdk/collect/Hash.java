@@ -8,8 +8,9 @@ import org.incava.ijdk.tuple.Pair;
  */
 public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java.util.Map.Entry<K, V>> {
     /**
-     * Creates an empty tree map.
+     * Creates an empty hash map.
      *
+     * @return an empty map
      * @see #empty
      */
     public static <KeyType, ValueType> Hash<KeyType, ValueType> of() {
@@ -17,7 +18,9 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
     }
 
     /**
-     * Creates an empty tree map.
+     * Creates an empty hash map.
+     *
+     * @return an empty map
      */
     public static <KeyType, ValueType> Hash<KeyType, ValueType> empty() {
         return new Hash<KeyType, ValueType>();
@@ -144,6 +147,7 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
      * <pre>
      * Hash&lt;String, Integer&gt; map = Hash.&lt;String, Integer&gt;of("one", 1, "two", 2);
      * for (Map.Entry&lt;String, Integer&gt; it : map) {
+     *     // use it.getKey(), it.getValue()
      * }
      * </pre>
      *
