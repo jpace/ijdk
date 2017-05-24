@@ -44,30 +44,20 @@ public class TestStr extends StringTest {
         return new Str(str).padLeft(length);
     }    
 
-    // repeat
+    public String repeat(String str, int length) {
+        return new Str(str).repeat(length);
+    }    
 
-    public String assertRepeat(String expected, String str, int length) {
-        String result = new Str(str).repeat(length);
-        return assertEqual(expected, result, message("str", str, "length", length));
+    public String repeat(char ch, int length) {
+        return new Str(ch).repeat(length);
     }
 
-    public String assertRepeat(String expected, char ch, int length) {
-        String result = new Str(ch).repeat(length);
-        return assertEqual(expected, result, message("ch", ch, "length", length));
+    public String left(String str, int length) {
+        return new Str(str).left(length);
     }
 
-    // left
-
-    public String assertLeft(String expected, String str, int length) {
-        String result = new Str(str).left(length);
-        return assertEqual(expected, result, message("str", str, "length", length));
-    }
-
-    // right
-
-    public String assertRight(String expected, String str, int length) {
-        String result = new Str(str).right(length);
-        return assertEqual(expected, result, message("str", str, "length", length));
+    public String right(String str, int length) {
+        return new Str(str).right(length);
     }
 
     // join

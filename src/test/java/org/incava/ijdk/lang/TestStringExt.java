@@ -60,30 +60,20 @@ public class TestStringExt extends StringTest {
         return StringExt.padLeft(str, length);
     }    
 
-    // repeat
+    public String repeat(String str, int length) {
+        return StringExt.repeat(str, length);
+    }    
 
-    public String assertRepeat(String expected, String str, int length) {
-        String result = StringExt.repeat(str, length);
-        return assertEqual(expected, result, message("str", str, "length", length));
+    public String repeat(char ch, int length) {
+        return StringExt.repeat(ch, length);
     }
 
-    public String assertRepeat(String expected, char ch, int length) {
-        String result = StringExt.repeat(ch, length);
-        return assertEqual(expected, result, message("ch", ch, "length", length));
+    public String left(String str, int length) {
+        return StringExt.left(str, length);
     }
 
-    // left
-
-    public String assertLeft(String expected, String str, int length) {
-        String result = StringExt.left(str, length);
-        return assertEqual(expected, result, message("str", str, "length", length));
-    }
-
-    // right
-
-    public String assertRight(String expected, String str, int length) {
-        String result = StringExt.right(str, length);
-        return assertEqual(expected, result, message("str", str, "length", length));
+    public String right(String str, int length) {
+        return StringExt.right(str, length);
     }
 
     // join

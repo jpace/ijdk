@@ -156,121 +156,81 @@ public abstract class StringTest {
     
     // repeat
 
-    public abstract String assertRepeat(String expected, String str, int length);
+    public abstract String repeat(String str, int length);
 
-    public abstract String assertRepeat(String expected, char ch, int length);
+    public abstract String repeat(char ch, int length);
 
     @Test
-    public void testRepeatStringNull() {
-        assertRepeat("", null,  0);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void repeatString(String expected, String str, int length) {
+        String result = repeat(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
+    }
+    
+    private List<Object[]> parametersForRepeatString() {
+        return paramsList(params("", null,  0),
+                          params("", "abcd",  -1),
+                          params("", "abcd",  0),
+                          params("abcd", "abcd",  1),
+                          params("abcdabcd", "abcd",  2));
     }
 
     @Test
-    public void testRepeatStringNegative() {
-        assertRepeat("", "abcd",  -1);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void repeatChar(String expected, char ch, int length) {
+        String result = repeat(ch, length);
+        assertEqual(expected, result, message("ch", ch, "length", length));
     }
-
-    @Test
-    public void testRepeatStringZero() {
-        assertRepeat("", "abcd",  0);
-    }
-
-    @Test
-    public void testRepeatStringOne() {
-        assertRepeat("abcd", "abcd",  1);
-    }
-
-    @Test
-    public void testRepeatStringTwo() {
-        assertRepeat("abcdabcd", "abcd",  2);
-    }
-
-    @Test
-    public void testRepeatCharNegative() {
-        assertRepeat("", 'a', -1);
-    }
-
-    @Test
-    public void testRepeatCharZero() {
-        assertRepeat("", 'a', 0);
-    }
-
-    @Test
-    public void testRepeatCharOne() {
-        assertRepeat("a", 'a', 1);
-    }
-
-    @Test
-    public void testRepeatCharTwo() {
-        assertRepeat("aa", 'a', 2);
+    
+    private List<Object[]> parametersForRepeatChar() {
+        return paramsList(params("", 'a', -1),
+                          params("", 'a', 0),
+                          params("a", 'a', 1),
+                          params("aa", 'a', 2));
     }
 
     // left
 
-    public abstract String assertLeft(String expected, String str, int length);
+    public abstract String left(String str, int length);
 
     @Test
-    public void testLeftNull() {
-        assertLeft(null, null,  1);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void left(String expected, String str, int length) {
+        String result = left(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
-
-    @Test
-    public void testLeftLonger() {
-        assertLeft("abcd", "abcdefgh", 4);
-    }
-
-    @Test
-    public void testLeftAtLimit() {
-        assertLeft("abcd", "abcd", 4);
-    }
-
-    @Test
-    public void testLeftShorter() {
-        assertLeft("abcd", "abcd", 5);
-    }
-
-    @Test
-    public void testLeftZero() {
-        assertLeft("", "abcd", 0);
-    }
-
-    @Test
-    public void testLeftNegative() {
-        assertLeft("", "abcd", -1);
+    
+    private List<Object[]> parametersForLeft() {
+        return paramsList(params(null, null,  1),
+                          params("abcd", "abcdefgh", 4),
+                          params("abcd", "abcd", 4),
+                          params("abcd", "abcd", 5),
+                          params("", "abcd", 0),
+                          params("", "abcd", -1));
     }
 
     // right
 
-    public abstract String assertRight(String expected, String str, int length);
+    public abstract String right(String str, int length);
 
     @Test
-    public void testRightNull() {
-        assertRight(null, null,  1);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void right(String expected, String str, int length) {
+        String result = right(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
-
-    @Test
-    public void testRightLonger() {
-        assertRight("efgh", "abcdefgh", 4);
-    }
-
-    @Test
-    public void testRightAtLimit() {
-        assertRight("abcd", "abcd", 4);
-    }
-
-    @Test
-    public void testRightShorter() {
-        assertRight("abcd", "abcd", 5);
-    }
-
-    @Test
-    public void testRightZero() {
-        assertRight("", "abcd", 0);
-    }
-
-    @Test
-    public void testRightNegative() {
-        assertRight("", "abcd", -1);
+    
+    private List<Object[]> parametersForRight() {
+        return paramsList(params(null, null,  1),
+                          params("efgh", "abcdefgh", 4),
+                          params("abcd", "abcd", 4),
+                          params("abcd", "abcd", 5),
+                          params("", "abcd", 0),
+                          params("", "abcd", -1));
     }
 
     // join
