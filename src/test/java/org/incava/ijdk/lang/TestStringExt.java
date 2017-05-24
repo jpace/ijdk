@@ -52,17 +52,13 @@ public class TestStringExt extends StringTest {
         return StringExt.pad(str, length);
     }    
 
-    // padLeft
+    public String padLeft(String str, char ch, int length) {
+        return StringExt.padLeft(str, ch, length);
+    }    
 
-    public String assertPadLeft(String expected, String str, char ch, int length) {
-        String result = StringExt.padLeft(str, ch, length);
-        return assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
-    }
-
-    public String assertPadLeft(String expected, String str, int length) {
-        String result = StringExt.padLeft(str, length);
-        return assertEqual(expected, result, message("str", str, "length", length));
-    }
+    public String padLeft(String str, int length) {
+        return StringExt.padLeft(str, length);
+    }    
 
     // repeat
 

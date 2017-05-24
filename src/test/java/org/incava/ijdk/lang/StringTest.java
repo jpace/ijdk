@@ -108,58 +108,50 @@ public abstract class StringTest {
 
     // padLeft
 
-    public abstract String assertPadLeft(String expected, String str, char ch, int length);
+    public abstract String padLeft(String str, char ch, int length);
 
-    public abstract String assertPadLeft(String expected, String str, int length);
-    
+    public abstract String padLeft(String str, int length);
+
+    public String assertPadLeft(String expected, String str, char ch, int length) {
+        String result = padLeft(str, ch, length);
+        return assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
+    }
+
+    public String assertPadLeft(String expected, String str, int length) {
+        String result = padLeft(str, length);
+        return assertEqual(expected, result, message("str", str, "length", length));
+    }
+
     @Test
-    public void testPadLeftCharNull() {
-        assertPadLeft(null, null, '*', 8);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void padLeftWithChar(String expected, String str, char ch, int length) {
+        String result = padLeft(str, ch, length);
+        assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
     }
     
+    private List<Object[]> parametersForPadLeftWithChar() {
+        return paramsList(params(null, null, '*', 8),
+                          params("****abcd", "abcd", '*', 8),
+                          params("abcd", "abcd", '*', 3),
+                          params("abcd", "abcd", '*', 4),
+                          params("*abcd", "abcd", '*', 5));
+    }
+
     @Test
-    public void testPadLeftCharDefault() {
-        assertPadLeft("****abcd", "abcd", '*', 8);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void padLeftWithoutChar(String expected, String str, int length) {
+        String result = padLeft(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
     
-    @Test
-    public void testPadLeftCharShorter() {
-        assertPadLeft("abcd", "abcd", '*', 3);
-    }
-    
-    @Test
-    public void testPadLeftCharAtLength() {
-        assertPadLeft("abcd", "abcd", '*', 4);
-    }
-    
-    @Test
-    public void testPadLeftCharOneChar() {
-        assertPadLeft("*abcd", "abcd", '*', 5);
-    }
-    
-    @Test
-    public void testPadLeftSpaceNull() {
-        assertPadLeft(null, null, 8);
-    }
-    
-    @Test
-    public void testPadLeftSpaceDefault() {
-        assertPadLeft("    abcd", "abcd", 8);
-    }
-    
-    @Test
-    public void testPadLeftSpaceShorter() {
-        assertPadLeft("abcd", "abcd", 3);
-    }
-    
-    @Test
-    public void testPadLeftSpaceAtLength() {
-        assertPadLeft("abcd", "abcd", 4);
-     }
-    
-    @Test
-    public void testPadLeftSpaceOneChar() {
-       assertPadLeft(" abcd", "abcd", 5);
+    private List<Object[]> parametersForPadLeftWithoutChar() {
+        return paramsList(params(null, null, 8),
+                          params("    abcd", "abcd", 8),
+                          params("abcd", "abcd", 3),
+                          params("abcd", "abcd", 4),
+                          params(" abcd", "abcd", 5));
     }
     
     // repeat

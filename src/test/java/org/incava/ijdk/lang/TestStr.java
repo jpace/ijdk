@@ -28,9 +28,6 @@ public class TestStr extends StringTest {
         return new Str(str).toList();
     }
 
-    // pad
-
-
     public String pad(String str, char ch, int length) {
         return new Str(str).pad(ch, length);
     }
@@ -39,17 +36,13 @@ public class TestStr extends StringTest {
         return new Str(str).pad(length);
     }    
 
-    // padLeft
+    public String padLeft(String str, char ch, int length) {
+        return new Str(str).padLeft(ch, length);
+    }    
 
-    public String assertPadLeft(String expected, String str, char ch, int length) {
-        String result = new Str(str).padLeft(ch, length);
-        return assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
-    }
-
-    public String assertPadLeft(String expected, String str, int length) {
-        String result = new Str(str).padLeft(length);
-        return assertEqual(expected, result, message("str", str, "length", length));
-    }
+    public String padLeft(String str, int length) {
+        return new Str(str).padLeft(length);
+    }    
 
     // repeat
 
