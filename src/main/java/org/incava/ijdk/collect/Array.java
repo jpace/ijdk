@@ -137,7 +137,7 @@ public class Array<T extends Object> extends ArrayList<T> implements Sequence<T>
      * null is returned.</p>
      */
     public T get(int index) {
-        Integer idx = org.incava.ijdk.util.Index.getIndex(size(), index);
+        Integer idx = getIndex(index);
         return idx == null ? null : super.get(idx);
     }
 
@@ -151,8 +151,8 @@ public class Array<T extends Object> extends ArrayList<T> implements Sequence<T>
      * ... size()</code>), then an empty set is returned.</p>
      */
     public Array<T> get(int fromIndex, int toIndex) {
-        Integer fromIdx = org.incava.ijdk.util.Index.getIndex(size(), fromIndex);
-        Integer toIdx   = toIndex < 0 ? org.incava.ijdk.util.Index.getIndex(size(), toIndex) : Integer.valueOf(toIndex);
+        Integer fromIdx = getIndex(fromIndex);
+        Integer toIdx   = toIndex < 0 ? getIndex(toIndex) : Integer.valueOf(toIndex);
         Array<T> list = new Array<T>();
         if (fromIdx != null && toIdx != null) {
             while (fromIdx <= toIdx && fromIdx < size()) {
@@ -210,6 +210,9 @@ public class Array<T extends Object> extends ArrayList<T> implements Sequence<T>
     /**
      * Removes all occurrances of <code>element</code> from <code>list</code>, returning whether any
      * were found.
+     *
+     * @param element the element to remove
+     * @return whether any elements were removed from this list
      */
     public boolean removeAll(T element) {
         boolean found = remove(element);
@@ -329,5 +332,9 @@ public class Array<T extends Object> extends ArrayList<T> implements Sequence<T>
             elmts.append(get(idx));
         }
         return elmts;
+    }
+
+    private Integer getIndex(Integer n) {
+        return new org.incava.ijdk.util.Indexable(size()).get(n);
     }
 }    
