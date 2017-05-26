@@ -103,35 +103,25 @@ public class TestStr extends StringTest {
         return new Str(str).startsWith(ch);
     }
 
-    // indexOf
-
-    public Integer assertIndexOf(Integer expected, String str, Character ch) {
-        Integer result = new Str(str).indexOf(ch);
-        return assertEqual(expected, result, message("str", str, "ch", ch));
+    public Integer indexOf(String str, Character ch) {
+        return new Str(str).indexOf(ch);
     }    
 
-    // contains
-
-    public boolean assertContains(boolean expected, String str, Character ch) {
-        boolean result = new Str(str).contains(ch);
-        return assertEqual(expected, result, message("str", str, "ch", ch));
+    public boolean contains(String str, Character ch) {
+        return new Str(str).contains(ch);
     }
 
-    // substringAfter
-
-    public String assertSubstringAfter(String expected, String str, Character ch) {
-        String result = new Str(str).substringAfter(ch);
-        return assertEqual(expected, result, message("str", str, "ch", ch));
+    public String substringAfter(String str, Character ch) {
+        return new Str(str).substringAfter(ch);
     }
 
-    // substringBefore
-
-    public String assertSubstringBefore(String expected, String str, Character ch) {
-        String result = new Str(str).substringBefore(ch);
-        return assertEqual(expected, result, message("str", str, "ch", ch));
+    public String substringBefore(String str, Character ch) {
+        return new Str(str).substringBefore(ch);
     }
 
-    // eq
+    public Boolean eq(String a, String b) {
+        return new Str(a).eq(b);
+    }    
 
     public Boolean assertEq(Boolean expected, String a, String b) {
         Boolean result = new Str(a).eq(b);
@@ -140,9 +130,8 @@ public class TestStr extends StringTest {
 
     // eqi
 
-    public Boolean assertEqi(Boolean expected, String a, String b) {
-        Boolean result = new Str(a).eqi(b);
-        return assertEqual(expected, result, message("a", a, "b", b));
+    public Boolean eqi(String a, String b) {
+        return new Str(a).eqi(b);
     }
 
     // snip

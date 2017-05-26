@@ -371,256 +371,138 @@ public abstract class StringTest {
 
     // indexOf
 
-    public abstract Integer assertIndexOf(Integer expected, String str, Character ch);
-    
-    @Test
-    public void testIndexOfNullCharacter() {
-        assertIndexOf(null, "abc", null);
-    }
-    
-    @Test
-    public void testIndexOfNullString() {
-        assertIndexOf(null, null,  'a');
-    }
-    
-    @Test
-    public void testIndexOfBothNull() {
-        assertIndexOf(null, null,  null);
-    }
-    
-    @Test
-    public void testIndexOfFirstChar() {
-        assertIndexOf(0, "abc", 'a');
-    }
-    
-    @Test
-    public void testIndexOfLastChar() {
-        assertIndexOf(2, "abc", 'c');
-    }
+    public abstract Integer indexOf(String str, Character ch);
 
     @Test
-    public void testIndexOfNoMatch() {
-        assertIndexOf(null, "abc", 'd');
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void indexOf(Integer expected, String str, Character ch) {
+        Integer result = indexOf(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
     }
-
-    @Test
-    public void testIndexOfMismatchedCase() {
-        assertIndexOf(null, "abc", 'A');
+    
+    private List<Object[]> parametersForIndexOf() {
+        return paramsList(params(null, "abc", null),
+                          params(null, null,  'a'),
+                          params(null, null,  null),
+                          params(0, "abc", 'a'),
+                          params(2, "abc", 'c'),
+                          params(null, "abc", 'd'),
+                          params(null, "abc", 'A'));
     }
 
     // contains
 
-    public abstract boolean assertContains(boolean expected, String str, Character ch);
-    
-    @Test
-    public void testContainsNullCharacter() {
-        assertContains(false, "abc", null);
-    }
-    
-    @Test
-    public void testContainsNullString() {
-        assertContains(false, null,  'a');
-    }
-    
-    @Test
-    public void testContainsBothNull() {
-        assertContains(false, null,  null);
-    }
-    
-    @Test
-    public void testContainsFirstChar() {
-        assertContains(true, "abc", 'a');
-    }
-    
-    @Test
-    public void testContainsLastChar() {
-        assertContains(true, "abc", 'c');
-    }
+    public abstract boolean contains(String str, Character ch);
 
     @Test
-    public void testContainsNoMatch() {
-        assertContains(false, "abc", 'd');
-    }    
-
-    @Test
-    public void testContainsMismatchedCase() {
-        assertContains(false, "abc", 'A');
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void contains(boolean expected, String str, Character ch) {
+        boolean result = contains(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
+    }
+    
+    private List<Object[]> parametersForContains() {
+        return paramsList(params(false, "abc", null),
+                          params(false, null,  'a'),
+                          params(false, null,  null),
+                          params(true, "abc", 'a'),
+                          params(true, "abc", 'c'),
+                          params(false, "abc", 'd'),
+                          params(false, "abc", 'A'));
     }
 
     // substringAfter
 
-    public abstract String assertSubstringAfter(String expected, String str, Character ch);
-    
-    @Test
-    public void testSubstringAfterNullCharacter() {
-        assertSubstringAfter(null, "abc", null);
-    }
-    
-    @Test
-    public void testSubstringAfterNullString() {
-        assertSubstringAfter(null, null,  'a');
-    }
-    
-    @Test
-    public void testSubstringAfterBothNull() {
-        assertSubstringAfter(null, null,  null);
-    }
-    
-    @Test
-    public void testSubstringAfterFirstChar() {
-        assertSubstringAfter("bc", "abc", 'a');
-    }
-    
-    @Test
-    public void testSubstringAfterLastChar() {
-        assertSubstringAfter("", "abc", 'c');
-    }
+    public abstract String substringAfter(String str, Character ch);
 
     @Test
-    public void testSubstringAfterNoMatch() {
-        assertSubstringAfter(null, "abc", 'd');
-    }    
-
-    @Test
-    public void testSubstringAfterMismatchedCase() {
-        assertSubstringAfter(null, "abc", 'A');
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void substringAfter(String expected, String str, Character ch) {
+        String result = substringAfter(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
+    }
+    
+    private List<Object[]> parametersForSubstringAfter() {
+        return paramsList(params(null, "abc", null),
+                          params(null, null,  'a'),
+                          params(null, null,  null),
+                          params("bc", "abc", 'a'),
+                          params("", "abc", 'c'),
+                          params(null, "abc", 'd'),
+                          params(null, "abc", 'A'));
     }
 
     // substringBefore
 
-    public abstract String assertSubstringBefore(String expected, String str, Character ch);
+    public abstract String substringBefore(String str, Character ch);
 
     @Test
-    public void testSubstringBeforeNullCharacter() {
-        assertSubstringBefore(null, "abc", null);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void substringBefore(String expected, String str, Character ch) {
+        String result = substringBefore(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
     }
     
-    @Test
-    public void testSubstringBeforeNullString() {
-        assertSubstringBefore(null, null,  'a');
-    }
-    
-    @Test
-    public void testSubstringBeforeBothNull() {
-        assertSubstringBefore(null, null,  null);
-    }
-    
-    @Test
-    public void testSubstringBeforeFirstChar() {
-        assertSubstringBefore("", "abc", 'a');
-    }
-    
-    @Test
-    public void testSubstringBeforeLastChar() {
-        assertSubstringBefore("ab", "abc", 'c');
-    }
-
-    @Test
-    public void testSubstringBeforeNoMatch() {
-        assertSubstringBefore(null, "abc", 'd');
-    }    
-
-    @Test
-    public void testSubstringBeforeMismatchedCase() {
-        assertSubstringBefore(null, "abc", 'A');
+    private List<Object[]> parametersForSubstringBefore() {
+        return paramsList(params(null, "abc", null),
+                          params(null, null,  'a'),
+                          params(null, null,  null),
+                          params("", "abc", 'a'),
+                          params("ab", "abc", 'c'),
+                          params(null, "abc", 'd'),
+                          params(null, "abc", 'A'));
     }
 
     // eq
 
-    public abstract Boolean assertEq(Boolean expected, String a, String b);
+    public abstract Boolean eq(String a, String b);
 
     @Test
-    public void testEqNullEmptyString() {
-        assertEq(false, null, "");
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void eq(Boolean expected, String a, String b) {
+        Boolean result = eq(a, b);
+        assertEqual(expected, result, message("a", a, "b", b));
     }
-
-    @Test
-    public void testEqEmptyStringNull() {
-        assertEq(false, "", null);
-    }
-
-    @Test
-    public void testEqNullNull() {
-        assertEq(true, null, null);
-    }
-
-    @Test
-    public void testEqNullNonEmptyString() {
-        assertEq(false, null, "a");
-    }
-
-    @Test
-    public void testEqNonEmptyStringNull() {
-        assertEq(false, "a", null);
-    }
-
-    @Test
-    public void testEqCharCharMatch() {
-        assertEq(true, "a", "a");
-    }
-
-    @Test
-    public void testEqCharCharNoMatch() {
-        assertEq(false, "a", "b");
-    }
-
-    @Test
-    public void testEqCharCharMismatchedCase() {
-        assertEq(false, "a", "A");
-    }
-
-    @Test
-    public void testEqDifferentLengths() {
-        assertEq(false, "a", "ab");
+    
+    private List<Object[]> parametersForEq() {
+        return paramsList(params(false, null, ""),
+                          params(false, "", null),
+                          params(true, null, null),
+                          params(false, null, "a"),
+                          params(false, "a", null),
+                          params(true, "a", "a"),
+                          params(false, "a", "b"),
+                          params(false, "a", "A"),
+                          params(false, "a", "ab"));
     }
 
     // eqi
 
-    public abstract Boolean assertEqi(Boolean expected, String a, String b);
+    public abstract Boolean eqi(String a, String b);
 
     @Test
-    public void testEqiNullEmptyString() {
-        assertEqi(false, null, "");
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void eqi(Boolean expected, String a, String b) {
+        Boolean result = eqi(a, b);
+        assertEqual(expected, result, message("a", a, "b", b));
     }
-
-    @Test
-    public void testEqiEmptyStringNull() {
-        assertEqi(false, "", null);
-    }
-
-    @Test
-    public void testEqiNullNull() {
-        assertEqi(true, null, null);
-    }
-
-    @Test
-    public void testEqiNullNonEmptyString() {
-        assertEqi(false, null, "a");
-    }
-
-    @Test
-    public void testEqiNonEmptyStringNull() {
-        assertEqi(false, "a", null);
-    }
-
-    @Test
-    public void testEqiCharCharMatch() {
-        assertEqi(true, "a", "a");
-    }
-
-    @Test
-    public void testEqiCharCharNoMatch() {
-        assertEqi(false, "a", "b");
-    }
-
-    @Test
-    public void testEqiCharCharMismatchedCase() {
-        assertEqi(true, "A", "a");
-    }
-
-    @Test
-    public void testEqiDifferentLengths() {
-        assertEqi(false, "a", "ab");
+    
+    private List<Object[]> parametersForEqi() {
+        return paramsList(params(false, null, ""),
+                          params(false, "", null),
+                          params(true, null, null),
+                          params(false, null, "a"),
+                          params(false, "a", null),
+                          params(true, "a", "a"),
+                          params(false, "a", "b"),
+                          params(true, "A", "a"),
+                          params(false, "a", "ab"));
     }
 
     // snip

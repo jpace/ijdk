@@ -100,42 +100,29 @@ public class TestStringExt extends StringTest {
         return StringExt.startsWith(str, ch);
     }
 
-    // indexOf
-
-    public Integer assertIndexOf(Integer expected, String str, Character ch) {
-        Integer result = StringExt.indexOf(str, ch);
-        return assertEqual(expected, result, message("str", str, "ch", ch));
+    public Integer indexOf(String str, Character ch) {
+        return StringExt.indexOf(str, ch);
     }
 
-    // contains
-
-    public boolean assertContains(boolean expected, String str, Character ch) {
-        boolean result = StringExt.contains(str, ch);
-        return assertEqual(expected, result, message("str", str, "ch", ch));
+    public boolean contains(String str, Character ch) {
+        return StringExt.contains(str, ch);
     }
 
-    // substringAfter
-
-    public String assertSubstringAfter(String expected, String str, Character ch) {
-        String result = StringExt.substringAfter(str, ch);
-        return assertEqual(expected, result, message("str", str, "ch", ch));
+    public String substringAfter(String str, Character ch) {
+        return StringExt.substringAfter(str, ch);
     }
 
-    // substringBefore
-
-    public String assertSubstringBefore(String expected, String str, Character ch) {
-        String result = StringExt.substringBefore(str, ch);
-        return assertEqual(expected, result, message("str", str, "ch", ch));
+    public String substringBefore(String str, Character ch) {
+        return StringExt.substringBefore(str, ch);
     }
 
-    // eq
-
-    public Boolean assertEq(Boolean expected, String a, String b) {
-        Boolean result = StringExt.eq(a, b);
-        return assertEqual(expected, result, message("a", a, "b", b));
+    public Boolean eq(String a, String b) {
+        return StringExt.eq(a, b);
     }
 
-    // eqi
+    public Boolean eqi(String a, String b) {
+        return StringExt.eqi(a, b);
+    }
 
     public Boolean assertEqi(Boolean expected, String a, String b) {
         Boolean result = StringExt.eqi(a, b);
