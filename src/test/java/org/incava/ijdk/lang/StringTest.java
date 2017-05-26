@@ -352,26 +352,21 @@ public abstract class StringTest {
 
     // startsWith
 
-    public abstract boolean assertStartsWith(boolean expected, String str, char ch);
+    public abstract boolean startsWith(String str, char ch);
 
     @Test
-    public void testStartsWithNull() {
-        assertStartsWith(false, null, 'j');
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void startsWith(boolean expected, String str, char ch) {
+        boolean result = startsWith(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
     }
-
-    @Test
-    public void testStartsWithMatch() {
-        assertStartsWith(true, "java", 'j');
-    }
-
-    @Test
-    public void testStartsWithNoMatch() {
-        assertStartsWith(false, "java", 'a');
-    }
-
-    @Test
-    public void testStartsWithMismatchedCase() {
-        assertStartsWith(false, "java", 'J');
+    
+    private List<Object[]> parametersForStartsWith() {
+        return paramsList(params(false, null, 'j'),
+                          params(true, "java", 'j'),
+                          params(false, "java", 'a'),
+                          params(false, "java", 'J'));
     }
 
     // indexOf

@@ -99,11 +99,8 @@ public class TestStr extends StringTest {
         return new Str(str).substring(fromIndex, toIndex);
     }
 
-    // startsWith
-
-    public boolean assertStartsWith(boolean expected, String str, char ch) {
-        boolean result = new Str(str).startsWith(ch);
-        return assertEqual(expected, result, message("str", str, "ch", ch));
+    public boolean startsWith(String str, char ch) {
+        return new Str(str).startsWith(ch);
     }
 
     // indexOf

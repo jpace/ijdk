@@ -96,11 +96,8 @@ public class TestStringExt extends StringTest {
         return StringExt.substring(str, fromIndex, toIndex);
     }
 
-    // startsWith
-
-    public boolean assertStartsWith(boolean expected, String str, char ch) {
-        boolean result = StringExt.startsWith(str, ch);
-        return assertEqual(expected, result, message("str", str, "ch", ch));
+    public boolean startsWith(String str, char ch) {
+        return StringExt.startsWith(str, ch);
     }
 
     // indexOf
