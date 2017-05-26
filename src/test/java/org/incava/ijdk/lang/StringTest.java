@@ -272,101 +272,51 @@ public abstract class StringTest {
     }
 
     // charAt
+    
+    public abstract Character charAt(String str, int index);
 
-    public abstract Character assertCharAt(Character expected, String str, int index);
-    
     @Test
-    public void testCharAtNullString() {
-        assertCharAt(null, null, 0);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void charAt(Character expected, String str, int index) {
+        Character result = charAt(str, index);
+        assertEqual(expected, result, message("str", str, "index", index));
     }
     
-    @Test
-    public void testCharAtZero() {
-        assertCharAt('a', "abc", 0);
-    }
-    
-    @Test
-    public void testCharAtOne() {
-        assertCharAt('b', "abc", 1);
-    }
-    
-    @Test
-    public void testCharAtEnd() {
-        assertCharAt('c', "abc", 2);
-    }
-    
-    @Test
-    public void testCharAtPastRange() {
-        assertCharAt(null, "abc", 3);
-    }
-    
-    @Test
-    public void testCharAtNegativeOne() {
-        assertCharAt('c', "abc", -1);
-    }
-    
-    @Test
-    public void testCharAtNegativeTwo() {
-        assertCharAt('b', "abc", -2);
-    }
-    
-    @Test
-    public void testCharAtNegativeAtStart() {
-        assertCharAt('a', "abc", -3);
-    }
-    
-    @Test
-    public void testCharAtNegativeBeforeRange() {
-        assertCharAt(null, "abc", -4);
+    private List<Object[]> parametersForCharAt() {
+        return paramsList(params(null, null, 0),
+                          params('a', "abc", 0),
+                          params('b', "abc", 1),
+                          params('c', "abc", 2),
+                          params(null, "abc", 3),
+                          params('c', "abc", -1),
+                          params('b', "abc", -2),
+                          params('a', "abc", -3),
+                          params(null, "abc", -4));
     }
 
     // get
 
-    public abstract Character assertGet(Character expected, String str, int index);
-    
+    public abstract Character get(String str, int index);
+
     @Test
-    public void testGetNullString() {
-        assertGet(null, null, 0);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void get(Character expected, String str, int index) {
+        Character result = get(str, index);
+        assertEqual(expected, result, message("str", str, "index", index));
     }
     
-    @Test
-    public void testGetZero() {
-        assertGet('a', "abc", 0);
-    }
-    
-    @Test
-    public void testGetOne() {
-        assertGet('b', "abc", 1);
-    }
-    
-    @Test
-    public void testGetEnd() {
-        assertGet('c', "abc", 2);
-    }
-    
-    @Test
-    public void testGetPastRange() {
-        assertGet(null, "abc", 3);
-    }
-    
-    @Test
-    public void testGetNegativeOne() {
-        assertGet('c', "abc", -1);
-    }
-    
-    @Test
-    public void testGetNegativeTwo() {
-        assertGet('b', "abc", -2);
-    }
-    
-    @Test
-    public void testGetNegativeAtStart() {
-        assertGet('a', "abc", -3);
-    }
-    
-    @Test
-    public void testGetNegativeBeforeRange() {
-        assertGet(null, "abc", -4);
+    private List<Object[]> parametersForGet() {
+        return paramsList(params(null, null, 0),
+                          params('a', "abc", 0),
+                          params('b', "abc", 1),
+                          params('c', "abc", 2),
+                          params(null, "abc", 3),
+                          params('c', "abc", -1),
+                          params('b', "abc", -2),
+                          params('a', "abc", -3),
+                          params(null, "abc", -4));
     }
 
     // substring

@@ -84,18 +84,12 @@ public class TestStringExt extends StringTest {
         return StringExt.join(coll, delim);
     }
 
-    // charAt
-
-    public Character assertCharAt(Character expected, String str, int index) {
-        Character result = StringExt.charAt(str, index);
-        return assertEqual(expected, result, message("str", str, "index", index));
+    public Character charAt(String str, int index) {
+        return StringExt.charAt(str, index);
     }
 
-    // get
-
-    public Character assertGet(Character expected, String str, int index) {
-        Character result = StringExt.get(str, index);
-        return assertEqual(expected, result, message("str", str, "index", index));
+    public Character get(String str, int index) {
+        return StringExt.get(str, index);
     }
 
     // substring

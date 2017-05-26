@@ -68,18 +68,12 @@ public class TestStr extends StringTest {
         return Str.join(coll, delim).str();
     }    
 
-    // charAt
+    public Character charAt(String str, int index) {
+        return new Str(str).charAt(index);
+    }
 
-    public Character assertCharAt(Character expected, String str, int index) {
-        Character result = new Str(str).charAt(index);
-        return assertEqual(expected, result, message("str", str, "index", index));
-    }    
-
-    // get
-
-    public Character assertGet(Character expected, String str, int index) {
-        Character result = new Str(str).get(index);
-        return assertEqual(expected, result, message("str", str, "index", index));
+    public Character get(String str, int index) {
+        return new Str(str).get(index);
     }    
 
     @Test
