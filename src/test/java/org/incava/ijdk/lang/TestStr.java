@@ -60,17 +60,13 @@ public class TestStr extends StringTest {
         return new Str(str).right(length);
     }
 
-    // join
-
-    public String assertJoin(String expected, String[] ary, String delim) {
-        String result = Str.join(ary, delim).str();
-        return assertEqual(expected, result, message("ary", ary, "delim", delim));
+    public String join(String[] ary, String delim) {
+        return Str.join(ary, delim).str();
     }
 
-    public String assertJoin(String expected, Collection<String> coll, String delim) {
-        String result = Str.join(coll, delim).str();
-        return assertEqual(expected, result, message("coll", coll, "delim", delim));
-    }
+    public String join(Collection<String> coll, String delim) {
+        return Str.join(coll, delim).str();
+    }    
 
     // charAt
 

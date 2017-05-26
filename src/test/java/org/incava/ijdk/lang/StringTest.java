@@ -235,58 +235,40 @@ public abstract class StringTest {
 
     // join
 
-    public abstract String assertJoin(String expected, String[] ary, String delim);
+    public abstract String join(String[] ary, String delim);
 
-    public abstract String assertJoin(String expected, Collection<String> coll, String delim);
+    public abstract String join(Collection<String> coll, String delim);
 
     @Test
-    public void testJoinArrayNull() {
-        assertJoin(null, (String[])null, ",");
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void joinArray(String expected, String[] ary, String delim) {
+        String result = join(ary, delim);
+        assertEqual(expected, result, message("ary", ary, "delim", delim));
+    }
+    
+    private List<Object[]> parametersForJoinArray() {
+        return paramsList(params(null, (String[])null, ","),
+                          params("abcd", new String[] { "a", "b", "c", "d" }, null),
+                          params("abcd", new String[] { "a", "b", "c", "d" }, ""),
+                          params("", new String[] { "" }, ","),
+                          params("a,b,c,d", new String[] { "a", "b", "c", "d" }, ","));
     }
 
     @Test
-    public void testJoinArrayDelimNull() {
-        assertJoin("abcd", new String[] { "a", "b", "c", "d" }, null);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void joinCollection(String expected, Collection<String> coll, String delim) {
+        String result = join(coll, delim);
+        assertEqual(expected, result, message("coll", coll, "delim", delim));
     }
-
-    @Test
-    public void testJoinArrayDelimEmpty() {
-        assertJoin("abcd", new String[] { "a", "b", "c", "d" }, "");
-    }
-
-    @Test
-    public void testJoinArrayEmpty() {
-        assertJoin("", new String[] { "" }, ",");
-    }
-
-    @Test
-    public void testJoinArrayNotEmpty() {
-        assertJoin("a,b,c,d", new String[] { "a", "b", "c", "d" }, ",");
-    }
-
-    @Test
-    public void testJoinCollectionNull() {
-        assertJoin(null, (ArrayList<String>)null, ",");
-    }
-
-    @Test
-    public void testJoinCollectionDelimNull() {
-        assertJoin("abcd", Arrays.asList("a", "b", "c", "d"), null);
-    }
-
-    @Test
-    public void testJoinCollectionDelimEmpty() {
-        assertJoin("abcd", Arrays.asList("a", "b", "c", "d"), "");
-    }
-
-    @Test
-    public void testJoinCollectionEmpty() {
-        assertJoin("", new ArrayList<String>(), ",");
-    }
-
-    @Test
-    public void testJoinCollectionNotEmpty() {
-        assertJoin("a,b,c,d", Arrays.asList("a", "b", "c", "d"), ",");
+    
+    private List<Object[]> parametersForJoinCollection() {
+        return paramsList(params(null, (ArrayList<String>)null, ","),
+                          params("abcd", Arrays.asList("a", "b", "c", "d"), null),
+                          params("abcd", Arrays.asList("a", "b", "c", "d"), ""),
+                          params("", new ArrayList<String>(), ","),
+                          params("a,b,c,d", Arrays.asList("a", "b", "c", "d"), ","));
     }
 
     // charAt

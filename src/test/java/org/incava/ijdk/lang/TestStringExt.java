@@ -76,16 +76,12 @@ public class TestStringExt extends StringTest {
         return StringExt.right(str, length);
     }
 
-    // join
-
-    public String assertJoin(String expected, String[] ary, String delim) {
-        String result = StringExt.join(ary, delim);
-        return assertEqual(expected, result, message("ary", ary, "delim", delim));
+    public String join(String[] ary, String delim) {
+        return StringExt.join(ary, delim);
     }
 
-    public String assertJoin(String expected, Collection<String> coll, String delim) {
-        String result = StringExt.join(coll, delim);
-        return assertEqual(expected, result, message("coll", coll, "delim", delim));
+    public String join(Collection<String> coll, String delim) {
+        return StringExt.join(coll, delim);
     }
 
     // charAt
