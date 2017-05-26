@@ -92,11 +92,8 @@ public class TestStringExt extends StringTest {
         return StringExt.get(str, index);
     }
 
-    // substring
-
-    public String assertSubstring(String expected, String str, Integer fromIndex, Integer toIndex) {
-        String result = StringExt.substring(str, fromIndex, toIndex);
-        return assertEqual(expected, result, message("str", str, "fromIndex", fromIndex, "toIndex", toIndex));
+    public String substring(String str, Integer fromIndex, Integer toIndex) {
+        return StringExt.substring(str, fromIndex, toIndex);
     }
 
     // startsWith

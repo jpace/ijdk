@@ -95,11 +95,8 @@ public class TestStr extends StringTest {
                           params(null, "abcd", -5));
     }
 
-    // substring
-
-    public String assertSubstring(String expected, String str, Integer fromIndex, Integer toIndex) {
-        String result = new Str(str).substring(fromIndex, toIndex);
-        return assertEqual(expected, result, message("str", str, "fromIndex", fromIndex, "toIndex", toIndex));
+    public String substring(String str, Integer fromIndex, Integer toIndex) {
+        return new Str(str).substring(fromIndex, toIndex);
     }
 
     // startsWith

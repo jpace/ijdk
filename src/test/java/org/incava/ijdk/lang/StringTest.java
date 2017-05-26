@@ -321,74 +321,33 @@ public abstract class StringTest {
 
     // substring
 
-    public abstract String assertSubstring(String expected, String str, Integer fromIndex, Integer toIndex);
+    public abstract String substring(String str, Integer fromIndex, Integer toIndex);
 
     @Test
-    public void testSubstringNull() {
-        assertSubstring(null, null, 1, 0);
-    }
-
-    @Test
-    public void testSubstringPositiveFull() {
-        assertSubstring("abcd", "abcd", 0, 3);
-    }
-
-    @Test
-    public void testSubstringPositiveFromLessThanTo() {
-        assertSubstring("abc", "abcd", 0, 2);
-    }
-
-    @Test
-    public void testSubstringPositiveFromEqualsTo() {
-        assertSubstring("a", "abcd", 0, 0);
-    }
-
-    @Test
-    public void testSubstringPositiveFromGreaterThanTo() {
-        // expect "", not null, per Ruby behavior
-        assertSubstring("", "abcd", 1, 0);
-    }
-
-    @Test
-    public void testSubstringPositiveFromPastEnd() {
-        assertSubstring("", "abcd", 4, 5);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void substring(String expected, String str, Integer fromIndex, Integer toIndex) {
+        String result = substring(str, fromIndex, toIndex);
+        assertEqual(expected, result, message("str", str, "fromIndex", fromIndex, "toIndex", toIndex));
     }
     
-    @Test
-    public void testSubstringNegativeFull() {
-        assertSubstring("abcd", "abcd", -4, -1);
-    }
-    
-    @Test
-    public void testSubstringNegativeFromLessThanTo() {
-        assertSubstring("abc", "abcd", -4, -2);
-    }    
-    
-    @Test
-    public void testSubstringNegativeFromEqualsTo() {
-        assertSubstring("a", "abcd", -4, -4);
-    }
-    
-    @Test
-    public void testSubstringNegativeFromGreaterThanTo() {
-        // expect "", not null, per Ruby behavior
-        assertSubstring("", "abcd", -1, -2);
-    }
-
-    @Test
-    public void testSubstringNullFrom() {
-        // null == first in string
-        assertSubstring("abc", "abcd", null, -2);
-    }
-
-    @Test
-    public void testSubstringNullTo() {
-        assertSubstring("cd", "abcd", -2, null);
-    }
-
-    @Test
-    public void testSubstringNullFromNullTo() {
-        assertSubstring("abcd", "abcd", null, null);
+    private List<Object[]> parametersForSubstring() {
+        return paramsList(params(null, null, 1, 0),
+                          params("abcd", "abcd", 0, 3),
+                          params("abc", "abcd", 0, 2),
+                          params("a", "abcd", 0, 0),
+                          // expect "", not null, per Ruby behavior
+                          params("", "abcd", 1, 0),
+                          params("", "abcd", 4, 5),
+                          params("abcd", "abcd", -4, -1),
+                          params("abc", "abcd", -4, -2),
+                          params("a", "abcd", -4, -4),
+                          // expect "", not null, per Ruby behavior
+                          params("", "abcd", -1, -2),
+                          // null == first in string
+                          params("abc", "abcd", null, -2),
+                          params("cd", "abcd", -2, null),
+                          params("abcd", "abcd", null, null));
     }
 
     // startsWith
