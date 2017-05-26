@@ -507,36 +507,23 @@ public abstract class StringTest {
 
     // snip
 
-    public abstract String assertSnip(String expected, String str, int length);
+    public abstract String snip(String str, int length);
 
     @Test
-    public void testSnipNull() {
-        assertSnip(null, null, 3);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void snip(String expected, String str, int length) {
+        String result = snip(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
-
-    @Test
-    public void testSnipEmpty() {
-        assertSnip("", "", 3);
-    }
-
-    @Test
-    public void testSnipToEmpty() {
-        assertSnip("-", "abc", 1);
-    }
-
-    @Test
-    public void testSnipLongerAtEnd() {
-        assertSnip("a-", "abc", 2);
-    }
-
-    @Test
-    public void testSnipAtLength() {
-        assertSnip("abc", "abc", 3);
-    }
-
-    @Test
-    public void testSnipTwoLonger() {
-        assertSnip("ab-", "abcd", 3);
+    
+    private List<Object[]> parametersForSnip() {
+        return paramsList(params(null, null, 3),
+                          params("", "", 3),
+                          params("-", "abc", 1),
+                          params("a-", "abc", 2),
+                          params("abc", "abc", 3),
+                          params("ab-", "abcd", 3));
     }
 
     // isEmpty

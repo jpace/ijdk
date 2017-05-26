@@ -123,22 +123,12 @@ public class TestStr extends StringTest {
         return new Str(a).eq(b);
     }    
 
-    public Boolean assertEq(Boolean expected, String a, String b) {
-        Boolean result = new Str(a).eq(b);
-        return assertEqual(expected, result, message("a", a, "b", b));
-    }
-
-    // eqi
-
     public Boolean eqi(String a, String b) {
         return new Str(a).eqi(b);
     }
 
-    // snip
-
-    public String assertSnip(String expected, String str, int length) {
-        String result = new Str(str).snip(length);
-        return assertEqual(expected, result, message("str", str, "length", length));
+    public String snip(String str, int length) {
+        return new Str(str).snip(length);
     }
 
     // isEmpty

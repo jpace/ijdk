@@ -124,12 +124,9 @@ public class TestStringExt extends StringTest {
         return StringExt.eqi(a, b);
     }
 
-    public Boolean assertEqi(Boolean expected, String a, String b) {
-        Boolean result = StringExt.eqi(a, b);
-        return assertEqual(expected, result, message("a", a, "b", b));
+    public String snip(String str, int length) {
+        return StringExt.snip(str, length);
     }
-
-    // snip
 
     public String assertSnip(String expected, String str, int length) {
         String result = StringExt.snip(str, length);
