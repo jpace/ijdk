@@ -131,18 +131,12 @@ public class TestStr extends StringTest {
         return new Str(str).snip(length);
     }
 
-    // isEmpty
-
-    public boolean assertIsEmpty(boolean expected, String str) {
-        boolean result = new Str(str).isEmpty();
-        return assertEqual(expected, result, message("str", str));
+    public boolean isEmpty(String str) {
+        return new Str(str).isEmpty();
     }
 
-    // length
-
-    public int assertLength(int expected, String str) {
-        int result = new Str(str).length();
-        return assertEqual(expected, result, message("str", str));
+    public int length(String str) {
+        return new Str(str).length();
     }
 
     // chomp

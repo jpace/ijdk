@@ -128,23 +128,12 @@ public class TestStringExt extends StringTest {
         return StringExt.snip(str, length);
     }
 
-    public String assertSnip(String expected, String str, int length) {
-        String result = StringExt.snip(str, length);
-        return assertEqual(expected, result, message("str", str, "length", length));
+    public boolean isEmpty(String str) {
+        return StringExt.isEmpty(str);
     }
 
-    // isEmpty
-
-    public boolean assertIsEmpty(boolean expected, String str) {
-        boolean result = StringExt.isEmpty(str);
-        return assertEqual(expected, result, message("str", str));
-    }
-
-    // length
-
-    public int assertLength(int expected, String str) {
-        int result = StringExt.length(str);
-        return assertEqual(expected, result, message("str", str));
+    public int length(String str) {
+        return StringExt.length(str);
     }
 
     // chomp

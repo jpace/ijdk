@@ -528,40 +528,38 @@ public abstract class StringTest {
 
     // isEmpty
 
-    public abstract boolean assertIsEmpty(boolean expected, String str);
+    public abstract boolean isEmpty(String str);
 
     @Test
-    public void testIsEmptyNull() {
-        assertIsEmpty(true, null);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void isEmpty(boolean expected, String str) {
+        boolean result = isEmpty(str);
+        assertEqual(expected, result, message("str", str));
     }
-
-    @Test
-    public void testIsEmptyEmpty() {
-        assertIsEmpty(true, "");
-    }
-
-    @Test
-    public void testIsEmptyNonEmpty() {
-        assertIsEmpty(false, "a");
+    
+    private List<Object[]> parametersForIsEmpty() {
+        return paramsList(params(true, null),
+                          params(true, ""),
+                          params(false, "a"));
     }
 
     // length
 
-    public abstract int assertLength(int expected, String str);
+    public abstract int length(String str);
 
     @Test
-    public void testLengthNull() {
-        assertLength(0, null);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void length(int expected, String str) {
+        int result = length(str);
+        assertEqual(expected, result, message("str", str));
     }
-
-    @Test
-    public void testLengthEmpty() {
-        assertLength(0, "");
-    }
-
-    @Test
-    public void testLengthNonEmpty() {
-        assertLength(1, "a");
+    
+    private List<Object[]> parametersForLength() {
+        return paramsList(params(0, null),
+                          params(0, ""),
+                          params(1, "a"));
     }
 
     // chomp
