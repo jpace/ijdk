@@ -1,6 +1,5 @@
 package org.incava.ijdk.lang;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import junitparams.JUnitParamsRunner;
@@ -139,32 +138,20 @@ public class TestStr extends StringTest {
         return new Str(str).length();
     }
 
-    // chomp
-
-    public String assertChomp(String expected, String str) {
-        String result = new Str(str).chomp();
-        return assertEqual(expected, result, message("str", str));
+    public String chomp(String str) {
+        return new Str(str).chomp();
     }
 
-    // chompAll
-
-    public String assertChompAll(String expected, String str) {
-        String result = new Str(str).chompAll();
-        return assertEqual(expected, result, message("str", str));
+    public String chompAll(String str) {
+        return new Str(str).chompAll();
     }
     
-    // unquote
-    
-    public String assertUnquote(String expected, String str) {
-        String result = new Str(str).unquote();
-        return assertEqual(expected, result, message("str", str));
+    public String unquote(String str) {
+        return new Str(str).unquote();
     }
-
-    // quote
     
-    public String assertQuote(String expected, String str) {
-        String result = new Str(str).quote();
-        return assertEqual(expected, result, message("str", str));
+    public String quote(String str) {
+        return new Str(str).quote();
     }
 
     @Test

@@ -136,31 +136,19 @@ public class TestStringExt extends StringTest {
         return StringExt.length(str);
     }
 
-    // chomp
-
-    public String assertChomp(String expected, String str) {
-        String result = StringExt.chomp(str);
-        return assertEqual(expected, result, message("str", str));
+    public String chomp(String str) {
+        return StringExt.chomp(str);
     }
 
-    // chompAll
-
-    public String assertChompAll(String expected, String str) {
-        String result = StringExt.chompAll(str);
-        return assertEqual(expected, result, message("str", str));
+    public String chompAll(String str) {
+        return StringExt.chompAll(str);
     }
     
-    // unquote
-    
-    public String assertUnquote(String expected, String str) {
-        String result = StringExt.unquote(str);
-        return assertEqual(expected, result, message("str", str));
+    public String unquote(String str) {
+        return StringExt.unquote(str);
     }
-
-    // quote
     
-    public String assertQuote(String expected, String str) {
-        String result = StringExt.quote(str);
-        return assertEqual(expected, result, message("str", str));
+    public String quote(String str) {
+        return StringExt.quote(str);
     }    
 }

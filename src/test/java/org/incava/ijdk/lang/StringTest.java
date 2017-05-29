@@ -564,147 +564,87 @@ public abstract class StringTest {
 
     // chomp
 
-    public abstract String assertChomp(String expected, String str);
+    public abstract String chomp(String str);
 
     @Test
-    public void testChompNull() {
-        assertChomp(null, null);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void chomp(String expected, String str) {
+        String result = chomp(str);
+        assertEqual(expected, result, message("str", str));
     }
-
-    @Test
-    public void testChompEmpty() {
-        assertChomp("", "");
-    }
-
-    @Test
-    public void testChompNoEoln() {
-        assertChomp("a", "a");
-    }
-
-    @Test
-    public void testChompN() {
-        assertChomp("a", "a\n");
-    }
-
-    @Test
-    public void testChompNN() {
-        assertChomp("a\n", "a\n\n");
-    }
-
-    @Test
-    public void testChompR() {
-        assertChomp("a", "a\r");
-    }
-
-    @Test
-    public void testChompRR() {
-        assertChomp("a\r", "a\r\r");
-    }
-
-    @Test
-    public void testChompRN() {
-        assertChomp("a\r", "a\r\n");
+    
+    private List<Object[]> parametersForChomp() {
+        return paramsList(params(null, null),
+                          params("", ""),
+                          params("a", "a"),
+                          params("a", "a\n"),
+                          params("a\n", "a\n\n"),
+                          params("a", "a\r"),
+                          params("a\r", "a\r\r"),
+                          params("a\r", "a\r\n"));
     }
 
     // chompAll
 
-    public abstract String assertChompAll(String expected, String str);
+    public abstract String chompAll(String str);
 
     @Test
-    public void testChompAllNull() {
-        assertChompAll(null, null);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void chompAll(String expected, String str) {
+        String result = chompAll(str);
+        assertEqual(expected, result, message("str", str));
     }
-
-    @Test
-    public void testChompAllEmpty() {
-        assertChompAll("", "");
+    
+    private List<Object[]> parametersForChompAll() {
+        return paramsList(params(null, null),
+                          params("", ""),
+                          params("a", "a"),
+                          params("a", "a\n"),
+                          params("a", "a\n\n"),
+                          params("a", "a\r"),
+                          params("a", "a\r\r"),
+                          params("a", "a\r\n"));
     }
-
-    @Test
-    public void testChompAllNoEoln() {
-        assertChompAll("a", "a");
-    }
-
-    @Test
-    public void testChompAllN() {
-        assertChompAll("a", "a\n");
-    }
-
-    @Test
-    public void testChompAllNN() {
-        assertChompAll("a", "a\n\n");
-    }
-
-    @Test
-    public void testChompAllR() {
-        assertChompAll("a", "a\r");
-    }
-
-    @Test
-    public void testChompAllRR() {
-        assertChompAll("a", "a\r\r");
-    }
-
-    @Test
-    public void testChompAllRN() {
-        assertChompAll("a", "a\r\n");
-    }    
     
     // unquote
     
-    public abstract String assertUnquote(String expected, String str);
-    
+    public abstract String unquote(String str);    
+
     @Test
-    public void testUnquoteNull() {
-        assertUnquote(null, null);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void unquote(String expected, String str) {
+        String result = unquote(str);
+        assertEqual(expected, result, message("str", str));
     }
     
-    @Test
-    public void testUnquoteEmpty() {
-        assertUnquote("", "");
-    }
-    
-    @Test
-    public void testUnquoteNeitherQuote() {
-        assertUnquote("abc", "abc");
-    }
-    
-    @Test
-    public void testUnquoteSingleDouble() {
-        assertUnquote("\'abc\"", "\'abc\"");
-    }
-    
-    @Test
-    public void testUnquoteDoubleSingle() {
-        assertUnquote("\"abc\'", "\"abc\'");
-    }
-    
-    @Test
-    public void testUnquoteSingleSingle() {
-        assertUnquote("abc", "\'abc\'");
-    }
-    
-    @Test
-    public void testUnquoteDoubleDouble() {
-        assertUnquote("abc", "\"abc\"");
+    private List<Object[]> parametersForUnquote() {
+        return paramsList(params(null, null),
+                          params("", ""),
+                          params("abc", "abc"),
+                          params("\'abc\"", "\'abc\""),
+                          params("\"abc\'", "\"abc\'"),
+                          params("abc", "\'abc\'"),
+                          params("abc", "\"abc\""));
     }
     
     // quote
     
-    public abstract String assertQuote(String expected, String str);
-    
+    public abstract String quote(String str);
+
     @Test
-    public void testQuoteNull() {
-        assertQuote(null, null);
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void quote(String expected, String str) {
+        String result = quote(str);
+        assertEqual(expected, result, message("str", str));
     }
     
-    @Test
-    public void testQuoteEmpty() {
-        assertQuote("\"\"", "");
-    }
-    
-    @Test
-    public void testQuoteNotEmpty() {
-        assertQuote("\"abc\"", "abc");
+    private List<Object[]> parametersForQuote() {
+        return paramsList(params(null, null),
+                          params("\"\"", ""),
+                          params("\"abc\"", "abc"));
     }
 }
