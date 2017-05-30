@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.incava.ijdk.lang.StringTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -227,21 +228,38 @@ public class TestStr extends StringTest {
     }
 
     @Test
-    public void testEndsWith() {
-        assertEqual(true, new Str("abc").endsWith("c"));
-        assertEqual(true, new Str("abc").endsWith("bc"));
-        assertEqual(true, new Str("abc").endsWith("abc"));
-        //$$$ fix this -- it's inconsistent with String#endsWith:
-        assertEqual(false, new Str("abc").endsWith(""));
-        assertEqual(false, new Str(null).endsWith(""));
-        assertEqual(false, new Str("abc").endsWith("d"));
-
-        assertEqual(true, new Str("abc").endsWith('c'));
-        assertEqual(false, new Str("abc").endsWith(' '));
-        assertEqual(false, new Str(null).endsWith('c'));
-        assertEqual(false, new Str("abc").endsWith('d'));
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void endsWithChar(boolean expected, String str, char ch) {
+        boolean result = new Str(str).endsWith(ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
+    }
+    
+    private List<Object[]> parametersForEndsWithChar() {
+        return paramsList(params(true, "abc", 'c'),
+                          params(false, "abc", ' '),
+                          params(false, null, 'c'),
+                          params(false, "abc", 'd'));
     }
 
+    @Test
+    @Parameters
+    @TestCaseName("{index} {method} {params}")
+    public void endsWithString(boolean expected, String str, String s) {
+        boolean result = new Str(str).endsWith(s);
+        assertEqual(expected, result, message("str", str, "s", s));
+    }
+    
+    private List<Object[]> parametersForEndsWithString() {
+        return paramsList(params(true, "abc", "c"),
+                          params(true, "abc", "bc"),
+                          params(true, "abc", "abc"),
+                          //$$$ fix this -- it's inconsistent with String#endsWith:
+                          params(false, "abc", ""),
+                          params(false, null, ""),
+                          params(false, "abc", "d"));
+    }
+    
     @Test
     public void testCompareTo() {
         assertEqual(true, new Str("abc").compareTo(new Str("abc")) == 0);
