@@ -259,7 +259,7 @@ public class TestStr extends StringTest {
                           params(false, null, ""),
                           params(false, "abc", "d"));
     }
-    
+
     @Test
     public void testCompareTo() {
         assertEqual(true, new Str("abc").compareTo(new Str("abc")) == 0);
