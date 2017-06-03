@@ -156,14 +156,25 @@ public class TestStr extends StringTest {
     }
 
     @Test
-    @Parameters
+    @Parameters(method="parametersForEquals")
+    @TestCaseName("{method} {index} {params}")
     public void equalsString(boolean expected, String a, String b) {
         Str sa = new Str(a);
         boolean result = sa.equals(b);
-        assertEqual(expected, result);
+        assertEqual(expected, result, message("a", a, "b", b));
+    }    
+
+    @Test
+    @Parameters(method="parametersForEquals")
+    @TestCaseName("{method} {index} {params}")
+    public void equalsStr(boolean expected, String a, String b) {
+        Str sa = new Str(a);
+        Str sb = new Str(b);
+        boolean result = sa.equals(sb);
+        assertEqual(expected, result, message("a", a, "b", b));
     }
-    
-    private java.util.List<Object[]> parametersForEqualsString() {
+
+    private java.util.List<Object[]> parametersForEquals() {
         return paramsList(params(false, null, ""),
                           params(false, "", null),
                           params(true, null, null),
@@ -174,62 +185,10 @@ public class TestStr extends StringTest {
                           params(false, "a", "A"),
                           params(false, "a", "ab"));
     }
-
-    // equals Str
-
-    public Boolean assertEqualStr(Boolean expected, String a, String b) {
-        Boolean result = new Str(a).equals(new Str(b));
-        return assertEqual(expected, result, message("a", a, "b", b));
-    }
-
-    @Test
-    public void testEqualsStrNullEmptyString() {
-        assertEqualStr(false, null, "");
-    }
-
-    @Test
-    public void testEqualsStrEmptyStringNull() {
-        assertEqualStr(false, "", null);
-    }
-
-    @Test
-    public void testEqualsStrNullNull() {
-        assertEqualStr(true, null, null);
-    }
-
-    @Test
-    public void testEqualsStrNullNonEmptyString() {
-        assertEqualStr(false, null, "a");
-    }
-
-    @Test
-    public void testEqualsStrNonEmptyStringNull() {
-        assertEqualStr(false, "a", null);
-    }
-
-    @Test
-    public void testEqualsStrCharCharMatch() {
-        assertEqualStr(true, "a", "a");
-    }
-
-    @Test
-    public void testEqualsStrCharCharNoMatch() {
-        assertEqualStr(false, "a", "b");
-    }
-
-    @Test
-    public void testEqualsStrCharCharMismatchedCase() {
-        assertEqualStr(false, "a", "A");
-    }
-
-    @Test
-    public void testEqualsStrDifferentLengths() {
-        assertEqualStr(false, "a", "ab");
-    }
-
+    
     @Test
     @Parameters
-    @TestCaseName("{index} {method} {params}")
+    @TestCaseName("{method} {index} {params}")
     public void endsWithChar(boolean expected, String str, char ch) {
         boolean result = new Str(str).endsWith(ch);
         assertEqual(expected, result, message("str", str, "ch", ch));
@@ -244,7 +203,7 @@ public class TestStr extends StringTest {
 
     @Test
     @Parameters
-    @TestCaseName("{index} {method} {params}")
+    @TestCaseName("{method} {index} {params}")
     public void endsWithString(boolean expected, String str, String s) {
         boolean result = new Str(str).endsWith(s);
         assertEqual(expected, result, message("str", str, "s", s));
@@ -261,18 +220,33 @@ public class TestStr extends StringTest {
     }
 
     @Test
-    public void testCompareTo() {
-        assertEqual(true, new Str("abc").compareTo(new Str("abc")) == 0);
-        assertEqual(true, new Str("abc").compareTo(new Str("def")) < 0);
-        assertEqual(true, new Str("def").compareTo(new Str("abc")) > 0);
-        assertEqual(true, new Str("abc").compareTo(new Str(null)) > 0);
-        assertEqual(true, new Str(null).compareTo(new Str(null)) == 0);
-        assertEqual(true, new Str(null).compareTo(new Str("abc")) < 0);
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void compareTo(Integer expected, String x, String y) {
+        Integer result = new Str(x).compareTo(new Str(y));
+        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
+        assertEqual(expected, relResult, message("x", x, "y", y, "result", result));
+    }
+    
+    private List<Object[]> parametersForCompareTo() {
+        return paramsList(params(0, "abc", "abc"),
+                          params(-1, "abc", "def"),
+                          params(1, "def", "abc"),
+                          params(1, "abc", null),
+                          params(0, null, null),
+                          params(-1, null, "abc"));
     }
 
     @Test
-    public void testHashCode() {
-        assertEqual("abc".hashCode(), new Str("abc").hashCode());
-        assertEqual(0, new Str(null).hashCode());
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void hashCodeTest(Integer expected, String x) {
+        Integer result = new Str(x).hashCode();
+        assertEqual(expected, result, message("x", x));
+    }
+    
+    private List<Object[]> parametersForHashCodeTest() {
+        return paramsList(params("abc".hashCode(), "abc"),
+                          params(0, null));
     }
 }
