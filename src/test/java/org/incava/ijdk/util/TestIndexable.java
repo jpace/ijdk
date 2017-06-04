@@ -16,7 +16,7 @@ import static org.incava.test.Parameters.paramsList;
 public class TestIndexable {
     @Test
     @Parameters
-    @TestCaseName("{index} {method} {params}")
+    @TestCaseName("{method} {index} {params}")
     public void getIndex(Integer expected, Integer size, Integer index) {
         Integer result = new Indexable(size).get(index);
         assertEqual(expected, result, message("size", size, "index", index));
@@ -35,6 +35,5 @@ public class TestIndexable {
                           params(1,    4,   -3),
                           params(0,    4,   -4),
                           params(null, 4,   -5));
-    }            
-    
+    }    
 }

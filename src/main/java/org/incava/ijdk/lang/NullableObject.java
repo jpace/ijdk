@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.Arrays;
 
 /**
- * Extensions to the Object class, wrapping a Java Object with additional methods.
+ * Extension to the Object class, wrapping a Java Object with additional methods. The referenced
+ * object can be null.
  */
 public class NullableObject<T> {
     public static <T> NullableObject<T> of(T obj) {
@@ -53,7 +54,8 @@ public class NullableObject<T> {
     
     /**
      * Returns whether the other object is equal to the wrapped object, including whether they are
-     * both null.
+     * both null. If <code>other</code> is a <code>NullableObject</code>, then its wrapped object is
+     * compared.
      */
     public boolean equals(Object other) {
         if (isNull()) {
@@ -62,13 +64,20 @@ public class NullableObject<T> {
         else if (other == null) {
             return false;
         }
+        else if (this == other) {
+            return true;
+        }
+        else if (other instanceof NullableObject) {
+            Object oobj = ((NullableObject)other).obj();
+            return obj().equals(oobj);
+        }
         else {
             return obj().equals(other);
         }
     }
 
     /**
-     * Returns the hash code for the wrapped object.
+     * Returns the hash code of the wrapped object. Returns 0 if the referenced object is null.
      */
     public int hashCode() {
         return isNull() ? 0 : obj().hashCode();
@@ -147,7 +156,8 @@ public class NullableObject<T> {
 
     /**
      * Returns the wrapped object as a string. C style arrays (e.g., Double[]) are run through the
-     * toString for java.util.List, giving them better output.
+     * toString for java.util.List, giving them better output, <code>"[abc, def, ghi]"</code>
+     * instead of <code>"[Ljava.lang.Object;@15db9742"</code>.
      */
     public String toString() {
         Object obj = obj();

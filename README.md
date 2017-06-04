@@ -1,6 +1,6 @@
 # Overview
 
-IJDK (Incava Java Development Kit) is a library of general-purposed code, much of it inspired by
+IJDK (Incava Java Development Kit) is a library of general-purpose Java code, much of it inspired by
 Ruby. For example, reading a file is this simple:
 
 ```java
@@ -155,7 +155,7 @@ A Range is a pair of integers. It converts easily to arrays and lists, and suppo
 
 ## Iterators
 
-"Safe" iterators for arrays and collections, which handles the case when they are null
+"Safe" iterators for arrays and collections, which handles the case when they are null.
 
 ```java
     String[] ary = new String[0];
@@ -215,8 +215,9 @@ Pathname extends java.io.File with Ruby-like functionality:
 
 ## Comp
 
-ijdk.lang.Comp extends and replaces Comparable (compareTo) usage, normalizing the result to be
-simply -1, 0, or 1. Comp also contains lt, lte, gt, and gte, for simpler comparisons:
+ijdk.lang.Comp extends and replaces Comparable (`compareTo`) usage, normalizing the result to be
+simply -1, 0, or 1. Comp also contains `lt` (less than), `lte` (less than or equal), `gt` (greater
+than), and `gte` (greater than or equal), for simpler comparisons:
 
 ```java
    if (Comp.gte("abc", "bbc")) {
@@ -253,8 +254,21 @@ call to `assertEqual`.
 Among the variations of `assertEqual`, one supports assertions of C-style arrays (Object[]),
 including with better output on failure.
 
+The `message` method converts key/value pairs to more descriptive output on failure of an assertion,
+providing more context than just the values being compared:
 
-
+```java
+    import static org.incava.test.Assertions.message;
+    // ...
+    
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public <T> void equalsTest(boolean expected, NullableObject<T> nobj, Object obj) {
+        boolean result = nobj.equals(obj);
+        assertEqual(expected, result, message("nobj", nobj, "obj", obj));
+    }
+```
 
 ## Miscellaneous
 

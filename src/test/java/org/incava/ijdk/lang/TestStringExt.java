@@ -20,7 +20,7 @@ public class TestStringExt extends StringTest {
     // the unquoting functionality is in StringExt, but not Str:
     @Test
     @Parameters
-    @TestCaseName("{index} {method} {params}")
+    @TestCaseName("{method} {index} {params}")
     public void toListQuoted(String[] expected, String str) {
         List<String> result = toList(str);
         assertEqual(expected == null ? null : Arrays.asList(expected), result, message("str", str));
