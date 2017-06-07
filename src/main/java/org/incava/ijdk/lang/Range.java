@@ -61,6 +61,13 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
         return first;
     }
 
+    /*
+     * Returns the first number of the range.
+     */
+    public Integer first() {
+        return first;
+    }
+
     /**
      * Returns the last number of the range.
      */
@@ -69,11 +76,17 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
     }
 
     /**
-     * Returns whether the given number is within the range. Returns false if the first value is
-     * greater than the last value in the range.
+     * Returns the last number of the range.
+     */
+    public Integer last() {
+        return last;
+    }
+
+    /**
+     * Returns whether the given number is within the range, or is either the first or last value.
      */
     public boolean includes(Integer n) {
-        return n >= first && n <= last;
+        return n != null && (n == first || n == last || (n > first && n < last));
     }
 
     /**

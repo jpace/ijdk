@@ -1,217 +1,170 @@
 package org.incava.ijdk.lang;
 
+import java.util.List;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.incava.ijdk.collect.Array;
-import org.incava.test.TestCaseExt;
+import org.incava.ijdk.lang.Common;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class TestRange extends TestCaseExt {
-    public TestRange(String name) {
-        super(name);
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
+
+@RunWith(JUnitParamsRunner.class)
+public class TestRange {
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void first(Integer expected, Range rg) {
+        Integer result = rg.first();
+        assertEqual(expected, result, message("rg", rg));
     }
-
-    // first
-
-    public void assertFirstEquals(Integer expected, Range rg) {
-        assertEquals("range: " + rg, expected, rg.getFirst());
-    }
-
-    // last
-
-    public void assertLastEquals(Integer expected, Range rg) {
-        assertEquals("range: " + rg, expected, rg.getLast());
-    }
-
-    // ctor
-
-    public void testFirstLessThanLast() {
-        Range rg = new Range(3, 17);
-
-        assertFirstEquals(3, rg);
-        assertLastEquals(17, rg);
-    }
-
-    public void testFirstGreaterThanLast() {
-        Range rg = new Range(17, 3);
-
-        assertFirstEquals(17, rg);
-        assertLastEquals(3, rg);
-    }
-
-    public void testFirstEqualsLast() {
-        Range rg = new Range(3, 3);
-
-        assertFirstEquals(3, rg);
-        assertLastEquals(3, rg);
-    }
-
-    public void assertNotEqual(Object obj0, Object obj1) {
-        assertFalse("obj0: " + obj0 + "; obj1" + obj1, obj0.equals(obj1));
-    }
-
-    // includes
     
-    public void assertIncludes(boolean expected, Range rg, Integer val) {
-        assertEquals("range: '" + rg + "' includes '" + val + "'", expected, rg.includes(val));
+
+    @Test
+    @Parameters(method="parametersForFirst")
+    @TestCaseName("{method} {index} {params}")
+    public void getFirst(Integer expected, Range rg) {
+        Integer result = rg.getFirst();
+        assertEqual(expected, result, message("rg", rg));
+    }
+    
+    private List<Object[]> parametersForFirst() {
+        return paramsList(params(3, new Range(3, 17)),
+                          params(17, new Range(17, 3)));
     }
 
-    public void testIncludesFirstLessThanLast() {
-        Range rg = new Range(3, 5);
-
-        assertIncludes(true, rg, 3);
-        assertIncludes(true, rg, 4);
-        assertIncludes(true, rg, 5);
-
-        assertIncludes(false, rg, 2);
-        assertIncludes(false, rg, 6);
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void last(Integer expected, Range rg) {
+        Integer result = rg.last();
+        assertEqual(expected, result, message("rg", rg));
+    }
+    
+    private List<Object[]> parametersForLast() {
+        return paramsList(params(17, new Range(3, 17)),
+                          params(3, new Range(17, 3)));
     }
 
-    public void testIncludesFirstEqualsLast() {
-        Range rg = new Range(3, 3);
-
-        assertIncludes(true, rg, 3);
-
-        assertIncludes(false, rg, 2);
-        assertIncludes(false, rg, 4);
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void equalsTest(boolean expected, Range rg, Object other) {
+        boolean result = rg.equals(other);
+        assertEqual(expected, result, message("rg", rg, "other", other));
+    }
+    
+    private List<Object[]> parametersForEqualsTest() {
+        Range rg12 = new Range(1, 2);
+        Range rg21 = new Range(2, 1);
+        Range rg13 = new Range(1, 3);
+        
+        return paramsList(params(true, rg12, rg12),
+                          params(false, rg12, null),
+                          params(false, rg12, "abc"),
+                          params(true, rg12, new Range(1, 2)),
+                          params(false, rg12, rg21),
+                          params(false, rg12, rg13));
     }
 
-    public void testIncludesFirstGreaterThanLast() {
-        Range rg = new Range(5, 3);
-
-
-        assertIncludes(false, rg, 2);
-        assertIncludes(false, rg, 3);
-        assertIncludes(false, rg, 4);
-        assertIncludes(false, rg, 5);
-        assertIncludes(false, rg, 6);
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void includes(boolean expected, Range rg, Integer val) {
+        boolean result = rg.includes(val);
+        assertEqual(expected, result, message("rg", rg, "val", val));
+    }
+    
+    private List<Object[]> parametersForIncludes() {
+        Range rg35 = new Range(3, 5);
+        Range rg53 = new Range(5, 3);
+        Range rg33 = new Range(3, 3);
+        return paramsList(params(true,  rg35, 3),
+                          params(true,  rg35, 4),
+                          params(true,  rg35, 5),
+                          params(false, rg35, 2),
+                          params(false, rg35, 6),
+                          params(false, rg35, null),
+                          
+                          params(true,  rg53, 3),
+                          params(false, rg53, 4),
+                          params(true,  rg53, 5),
+                          
+                          params(true,  rg33, 3),
+                          params(false, rg33, 4),
+                          params(false, rg33, 5));                          
     }
 
-    // equals
-
-    public void testEqualsRangeNull() {
-        Range rg = new Range(3, 7);
-        assertNotEqual(rg, null);
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void toArray(Array<Integer> expected, Range rg) {
+        Array<Integer> result = rg.toArray();
+        assertEqual(expected, result, message("rg", rg));
+    }
+    
+    private List<Object[]> parametersForToArray() {
+        return paramsList(params(Array.of(3, 4, 5, 6, 7), new Range(3, 7)),
+                          params(Array.of(3), new Range(3, 3)),
+                          params(Array.<Integer>empty(), new Range(7, 3)));
     }
 
-    public void testEqualsRangeNotRange() {
-        Range rg = new Range(3, 7);
-        Object obj = new Object();
-        assertNotEqual(rg, obj);
-    }
-
-    public void testEqualsBothMatch() {
-        Range x = new Range(3, 7);
-        Range y = new Range(3, 7);
-        assertEquals(x, y);
-    }
-
-    public void testEqualsMismatchFirst() {
-        Range x = new Range(3, 7);
-        Range y = new Range(2, 7);
-        assertNotEqual(x, y);
-    }
-
-    public void testEqualsMismatchLast() {
-        Range x = new Range(3, 7);
-        Range y = new Range(3, 6);
-        assertNotEqual(x, y);
-    }
-
-    public void testEqualsBothMismatch() {
-        Range x = new Range(3, 7);
-        Range y = new Range(2, 6);
-        assertNotEqual(x, y);
-    }
-
-    // toArray
-
-    public Range assertToArray(Array<Integer> expected, Range rg) {
-        assertEquals("range: " + rg, expected, rg.toArray());
-        return rg;
-    }    
-
-    public void testToArrayFirstLessThanLast() {
-        assertToArray(Array.of(3, 4, 5, 6, 7), new Range(3, 7));
-    }
-
-    public void testToArrayFirstEqualsLast() {
-        assertToArray(Array.of(3), new Range(3, 3));
-    }
-
-    public void testToArrayFirstGreaterThanLast() {
-        assertToArray(Array.<Integer>empty(), new Range(7, 3));
-    }
-
-    // iterator
-
-    public Range assertIterator(Integer[] expected, Range rg) {
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void iterator(Integer[] expected, Range rg) {
         int idx = 0;
         for (Integer i : rg) {
-            assertEquals("idx: " + idx, expected[idx], i);
+            assertEqual(i, expected[idx], message("rg", rg, "idx", idx));
             ++idx;
         }
-        assertEquals(expected.length, idx);
-        return rg;
-    }    
-
-    public void testIteratorFirstLessThanLast() {
-        assertIterator(new Integer[] { 3, 4, 5, 6, 7 }, new Range(3, 7));
+        assertEqual(expected.length, idx, message("rg", rg));
     }
-
-    public void testIteratorFirstEqualsLast() {
-        assertIterator(new Integer[] { 3 }, new Range(3, 3));
-    }
-
-    public void testIteratorFirstGreaterThanLast() {
-        assertIterator(new Integer[] { }, new Range(7, 3));
-    }
-
-    // compareTo
     
-    public void assertCompareTo(int expCmp, Range rg0, Range rg1) {
-        String msg = "rg0: " + rg0 + "; rg1: " + rg1;
-        assertEquals(msg, expCmp, rg0.compareTo(rg1));
+    private List<Object[]> parametersForIterator() {
+        return paramsList(params(new Integer[] { 3, 4, 5, 6, 7 }, new Range(3, 7)),
+                          params(new Integer[] { 3 }, new Range(3, 3)),
+                          params(new Integer[] { }, new Range(7, 3)));
     }
 
-    public void testCompareToRangeNull() {
-        Range rg = new Range(3, 7);
-        assertCompareTo(1, rg, null);
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void compareTo(int expected, Range x, Range y) {
+        int result = x.compareTo(y);
+        assertEqual(expected, result, message("x", x, "y", y));
     }
-
-    public void testCompareToBothMatch() {
-        Range x = new Range(3, 7);
-        Range y = new Range(3, 7);
-        assertCompareTo(0, x, y);
-    }
-
-    public void testCompareFirstLessThanOther() {
-        Range x = new Range(2, 7);
-        Range y = new Range(3, 7);
-        assertCompareTo(-1, x, y);
-    }
-
-    public void testCompareLastLessThanOther() {
-        Range x = new Range(3, 6);
-        Range y = new Range(3, 7);
-        assertCompareTo(-1, x, y);
-    }
-
-    // toString
     
-    public String assertToString(String expected, Range rg) {
-        String msg = "rg: " + rg;
+    private List<Object[]> parametersForCompareTo() {
+        Range rg26 = new Range(2, 6);
+        Range rg27 = new Range(2, 7);
+        Range rg36 = new Range(3, 6);
+        Range rg37 = new Range(3, 7);
+        return paramsList(params(1, rg26, null),
+                          params(0, rg26, rg26),
+                          params(0, rg26, new Range(2, 6)),
+                          params(-1, rg26, rg36),
+                          params(-1, rg26, rg27),
+                          params(1, rg36, rg26),
+                          params(1, rg37, rg36));
+    }
+
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void toStringTest(String expected, Range rg) {
         String result = rg.toString();
-        assertEquals(msg, expected, result);
-        return result;
+        assertEqual(expected, result);
     }
-
-    public void testToStringFirstLessThanLast() {
-        assertToString("[3 .. 7]", new Range(3, 7));
+    
+    private List<Object[]> parametersForToStringTest() {
+        return paramsList(params("[3 .. 7]", new Range(3, 7)),
+                          params("[3 .. 3]", new Range(3, 3)),
+                          params("[7 .. 3]", new Range(7, 3)));
     }
-
-    public void testToStringFirstEqualsLast() {
-        assertToString("[3 .. 3]", new Range(3, 3));
-    }
-
-    public void testToStringFirstGreaterThanLast() {
-        assertToString("[7 .. 3]", new Range(7, 3));
-    }    
 }
