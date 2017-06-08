@@ -49,9 +49,31 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      *  for (Integer i : rg) { // block called with 11, 12, 13, 14
      *  }
      * </pre>
+     *
+     * A range is iterated over only if <code>first</code> &lt;= <code>last</code>.
      */
     public Iterator<Integer> iterator() {
         return new RangeIterator(this.first, this.last);
+    }
+
+    /**
+     * Returns an iterator for the range, inclusive of the first value, but exclusive of the last
+     * one. Will not execute if <code>first</code> &lt;= <code>last - 1</code>. Usage:
+     *
+     * <pre>
+     *  Range rg = new Range(11, 14);
+     *  for (Integer i : rg.upTo()) { // block called with 11, 12, 13
+     *  }
+     * </pre>
+     *
+     * A range is iterated over only if <code>first</code> &lt;= <code>last</code>.
+     */
+    public Iterable<Integer> upTo() {
+        return new Iterable<Integer>() {
+            public Iterator<Integer> iterator() {
+                return new RangeIterator(Range.this.first, Range.this.last - 1);
+            }
+        };
     }
 
     /*
@@ -119,8 +141,9 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
     }
 
     /**
-     * Returns the hashCode for this range. Thus ranges can be used as keys in a
-     * HashMap.
+     * Returns the hashCode for this range.
+     *
+     * @return the hash code
      */
     public int hashCode() {
         return first.hashCode() * 17 + last.hashCode();
@@ -128,6 +151,8 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
 
     /**
      * Returns the range as a string.
+     *
+     * @return a string
      */
     public String toString() {
         return "[" + first + " .. " + last + "]";
@@ -142,10 +167,15 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
         if (other == null) {
             return 1;
         }
-        int cmp = ObjectExt.compare(first, other.first);
-        if (cmp == 0) {
-            cmp = ObjectExt.compare(last, other.last);
+        else if (this == other) {
+            return 0;
         }
-        return cmp;
+        else {
+            int cmp = ObjectExt.compare(first, other.first);
+            if (cmp == 0) {
+                cmp = ObjectExt.compare(last, other.last);
+            }
+            return cmp;
+        }
     }
 }
