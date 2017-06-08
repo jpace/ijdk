@@ -22,8 +22,7 @@ public class TestRange {
     public void first(Integer expected, Range rg) {
         Integer result = rg.first();
         assertEqual(expected, result, message("rg", rg));
-    }
-    
+    }    
 
     @Test
     @Parameters(method="parametersForFirst")
@@ -43,6 +42,14 @@ public class TestRange {
     @TestCaseName("{method} {index} {params}")
     public void last(Integer expected, Range rg) {
         Integer result = rg.last();
+        assertEqual(expected, result, message("rg", rg));
+    }    
+
+    @Test
+    @Parameters(method="parametersForLast")
+    @TestCaseName("{method} {index} {params}")
+    public void getLast(Integer expected, Range rg) {
+        Integer result = rg.getLast();
         assertEqual(expected, result, message("rg", rg));
     }
     
@@ -64,10 +71,10 @@ public class TestRange {
         Range rg21 = new Range(2, 1);
         Range rg13 = new Range(1, 3);
         
-        return paramsList(params(true, rg12, rg12),
+        return paramsList(params(true,  rg12, rg12),
                           params(false, rg12, null),
                           params(false, rg12, "abc"),
-                          params(true, rg12, new Range(1, 2)),
+                          params(true,  rg12, new Range(1, 2)),
                           params(false, rg12, rg21),
                           params(false, rg12, rg13));
     }
@@ -127,9 +134,28 @@ public class TestRange {
     }
     
     private List<Object[]> parametersForIterator() {
-        return paramsList(params(new Integer[] { 3, 4, 5, 6, 7 }, new Range(3, 7)),
-                          params(new Integer[] { 3 }, new Range(3, 3)),
-                          params(new Integer[] { }, new Range(7, 3)));
+        return paramsList(params(new Integer[] { 2, 3, 4 }, new Range(2, 4)),
+                          params(new Integer[] { 2 }, new Range(2, 2)),
+                          params(new Integer[] { }, new Range(3, 2)));
+    }
+
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void upTo(Integer[] expected, Range rg) {
+        int idx = 0;
+        for (Integer i : rg.upTo()) {
+            assertEqual(i, expected[idx], message("rg", rg, "idx", idx));
+            ++idx;
+        }
+        assertEqual(expected.length, idx, message("rg", rg));
+    }
+    
+    private List<Object[]> parametersForUpTo() {
+        return paramsList(params(new Integer[] { 2, 3 }, new Range(2, 4)),
+                          params(new Integer[] { 2 }, new Range(2, 3)),
+                          params(new Integer[] { }, new Range(2, 2)),
+                          params(new Integer[] { }, new Range(3, 2)));
     }
 
     @Test
@@ -145,13 +171,13 @@ public class TestRange {
         Range rg27 = new Range(2, 7);
         Range rg36 = new Range(3, 6);
         Range rg37 = new Range(3, 7);
-        return paramsList(params(1, rg26, null),
-                          params(0, rg26, rg26),
-                          params(0, rg26, new Range(2, 6)),
+        return paramsList(params(1,  rg26, null),
+                          params(0,  rg26, rg26),
+                          params(0,  rg26, new Range(2, 6)),
                           params(-1, rg26, rg36),
                           params(-1, rg26, rg27),
-                          params(1, rg36, rg26),
-                          params(1, rg37, rg36));
+                          params(1,  rg36, rg26),
+                          params(1,  rg37, rg36));
     }
 
     @Test

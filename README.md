@@ -1,7 +1,7 @@
 # Overview
 
 IJDK (Incava Java Development Kit) is a library of general-purpose Java code, much of it inspired by
-Ruby. For example, reading a file is this simple:
+and modeled on the equivalent in Ruby. For example, reading a file:
 
 ```java
     List<String> lines = IO.readLines("foo.txt");
@@ -18,6 +18,8 @@ Note the similarity to idiomatic Ruby:
 IJDK has a very expansive (and growing) library for Java I/O and collections, as an alternative to
 the JDK. IJDK is mostly inspired by Ruby, and parallels Ruby classes (such as Map/Hash and
 List/Array) closely, usually moreso than it does the Apache Commons and Guava libraries.
+
+As IJDK gets more behavior, modules -- such as I/O -- may be split into subprojects.
 
 ## Enhanced collections
 
@@ -140,17 +142,25 @@ Similarly, the nearly identical KeyValue:
 
 ## Range
 
-A Range is a pair of integers. It converts easily to arrays and lists, and supports iteration:
+A Range is a pair of integers. It converts to arrays, and supports iteration.
 
 ```java
     Range r = new Range(3, 7);
     r.includes(4); // true
     r.includes(2); // false
 
+    // inclusive of both first and last values
     for (Integer i : r) {
         // iterate from 3 *through* 7
     }
+
     Array<Integer> list = r.toArray(); // list == [ 3, 4, 5, 6, 7 ]
+
+    // exclusive of last value
+    for (Integer i : r.upTo()) {
+        // iterate from 3 *through* 6
+    }
+
 ```
 
 ## Iterators
@@ -289,8 +299,15 @@ names, such as Str (String), Int (Integer), Obj (Object), etc.
 From the GitHub project [ijdk](http://github.com/jpace/ijdk "IJDK"), download and build the project
 with Gradle.
 
-IJDK is not yet available via a Maven repository. (Volunteers for such effort are welcome and very
-appreciated.)
+IJDK is available in the Maven repository.
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile group: 'org.incava', name: 'ijdk', version: '3.3.2'
+    }
 
 # Help
 
