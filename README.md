@@ -193,7 +193,7 @@ Does one-to-many mappings.
 
 ## Int
 
-An lternate class to Integer:
+An alternate class to Integer:
 
 ```java
     Integer num = Int.toInteger("1");   // num == 1
