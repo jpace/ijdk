@@ -112,16 +112,6 @@ public abstract class StringTest {
 
     public abstract String padLeft(String str, int length);
 
-    public String assertPadLeft(String expected, String str, char ch, int length) {
-        String result = padLeft(str, ch, length);
-        return assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
-    }
-
-    public String assertPadLeft(String expected, String str, int length) {
-        String result = padLeft(str, length);
-        return assertEqual(expected, result, message("str", str, "length", length));
-    }
-
     @Test
     @Parameters
     @TestCaseName("{method} {index} {params}")
