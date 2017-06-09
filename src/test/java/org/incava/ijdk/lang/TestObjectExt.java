@@ -1,256 +1,107 @@
 package org.incava.ijdk.lang;
 
-import junit.framework.TestCase;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.assertSame;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-public class TestObjectExt extends TestCase {
-    public TestObjectExt(String name) {
-        super(name);
-    }
-
-    // areEqual, equal
-
-    // compare
-
-    public<T extends Comparable<T>> int assertCompare(int expected, T x, T y) {
+@RunWith(JUnitParamsRunner.class)
+public class TestObjectExt {
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public <T extends Comparable<T>> void compare(int expected, T x, T y) {
         int result = ObjectExt.compare(x, y);
-        assertEquals("x: " + x + "; y: " + y, expected, result);
-        return result;
-    }
-
-    public void testCompareNullNull() {
-        assertCompare(0, null, null);
-    }
-
-    public void testCompareNullObject() {
-        assertCompare(-1, null, new String());
-    }
-
-    public void testCompareObjectNull() {
-        assertCompare(1, new String(), null);
-    }
-
-    public void testCompareSameObject() {
-        String obj = new String();
-        assertCompare(0, obj, obj);
-    }
-
-    public void testCompareDifferentObject() {
-        assertCompare(0, new String(), new String());
-    }
-
-    public void testCompareEquivalentObject() {
-        assertCompare(0, new String("abc"), new String("abc"));
-    }
-
-    public void testCompareLesserObject() {
-        assertCompare(-1, new String("abc"), new String("def"));
-    }
-
-    public void testCompareGreaterObject() {
-        assertCompare(1, new String("def"), new String("abc"));
-    }
-
-    // ObjectExt: equal, Obj: equals
-
-    public boolean objectsEqual(Object x, Object y) {
-        return ObjectExt.equal(x, y);
-    }    
-
-    public boolean assertObjectsEqual(boolean expected, Object x, Object y) {
-        return assertEqual(expected, objectsEqual(x, y), message("x", x, "y", y));
-    }
-
-    public void testObjectsEqualNullNull() {
-        assertObjectsEqual(true, null, null);
-    }
-
-    public void testObjectsEqualNullObject() {
-        assertObjectsEqual(false, null, new Object());
-    }
-
-    public void testObjectsEqualObjectNull() {
-        assertObjectsEqual(false, new Object(), null);
-    }
-
-    public void testObjectsEqualSameObject() {
-        Object obj = new Object();
-        assertObjectsEqual(true, obj, obj);
-    }
-
-    public void testObjectsEqualDifferentObject() {
-        assertObjectsEqual(false, new Object(), new Object());
-    }
-
-    public void testObjectsEqualEquivalentObject() {
-        assertObjectsEqual(true, new String("abc"), new String("abc"));
+        assertEqual(expected, result, message("x", x, "y", y));
     }
     
-    // isTrue
-
-    public boolean assertIsTrue(boolean expected, Object obj) {
-        return assertEqual(expected, isTrue(obj), message("obj", obj));
-    }
-
-    public boolean isTrue(Object obj) {
-        return ObjectExt.isTrue(obj);
-    }
-
-    public void testIsTrueNull() {
-        assertIsTrue(false, null);
-    }
-
-    public void testIsTrueObject() {
-        assertIsTrue(true, new Object());
-    }
-
-    public void testIsTrueEmptyString() {
-        assertIsTrue(false, "");
-    }
-
-    public void testIsTrueNotEmptyString() {
-        assertIsTrue(true, "abc");
-    }
-
-    public void testIsTrueEmptyCollection() {
-        assertIsTrue(false, new ArrayList<String>());
-    }
-
-    public void testIsTrueNotEmptyCollection() {
-        assertIsTrue(true, Arrays.asList(new Integer[] { 1 }));
-    }
-
-    public void testIsTrueEmptyArray() {
-        assertIsTrue(false, new Integer[0]);
-    }
-
-    public void testIsTrueNotEmptyArray() {
-        assertIsTrue(true, new Integer[] { 1 });
-    }
-
-    // isFalse
-
-    public boolean assertIsFalse(boolean expected, Object obj) {
-        return assertEqual(expected, isFalse(obj), message("obj", obj));
-    }
-
-    public boolean isFalse(Object obj) {
-        return ObjectExt.isFalse(obj);
-    }
-
-    public void testIsFalseNull() {
-        assertIsFalse(true, null);
-    }
-
-    public void testIsFalseObject() {
-        assertIsFalse(false, new Object());
-    }
-
-    public void testIsFalseEmptyString() {
-        assertIsFalse(true, "");
-    }
-
-    public void testIsFalseNotEmptyString() {
-        assertIsFalse(false, "abc");
-    }
-
-    public void testIsFalseEmptyCollection() {
-        assertIsFalse(true, new ArrayList<String>());
-    }
-
-    public void testIsFalseNotEmptyCollection() {
-        assertIsFalse(false, Arrays.asList(new Integer[] { 1 }));
-    }
-
-    public void testIsFalseEmptyArray() {
-        assertIsFalse(true, new Integer[0]);
-    }
-
-    public void testIsFalseNotEmptyArray() {
-        assertIsFalse(false, new Integer[] { 1 });
+    private List<Object[]> parametersForCompare() {
+        String empty = new String();
+        String abc = new String("abc");
+        String def = new String("def");
+        
+        return paramsList(params(0,  null,  null),
+                          params(-1, null,  empty),
+                          params(-1, null,  abc),
+                          params(1,  empty, null),
+                          params(0,  empty, empty),
+                          params(0,  abc,   abc),
+                          params(-1, abc,   def),
+                          params(1,  def,   abc));
     }    
 
-    // isEmpty
-
-    public boolean assertIsEmpty(boolean expected, Object obj) {
-        return assertEqual(expected, isEmpty(obj), message("obj", obj));
-    }    
-
-    public boolean isEmpty(Object obj) {
-        return ObjectExt.isEmpty(obj);
-    }
-
-    public void testIsEmptyNull() {
-        assertIsEmpty(true, null);
-    }
-
-    public void testIsEmptyObject() {
-        assertIsEmpty(false, new Object());
-    }
-
-    public void testIsEmptyEmptyString() {
-        assertIsEmpty(true, "");
-    }
-
-    public void testIsEmptyNotEmptyString() {
-        assertIsEmpty(false, "abc");
-    }
-
-    public void testIsEmptyEmptyCollection() {
-        assertIsEmpty(true, new ArrayList<String>());
-    }
-
-    public void testIsEmptyNotEmptyCollection() {
-        assertIsEmpty(false, Arrays.asList(new Integer[] { 1 }));
-    }
-
-    public void testIsEmptyEmptyArray() {
-        assertIsEmpty(true, new Integer[0]);
-    }
-
-    public void testIsEmptyNotEmptyArray() {
-        assertIsEmpty(false, new Integer[] { 1 });
-    }
-
-    // isNull
-
-    public boolean assertIsNull(boolean expected, Object obj) {
-        return assertEqual(expected, isNull(obj), message("obj", obj));
-    }    
-
-    public boolean isNull(Object obj) {
-        return ObjectExt.isNull(obj);
-    }
-
-    public void testIsNullNull() {
-        assertIsNull(true, null);
-    }
-
-    public void testIsNullObject() {
-        assertIsNull(false, new Object());
-    }
-
-    // isNotNull    
-
-    public boolean assertIsNotNull(boolean expected, Object obj) {
-        return assertEqual(expected, isNotNull(obj), message("obj", obj));
-    }
-
-    public boolean isNotNull(Object obj) {
-        return ObjectExt.isNotNull(obj);
+    @Test
+    @Parameters(method="parametersForCompare")
+    @TestCaseName("{method} {index} {params}")
+    public void equal(int cmpValue, Object x, Object y) {
+        boolean result = ObjectExt.equal(x, y);
+        assertEqual(cmpValue == 0, result, message("x", x, "y", y, "cmpValue", cmpValue));
     }
     
-    public void testIsNotNullNull() {
-        assertIsNotNull(false, null);
+
+    @Test
+    @Parameters(method="parametersForIsBoolean")
+    @TestCaseName("{method} {index} {params}")
+    public void isTrue(boolean expected, Object obj) {
+        boolean result = ObjectExt.isTrue(obj);
+        assertEqual(expected, result, message("obj", obj));
     }
 
-    public void testIsNotNullObject() {
-        assertIsNotNull(true, new Object());
-    }    
+    @Test
+    @Parameters(method="parametersForIsBoolean")
+    @TestCaseName("{method} {index} {params}")
+    public void isFalse(boolean expected, Object obj) {
+        boolean result = ObjectExt.isFalse(obj);
+        assertEqual(!expected, result, message("obj", obj));
+    }
+
+    @Test
+    @Parameters(method="parametersForIsBoolean")
+    @TestCaseName("{method} {index} {params}")
+    public void isEmpty(boolean expected, Object obj) {
+        boolean result = ObjectExt.isEmpty(obj);
+        assertEqual(!expected, result, message("obj", obj));
+    }
+    
+    private List<Object[]> parametersForIsBoolean() {
+        return paramsList(params(false, null),
+                          params(true,  new Object()),
+                          params(false, ""),
+                          params(true,  "abc"),
+                          params(false, new ArrayList<String>()),
+                          params(true,  Arrays.asList(new Integer[] { 1 })),
+                          params(false, new Integer[0]),
+                          params(true,  new Integer[] { 1 }));
+    }
+
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void isNull(boolean expected, Object obj) {
+        boolean result = ObjectExt.isNull(obj);
+        assertEqual(expected, result, message("obj", obj));
+    }
+
+    @Test
+    @Parameters(method="parametersForIsNull")
+    @TestCaseName("{method} {index} {params}")
+    public void isNotNull(boolean expected, Object obj) {
+        boolean result = ObjectExt.isNotNull(obj);
+        assertEqual(!expected, result, message("obj", obj));
+    }
+    
+    private List<Object[]> parametersForIsNull() {
+        return paramsList(params(true, null),
+                          params(false, new Object()));
+    }
 }
