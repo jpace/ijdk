@@ -1,58 +1,67 @@
 package org.incava.ijdk.lang;
 
-import junit.framework.TestCase;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class TestInt extends TestCase {
-    public TestInt(String name) {
-        super(name);
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
+
+@RunWith(JUnitParamsRunner.class)
+public class TestInt {
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void init(Integer expected, Int intr) {
+        assertEqual(expected, intr.get(), message("intr", intr));
+        assertEqual(expected, intr.integer(), message("intr", intr));
     }
-
-    public Int assertAccessors(Integer expected, Int intr) {
-        assertEquals(expected, intr.get());
-        assertEquals(expected, intr.integer());
-        return intr;
-    }
-
-    // ctor from integer
-
-    public void testCtorNull() {
-        assertAccessors(null, new Int((Integer)null));
-    }
-
-    public void testCtorNotNull() {
-        Integer i = new Integer(17);
-        assertAccessors(i, new Int(i));
-    }
-
-    // ctor from string
     
-    public Integer assertStringCtor(Integer expected, String str) {
-        Integer result = new Int(str).integer();
-        assertEquals("str: '" + str + "'", expected, result);
-        return result;
+    private List<Object[]> parametersForInit() {
+        return paramsList(params(null, new Int((Integer)null)),
+                          params(new Integer(17), new Int(17)));
     }
 
-    public void testStringCtorNull() {
-        assertStringCtor(null, null);
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void ofString(Int expected, String str) {
+        Int result = Int.of(str);
+        assertEqual(expected, result, message("str", str));
+    }
+    
+    private List<Object[]> parametersForOfString() {
+        Int inNull = new Int((Integer)null);
+        Int inOne = new Int(1);
+        
+        return paramsList(params(inNull, null),
+                          params(inNull, ""),
+                          params(inNull, "abc"),
+                          params(inNull, "a1"),
+                          params(inOne, "1"),
+                          params(inNull, "1a"));
     }
 
-    public void testStringCtorEmpty() {
-        assertStringCtor(null, "");
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public void ofInteger(Int expected, Integer i) {
+        Int result = Int.of(i);
+        assertEqual(expected, result, message("i", i));
     }
-
-    public void testStringCtorAlpha() {
-        assertStringCtor(null, "abc");
-    }
-
-    public void testStringCtorAlphaNumber() {
-        assertStringCtor(null, "a1");
-    }
-
-    public void testStringCtorNumber() {
-        assertStringCtor(1, "1");
-    }
-
-    public void testStringCtorNumberAlpha() {
-        assertStringCtor(null, "1a");
+    
+    private List<Object[]> parametersForOfInteger() {
+        Int inNull = new Int((Integer)null);
+        
+        return paramsList(params(inNull, null),
+                          params(new Int(1), 1),
+                          params(new Int(0), 0));
     }
 }

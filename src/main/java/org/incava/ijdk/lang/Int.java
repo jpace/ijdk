@@ -7,6 +7,34 @@ import java.util.*;
  */
 public class Int extends NullableObject<Integer> {
     /**
+     * Returns an Int (integer) for the number.
+     */
+    public static Int of(Integer num) {
+        // this may become optimized to reduce object creation
+        return new Int(num);
+    }
+    
+    /**
+     * Returns an Int (integer) for the string.
+     */
+    public static Int of(String str) {
+        // this too may become optimized to reduce object creation
+        if (str == null) {
+            return new Int((Integer)null);
+        }
+        else {
+            Integer i;
+            try {
+                i = Integer.valueOf(str);
+            }
+            catch (NumberFormatException nfe) {
+                i = null;
+            }
+            return new Int(i);
+        }
+    }
+    
+    /**
      * Returns the str as an integer, or null if it is null or is not an integer.
      */
     public static Integer toInteger(String str) {

@@ -59,7 +59,12 @@ public class NullableObject<T> {
      */
     public boolean equals(Object other) {
         if (isNull()) {
-            return other == null;
+            if (other instanceof NullableObject) {
+                return ((NullableObject)other).isNull();
+            }
+            else {
+                return other == null;
+            }
         }
         else if (other == null) {
             return false;

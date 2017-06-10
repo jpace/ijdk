@@ -62,18 +62,26 @@ public class TestNullableObject {
     }
     
     private List<Object[]> parametersForEqualsTest() {
-        NullableObject<String> objStr = new NullableObject<String>("abc");
-        NullableObject<Integer> objInt = new NullableObject<Integer>(1);
+        NullableObject<String>  objStr     = new NullableObject<String>("abc");
+        NullableObject<Integer> objInt     = new NullableObject<Integer>(1);
+        NullableObject<String>  objStrNull = new NullableObject<String>(null);
+        NullableObject<Integer> objIntNull = new NullableObject<Integer>(null);
         
         return paramsList(params(true,  objStr, "abc"),
                           params(true,  objStr, new NullableObject<String>("abc")),
                           params(true,  objStr, objStr),
                           params(false, objStr, "def"),
                           params(false, objStr, 1),
+                          params(false, objStr, objStrNull),
+                          params(false, objStrNull, objStr),
+                          
+                          params(false, objStr, objIntNull),
                           
                           params(true,  objInt, 1),
                           params(true,  objInt, new NullableObject<Integer>(1)),
                           params(true,  objInt, objInt),
+                          params(false, objInt, objIntNull),
+                          params(false, objIntNull, objInt),
                           params(false, objInt, 2));
     }
 
