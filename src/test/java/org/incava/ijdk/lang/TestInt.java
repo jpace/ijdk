@@ -1,7 +1,5 @@
 package org.incava.ijdk.lang;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
@@ -19,12 +17,25 @@ public class TestInt {
     @Test
     @Parameters
     @TestCaseName("{method} {index} {params}")
-    public void init(Integer expected, Int intr) {
+    public void get(Integer expected, Int intr) {
         assertEqual(expected, intr.get(), message("intr", intr));
+    }
+    
+    @Test
+    @Parameters(method="parametersForGet")
+    @TestCaseName("{method} {index} {params}")
+    public void obj(Integer expected, Int intr) {
+        assertEqual(expected, intr.obj(), message("intr", intr));
+    }
+    
+    @Test
+    @Parameters(method="parametersForGet")
+    @TestCaseName("{method} {index} {params}")
+    public void integer(Integer expected, Int intr) {
         assertEqual(expected, intr.integer(), message("intr", intr));
     }
     
-    private List<Object[]> parametersForInit() {
+    private List<Object[]> parametersForGet() {
         return paramsList(params(null, new Int((Integer)null)),
                           params(new Integer(17), new Int(17)));
     }
@@ -45,8 +56,10 @@ public class TestInt {
                           params(inNull, ""),
                           params(inNull, "abc"),
                           params(inNull, "a1"),
-                          params(inOne, "1"),
-                          params(inNull, "1a"));
+                          params(inOne,  "1"),
+                          params(inNull, "1a"),
+                          params(inNull, "1 "),
+                          params(inNull, " 1"));
     }
 
     @Test

@@ -226,8 +226,8 @@ Pathname extends java.io.File with Ruby-like functionality:
 ## Comp
 
 ijdk.lang.Comp extends and replaces Comparable (`compareTo`) usage, normalizing the result to be
-simply -1, 0, or 1. Comp also contains `lt` (less than), `lte` (less than or equal), `gt` (greater
-than), and `gte` (greater than or equal), for simpler comparisons:
+simply -1, 0, or 1. Comp also contains the methods `lt` (less than), `lte` (less than or equal),
+`gt` (greater than), and `gte` (greater than or equal), for simpler comparisons:
 
 ```java
    if (Comp.gte("abc", "bbc")) {
@@ -284,12 +284,10 @@ providing more context than just the values being compared:
 
 * colorized strings (on ANSI terminals)
 
-* an alternative "logging" (debugging output) module
-
 * logical package structure
 
-The primary classes are in org.incava.ijdk.lang (roughly equivalent of java.lang) and
-org.incava.ijdk.collect. 
+The primary classes are in org.incava.ijdk.lang (roughly the equivalent of java.lang) and
+org.incava.ijdk.collect.
 
 The names of the shadow classes follow the convention of the class that they wrap, with shorter
 names, such as Str (String), Int (Integer), Obj (Object), etc.
@@ -311,7 +309,7 @@ IJDK is available in the Maven repository.
 
 # Help
 
-Please email me at jeugenepace at gmail dot com if you have questions about IJDK.
+Please email me at jeugenepace at gmail dot com if you have questions or feedback about IJDK.
 
 # Contributing
 

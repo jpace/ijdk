@@ -1,13 +1,13 @@
 package org.incava.ijdk.lang;
 
-import java.util.*;
-
 /**
  * Extensions to Integer, wrapping a possibly-null Integer with better null checking.
  */
 public class Int extends NullableObject<Integer> {
     /**
      * Returns an Int (integer) for the number.
+     *
+     * @return an Int wrapping the given Integer
      */
     public static Int of(Integer num) {
         // this may become optimized to reduce object creation
@@ -16,26 +16,18 @@ public class Int extends NullableObject<Integer> {
     
     /**
      * Returns an Int (integer) for the string.
+     *
+     * @return an Int wrapping the given string, converted to an Integer
      */
     public static Int of(String str) {
         // this too may become optimized to reduce object creation
-        if (str == null) {
-            return new Int((Integer)null);
-        }
-        else {
-            Integer i;
-            try {
-                i = Integer.valueOf(str);
-            }
-            catch (NumberFormatException nfe) {
-                i = null;
-            }
-            return new Int(i);
-        }
+        return new Int(toInteger(str));
     }
     
     /**
      * Returns the str as an integer, or null if it is null or is not an integer.
+     *
+     * @return an Int wrapping the given string, converted to an Integer
      */
     public static Integer toInteger(String str) {
         if (str == null) {
@@ -48,8 +40,6 @@ public class Int extends NullableObject<Integer> {
             return null;
         }
     }
-    
-    private final Integer integer;
     
     /**
      * Converts the given string to an integer, if it is a valid value. Otherwise the wrapped
@@ -64,13 +54,12 @@ public class Int extends NullableObject<Integer> {
      */
     public Int(Integer in) {
         super(in);
-        this.integer = in;
     }
 
     /**
      * Returns the wrapped integer.
      */
     public Integer integer() {
-        return this.integer;
+        return obj();
     }
 }

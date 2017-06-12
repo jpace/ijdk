@@ -1,7 +1,5 @@
 package org.incava.ijdk.lang;
 
-import java.util.*;
-
 /**
  * Extensions to the Comparable interface.
  */
