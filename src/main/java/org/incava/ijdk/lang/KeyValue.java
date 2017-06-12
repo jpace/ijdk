@@ -9,6 +9,8 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
     /**
      * Shorter syntax than the default constructor, allowing the compiler to discern the object types.
      *
+     * @param key the key
+     * @param value the value
      * @return a new KeyValue pair
      */
     public static <K, V> KeyValue<K, V> of(K key, V value) {
@@ -18,6 +20,12 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
     private final K key;
     private final V value;
     
+    /**
+     * Constructs a KeyValue. Either <code>key</code> or <code>value</code> can be null.
+     *
+     * @param key the key
+     * @param value the value
+     */
     public KeyValue(K key, V value) {
         this.key = key;
         this.value = value;
@@ -62,6 +70,7 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
     /**
      * Returns if <code>obj</code> equals this one.
      *
+     * @param obj the object to compare to this one
      * @return if <code>obj</code> equals this one
      */
     public boolean equals(Object obj) {
@@ -75,7 +84,7 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
     }
 
     /**
-     * Returns this key/value pair as a string, in the form "#{key} => #{value}".
+     * Returns this key/value pair as a string, in the form "#{key} =&gt; #{value}".
      *
      * @return this object as a string
      */
@@ -87,6 +96,7 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
      * Returns this key/value pair as a string, using the given separator, in the form
      * "#{key}#{separator}#{value}".
      *
+     * @param sep the separator to use
      * @return this object as a string
      */
     public String toString(String sep) {
@@ -106,9 +116,9 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
      * Compares the given object to this one, using their <code>compareTo</code> methods if the key
      * and/or value implement <code>Comparable</code>.
      *
+     * @param other the KeyValue to compare to this one
      * @return the comparison value, which is -1, 0, or 1
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public int compareTo(KeyValue<K, V> other) {
         int cmp = compare(this.key, other.key);
         if (cmp == 0) {

@@ -1,71 +1,85 @@
 package org.incava.ijdk.lang;
 
-import junitparams.JUnitParamsRunner;
+import java.util.List;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class TestKeyValue {
+public class TestKeyValue extends Parameterized {
+    private KeyValue<String, Double> kvOne123 = KeyValue.of("one", 1.23);
+
     @Test
-    public void init() {
-        KeyValue<String, Double> kv = new KeyValue<String, Double>("one", 1.23);
-        assertEqual("one", kv.key());
-        assertEqual(new Double(1.23), kv.value());
+    @TestCaseName("{method} {index} {params}")
+    @Parameters(method="parametersForAccessors")
+    public void getKey(String expKey, Double expValue, KeyValue<String, Double> kv) {
+        assertEqual(expKey, kv.getKey(), message("kv", kv));
     }
 
     @Test
-    public void of() {
-        KeyValue<String, Double> kv = KeyValue.of("one", 1.23);
-        assertEqual("one", kv.key());
-        assertEqual(new Double(1.23), kv.value());
+    @Parameters(method="parametersForAccessors")
+    @TestCaseName("{method} {index} {params}")
+    public void key(String expKey, Double expValue, KeyValue<String, Double> kv) {
+        assertEqual(expKey, kv.key(), message("kv", kv));
     }
 
     @Test
-    public void getKey() {
-        KeyValue<String, Double> kv = KeyValue.of("one", 1.23);
-        assertEqual("one", kv.getKey());
+    @Parameters(method="parametersForAccessors")
+    @TestCaseName("{method} {index} {params}")
+    public void getValue(String expKey, Double expValue, KeyValue<String, Double> kv) {
+        assertEqual(expValue, kv.getValue(), message("kv", kv));
     }
 
     @Test
-    public void getValue() {
-        KeyValue<String, Double> kv = KeyValue.of("one", 1.23);
-        assertEqual(1.23, kv.getValue());
+    @Parameters(method="parametersForAccessors")
+    @TestCaseName("{method} {index} {params}")
+    public void value(String expKey, Double expValue, KeyValue<String, Double> kv) {
+        assertEqual(expValue, kv.value(), message("kv", kv));
+    }
+
+    private List<Object[]> parametersForAccessors() {
+        return paramsList(params("one", 1.23, kvOne123),
+                          params(null, 1.23, new KeyValue<String, Double>(null, 1.23)),
+                          params("one", null, new KeyValue<String, Double>("one", null)));
     }
 
     @Test
-    public void equals() {
-        KeyValue<String, Double> kv1 = KeyValue.of("one", 1.23);
-        KeyValue<String, Double> kv2 = KeyValue.of("one", 1.23);
-        KeyValue<String, Double> kv3 = KeyValue.of("one", 4.56);
-        KeyValue<String, Double> kv4 = KeyValue.of("two", 1.23);
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public <K, V> void equalsTest(boolean expected, KeyValue<K, V> kv, Object other) {
+        boolean result = kv.equals(other);
+        assertEqual(expected, result, message("kv", kv, "other", other));
+    }
 
-        assertEqual(true, kv1.equals(kv2));
-        assertEqual(true, kv2.equals(kv1));
-
-        assertEqual(false, kv1.equals(kv3));
-        assertEqual(false, kv1.equals(kv4));
+    private List<Object[]> parametersForEqualsTest() {
+        return paramsList(params(true,  kvOne123, kvOne123),
+                          params(false, kvOne123, null),
+                          params(false, kvOne123, "abc"),
+                          params(true,  kvOne123, KeyValue.of("one", 1.23)),
+                          params(false, kvOne123, KeyValue.of("one", 3.45)),
+                          params(false, kvOne123, KeyValue.of("two", 1.23)));
     }
 
     @Test
-    public void hashCode_test() {
+    public void hashCodeTest() {
         KeyValue<String, Double> kv = KeyValue.of("one", 1.23);
         assertEqual(1171979044, kv.hashCode());
     }
 
     @Test
     @Parameters
-    public <K, V> void toString_test(String expected, KeyValue<K, V> kv, String separator) {
+    public <K, V> void toStringTest(String expected, KeyValue<K, V> kv, String separator) {
         String result = separator == null ? kv.toString() : kv.toString(separator);
         assertEqual(expected, result, message("kv", kv, "separator", separator));
     }    
 
-    private java.util.List<Object[]> parametersForToString_test() {
+    private java.util.List<Object[]> parametersForToStringTest() {
         KeyValue<String, Double> kv = KeyValue.of("one", 1.23);
         return paramsList(params("one => 1.23", kv, null),
                           params("one: 1.23", kv, ": "));
@@ -83,15 +97,15 @@ public class TestKeyValue {
         KeyValue<String, Double> ab = KeyValue.of("one", 2.4);
         KeyValue<String, Double> ba = KeyValue.of("two", 1.2);
         
-        return paramsList(params(0, aa, aa),
-                          params(0, aa, KeyValue.of("one", 1.2)),
-                          params(0, KeyValue.of("one", 1.2), aa),
+        return paramsList(params(0,  aa, aa),
+                          params(0,  aa, KeyValue.of("one", 1.2)),
+                          params(0,  KeyValue.of("one", 1.2), aa),
                           params(-1, aa, ba),
-                          params(1, ba, aa),
+                          params(1,  ba, aa),
                           params(-1, aa, ba),
                           params(-1, aa, ab),
-                          params(1, ab, aa),
-                          // not comparable:
+                          params(1,  ab, aa),
+                          // StringBuilder is not comparable:
                           params(-1, KeyValue.of(new StringBuilder("one"), 1.2), KeyValue.of(new StringBuilder("one"), 1.2)),
                           params(-1, KeyValue.of(1.2, new StringBuilder("one")), KeyValue.of(1.2, new StringBuilder("one"))));
     }
