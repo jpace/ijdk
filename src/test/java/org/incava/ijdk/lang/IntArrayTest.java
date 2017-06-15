@@ -13,9 +13,7 @@ import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
 public class IntArrayTest extends Parameterized {
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void max(int expected, int[] nums) {
         assertEqual(expected, IntArray.max(nums), message("nums", nums == null ? null : Arrays.asList(nums)));
     }
@@ -30,9 +28,7 @@ public class IntArrayTest extends Parameterized {
                           params(17, new int[] { 17, 3 }));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void min(int expected, int[] nums) {
         assertEqual(expected, IntArray.min(nums), message("nums", nums == null ? null : Arrays.asList(nums)));
     }
@@ -47,9 +43,7 @@ public class IntArrayTest extends Parameterized {
                           params(3, new int[] { 17, 3 }));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void sum(int expected, int[] nums) {
         assertEqual(expected, IntArray.sum(nums), message("nums", nums == null ? null : Arrays.asList(nums)));
         
@@ -65,9 +59,7 @@ public class IntArrayTest extends Parameterized {
                           params(20, new int[] { 17, 3 }));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void length(int expected, int[] nums) {
         assertEqual(expected, IntArray.length(nums), message("nums", nums == null ? null : Arrays.asList(nums)));        
     }
@@ -78,9 +70,7 @@ public class IntArrayTest extends Parameterized {
                           params(2, new int[] { 3, 17 }));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void average(int expected, int[] nums) {
         assertEqual(expected, IntArray.average(nums), message("nums", nums == null ? null : Arrays.asList(nums)));
     }
@@ -95,9 +85,7 @@ public class IntArrayTest extends Parameterized {
                           params(10, new int[] { 17, 4 }));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void contains(boolean expected, int[] nums, int value) {
         assertEqual(expected, IntArray.contains(nums, value), message("nums", nums == null ? null : Arrays.asList(nums), "value", value));
     }
@@ -111,9 +99,7 @@ public class IntArrayTest extends Parameterized {
                           params(false, new int[] { 3, 17 }, 8));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void toStringArray(String[] expected, int[] nums) {
         assertEqual(expected, IntArray.toStringArray(nums), message("nums", nums == null ? null : Arrays.asList(nums)));
     }

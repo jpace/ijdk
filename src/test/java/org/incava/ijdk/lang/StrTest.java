@@ -152,18 +152,14 @@ public class StrTest extends StringTest {
         return new Str(str).quote();
     }
 
-    @Test
-    @Parameters(method="parametersForEquals")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
     public void equalsString(boolean expected, String a, String b) {
         Str sa = new Str(a);
         boolean result = sa.equals(b);
         assertEqual(expected, result, message("a", a, "b", b));
     }    
 
-    @Test
-    @Parameters(method="parametersForEquals")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
     public void equalsStr(boolean expected, String a, String b) {
         Str sa = new Str(a);
         Str sb = new Str(b);
@@ -183,9 +179,7 @@ public class StrTest extends StringTest {
                           params(false, "a", "ab"));
     }
     
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void endsWithChar(boolean expected, String str, char ch) {
         boolean result = new Str(str).endsWith(ch);
         assertEqual(expected, result, message("str", str, "ch", ch));
@@ -198,9 +192,7 @@ public class StrTest extends StringTest {
                           params(false, "abc", 'd'));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void endsWithString(boolean expected, String str, String s) {
         boolean result = new Str(str).endsWith(s);
         assertEqual(expected, result, message("str", str, "s", s));
@@ -216,9 +208,7 @@ public class StrTest extends StringTest {
                           params(false, "abc", "d"));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void compareTo(Integer expected, String x, String y) {
         Integer result = new Str(x).compareTo(new Str(y));
         Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
@@ -234,9 +224,7 @@ public class StrTest extends StringTest {
                           params(-1, null, "abc"));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void hashCodeTest(Integer expected, String x) {
         Integer result = new Str(x).hashCode();
         assertEqual(expected, result, message("x", x));

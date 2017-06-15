@@ -14,30 +14,22 @@ import static org.incava.test.Parameters.paramsList;
 public class KeyValueTest extends Parameterized {
     private KeyValue<String, Double> kvOne123 = KeyValue.of("one", 1.23);
 
-    @Test
-    @TestCaseName("{method} {index} {params}")
-    @Parameters(method="parametersForAccessors")
+    @Test @Parameters(method="parametersForAccessors") @TestCaseName("{method} {index} {params}")
     public void getKey(String expKey, Double expValue, KeyValue<String, Double> kv) {
         assertEqual(expKey, kv.getKey(), message("kv", kv));
     }
 
-    @Test
-    @Parameters(method="parametersForAccessors")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForAccessors") @TestCaseName("{method} {index} {params}")
     public void key(String expKey, Double expValue, KeyValue<String, Double> kv) {
         assertEqual(expKey, kv.key(), message("kv", kv));
     }
 
-    @Test
-    @Parameters(method="parametersForAccessors")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForAccessors") @TestCaseName("{method} {index} {params}")
     public void getValue(String expKey, Double expValue, KeyValue<String, Double> kv) {
         assertEqual(expValue, kv.getValue(), message("kv", kv));
     }
 
-    @Test
-    @Parameters(method="parametersForAccessors")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForAccessors") @TestCaseName("{method} {index} {params}")
     public void value(String expKey, Double expValue, KeyValue<String, Double> kv) {
         assertEqual(expValue, kv.value(), message("kv", kv));
     }
@@ -48,9 +40,7 @@ public class KeyValueTest extends Parameterized {
                           params("one", null, new KeyValue<String, Double>("one", null)));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void equalsTest(boolean expected, KeyValue<K, V> kv, Object other) {
         boolean result = kv.equals(other);
         assertEqual(expected, result, message("kv", kv, "other", other));
@@ -71,8 +61,7 @@ public class KeyValueTest extends Parameterized {
         assertEqual(1171979044, kv.hashCode());
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void toStringTest(String expected, KeyValue<K, V> kv, String separator) {
         String result = separator == null ? kv.toString() : kv.toString(separator);
         assertEqual(expected, result, message("kv", kv, "separator", separator));
@@ -84,8 +73,7 @@ public class KeyValueTest extends Parameterized {
                           params("one: 1.23", kv, ": "));
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void compareTo(Integer expected, KeyValue<K, V> x, KeyValue<K, V> y) {
         int result = x.compareTo(y);
         assertEqual(result, expected, message("x", x, "y", y));        

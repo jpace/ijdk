@@ -3,12 +3,10 @@ package org.incava.ijdk.lang;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.ijdk.lang.StringTest;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
@@ -17,9 +15,7 @@ import static org.incava.test.Parameters.paramsList;
 
 public class StringExtTest extends StringTest {
     // the unquoting functionality is in StringExt, but not Str:
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void toListQuoted(String[] expected, String str) {
         List<String> result = toList(str);
         assertEqual(expected == null ? null : Arrays.asList(expected), result, message("str", str));

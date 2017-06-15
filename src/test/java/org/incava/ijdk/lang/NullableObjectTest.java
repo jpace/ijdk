@@ -14,9 +14,7 @@ import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
 public class NullableObjectTest extends Parameterized {
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void of(NullableObject<T> expected, T obj) {
         NullableObject<T> result = NullableObject.of(obj);
         assertEqual(expected, result);
@@ -27,18 +25,14 @@ public class NullableObjectTest extends Parameterized {
                           params(new NullableObject<Integer>(1), 1));
     }
     
-    @Test
-    @Parameters(method="parametersForGetObj")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForGetObj") @TestCaseName("{method} {index} {params}")
     public void get(Object expected, Object fromObj) {
         NullableObject<Object> obj = NullableObject.of(fromObj);
         Object result = obj.get();
         assertSame(expected, result, message("fromObj", fromObj));
     }
 
-    @Test
-    @Parameters(method="parametersForGetObj")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForGetObj") @TestCaseName("{method} {index} {params}")
     public void obj(Object expected, Object fromObj) {
         NullableObject<Object> obj = NullableObject.of(fromObj);
         Object result = obj.obj();
@@ -51,9 +45,7 @@ public class NullableObjectTest extends Parameterized {
                           params(null, null));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void equalsTest(boolean expected, NullableObject<T> nobj, Object obj) {
         boolean result = nobj.equals(obj);
         assertEqual(expected, result, message("nobj", nobj, "obj", obj));
@@ -83,9 +75,7 @@ public class NullableObjectTest extends Parameterized {
                           params(false, objInt, 2));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void hashCodeTest(int expected, T obj) {
         NullableObject<T> nobj = new NullableObject<T>(obj);
         int result = nobj.hashCode();
@@ -98,27 +88,21 @@ public class NullableObjectTest extends Parameterized {
                           params("abc".hashCode(), "abc"));
     }
 
-    @Test
-    @Parameters(method="parametersForIsBoolean")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForIsBoolean") @TestCaseName("{method} {index} {params}")
     public <T> void isTrue(boolean expected, T obj) {
         NullableObject<T> nobj = new NullableObject<T>(obj);
         boolean result = nobj.isTrue();
         assertEqual(expected, result, message("nobj", nobj, "obj", obj));
     }
 
-    @Test
-    @Parameters(method="parametersForIsBoolean")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForIsBoolean") @TestCaseName("{method} {index} {params}")
     public <T> void isFalse(boolean expected, T obj) {
         NullableObject<T> nobj = new NullableObject<T>(obj);
         boolean result = nobj.isFalse();
         assertEqual(!expected, result, message("nobj", nobj, "obj", obj));
     }    
 
-    @Test
-    @Parameters(method="parametersForIsBoolean")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForIsBoolean") @TestCaseName("{method} {index} {params}")
     public <T> void isEmpty(boolean expected, T obj) {
         NullableObject<T> nobj = new NullableObject<T>(obj);
         boolean result = nobj.isEmpty();
@@ -150,18 +134,14 @@ public class NullableObjectTest extends Parameterized {
                           );
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void isNull(boolean expected, T obj) {
         NullableObject<T> nobj = new NullableObject<T>(obj);
         boolean result = nobj.isNull();
         assertEqual(expected, result, message("nobj", nobj, "obj", obj));
     }
 
-    @Test
-    @Parameters(method="parametersForIsNull")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForIsNull") @TestCaseName("{method} {index} {params}")
     public <T> void isNotNull(boolean expected, T obj) {
         NullableObject<T> nobj = new NullableObject<T>(obj);
         boolean result = nobj.isNotNull();
@@ -173,9 +153,7 @@ public class NullableObjectTest extends Parameterized {
                           params(false, "abc"));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void toStringTest(String expected, Object x) {
         NullableObject<Object> obj = NullableObject.of(x);
         String result = obj.toString();

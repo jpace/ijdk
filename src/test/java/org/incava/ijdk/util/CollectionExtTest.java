@@ -4,19 +4,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class CollectionExtTest {
+public class CollectionExtTest extends Parameterized {
     public static final Collection<String> ABC = Arrays.asList(new String[] { "a", "b", "c" });
     public static final Collection<String> ABC_DUP = Arrays.asList(new String[] { "a", "b", "c" });
     public static final Collection<String> A = Arrays.asList(new String[] { "a" });
@@ -25,9 +23,7 @@ public class CollectionExtTest {
     public static final Collection<String> DE = Arrays.asList(new String[] { "d", "e" });
     public static final Collection<String> EMPTY = new ArrayList<String>();
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void hasAny(boolean expected, Collection<T> src, Collection<T> tgt) {
         boolean result = CollectionExt.hasAny(src, tgt);
         assertEqual(expected, result, message("src", src, "tgt", tgt));
@@ -49,9 +45,7 @@ public class CollectionExtTest {
                           params(false, null, DE));            
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void hasAll(boolean expected, Collection<T> src, Collection<T> tgt) {
         boolean result = CollectionExt.hasAll(src, tgt);
         assertEqual(expected, result, message("src", src, "tgt", tgt));
@@ -75,9 +69,7 @@ public class CollectionExtTest {
                           params(false, null, DE));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void any(boolean expected, Collection<T> coll) {
         boolean result = CollectionExt.any(coll);
         assertEqual(expected, result);

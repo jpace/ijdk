@@ -15,9 +15,7 @@ import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
 public class ObjectExtTest extends Parameterized {
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void compare(int expected, T x, T y) {
         int result = ObjectExt.compare(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
@@ -38,33 +36,25 @@ public class ObjectExtTest extends Parameterized {
                           params(1,  def,   abc));
     }    
 
-    @Test
-    @Parameters(method="parametersForCompare")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForCompare") @TestCaseName("{method} {index} {params}")
     public void equal(int cmpValue, Object x, Object y) {
         boolean result = ObjectExt.equal(x, y);
         assertEqual(cmpValue == 0, result, message("x", x, "y", y, "cmpValue", cmpValue));
     }
 
-    @Test
-    @Parameters(method="parametersForIsBoolean")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForIsBoolean") @TestCaseName("{method} {index} {params}")
     public void isTrue(boolean expected, Object obj) {
         boolean result = ObjectExt.isTrue(obj);
         assertEqual(expected, result, message("obj", obj));
     }
 
-    @Test
-    @Parameters(method="parametersForIsBoolean")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForIsBoolean") @TestCaseName("{method} {index} {params}")
     public void isFalse(boolean expected, Object obj) {
         boolean result = ObjectExt.isFalse(obj);
         assertEqual(!expected, result, message("obj", obj));
     }
 
-    @Test
-    @Parameters(method="parametersForIsBoolean")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForIsBoolean") @TestCaseName("{method} {index} {params}")
     public void isEmpty(boolean expected, Object obj) {
         boolean result = ObjectExt.isEmpty(obj);
         assertEqual(!expected, result, message("obj", obj));
@@ -81,17 +71,13 @@ public class ObjectExtTest extends Parameterized {
                           params(true,  new Integer[] { 1 }));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void isNull(boolean expected, Object obj) {
         boolean result = ObjectExt.isNull(obj);
         assertEqual(expected, result, message("obj", obj));
     }
 
-    @Test
-    @Parameters(method="parametersForIsNull")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForIsNull") @TestCaseName("{method} {index} {params}")
     public void isNotNull(boolean expected, Object obj) {
         boolean result = ObjectExt.isNotNull(obj);
         assertEqual(!expected, result, message("obj", obj));

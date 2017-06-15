@@ -3,26 +3,22 @@ package org.incava.ijdk.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class ListExtTest {
+public class ListExtTest extends Parameterized {
     public static final List<Integer> NUMS = Arrays.asList(new Integer[] { 2, 4, 6, 8 });
     public static final List<String> WORDS  = Arrays.asList(new String[] { "the", "whole", "kit", "and", "caboodle" });
     public static final List<String> EMPTY  = new ArrayList<String>();
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void get(T expected, List<T> list, int idx) {
         T result = ListExt.get(list, idx);
         assertEqual(expected, result, message("list", list, "idx", idx));
@@ -50,9 +46,7 @@ public class ListExtTest {
                           params(null, null, -1));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void first(T expected, List<T> list) {
         T result = ListExt.first(list);
         assertEqual(expected, result);
@@ -64,9 +58,7 @@ public class ListExtTest {
                           params("the", WORDS));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void last(T expected, List<T> list) {
         T result = ListExt.last(list);
         assertEqual(expected, result);        
@@ -78,9 +70,7 @@ public class ListExtTest {
                           params("caboodle", WORDS));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void removeAll(List<T> expected, List<T> list, T element) {
         ListExt.removeAll(list, element);
         assertEqual(expected, list);
@@ -94,9 +84,7 @@ public class ListExtTest {
                           params(letters, new ArrayList<String>(letters), "d"));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void getIndex(Integer expected, Integer size, Integer index) {
         Integer result = ListExt.getIndex(size, index);
         assertEqual(expected, result, message("size", size, "index", index));
@@ -120,9 +108,7 @@ public class ListExtTest {
                           params(null, 0, -1));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void contains(Boolean expected, List<T> list, T value) {
         Boolean result = ListExt.contains(list, value);
         assertEqual(expected, result, message("list", list, "value", value));
@@ -142,9 +128,7 @@ public class ListExtTest {
                           params(false, intList, 4));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void getRandomElement(Boolean expObject, List<T> list) {
         T result = ListExt.getRandomElement(list);
         assertEqual(expObject, result != null, message("list", list, "result", result));

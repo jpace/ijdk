@@ -1,22 +1,18 @@
 package org.incava.ijdk.util;
 
 import java.util.List;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class VersionTest {
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+public class VersionTest extends Parameterized {
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void initFromString(Integer expMajor, Integer expMinor, Integer expPatch, Integer expRevision, String str) {
         Version version = new Version(str);
         assertEqual(expMajor, version.getMajor(), message("str", str));
@@ -33,9 +29,7 @@ public class VersionTest {
                           params(1, 2,       3,    4, "1.2.3.4"));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void initFromIntegers(Integer expMajor, Integer expMinor, Integer expPatch, Integer expRevision, Integer ... args) {
         Version version = new Version(args);
         assertEqual(expMajor, version.getMajor(), message("args", args));
@@ -52,9 +46,7 @@ public class VersionTest {
                           params(1, 2,       3, 4,    new Integer[] { 1, 2, 3, 4 }));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void toString(String expected, String str) {
         assertEqual(expected, new Version(str).toString(), message("str", str));
     }
@@ -67,9 +59,7 @@ public class VersionTest {
                           params("1.0", "1.0"));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void equals(Boolean expected, Version x, Version y) {
         assertEqual(expected, x.equals(y), message("x", x, "y", y));
     }
@@ -86,9 +76,7 @@ public class VersionTest {
                           params(false, new Version(1, 2, 3), new Version(1, 2, 3, 4)));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void compareTo(Integer expected, Version x, Version y) {
         assertEqual(expected, x.compareTo(y), message("x", x, "y", y));
     }

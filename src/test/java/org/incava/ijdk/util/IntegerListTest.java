@@ -2,19 +2,17 @@ package org.incava.ijdk.util;
 
 import java.util.Arrays;
 import java.util.List;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class IntegerListTest {
+public class IntegerListTest extends Parameterized {
     @Test
     public void ctorEmpty() {
         IntegerList sl = new IntegerList();
@@ -52,9 +50,7 @@ public class IntegerListTest {
         assertEqual(3, sl.get(2));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void minimum(Integer expected, Integer ... values) {
         IntegerList sl = new IntegerList(values);
         Integer result = sl.minimum();
@@ -68,9 +64,7 @@ public class IntegerListTest {
                           params(1, 2, 1));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void maximum(Integer expected, Integer ... values) {
         IntegerList sl = new IntegerList(values);
         Integer result = sl.maximum();

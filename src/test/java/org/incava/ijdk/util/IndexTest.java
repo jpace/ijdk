@@ -1,20 +1,17 @@
 package org.incava.ijdk.util;
 
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class IndexTest {
-    @Test
-    @Parameters
+public class IndexTest extends Parameterized {
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void getIndex(Integer expected, Integer size, int index) {
         Integer result = Index.getIndex(size, index);
         assertEqual(expected, result, message("size", size, "index", index));

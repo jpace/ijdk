@@ -1,18 +1,17 @@
 package org.incava.ijdk.collect;
 
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.incava.ijdk.tuple.Pair;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.incava.test.Parameterized;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.assertSame;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class HashTest {
+public class HashTest extends Parameterized {
     @Test
     public void init() {
         java.util.Map<String, Integer> jdkMap = new java.util.TreeMap<String, Integer>();
@@ -45,8 +44,7 @@ public class HashTest {
         assertEqual(new Hash<String, Integer>(), Hash.<String, Integer>empty());
     }   
     
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void of(java.util.TreeMap<K, V> expected, Hash<K, V> result) {
         assertEqual(expected, result);        
     }

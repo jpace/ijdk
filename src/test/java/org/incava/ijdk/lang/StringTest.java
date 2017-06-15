@@ -19,9 +19,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String[] split(String str, String delim, int max);    
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void splitCharDelim(String[] expected, String str, char delim, int max) {
         String[] result = split(str, delim, max);
         assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
@@ -36,9 +34,7 @@ public abstract class StringTest extends Parameterized {
                           params(new String[] { "this", "is", "a", ";test" }, "this;is;a;;test", ';', 4));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void splitStringDelim(String[] expected, String str, String delim, int max) {
         String[] result = split(str, delim, max);
         assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
@@ -52,9 +48,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract List<String> toList(String str);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void toList(String[] expected, String str) {
         List<String> result = toList(str);
         assertEqual(expected == null ? null : Arrays.asList(expected), result, message("str", str));
@@ -72,9 +66,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String pad(String str, int length);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void padWithChar(String expected, String str, char ch, int length) {
         String result = pad(str, ch, length);
         assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
@@ -88,9 +80,7 @@ public abstract class StringTest extends Parameterized {
                           params("abcd*", "abcd", '*', 5));
     }    
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void padWithoutChar(String expected, String str, int length) {
         String result = pad(str, length);
         assertEqual(expected, result, message("str", str, "length", length));
@@ -109,9 +99,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String padLeft(String str, int length);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void padLeftWithChar(String expected, String str, char ch, int length) {
         String result = padLeft(str, ch, length);
         assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
@@ -125,9 +113,7 @@ public abstract class StringTest extends Parameterized {
                           params("*abcd", "abcd", '*', 5));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void padLeftWithoutChar(String expected, String str, int length) {
         String result = padLeft(str, length);
         assertEqual(expected, result, message("str", str, "length", length));
@@ -147,9 +133,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String repeat(char ch, int length);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void repeatString(String expected, String str, int length) {
         String result = repeat(str, length);
         assertEqual(expected, result, message("str", str, "length", length));
@@ -163,9 +147,7 @@ public abstract class StringTest extends Parameterized {
                           params("abcdabcd", "abcd",  2));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void repeatChar(String expected, char ch, int length) {
         String result = repeat(ch, length);
         assertEqual(expected, result, message("ch", ch, "length", length));
@@ -182,9 +164,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String left(String str, int length);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void left(String expected, String str, int length) {
         String result = left(str, length);
         assertEqual(expected, result, message("str", str, "length", length));
@@ -203,9 +183,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String right(String str, int length);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void right(String expected, String str, int length) {
         String result = right(str, length);
         assertEqual(expected, result, message("str", str, "length", length));
@@ -226,9 +204,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String join(Collection<String> coll, String delim);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void joinArray(String expected, String[] ary, String delim) {
         String result = join(ary, delim);
         assertEqual(expected, result, message("ary", ary, "delim", delim));
@@ -242,9 +218,7 @@ public abstract class StringTest extends Parameterized {
                           params("a,b,c,d", new String[] { "a", "b", "c", "d" }, ","));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void joinCollection(String expected, Collection<String> coll, String delim) {
         String result = join(coll, delim);
         assertEqual(expected, result, message("coll", coll, "delim", delim));
@@ -262,9 +236,7 @@ public abstract class StringTest extends Parameterized {
     
     public abstract Character charAt(String str, int index);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void charAt(Character expected, String str, int index) {
         Character result = charAt(str, index);
         assertEqual(expected, result, message("str", str, "index", index));
@@ -286,9 +258,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract Character get(String str, int index);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void get(Character expected, String str, int index) {
         Character result = get(str, index);
         assertEqual(expected, result, message("str", str, "index", index));
@@ -310,9 +280,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String substring(String str, Integer fromIndex, Integer toIndex);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void substring(String expected, String str, Integer fromIndex, Integer toIndex) {
         String result = substring(str, fromIndex, toIndex);
         assertEqual(expected, result, message("str", str, "fromIndex", fromIndex, "toIndex", toIndex));
@@ -341,9 +309,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract boolean startsWith(String str, char ch);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void startsWith(boolean expected, String str, char ch) {
         boolean result = startsWith(str, ch);
         assertEqual(expected, result, message("str", str, "ch", ch));
@@ -360,9 +326,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract Integer indexOf(String str, Character ch);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void indexOf(Integer expected, String str, Character ch) {
         Integer result = indexOf(str, ch);
         assertEqual(expected, result, message("str", str, "ch", ch));
@@ -382,9 +346,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract boolean contains(String str, Character ch);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void contains(boolean expected, String str, Character ch) {
         boolean result = contains(str, ch);
         assertEqual(expected, result, message("str", str, "ch", ch));
@@ -404,9 +366,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String substringAfter(String str, Character ch);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void substringAfter(String expected, String str, Character ch) {
         String result = substringAfter(str, ch);
         assertEqual(expected, result, message("str", str, "ch", ch));
@@ -426,9 +386,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String substringBefore(String str, Character ch);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void substringBefore(String expected, String str, Character ch) {
         String result = substringBefore(str, ch);
         assertEqual(expected, result, message("str", str, "ch", ch));
@@ -448,9 +406,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract Boolean eq(String a, String b);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void eq(Boolean expected, String a, String b) {
         Boolean result = eq(a, b);
         assertEqual(expected, result, message("a", a, "b", b));
@@ -472,9 +428,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract Boolean eqi(String a, String b);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void eqi(Boolean expected, String a, String b) {
         Boolean result = eqi(a, b);
         assertEqual(expected, result, message("a", a, "b", b));
@@ -496,9 +450,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String snip(String str, int length);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void snip(String expected, String str, int length) {
         String result = snip(str, length);
         assertEqual(expected, result, message("str", str, "length", length));
@@ -517,9 +469,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract boolean isEmpty(String str);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void isEmpty(boolean expected, String str) {
         boolean result = isEmpty(str);
         assertEqual(expected, result, message("str", str));
@@ -535,9 +485,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract int length(String str);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void length(int expected, String str) {
         int result = length(str);
         assertEqual(expected, result, message("str", str));
@@ -553,9 +501,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String chomp(String str);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void chomp(String expected, String str) {
         String result = chomp(str);
         assertEqual(expected, result, message("str", str));
@@ -576,9 +522,7 @@ public abstract class StringTest extends Parameterized {
 
     public abstract String chompAll(String str);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void chompAll(String expected, String str) {
         String result = chompAll(str);
         assertEqual(expected, result, message("str", str));
@@ -599,9 +543,7 @@ public abstract class StringTest extends Parameterized {
     
     public abstract String unquote(String str);    
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void unquote(String expected, String str) {
         String result = unquote(str);
         assertEqual(expected, result, message("str", str));
@@ -621,9 +563,7 @@ public abstract class StringTest extends Parameterized {
     
     public abstract String quote(String str);
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void quote(String expected, String str) {
         String result = quote(str);
         assertEqual(expected, result, message("str", str));

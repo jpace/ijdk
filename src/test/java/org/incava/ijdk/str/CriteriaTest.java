@@ -11,9 +11,7 @@ import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
 public class CriteriaTest extends Parameterized {
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void init(Boolean expected, String x, String y) {
         Criteria<Boolean> crit = new Criteria<Boolean>() {
                 public Boolean apply(String str) {
@@ -29,9 +27,7 @@ public class CriteriaTest extends Parameterized {
                           params(null, null, "a"));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void startsWith(Boolean expected, final String x, final String y) {
         Criteria<Boolean> crit = Criteria.startsWith(y);
         assertEqual(expected, crit.execute(x));
@@ -44,9 +40,7 @@ public class CriteriaTest extends Parameterized {
                           params(null, null, "a"));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void contains(Boolean expected, final String x, final String y) {
         Criteria<Boolean> crit = Criteria.contains(y);
         assertEqual(expected, crit.execute(x));
@@ -59,9 +53,7 @@ public class CriteriaTest extends Parameterized {
                           params(null, null, "b"));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void endsWith(Boolean expected, final String x, final String y) {
         Criteria<Boolean> crit = Criteria.endsWith(y);
         assertEqual(expected, crit.execute(x));
@@ -74,9 +66,7 @@ public class CriteriaTest extends Parameterized {
                           params(null, null, "a"));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void equalsIgnoreCase(Boolean expected, final String x, final String y) {
         Criteria<Boolean> crit = Criteria.equalsIgnoreCase(y);
         assertEqual(expected, crit.execute(x));        
@@ -91,9 +81,7 @@ public class CriteriaTest extends Parameterized {
                           params(null, null, null));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void equals(Boolean expected, final String x, final String y) {
         Criteria<Boolean> crit = Criteria.equals(y);
         assertEqual(expected, crit.execute(x));        

@@ -1,27 +1,28 @@
 package org.incava.ijdk.tuple;
 
 import java.util.Arrays;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import static org.incava.ijdk.lang.Common.*;
-import static org.incava.test.Assertions.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class TripleTest {
+public class TripleTest extends Parameterized {
     @Test
     public void init() {
         Triple<String, Integer, Double> t = Triple.of("abc", 123, 3.14);
         assertEqual("abc", t.getFirst());
         assertEqual("abc", t.first());
-        assertEqual(123, t.getSecond());
-        assertEqual(123, t.second());
-        assertEqual(3.14, t.getThird());
-        assertEqual(3.14, t.third());
+        
+        assertEqual(123,   t.getSecond());
+        assertEqual(123,   t.second());
+        
+        assertEqual(3.14,  t.getThird());
+        assertEqual(3.14,  t.third());
     }
 
     @Test
@@ -30,8 +31,7 @@ public class TripleTest {
         assertEqual("(abc, 123, 3.14)", t.toString());
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <A, B, C> void compareTo(Integer expected, Triple<A, B, C> x, Triple<A, B, C> y) {
         int result = x.compareTo(y);
         assertEqual(expected, result, message("x", x, "y", y));        
@@ -43,6 +43,7 @@ public class TripleTest {
         Triple<String, Double, Integer> aba = Triple.of("one", 2.3, 1);
         Triple<String, Double, Integer> baa = Triple.of("two", 1.2, 1);
 
+        // StringBuilder is not comparable:
         StringBuilder notComparable = new StringBuilder("one");
 
         return paramsList(params(0, aaa, aaa),
@@ -53,9 +54,8 @@ public class TripleTest {
                           params(-1, aaa, aba),
                           params(1, aba, aaa),
                           params(1, baa, aaa),
-                          // StringBuilder is not comparable:
-                          params(-1, Triple.of(new StringBuilder("sb"), 1.2, 0), Triple.of(new StringBuilder("sb"), 1.2, 0)),
-                          params(-1, Triple.of(1.2, new StringBuilder("sb"), 0), Triple.of(1.2, new StringBuilder("sb"), 0)),
-                          params(-1, Triple.of(1.2, 0, new StringBuilder("sb")), Triple.of(1.2, 0, new StringBuilder("sb"))));
+                          params(-1, Triple.of(notComparable, 1.2, 0), Triple.of(notComparable, 1.2, 0)),
+                          params(-1, Triple.of(1.2, notComparable, 0), Triple.of(1.2, notComparable, 0)),
+                          params(-1, Triple.of(1.2, 0, notComparable), Triple.of(1.2, 0, notComparable)));
     }    
 }

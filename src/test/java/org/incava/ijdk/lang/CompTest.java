@@ -11,9 +11,7 @@ import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
 public class CompTest extends Parameterized {
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void compare(int expected, T x, T y) {
         int result = Comp.compare(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
@@ -32,25 +30,19 @@ public class CompTest extends Parameterized {
                           params(1,  new String("def"), new String("abc")));
     }
     
-    @Test
-    @Parameters(method="lessThanParams")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="lessThanParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void lessThan(boolean expected, T x, T y) {
         boolean result = Comp.lessThan(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
     }
     
-    @Test
-    @Parameters(method="lessThanParams")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="lessThanParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void lt(boolean expected, T x, T y) {
         boolean result = Comp.lt(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
     }
     
-    @Test
-    @Parameters(method="equalParams")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="equalParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void lte(boolean expected, T x, T y) {
         boolean result = Comp.lte(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
@@ -69,25 +61,19 @@ public class CompTest extends Parameterized {
                           params(false, new String("def"), new String("abc")));
     }    
 
-    @Test
-    @Parameters(method="greaterThanParams")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="greaterThanParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void greaterThan(boolean expected, T x, T y) {
         boolean result = Comp.greaterThan(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
     }
 
-    @Test
-    @Parameters(method="greaterThanParams")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="greaterThanParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void gt(boolean expected, T x, T y) {
         boolean result = Comp.gt(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
     }
 
-    @Test
-    @Parameters(method="equalParams")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="equalParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void gte(boolean expected, T x, T y) {
         boolean result = Comp.gte(x, y);
         assertEqual(expected, result, message("x", x, "y", y));

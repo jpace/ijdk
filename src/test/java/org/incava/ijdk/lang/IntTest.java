@@ -12,23 +12,17 @@ import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
 public class IntTest extends Parameterized {
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void get(Integer expected, Int intr) {
         assertEqual(expected, intr.get(), message("intr", intr));
     }
     
-    @Test
-    @Parameters(method="parametersForGet")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForGet") @TestCaseName("{method} {index} {params}")
     public void obj(Integer expected, Int intr) {
         assertEqual(expected, intr.obj(), message("intr", intr));
     }
     
-    @Test
-    @Parameters(method="parametersForGet")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForGet") @TestCaseName("{method} {index} {params}")
     public void integer(Integer expected, Int intr) {
         assertEqual(expected, intr.integer(), message("intr", intr));
     }
@@ -38,9 +32,7 @@ public class IntTest extends Parameterized {
                           params(new Integer(17), new Int(17)));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void ofString(Int expected, String str) {
         Int result = Int.of(str);
         assertEqual(expected, result, message("str", str));
@@ -60,9 +52,7 @@ public class IntTest extends Parameterized {
                           params(inNull, " 1"));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void ofInteger(Int expected, Integer i) {
         Int result = Int.of(i);
         assertEqual(expected, result, message("i", i));

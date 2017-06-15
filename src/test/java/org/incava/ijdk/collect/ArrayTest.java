@@ -2,20 +2,19 @@ package org.incava.ijdk.collect;
 
 import java.util.Arrays;
 import java.util.Collection;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.incava.ijdk.lang.Common;
+import org.incava.test.Parameterized;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import static org.incava.ijdk.lang.Common.*;
-import static org.incava.test.Assertions.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class ArrayTest {
+public class ArrayTest extends Parameterized {
     private Array<Integer> emptyIntegerList() {
         return Array.<Integer>of();
     }
@@ -64,8 +63,7 @@ public class ArrayTest {
         assertEqual(expected, numbers.toStringList());
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void containsAnyCollection(Boolean expected, Array<Integer> list, java.util.List<Integer> coll) {
         assertEqual(expected, list.containsAny(coll));
     }
@@ -77,8 +75,7 @@ public class ArrayTest {
                           params(false, new Array<Integer>(1, 2, 3), Common.list(4, 5)));
     }
     
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void containsAnyArray(Boolean expected, Array<Integer> list, Integer ... args) {
         assertEqual(expected, list.containsAny(args));
     }
@@ -94,8 +91,7 @@ public class ArrayTest {
                           params(false, new Array<Integer>(1, 2, 3), 4));
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void first(Object expected, Array<Object> list) {
         assertEqual(expected, list.first(), message("list", list));
     }
@@ -106,8 +102,7 @@ public class ArrayTest {
                           params((Integer)null,  emptyIntegerList()));
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void last(Object expected, Array<Object> list) {
         assertEqual(expected, list.last(), message("list", list));
     }
@@ -118,8 +113,7 @@ public class ArrayTest {
                           params((Integer)null,  emptyIntegerList()));
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void get(Object expected, Array<Object> list, int idx) {
         assertEqual(expected, list.get(idx), message("list", list));
     }
@@ -138,8 +132,7 @@ public class ArrayTest {
                                      
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void getRange(Array<Object> expected, Array<Object> list, int from, int to) {
         assertEqual(expected, list.get(from, to), message("list", list, "from", from, "to", to));
     }
@@ -161,8 +154,7 @@ public class ArrayTest {
                                      
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void append(Array<Object> expected, Array<Object> list, Object obj) {
         String msg = message("list", list, "obj", obj);
         // the returned value is also the list
@@ -176,8 +168,7 @@ public class ArrayTest {
                           params(Array.of(7),        emptyIntegerList(), 7));                                     
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void set(Array<Object> expected, Array<Object> list, int index, Object obj) {
         if (expected == null) {
             try {
@@ -203,8 +194,7 @@ public class ArrayTest {
                           params(null,              Array.of(6),         -2, 7));
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void removeAll(Boolean expReturned, Array<Object> expected, Array<Object> list, Object toRemove) {
         Boolean result = list.removeAll(toRemove);
         assertEqual(expReturned, result, message("list", list, "toRemove", toRemove));
@@ -219,8 +209,7 @@ public class ArrayTest {
                           params(false,  Array.of(1),         Array.of(1), 2));
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void getRandomElement(Boolean exp, Array<Object> list) {
         Object result = list.getRandomElement();
         assertEqual(exp, result != null, message("list", list, "exp", exp, "result", result));
@@ -232,8 +221,7 @@ public class ArrayTest {
                           params(false,  emptyIntegerList()));
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void takeFirst(Object expReturn, Array<Object> expList, Array<Object> list) {
         Array<Object> origList = new Array<Object>(list);
         Object result = list.takeFirst();
@@ -249,8 +237,7 @@ public class ArrayTest {
                           params((Integer)null, emptyIntegerList(), emptyIntegerList()));
     }    
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void takeLast(Object expReturn, Array<Object> expList, Array<Object> list) {
         Array<Object> origList = new Array<Object>(list);
         Object result = list.takeLast();
@@ -266,8 +253,7 @@ public class ArrayTest {
                           params((Integer)null, emptyIntegerList(), emptyIntegerList()));
     }
     
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void unique(Array<Object> expected, Array<Object> list) {
         Array<Object> origList = new Array<Object>(list);
         Array<Object> result = list.unique();
@@ -284,8 +270,7 @@ public class ArrayTest {
                           params(emptyIntegerList(), emptyIntegerList()));
     }    
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void compact(Array<Object> expected, Array<Object> list) {
         Array<Object> origList = new Array<Object>(list);
         Array<Object> result = list.compact();
@@ -308,8 +293,7 @@ public class ArrayTest {
     }
 
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void join(String expected, Array<Object> list, String delimiter) {
         String result = list.join(delimiter);
         assertEqual(expected, result, message("list", list, "delimiter", delimiter));
@@ -325,8 +309,7 @@ public class ArrayTest {
                           params("1x2", Array.of(1, 2), "x"));
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void plus(Array<Object> expected, Array<Object> list, Array<Object> other) {
         Array<Object> result = list.plus(other);
         assertEqual(expected, result);
@@ -344,8 +327,7 @@ public class ArrayTest {
         return params;
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void minus(Array<Object> expected, Array<Object> list, Array<Object> other) {
         Array<Object> result = list.minus(other);
         assertEqual(expected, result);
@@ -366,8 +348,7 @@ public class ArrayTest {
         return params;
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void elements(Array<Object> expected, Array<Object> list, int ... indices) {
         Array<Object> result = list.elements(indices);
         assertEqual(expected, result, message("indices", indices));

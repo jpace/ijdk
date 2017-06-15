@@ -14,17 +14,13 @@ import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
 public class RangeTest extends Parameterized {
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void first(Integer expected, Range rg) {
         Integer result = rg.first();
         assertEqual(expected, result, message("rg", rg));
     }    
 
-    @Test
-    @Parameters(method="parametersForFirst")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForFirst") @TestCaseName("{method} {index} {params}")
     public void getFirst(Integer expected, Range rg) {
         Integer result = rg.getFirst();
         assertEqual(expected, result, message("rg", rg));
@@ -35,17 +31,13 @@ public class RangeTest extends Parameterized {
                           params(17, new Range(17, 3)));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void last(Integer expected, Range rg) {
         Integer result = rg.last();
         assertEqual(expected, result, message("rg", rg));
     }    
 
-    @Test
-    @Parameters(method="parametersForLast")
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForLast") @TestCaseName("{method} {index} {params}")
     public void getLast(Integer expected, Range rg) {
         Integer result = rg.getLast();
         assertEqual(expected, result, message("rg", rg));
@@ -56,9 +48,7 @@ public class RangeTest extends Parameterized {
                           params(3, new Range(17, 3)));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void equalsTest(boolean expected, Range rg, Object other) {
         boolean result = rg.equals(other);
         assertEqual(expected, result, message("rg", rg, "other", other));
@@ -77,9 +67,7 @@ public class RangeTest extends Parameterized {
                           params(false, rg12, rg13));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void includes(boolean expected, Range rg, Integer val) {
         boolean result = rg.includes(val);
         assertEqual(expected, result, message("rg", rg, "val", val));
@@ -105,9 +93,7 @@ public class RangeTest extends Parameterized {
                           params(false, rg33, 5));                          
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void toArray(Array<Integer> expected, Range rg) {
         Array<Integer> result = rg.toArray();
         assertEqual(expected, result, message("rg", rg));
@@ -119,9 +105,7 @@ public class RangeTest extends Parameterized {
                           params(Array.<Integer>empty(), new Range(7, 3)));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void iterator(Integer[] expected, Range rg) {
         int idx = 0;
         for (Integer i : rg) {
@@ -137,9 +121,7 @@ public class RangeTest extends Parameterized {
                           params(new Integer[] { }, new Range(3, 2)));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void upTo(Integer[] expected, Range rg) {
         int idx = 0;
         for (Integer i : rg.upTo()) {
@@ -156,9 +138,7 @@ public class RangeTest extends Parameterized {
                           params(new Integer[] { }, new Range(3, 2)));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void compareTo(int expected, Range x, Range y) {
         int result = x.compareTo(y);
         assertEqual(expected, result, message("x", x, "y", y));
@@ -178,9 +158,7 @@ public class RangeTest extends Parameterized {
                           params(1,  rg37, rg36));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void toStringTest(String expected, Range rg) {
         String result = rg.toString();
         assertEqual(expected, result);

@@ -1,19 +1,18 @@
 package org.incava.ijdk.collect;
 
 import java.util.Arrays;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.incava.ijdk.lang.Closure;
+import org.incava.test.Parameterized;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class StringListTest {
+public class StringListTest extends Parameterized {
     @Test
     public void ctorEmpty() {
         StringList sl = new StringList();
@@ -42,8 +41,7 @@ public class StringListTest {
         assertEqual("two", sl.get(1));
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void anyStartsWith(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
         assertEqual(expected, sl.anyStartsWith(substr), message("sl", sl, "substr", substr));
@@ -56,8 +54,7 @@ public class StringListTest {
                           params(false, "n", "one"));
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void anyContains(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
         assertEqual(expected, sl.anyContains(substr), message("sl", sl, "substr", substr));
@@ -70,8 +67,7 @@ public class StringListTest {
                           params(false, "z", "one"));
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void anyEndsWith(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
         assertEqual(expected, sl.anyEndsWith(substr), message("sl", sl, "substr", substr));
@@ -83,8 +79,7 @@ public class StringListTest {
                           params(false, "n", "one"));
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void findFirst(String expected, Closure<Boolean, String> criteria, String ... args) {
         StringList sl = new StringList(args);
         String result = sl.findFirst(criteria);
@@ -120,8 +115,7 @@ public class StringListTest {
         return params;
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void findAll(StringList expected, Closure<Boolean, String> criteria, String ... args) {
         StringList sl = new StringList(args);
         StringList result = sl.findAll(criteria);
@@ -164,8 +158,7 @@ public class StringListTest {
         return params;
     }
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void anyEqualsIgnoreCase(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
         assertEqual(expected, sl.anyEqualsIgnoreCase(substr), message("sl", sl, "substr", substr));

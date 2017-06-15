@@ -13,9 +13,7 @@ import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
 public class MathExtTest extends Parameterized {
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void min(int expected, int[] nums) {
         int result = MathExt.min(nums);
         assertEqual(expected, result, message("nums", Arrays.asList(nums)));

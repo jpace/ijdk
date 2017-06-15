@@ -1,21 +1,17 @@
 package org.incava.ijdk.util;
 
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class ANSITest {
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+public class ANSITest extends Parameterized {
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public String test(int code, String ansiName) {
         String expected = String.valueOf((char)27) + "[" + code + "m";
         assertEqual(expected, ansiName);
@@ -62,9 +58,7 @@ public class ANSITest {
         assertEqual(expected, color);
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void rgbToCode(int expected, int r, int g, int b) {
         int code = ANSI.toCode(r, g, b);
         assertEqual(expected, code);
@@ -80,9 +74,7 @@ public class ANSITest {
                           params(18, 0, 0, 95));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void newRgbToCode(int expected, int r, int g, int b) {
         int code = ANSI.toCode(new RGB(r, g, b));
         assertEqual(expected, code);

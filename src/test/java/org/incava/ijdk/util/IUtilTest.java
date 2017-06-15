@@ -5,23 +5,19 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class IUtilTest {
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+public class IUtilTest extends Parameterized {
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void isTrue(boolean expected, Object input) {
         assertEqual(expected, IUtil.isTrue(input));
     }
@@ -37,9 +33,7 @@ public class IUtilTest {
                           params(false, new ArrayList<String>()));
     }
     
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void isFalse(boolean expected, Object input) {
         assertEqual(expected, IUtil.isFalse(input));
     }
@@ -52,9 +46,7 @@ public class IUtilTest {
                           params(false, Arrays.asList(new String[] { "ord" })));
     }
 
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void elvis(Object expected, Object x, Object y) {
         assertEqual(expected, IUtil.elvis(x, y));
     }
@@ -71,9 +63,7 @@ public class IUtilTest {
                           params(collOne, collOne, null));
     }
     
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void and(Object expected, Object x, Object y) {
         assertEqual(expected, IUtil.and(x, y));
     }
@@ -98,9 +88,7 @@ public class IUtilTest {
                           params(null, null, one));
     }
     
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void or(Object expected, Object x, Object y) {
         assertEqual(expected, IUtil.or(x, y));
     }
