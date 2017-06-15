@@ -1,12 +1,12 @@
 package org.incava.ijdk.lang;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class ThrwTest extends TestCase {
-    public ThrwTest(String name) {
-        super(name);
-    }
-    
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+
+public class ThrwTest {
+    @Test
     public void testGetStackTraceStringNPE() {
         Throwable t = new NullPointerException("nope");
         String expected = "java.lang.NullPointerException: nope\n" +
@@ -15,6 +15,7 @@ public class ThrwTest extends TestCase {
         assertGetStackTraceString(expected, t);
     }
 
+    @Test
     public void testGetStackTraceStringNull() {
         assertGetStackTraceString(null, null);
     }
@@ -22,10 +23,10 @@ public class ThrwTest extends TestCase {
     public String assertGetStackTraceString(String expected, Throwable t) {
         String result = new Thrw(t).getStackTraceString();
         if (expected == null) {
-            assertEquals("t: " + t, expected, result);
+            assertEqual(expected, result, message("t", t));
         }
         else {
-            assertTrue("t: " + t + "; result " + result + "; expected: " + expected, result.startsWith(expected));
+            assertEqual(true, result.startsWith(expected), message("t", t, "result", result, "expected", expected));
         }
         return result;
     }

@@ -1,19 +1,19 @@
 package org.incava.ijdk.lang;
 
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class CompTest {
+public class CompTest extends Parameterized {
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void compare(int expected, T x, T y) {
         int result = Comp.compare(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
@@ -34,6 +34,7 @@ public class CompTest {
     
     @Test
     @Parameters(method="lessThanParams")
+    @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void lessThan(boolean expected, T x, T y) {
         boolean result = Comp.lessThan(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
@@ -41,6 +42,7 @@ public class CompTest {
     
     @Test
     @Parameters(method="lessThanParams")
+    @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void lt(boolean expected, T x, T y) {
         boolean result = Comp.lt(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
@@ -48,6 +50,7 @@ public class CompTest {
     
     @Test
     @Parameters(method="equalParams")
+    @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void lte(boolean expected, T x, T y) {
         boolean result = Comp.lte(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
@@ -68,6 +71,7 @@ public class CompTest {
 
     @Test
     @Parameters(method="greaterThanParams")
+    @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void greaterThan(boolean expected, T x, T y) {
         boolean result = Comp.greaterThan(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
@@ -75,6 +79,7 @@ public class CompTest {
 
     @Test
     @Parameters(method="greaterThanParams")
+    @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void gt(boolean expected, T x, T y) {
         boolean result = Comp.gt(x, y);
         assertEqual(expected, result, message("x", x, "y", y));
@@ -82,6 +87,7 @@ public class CompTest {
 
     @Test
     @Parameters(method="equalParams")
+    @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void gte(boolean expected, T x, T y) {
         boolean result = Comp.gte(x, y);
         assertEqual(expected, result, message("x", x, "y", y));

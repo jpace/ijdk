@@ -4,19 +4,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public abstract class StringTest {
+public abstract class StringTest extends Parameterized {
     public abstract String[] split(String str, char delim, int max);
 
     public abstract String[] split(String str, String delim, int max);    

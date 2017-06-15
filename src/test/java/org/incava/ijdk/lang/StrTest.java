@@ -2,19 +2,16 @@ package org.incava.ijdk.lang;
 
 import java.util.Collection;
 import java.util.List;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.ijdk.lang.StringTest;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
 public class StrTest extends StringTest {
     public String[] split(String str, char delim, int max) {
         return new Str(str).split(delim, max);

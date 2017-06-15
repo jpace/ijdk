@@ -2,19 +2,20 @@ package org.incava.ijdk.lang;
 
 import java.util.Arrays;
 import java.util.List;
-import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import static org.incava.test.Assertions.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
-public class IntArrayTest {
+public class IntArrayTest extends Parameterized {
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void max(int expected, int[] nums) {
         assertEqual(expected, IntArray.max(nums), message("nums", nums == null ? null : Arrays.asList(nums)));
     }
@@ -31,6 +32,7 @@ public class IntArrayTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void min(int expected, int[] nums) {
         assertEqual(expected, IntArray.min(nums), message("nums", nums == null ? null : Arrays.asList(nums)));
     }
@@ -47,6 +49,7 @@ public class IntArrayTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void sum(int expected, int[] nums) {
         assertEqual(expected, IntArray.sum(nums), message("nums", nums == null ? null : Arrays.asList(nums)));
         
@@ -64,9 +67,9 @@ public class IntArrayTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void length(int expected, int[] nums) {
-        assertEqual(expected, IntArray.length(nums), message("nums", nums == null ? null : Arrays.asList(nums)));
-        
+        assertEqual(expected, IntArray.length(nums), message("nums", nums == null ? null : Arrays.asList(nums)));        
     }
     
     private List<Object[]> parametersForLength() {
@@ -77,6 +80,7 @@ public class IntArrayTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void average(int expected, int[] nums) {
         assertEqual(expected, IntArray.average(nums), message("nums", nums == null ? null : Arrays.asList(nums)));
     }
@@ -93,6 +97,7 @@ public class IntArrayTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void contains(boolean expected, int[] nums, int value) {
         assertEqual(expected, IntArray.contains(nums, value), message("nums", nums == null ? null : Arrays.asList(nums), "value", value));
     }
@@ -108,9 +113,9 @@ public class IntArrayTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void toStringArray(String[] expected, int[] nums) {
         assertEqual(expected, IntArray.toStringArray(nums), message("nums", nums == null ? null : Arrays.asList(nums)));
-        
     }
     
     private List<Object[]> parametersForToStringArray() {

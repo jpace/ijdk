@@ -4,7 +4,6 @@ import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.test.Parameterized;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.incava.test.Assertions.assertEqual;

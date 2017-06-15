@@ -15,7 +15,6 @@ import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
-@RunWith(JUnitParamsRunner.class)
 public class StringExtTest extends StringTest {
     // the unquoting functionality is in StringExt, but not Str:
     @Test
