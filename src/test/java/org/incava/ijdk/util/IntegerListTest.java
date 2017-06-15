@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -53,10 +54,11 @@ public class IntegerListTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void minimum(Integer expected, Integer ... values) {
         IntegerList sl = new IntegerList(values);
-        Integer min = sl.minimum();
-        assertEqual(expected, min, message("values", Arrays.asList(values)));
+        Integer result = sl.minimum();
+        assertEqual(expected, result, message("values", Arrays.asList(values)));
     }
     
     private List<Object[]> parametersForMinimum() {
@@ -68,10 +70,11 @@ public class IntegerListTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void maximum(Integer expected, Integer ... values) {
         IntegerList sl = new IntegerList(values);
-        Integer max = sl.maximum();
-        assertEqual(expected, max, message("values", Arrays.asList(values)));        
+        Integer result = sl.maximum();
+        assertEqual(expected, result, message("values", Arrays.asList(values)));        
     }
     
     private List<Object[]> parametersForMaximum() {

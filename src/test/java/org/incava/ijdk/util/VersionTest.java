@@ -3,12 +3,12 @@ package org.incava.ijdk.util;
 import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.incava.ijdk.lang.Common;
+import junitparams.naming.TestCaseName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.ijdk.lang.Common.*;
-import static org.incava.test.Assertions.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
@@ -16,6 +16,7 @@ import static org.incava.test.Parameters.paramsList;
 public class VersionTest {
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void initFromString(Integer expMajor, Integer expMinor, Integer expPatch, Integer expRevision, String str) {
         Version version = new Version(str);
         assertEqual(expMajor, version.getMajor(), message("str", str));
@@ -34,6 +35,7 @@ public class VersionTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void initFromIntegers(Integer expMajor, Integer expMinor, Integer expPatch, Integer expRevision, Integer ... args) {
         Version version = new Version(args);
         assertEqual(expMajor, version.getMajor(), message("args", args));
@@ -52,6 +54,7 @@ public class VersionTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void toString(String expected, String str) {
         assertEqual(expected, new Version(str).toString(), message("str", str));
     }
@@ -66,6 +69,7 @@ public class VersionTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void equals(Boolean expected, Version x, Version y) {
         assertEqual(expected, x.equals(y), message("x", x, "y", y));
     }
@@ -84,6 +88,7 @@ public class VersionTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void compareTo(Integer expected, Version x, Version y) {
         assertEqual(expected, x.compareTo(y), message("x", x, "y", y));
     }

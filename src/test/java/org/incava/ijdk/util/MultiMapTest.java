@@ -4,10 +4,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.test.Assertions.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.assertNotNull;
+import static org.incava.test.Assertions.assertNull;
+import static org.incava.test.Assertions.message;
 
 @RunWith(JUnitParamsRunner.class)
 public class MultiMapTest {

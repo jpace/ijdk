@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import junit.framework.TestCase;
 import org.incava.ijdk.util.IUtil;
+
 import static org.incava.ijdk.util.IUtil.*;
 
 public class ListComparatorTest extends TestCase {

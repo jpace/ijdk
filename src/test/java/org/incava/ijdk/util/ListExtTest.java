@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -21,6 +22,7 @@ public class ListExtTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public <T> void get(T expected, List<T> list, int idx) {
         T result = ListExt.get(list, idx);
         assertEqual(expected, result, message("list", list, "idx", idx));
@@ -50,6 +52,7 @@ public class ListExtTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public <T> void first(T expected, List<T> list) {
         T result = ListExt.first(list);
         assertEqual(expected, result);
@@ -63,6 +66,7 @@ public class ListExtTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public <T> void last(T expected, List<T> list) {
         T result = ListExt.last(list);
         assertEqual(expected, result);        
@@ -76,6 +80,7 @@ public class ListExtTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public <T> void removeAll(List<T> expected, List<T> list, T element) {
         ListExt.removeAll(list, element);
         assertEqual(expected, list);
@@ -91,6 +96,7 @@ public class ListExtTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public void getIndex(Integer expected, Integer size, Integer index) {
         Integer result = ListExt.getIndex(size, index);
         assertEqual(expected, result, message("size", size, "index", index));
@@ -116,6 +122,7 @@ public class ListExtTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public <T> void contains(Boolean expected, List<T> list, T value) {
         Boolean result = ListExt.contains(list, value);
         assertEqual(expected, result, message("list", list, "value", value));
@@ -137,6 +144,7 @@ public class ListExtTest {
 
     @Test
     @Parameters
+    @TestCaseName("{method} {index} {params}")
     public <T> void getRandomElement(Boolean expObject, List<T> list) {
         T result = ListExt.getRandomElement(list);
         assertEqual(expObject, result != null, message("list", list, "result", result));

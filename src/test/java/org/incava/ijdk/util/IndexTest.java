@@ -1,13 +1,15 @@
 package org.incava.ijdk.util;
 
-import org.incava.ijdk.lang.Common;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.incava.test.Assertions.*;
-import static org.incava.ijdk.lang.Common.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
 @RunWith(JUnitParamsRunner.class)
 public class IndexTest {
@@ -19,16 +21,16 @@ public class IndexTest {
     }
 
     public java.util.List<Object[]> parametersForGetIndex() {
-        return Common.<Object[]>list(ary(null, null, 0),
-                                     ary(null, 0, 0),
-                                     ary(0, 4, 0),
-                                     ary(1, 4, 1),
-                                     ary(3, 4, 3),
-                                     ary(null, 4, 4),
-                                     ary(3, 4, -1),
-                                     ary(2, 4, -2),
-                                     ary(1, 4, -3),
-                                     ary(0, 4, -4),
-                                     ary(null, 4, -5));
+        return paramsList(params(null, null, 0),
+                          params(null, 0, 0),
+                          params(0, 4, 0),
+                          params(1, 4, 1),
+                          params(3, 4, 3),
+                          params(null, 4, 4),
+                          params(3, 4, -1),
+                          params(2, 4, -2),
+                          params(1, 4, -3),
+                          params(0, 4, -4),
+                          params(null, 4, -5));
     }            
 }
