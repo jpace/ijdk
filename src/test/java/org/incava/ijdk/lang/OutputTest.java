@@ -1,13 +1,18 @@
 package org.incava.ijdk.lang;
 
-import junit.framework.TestCase;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class OutputTest extends TestCase {
-    public OutputTest(String name) {
-        super(name);
-    }
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
-    public void testNothing() {
-        
+@RunWith(JUnitParamsRunner.class)
+public class OutputTest {
+    @Test
+    public void nothing() {
     }
 }
