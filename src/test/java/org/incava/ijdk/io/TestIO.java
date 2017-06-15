@@ -8,14 +8,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
-import org.incava.test.TestCaseExt;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class TestIO extends TestCaseExt {
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+
+public class TestIO extends Parameterized {
     private final String tmpdir = System.getProperty("java.io.tmpdir");
-
-    public TestIO(String name) {
-        super(name);
-    }
 
     public File writeFile(String fname, String ... lines) {
         File file = new File(fname);        
@@ -34,6 +38,7 @@ public class TestIO extends TestCaseExt {
         return file;
     }
 
+    @Test
     public void testReadLines() {
         String[] lines = new String[] { "first line", "line #2", "and the third line" };
 
@@ -41,11 +46,12 @@ public class TestIO extends TestCaseExt {
         File tmpFile = writeFile(tmpFname, lines);
 
         List<String> readLines = IO.readLines(tmpFname);
-        assertEquals(Arrays.asList(lines), readLines);
+        assertEqual(Arrays.asList(lines), readLines);
 
         tmpFile.delete();
     }
 
+    @Test
     public void testReadLinesNonEmpty() {
         String[] lines = new String[] { 
             "",
@@ -67,24 +73,26 @@ public class TestIO extends TestCaseExt {
         expLines.add(lines[6]);
 
         List<String> readLines = IO.readLines(tmpFname, EnumSet.of(ReadOptionType.NONEMPTY));
-        assertEquals(expLines, readLines);
+        assertEqual(expLines, readLines);
 
         tmpFile.delete();        
     }
 
+    @Test
     public void testNoExceptionForMissingFile() {
         try {
             IO.readLines("/tmp/zawsdfsadfzv.jkljkl");
         }
         catch (Exception e) {
-            fail("should be no exception");
+            Assert.fail("should be no exception");
         }
     }
 
+    @Test
     public void testExceptionForMissingFile() {
         try {
             IO.readLines("/tmp/zawsdfsadfzv.jkljkl", EnumSet.of(ReadOptionType.WITH_EXCEPTION));
-            fail("should be an exception");
+            Assert.fail("should be an exception");
         }
         catch (Exception e) {
         }
