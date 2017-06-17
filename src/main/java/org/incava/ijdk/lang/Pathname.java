@@ -1,10 +1,8 @@
 package org.incava.ijdk.lang;
 
 import java.io.File;
-import java.util.*;
 import org.incava.ijdk.io.FileExt;
 import org.incava.ijdk.io.IO;
-import org.incava.ijdk.lang.ObjectExt;
 
 /**
  * Extends java.io.File with Ruby-ish functionality, based on pathname.rb.
@@ -23,7 +21,7 @@ public class Pathname extends File {
 
     public static java.util.List<Pathname> findAll() {
         Pathname root = new Pathname();
-        java.util.List<Pathname> all = new ArrayList<Pathname>();
+        java.util.List<Pathname> all = new java.util.ArrayList<Pathname>();
         for (Pathname child : root.children()) {
             all.add(child);
         }
@@ -147,7 +145,7 @@ public class Pathname extends File {
         }
         else {
             // reduce single dots
-            java.util.List<String> comps = new ArrayList<String>();
+            java.util.List<String> comps = new java.util.ArrayList<String>();
             for (String c : components) {
                 if (!c.equals(".")) {
                     comps.add(c);
@@ -190,7 +188,7 @@ public class Pathname extends File {
      *
      * @param lines the lines to print
      */
-    public void printLines(List<String> lines) {
+    public void printLines(java.util.List<String> lines) {
         IO.printLines(relativePath(), lines);
     }
 
@@ -198,7 +196,7 @@ public class Pathname extends File {
      * Returns the immediate subelements of this pathname.
      */
     public java.util.List<Pathname> children() {
-        java.util.List<Pathname> children = new ArrayList<Pathname>();
+        java.util.List<Pathname> children = new java.util.ArrayList<Pathname>();
         for (File child : listFiles()) {
             children.add(new Pathname(child));
         }

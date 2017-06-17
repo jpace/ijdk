@@ -1,337 +1,179 @@
 package org.incava.ijdk.lang;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import junit.framework.TestCase;
-import static org.incava.ijdk.lang.ICore.list;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
+import org.junit.Test;
 
-public class PathnameTest extends TestCase {
-    public PathnameTest(String name) {
-        super(name);
-    }
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.assertSame;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
-    // shortcut used within this test
+public class PathnameTest extends Parameterized {
+    // shortcuts used within this test
 
-    public Pathname pnName(String fileName) {
+    public Pathname pn(String fileName) {
         return new Pathname(fileName);
     }
 
-    public Pathname pnFile(File file) {
+    public Pathname pn(File file) {
         return new Pathname(file);
     }
 
+    @Test
     public void testPnName() {
+        // make sure that .equals works:
         String fileName = "f.x";
-        Pathname pn = pnName(fileName);
-        assertEquals(new Pathname(fileName), pn);
+        Pathname pn = pn(fileName);
+        assertEqual(true, new Pathname(fileName).equals(pn), message("fileName", fileName, "pn", pn));
     }
 
+    @Test
     public void testPnFile() {
+        // make sure that .equals works:        
         File file = new File("f.x");
-        Pathname pn = pnFile(file);
-        assertEquals(new Pathname(file), pn);
+        Pathname pn = pn(file);
+        assertEqual(true, new Pathname(file).equals(pn), message("file", file, "pn", pn));
     }
 
-    // equals
-
-    public boolean assertEquals(boolean expected, Pathname x, Pathname y) {
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void equalsTest(boolean expected, Pathname x, Pathname y) {
         boolean result = x.equals(y);
-        assertEquals("x: " + x + "; y: " + y, expected, result);
-        return result;
+        assertEqual(expected, result, message("x", x, "y", y));
+    }
+    
+    private List<Object[]> parametersForEqualsTest() {
+        return paramsList(params(true, pn("f.x"), pn("f.x")),
+                          params(true, pn(new File("f.x")), pn(new File("f.x"))),
+                          params(false, pn("f.x"), pn("g.x")),
+                          params(false, pn(new File("f.x")), pn(new File("g.x"))));
     }
 
-    public void testEqualsFileNamesTrue() {
-        assertEquals(true, pnName("f.x"), pnName("f.x"));
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void ctorString(Pathname expected, String fileName) {
+        Pathname result = new Pathname(fileName);
+        assertEqual(expected, result, message("fileName", fileName));
+    }
+    
+    private List<Object[]> parametersForCtorString() {
+        return paramsList(params(new Pathname("f.x"), "f.x"),
+                          params(new Pathname("d/f.x"), "d/f.x"),
+                          // empty args is current directory:
+                          params(new Pathname(), System.getProperty("user.dir")));
     }
 
-    public void testEqualsFilesTrue() {
-        assertEquals(true, pnFile(new File("f.x")), pnFile(new File("f.x")));
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void ctorFile(Pathname expected, File file) {
+        Pathname result = new Pathname(file);
+        assertEqual(expected, result, message("file", file));
+    }
+    
+    private List<Object[]> parametersForCtorFile() {
+        return paramsList(params(new Pathname("f.x"), new File("f.x")),
+                          params(new Pathname("d/f.x"), new File("d/f.x")));
     }
 
-    public void testEqualsFileNamesFalse() {
-        assertEquals(false, pnName("f.x"), pnName("g.x"));
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void baseName(String expected, Pathname pn) {
+        String result = pn.baseName();
+        assertEqual(expected, result, message("pn", pn));
+    }
+    
+    private List<Object[]> parametersForBaseName() {
+        return paramsList(params("f.x", pn("f.x")),
+                          params("f.x", pn("d/f.x")),
+                          params(".",   pn(".")));
     }
 
-    public void testEqualsFilesFalse() {
-        assertEquals(false, pnFile(new File("f.x")), pnFile(new File("g.x")));
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void rootName(String expected, Pathname pn) {
+        String result = pn.rootName();
+        assertEqual(expected, result, message("pn", pn));
+    }
+    
+    private List<Object[]> parametersForRootName() {
+        return paramsList(params("f",   pn("f.x")),
+                          params("f",   pn("d/f.x")),
+                          params("f",   pn("d/f")),
+                          params("f.x", pn("d/f.x.y")),
+                          params("f",   pn("d/f.")),
+                          params(".",   pn(".")));
+    }
+    
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void relativePath(String expected, Pathname pn) {
+        String result = pn.relativePath();
+        assertEqual(expected, result, message("pn", pn));
+    }
+    
+    private List<Object[]> parametersForRelativePath() {
+        return paramsList(params("f.x",   pn("f.x")),
+                          params("d/f.x", pn("d/f.x")));
     }
 
-    // ctor
-
-    public Pathname assertCtor(Pathname expected, Pathname pn) {
-        assertEquals(expected, pn);
-        return pn;
-    }
-
-    public Pathname assertCtor(Pathname expected, String fileName) {
-        Pathname pn = new Pathname(fileName);
-        assertEquals("fileName: " + fileName, expected, pn);
-        return pn;
-    }
-
-    public Pathname assertCtor(Pathname expected, File file) {
-        Pathname pn = new Pathname(file);
-        assertEquals("file: " + file, expected, pn);
-        return pn;
-    }
-
-    public void testCtorFileName() {
-        Pathname expected = pnName("f.x");
-        assertCtor(expected, "f.x");
-    }
-
-    public void testCtorFile() {
-        Pathname expected = pnFile(new File("f.x"));
-        assertCtor(expected, new File("f.x"));
-    }
-
-    public void testCtorFileNamePath() {
-        Pathname expected = pnName("d/f.x");
-        assertCtor(expected, "d/f.x");
-    }
-
-    public void testCtorFilePath() {
-        Pathname expected = pnFile(new File("d/f.x"));
-        assertCtor(expected, new File("d/f.x"));
-    }
-
-    public void testCtorUserDir() {
-        Pathname expected = pnName(System.getProperty("user.dir"));
-        assertCtor(expected, new Pathname(System.getProperty("user.dir")));
-    }
-
-    // baseName
-
-    public Pathname assertBaseName(String expected, Pathname pn) {
-        assertEquals(expected, pn.baseName());
-        return pn;
-    }
-
-    public void testBaseNameFileName() {
-        assertBaseName("f.x", pnName("f.x"));
-    }
-
-    public void testBaseNameFile() {
-        assertBaseName("f.x", pnFile(new File("f.x")));
-    }
-
-    public void testBaseNameFileNamePath() {
-        assertBaseName("f.x", pnName("d/f.x"));
-    }
-
-    public void testBaseNameFilePath() {
-        assertBaseName("f.x", pnFile(new File("d/f.x")));
-    }
-
-    public void testBaseNameDot() {
-        assertBaseName(".", pnName("."));
-    }
-
-    // rootName
-
-    public Pathname assertRootName(String expected, Pathname pn) {
-        assertEquals(expected, pn.rootName());
-        return pn;
-    }
-
-    public void testRootNameFileName() {
-        assertRootName("f", pnName("f.x"));
-    }
-
-    public void testRootNameFileNamePath() {
-        assertRootName("f", pnName("d/f.x"));
-    }
-
-    public void testRootNameNoExtension() {
-        assertRootName("f", pnName("d/f"));
-    }
-
-    public void testRootNameMultipleExtensions() {
-        assertRootName("f.x", pnName("d/f.x.y"));
-    }
-
-    public void testRootNameEndingDot() {
-        assertRootName("f", pnName("d/f."));
-    }
-
-    public void testRootNameDot() {
-        assertRootName(".", pnName("."));
-    }
-
-    // relativePath
-
-    public Pathname assertRelativePath(String expected, Pathname pn) {
-        assertEquals(expected, pn.relativePath());
-        return pn;
-    }
-
-    public void testRelativePathFileName() {
-        assertRelativePath("f.x", pnName("f.x"));
-    }
-
-    public void testRelativePathFile() {
-        assertRelativePath("f.x", pnFile(new File("f.x")));
-    }
-
-    public void testRelativePathFileNamePath() {
-        assertRelativePath("d/f.x", pnName("d/f.x"));
-    }
-
-    public void testRelativePathFilePath() {
-        assertRelativePath("d/f.x", pnFile(new File("d/f.x")));
-    }
-
-    // file
-
-    public Pathname assertFile(File expected, Pathname pn) {
-        assertEquals(expected, pn.file());
-        return pn;
-    }
-
-    public void testFileFileName() {
-        assertFile(new File("f.x"), pnName("f.x"));
-    }
-
-    public void testFileFile() {
-        assertFile(new File("f.x"), pnFile(new File("f.x")));
+    @Test
+    public void file() {
+        Pathname pn = pn("f.x");
+        assertSame(pn, pn.file());
     }
 
     // extension
 
-    public Pathname assertExtension(String expected, Pathname pn) {
-        assertEquals(expected, pn.extension());
-        return pn;
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void extension(String expected, Pathname pn) {
+        String result = pn.extension();
+        assertEqual(expected, result, message("pn", pn));
     }
-
-    public void testExtensionSingle() {
-        assertExtension("x", pnName("f.x"));
-    }
-
-    public void testExtensionMultiple() {
-        assertExtension("y", pnName("f.x.y"));
-    }
-
-    public void testExtensionEmpty() {
-        assertExtension("", pnName("f."));
-    }
-
-    public void testExtensionNone() {
-        assertExtension(null, pnFile(new File("f")));
+    
+    private List<Object[]> parametersForExtension() {
+        return paramsList(params("x",  pn("f.x")),
+                          params("y",  pn("f.x.y")),
+                          params("",   pn("f.")),
+                          params(null, pn("f")));
     }
 
     // parent
 
-    public Pathname assertParent(Pathname expected, Pathname pn) {
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void parent(Pathname expected, Pathname pn) {
         Pathname result = pn.parent();
-        assertEquals("pn: " + pn, expected, result);
-        return result;
+        assertEqual(expected, result, message("pn", pn));
     }
-
-    public void testParentOneLevelToCurrentDirectory() {
-        assertParent(pnName("."), pnName("a"));
-    }
-
-    public void testParentOneLevelToSuper() {
-        assertParent(pnName(".."), pnName("."));
-    }
-
-    public void testParentOneLevelFromDots() {
-        assertParent(pnName("../.."), pnName(".."));
-    }
-
-    public void testParentTwoLevelsToParent() {
-        assertParent(pnName("d"), pnName("d/f"));
-    }
-
-    public void testParentTwoLevelsIncludesDot() {
-        assertParent(pnName("d"), pnName("d/./f"));
-    }
-
-    public void testParentTwoLevelsIncludesDots() {
-        assertParent(pnName("d"), pnName("d/././f"));
-    }
-
-    public void testParentTwoLevelsIncludesDoubleDots() {
-        assertParent(pnName("d/.."), pnName("d/../f"));
-    }
-
-    public void testParentEmpty() {
-        assertParent(pnName(".."), pnName(""));
+    
+    private List<Object[]> parametersForParent() {
+        return paramsList(params(pn("."), pn("a")),
+                          params(pn(".."), pn(".")),
+                          params(pn("../.."), pn("..")),
+                          params(pn("d"), pn("d/f")),
+                          params(pn("d"), pn("d/./f")),
+                          params(pn("d"), pn("d/././f")),
+                          params(pn("d/.."), pn("d/../f")),
+                          params(pn(".."), pn("")));
     }
 
     // expand path
 
-    public String assertExpandPath(String expected, Pathname pn) {
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void expandPath(String expected, Pathname pn) {
         String result = pn.expandPath();
-        assertEquals("pn: " + pn, expected, result);
-        return result;
+        assertEqual(expected, result, message("pn", pn));
     }
-
-    public void testExpandPathOneLevelToSuper() {
+    
+    private List<Object[]> parametersForExpandPath() {
         String userDir = System.getProperty("user.dir");
         String separator = "/";
-        assertExpandPath(userDir + separator + "a", pnName("a"));
+        
+        return paramsList(params(userDir + "/" + "a", pn("a")),
+                          params(userDir + "/" + "a/b", pn("a/b")),
+                          // this is what Ruby pathname does:
+                          params(userDir + "/" + "a/./b", pn("a/./b")),
+                          params(userDir + "/" + "a/../b", pn("a/../b")),
+                          params("/a", pn("/a")),
+                          params("/a/../b/c", pn("/a/../b/c")));
     }
-
-    public void testExpandPathTwoLevels() {
-        String userDir = System.getProperty("user.dir");
-        String separator = "/";
-        assertExpandPath(userDir + separator + "a/b", pnName("a/b"));
-    }
-
-    public void testExpandPathContainsSingleDot() {
-        String userDir = System.getProperty("user.dir");
-        String separator = "/";
-        assertExpandPath(userDir + separator + "a/./b", pnName("a/./b"));
-    }    
-
-    public void testExpandPathContainsDoubleDots() {
-        String userDir = System.getProperty("user.dir");
-        String separator = "/";
-        assertExpandPath(userDir + separator + "a/../b", pnName("a/../b"));
-    }    
-
-    public void testExpandPathEmpty() {
-        String userDir = System.getProperty("user.dir");
-        String separator = "/";
-        assertExpandPath(userDir, pnName(""));
-    }
-
-    public void testExpandPathFullPathOneElement() {
-        assertExpandPath("/a", pnName("/a"));
-    }
-
-    public void testExpandPathFullPathRelative() {
-        assertExpandPath("/a/../b/c", pnName("/a/../b/c"));
-    }
-
-    // glob
-
-    public List<Pathname> assertGlob(List<Pathname> expected, String glob) {
-        String msg = "glob: " + glob;
-        List<Pathname> result = Pathname.glob(glob);
-        System.out.println("glob: " + glob);
-        System.out.println("result: " + result);
-        assertEquals(msg, expected, result);
-        return result;
-    }
-
-    // public void testSingleDirectory() {
-    //     assertGlob(list(new Pathname("main")), "main");
-    // }
-
-    // children
-
-    public List<Pathname> assertChildren(List<Pathname> expected, Pathname dir) {
-        List<Pathname> result = dir.children();
-        assertEquals("dir: " + dir, expected, result);
-        return result;
-    }
-
-    // public void testChildrenUserDir() {
-    //     Pathname dir = new Pathname();
-    //     List<Pathname> expected = new ArrayList<Pathname>();
-    //     assertChildren(expected, dir);
-    // }
 }
