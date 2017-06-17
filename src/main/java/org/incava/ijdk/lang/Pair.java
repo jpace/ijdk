@@ -1,7 +1,10 @@
 package org.incava.ijdk.lang;
 
 /**
- * A two-element tuple, for classes that are comparable.
+ * A two-element tuple, for classes that are comparable. Consider using KeyValue instead, which is
+ * more flexible in variable types.
+ *
+ * @see KeyValue
  */
 public class Pair<FirstType extends Comparable<? super FirstType>, SecondType extends Comparable<? super SecondType>> 
     implements Comparable<Pair<FirstType, SecondType>> {
@@ -21,7 +24,7 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
      * @return the created pair
      */
     public static <X extends Comparable<? super X>, Y extends Comparable<? super Y>>
-        Pair<X, Y> create(X first, Y second) {
+        Pair<X, Y> of(X first, Y second) {
         return new Pair<X, Y>(first, second);
     }
 

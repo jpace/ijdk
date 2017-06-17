@@ -36,7 +36,7 @@ public class KeyValueTest extends Parameterized {
 
     private List<Object[]> parametersForAccessors() {
         return paramsList(params("one", 1.23, kvOne123),
-                          params(null, 1.23, new KeyValue<String, Double>(null, 1.23)),
+                          params(null,  1.23, new KeyValue<String, Double>(null, 1.23)),
                           params("one", null, new KeyValue<String, Double>("one", null)));
     }
 
@@ -83,6 +83,9 @@ public class KeyValueTest extends Parameterized {
         KeyValue<String, Double> aa = KeyValue.of("one", 1.2);
         KeyValue<String, Double> ab = KeyValue.of("one", 2.4);
         KeyValue<String, Double> ba = KeyValue.of("two", 1.2);
+
+        // StringBuilder is not comparable:
+        StringBuilder notComparable = new StringBuilder("one");
         
         return paramsList(params(0,  aa, aa),
                           params(0,  aa, KeyValue.of("one", 1.2)),
@@ -92,8 +95,8 @@ public class KeyValueTest extends Parameterized {
                           params(-1, aa, ba),
                           params(-1, aa, ab),
                           params(1,  ab, aa),
-                          // StringBuilder is not comparable:
-                          params(-1, KeyValue.of(new StringBuilder("one"), 1.2), KeyValue.of(new StringBuilder("one"), 1.2)),
-                          params(-1, KeyValue.of(1.2, new StringBuilder("one")), KeyValue.of(1.2, new StringBuilder("one"))));
+                          // @todo although these are equal, compareTo returns -1, as if they are not.
+                          params(-1, KeyValue.of(notComparable, 1.2), KeyValue.of(notComparable, 1.2)),
+                          params(-1, KeyValue.of(1.2, notComparable), KeyValue.of(1.2, notComparable)));
     }
 }

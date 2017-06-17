@@ -1,53 +1,33 @@
 package org.incava.ijdk.lang;
 
-import junit.framework.TestCase;
+import java.util.List;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.incava.test.Parameterized;
+import org.junit.Test;
 
-public class PathnameGlobTest extends TestCase {
-    public PathnameGlobTest(String name) {
-        super(name);
-    }
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
-    public String assertPattern(String expected, String glob) {
+public class PathnameGlobTest extends Parameterized {
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void method(String expected, String glob) {
         String result = PathnameGlob.toPattern(glob);
-        assertEquals("glob: '" + glob + "'", expected, result);
-        return result;
+        assertEqual(expected, result, message("glob", glob));
     }
-
-    public void testEmpty() {
-        assertPattern("", "");
-    }
-
-    public void testAB() {
-        assertPattern("ab", "ab");
-    }
-
-    public void testASlashB() {
-        assertPattern("a/b", "a/b");
-    }
-
-    public void testAStar() {
-        assertPattern("a[^/]*", "a*");
-    }
-
-    public void testASlashStarStar() {
-        assertPattern("a/.*", "a/**");
-    }
-
-    public void testASlashStarStarSlashB() {
-        assertPattern("a/.*/b", "a/**/b");
-    }
-
-    // a**b == a*b, per Ruby
-
-    public void testAStarStarSlashB() {
-        assertPattern("a[^/]*[^/]*/b", "a**/b");
-    }
-
-    public void testADotB() {
-        assertPattern("a\\.b", "a.b");
-    }
-
-    public void testADotBDotC() {
-        assertPattern("a\\.b\\.c", "a.b.c");
+    
+    private List<Object[]> parametersForMethod() {
+        return paramsList(params("", ""),
+                          params("ab", "ab"),
+                          params("a/b", "a/b"),
+                          params("a[^/]*", "a*"),
+                          params("a/.*", "a/**"),
+                          params("a/.*/b", "a/**/b"),
+                          // a**b == a*b, per Ruby:
+                          params("a[^/]*[^/]*/b", "a**/b"),
+                          params("a\\.b", "a.b"),
+                          params("a\\.b\\.c", "a.b.c"));
     }
  }

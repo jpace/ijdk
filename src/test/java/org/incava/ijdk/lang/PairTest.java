@@ -1,70 +1,64 @@
 package org.incava.ijdk.lang;
 
-import junit.framework.TestCase;
-import java.util.*;
+import org.junit.Test;
 
-public class PairTest extends TestCase {
-    public PairTest(String name) {
-        super(name);
-    }
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
 
+public class PairTest {
+    private Pair<String, Integer> abc123 = Pair.of("abc", 123);
+    
     public <A extends Comparable<? super A>, B extends Comparable<? super B>> void assertCompareToEquals(Pair<A, B> a, Pair<A, B> b) {
-        String ab = "a: " + a + "; b: " + b;
+        String msg = message("a", a, "b", b);
 
-        assertEquals(ab, a, b);
-        assertEquals(ab, 0, a.compareTo(b));
-        assertEquals(ab, 0, b.compareTo(a));
+        assertEqual(a, b, msg);
+        assertEqual(0, a.compareTo(b), msg);
+        assertEqual(0, b.compareTo(a), msg);
     }
 
     public <A extends Comparable<? super A>, B extends Comparable<? super B>> void assertCompareToLessThan(Pair<A, B> a, Pair<A, B> b) {
-        String ab = "a: " + a + "; b: " + b;
+        String msg = message("a", a, "b", b);
         
-        assertFalse(ab, a.equals(b));
-        assertTrue(ab, a.compareTo(b) < 0);
-        assertTrue(ab, b.compareTo(a) > 0);
+        assertEqual(false, a.equals(b), msg);
+        assertEqual(true, a.compareTo(b) < 0, msg);
+        assertEqual(true, b.compareTo(a) > 0, msg);
     }
 
-    public <A extends Comparable<? super A>, B extends Comparable<? super B>> void doComparableTest(Pair<A, B> a, Pair<A, B> b, Pair<A, B> c, Pair<A, B> d) {
-        String ab = "a: " + a + "; b: " + b;
-        String ac = "a: " + a + "; c: " + c;
-        String ad = "a: " + a + "; d: " + d;
+    @Test
+    public void of() {
+        Pair<Integer, String> pair = Pair.of(Integer.valueOf(34), "thirty-four");
+        assertEqual(true, pair instanceof Pair, message("pair", pair));
+    }
+    
+    @Test
+    public void testComparable() {
+        Pair<String, Integer> a = Pair.of("hello", Integer.valueOf(4));
+        Pair<String, Integer> b = Pair.of("hello", 4);
+        Pair<String, Integer> c = Pair.of("hello", 5);
+        Pair<String, Integer> d = Pair.of("ha",    4);
 
         assertCompareToEquals(a, b);
         assertCompareToLessThan(a, c);
         assertCompareToLessThan(d, a);
     }
 
-    public void testCreate() {
-        Pair<Integer, String> intStrPair = Pair.create(Integer.valueOf(34), "thirty-four");
-        assertTrue(intStrPair instanceof Pair);
-    }
-    
-    public void testComparable() {
-        Pair<String, Integer> a = Pair.create("hello", Integer.valueOf(4));
-        Pair<String, Integer> b = Pair.create("hello", 4);
-        Pair<String, Integer> c = Pair.create("hello", 5);
-        Pair<String, Integer> d = Pair.create("ha",    4);
-
-        doComparableTest(a, b, c, d);
-    }
-
+    @Test
     public void testGetFirstDefault() {
-        Pair<String, Integer> pair = Pair.create("abc", 123);
-        assertEquals("abc", pair.getFirst());
+        assertEqual("abc", abc123.getFirst());
     }
 
+    @Test
     public void testFirstDefault() {
-        Pair<String, Integer> pair = Pair.create("abc", 123);
-        assertEquals("abc", pair.first());
+        assertEqual("abc", abc123.first());
     }
 
+    @Test
     public void testGetSecondDefault() {
-        Pair<String, Integer> pair = Pair.create("abc", 123);
-        assertEquals(Integer.valueOf(123), pair.getSecond());
+        assertEqual(Integer.valueOf(123), abc123.getSecond());
     }
 
+    @Test
     public void testSecondDefault() {
-        Pair<String, Integer> pair = Pair.create("abc", 123);
-        assertEquals(Integer.valueOf(123), pair.second());
+        assertEqual(Integer.valueOf(123), abc123.second());
     }
 }

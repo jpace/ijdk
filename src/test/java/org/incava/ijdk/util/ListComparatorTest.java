@@ -5,26 +5,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import junit.framework.TestCase;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.incava.ijdk.util.IUtil;
+import org.incava.test.Parameterized;
+import org.junit.Test;
 
-import static org.incava.ijdk.util.IUtil.*;
+import static org.incava.test.Assertions.assertEqual;
+import static org.incava.test.Assertions.message;
+import static org.incava.test.Parameters.params;
+import static org.incava.test.Parameters.paramsList;
 
-public class ListComparatorTest extends TestCase {
-    public ListComparatorTest(String name) {
-        super(name);
-    }
-
-    public <Type> void assertComparison(List<Integer> expExactMatches, 
-                                        Map<Integer, Integer> expMisorderedMatches, 
-                                        List<Type> from, List<Type> to) {
-        
-        ListComparator<Type> lc = new ListComparator<Type>(from, to);
-        ListComparison comp = lc.getComparison();
-        assertEquals(expExactMatches, comp.getExactMatches());
-        assertEquals(expMisorderedMatches, comp.getMisorderedMatches());
-    }
-
+public class ListComparatorTest extends Parameterized {
     public Map<Integer, Integer> map(Integer ... vals) {
         Map<Integer, Integer> m = new HashMap<Integer, Integer>();
         Integer k = null;
@@ -40,31 +32,23 @@ public class ListComparatorTest extends TestCase {
         return m;
     }
 
-    public void testEmptyLists() {
-        assertComparison(IUtil.<Integer>list(), map(), IUtil.<String>list(), IUtil.<String>list());
+    @Test
+    @Parameters
+    @TestCaseName("{method} {index} {params}")
+    public <T> void test(List<Integer> expExactMatches, Map<Integer, Integer> expMisorderedMatches, List<T> from, List<T> to) {   
+        ListComparator<T> lc = new ListComparator<T>(from, to);
+        ListComparison comp = lc.getComparison();
+        assertEqual(expExactMatches,      comp.getExactMatches(),      message("from", from, "to", to));
+        assertEqual(expMisorderedMatches, comp.getMisorderedMatches(), message("from", from, "to", to));
     }
-
-    public void testExactMatchOneElement() {
-        assertComparison(IUtil.list(0), map(), list("x"), list("x"));
-    }
-
-    public void testExactMatchTwoElements() {
-        assertComparison(IUtil.list(0, 1), map(), list("x", "y"), list("x", "y"));
-    }
-
-    public void testExactMatchTwoElementsNoMatchOne() {
-        assertComparison(IUtil.list(0, 1), map(), list("x", "y", "z"), list("x", "y", "a"));
-    }
-
-    public void testExactMisorderedMatchesTwo() {
-        assertComparison(IUtil.<Integer>list(), map(0, 1, 1, 0), list("x", "y"), list("y", "x"));
-    }
-
-    public void testExactMisorderedMatchesThree() {
-        assertComparison(IUtil.<Integer>list(), map(0, 1, 1, 2, 2, 0), list("x", "y", "z"), list("z", "x", "y"));
-    }
-
-    public void testExactMisorderedMatchesThreeOneRemaining() {
-        assertComparison(IUtil.<Integer>list(), map(0, 1, 1, 2, 2, 0), list("x", "y", "z"), list("z", "x", "y", "a"));
+    
+    private List<Object[]> parametersForTest() {
+        return paramsList(params(IUtil.<Integer>list(), map(),                 IUtil.<String>list(),      IUtil.<String>list()),
+                          params(IUtil.list(0),         map(),                 IUtil.list("x"),           IUtil.list("x")),
+                          params(IUtil.list(0, 1),      map(),                 IUtil.list("x", "y"),      IUtil.list("x", "y")),
+                          params(IUtil.list(0, 1),      map(),                 IUtil.list("x", "y", "z"), IUtil.list("x", "y", "a")),
+                          params(IUtil.<Integer>list(), map(0, 1, 1, 0),       IUtil.list("x", "y"),      IUtil.list("y", "x")),
+                          params(IUtil.<Integer>list(), map(0, 1, 1, 2, 2, 0), IUtil.list("x", "y", "z"), IUtil.list("z", "x", "y")),
+                          params(IUtil.<Integer>list(), map(0, 1, 1, 2, 2, 0), IUtil.list("x", "y", "z"), IUtil.list("z", "x", "y", "a")));
     }
 }

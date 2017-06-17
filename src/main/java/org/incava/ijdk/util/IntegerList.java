@@ -61,7 +61,7 @@ public class IntegerList extends ArrayList<Integer> {
     public Integer apply(Closure<Integer, Pair<Integer, Integer>> closure) {
         Integer num = null;
         for (int idx = 0; idx < size(); ++idx) {
-            num = closure.execute(Pair.create(num, get(idx)));
+            num = closure.execute(Pair.of(num, get(idx)));
         }
         return num;
     }
