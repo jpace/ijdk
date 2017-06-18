@@ -107,7 +107,7 @@ public class NullableObject<T> implements Bool {
     }
 
     /**
-     * {@inheritDocReturns whether the wrapped object is non-null and, if it is a collection or a string, has a
+     * Returns whether the wrapped object is non-null and, if it is a collection or a string, has a
      * length greater than zero.
      *
      * @return whether the wrapped object is not null and is true for that object type

@@ -20,9 +20,11 @@ public class ICore {
      * Returns whether the object is non-null and, if it is a collection or a
      * string, has a length greater than zero.
      *
+     * @param obj the object to check
      * @see #isEmpty
      * @see #isFalse
      * @see org.incava.ijdk.lang.ObjectExt#isTrue
+     * @return whether the object is true
      */
     public static boolean isTrue(Object obj) {
         return ObjectExt.isTrue(obj);
@@ -33,6 +35,7 @@ public class ICore {
      *
      * @see #isEmpty
      * @see #isFalse
+     * @return whether the array is true
      */
     public static boolean isTrue(Object ... objs) {
         return ObjectExt.isTrue(objs);
@@ -41,7 +44,9 @@ public class ICore {
     /**
      * Returns whether the object is null or is a string or collection of zero length.
      *
+     * @param obj the object to check
      * @see #isEmpty
+     * @return whether the object is false
      */
     public static boolean isFalse(Object obj) {
         return ObjectExt.isFalse(obj);
@@ -51,6 +56,7 @@ public class ICore {
      * Returns whether the array is not null and is not of zero length.
      *
      * @see #isEmpty
+     * @return whether the array is false
      */
     public static boolean isFalse(Object ... objs) {
         return ObjectExt.isFalse(objs);
@@ -59,7 +65,9 @@ public class ICore {
     /**
      * Returns whether the object is null or is a string or collection of zero length.
      *
+     * @param obj the object to check
      * @see #isEmpty
+     * @return whether the object is empty
      */
     public static boolean isEmpty(Object obj) {
         return ObjectExt.isEmpty(obj);
@@ -68,7 +76,9 @@ public class ICore {
     /**
      * Returns whether the string is null or of zero length.
      *
+     * @param str the string to check
      * @see #isEmpty
+     * @return whether the string is empty
      */
     public static boolean isEmpty(String str) {
         return StringExt.isEmpty(str);
@@ -78,7 +88,9 @@ public class ICore {
      * Returns whether the object is null. This method provides an alternative
      * syntax than "if (obj == null)".
      *
+     * @param obj the object to check
      * @see #isNotNull
+     * @return whether the object is null
      */
     public static boolean isNull(Object obj) {
         return obj == null;
@@ -88,7 +100,9 @@ public class ICore {
      * Returns whether the object is not null. This method provides an
      * alternative syntax than "if (obj != null)".
      *
+     * @param obj the object to check
      * @see #isNull
+     * @return whether the object is not null
      */
     public static boolean isNotNull(Object obj) {
         return obj != null;
@@ -117,8 +131,12 @@ public class ICore {
      *     String status = db.status() != null ? db.status() : db.initialize());
      * </pre>
      *
+     * @param a the value returned if true
+     * @param b the value returned if a is not true, and b is true
+     * @param <T> the type of a and b
      * @see #elvis
      * @see #isTrue
+     * @return a if true, b if true, else null
      */
     public static <T> T or(T a, T b) {
         return isTrue(a) ? a : (isTrue(b) ? b : null);
@@ -133,8 +151,12 @@ public class ICore {
      *    String statusName = IUtil.and(userName, lastName);
      * </pre>
      *
+     * @param a the value returned if true
+     * @param b the value returned if a is not true, and b is true
+     * @param <T> the type of a and b
      * @see #or
      * @see #isTrue
+     * @return b if a and b are true, else null
      */
     public static <T> T and(T a, T b) {
         return isTrue(a) ? (isTrue(b) ? b : null) : null;
