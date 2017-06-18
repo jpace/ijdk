@@ -25,6 +25,18 @@ public class NullableObjectTest extends Parameterized {
                           params(new NullableObject<Integer>(1), 1));
     }
     
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public <T> void ofNull(NullableObject<?> expected, T obj) {
+        NullableObject<T> result = NullableObject.of(obj);
+        assertSame(expected, result);
+    }
+    
+    private List<Object[]> parametersForOfNull() {
+        NullableObject<Object> nil = NullableObject.<Object>of(null);
+        return paramsList(params(nil, (String)null),
+                          params(nil, (Integer)null));
+    }
+    
     @Test @Parameters(method="parametersForGetObj") @TestCaseName("{method} {index} {params}")
     public void get(Object expected, Object fromObj) {
         NullableObject<Object> obj = NullableObject.of(fromObj);
@@ -110,30 +122,24 @@ public class NullableObjectTest extends Parameterized {
     }    
     
     private List<Object[]> parametersForIsBoolean() {
-        return paramsList(
-            params(false, null),
+        return paramsList(params(false, null),
             
-            // Integer
-            params(true, 0),
-            params(true, 1),
-            params(true, -1),
+                          // Integer
+                          params(true, 0),
+                          params(true, 1),
+                          params(true, -1),
 
-            // String
-            params(true, "a"),
-            params(false, ""),
+                          // T[]
+                          params(true, new Object[] { "abc" }),
+                          params(true, new Object[] { "" }),
+                          params(false, new Object[] { }),
 
-            // T[]
-            params(true, new Object[] { "abc" }),
-            params(true, new Object[] { "" }),
-            params(false, new Object[] { }),
-
-            // Collection<T>            
-            params(true, Arrays.asList(new Object[] { "abc" })),
-            params(true, Arrays.asList(new Object[] { "" })),
-            params(false, Arrays.asList(new Object[] { }))
-                          );
+                          // Collection<T>            
+                          params(true, Arrays.asList(new Object[] { "abc" })),
+                          params(true, Arrays.asList(new Object[] { "" })),
+                          params(false, Arrays.asList(new Object[] { })));
     }
-
+    
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void isNull(boolean expected, T obj) {
         NullableObject<T> nobj = new NullableObject<T>(obj);

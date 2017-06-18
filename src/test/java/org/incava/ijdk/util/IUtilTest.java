@@ -28,7 +28,6 @@ public class IUtilTest extends Parameterized {
                           params(true, 0),
                           params(true, Arrays.asList(new String[] { "foo" })),
                           
-                          params(false, ""),
                           params(false, null),
                           params(false, new ArrayList<String>()));
     }
@@ -40,7 +39,6 @@ public class IUtilTest extends Parameterized {
     
     private List<Object[]> parametersForIsFalse() {
         return paramsList(params(true, null),
-                          params(true, ""),
                           params(true, new ArrayList<Double>()),
                           params(false, new Integer(317)),
                           params(false, Arrays.asList(new String[] { "ord" })));

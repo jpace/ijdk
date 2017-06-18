@@ -7,9 +7,19 @@ import java.util.Arrays;
  * Extension to the Object class, wrapping a Java Object with additional methods. The referenced
  * object can be null.
  */
-public class NullableObject<T> {
+public class NullableObject<T> implements Bool {
+    /**
+     * A single variable representing all wrapped null objects.
+     */
+    public static NullableObject<Object> NULL = new NullableObject<Object>(null);
+
+    /**
+     * Creates a wrapper for the given object. If the object is null, then common variable
+     * <code>NULL</code> is returned, thus eliminating unnecessary object creation.
+     */
+    @SuppressWarnings("unchecked")
     public static <T> NullableObject<T> of(T obj) {
-        return new NullableObject<T>(obj);
+        return obj == null ? (NullableObject<T>)NULL : new NullableObject<T>(obj);
     }
     
     /**
@@ -34,6 +44,9 @@ public class NullableObject<T> {
 
     private final T object;
 
+    /**
+     * Creates a wrapper for the given object.
+     */
     public NullableObject(T object) {
         this.object = object;
     }
@@ -56,6 +69,9 @@ public class NullableObject<T> {
      * Returns whether the other object is equal to the wrapped object, including whether they are
      * both null. If <code>other</code> is a <code>NullableObject</code>, then its wrapped object is
      * compared.
+     *
+     * @param other the object to compare to the wrapped object
+     * @return whether the given object equals this one
      */
     public boolean equals(Object other) {
         if (isNull()) {
@@ -83,13 +99,15 @@ public class NullableObject<T> {
 
     /**
      * Returns the hash code of the wrapped object. Returns 0 if the referenced object is null.
+     *
+     * @return the hash code
      */
     public int hashCode() {
         return isNull() ? 0 : obj().hashCode();
     }
 
     /**
-     * Returns whether the wrapped object is non-null and, if it is a collection or a string, has a
+     * {@inheritDocReturns whether the wrapped object is non-null and, if it is a collection or a string, has a
      * length greater than zero.
      *
      * @return whether the wrapped object is not null and is true for that object type
@@ -122,9 +140,6 @@ public class NullableObject<T> {
         Object obj = obj();
         if (obj == null) {
             return true;
-        }
-        else if (obj instanceof String) {
-            return new Str((String)obj).isEmpty();
         }
         else if (obj instanceof Object[]) {
             return ((Object[])obj).length == 0;

@@ -524,7 +524,7 @@ public class Str extends NullableObject<String> implements Comparable<Str> {
      */
     public boolean isEmpty() {
         // str.isEmpty() is JDK 1.6+, and IJDK is backward compatible with 1.5.
-        return this.string == null || this.string.length() == 0;
+        return isNull() || obj().length() == 0;
     }
 
     /**

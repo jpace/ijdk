@@ -63,8 +63,6 @@ public class ObjectExtTest extends Parameterized {
     private List<Object[]> parametersForIsBoolean() {
         return paramsList(params(false, null),
                           params(true,  new Object()),
-                          params(false, ""),
-                          params(true,  "abc"),
                           params(false, new ArrayList<String>()),
                           params(true,  Arrays.asList(new Integer[] { 1 })),
                           params(false, new Integer[0]),
