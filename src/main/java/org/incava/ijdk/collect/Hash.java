@@ -104,7 +104,7 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
     }
 
     /**
-     * Creates a IJDK map.
+     * Creates an empty IJDK map.
      */
     public Hash() {
     }
@@ -155,5 +155,27 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
      */
     public java.util.Iterator<java.util.Map.Entry<K, V>> iterator() {
         return entrySet().iterator();
+    }
+
+    /**
+     * Returns the value for the given entry. If there is no such entry, then the default value is returned.
+     */
+    public V fetch(K key, V defValue) {
+        return containsKey(key) ? get(key) : defValue;            
+    }
+
+    /**
+     * Returns the value for the given entry. If there is no such entry, then an
+     * IllegalArgumentException is thrown.
+     *
+     * @throws IllegalArgumentException if there is no such key
+     */
+    public V fetch(K key) {
+        if (containsKey(key)) {
+            return get(key);
+        }
+        else {
+            throw new IllegalArgumentException("key not found: '" + key + "'");
+        }
     }
 }

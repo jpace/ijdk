@@ -1,13 +1,15 @@
 package org.incava.ijdk.collect;
 
+import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.ijdk.tuple.Pair;
-import org.junit.Test;
 import org.incava.test.Parameterized;
+import org.junit.Test;
 
 import static org.incava.test.Assertions.assertEqual;
 import static org.incava.test.Assertions.assertSame;
+import static org.incava.test.Assertions.message;
 import static org.incava.test.Parameters.params;
 import static org.incava.test.Parameters.paramsList;
 
@@ -114,5 +116,37 @@ public class HashTest extends Parameterized {
         assertEqual(new java.util.AbstractMap.SimpleEntry<String, Integer>("one", 1), it.next());
         assertEqual(new java.util.AbstractMap.SimpleEntry<String, Integer>("two", 2), it.next());
         assertEqual(false, it.hasNext());
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public <K, V> void fetchWithDefValue(V expected, Hash<K, V> map, K key, V defValue) {
+        V result = map.fetch(key, defValue);
+        assertEqual(expected, result, message("map", map, "key", key, "defValue", defValue));
+    }
+    
+    private List<Object[]> parametersForFetchWithDefValue() {
+        Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");        
+        return paramsList(params("abc", h, "first", "xyz"),
+                          params("def", h, "second", "xyz"),
+                          params("yyy", h, "fourth", "yyy"),
+                          params("zzz", h, "fourth", "zzz"));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public <K, V> void fetchNoDefault(String expError, Hash<K, V> map, K key) {
+        try {
+            map.fetch(key);
+            assertEqual(null, expError, message("map", map, "key", key));
+        }
+        catch (IllegalArgumentException iae) {
+            assertEqual(expError, iae.getMessage(), message("map", map, "key", key));
+        }
+    }
+    
+    private List<Object[]> parametersForFetchNoDefault() {
+        Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");        
+        return paramsList(params(null, h, "first"),
+                          params("key not found: 'fourth'", h, "fourth"),
+                          params("key not found: 'fifth'", h, "fifth"));
     }
 }
