@@ -3,13 +3,13 @@ package org.incava.ijdk.util;
 import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
-import org.incava.test.Parameterized;
+import org.incava.attest.Parameterized;
 import org.junit.Test;
 
-import static org.incava.test.Assertions.assertEqual;
-import static org.incava.test.Assertions.message;
-import static org.incava.test.Parameters.params;
-import static org.incava.test.Parameters.paramsList;
+import static org.incava.attest.Assertions.assertEqual;
+import static org.incava.attest.Assertions.message;
+import static org.incava.attest.Parameters.params;
+import static org.incava.attest.Parameters.paramsList;
 
 public class IndexableTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")

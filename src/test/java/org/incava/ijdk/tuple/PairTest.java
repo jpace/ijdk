@@ -2,7 +2,7 @@ package org.incava.ijdk.tuple;
 
 import org.junit.Test;
 
-import static org.incava.test.Assertions.assertEqual;
+import static org.incava.attest.Assertions.assertEqual;
 
 public class PairTest {
     @Test

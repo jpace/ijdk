@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.TreeMap;
 import org.junit.Test;
 
-import static org.incava.test.Assertions.assertEqual;
-import static org.incava.test.Assertions.message;
+import static org.incava.attest.Assertions.assertEqual;
+import static org.incava.attest.Assertions.message;
 
 public class ICoreTest {
     @Test

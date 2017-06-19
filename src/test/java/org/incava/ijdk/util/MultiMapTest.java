@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import org.junit.Test;
 
-import static org.incava.test.Assertions.assertEqual;
-import static org.incava.test.Assertions.assertNotNull;
-import static org.incava.test.Assertions.assertNull;
+import static org.incava.attest.Assertions.assertEqual;
+import static org.incava.attest.Assertions.assertNotNull;
+import static org.incava.attest.Assertions.assertNull;
 
 public class MultiMapTest {
     public static final Collection<Integer> EVENS = Arrays.asList(new Integer[] { 2, 4, 6, 8 });

@@ -37,6 +37,7 @@ apply from: 'deploy.gradle'
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
     testCompile group: 'pl.pragmatists', name: 'JUnitParams', version: '1.0.6'
+    testCompile 'org.incava:attest:+'
 }
 
 allprojects {

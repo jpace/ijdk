@@ -3,7 +3,7 @@ package org.incava.ijdk.lang;
 import java.util.Arrays;
 import org.junit.Test;
 
-import static org.incava.test.Assertions.assertEqual;
+import static org.incava.attest.Assertions.assertEqual;
 
 public class CommonTest {
     @Test

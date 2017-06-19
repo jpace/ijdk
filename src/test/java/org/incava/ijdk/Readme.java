@@ -6,7 +6,7 @@ import java.util.Set;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.ijdk.collect.Hash;
-import org.incava.test.Parameterized;
+import org.incava.attest.Parameterized;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-import static org.incava.test.Assertions.message;
+import static org.incava.attest.Assertions.message;
 
 public class Readme extends Parameterized {
     @Rule public TestName name = new TestName();
@@ -22,7 +22,7 @@ public class Readme extends Parameterized {
     @SuppressWarnings("unchecked")
     public static <T> T assertEqual(T expected, T actual, String msg) {
         System.out.println(String.valueOf(expected) +  "; " + msg);
-        return org.incava.test.Assertions.assertEqual(expected, actual, msg);
+        return org.incava.attest.Assertions.assertEqual(expected, actual, msg);
     }
 
     @Before

@@ -10,13 +10,13 @@ import java.util.EnumSet;
 import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
-import org.incava.test.Parameterized;
+import org.incava.attest.Parameterized;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.incava.test.Assertions.assertEqual;
-import static org.incava.test.Assertions.message;
+import static org.incava.attest.Assertions.assertEqual;
+import static org.incava.attest.Assertions.message;
 
 public class IOTest extends Parameterized {
     private final String tmpdir = System.getProperty("java.io.tmpdir");

@@ -8,10 +8,10 @@ import junitparams.naming.TestCaseName;
 import org.incava.ijdk.lang.StringTest;
 import org.junit.Test;
 
-import static org.incava.test.Assertions.assertEqual;
-import static org.incava.test.Assertions.message;
-import static org.incava.test.Parameters.params;
-import static org.incava.test.Parameters.paramsList;
+import static org.incava.attest.Assertions.assertEqual;
+import static org.incava.attest.Assertions.message;
+import static org.incava.attest.Parameters.params;
+import static org.incava.attest.Parameters.paramsList;
 
 public class StringExtTest extends StringTest {
     // the unquoting functionality is in StringExt, but not Str:
