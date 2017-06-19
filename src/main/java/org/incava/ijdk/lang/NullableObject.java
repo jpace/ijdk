@@ -21,26 +21,6 @@ public class NullableObject<T> implements Bool {
     public static <T> NullableObject<T> of(T obj) {
         return obj == null ? (NullableObject<T>)NULL : new NullableObject<T>(obj);
     }
-    
-    /**
-     * Returns whether the object is null. This method provides an alternative syntax to "if (obj ==
-     * null)".
-     *
-     * @see #isNotNull
-     */
-    public static boolean isNull(Object obj) {
-        return obj == null;
-    }
-
-    /**
-     * Returns whether the object is not null. This method provides an alternative syntax to "if
-     * (obj != null)".
-     *
-     * @see #isNull
-     */
-    public static boolean isNotNull(Object obj) {
-        return obj != null;
-    }
 
     private final T object;
 

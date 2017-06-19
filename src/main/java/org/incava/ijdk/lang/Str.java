@@ -279,7 +279,7 @@ public class Str extends NullableObject<String> implements Comparable<Str> {
         }
         else {
             Integer idx = getIndex(index);
-            return isNull(idx) ? null : this.string.charAt(idx);
+            return idx == null ? null : this.string.charAt(idx);
         }
     }
 
@@ -316,14 +316,13 @@ public class Str extends NullableObject<String> implements Comparable<Str> {
         }
         else {
             frIdx = getIndex(fromIndex);
-            if (isNull(frIdx)) {
+            if (frIdx == null) {
                 return "";
             }
         }
 
         Integer toIdx = toIndex == null ? null : getIndex(toIndex);
-
-        if (isNull(toIdx)) {
+        if (toIdx == null) {
             toIdx = this.string.length() - 1;
         }
 
@@ -467,7 +466,7 @@ public class Str extends NullableObject<String> implements Comparable<Str> {
      * <code>str</code> or <code>ch</code> is null, or if the character is not in the string.
      */
     public Integer indexOf(Character ch) {
-        if (isNull() || isNull(ch)) {
+        if (isNull() || ch == null) {
             return null;
         }
         else {
