@@ -1,7 +1,7 @@
 repositories {
     mavenCentral()
     maven {
-        url  "http://dl.bintray.com/jpace/org.incava" 
+        url "http://dl.bintray.com/jpace/org.incava" 
     }
 }
 
@@ -34,7 +34,7 @@ bintray {
     publish = true // If version should be auto published after an upload
     configurations = ['archives'] // Use the archives Configuration.
     pkg {
-        repo = 'ijdk'
+        repo = 'org.incava'
         name = 'ijdk'
         userOrg = user
         licenses = [pkgLicense]

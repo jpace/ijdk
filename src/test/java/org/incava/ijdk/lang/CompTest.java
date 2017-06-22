@@ -5,16 +5,16 @@ import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
 import org.junit.Test;
 
-import static org.incava.attest.Assertions.assertEqual;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.incava.attest.Assertions.message;
-import static org.incava.attest.Parameters.params;
-import static org.incava.attest.Parameters.paramsList;
+import static org.incava.ijdk.lang.ContextMatcher.withContext;
 
 public class CompTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void compare(int expected, T x, T y) {
         int result = Comp.compare(x, y);
-        assertEqual(expected, result, message("x", x, "y", y));
+        assertThat(result, withContext(equalTo(expected), message("x", x, "y", y)));
     }
 
     public java.util.List<Object[]> parametersForCompare() {
@@ -29,23 +29,24 @@ public class CompTest extends Parameterized {
                           params(-1, new String("abc"), new String("def")),
                           params(1,  new String("def"), new String("abc")));
     }
+
+    public <T> void assertBooleanEqual(boolean expected, boolean result, T x, T y) {
+        assertThat(result, withContext(equalTo(expected), message("x", x, "y", y)));
+    }
     
     @Test @Parameters(method="lessThanParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void lessThan(boolean expected, T x, T y) {
-        boolean result = Comp.lessThan(x, y);
-        assertEqual(expected, result, message("x", x, "y", y));
+        assertBooleanEqual(expected, Comp.lessThan(x, y), x, y);
     }
     
     @Test @Parameters(method="lessThanParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void lt(boolean expected, T x, T y) {
-        boolean result = Comp.lt(x, y);
-        assertEqual(expected, result, message("x", x, "y", y));
+        assertBooleanEqual(expected, Comp.lt(x, y), x, y);
     }
     
     @Test @Parameters(method="equalParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void lte(boolean expected, T x, T y) {
-        boolean result = Comp.lte(x, y);
-        assertEqual(expected, result, message("x", x, "y", y));
+        assertBooleanEqual(expected, Comp.lte(x, y), x, y);
     }
 
     public java.util.List<Object[]> lessThanParams() {
@@ -63,20 +64,17 @@ public class CompTest extends Parameterized {
 
     @Test @Parameters(method="greaterThanParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void greaterThan(boolean expected, T x, T y) {
-        boolean result = Comp.greaterThan(x, y);
-        assertEqual(expected, result, message("x", x, "y", y));
+        assertBooleanEqual(expected, Comp.greaterThan(x, y), x, y);
     }
 
     @Test @Parameters(method="greaterThanParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void gt(boolean expected, T x, T y) {
-        boolean result = Comp.gt(x, y);
-        assertEqual(expected, result, message("x", x, "y", y));
+        assertBooleanEqual(expected, Comp.gt(x, y), x, y);
     }
 
     @Test @Parameters(method="equalParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void gte(boolean expected, T x, T y) {
-        boolean result = Comp.gte(x, y);
-        assertEqual(expected, result, message("x", x, "y", y));
+        assertBooleanEqual(expected, Comp.gte(x, y), x, y);
     }
 
     public java.util.List<Object[]> greaterThanParams() {
