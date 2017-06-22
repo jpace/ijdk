@@ -3,48 +3,56 @@ package org.incava.ijdk.collect;
 import java.util.Arrays;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
-import org.incava.ijdk.lang.Closure;
+import org.hamcrest.Matchers;
 import org.incava.attest.Parameterized;
+import org.incava.ijdk.lang.Closure;
 import org.junit.Test;
 
-import static org.incava.attest.Assertions.assertEqual;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.incava.attest.Assertions.message;
-import static org.incava.attest.Parameters.params;
-import static org.incava.attest.Parameters.paramsList;
+import static org.incava.attest.ContextMatcher.withContext;
 
 public class StringListTest extends Parameterized {
     @Test
+    public void empty() {
+        StringList sl = StringList.empty();
+        assertThat(sl, Matchers.empty());
+    }
+    
+    @Test
     public void ctorEmpty() {
         StringList sl = new StringList();
-        assertEqual(0, sl.size());
+        assertThat(sl, Matchers.empty());
     }
 
     @Test
     public void ctorCollection() {
         java.util.List<String> list = Arrays.asList(new String[] { "one", "two", "three" });
         StringList sl = new StringList(list);
-        assertEqual(3, sl.size());
+        assertThat(sl, hasSize(3));
     }
 
     @Test
     public void ctorVarArgsOne() {
         StringList sl = new StringList("one");
-        assertEqual(1, sl.size());
-        assertEqual("one", sl.get(0));
+        assertThat(sl, hasSize(1));
+        assertThat(sl, contains("one"));
     }
 
     @Test
     public void ctorVarArgsTwo() {
         StringList sl = new StringList("one", "two");
-        assertEqual(2, sl.size());
-        assertEqual("one", sl.get(0));
-        assertEqual("two", sl.get(1));
+        assertThat(sl, hasSize(2));
+        assertThat(sl.get(0), equalTo("one"));
+        assertThat(sl.get(1), equalTo("two"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void anyStartsWith(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
-        assertEqual(expected, sl.anyStartsWith(substr), message("sl", sl, "substr", substr));
+        boolean result = sl.anyStartsWith(substr);
+        assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
         
     }
     
@@ -57,7 +65,8 @@ public class StringListTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void anyContains(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
-        assertEqual(expected, sl.anyContains(substr), message("sl", sl, "substr", substr));
+        boolean result = sl.anyContains(substr);
+        assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
     }
     
     private java.util.List<Object[]> parametersForAnyContains() {
@@ -70,7 +79,8 @@ public class StringListTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void anyEndsWith(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
-        assertEqual(expected, sl.anyEndsWith(substr), message("sl", sl, "substr", substr));
+        boolean result = sl.anyEndsWith(substr);
+        assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
     }
     
     private java.util.List<Object[]> parametersForAnyEndsWith() {
@@ -83,7 +93,7 @@ public class StringListTest extends Parameterized {
     public void findFirst(String expected, Closure<Boolean, String> criteria, String ... args) {
         StringList sl = new StringList(args);
         String result = sl.findFirst(criteria);
-        assertEqual(expected, result, message("sl", sl, "criteria", criteria));
+        assertThat(result, withContext(equalTo(expected), message("sl", sl, "criteria", criteria)));
     }
     
     private java.util.List<Object[]> parametersForFindFirst() {
@@ -119,7 +129,7 @@ public class StringListTest extends Parameterized {
     public void findAll(StringList expected, Closure<Boolean, String> criteria, String ... args) {
         StringList sl = new StringList(args);
         StringList result = sl.findAll(criteria);
-        assertEqual(expected, result, message("sl", sl, "criteria", criteria));
+        assertThat(result, withContext(equalTo(expected), message("sl", sl, "criteria", criteria)));
     }
     
     private java.util.List<Object[]> parametersForFindAll() {
@@ -161,8 +171,8 @@ public class StringListTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void anyEqualsIgnoreCase(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
-        assertEqual(expected, sl.anyEqualsIgnoreCase(substr), message("sl", sl, "substr", substr));
-        
+        boolean result = sl.anyEqualsIgnoreCase(substr);
+        assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
     }
     
     private java.util.List<Object[]> parametersForAnyEqualsIgnoreCase() {

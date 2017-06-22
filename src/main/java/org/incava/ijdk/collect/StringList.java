@@ -19,6 +19,16 @@ public class StringList extends Array<String> {
         return new StringList(args);
     }
     
+    /**
+     * Creates an empty StringList.
+     *
+     * @return the newly-created array
+     */
+    @SuppressWarnings("unchecked")
+    public static StringList empty() {
+        return new StringList();
+    }
+    
     private static final long serialVersionUID = -5489075883851520676L;
 
     /**
