@@ -1,6 +1,7 @@
 package org.incava.ijdk.collect;
 
 import java.util.Arrays;
+import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.hamcrest.Matchers;
@@ -28,7 +29,7 @@ public class StringListTest extends Parameterized {
 
     @Test
     public void ctorCollection() {
-        java.util.List<String> list = Arrays.asList(new String[] { "one", "two", "three" });
+        List<String> list = Arrays.asList(new String[] { "one", "two", "three" });
         StringList sl = new StringList(list);
         assertThat(sl, hasSize(3));
     }
@@ -52,14 +53,14 @@ public class StringListTest extends Parameterized {
     public void anyStartsWith(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
         boolean result = sl.anyStartsWith(substr);
-        assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
-        
+        assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));        
     }
     
-    private java.util.List<Object[]> parametersForAnyStartsWith() {
-        return paramsList(params(false, "o", new String[0]),
-                          params(true, "o", "one"),
-                          params(false, "n", "one"));
+    private List<Object[]> parametersForAnyStartsWith() {
+        return paramsList(
+            params(false, "o", new String[0]),
+            params(true, "o", "one"),
+            params(false, "n", "one"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -69,11 +70,12 @@ public class StringListTest extends Parameterized {
         assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
     }
     
-    private java.util.List<Object[]> parametersForAnyContains() {
-        return paramsList(params(false, "o", new String[0]),
-                          params(true, "o", "one"),
-                          params(true, "n", "one"),
-                          params(false, "z", "one"));
+    private List<Object[]> parametersForAnyContains() {
+        return paramsList(
+            params(false, "o", new String[0]),
+            params(true, "o", "one"),
+            params(true, "n", "one"),
+            params(false, "z", "one"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -83,10 +85,11 @@ public class StringListTest extends Parameterized {
         assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
     }
     
-    private java.util.List<Object[]> parametersForAnyEndsWith() {
-        return paramsList(params(false, "o", new String[0]),
-                          params(true, "e", "one"),
-                          params(false, "n", "one"));
+    private List<Object[]> parametersForAnyEndsWith() {
+        return paramsList(
+            params(false, "o", new String[0]),
+            params(true, "e", "one"),
+            params(false, "n", "one"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -96,8 +99,8 @@ public class StringListTest extends Parameterized {
         assertThat(result, withContext(equalTo(expected), message("sl", sl, "criteria", criteria)));
     }
     
-    private java.util.List<Object[]> parametersForFindFirst() {
-        java.util.List<Object[]> params = paramsList();
+    private List<Object[]> parametersForFindFirst() {
+        List<Object[]> params = paramsList();
 
         params.add(params(null, null, new String[0]));
 
@@ -132,8 +135,8 @@ public class StringListTest extends Parameterized {
         assertThat(result, withContext(equalTo(expected), message("sl", sl, "criteria", criteria)));
     }
     
-    private java.util.List<Object[]> parametersForFindAll() {
-        java.util.List<Object[]> params = paramsList();
+    private List<Object[]> parametersForFindAll() {
+        List<Object[]> params = paramsList();
 
         params.add(params(new StringList(), null, new String[0]));
 
@@ -175,10 +178,11 @@ public class StringListTest extends Parameterized {
         assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
     }
     
-    private java.util.List<Object[]> parametersForAnyEqualsIgnoreCase() {
-        return paramsList(params(false, "o", new String[0]),
-                          params(true, "one", "one"),
-                          params(true, "one", "one", "two"),
-                          params(true, "one", "One"));
+    private List<Object[]> parametersForAnyEqualsIgnoreCase() {
+        return paramsList(
+            params(false, "o", new String[0]),
+            params(true, "one", "one"),
+            params(true, "one", "one", "two"),
+            params(true, "one", "One"));
     }
 }
