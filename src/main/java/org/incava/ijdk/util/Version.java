@@ -2,7 +2,7 @@ package org.incava.ijdk.util;
 
 import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.lang.Comp;
-import org.incava.ijdk.lang.NullableObject;
+import org.incava.ijdk.lang.Obj;
 
 public class Version implements Comparable<Version> {
     private final Integer major;
@@ -50,10 +50,10 @@ public class Version implements Comparable<Version> {
     }
 
     public int hashCode() {
-        int hash = new NullableObject<Integer>(major).hashCode();
-        hash = hash * 3 + new NullableObject<Integer>(minor).hashCode();
-        hash = hash * 17 + new NullableObject<Integer>(build).hashCode();
-        hash = hash * 31 + new NullableObject<Integer>(revision).hashCode();
+        int hash = Obj.of(major).hashCode();
+        hash = hash * 3 + Obj.of(minor).hashCode();
+        hash = hash * 17 + Obj.of(build).hashCode();
+        hash = hash * 31 + Obj.of(revision).hashCode();
         return hash;
     }
 

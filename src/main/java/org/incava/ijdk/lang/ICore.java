@@ -33,6 +33,7 @@ public class ICore {
     /**
      * Returns whether the array is not null and is not of zero length.
      *
+     * @param objs the array
      * @see #isEmpty
      * @see #isFalse
      * @return whether the array is true
@@ -55,6 +56,7 @@ public class ICore {
     /**
      * Returns whether the array is not null and is not of zero length.
      *
+     * @param objs the array
      * @see #isEmpty
      * @return whether the array is false
      */
@@ -166,7 +168,10 @@ public class ICore {
      * An alias for the <code>or</code> method. So-named for the "?:" operator
      * in Groovy.
      *
+     * @param obj the object to return if true
+     * @param defVal returned if obj is not true
      * @see #or
+     * @return obj or defVal
      */
     public static <T> T elvis(T obj, T defVal) {
         return or(obj, defVal);
@@ -176,8 +181,10 @@ public class ICore {
      * Returns the last parameter, if all parameters evaluate to true (via
      * <code>isTrue</code>).
      *
+     * @param operands the array of type T
      * @see #or
      * @see #isTrue
+     * @return the last element in operands if all are true
      */
     @SafeVarargs
     public static <T> T and(T ... operands) {
@@ -193,11 +200,12 @@ public class ICore {
     }
 
     /**
-     * Returns the first parameter that evaluates to true (via
-     * <code>isTrue</code>).
+     * Returns the first parameter that evaluates to true (via <code>isTrue</code>).
      *
+     * @param operands the array of type T
      * @see #or
      * @see #isTrue
+     * @return the first element in operands that is true
      */
     @SafeVarargs
     public static <T> T or(T ... operands) {
@@ -254,6 +262,9 @@ public class ICore {
      *     List&lt;String&gt; names = list("kevin", "jacob", "isaac");
      *     names.add("henry");
      * </pre>
+     *
+     * @param elements the array of type T
+     * @return the Array
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
@@ -264,6 +275,9 @@ public class ICore {
     /**
      * Returns an string list, which can be empty. This exists as an internate to
      * <code>ICore.&lt;String&gt;list()</code> for empty string lists.
+     *
+     * @param elements the elements for the new array
+     * @return the StringList
      */
     @SuppressWarnings("unchecked")
     public static StringList strlist(String ... elements) {
@@ -273,6 +287,9 @@ public class ICore {
     /**
      * Returns an integer list, which can be empty. This exists as an internate to
      * <code>ICore.&lt;Integer&gt;list()</code> for empty integer lists.
+     *
+     * @param elements the elements for the new array
+     * @return the Integer array
      */
     @SuppressWarnings("unchecked")
     public static Array<Integer> intlist(Integer ... elements) {
@@ -282,6 +299,7 @@ public class ICore {
     /**
      * Writes to standard output. Returns true, so this can be used inside conditionals.
      *
+     * @param obj the object to write
      * @return true always
      */
     public static boolean puts(Object obj) {
@@ -291,6 +309,8 @@ public class ICore {
     /**
      * Writes to standard output. Returns true, so this can be used inside conditionals.
      *
+     * @param fmt the format
+     * @param args the arguments for the format
      * @return true always
      */
     public static boolean printf(String fmt, Object ... args) {
@@ -300,6 +320,7 @@ public class ICore {
     /**
      * Writes to standard output. Returns true, so this can be used inside conditionals.
      *
+     * @param obj the object to write
      * @return true always
      */
     public static boolean println(Object obj) {

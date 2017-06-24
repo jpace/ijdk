@@ -11,7 +11,7 @@ import org.incava.ijdk.util.Indexable;
 /**
  * Extensions to the String class.
  */
-public class Str extends NullableObject<String> implements Comparable<Str> {
+public class Str extends Obj<String> implements Comparable<Str> {
     /**
      * Creates a string from the collection, joined by <code>delim</code>. If <code>coll</code> is
      * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the

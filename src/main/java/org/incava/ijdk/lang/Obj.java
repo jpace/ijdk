@@ -7,19 +7,19 @@ import java.util.Arrays;
  * Extension to the Object class, wrapping a Java Object with additional methods. The referenced
  * object can be null.
  */
-public class NullableObject<T> implements Bool {
+public class Obj<T> implements Bool {
     /**
      * A single variable representing all wrapped null objects.
      */
-    public static NullableObject<Object> NULL = new NullableObject<Object>(null);
+    public static Obj<Object> NULL = new Obj<Object>(null);
 
     /**
      * Creates a wrapper for the given object. If the object is null, then common variable
      * <code>NULL</code> is returned, thus eliminating unnecessary object creation.
      */
     @SuppressWarnings("unchecked")
-    public static <T> NullableObject<T> of(T obj) {
-        return obj == null ? (NullableObject<T>)NULL : new NullableObject<T>(obj);
+    public static <T> Obj<T> of(T obj) {
+        return obj == null ? (Obj<T>)NULL : new Obj<T>(obj);
     }
 
     private final T object;
@@ -27,7 +27,7 @@ public class NullableObject<T> implements Bool {
     /**
      * Creates a wrapper for the given object.
      */
-    public NullableObject(T object) {
+    public Obj(T object) {
         this.object = object;
     }
 
@@ -47,7 +47,7 @@ public class NullableObject<T> implements Bool {
     
     /**
      * Returns whether the other object is equal to the wrapped object, including whether they are
-     * both null. If <code>other</code> is a <code>NullableObject</code>, then its wrapped object is
+     * both null. If <code>other</code> is a <code>Obj</code>, then its wrapped object is
      * compared.
      *
      * @param other the object to compare to the wrapped object
@@ -55,8 +55,8 @@ public class NullableObject<T> implements Bool {
      */
     public boolean equals(Object other) {
         if (isNull()) {
-            if (other instanceof NullableObject) {
-                return ((NullableObject)other).isNull();
+            if (other instanceof Obj) {
+                return ((Obj)other).isNull();
             }
             else {
                 return other == null;
@@ -68,8 +68,8 @@ public class NullableObject<T> implements Bool {
         else if (this == other) {
             return true;
         }
-        else if (other instanceof NullableObject) {
-            Object oobj = ((NullableObject)other).obj();
+        else if (other instanceof Obj) {
+            Object oobj = ((Obj)other).obj();
             return obj().equals(oobj);
         }
         else {

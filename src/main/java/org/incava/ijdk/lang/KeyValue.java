@@ -76,7 +76,7 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
     public boolean equals(Object obj) {
         if (obj instanceof KeyValue) {
             KeyValue<?, ?> other = (KeyValue<?, ?>)obj;
-            return NullableObject.of(key).equals(other.key()) && NullableObject.of(value).equals(other.value());
+            return Obj.of(key).equals(other.key()) && Obj.of(value).equals(other.value());
         }
         else {
             return false;

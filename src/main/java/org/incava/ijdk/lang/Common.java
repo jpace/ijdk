@@ -17,7 +17,7 @@ public class Common extends ICore {
      * for java.util.List, giving them better output.
      */
     public static String toString(Object obj) {
-        return NullableObject.of(obj).toString();
+        return Obj.of(obj).toString();
     }
 
     /**

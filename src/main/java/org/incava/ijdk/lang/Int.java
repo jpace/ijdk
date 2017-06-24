@@ -3,7 +3,7 @@ package org.incava.ijdk.lang;
 /**
  * Extensions to Integer, wrapping a possibly-null Integer with better null checking.
  */
-public class Int extends NullableObject<Integer> {
+public class Int extends Obj<Integer> {
     /**
      * Returns an Int (integer) for the number.
      *
