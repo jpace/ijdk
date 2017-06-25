@@ -27,26 +27,20 @@ public class ArrayTest extends Parameterized {
     }
     
     private List<Object[]> parametersForInit() {
+        List<String> abcList = Arrays.asList(new String[] { "a", "b", "c" });
+        
         return paramsList(
             params(new Array<Object>(), new Array<Object>()),
-            params(Arrays.asList(new String[] { "a", "b", "c" }), new Array<Object>(Arrays.asList(new String[] { "a", "b", "c" }))),
-            params(Arrays.asList(new String[] { "a", "b", "c" }), new Array<Object>("a", "b", "c")),
+            params(abcList,             new Array<Object>(abcList)),
+            params(abcList,             new Array<Object>("a", "b", "c")),
             params(new Array<Object>(), new Array<Object>((Collection<Object>)null)),
             params(new Array<Object>(), Array.<Object>empty()));
     }    
     
     @Test
     public void toStringList() {
-        Array<String> expected = new Array<String>();
-        expected.add("1");
-        expected.add("2");
-        expected.add("3");
-
-        Array<Integer> numbers = new Array<Integer>();
-        numbers.add(1);
-        numbers.add(2);
-        numbers.add(3);
-
+        Array<String> expected = new Array<String>("1", "2", "3");
+        Array<Integer> numbers = new Array<Integer>(1, 2, 3);
         assertThat(expected, equalTo(numbers.toStringList()));
     }
 
@@ -56,11 +50,12 @@ public class ArrayTest extends Parameterized {
     }
 
     public List<Object[]> parametersForContainsAnyCollection() {
+        Array<Integer> ary123 = new Array<Integer>(1, 2, 3);
         return paramsList(
-            params(true,  new Array<Integer>(1, 2, 3), Common.list(1)),
-            params(true,  new Array<Integer>(1, 2, 3), Common.list(2, 4)),
-            params(false, new Array<Integer>(1, 2, 3), Common.list(4)),
-            params(false, new Array<Integer>(1, 2, 3), Common.list(4, 5)));
+            params(true,  ary123, Common.list(1)),
+            params(true,  ary123, Common.list(2, 4)),
+            params(false, ary123, Common.list(4)),
+            params(false, ary123, Common.list(4, 5)));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -70,14 +65,15 @@ public class ArrayTest extends Parameterized {
     
     @Test
     public void containsAnyArrayEmpty() {
-        assertThat(false, equalTo(new Array<Integer>(1, 2, 3).containsAny()));
+        assertThat(false, equalTo(Array.empty().containsAny()));
     }
 
     public List<Object[]> parametersForContainsAnyArray() {
+        Array<Integer> ary123 = new Array<Integer>(1, 2, 3);       
         return paramsList(
-            params(true,  new Array<Integer>(1, 2, 3), 1),
-            params(true,  new Array<Integer>(1, 2, 3), 4, 3),
-            params(false, new Array<Integer>(1, 2, 3), 4));
+            params(true,  ary123, 1),
+            params(true,  ary123, 4, 3),
+            params(false, ary123, 4));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -110,17 +106,21 @@ public class ArrayTest extends Parameterized {
     }
 
     public List<Object[]> parametersForGet() {
+        Array<Object> ary6 = Array.of(6);
+        Array<Object> ary67 = Array.of(6, 7);
+        Array<Object> empty = Array.<Object>empty();
+        
         return paramsList(
-            params(new Integer(6), Array.of(6), 0),
-            params(null,           Array.of(6), 1),
-            params(new Integer(6), Array.of(6), -1),
-            params(new Integer(7), Array.of(6, 7), -1),
-            params(new Integer(6), Array.of(6, 7), -2),
-            params(null,           Array.of(6, 7),  2),
-            params(null,           Array.of(6, 7), -3),
-            params(null,           emptyIntegerList(), 0),
-            params(null,           emptyIntegerList(), -1),
-            params(null,           emptyIntegerList(), 1));                         
+            params(new Integer(6), ary6,   0),
+            params(null,           ary6,   1),
+            params(new Integer(6), ary6,  -1),
+            params(new Integer(7), ary67, -1),
+            params(new Integer(6), ary67, -2),
+            params(null,           ary67,  2),
+            params(null,           ary67, -3),
+            params(null,           empty,  0),
+            params(null,           empty, -1),
+            params(null,           empty,  1));                         
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -130,19 +130,19 @@ public class ArrayTest extends Parameterized {
 
     public List<Object[]> parametersForGetRange() {
         return paramsList(
-            params(Array.of(),     Array.of(),  0, 0),
-            params(Array.of(6),    Array.of(6), 0, 0),
-            params(Array.of(6),    Array.of(6), 0, 1),
-            params(Array.of(6),    Array.of(6), 0, 2),
-            params(Array.of(6),    Array.of(6, 7), 0, 0),
-            params(Array.of(6, 7), Array.of(6, 7), 0, 1),
-            params(Array.of(7),    Array.of(6, 7), 1, 1),
-            params(Array.of(),     Array.of(6, 7), 1, 0),
+            params(Array.of(),     Array.of(),     0,  0),
+            params(Array.of(6),    Array.of(6),    0,  0),
+            params(Array.of(6),    Array.of(6),    0,  1),
+            params(Array.of(6),    Array.of(6),    0,  2),
+            params(Array.of(6),    Array.of(6, 7), 0,  0),
+            params(Array.of(6, 7), Array.of(6, 7), 0,  1),
+            params(Array.of(7),    Array.of(6, 7), 1,  1),
+            params(Array.of(),     Array.of(6, 7), 1,  0),
             params(Array.of(6, 7), Array.of(6, 7), 0, -1),
             params(Array.of(6),    Array.of(6, 7), 0, -2),
             params(Array.of(7),    Array.of(6, 7), 1, -1),
             params(Array.of(),     Array.of(6, 7), 1, -2),
-            params(Array.of(),     Array.of(), 0, -1));
+            params(Array.of(),     Array.of(),     0, -1));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -155,8 +155,8 @@ public class ArrayTest extends Parameterized {
 
     public List<Object[]> parametersForAppend() {
         return paramsList(
-            params(Array.of(6, 7),    Array.of(6), 7),
-            params(Array.of(6, null), Array.of(6), (Integer)null),
+            params(Array.of(6, 7),    Array.of(6),        7),
+            params(Array.of(6, null), Array.of(6),        (Integer)null),
             params(Array.of(7),       emptyIntegerList(), 7));                                     
     }
 
@@ -348,23 +348,24 @@ public class ArrayTest extends Parameterized {
     }
     
     private List<Object[]> parametersForElements() {
-        Array<Integer> list = Array.of(6, 7, 8);
+        Array<Integer> list678 = Array.of(6, 7, 8);
+        Array<Integer> listOfNull = Array.<Integer>of((Integer)null);
         
         return paramsList(
-            params(Array.of(6),    list, new int[] { 0 }),
-            params(Array.of(7),    list, new int[] { 1 }),
-            params(Array.of(8),    list, new int[] { 2 }),
+            params(Array.of(6),    list678, new int[] { 0 }),
+            params(Array.of(7),    list678, new int[] { 1 }),
+            params(Array.of(8),    list678, new int[] { 2 }),
 
-            params(Array.of(6, 7), list, new int[] { 0, 1 }),
-            params(Array.of(7, 6), list, new int[] { 1, 0 }),
+            params(Array.of(6, 7), list678, new int[] { 0, 1 }),
+            params(Array.of(7, 6), list678, new int[] { 1, 0 }),
 
-            params(Array.of(6, 6), list, new int[] { 0, 0 }),
+            params(Array.of(6, 6), list678, new int[] { 0, 0 }),
 
-            params(Array.of(8),    list, new int[] { -1 }),
-            params(Array.of(8, 7), list, new int[] { -1, 1 }),
-            params(Array.of(8, 7), list, new int[] { -1, -2 }),
+            params(Array.of(8),    list678, new int[] { -1 }),
+            params(Array.of(8, 7), list678, new int[] { -1, 1 }),
+            params(Array.of(8, 7), list678, new int[] { -1, -2 }),
         
-            params(Array.<Integer>of((Integer)null), list, new int[] { -4 }));
+            params(listOfNull,     list678, new int[] { -4 }));
     }
 
     @Test
