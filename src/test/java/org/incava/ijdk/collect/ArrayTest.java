@@ -2,50 +2,37 @@ package org.incava.ijdk.collect;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
-import org.incava.ijdk.lang.Common;
 import org.incava.attest.Parameterized;
+import org.incava.ijdk.lang.Common;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
-import static org.incava.attest.Parameters.params;
-import static org.incava.attest.Parameters.paramsList;
+import static org.incava.attest.ContextMatcher.withContext;
 
-public class ArrayTest extends Parameterized {
+public class ArrayTest extends Parameterized {    
     private Array<Integer> emptyIntegerList() {
         return Array.<Integer>of();
     }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void init(List<Object> expected, Array<Object> result) {
+        assertThat(expected, equalTo(result));
+    }
     
-    @Test
-    public void ctorEmpty() {
-        Array<Object> expected = new Array<Object>();
-        Array<Object> actual = new Array<Object>();
-        assertEqual(expected, actual);
-    }
-
-    @Test
-    public void ctorCollection() {
-        Collection<String> coll = Arrays.asList(new String[] { "a", "b", "c" });
-        Array<Object> actual = new Array<Object>(coll);
-        assertEqual(Arrays.asList(new Object[] { "a", "b", "c" }), actual);
-    }
-
-    @Test
-    public void ctorNull() {
-        java.util.Collection<Object> nullColl = null;
-        Array<Object> expected = new Array<Object>();
-        Array<Object> actual = new Array<Object>(nullColl);
-        assertEqual(expected, actual);
-    }
-
-    @Test
-    public void empty() {
-        Array<Object> expected = new Array<Object>();
-        Array<Object> actual = Array.<Object>empty();
-        assertEqual(expected, actual);
+    private List<Object[]> parametersForInit() {
+        return paramsList(
+            params(new Array<Object>(), new Array<Object>()),
+            params(Arrays.asList(new String[] { "a", "b", "c" }), new Array<Object>(Arrays.asList(new String[] { "a", "b", "c" }))),
+            params(Arrays.asList(new String[] { "a", "b", "c" }), new Array<Object>("a", "b", "c")),
+            params(new Array<Object>(), new Array<Object>((Collection<Object>)null)),
+            params(new Array<Object>(), Array.<Object>empty()));
     }    
     
     @Test
@@ -60,76 +47,80 @@ public class ArrayTest extends Parameterized {
         numbers.add(2);
         numbers.add(3);
 
-        assertEqual(expected, numbers.toStringList());
+        assertThat(expected, equalTo(numbers.toStringList()));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void containsAnyCollection(Boolean expected, Array<Integer> list, java.util.List<Integer> coll) {
+    public void containsAnyCollection(Boolean expected, Array<Integer> list, List<Integer> coll) {
         assertEqual(expected, list.containsAny(coll));
     }
 
-    public java.util.List<Object[]> parametersForContainsAnyCollection() {
-        return paramsList(params(true,  new Array<Integer>(1, 2, 3), Common.list(1)),
-                          params(true,  new Array<Integer>(1, 2, 3), Common.list(2, 4)),
-                          params(false, new Array<Integer>(1, 2, 3), Common.list(4)),
-                          params(false, new Array<Integer>(1, 2, 3), Common.list(4, 5)));
+    public List<Object[]> parametersForContainsAnyCollection() {
+        return paramsList(
+            params(true,  new Array<Integer>(1, 2, 3), Common.list(1)),
+            params(true,  new Array<Integer>(1, 2, 3), Common.list(2, 4)),
+            params(false, new Array<Integer>(1, 2, 3), Common.list(4)),
+            params(false, new Array<Integer>(1, 2, 3), Common.list(4, 5)));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void containsAnyArray(Boolean expected, Array<Integer> list, Integer ... args) {
-        assertEqual(expected, list.containsAny(args));
+        assertThat(expected, equalTo(list.containsAny(args)));
     }
     
     @Test
     public void containsAnyArrayEmpty() {
-        assertEqual(false, new Array<Integer>(1, 2, 3).containsAny());
+        assertThat(false, equalTo(new Array<Integer>(1, 2, 3).containsAny()));
     }
 
-    public java.util.List<Object[]> parametersForContainsAnyArray() {
-        return paramsList(params(true,  new Array<Integer>(1, 2, 3), 1),
-                          params(true,  new Array<Integer>(1, 2, 3), 4, 3),
-                          params(false, new Array<Integer>(1, 2, 3), 4));
+    public List<Object[]> parametersForContainsAnyArray() {
+        return paramsList(
+            params(true,  new Array<Integer>(1, 2, 3), 1),
+            params(true,  new Array<Integer>(1, 2, 3), 4, 3),
+            params(false, new Array<Integer>(1, 2, 3), 4));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void first(Object expected, Array<Object> list) {
-        assertEqual(expected, list.first(), message("list", list));
+        assertThat(expected, withContext("list: " + list, equalTo(list.first())));
     }
 
-    public java.util.List<Object[]> parametersForFirst() {
-        return paramsList(params(new Integer(6), Array.of(6)),
-                          params(new Integer(6), Array.of(6, 7)),
-                          params((Integer)null,  emptyIntegerList()));
+    public List<Object[]> parametersForFirst() {
+        return paramsList(
+            params(new Integer(6), Array.of(6)),
+            params(new Integer(6), Array.of(6, 7)),
+            params((Integer)null,  emptyIntegerList()));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void last(Object expected, Array<Object> list) {
-        assertEqual(expected, list.last(), message("list", list));
+        assertThat(expected, withContext("list: " + list, equalTo(list.last())));
     }
 
-    public java.util.List<Object[]> parametersForLast() {
-        return paramsList(params(new Integer(6), Array.of(6)),
-                          params(new Integer(7), Array.of(6, 7)),
-                          params((Integer)null,  emptyIntegerList()));
+    public List<Object[]> parametersForLast() {
+        return paramsList(
+            params(new Integer(6), Array.of(6)),
+            params(new Integer(7), Array.of(6, 7)),
+            params((Integer)null,  emptyIntegerList()));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void get(Object expected, Array<Object> list, int idx) {
-        assertEqual(expected, list.get(idx), message("list", list));
+        assertThat(expected, withContext("list: " + list, equalTo(list.get(idx))));
     }
 
-    public java.util.List<Object[]> parametersForGet() {
-        return paramsList(params(new Integer(6), Array.of(6), 0),
-                          params(null,           Array.of(6), 1),
-                          params(new Integer(6), Array.of(6), -1),
-                          params(new Integer(7), Array.of(6, 7), -1),
-                          params(new Integer(6), Array.of(6, 7), -2),
-                          params(null,           Array.of(6, 7),  2),
-                          params(null,           Array.of(6, 7), -3),
-                          params(null,           emptyIntegerList(), 0),
-                          params(null,           emptyIntegerList(), -1),
-                          params(null,           emptyIntegerList(), 1));
-                                     
+    public List<Object[]> parametersForGet() {
+        return paramsList(
+            params(new Integer(6), Array.of(6), 0),
+            params(null,           Array.of(6), 1),
+            params(new Integer(6), Array.of(6), -1),
+            params(new Integer(7), Array.of(6, 7), -1),
+            params(new Integer(6), Array.of(6, 7), -2),
+            params(null,           Array.of(6, 7),  2),
+            params(null,           Array.of(6, 7), -3),
+            params(null,           emptyIntegerList(), 0),
+            params(null,           emptyIntegerList(), -1),
+            params(null,           emptyIntegerList(), 1));                         
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -137,21 +128,21 @@ public class ArrayTest extends Parameterized {
         assertEqual(expected, list.get(from, to), message("list", list, "from", from, "to", to));
     }
 
-    public java.util.List<Object[]> parametersForGetRange() {
-        return paramsList(params(Array.of(),     Array.of(),  0, 0),
-                          params(Array.of(6),    Array.of(6), 0, 0),
-                          params(Array.of(6),    Array.of(6), 0, 1),
-                          params(Array.of(6),    Array.of(6), 0, 2),
-                          params(Array.of(6),    Array.of(6, 7), 0, 0),
-                          params(Array.of(6, 7), Array.of(6, 7), 0, 1),
-                          params(Array.of(7),    Array.of(6, 7), 1, 1),
-                          params(Array.of(),     Array.of(6, 7), 1, 0),
-                          params(Array.of(6, 7), Array.of(6, 7), 0, -1),
-                          params(Array.of(6),    Array.of(6, 7), 0, -2),
-                          params(Array.of(7),    Array.of(6, 7), 1, -1),
-                          params(Array.of(),     Array.of(6, 7), 1, -2),
-                          params(Array.of(),     Array.of(), 0, -1));
-                                     
+    public List<Object[]> parametersForGetRange() {
+        return paramsList(
+            params(Array.of(),     Array.of(),  0, 0),
+            params(Array.of(6),    Array.of(6), 0, 0),
+            params(Array.of(6),    Array.of(6), 0, 1),
+            params(Array.of(6),    Array.of(6), 0, 2),
+            params(Array.of(6),    Array.of(6, 7), 0, 0),
+            params(Array.of(6, 7), Array.of(6, 7), 0, 1),
+            params(Array.of(7),    Array.of(6, 7), 1, 1),
+            params(Array.of(),     Array.of(6, 7), 1, 0),
+            params(Array.of(6, 7), Array.of(6, 7), 0, -1),
+            params(Array.of(6),    Array.of(6, 7), 0, -2),
+            params(Array.of(7),    Array.of(6, 7), 1, -1),
+            params(Array.of(),     Array.of(6, 7), 1, -2),
+            params(Array.of(),     Array.of(), 0, -1));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -162,10 +153,11 @@ public class ArrayTest extends Parameterized {
         assertEqual(expected, list,             msg);
     }
 
-    public java.util.List<Object[]> parametersForAppend() {
-        return paramsList(params(Array.of(6, 7),     Array.of(6), 7),
-                          params(Array.of(6, null),  Array.of(6), (Integer)null),
-                          params(Array.of(7),        emptyIntegerList(), 7));                                     
+    public List<Object[]> parametersForAppend() {
+        return paramsList(
+            params(Array.of(6, 7),    Array.of(6), 7),
+            params(Array.of(6, null), Array.of(6), (Integer)null),
+            params(Array.of(7),       emptyIntegerList(), 7));                                     
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -185,13 +177,14 @@ public class ArrayTest extends Parameterized {
         }
     }
 
-    public java.util.List<Object[]> parametersForSet() {
-        return paramsList(params(Array.of(6, 7),     Array.of(6),          1, 7),
-                          params(Array.of(6, null),  Array.of(6),          1, (Integer)null),
-                          params(Array.of(7),        emptyIntegerList(),  0, 7),
-                          params(null,              emptyIntegerList(), -1, 7),
-                          params(Array.of(7),        Array.of(6),         -1, 7),
-                          params(null,              Array.of(6),         -2, 7));
+    public List<Object[]> parametersForSet() {
+        return paramsList(
+            params(Array.of(6, 7),    Array.of(6),         1, 7),
+            params(Array.of(6, null), Array.of(6),         1, (Integer)null),
+            params(Array.of(7),       emptyIntegerList(),  0, 7),
+            params(null,              emptyIntegerList(), -1, 7),
+            params(Array.of(7),       Array.of(6),        -1, 7),
+            params(null,              Array.of(6),        -2, 7));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -201,12 +194,13 @@ public class ArrayTest extends Parameterized {
         assertEqual(expected,    list,   message("list", list, "toRemove", toRemove));
     }
 
-    public java.util.List<Object[]> parametersForRemoveAll() {
-        return paramsList(params(true,   Array.of(1),         Array.of(1, 2),       2),
-                          params(true,   Array.of(1),         Array.of(1, 2, 2),    2),
-                          params(true,   emptyIntegerList(), Array.of(2, 2),       2),
-                          params(false,  emptyIntegerList(), emptyIntegerList(),  2),
-                          params(false,  Array.of(1),         Array.of(1), 2));
+    public List<Object[]> parametersForRemoveAll() {
+        return paramsList(
+            params(true,  Array.of(1),        Array.of(1, 2),      2),
+            params(true,  Array.of(1),        Array.of(1, 2, 2),   2),
+            params(true,  emptyIntegerList(), Array.of(2, 2),      2),
+            params(false, emptyIntegerList(), emptyIntegerList(),  2),
+            params(false, Array.of(1),        Array.of(1),         2));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -215,10 +209,11 @@ public class ArrayTest extends Parameterized {
         assertEqual(exp, result != null, message("list", list, "exp", exp, "result", result));
     }
 
-    public java.util.List<Object[]> parametersForGetRandomElement() {
-        return paramsList(params(true,   Array.of(1)),
-                          params(true,   Array.of(1, 2)),
-                          params(false,  emptyIntegerList()));
+    public List<Object[]> parametersForGetRandomElement() {
+        return paramsList(
+            params(true,  Array.of(1)),
+            params(true,  Array.of(1, 2)),
+            params(false, emptyIntegerList()));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -229,12 +224,13 @@ public class ArrayTest extends Parameterized {
         assertEqual(expList, list, message("origList", origList));
     }
 
-    public java.util.List<Object[]> parametersForTakeFirst() {
-        return paramsList(params(1, emptyIntegerList(), Array.of(1)),
-                          params(1, Array.of(2), Array.of(1, 2)),
-                          params("a", Array.<String>of(), Array.of("a")),
-                          params("a", Array.of("b"), Array.of("a", "b")),
-                          params((Integer)null, emptyIntegerList(), emptyIntegerList()));
+    public List<Object[]> parametersForTakeFirst() {
+        return paramsList(
+            params(1,             emptyIntegerList(), Array.of(1)),
+            params(1,             Array.of(2),        Array.of(1, 2)),
+            params("a",           Array.<String>of(), Array.of("a")),
+            params("a",           Array.of("b"),      Array.of("a", "b")),
+            params((Integer)null, emptyIntegerList(), emptyIntegerList()));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -245,12 +241,13 @@ public class ArrayTest extends Parameterized {
         assertEqual(expList, list, message("origList", origList));
     }
 
-    public java.util.List<Object[]> parametersForTakeLast() {
-        return paramsList(params(1, emptyIntegerList(), Array.of(1)),
-                          params(2, Array.of(1), Array.of(1, 2)),
-                          params("a", Array.<String>of(), Array.of("a")),
-                          params("b", Array.of("a"), Array.of("a", "b")),
-                          params((Integer)null, emptyIntegerList(), emptyIntegerList()));
+    public List<Object[]> parametersForTakeLast() {
+        return paramsList(
+            params(1,             emptyIntegerList(), Array.of(1)),
+            params(2,             Array.of(1),        Array.of(1, 2)),
+            params("a",           Array.<String>of(), Array.of("a")),
+            params("b",           Array.of("a"),      Array.of("a", "b")),
+            params((Integer)null, emptyIntegerList(), emptyIntegerList()));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -261,13 +258,14 @@ public class ArrayTest extends Parameterized {
         assertEqual(origList, list, message("origList", origList));
     }
 
-    public java.util.List<Object[]> parametersForUnique() {
-        return paramsList(params(Array.of(1), Array.of(1)),
-                          params(Array.of(1), Array.of(1, 1)),
-                          params(Array.of(1, 2), Array.of(1, 2)),
-                          params(Array.of(2, 1), Array.of(2, 1)),
-                          params(Array.of(1, 2), Array.of(1, 2, 1)),
-                          params(emptyIntegerList(), emptyIntegerList()));
+    public List<Object[]> parametersForUnique() {
+        return paramsList(
+            params(Array.of(1),        Array.of(1)),
+            params(Array.of(1),        Array.of(1, 1)),
+            params(Array.of(1, 2),     Array.of(1, 2)),
+            params(Array.of(2, 1),     Array.of(2, 1)),
+            params(Array.of(1, 2),     Array.of(1, 2, 1)),
+            params(emptyIntegerList(), emptyIntegerList()));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -278,20 +276,20 @@ public class ArrayTest extends Parameterized {
         assertEqual(origList, list, message("origList", origList));
     }
 
-    public java.util.List<Object[]> parametersForCompact() {
+    public List<Object[]> parametersForCompact() {
         Array<Integer> emptyList = emptyIntegerList();
-        return paramsList(params(emptyList, emptyList),
-                          params(Array.of(1), Array.of(1)),
-                          params(emptyList, Array.<Integer>of((Integer)null)),
-                          params(Array.of(1), Array.of(1, null)),
-                          params(Array.of(1), Array.of(1, null, null)),
-                          params(Array.of(1), Array.of(null, 1)),
-                          params(Array.of(1), Array.of(null, 1, null)),
-                          params(Array.of(1, 1), Array.of(1, 1, null)),
-                          params(Array.of(1, 2), Array.of(1, 2, null)),
-                          params(Array.of(2, 1), Array.of(2, 1, null)));
+        return paramsList(
+            params(emptyList,      emptyList),
+            params(Array.of(1),    Array.of(1)),
+            params(emptyList,      Array.<Integer>of((Integer)null)),
+            params(Array.of(1),    Array.of(1, null)),
+            params(Array.of(1),    Array.of(1, null, null)),
+            params(Array.of(1),    Array.of(null, 1)),
+            params(Array.of(1),    Array.of(null, 1, null)),
+            params(Array.of(1, 1), Array.of(1, 1, null)),
+            params(Array.of(1, 2), Array.of(1, 2, null)),
+            params(Array.of(2, 1), Array.of(2, 1, null)));
     }
-
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void join(String expected, Array<Object> list, String delimiter) {
@@ -299,14 +297,15 @@ public class ArrayTest extends Parameterized {
         assertEqual(expected, result, message("list", list, "delimiter", delimiter));
     }
 
-    public java.util.List<Object[]> parametersForJoin() {
+    public List<Object[]> parametersForJoin() {
         Array<Integer> emptyList = emptyIntegerList();
-        return paramsList(params("", emptyList, ""),
-                          params("", emptyList, "x"),
-                          params("1", Array.of(1), ""),
-                          params("1null", Array.of(1, null), ""),
-                          params("1", Array.of(1), "x"),
-                          params("1x2", Array.of(1, 2), "x"));
+        return paramsList(
+            params("",      emptyList,         ""),
+            params("",      emptyList,         "x"),
+            params("1",     Array.of(1),       ""),
+            params("1null", Array.of(1, null), ""),
+            params("1",     Array.of(1),       "x"),
+            params("1x2",   Array.of(1, 2),    "x"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -315,16 +314,13 @@ public class ArrayTest extends Parameterized {
         assertEqual(expected, result);
     }
     
-    private Array<Object[]> parametersForPlus() {
-        Array<Object[]> params = Array.<Object[]>of();
-
-        params.add(params(Array.of(1, 2, 3, 4), Array.of(1, 2), Array.of(3, 4)));
-        params.add(params(Array.of(1, 2, 3), Array.of(1, 2), Array.of(3)));
-        params.add(params(Array.of(1, 2), Array.of(1, 2), emptyIntegerList()));
-        params.add(params(Array.of(1, 2, 3, 3), Array.of(1, 2, 3), Array.of(3)));
-        params.add(params(Array.of(1, 2, 3, 1), Array.of(1, 2, 3), Array.of(1)));
-        
-        return params;
+    private List<Object[]> parametersForPlus() {
+        return paramsList(
+            params(Array.of(1, 2, 3, 4), Array.of(1, 2),    Array.of(3, 4)),
+            params(Array.of(1, 2, 3),    Array.of(1, 2),    Array.of(3)),
+            params(Array.of(1, 2),       Array.of(1, 2),    emptyIntegerList()),
+            params(Array.of(1, 2, 3, 3), Array.of(1, 2, 3), Array.of(3)),
+            params(Array.of(1, 2, 3, 1), Array.of(1, 2, 3), Array.of(1)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -333,19 +329,16 @@ public class ArrayTest extends Parameterized {
         assertEqual(expected, result);
     }
     
-    private java.util.List<Object[]> parametersForMinus() {
-        java.util.List<Object[]> params = paramsList();
+    private List<Object[]> parametersForMinus() {
+        return paramsList(
+            params(Array.of(2),        Array.of(1, 2),     Array.of(1)),
+            params(Array.of(1),        Array.of(1, 2),     Array.of(2)),
+            params(Array.of(1, 1),     Array.of(1, 1),     Array.of(2)),
+            params(Array.of(1, 1),     Array.of(1, 2, 1),  Array.of(2)),
         
-        params.add(params(Array.of(2), Array.of(1, 2), Array.of(1)));
-        params.add(params(Array.of(1), Array.of(1, 2), Array.of(2)));
-        params.add(params(Array.of(1, 1), Array.of(1, 1), Array.of(2)));
-        params.add(params(Array.of(1, 1), Array.of(1, 2, 1), Array.of(2)));
-        
-        params.add(params(emptyIntegerList(), emptyIntegerList(), emptyIntegerList()));
-        params.add(params(emptyIntegerList(), emptyIntegerList(), Array.of(1)));
-        params.add(params(Array.of(1), Array.of(1), emptyIntegerList()));
-        
-        return params;
+            params(emptyIntegerList(), emptyIntegerList(), emptyIntegerList()),
+            params(emptyIntegerList(), emptyIntegerList(), Array.of(1)),
+            params(Array.of(1),        Array.of(1),        emptyIntegerList()));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -354,27 +347,24 @@ public class ArrayTest extends Parameterized {
         assertEqual(expected, result, message("indices", indices));
     }
     
-    private Array<Object[]> parametersForElements() {
-        Array<Object[]> params = Array.<Object[]>of();
-
+    private List<Object[]> parametersForElements() {
         Array<Integer> list = Array.of(6, 7, 8);
-
-        params.add(params(Array.of(6), list, new int[] { 0 }));
-        params.add(params(Array.of(7), list, new int[] { 1 }));
-        params.add(params(Array.of(8), list, new int[] { 2 }));
-
-        params.add(params(Array.of(6, 7), list, new int[] { 0, 1 }));
-        params.add(params(Array.of(7, 6), list, new int[] { 1, 0 }));
-
-        params.add(params(Array.of(6, 6), list, new int[] { 0, 0 }));
-
-        params.add(params(Array.of(8), list, new int[] { -1 }));
-        params.add(params(Array.of(8, 7), list, new int[] { -1, 1 }));
-        params.add(params(Array.of(8, 7), list, new int[] { -1, -2 }));
         
-        params.add(params(Array.<Integer>of((Integer)null), list, new int[] { -4 }));
+        return paramsList(
+            params(Array.of(6),    list, new int[] { 0 }),
+            params(Array.of(7),    list, new int[] { 1 }),
+            params(Array.of(8),    list, new int[] { 2 }),
+
+            params(Array.of(6, 7), list, new int[] { 0, 1 }),
+            params(Array.of(7, 6), list, new int[] { 1, 0 }),
+
+            params(Array.of(6, 6), list, new int[] { 0, 0 }),
+
+            params(Array.of(8),    list, new int[] { -1 }),
+            params(Array.of(8, 7), list, new int[] { -1, 1 }),
+            params(Array.of(8, 7), list, new int[] { -1, -2 }),
         
-        return params;
+            params(Array.<Integer>of((Integer)null), list, new int[] { -4 }));
     }
 
     @Test
