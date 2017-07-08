@@ -368,6 +368,33 @@ public class ArrayTest extends Parameterized {
             params(listOfNull,     list678, new int[] { -4 }));
     }
 
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void intersection(Array<Object> expected, Array<Object> x, Array<Object> y) {
+        Array<Object> result = x.intersection(y);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForIntersection() {
+        Array<Object> x1  = Array.of(1);
+        Array<Object> x11 = Array.of(1, 1);
+        Array<Object> x12 = Array.of(1, 2);
+        Array<Object> x2  = Array.of(2);
+        Array<Object> x21 = Array.of(2, 1);
+        Array<Object> emp = Array.<Object>empty();
+        
+        return paramsList(
+            params(x1,  x12, x1),
+            params(x2,  x12, x2),
+            params(emp, x11, x2),
+            params(x2,  Array.of(1, 2, 1), x2),
+            params(x21, x21, x12),        
+            params(emp, emp, emp),
+            params(emp, emp, x1),
+            params(emp, x1,  emp)
+                          );
+    }    
+
     @Test
     public void demo() {
         Integer x = null;

@@ -335,6 +335,19 @@ public class Array<T extends Object> extends ArrayList<T> implements Sequence<T>
         return elmts;
     }
 
+    /**
+     * Returns a list of elements in both this array and the other. The order is the same as in this array.
+     */
+    public Array<T> intersection(Array<T> other) {
+        Array<T> ary = new Array<T>();
+        for (T obj : this) {
+            if (other.contains(obj)) {
+                ary.add(obj);
+            }
+        }
+        return ary;
+    }
+
     private Integer getIndex(Integer n) {
         return new org.incava.ijdk.util.Indexable(size()).get(n);
     }
