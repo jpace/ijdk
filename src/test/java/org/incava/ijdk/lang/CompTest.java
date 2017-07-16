@@ -6,7 +6,7 @@ import org.incava.attest.Parameterized;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
 
@@ -20,11 +20,11 @@ public class CompTest extends Parameterized {
     public java.util.List<Object[]> parametersForCompare() {
         String obj = new String();
         
-        return paramsList(params(0,  null, null),
-                          params(-1, null, new String()),
-                          params(1,  new String(), null),
-                          params(0,  obj, obj),
-                          params(0,  new String(), new String()),
+        return paramsList(params(0,  null,              null),
+                          params(-1, null,              new String()),
+                          params(1,  new String(),      null),
+                          params(0,  obj,               obj),
+                          params(0,  new String(),      new String()),
                           params(0,  new String("abc"), new String("abc")),
                           params(-1, new String("abc"), new String("def")),
                           params(1,  new String("def"), new String("abc")));
@@ -52,11 +52,11 @@ public class CompTest extends Parameterized {
     public java.util.List<Object[]> lessThanParams() {
         String obj = new String();
         
-        return paramsList(params(false, null, null),
-                          params(true,  null, new String()),
-                          params(false, new String(), null),
-                          params(false, obj, obj),
-                          params(false, new String(), new String()),
+        return paramsList(params(false, null,              null),
+                          params(true,  null,              new String()),
+                          params(false, new String(),      null),
+                          params(false, obj,               obj),
+                          params(false, new String(),      new String()),
                           params(false, new String("abc"), new String("abc")),
                           params(true,  new String("abc"), new String("def")),
                           params(false, new String("def"), new String("abc")));
@@ -80,11 +80,11 @@ public class CompTest extends Parameterized {
     public java.util.List<Object[]> greaterThanParams() {
         String obj = new String();        
         
-        return paramsList(params(false, null, null),
-                          params(false, null, new String()),
-                          params(true,  new String(), null),
-                          params(false, obj, obj),
-                          params(false, new String(), new String()),
+        return paramsList(params(false, null,              null),
+                          params(false, null,              new String()),
+                          params(true,  new String(),      null),
+                          params(false, obj,               obj),
+                          params(false, new String(),      new String()),
                           params(false, new String("abc"), new String("abc")),
                           params(false, new String("abc"), new String("def")),
                           params(true,  new String("def"), new String("abc")));
@@ -93,9 +93,9 @@ public class CompTest extends Parameterized {
     public java.util.List<Object[]> equalParams() {
         String obj = new String();
         
-        return paramsList(params(true, null, null),
-                          params(true, obj, obj),
-                          params(true, new String(), new String()),
+        return paramsList(params(true, null,              null),
+                          params(true, obj,               obj),
+                          params(true, new String(),      new String()),
                           params(true, new String("abc"), new String("abc")));
     }    
 }

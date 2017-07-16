@@ -77,4 +77,19 @@ public class IntegerListTest extends Parameterized {
                           params(2, 1, 2),
                           params(2, 2, 1));
     }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void sum(Integer expected, Integer ... values) {
+        IntegerList sl = new IntegerList(values);
+        Integer result = sl.sum();
+        assertEqual(expected, result, message("values", Arrays.asList(values)));
+    }
+    
+    private List<Object[]> parametersForSum() {
+        return paramsList(params(0, new Integer[0]),
+                          params(1, 1),
+                          params(3, 1, 2),
+                          params(3, 1, 2, null),
+                          params(3, 2, 1));
+    }
 }

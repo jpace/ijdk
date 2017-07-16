@@ -64,8 +64,8 @@ An extension of ArrayList, with Ruby-like methods (thus the name matching Array 
     assertEqual(13, x);
     assertEqual(Array.of(5, 7, 9, 11), nums);
 
-    StringArray strArray = nums.toStringArray();
-    assertEqual(StringArray.of("5", "7", "9", "11"), strArray);
+    StringList sl = nums.toStringList();
+    assertEqual(StringList.of("5", "7", "9", "11"), sl);
 
     nums.append(2).append(2).append(2);
     assertEqual(Array.of(5, 7, 9, 11, 2, 2, 2), nums);
@@ -191,19 +191,25 @@ collision with java.util.Map).
     }
 ```
 
-
 ### Common Collections
 
-Classes for common Java collections of generics, such as:
+Classes for common Java collections of generics, such as a list of strings, and a list of integers:
+
+#### StringList
 
 ```java
    // instead of Array<String>; varargs constructor
-   StringArray sl = new StringArray("apple", "banana", "cherry");
+   StringList sl = new StringList("apple", "banana", "cherry");
    boolean result = sl.anyStartsWith("ba");  // true
    boolean result = sl.anyStartsWith("do");  // false
-   
+   StringList lines = sl.toLines();          // returns each element appended with "\n"
+```
+
+#### IntegerList
+
+```java
    // instead of Array<Integer>; varargs constructor
-   IntegerArray il = new IntegerArray(3, 6, 9);
+   IntegerList il = new IntegerList(3, 6, 9);
    int max = il.maximum();                 // max == 9
    int avg = il.average();                 // avg == 6
    int min = il.minimum();                 // min == 3

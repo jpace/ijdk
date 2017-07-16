@@ -1,4 +1,4 @@
-package org.incava.ijdk.str;
+package org.incava.ijdk.collect;
 
 import org.incava.ijdk.lang.Closure;
 

@@ -185,4 +185,19 @@ public class StringListTest extends Parameterized {
             params(true, "one", "one", "two"),
             params(true, "one", "One"));
     }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void toLines(StringList expected, StringList sl) {
+        StringList result = sl.toLines();
+        assertThat(result, withContext(equalTo(expected), message("sl", sl)));
+    }
+    
+    private List<Object[]> parametersForToLines() {
+        return paramsList(
+            params(StringList.empty(), StringList.empty()),
+            params(StringList.of((String)null), StringList.of((String)null)),
+            params(StringList.of("a\n"), StringList.of("a")),
+            params(StringList.of("a\n", "b\n"), StringList.of("a", "b")),
+            params(StringList.of("a\n"), StringList.of("a\n")));
+    }    
 }

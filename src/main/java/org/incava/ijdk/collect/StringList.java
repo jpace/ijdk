@@ -1,6 +1,7 @@
 package org.incava.ijdk.collect;
 
 import java.util.Collection;
+import org.incava.ijdk.io.IO;
 import org.incava.ijdk.lang.Closure;
 import org.incava.ijdk.str.Criteria;
 
@@ -179,5 +180,26 @@ public class StringList extends Array<String> {
             }
         }
         return matching;
+    }
+
+    /**
+     * Returns the string list as lines, which have the current end-of-line character(s) for the
+     * current OS, for any element that does not already have an EOLN character. Null elements will
+     * have no EOLN added.
+     *
+     * @return the new list of strings
+     */
+    public StringList toLines() {
+        String eoln = IO.EOLN;
+        StringList newList = StringList.empty();
+        for (String str : this) {
+            if (str == null || str.endsWith(eoln)) {
+                newList.append(str);
+            }
+            else {
+                newList.append(str + eoln);
+            }
+        }
+        return newList;
     }
 }
