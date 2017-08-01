@@ -86,7 +86,18 @@ public class Str extends Obj<String> implements Comparable<Str> {
      * Returns whether the given string is equal to this one.
      */
     public boolean equals(Object obj) {
-        return obj instanceof Str ? equals(((Str)obj).str()) : false;
+        if (obj == null) {
+            return this.string == null;
+        }
+        else if (obj instanceof String) {
+            return equals((String)obj);
+        }
+        else if (obj instanceof Str) {
+            return equals(((Str)obj).str());
+        }
+        else {
+            return false;
+        }
     }
     
     /**

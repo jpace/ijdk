@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class Obj<T> implements Bool {
     /**
-     * A single variable representing all wrapped null objects.
+     * A single variable representing all objects that wrap null.
      */
     public static Obj<Object> NULL = new Obj<Object>(null);
 

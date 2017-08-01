@@ -153,6 +153,13 @@ public class StrTest extends StringTest {
     }
 
     @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
+    public void equalsObject(boolean expected, String a, Object b) {
+        Str sa = new Str(a);
+        boolean result = sa.equals(b);
+        assertEqual(expected, result, message("a", a, "b", b));
+    }    
+
+    @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
     public void equalsString(boolean expected, String a, String b) {
         Str sa = new Str(a);
         boolean result = sa.equals(b);

@@ -21,9 +21,8 @@ public class ObjTest extends Parameterized {
     }
     
     private List<Object[]> parametersForOf() {
-        return paramsList(
-            params(new Obj<String>("abc"), "abc"),
-            params(new Obj<Integer>(1), 1));
+        return paramsList(params(new Obj<String>("abc"), "abc"),
+                          params(new Obj<Integer>(1), 1));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -34,9 +33,8 @@ public class ObjTest extends Parameterized {
     
     private List<Object[]> parametersForOfNull() {
         Obj<Object> nil = Obj.<Object>of(null);
-        return paramsList(
-            params(nil, (String)null),
-            params(nil, (Integer)null));
+        return paramsList(params(nil, (String)null),
+                          params(nil, (Integer)null));
     }
     
     @Test @Parameters(method="parametersForGetObj") @TestCaseName("{method} {index} {params}")
@@ -54,10 +52,9 @@ public class ObjTest extends Parameterized {
     }
     
     private List<Object[]> parametersForGetObj() {
-        return paramsList(
-            params("abc", "abc"),
-            params(1, 1),
-            params(null, null));
+        return paramsList(params("abc", "abc"),
+                          params(1, 1),
+                          params(null, null));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -72,23 +69,20 @@ public class ObjTest extends Parameterized {
         Obj<String>  objStrNull = new Obj<String>(null);
         Obj<Integer> objIntNull = new Obj<Integer>(null);
         
-        return paramsList(
-            params(true,  objStr, "abc"),
-            params(true,  objStr, new Obj<String>("abc")),
-            params(true,  objStr, objStr),
-            params(false, objStr, "def"),
-            params(false, objStr, 1),
-            params(false, objStr, objStrNull),
-            params(false, objStrNull, objStr),
-                          
-            params(false, objStr, objIntNull),
-                          
-            params(true,  objInt, 1),
-            params(true,  objInt, new Obj<Integer>(1)),
-            params(true,  objInt, objInt),
-            params(false, objInt, objIntNull),
-            params(false, objIntNull, objInt),
-            params(false, objInt, 2));
+        return paramsList(params(true,  objStr, "abc"),
+                          params(true,  objStr, new Obj<String>("abc")),
+                          params(true,  objStr, objStr),
+                          params(false, objStr, "def"),
+                          params(false, objStr, 1),
+                          params(false, objStr, objStrNull),
+                          params(false, objStrNull, objStr),
+                          params(false, objStr, objIntNull),                          
+                          params(true,  objInt, 1),
+                          params(true,  objInt, new Obj<Integer>(1)),
+                          params(true,  objInt, objInt),
+                          params(false, objInt, objIntNull),
+                          params(false, objIntNull, objInt),
+                          params(false, objInt, 2));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -99,10 +93,9 @@ public class ObjTest extends Parameterized {
     }
     
     private List<Object[]> parametersForHashCodeTest() {
-        return paramsList(
-            params(0, null),
-            params(1, 1),
-            params("abc".hashCode(), "abc"));
+        return paramsList(params(0, null),
+                          params(1, 1),
+                          params("abc".hashCode(), "abc"));
     }
 
     @Test @Parameters(method="parametersForIsBoolean") @TestCaseName("{method} {index} {params}")
@@ -127,23 +120,22 @@ public class ObjTest extends Parameterized {
     }    
     
     private List<Object[]> parametersForIsBoolean() {
-        return paramsList(
-            params(false, null),
+        return paramsList(params(false, null),
             
-            // Integer
-            params(true, 0),
-            params(true, 1),
-            params(true, -1),
+                          // Integer
+                          params(true, 0),
+                          params(true, 1),
+                          params(true, -1),
 
-            // T[]
-            params(true, new Object[] { "abc" }),
-            params(true, new Object[] { "" }),
-            params(false, new Object[] { }),
+                          // T[]
+                          params(true, new Object[] { "abc" }),
+                          params(true, new Object[] { "" }),
+                          params(false, new Object[] { }),
 
-            // Collection<T>            
-            params(true, Arrays.asList(new Object[] { "abc" })),
-            params(true, Arrays.asList(new Object[] { "" })),
-            params(false, Arrays.asList(new Object[] { })));
+                          // Collection<T>            
+                          params(true, Arrays.asList(new Object[] { "abc" })),
+                          params(true, Arrays.asList(new Object[] { "" })),
+                          params(false, Arrays.asList(new Object[] { })));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -161,9 +153,8 @@ public class ObjTest extends Parameterized {
     }
     
     private List<Object[]> parametersForIsNull() {
-        return paramsList(
-            params(true, null),
-            params(false, "abc"));
+        return paramsList(params(true, null),
+                          params(false, "abc"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -174,9 +165,8 @@ public class ObjTest extends Parameterized {
     }
     
     private List<Object[]> parametersForToStringTest() {
-        return paramsList(
-            params("one", "one"),
-            params("null", null),
-            params("[a, b, c]", new Object[] { "a", "b", "c" }));
-    }    
+        return paramsList(params("one", "one"),
+                          params("null", null),
+                          params("[a, b, c]", new Object[] { "a", "b", "c" }));
+    }
 }
