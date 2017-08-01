@@ -1,6 +1,7 @@
 package org.incava.ijdk.collect;
 
 import java.util.Collection;
+import java.util.Collections;
 import org.incava.ijdk.io.IO;
 import org.incava.ijdk.lang.Closure;
 import org.incava.ijdk.str.Criteria;
@@ -202,4 +203,13 @@ public class StringList extends Array<String> {
         }
         return newList;
     }
+
+    /**
+     * Returns a copy of this string list, sorted.
+     */
+    public StringList sort() {
+        StringList sorted = new StringList(this);
+        Collections.sort(sorted);
+        return sorted;
+    }    
 }
