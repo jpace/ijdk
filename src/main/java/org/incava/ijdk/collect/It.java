@@ -16,7 +16,7 @@ import java.util.List;
  * </pre>
  *
  * <pre>
- *     for (int index = 0; index < listOfStrings.size(); ++index) {
+ *     for (int index = 0; index &lt; listOfStrings.size(); ++index) {
  *         System.out.println("string #" + index + ": " + listOfStrings.get(index));
  *     }
  * </pre>
@@ -24,7 +24,7 @@ import java.util.List;
  * Using It:
  *
  * <pre>
- *     for (It<String> it : It.of(listOfStrings)) {
+ *     for (It&lt;String&gt; it : It.of(listOfStrings)) {
  *         System.out.println("string #" + it.index() + ": " + it.value());
  *     }
  * </pre>

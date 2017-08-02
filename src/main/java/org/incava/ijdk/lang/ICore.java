@@ -224,6 +224,7 @@ public class ICore {
      * Returns an Iterable (iterator) for the C-style array, which can be null.
      * If <code>ary</code> is null, an "empty" iterator will be returned.
      *
+     * @param ary the array to iterate over; can be null
      * @return an iterator for the array
      */
     public static <T> Iterable<T> iter(T[] ary) {
@@ -234,6 +235,7 @@ public class ICore {
      * Returns an Iterable (iterator) for the collection, which can be null. If
      * <code>coll</code> is null, an "empty" iterator will be returned.
      *
+     * @param coll the collection to iterate over; can be null
      * @return an iterator for the collection
      */
     public static <T> Iterable<T> iter(Iterable<T> coll) {
@@ -243,6 +245,7 @@ public class ICore {
     /**
      * Returns an iterator to be executed <code>num</code> times.
      *
+     * @param num the number of times to iterate
      * @return an iterator
      */
     public static NumIterable iter(int num) {
