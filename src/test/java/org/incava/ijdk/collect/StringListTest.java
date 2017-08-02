@@ -10,7 +10,10 @@ import org.incava.ijdk.lang.Closure;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
 import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
 
@@ -57,10 +60,9 @@ public class StringListTest extends Parameterized {
     }
     
     private List<Object[]> parametersForAnyStartsWith() {
-        return paramsList(
-            params(false, "o", new String[0]),
-            params(true, "o", "one"),
-            params(false, "n", "one"));
+        return paramsList(params(false, "o", new String[0]),
+                          params(true,  "o", "one"),
+                          params(false, "n", "one"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -71,11 +73,10 @@ public class StringListTest extends Parameterized {
     }
     
     private List<Object[]> parametersForAnyContains() {
-        return paramsList(
-            params(false, "o", new String[0]),
-            params(true, "o", "one"),
-            params(true, "n", "one"),
-            params(false, "z", "one"));
+        return paramsList(params(false, "o", new String[0]),
+                          params(true,  "o", "one"),
+                          params(true,  "n", "one"),
+                          params(false, "z", "one"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -86,10 +87,9 @@ public class StringListTest extends Parameterized {
     }
     
     private List<Object[]> parametersForAnyEndsWith() {
-        return paramsList(
-            params(false, "o", new String[0]),
-            params(true, "e", "one"),
-            params(false, "n", "one"));
+        return paramsList(params(false, "o", new String[0]),
+                          params(true,  "e", "one"),
+                          params(false, "n", "one"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -179,11 +179,10 @@ public class StringListTest extends Parameterized {
     }
     
     private List<Object[]> parametersForAnyEqualsIgnoreCase() {
-        return paramsList(
-            params(false, "o", new String[0]),
-            params(true, "one", "one"),
-            params(true, "one", "one", "two"),
-            params(true, "one", "One"));
+        return paramsList(params(false, "o",   new String[0]),
+                          params(true,  "one", "one"),
+                          params(true,  "one", "one", "two"),
+                          params(true,  "one", "One"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -193,11 +192,22 @@ public class StringListTest extends Parameterized {
     }
     
     private List<Object[]> parametersForToLines() {
-        return paramsList(
-            params(StringList.empty(), StringList.empty()),
-            params(StringList.of((String)null), StringList.of((String)null)),
-            params(StringList.of("a\n"), StringList.of("a")),
-            params(StringList.of("a\n", "b\n"), StringList.of("a", "b")),
-            params(StringList.of("a\n"), StringList.of("a\n")));
+        return paramsList(params(StringList.empty(),          StringList.empty()),
+                          params(StringList.of((String)null), StringList.of((String)null)),
+                          params(StringList.of("a\n"),        StringList.of("a")),
+                          params(StringList.of("a\n", "b\n"), StringList.of("a", "b")),
+                          params(StringList.of("a\n"),        StringList.of("a\n")));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void sort(StringList expected, StringList ary) {
+        StringList result = ary.sort();
+        assertThat(result, equalTo(expected));
+        assertThat(result, not(equalTo(ary)));
+    }
+    
+    private List<Object[]> parametersForSort() {
+        return paramsList(params(StringList.of("a", "b", "c"), StringList.of("b", "a", "c")),
+                          params(StringList.of("a", "b", "c"), StringList.of("b", "c", "a")));
     }    
 }
