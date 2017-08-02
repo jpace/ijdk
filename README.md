@@ -277,6 +277,15 @@ Execute a given number of times, similar to Ruby:
     }
 ```
 
+An iterator that has been a value and an index:
+
+```java
+    List<String> list = Arrays.asList(new String[] { "a", "b", "c" });
+    for (It<String> it : It.of(list)) {
+        // use it.index() and it.value()
+    }
+```
+
 ## MultiMap
 
 Does one-to-many mappings.
@@ -327,47 +336,8 @@ simply -1, 0, or 1. Comp also contains the methods `lt` (less than), `lte` (less
 
 ## Assertions
 
-`org.incava.test.Assertions` (this may be repackaged to `org.incava.ijdk.test`) contains
-alternatives to JUnit4 org.junit.Assert. Consistent with the test/unit and minitest libraries in
-Ruby, the primary assertion method is of the form:
-
-```java
-   public static <T> T assertEqual(T expected, T actual, String msg);
-```
-
-The message is the last parameter, in comparision to it being the first parameter in JUnit4
-`Assert.assertEquals`. That's because the message is considered of lesser importance than the
-expected value and the result. In a later version, this method will have varargs arguments as the
-message components (but see below for an alternative).
-
-In comparision to `Assert.assertEquals`, which has a void return type, `assertEqual` returns the
-`actual` value. That supports a more concise and elegant style of instantiating objects "inside" the
-call to `assertEqual`.
-
-```java
-   Type expected = new Type(expArgs);
-   Type value = assertEqual(expected, new Type(args));
-   // do stuff with value
-```
-
-Among the variations of `assertEqual`, one supports assertions of C-style arrays (Object[]),
-including with better output on failure.
-
-The `message` method converts key/value pairs to more descriptive output on failure of an assertion,
-providing more context than just the values being compared:
-
-```java
-    import static org.incava.test.Assertions.message;
-    // ...
-    
-    @Test
-    @Parameters
-    @TestCaseName("{method} {index} {params}")
-    public <T> void equalsTest(boolean expected, NullableObject<T> nobj, Object obj) {
-        boolean result = nobj.equals(obj);
-        assertEqual(expected, result, message("nobj", nobj, "obj", obj));
-    }
-```
+`org.incava.test.Assertions` has been split apart from IJDK, and is available at
+[Attest](http://github.com/jpace/attest "Attest").
 
 ## Miscellaneous
 
