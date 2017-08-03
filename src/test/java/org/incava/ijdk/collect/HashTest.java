@@ -3,15 +3,15 @@ package org.incava.ijdk.collect;
 import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
-import org.incava.ijdk.tuple.Pair;
 import org.incava.attest.Parameterized;
+import org.incava.ijdk.tuple.Pair;
 import org.junit.Test;
 
-import static org.incava.attest.Assertions.assertEqual;
-import static org.incava.attest.Assertions.assertSame;
-import static org.incava.attest.Assertions.message;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.incava.attest.Assertions.message;
+import static org.incava.attest.ContextMatcher.withContext;
 
 public class HashTest extends Parameterized {
     @Test
@@ -43,12 +43,12 @@ public class HashTest extends Parameterized {
     
     @Test
     public void empty() {
-        assertEqual(new Hash<String, Integer>(), Hash.<String, Integer>empty());
+        assertThat(Hash.<String, Integer>empty(), equalTo(new Hash<String, Integer>()));
     }   
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void of(java.util.TreeMap<K, V> expected, Hash<K, V> result) {
-        assertEqual(expected, result);        
+        assertThat(result, equalTo(expected));
     }
     
     private java.util.List<Object[]> parametersForOf() {
@@ -83,45 +83,45 @@ public class HashTest extends Parameterized {
         expected.put("one", 1);
         expected.put("two", 2);
 
-        Hash<String, Integer> m = Hash.<String, Integer>of();
+        Hash<String, Integer> m = Hash.empty();
         Hash<String, Integer> result = m.set("one", 1).set("two", 2);
 
-        assertEqual(expected, m);
-        assertSame(result, m);
+        assertThat(m, equalTo(expected));
+        assertThat(result, sameInstance(m));
     }
 
     @Test
     public void keys() {
-        Hash<String, Integer> map = Hash.<String, Integer>of("one", 1, "two", 2);
+        Hash<String, Integer> map = Hash.of("one", 1, "two", 2);
         java.util.Set<String> expected = new java.util.TreeSet<String>();
         expected.add("one");
         expected.add("two");
-        assertEqual(expected, map.keys());
+        assertThat(map.keys(), equalTo(expected));
     }
 
     @Test
     public void entries() {
-        Hash<String, Integer> map = Hash.<String, Integer>of("one", 1, "two", 2);
+        Hash<String, Integer> map = Hash.of("one", 1, "two", 2);
         java.util.Set<java.util.Map.Entry<String, Integer>> expected = new java.util.HashSet<java.util.Map.Entry<String, Integer>>();
         expected.add(new java.util.AbstractMap.SimpleEntry<String, Integer>("one", 1));
         expected.add(new java.util.AbstractMap.SimpleEntry<String, Integer>("two", 2));
-        assertEqual(expected, map.entries());
+        assertThat(map.entries(), equalTo(expected));
     }
 
     @Test
     public void iterator() {
-        Hash<String, Integer> map = Hash.<String, Integer>of("one", 1, "two", 2);
+        Hash<String, Integer> map = Hash.of("one", 1, "two", 2);
         java.util.Iterator<java.util.Map.Entry<String, Integer>> it = map.iterator();
-        assertEqual(true, it.hasNext());
-        assertEqual(new java.util.AbstractMap.SimpleEntry<String, Integer>("one", 1), it.next());
-        assertEqual(new java.util.AbstractMap.SimpleEntry<String, Integer>("two", 2), it.next());
-        assertEqual(false, it.hasNext());
+        assertThat(it.hasNext(), equalTo(true));        
+        assertThat(it.next(), equalTo(new java.util.AbstractMap.SimpleEntry<String, Integer>("one", 1)));
+        assertThat(it.next(), equalTo(new java.util.AbstractMap.SimpleEntry<String, Integer>("two", 2)));
+        assertThat(it.hasNext(), equalTo(false));        
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void fetchWithDefValue(V expected, Hash<K, V> map, K key, V defValue) {
         V result = map.fetch(key, defValue);
-        assertEqual(expected, result, message("map", map, "key", key, "defValue", defValue));
+        assertThat(result, withContext(message("map", map, "key", key, "defValue", defValue), equalTo(expected)));
     }
     
     private List<Object[]> parametersForFetchWithDefValue() {
@@ -136,10 +136,10 @@ public class HashTest extends Parameterized {
     public <K, V> void fetchNoDefault(String expError, Hash<K, V> map, K key) {
         try {
             map.fetch(key);
-            assertEqual(null, expError, message("map", map, "key", key));
+            assertThat(null, withContext(message("map", map, "key", key), equalTo(expError)));
         }
         catch (IllegalArgumentException iae) {
-            assertEqual(expError, iae.getMessage(), message("map", map, "key", key));
+            assertThat(iae.getMessage(), withContext(message("map", map, "key", key), equalTo(expError)));
         }
     }
     
@@ -147,6 +147,6 @@ public class HashTest extends Parameterized {
         Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");        
         return paramsList(params(null, h, "first"),
                           params("key not found: 'fourth'", h, "fourth"),
-                          params("key not found: 'fifth'", h, "fifth"));
+                          params("key not found: 'fifth'",  h, "fifth"));
     }
 }
