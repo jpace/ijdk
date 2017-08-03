@@ -7,13 +7,12 @@ import java.util.Iterator;
 import java.util.TreeMap;
 
 import org.incava.ijdk.collect.Array;
+import org.incava.ijdk.collect.Iterate;
 import org.incava.ijdk.collect.StringList;
 
 import org.incava.ijdk.io.StdOut;
 import org.incava.ijdk.lang.ObjectExt;
 import org.incava.ijdk.lang.StringExt;
-import org.incava.ijdk.util.EmptyIterable;
-import org.incava.ijdk.util.NumIterable;
 
 public class ICore {
     /**
@@ -228,7 +227,7 @@ public class ICore {
      * @return an iterator for the array
      */
     public static <T> Iterable<T> iter(T[] ary) {
-        return ary == null ? new EmptyIterable<T>() : Array.of(ary);
+        return Iterate.over(ary);
     }
 
     /**
@@ -239,7 +238,7 @@ public class ICore {
      * @return an iterator for the collection
      */
     public static <T> Iterable<T> iter(Iterable<T> coll) {
-        return coll == null ? new EmptyIterable<T>() : coll;
+        return Iterate.over(coll);
     }
 
     /**
@@ -248,8 +247,8 @@ public class ICore {
      * @param num the number of times to iterate
      * @return an iterator
      */
-    public static NumIterable iter(int num) {
-        return new NumIterable(num);
+    public static Iterable<Integer> iter(int num) {
+        return Iterate.count(num);
     }
 
     /**

@@ -17,7 +17,7 @@ public class ItIterator<T> implements Iterator<It<T>> {
     }
         
     public boolean hasNext() {
-        return this.index < list.size();
+        return this.list != null && this.index < list.size();
     }
 
     public It<T> next() {

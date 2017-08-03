@@ -258,10 +258,10 @@ A Range is a pair of integers. It converts to arrays, and supports iteration.
 
 ```java
     String[] ary = new String[0];
-    for (String str : ICore.iter(ary)) { // executes zero times
+    for (String str : Iterate.over(ary)) { // executes zero times
     }
     String[] ary = null;
-    for (String str : ICore.iter(ary)) {  // also executes zero times
+    for (String str : Iterate.over(ary)) {  // also executes zero times
     }
 ```
 
@@ -272,7 +272,7 @@ Execute a given number of times, similar to Ruby:
 ```
 
 ```java
-    for (Integer i : ICore.iter(3)) {
+    for (Integer i : Iterate.count(3)) {
         ICore.puts("hi");
     }
 ```
@@ -281,14 +281,14 @@ An iterator, `It`, that has a value and an index:
 
 ```java
     List<String> list = Arrays.asList(new String[] { "a", "b", "c" });
-    for (It<String> it : It.of(list)) {
+    for (It<String> it : Iterate.each(list)) {
         // use it.index() and it.value()
     }
 ```
 
 ```java
     String[] ary = new String[] { "a", "b", "c" };
-    for (It<String> it : It.of(ary)) {
+    for (It<String> it : Iterate.each(ary)) {
         // use it.index() and it.value()
     }
 ```
