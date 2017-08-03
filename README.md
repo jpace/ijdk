@@ -277,11 +277,18 @@ Execute a given number of times, similar to Ruby:
     }
 ```
 
-An iterator that has been a value and an index:
+An iterator, `It`, that has a value and an index:
 
 ```java
     List<String> list = Arrays.asList(new String[] { "a", "b", "c" });
     for (It<String> it : It.of(list)) {
+        // use it.index() and it.value()
+    }
+```
+
+```java
+    String[] ary = new String[] { "a", "b", "c" };
+    for (It<String> it : It.of(ary)) {
         // use it.index() and it.value()
     }
 ```
@@ -310,6 +317,13 @@ An alternate class to Integer:
     Integer num = Int.toInteger(null);  // num == null
 ```
 
+```java
+    Int num = Int.of("1");   // num.obj() == 1
+    Int num = Int.of("");    // num.obj() == null
+    Int num = Int.of("xyz"); // num.obj() == null
+    Int num = Int.of(null);  // num.obj() == null
+```
+
 ## Pathname
 
 Pathname extends java.io.File with Ruby-like functionality:
@@ -323,9 +337,9 @@ Pathname extends java.io.File with Ruby-like functionality:
 
 ## Comp
 
-ijdk.lang.Comp extends and replaces Comparable (`compareTo`) usage, normalizing the result to be
-simply -1, 0, or 1. Comp also contains the methods `lt` (less than), `lte` (less than or equal),
-`gt` (greater than), and `gte` (greater than or equal), for simpler comparisons:
+org.incava.ijdk.lang.Comp extends and replaces Comparable (`compareTo`) usage, normalizing the
+result to be simply -1, 0, or 1. Comp also contains the methods `lt` (less than), `lte` (less than
+or equal), `gt` (greater than), and `gte` (greater than or equal), for simpler comparisons:
 
 ```java
    if (Comp.gte("abc", "bbc")) {

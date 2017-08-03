@@ -13,7 +13,7 @@ import static org.incava.attest.Assertions.message;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class HashTest extends Parameterized {
+public class MapTest extends Parameterized {
     @Test
     public void init() {
         java.util.Map<String, Integer> jdkMap = new java.util.TreeMap<String, Integer>();
