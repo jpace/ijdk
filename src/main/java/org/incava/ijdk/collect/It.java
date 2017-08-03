@@ -35,7 +35,7 @@ public class It<T> {
     }
 
     public static <T> ItIterable<T> of(T[] list) {
-        return new ItIterable<T>(Arrays.asList(list));
+        return new ItIterable<T>(list == null ? null : Arrays.asList(list));
     }
 
     private final T value;

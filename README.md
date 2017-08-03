@@ -254,6 +254,8 @@ A Range is a pair of integers. It converts to arrays, and supports iteration.
 
 ## Iterators
 
+### Null-safe Iterators
+
 "Safe" iterators for arrays and collections, which handles the case when they are null.
 
 ```java
@@ -264,6 +266,32 @@ A Range is a pair of integers. It converts to arrays, and supports iteration.
     for (String str : Iterate.over(ary)) {  // also executes zero times
     }
 ```
+
+```java
+    List<String> list = null;
+    for (String str : Iterate.over(list)) {  // executes zero times
+    }
+```
+
+Thus the common idiom as shown below is simplified:
+
+```java
+    List<String> list;   // set somewhere
+    if (list != null) {
+        for (String str : list) {
+        }
+    }
+```
+
+now:
+
+```java
+    List<String> list;   // set somewhere
+    for (String str : Iterate.over(list)) {
+    }
+```
+
+### Numeric Iterators
 
 Execute a given number of times, similar to Ruby:
 
@@ -276,6 +304,8 @@ Execute a given number of times, similar to Ruby:
         ICore.puts("hi");
     }
 ```
+
+### Index/Value Iterators
 
 An iterator, `It`, that has a value and an index:
 
