@@ -19,7 +19,7 @@ IJDK has a very expansive (and growing) library for Java I/O and collections, as
 the JDK. IJDK is mostly inspired by Ruby, and parallels Ruby classes (such as Map/Hash and
 List/Array) closely, usually moreso than it does the Apache Commons and Guava libraries.
 
-As IJDK gets more behavior, modules -- such as I/O -- may be split into subprojects.
+As IJDK grows and gets more behavior, modules -- such as I/O -- may be split into subprojects.
 
 ## Enhanced collections
 

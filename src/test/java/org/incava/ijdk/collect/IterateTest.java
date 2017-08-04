@@ -80,28 +80,27 @@ public class IterateTest extends Parameterized {
         for (It<String> it : Iterate.each(list)) {
             ++index;
         }
-        assertThat(index, equalTo(0));        
+        assertThat(index, equalTo(0));
     }
     
     @Test
     public void eachArray() {
-        String[] list = new String[] { "a", "b", "c" };
+        String[] ary = new String[] { "a", "b", "c" };
         int index = 0;
-        for (It<String> it : Iterate.each(list)) {
+        for (It<String> it : Iterate.each(ary)) {
             assertThat(it.index(), equalTo(index));
-            assertThat(it.value(), equalTo(list[index]));
+            assertThat(it.value(), equalTo(ary[index]));
             ++index;
         }
     }    
     
     @Test
     public void eachArrayNull() {
-        String[] list = null;
+        String[] ary = null;
         int index = 0;
-        for (It<String> it : Iterate.each(list)) {
-            assertThat(it.index(), equalTo(index));
-            assertThat(it.value(), equalTo(list[index]));
+        for (It<String> it : Iterate.each(ary)) {
             ++index;
         }
+        assertThat(index, equalTo(0));
     }    
 }
