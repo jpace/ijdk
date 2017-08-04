@@ -9,13 +9,13 @@ import java.util.Iterator;
  * @see org.incava.ijdk.collect.It
  */
 public class ItIterable<T> implements Iterable<It<T>> {
-    private final List<T> list;
+    private final Iterable<T> elements;
     
-    public ItIterable(List<T> list) {
-        this.list = list;
+    public ItIterable(Iterable<T> elements) {
+        this.elements = elements;
     }
 
     public Iterator<It<T>> iterator() {
-        return new ItIterator<T>(list);
+        return new ItIterator<T>(elements);
     }    
 }

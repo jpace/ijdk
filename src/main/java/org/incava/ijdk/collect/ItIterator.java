@@ -1,14 +1,14 @@
 package org.incava.ijdk.collect;
 
-import java.util.List;
 import java.util.Iterator;
+import org.incava.ijdk.util.EmptyIterator;
 
 public class ItIterator<T> implements Iterator<It<T>> {
-    private final List<T> list;
+    private final Iterator<T> iterator;
     private int index;
         
-    public ItIterator(List<T> list) {
-        this.list = list;
+    public ItIterator(Iterable<T> elements) {
+        this.iterator = elements == null ? new EmptyIterator<T>(): elements.iterator();
         this.index = 0;
     }
 
@@ -17,16 +17,17 @@ public class ItIterator<T> implements Iterator<It<T>> {
     }
         
     public boolean hasNext() {
-        return this.list != null && this.index < list.size();
+        return this.iterator.hasNext();
     }
 
     public It<T> next() {
-        It<T> it = new It<T>(this.list.get(this.index), this.index);
+        T element = this.iterator.next();
+        It<T> it = new It<T>(element, this.index);
         ++this.index;
         return it;
     }
     
     public void remove() {
-        throw new UnsupportedOperationException();
+        this.iterator.remove();
     }
 }

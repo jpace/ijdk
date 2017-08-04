@@ -37,33 +37,13 @@ public class Iterate {
      * Returns an Iterable (iterator) for the collection, which can be null. If
      * <code>coll</code> is null, an "empty" iterator will be returned.
      *
-     * @param coll the collection to iterate over; can be null
+     * @param elements the elements to iterate over; can be null
      * @param <T> the type of elements
      * @return an iterator for the collection
      * @see #each
      */
-    public static <T> Iterable<T> over(Iterable<T> coll) {
-        return coll == null ? new EmptyIterable<T>() : coll;
-    }
-
-    /**
-     * An iterator that has a value (<code>it.value()</code>) and an index
-     * (<code>it.index()</code>).
-     *
-     * <pre>
-     *     for (It&lt;String&gt; it : Iterate.each(list)) {
-     *         System.out.println("element #" + it.index() + ": " + it.value());
-     *     }
-     * </pre>
-     *
-     * @param list the list to iterate over; can be null
-     * @param <T> the type of elements
-     * @return an iterator for the list
-     * @see #over
-     * @see org.incava.ijdk.collect.It
-     */
-    public static <T> ItIterable<T> each(List<T> list) {
-        return new ItIterable<T>(list);
+    public static <T> Iterable<T> over(Iterable<T> elements) {
+        return elements == null ? new EmptyIterable<T>() : elements;
     }
 
     /**
@@ -85,4 +65,24 @@ public class Iterate {
     public static <T> ItIterable<T> each(T[] ary) {
         return new ItIterable<T>(ary == null ? null : Arrays.asList(ary));
     }    
+
+    /**
+     * An iterator that has a value (<code>it.value()</code>) and an index
+     * (<code>it.index()</code>).
+     *
+     * <pre>
+     *     for (It&lt;String&gt; it : Iterate.each(list)) {
+     *         System.out.println("element #" + it.index() + ": " + it.value());
+     *     }
+     * </pre>
+     *
+     * @param elements the elements to iterate over; can be null
+     * @param <T> the type of elements
+     * @return an iterator for the elements
+     * @see #over
+     * @see org.incava.ijdk.collect.It
+     */
+    public static <T> ItIterable<T> each(Iterable<T> elements) {
+        return new ItIterable<T>(elements);
+    }
 }

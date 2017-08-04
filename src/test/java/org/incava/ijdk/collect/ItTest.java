@@ -17,7 +17,7 @@ public class ItTest extends Parameterized {
     public void list() {
         List<String> list = Arrays.asList(new String[] { "a", "b", "c" });
         int index = 0;
-        for (It<String> it : It.of(list)) {
+        for (It<String> it : Iterate.each(list)) {
             assertThat(it.index(), equalTo(index));
             assertThat(it.value(), equalTo(list.get(index)));
             ++index;
@@ -26,34 +26,14 @@ public class ItTest extends Parameterized {
     }
     
     @Test
-    public void listNull() {
-        List<String> list = null;
-        int index = 0;
-        for (It<String> it : It.of(list)) {
-            ++index;
-        }
-        assertThat(index, equalTo(0));
-    }
-    
-    @Test
     public void array() {
         String[] ary = new String[] { "a", "b", "c" };
         int index = 0;
-        for (It<String> it : It.of(ary)) {
+        for (It<String> it : Iterate.each(ary)) {
             assertThat(it.index(), equalTo(index));
             assertThat(it.value(), equalTo(ary[index]));
             ++index;
         }
         assertThat(index, equalTo(ary.length));
-    }
-    
-    @Test
-    public void arrayNull() {
-        String[] ary = null;
-        int index = 0;
-        for (It<String> it : It.of(ary)) {
-            ++index;
-        }
-        assertThat(index, equalTo(0));
     }
 }
