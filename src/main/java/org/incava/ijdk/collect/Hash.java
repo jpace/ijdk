@@ -81,6 +81,20 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
         return new Hash<KeyType, ValueType>(list);
     }    
 
+    /**
+     * Creates a map from an Array.
+     *
+     * @param list the list from which to populate the new map
+     * @return the new Map
+     */
+    public static <Type> Hash<Type, Type> of(Array<Type> array) {
+        Hash<Type, Type> h = new Hash<Type, Type>();
+        for (int idx = 0; idx < array.size() / 2; ++idx) {
+            h.put(array.get(idx * 2), array.get(idx * 2 + 1));
+        }
+        return h;
+    }    
+
     public static final long serialVersionUID = 1L;
 
     /**

@@ -42,6 +42,20 @@ public class HashTest extends Parameterized {
     }   
     
     @Test
+    public void ofArray() {
+        Array<String> array = Array.of("one", "1",
+                                       "two", "2",
+                                       "three", "3");
+        
+        java.util.TreeMap<String, String> expected = new java.util.TreeMap<String, String>();
+        expected.put("one", "1");
+        expected.put("two", "2");
+        expected.put("three", "3");
+
+        assertThat(expected, equalTo(Hash.of(array)));
+    }   
+    
+    @Test
     public void empty() {
         assertThat(Hash.<String, Integer>empty(), equalTo(new Hash<String, Integer>()));
     }   
