@@ -1,10 +1,16 @@
-package org.incava.ijdk.util;
+package org.incava.ijdk.version;
 
 import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.lang.Comp;
 import org.incava.ijdk.lang.Obj;
 
 public class Version implements Comparable<Version> {
+    public static final Version LATEST = new Version(Integer.MAX_VALUE) {
+            public String toString() {
+                return "latest";
+            }
+        };
+    
     private final Integer major;
     private final Integer minor;
     private final Integer build;
@@ -12,7 +18,7 @@ public class Version implements Comparable<Version> {
     
     public Version(String str) {
         String[] nums = str.split("\\.");
-        major = getNumber(nums, 0, null);
+        major = getNumber(nums, 0, 0);
         minor = getNumber(nums, 1, null);
         build = getNumber(nums, 2, null);
         revision = getNumber(nums, 3, null);
@@ -106,7 +112,7 @@ public class Version implements Comparable<Version> {
     }
 
     static Integer getNumber(String[] strs, Integer index, Integer defValue) {
-        return strs.length > index ? Integer.valueOf(strs[index]) : defValue;
+        return strs.length > index && strs[index].length() > 0 ? Integer.valueOf(strs[index]) : defValue;
     }
 
     static Integer getNumber(Integer[] ints, Integer index, Integer defValue) {
