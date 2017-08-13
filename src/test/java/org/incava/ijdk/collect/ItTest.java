@@ -10,7 +10,6 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.incava.attest.Assertions.message;
-import static org.incava.attest.ContextMatcher.withContext;
 
 public class ItTest extends Parameterized {
     @Test
@@ -35,5 +34,16 @@ public class ItTest extends Parameterized {
             ++index;
         }
         assertThat(index, equalTo(ary.length));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void test_toString(String expected, String value, int index) {
+        assertThat(new It<String>(value, index).toString(), equalTo(expected));
+    }
+
+    private java.util.List<Object[]> parametersForTest_toString() {
+        return paramsList(params("0: a", "a", 0),
+                          params("1: a", "a", 1),
+                          params("1: null", null, 1));
     }
 }

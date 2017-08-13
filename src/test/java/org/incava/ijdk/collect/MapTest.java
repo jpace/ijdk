@@ -1,22 +1,23 @@
 package org.incava.ijdk.collect;
 
 import java.util.List;
+import java.util.TreeMap;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
-import org.incava.ijdk.tuple.Pair;
 import org.incava.attest.Parameterized;
+import org.incava.ijdk.tuple.Pair;
 import org.junit.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.assertSame;
 import static org.incava.attest.Assertions.message;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
 public class MapTest extends Parameterized {
     @Test
     public void init() {
-        java.util.Map<String, Integer> jdkMap = new java.util.TreeMap<String, Integer>();
+        java.util.Map<String, Integer> jdkMap = new TreeMap<String, Integer>();
         jdkMap.put("one", 1);
         jdkMap.put("two", 2);
         jdkMap.put("three", 3);
@@ -28,12 +29,12 @@ public class MapTest extends Parameterized {
     
     @Test
     public void ofList() {
-        java.util.List<Pair<String, Integer>> list = new java.util.ArrayList<Pair<String, Integer>>();
+        List<Pair<String, Integer>> list = new java.util.ArrayList<Pair<String, Integer>>();
         list.add(Pair.of("one", 1));
         list.add(Pair.of("two", 2));
         list.add(Pair.of("three", 3));
 
-        java.util.TreeMap<String, Integer> expected = new java.util.TreeMap<String, Integer>();
+        TreeMap<String, Integer> expected = new TreeMap<String, Integer>();
         expected.put("one", 1);
         expected.put("two", 2);
         expected.put("three", 3);
@@ -47,28 +48,28 @@ public class MapTest extends Parameterized {
     }   
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public <K, V> void of(java.util.TreeMap<K, V> expected, Hash<K, V> result) {
+    public <K, V> void of(TreeMap<K, V> expected, Hash<K, V> result) {
         assertEqual(expected, result);        
     }
     
-    private java.util.List<Object[]> parametersForOf() {
-        java.util.TreeMap<String, Integer> expected;
+    private List<Object[]> parametersForOf() {
+        TreeMap<String, Integer> expected;
         
-        java.util.List<Object[]> params = paramsList();
+        List<Object[]> params = paramsList();
 
-        expected = new java.util.TreeMap<String, Integer>();
+        expected = new TreeMap<String, Integer>();
         params.add(params(expected, Hash.<String, Integer>of()));
 
-        expected = new java.util.TreeMap<String, Integer>();
+        expected = new TreeMap<String, Integer>();
         expected.put("one", 1);
         params.add(params(expected, Hash.of("one", 1)));
 
-        expected = new java.util.TreeMap<String, Integer>();
+        expected = new TreeMap<String, Integer>();
         expected.put("two", 2);
         expected.put("three", 3);
         params.add(params(expected, Hash.of("two", 2, "three", 3)));
 
-        expected = new java.util.TreeMap<String, Integer>();
+        expected = new TreeMap<String, Integer>();
         expected.put("four", 4);
         expected.put("five", 5);
         expected.put("six", 6);
@@ -79,7 +80,7 @@ public class MapTest extends Parameterized {
 
     @Test
     public void set() {
-        java.util.TreeMap<String, Integer> expected = new java.util.TreeMap<String, Integer>();
+        TreeMap<String, Integer> expected = new TreeMap<String, Integer>();
         expected.put("one", 1);
         expected.put("two", 2);
 

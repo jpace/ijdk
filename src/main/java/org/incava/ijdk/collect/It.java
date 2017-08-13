@@ -23,4 +23,8 @@ public class It<T> {
     public int index() {
         return this.index;
     }
+
+    public String toString() {
+        return String.valueOf(this.index) + ": " + String.valueOf(this.value);
+    }
 }

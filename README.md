@@ -117,20 +117,20 @@ collision with java.util.Map).
 ```java
     // generic type inferred by context:
     Hash<String, String> h = Hash.empty();
-    assertEqual(new HashMap<String, String>(), h, message("h", h));
+    assertEqual(new HashMap<String, String>(), h);
 
     // creates a map from one key/value pair
     Hash<String, String> h = Hash.of("one", "1");
     HashMap<String, String> expected = new HashMap<String, String>();
     expected.put("one", "1");    
-    assertEqual(expected, h, message("h", h));
+    assertEqual(expected, h);
 
     // creates a map from two key/value pairs
     Hash<String, String> h = Hash.of("one", "1", "two", "2");
     HashMap<String, String> expected = new HashMap<String, String>();
     expected.put("one", "1");    
     expected.put("two", "2");
-    assertEqual(expected, h, message("h", h));
+    assertEqual(expected, h);
 
     // creates a map from three key/value pairs
     Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");
@@ -138,7 +138,7 @@ collision with java.util.Map).
     expected.put("first", "abc");
     expected.put("second", "def");
     expected.put("third", "ghi");
-    assertEqual(expected, h, message("h", h));
+    assertEqual(expected, h);
 
     // set() returns the map, so methods can be chained:
     Hash<String, String> h = Hash.of("first", "abc");
@@ -150,7 +150,7 @@ collision with java.util.Map).
     expected.put("third", "ghi");
     expected.put("fourth", "jkl");
     
-    assertEqual(expected, h, message("h", h));
+    assertEqual(expected, h);
 
     // same as keySet, but a shorter name:
     Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");
@@ -180,9 +180,9 @@ collision with java.util.Map).
     }
 
     Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");    
-    assertEqual("abc", h.fetch("first"), message("h", h));
-    assertEqual("xyz", h.fetch("fourth", "xyz"), message("h", h));
-    assertEqual(null, h.fetch("fourth", null), message("h", h));
+    assertEqual("abc", h.fetch("first"));
+    assertEqual("xyz", h.fetch("fourth", "xyz"));
+    assertEqual(null, h.fetch("fourth", null));
     try {
         h.fetch("fourth");
     }
