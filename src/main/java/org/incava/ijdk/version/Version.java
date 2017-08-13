@@ -11,6 +11,10 @@ public class Version implements Comparable<Version> {
             }
         };
     
+    public static Version of(String str) {
+        return "latest".equalsIgnoreCase(str) ? LATEST : new Version(str);
+    }    
+    
     private final Integer major;
     private final Integer minor;
     private final Integer build;
