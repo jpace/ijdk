@@ -6,6 +6,8 @@ import java.util.Arrays;
 /**
  * Extension to the Object class, wrapping a Java Object with additional methods. The referenced
  * object can be null.
+ *
+ * @param <T> the type of object being wrapped
  */
 public class Obj<T> implements Bool {
     /**
@@ -14,7 +16,7 @@ public class Obj<T> implements Bool {
     public static Obj<Object> NULL = new Obj<Object>(null);
 
     /**
-     * Creates a wrapper for the given object. If the object is null, then common variable
+     * Creates a wrapper for the given object. If the object is null, the common variable
      * <code>NULL</code> is returned, thus eliminating unnecessary object creation.
      */
     @SuppressWarnings("unchecked")

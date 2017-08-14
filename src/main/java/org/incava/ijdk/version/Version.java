@@ -1,10 +1,11 @@
 package org.incava.ijdk.version;
 
 import org.incava.ijdk.collect.Array;
-import org.incava.ijdk.lang.Comp;
+import org.incava.ijdk.lang.Comparing;
+import org.incava.ijdk.lang.DefaultComparing;
 import org.incava.ijdk.lang.Obj;
 
-public class Version implements Comparable<Version> {
+public class Version implements Comparing<Version> {
     public static final Version LATEST = new Version(Integer.MAX_VALUE) {
             public String toString() {
                 return "latest";
@@ -19,6 +20,7 @@ public class Version implements Comparable<Version> {
     private final Integer minor;
     private final Integer build;
     private final Integer revision;
+    private final DefaultComparing<Version> comparing;
     
     public Version(String str) {
         String[] nums = str.split("\\.");
@@ -26,6 +28,7 @@ public class Version implements Comparable<Version> {
         minor = getNumber(nums, 1, null);
         build = getNumber(nums, 2, null);
         revision = getNumber(nums, 3, null);
+        comparing = new DefaultComparing<Version>(this);
     }
 
     public Version(Integer ... args) {
@@ -33,6 +36,7 @@ public class Version implements Comparable<Version> {
         minor = getNumber(args, 1, null);
         build = getNumber(args, 2, null);
         revision = getNumber(args, 3, null);
+        comparing = new DefaultComparing<Version>(this);
     }
 
     public Integer getMajor() {
@@ -83,36 +87,24 @@ public class Version implements Comparable<Version> {
         return cmp;
     }
 
-    /**
-     * Returns whether this version is less than the other.
-     */
     public boolean lt(Version other) {
-        return Comp.lt(this, other);
+        return comparing.lt(other);
     }
 
-    /**
-     * Returns whether this version is less than or equal to the other.
-     */
     public boolean lte(Version other) {
-        return Comp.lte(this, other);
+        return comparing.lte(other);
     }
 
-    /**
-     * Returns whether this version is greater than the other.
-     */
     public boolean gt(Version other) {
-        return Comp.gt(this, other);
+        return comparing.gt(other);
     }
 
-    /**
-     * Returns whether this version is greater than or equal to the other.
-     */
     public boolean gte(Version other) {
-        return Comp.gte(this, other);
-    }    
-
-    static int compareField(Integer x, Integer y) {
-        return Comp.compare(x, y);
+        return comparing.gte(other);
+    }
+    
+    private int compareField(Integer x, Integer y) {
+        return new DefaultComparing<Integer>(x).compareTo(y);
     }
 
     static Integer getNumber(String[] strs, Integer index, Integer defValue) {

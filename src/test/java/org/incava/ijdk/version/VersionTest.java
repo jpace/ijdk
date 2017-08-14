@@ -128,4 +128,36 @@ public class VersionTest extends Parameterized {
     public void latest() {
         assertThat(Version.LATEST, hasToString("latest"));
     }
+
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void lt(boolean expected, Version x, Version y) {
+        assertEqual(expected, x.lt(y), message("x", x, "y", y));
+    }
+    
+    private List<Object[]> parametersForLt() {
+        Version v = new Version();
+        Version v1 = new Version(1);
+        Version v12 = new Version(1, 2);
+        Version v123 = new Version(1, 2, 3);
+        Version v1234 = new Version(1, 2, 3, 4);
+        
+        return paramsList(params(false, v, v),
+                          params(false, v, new Version()),
+                          params(false, v1, new Version(1)),
+                          params(false, v12, new Version(1, 2)),
+                          params(false, v123, new Version(1, 2, 3)),
+                          params(false, v1234, new Version(1, 2, 3, 4)),
+                                     
+                          params(true,  v1, new Version(2)),
+                          params(true,  v12, new Version(1, 3)),
+                          params(true,  v123, new Version(1, 2, 4)),
+                          params(true,  v1234, new Version(1, 2, 3, 5)),
+                                     
+                          params(false, new Version(2), v1),
+                          params(false, new Version(1, 3), v12),
+                          params(false, new Version(1, 2, 4), v123),
+                          params(false, new Version(1, 2, 3, 5), v1234));
+    }
+    
 }

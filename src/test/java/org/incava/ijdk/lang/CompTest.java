@@ -30,10 +30,6 @@ public class CompTest extends Parameterized {
         int result = Comp.compare(x, y);
         assertThat(result, withContext(message("x", x, "y", y), equalTo(expCmp)));
     }
-
-    public <T> void assertBooleanEqual(boolean expected, boolean result, T x, T y) {
-        assertThat(result, withContext(message("x", x, "y", y), equalTo(expected)));
-    }
     
     @Test @Parameters(method="compParams") @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void lessThan(int expCmp, boolean expLt, boolean expGt, boolean expLte, boolean expGte, T x, T y) {
@@ -64,4 +60,8 @@ public class CompTest extends Parameterized {
     public <T extends Comparable<T>> void gte(int expCmp, boolean expLt, boolean expGt, boolean expLte, boolean expGte, T x, T y) {
         assertBooleanEqual(expGte, Comp.gte(x, y), x, y);
     }
+
+    private <T> void assertBooleanEqual(boolean expected, boolean result, T x, T y) {
+        assertThat(result, withContext(message("x", x, "y", y), equalTo(expected)));
+    }    
 }

@@ -4,11 +4,16 @@ import org.incava.ijdk.tuple.Pair;
 
 /**
  * A mapping from keys, sorted, to values, via java.util.TreeMap.
+ *
+ * @param <K> the type of keys of the map
+ * @param <K> the type of values of the map
  */
 public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable<java.util.Map.Entry<K, V>> {
     /**
      * Creates an empty tree map.
      *
+     * @param <KeyType> the type of keys of the map
+     * @param <ValueType> the type of values of the map
      * @return an empty map
      * @see #empty
      */
@@ -17,8 +22,10 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
     }
 
     /**
-     * Creates an empty tree map.
+     * Creates an empty tree map. The map is empty, but can be expanded.
      *
+     * @param <KeyType> the type of keys of the map
+     * @param <ValueType> the type of values of the map
      * @return an empty map
      */
     public static <KeyType, ValueType> SortedMap<KeyType, ValueType> empty() {
@@ -30,6 +37,8 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      *
      * @param k1 the first parameter
      * @param v1 the first value
+     * @param <KeyType> the type of keys of the map
+     * @param <ValueType> the type of values of the map
      * @return the new Map
      */
     public static <KeyType, ValueType> SortedMap<KeyType, ValueType> of(KeyType k1, ValueType v1) {
@@ -45,6 +54,8 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      * @param v1 the first value
      * @param k2 the second parameter
      * @param v2 the second value
+     * @param <KeyType> the type of keys of the map
+     * @param <ValueType> the type of values of the map
      * @return the new Map
      */
     public static <KeyType, ValueType> SortedMap<KeyType, ValueType> of(KeyType k1, ValueType v1, KeyType k2, ValueType v2) {
@@ -62,6 +73,8 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      * @param v2 the second value
      * @param k3 the third parameter
      * @param v3 the third value
+     * @param <KeyType> the type of keys of the map
+     * @param <ValueType> the type of values of the map
      * @return the new Map
      */
     public static <KeyType, ValueType> SortedMap<KeyType, ValueType> of(KeyType k1, ValueType v1, KeyType k2, ValueType v2, KeyType k3, ValueType v3) {
@@ -74,6 +87,8 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      * Creates a map from a list of pairs.
      *
      * @param list the list from which to populate the new map
+     * @param <KeyType> the type of keys of the map
+     * @param <ValueType> the type of values of the map
      * @return the new Map
      */
     public static <KeyType, ValueType> SortedMap<KeyType, ValueType> of(java.util.List<Pair<KeyType, ValueType>> list) {
@@ -158,6 +173,10 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
 
     /**
      * Returns the value for the given entry. If there is no such entry, then the default value is returned.
+     *
+     * @param key the key
+     * @param defValue the value to use if there is no entry for <code>key</code>
+     * @return the value or <code>defValue</code>
      */
     public V fetch(K key, V defValue) {
         return containsKey(key) ? get(key) : defValue;            
@@ -167,6 +186,8 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      * Returns the value for the given entry. If there is no such entry, then an
      * IllegalArgumentException is thrown.
      *
+     * @param key the key
+     * @return the value or <code>defValue</code>
      * @throws IllegalArgumentException if there is no such key
      */
     public V fetch(K key) {

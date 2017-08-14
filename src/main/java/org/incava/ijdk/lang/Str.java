@@ -11,7 +11,7 @@ import org.incava.ijdk.util.Indexable;
 /**
  * Extensions to the String class.
  */
-public class Str extends Obj<String> implements Comparable<Str> {
+public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Creates a string from the collection, joined by <code>delim</code>. If <code>coll</code> is
      * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the
@@ -582,31 +582,43 @@ public class Str extends Obj<String> implements Comparable<Str> {
     }
 
     /**
-     * Returns whether this string is less than the other.
+     * Returns whether the wrapped string is less than that of the other.
+     *
+     * @param other the other string
+     * @return the comparison value
      */
     public boolean lt(Str other) {
-        return Comp.lt(this, other);
+        return new DefaultComparing<Str>(this).lt(other);
     }
 
     /**
-     * Returns whether this string is less than or equal to the other.
+     * Returns whether the wrapped string is less than or equal to that of the other.
+     *
+     * @param other the other string
+     * @return the comparison value
      */
     public boolean lte(Str other) {
-        return Comp.lte(this, other);
+        return new DefaultComparing<Str>(this).lte(other);
     }
 
     /**
-     * Returns whether this string is greater than the other.
+     * Returns whether the wrapped string is greater than that of the other.
+     *
+     * @param other the other string
+     * @return the comparison value
      */
     public boolean gt(Str other) {
-        return Comp.gt(this, other);
+        return new DefaultComparing<Str>(this).gt(other);
     }
 
     /**
-     * Returns whether this string is greater than or equal to the other.
+     * Returns whether the wrapped string is greater than or equal to that of the other.
+     *
+     * @param other the other string
+     * @return the comparison value
      */
     public boolean gte(Str other) {
-        return Comp.gte(this, other);
+        return new DefaultComparing<Str>(this).gte(other);
     }
 
     /**

@@ -5,11 +5,16 @@ import org.incava.ijdk.tuple.Pair;
 /**
  * A mapping from keys, via <code>hashCode</code> to values. The name "Hash" is taken from the
  * equivalent class in Ruby, and avoids name collision with the existing java.util.Map.
+ *
+ * @param K the type of keys of the map
+ * @param V the type of values of the map
  */
 public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java.util.Map.Entry<K, V>> {
     /**
      * Creates an empty hash map.
      *
+     * @param <KeyType> the type of keys of the map
+     * @param <ValueType> the type of values of the map
      * @return an empty map
      * @see #empty
      */
@@ -20,6 +25,8 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
     /**
      * Creates an empty hash map.
      *
+     * @param <KeyType> the type of keys of the map
+     * @param <ValueType> the type of values of the map
      * @return an empty map
      */
     public static <KeyType, ValueType> Hash<KeyType, ValueType> empty() {
@@ -29,6 +36,8 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
     /**
      * Creates a map with one key/value pair.
      *
+     * @param <KeyType> the type of keys of the map
+     * @param <ValueType> the type of values of the map
      * @param k1 the first parameter
      * @param v1 the first value
      * @return the new Map
@@ -42,6 +51,8 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
     /**
      * Creates a map with two key/value pairs.
      *
+     * @param <KeyType> the type of keys of the map
+     * @param <ValueType> the type of values of the map
      * @param k1 the first parameter
      * @param v1 the first value
      * @param k2 the second parameter
@@ -57,6 +68,8 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
     /**
      * Creates a map with three key/value pairs.
      *
+     * @param <KeyType> the type of keys of the map
+     * @param <ValueType> the type of values of the map
      * @param k1 the first parameter
      * @param v1 the first value
      * @param k2 the second parameter
@@ -74,6 +87,8 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
     /**
      * Creates a map from a list of pairs.
      *
+     * @param <KeyType> the type of keys of the map
+     * @param <ValueType> the type of values of the map
      * @param list the list from which to populate the new map
      * @return the new Map
      */
@@ -84,7 +99,8 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
     /**
      * Creates a map from an Array.
      *
-     * @param list the list from which to populate the new map
+     * @param <Type> the type of keys and values of the map
+     * @param array the array from which to populate the new map
      * @return the new Map
      */
     public static <Type> Hash<Type, Type> of(Array<Type> array) {
@@ -173,6 +189,10 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
 
     /**
      * Returns the value for the given entry. If there is no such entry, then the default value is returned.
+     *
+     * @param key the key
+     * @param defValue the value to use if there is no entry for <code>key</code>
+     * @return the value or <code>defValue</code>
      */
     public V fetch(K key, V defValue) {
         return containsKey(key) ? get(key) : defValue;            
@@ -182,6 +202,8 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
      * Returns the value for the given entry. If there is no such entry, then an
      * IllegalArgumentException is thrown.
      *
+     * @param key the key
+     * @return the value or <code>defValue</code>
      * @throws IllegalArgumentException if there is no such key
      */
     public V fetch(K key) {

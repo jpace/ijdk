@@ -14,6 +14,9 @@ public class Versions extends Array<Version> {
 
     /**
      * Returns the version that is an exact match of <code>version</code>.
+     *
+     * @param version the version to match
+     * @return the matched version
      */
     public Version find(Version version) {
         if (version == Version.LATEST) {
@@ -29,6 +32,9 @@ public class Versions extends Array<Version> {
 
     /**
      * Returns the latest <code>Version</code> up through <code>version</code>.
+     *
+     * @param version the version to match
+     * @return the matched version
      */
     public Version findThrough(Version version) {
         Version latest = null;
@@ -44,6 +50,9 @@ public class Versions extends Array<Version> {
      * Returns the latest <code>Version</code> up to, but not through,
      * <code>version</code>. If <code>version</code> is <code>Version.LATEST</code>, then the latest
      * <code>Version</code> is returned.
+     *
+     * @param version the version to match
+     * @return the matched version
      */
     public Version findUpTo(Version version) {
         Version latest = null;
@@ -57,6 +66,8 @@ public class Versions extends Array<Version> {
 
     /**
      * Returns the latest <code>Version</code>.
+     *
+     * @return the latest version
      */
     public Version findLatest() {
         return findThrough(Version.LATEST);
