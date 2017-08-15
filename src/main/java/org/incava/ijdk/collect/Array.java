@@ -1,10 +1,12 @@
 package org.incava.ijdk.collect;
 
-import org.incava.ijdk.lang.Str;
-import org.incava.ijdk.lang.Sequence;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-
+import java.util.Collections;
+import java.util.List;
+import org.incava.ijdk.lang.Sequence;
+import org.incava.ijdk.lang.Str;
 
 /**
  * A dynamically-sized collection, wrapping ArrayList.
@@ -346,6 +348,32 @@ public class Array<T extends Object> extends ArrayList<T> implements Sequence<T>
             }
         }
         return ary;
+    }
+
+    /**
+     * Returns a copy of this array, sorted.
+     *
+     * @return a sorted array
+     */
+    @SuppressWarnings("unchecked")
+    public Array<T> sorted() {
+        Object[] copy = toArray();
+        if (copy.length == 0) {
+            return new Array<T>();
+        }
+        else {
+            if (copy[0] instanceof Comparable) {
+                Arrays.sort(copy);
+                Array<T> ary = new Array<T>();
+                for (Object x : copy) {
+                    ary.add((T)x);
+                }
+                return ary;
+            }
+            else {
+                throw new RuntimeException("array contains " + copy[0].getClass() + ", which is not Comparable");
+            }
+        }
     }
 
     private Integer getIndex(Integer n) {

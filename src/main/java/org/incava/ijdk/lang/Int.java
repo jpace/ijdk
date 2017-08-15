@@ -7,6 +7,7 @@ public class Int extends Obj<Integer> {
     /**
      * Returns an Int (integer) for the number.
      *
+     * @param num the number to wrap; can be null
      * @return an Int wrapping the given Integer
      */
     public static Int of(Integer num) {
@@ -15,8 +16,10 @@ public class Int extends Obj<Integer> {
     }
     
     /**
-     * Returns an Int (integer) for the string.
+     * Returns an Int (integer) for the string. If the string is not a valid integer, then the
+     * wrapped integer will be null.
      *
+     * @param str the string to parse for the number; can be null
      * @return an Int wrapping the given string, converted to an Integer
      */
     public static Int of(String str) {
@@ -25,8 +28,9 @@ public class Int extends Obj<Integer> {
     }
     
     /**
-     * Returns the str as an integer, or null if it is null or is not an integer.
+     * Returns the str as an integer, or null if it is null or is not a valid integer.
      *
+     * @param str the string to parse for the number; can be null
      * @return an Int wrapping the given string, converted to an Integer
      */
     public static Integer toInteger(String str) {
@@ -42,22 +46,28 @@ public class Int extends Obj<Integer> {
     }
     
     /**
-     * Converts the given string to an integer, if it is a valid value. Otherwise the wrapped
+     * Converts the given string to an integer, if it is a valid integer. Otherwise the wrapped
      * integer will be null.
+     *
+     * @param str the string to parse for the number; can be null
      */
-    public Int(String string) {
-        this(toInteger(string));
+    public Int(String str) {
+        this(toInteger(str));
     }
 
     /**
      * Wraps the given integer, which can be null.
+     *
+     * @param num the number to wrap; can be null
      */
-    public Int(Integer in) {
-        super(in);
+    public Int(Integer num) {
+        super(num);
     }
 
     /**
      * Returns the wrapped integer.
+     *
+     * @return the wrapped integer
      */
     public Integer integer() {
         return obj();

@@ -368,7 +368,6 @@ public class ArrayTest extends Parameterized {
             params(listOfNull,     list678, new int[] { -4 }));
     }
 
-
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void intersection(Array<Object> expected, Array<Object> x, Array<Object> y) {
         Array<Object> result = x.intersection(y);
@@ -393,6 +392,28 @@ public class ArrayTest extends Parameterized {
             params(emp, emp, x1),
             params(emp, x1,  emp)
                           );
+    }    
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void sorted(Array<Object> expArray, String expException, Array<Object> ary) {
+        try {
+            Array<Object> result = ary.sorted();
+            assertThat(result, equalTo(expArray));
+        }
+        catch (Exception ex) {
+            assertThat(ex.getMessage(), equalTo(expException));
+        }
+    }
+    
+    private List<Object[]> parametersForSorted() {
+        Array<Object> ab  = Array.of("a", "b");
+        Array<Object> ba  = Array.of("b", "a");
+        
+        Array<Object> sba  = Array.of(new StringBuilder("a"), new StringBuilder("b"));
+        
+        return paramsList(params(ab, null, ab),
+                          params(ab, null, ba),
+                          params(ab, "array contains class java.lang.StringBuilder, which is not Comparable", sba));
     }    
 
     @Test
