@@ -37,30 +37,24 @@ public class VersionsTest extends Parameterized {
     }
     
     @Test @Parameters(method="paramsForFind") @TestCaseName("{method} {index} {params}")
-    public void findThrough(Version expFindUpTo, Version expFindThrough, Version expFind, Versions versions, String version) {
+    public void findThrough(Version expFindUpTo, Version expFindThrough, Versions versions, String version) {
         Version result = versions.findThrough(Version.of(version));
         assertThat(result, sameInstance(expFindThrough));
     }
     
     @Test @Parameters(method="paramsForFind") @TestCaseName("{method} {index} {params}")
-    public void findUpTo(Version expFindUpTo, Version expFindThrough, Version expFind, Versions versions, String version) {
+    public void findUpTo(Version expFindUpTo, Version expFindThrough, Versions versions, String version) {
         Version result = versions.findUpTo(Version.of(version));
         assertThat(result, sameInstance(expFindUpTo));
     }
-
-    @Test @Parameters(method="paramsForFind") @TestCaseName("{method} {index} {params}")
-    public void find(Version expFindUpTo, Version expFindThrough, Version expFind, Versions versions, String version) {
-        Version result = versions.find(Version.of(version));
-        assertThat(result, sameInstance(expFind));
-    }
     
     private List<Object[]> paramsForFind() {
-        return paramsList(params(b,    b,    b,    ab, "latest"),
-                          params(b,    b,    b,    ba, "latest"),
-                          params(null, null, null, ba, "0"),
-                          params(null, a,    a,    ba, "1"),
-                          params(a,    b,    b,    ba, "2"),
-                          params(b,    b,    null, ba, "3"));
+        return paramsList(params(b,    b,    ab, "latest"),
+                          params(b,    b,    ba, "latest"),
+                          params(null, null, ba, "0"),
+                          params(null, a,    ba, "1"),
+                          params(a,    b,    ba, "2"),
+                          params(b,    b,    ba, "3"));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

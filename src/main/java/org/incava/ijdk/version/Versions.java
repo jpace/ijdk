@@ -13,24 +13,6 @@ public class Versions extends Array<Version> {
     }
 
     /**
-     * Returns the version that is an exact match of <code>version</code>.
-     *
-     * @param version the version to match
-     * @return the matched version
-     */
-    public Version find(Version version) {
-        if (version == Version.LATEST) {
-            return findLatest();
-        }
-        for (Version v : this) {
-            if (v.equals(version)) {
-                return v;
-            }
-        }
-        return null;        
-    }
-
-    /**
      * Returns the latest <code>Version</code> up through <code>version</code>.
      *
      * @param version the version to match
