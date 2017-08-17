@@ -41,6 +41,14 @@ public class VersionsTest extends Parameterized {
     @Test @Parameters(method="paramsForFind") @TestCaseName("{method} {index} {params}")
     public void findThrough(Version expFindUpTo, Version expFindThrough, Versions versions, String version) {
         Version result = versions.findThrough(Version.of(version));
+        System.out.println("result: " + result);
+        if (result != null) {
+            System.out.println("result.hashCode(): " + result.hashCode());
+        }
+        System.out.println("expFindThrough: " + expFindThrough);
+        if (expFindThrough != null) {
+            System.out.println("expFindThrough.hashCode(): " + expFindThrough.hashCode());
+        }
         assertThat(result, withContext(message("versions", versions, "version", version), sameInstance(expFindThrough)));
     }
     
@@ -55,7 +63,8 @@ public class VersionsTest extends Parameterized {
                           params(b,    b,    ba, "latest"),
                           params(null, null, ba, "0"),
                           params(null, a,    ba, "1"),
-                          params(a,    b,    ba, "2"));
+                          params(a,    b,    ba, "2"),
+                          params(b,    b,    ba, "3"));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

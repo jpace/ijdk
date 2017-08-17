@@ -19,14 +19,13 @@ public class Versions extends Array<Version> {
      * @return the matched version
      */
     public Version findThrough(Version version) {
-        Array<Version> sorted = sorted();
-        if (version.equals(Version.LATEST)) {
-            return sorted.get(-1);
+        Version latest = null;
+        for (Version v : this) {
+            if (v.lte(version) && (latest == null || v.gt(latest))) {
+                latest = v;
+            }
         }
-        else {
-            int idx = sorted.indexOf(version);
-            return idx >= 0 ? sorted.get(idx) : null;
-        }
+        return latest;
     }
 
     /**
