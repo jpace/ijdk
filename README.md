@@ -107,6 +107,9 @@ An extension of ArrayList, with Ruby-like methods (thus the name matching Array 
 
     Array<Integer> elements = numbers.elements(1, 0, -2, 0, -4);
     assertEqual(Array.of(3, 1, 4, 1, 5), elements);
+
+    Array<Integer> ary = Array.of(3, 7, 1).sorted();
+    assertEqual(Array.of(1, 3, 7), ary);
 ```
 
 ### Hash<T>

@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Arrays;
 
 /**
- * Extension to the Object class, wrapping a Java Object with additional methods. The referenced
- * object can be null.
+ * Extension to the Object class, wrapping a JDK Object with additional methods. The referenced
+ * object can be null. Also has "boolean-ness" of an object, which can be true, false, or empty.
  *
  * @param <T> the type of object being wrapped
  */
@@ -18,6 +18,10 @@ public class Obj<T> implements Bool {
     /**
      * Creates a wrapper for the given object. If the object is null, the common variable
      * <code>NULL</code> is returned, thus eliminating unnecessary object creation.
+     *
+     * @param <T> the type of object being wrapped
+     * @param obj the object being wrapped
+     * @return the newly created object, or <code>NULL</code>
      */
     @SuppressWarnings("unchecked")
     public static <T> Obj<T> of(T obj) {
@@ -28,6 +32,8 @@ public class Obj<T> implements Bool {
 
     /**
      * Creates a wrapper for the given object.
+     *
+     * @param object the object to wrap
      */
     public Obj(T object) {
         this.object = object;
@@ -35,6 +41,9 @@ public class Obj<T> implements Bool {
 
     /**
      * Returns the wrapped object.
+     *
+     * @return the wrapped object
+     * @see #obj
      */
     public T get() {
         return this.object;
@@ -42,6 +51,9 @@ public class Obj<T> implements Bool {
 
     /**
      * Returns the wrapped object.
+     *
+     * @return the wrapped object
+     * @see #get
      */
     public T obj() {
         return this.object;

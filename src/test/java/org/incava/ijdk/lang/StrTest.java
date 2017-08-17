@@ -7,8 +7,12 @@ import junitparams.naming.TestCaseName;
 import org.incava.ijdk.lang.StringTest;
 import org.junit.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
+import static org.incava.attest.ContextMatcher.withContext;
 import static org.incava.attest.Parameters.params;
 import static org.incava.attest.Parameters.paramsList;
 
@@ -202,16 +206,18 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void endsWithString(boolean expected, String str, String s) {
         boolean result = new Str(str).endsWith(s);
-        assertEqual(expected, result, message("str", str, "s", s));
+        assertThat(result, withContext(message("str", str, "s", s), equalTo(expected)));
     }
     
     private List<Object[]> parametersForEndsWithString() {
         return paramsList(params(true, "abc", "c"),
                           params(true, "abc", "bc"),
                           params(true, "abc", "abc"),
-                          //$$$ fix this -- it's inconsistent with String#endsWith:
-                          params(false, "abc", ""),
+                          params(false, "abcd", "abc"),
+                          params(true, "abc", ""),
                           params(false, null, ""),
+                          params(true, "abc.x", ".x"),
+                          params(false, "abc.x", ".y"),
                           params(false, "abc", "d"));
     }
 

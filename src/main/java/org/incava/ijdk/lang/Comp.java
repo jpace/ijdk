@@ -14,6 +14,7 @@ public class Comp {
      * @param <Type> the type, which is Comparable
      * @param x the first value
      * @param y the second value
+     * @return the comparison value
      */
     public static <Type extends Comparable<Type>> int compare(Type x, Type y) {
         if (x == null) {
@@ -34,6 +35,7 @@ public class Comp {
      * @param <Type> the type, which is Comparable
      * @param x the first value
      * @param y the second value
+     * @return whether x is less than y
      */
     public static <Type extends Comparable<Type>> boolean lessThan(Type x, Type y) {
         return compare(x, y) < 0;
@@ -45,6 +47,7 @@ public class Comp {
      * @param <Type> the type, which is Comparable
      * @param x the first value
      * @param y the second value
+     * @return whether x is less than y
      */
     public static <Type extends Comparable<Type>> boolean lt(Type x, Type y) {
         return compare(x, y) < 0;
@@ -56,6 +59,7 @@ public class Comp {
      * @param <Type> the type, which is Comparable
      * @param x the first value
      * @param y the second value
+     * @return whether x is less than or equal to y
      */
     public static <Type extends Comparable<Type>> boolean lte(Type x, Type y) {
         return compare(x, y) <= 0;
@@ -67,6 +71,7 @@ public class Comp {
      * @param <Type> the type, which is Comparable
      * @param x the first value
      * @param y the second value
+     * @return whether x is greater than y
      */
     public static <Type extends Comparable<Type>> boolean greaterThan(Type x, Type y) {
         return compare(x, y) > 0;
@@ -78,6 +83,7 @@ public class Comp {
      * @param <Type> the type, which is Comparable
      * @param x the first value
      * @param y the second value
+     * @return whether x is greater than y
      */
     public static <Type extends Comparable<Type>> boolean gt(Type x, Type y) {
         return compare(x, y) > 0;
@@ -89,6 +95,7 @@ public class Comp {
      * @param <Type> the type, which is Comparable
      * @param x the first value
      * @param y the second value
+     * @return whether x is greater than or equal to y
      */
     public static <Type extends Comparable<Type>> boolean gte(Type x, Type y) {
         return compare(x, y) >= 0;

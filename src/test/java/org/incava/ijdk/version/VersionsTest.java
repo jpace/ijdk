@@ -11,6 +11,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.sameInstance;
+import static org.incava.attest.Assertions.message;
+import static org.incava.attest.ContextMatcher.withContext;
 
 public class VersionsTest extends Parameterized {
     private static Version a;
@@ -39,7 +41,7 @@ public class VersionsTest extends Parameterized {
     @Test @Parameters(method="paramsForFind") @TestCaseName("{method} {index} {params}")
     public void findThrough(Version expFindUpTo, Version expFindThrough, Versions versions, String version) {
         Version result = versions.findThrough(Version.of(version));
-        assertThat(result, sameInstance(expFindThrough));
+        assertThat(result, withContext(message("versions", versions, "version", version), sameInstance(expFindThrough)));
     }
     
     @Test @Parameters(method="paramsForFind") @TestCaseName("{method} {index} {params}")
@@ -53,8 +55,7 @@ public class VersionsTest extends Parameterized {
                           params(b,    b,    ba, "latest"),
                           params(null, null, ba, "0"),
                           params(null, a,    ba, "1"),
-                          params(a,    b,    ba, "2"),
-                          params(b,    b,    ba, "3"));
+                          params(a,    b,    ba, "2"));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

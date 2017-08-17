@@ -396,7 +396,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns whether the string <code>str</code> begins with the string <code>str</code>. For
+     * Returns whether the wrapped string begins with the string <code>str</code>. For
      * consistency with String. Returns false if the wrapped string is null.
      */
     public boolean startsWith(String str) {
@@ -404,7 +404,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns whether the string <code>str</code> ends with the character <code>ch</code>.
+     * Returns whether the wrapped string ends with the character <code>ch</code>.
      * Returns false if the wrapped string is null.
      */
     public boolean endsWith(char ch) {
@@ -413,11 +413,13 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns whether the string <code>str</code> ends with the string <code>str</code>. For
+     * Returns whether the wrapped string ends with the string <code>str</code>. For
      * consistency with String. Returns false if the wrapped string is null.
      */
     public boolean endsWith(String str) {
-        return this.string != null && str.endsWith(get(-str.length(), -1));
+        String subStr = get(-str.length(), -1);
+        System.out.println("subStr: " + subStr);
+        return this.string != null && this.string.endsWith(str);
     }
 
     /**
