@@ -5,6 +5,9 @@ import org.incava.ijdk.lang.Comparing;
 import org.incava.ijdk.lang.DefaultComparing;
 import org.incava.ijdk.lang.Obj;
 
+/**
+ * A version of the form "1.2.3.4".
+ */
 public class Version implements Comparing<Version> {
     public static final Version LATEST = new Version(Integer.MAX_VALUE) {
             public String toString() {
@@ -71,10 +74,17 @@ public class Version implements Comparing<Version> {
         return hash;
     }
 
+    /**
+     * Returns whether the given object is equal to this one.
+     */
     public boolean equals(Object obj) {
         return obj instanceof Version && compareTo((Version)obj) == 0;
     }
 
+    /**
+     * Returns the comparison of the given version to this one. Undefined (null) fields are compared
+     * as if they are zero, so 1.2.3 == 1.2.3.0.
+     */
     public int compareTo(Version other) {
         int cmp;
         if ((cmp = compareField(major, other.major)) == 0) {
@@ -104,6 +114,12 @@ public class Version implements Comparing<Version> {
     }
     
     private int compareField(Integer x, Integer y) {
+        if (x == null) {
+            x = 0;
+        }
+        if (y == null) {
+            y = 0;
+        }
         return new DefaultComparing<Integer>(x).compareTo(y);
     }
 

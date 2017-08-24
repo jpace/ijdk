@@ -36,6 +36,7 @@ public class ObjectExt {
     /**
      * Compares the two objects, including testing for null.
      *
+     * @param <A> the type of objects; is Comparable
      * @param x the first object to compare
      * @param y the second object to compare
      * @return a negative, zero, or positive integer

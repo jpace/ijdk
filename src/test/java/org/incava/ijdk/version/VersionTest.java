@@ -7,22 +7,28 @@ import org.incava.attest.Parameterized;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
+import static org.incava.attest.ContextMatcher.withContext;
 import static org.incava.attest.Parameters.params;
 import static org.incava.attest.Parameters.paramsList;
 
 public class VersionTest extends Parameterized {
+    public void assertVersion(Integer expMajor, Integer expMinor, Integer expPatch, Integer expRevision, Version ver) {
+        String msg = message("ver", ver);
+        assertEqual(expMajor, ver.getMajor(), msg);
+        assertEqual(expMinor, ver.getMinor(), msg);
+        assertEqual(expPatch, ver.getPatch(), msg);
+        assertEqual(expPatch, ver.getBuild(), msg);
+        assertEqual(expRevision, ver.getRevision(), msg);
+    }
+    
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void initFromString(Integer expMajor, Integer expMinor, Integer expPatch, Integer expRevision, String str) {
-        String msg = message("str", str);
         Version version = new Version(str);
-        assertEqual(expMajor, version.getMajor(), msg);
-        assertEqual(expMinor, version.getMinor(), msg);
-        assertEqual(expPatch, version.getPatch(), msg);
-        assertEqual(expPatch, version.getBuild(), msg);
-        assertEqual(expRevision, version.getRevision(), msg);
+        assertVersion(expMajor, expMinor, expPatch, expRevision, version);
     }
     
     private List<Object[]> parametersForInitFromString() {
@@ -34,13 +40,8 @@ public class VersionTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void initFromIntegers(Integer expMajor, Integer expMinor, Integer expPatch, Integer expRevision, Integer ... args) {
-        String msg = message("args", args);
         Version version = new Version(args);
-        assertEqual(expMajor, version.getMajor(), msg);
-        assertEqual(expMinor, version.getMinor(), msg);
-        assertEqual(expPatch, version.getPatch(), msg);
-        assertEqual(expPatch, version.getBuild(), msg);
-        assertEqual(expRevision, version.getRevision(), msg);
+        assertVersion(expMajor, expMinor, expPatch, expRevision, version);
     }
     
     private List<Object[]> parametersForInitFromIntegers() {
@@ -66,7 +67,7 @@ public class VersionTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void equals(Boolean expected, Version x, Version y) {
-        assertEqual(expected, x.equals(y), message("x", x, "y", y));
+        assertThat(x.equals(y), withContext(message("x", x, "y", y), equalTo(expected)));
     }
     
     private List<Object[]> parametersForEquals() {
@@ -74,6 +75,7 @@ public class VersionTest extends Parameterized {
         Version v1 = new Version(1);
         Version v12 = new Version(1, 2);
         Version v123 = new Version(1, 2, 3);
+        Version v1230 = new Version(1, 2, 3, 0);
         Version v1234 = new Version(1, 2, 3, 4);        
         
         return paramsList(params(true,  v, v),
@@ -82,6 +84,8 @@ public class VersionTest extends Parameterized {
                           params(true,  v12, new Version(1, 2)),
                           params(true,  v123, new Version(1, 2, 3)),
                           params(true,  v1234, new Version(1, 2, 3, 4)),
+                          params(true,  v123, v1230),
+                          params(true,  v1230, v123),
                           params(false, v1, new Version(2)),
                           params(false, v1, new Version(1, 2)),
                           params(false, v12, new Version(1, 2, 3)),

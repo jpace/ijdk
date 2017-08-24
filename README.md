@@ -310,7 +310,8 @@ Execute a given number of times, similar to Ruby:
 
 ### Index/Value Iterators
 
-An iterator, `It`, that has a value and an index:
+Returned by `Iterate.each` (as opposed to `Iterate.over`, the iterator class `It` has a value and an
+index (which starts from zero):
 
 ```java
     List<String> list = Arrays.asList(new String[] { "a", "b", "c" });
