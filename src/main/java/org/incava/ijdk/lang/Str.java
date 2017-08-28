@@ -44,14 +44,11 @@ public class Str extends Obj<String> implements Comparing<Str> {
         return join(ary == null ? null : Arrays.asList(ary), delim);
     }
 
-    private final String string;
-
     /**
      * Wraps the given string.
      */
     public Str(String string) {
         super(string);
-        this.string = string;
     }
 
     /**
@@ -62,24 +59,31 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
+     * Repeats the given string <code>num</code> times.
+     */
+    public Str(String str, int num) {
+        super(StringExt.repeat(str, num));
+    }
+    
+    /**
      * Returns the wrapped string.
      */
     public String getString() {
-        return this.string;
+        return str();
     }
 
     /**
      * Returns the wrapped string.
      */
     public String str() {
-        return this.string;
+        return obj();
     }
 
     /**
      * Returns whether the given string is equal to this one.
      */
     public boolean equals(String other) {
-        return this.string == null ? other == null : this.string.equals(other);
+        return str() == null ? other == null : str().equals(other);
     }
 
     /**
@@ -87,7 +91,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      */
     public boolean equals(Object obj) {
         if (obj == null) {
-            return this.string == null;
+            return str() == null;
         }
         else if (obj instanceof String) {
             return equals((String)obj);
@@ -113,6 +117,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * is null.
      */
     public String[] split(String delim, int max) {
+        String string = str();
+        
         if (string == null) {
             return null;
         }
@@ -177,7 +183,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
         }
         
         List<String> list = new ArrayList<String>();
-        StringTokenizer st = new StringTokenizer(this.string, " \t\n\r\f,");
+        StringTokenizer st = new StringTokenizer(str(), " \t\n\r\f,");
         while (st.hasMoreTokens()) {
             String tk = st.nextToken();
             list.add(tk);
@@ -194,10 +200,10 @@ public class Str extends Obj<String> implements Comparing<Str> {
      *     pad("abcd", '*', 3) -&gt; "abcd"
      */
     public String pad(char ch, int length) {
-        if (this.string == null) {
+        if (str() == null) {
             return null;
         }
-        StringBuilder sb = new StringBuilder(this.string);
+        StringBuilder sb = new StringBuilder(str());
         while (sb.length() < length) {
             sb.append(ch);
         }
@@ -215,7 +221,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * </pre>
      */
     public String padLeft(char ch, int length) {
-        return this.string == null ? null : repeat(ch, length - this.string.length()) + this.string;
+        return str() == null ? null : repeat(ch, length - str().length()) + str();
     }
 
     /**
@@ -236,9 +242,12 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * Returns the string, repeated <code>num</code> times.
      */
     public String repeat(int num) {
+        if (isNull()) {
+            return null;
+        }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < num; ++i) {
-            sb.append(this.string);
+            sb.append(str());
         }
         return sb.toString();
     }
@@ -271,7 +280,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return null;
         }
         else {
-            return num <= 0 ? "" : get(-Math.min(num, this.string.length()), -1);
+            return num <= 0 ? "" : get(-Math.min(num, str().length()), -1);
         }
     }
 
@@ -290,7 +299,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
         }
         else {
             Integer idx = getIndex(index);
-            return idx == null ? null : this.string.charAt(idx);
+            return idx == null ? null : str().charAt(idx);
         }
     }
 
@@ -334,7 +343,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
         Integer toIdx = toIndex == null ? null : getIndex(toIndex);
         if (toIdx == null) {
-            toIdx = this.string.length() - 1;
+            toIdx = str().length() - 1;
         }
 
         if (frIdx > toIdx) {
@@ -343,7 +352,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return "";
         }
         else {
-            return this.string.substring(frIdx, 1 + toIdx);
+            return str().substring(frIdx, 1 + toIdx);
         }
     }
 
@@ -383,7 +392,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * the wrapped string is null, then null is returned.
      */
     protected Integer getIndex(Integer index) {
-        return isNull() || this.string.length() == 0 ? null : new Indexable(this.string.length()).get(index);
+        return isNull() || str().length() == 0 ? null : new Indexable(str().length()).get(index);
     }
 
     /**
@@ -400,7 +409,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * consistency with String. Returns false if the wrapped string is null.
      */
     public boolean startsWith(String str) {
-        return this.string != null && this.string.startsWith(str);
+        return str() != null && str().startsWith(str);
     }
 
     /**
@@ -418,8 +427,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      */
     public boolean endsWith(String str) {
         String subStr = get(-str.length(), -1);
-        System.out.println("subStr: " + subStr);
-        return this.string != null && this.string.endsWith(str);
+        return str() != null && str().endsWith(str);
     }
 
     /**
@@ -429,7 +437,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @see #chompAll
      */
     public String chomp() {
-        if (this.string == null) {
+        if (str() == null) {
             return null;
         }
         else {
@@ -441,7 +449,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
                 return substring(0, -2);
             }
             else {
-                return this.string;
+                return str();
             }
         }
     }
@@ -453,18 +461,18 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @see #chomp
      */
     public String chompAll() {
-        if (this.string == null) {
+        String string = str();
+        if (string == null) {
             return null;
         }
         else {
-            int idx = this.string.length() - 1;
-            while (idx >= 0 && "\r\n".indexOf(this.string.charAt(idx)) != -1) {
+            int idx = string.length() - 1;
+            while (idx >= 0 && "\r\n".indexOf(string.charAt(idx)) != -1) {
                 --idx;
             }
-            return this.string.substring(0, idx + 1);
+            return string.substring(0, idx + 1);
         }
     }
-
 
     /**
      * Returns whether the string contains the character. If <code>str</code> or
@@ -483,7 +491,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return null;
         }
         else {
-            int idx = this.string.indexOf(ch);
+            int idx = str().indexOf(ch);
             return idx >= 0 ? Integer.valueOf(idx) : null;
         }
     }
@@ -501,11 +509,11 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * null, then true is returned. Otherwise, if either is null, then false is returned.
      */
     public Boolean eqi(String other) {
-        if (this.string == null || other == null) {
-            return this.string == null && other == null;
+        if (str() == null || other == null) {
+            return str() == null && other == null;
         }
         else {
-            return this.string.equalsIgnoreCase(other);
+            return str().equalsIgnoreCase(other);
         }
     }
 
@@ -516,18 +524,18 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * zero or less.
      */
     public String snip(int len) {
-        if (this.string == null) {
+        if (str() == null) {
             return null;
         }
         else if (len <= 0) {
             return "";
         }
-        else if (this.string.length() > len)  {
+        else if (str().length() > len)  {
             String substr = len - 2 < 0 ? "" : get(0, len - 2);
             return substr + '-';
         }
         else {
-            return this.string;
+            return str();
         }
     }
 
@@ -536,14 +544,14 @@ public class Str extends Obj<String> implements Comparing<Str> {
      */
     public boolean isEmpty() {
         // str.isEmpty() is JDK 1.6+, and IJDK is backward compatible with 1.5.
-        return isNull() || obj().length() == 0;
+        return isNull() || str().length() == 0;
     }
 
     /**
      * Returns the length of the string, returning 0 if the wrapped string is null.
      */
     public int length() {
-        return isNull() ? 0 : this.string.length();
+        return isNull() ? 0 : str().length();
     }
 
     /**
@@ -556,7 +564,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return get(1, -2);
         }
         else {
-            return this.string;
+            return str();
         }
     }    
 
@@ -564,7 +572,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * Quotes the string, using double quotes. Returns null if the wrapped string is null.
      */
     public String quote() {
-        return isNull() ? null : "\"" + this.string + "\"";
+        return isNull() ? null : "\"" + str() + "\"";
     }
 
     public int compareTo(Str other) {
@@ -575,12 +583,12 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return 1;
         }
         else {
-            return string.compareTo(other.string);
+            return str().compareTo(other.str());
         }
     }
 
     public int hashCode() {
-        return isNull() ? 0 : this.string.hashCode();
+        return isNull() ? 0 : str().hashCode();
     }
 
     /**

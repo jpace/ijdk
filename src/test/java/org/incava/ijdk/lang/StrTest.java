@@ -85,15 +85,16 @@ public class StrTest extends StringTest {
     }
     
     private java.util.List<Object[]> parametersForGetIndex() {
+        String abcd = "abcd";
         return paramsList(params(null, null, 0),
-                          params(0, "abcd", 0),
-                          params(1, "abcd", 1),
-                          params(3, "abcd", 3),
-                          params(null, "abcd", 4),
-                          params(3, "abcd", -1),
-                          params(2, "abcd", -2),
-                          params(1, "abcd", -3),
-                          params(null, "abcd", -5));
+                          params(0,    abcd, 0),
+                          params(1,    abcd, 1),
+                          params(3,    abcd, 3),
+                          params(null, abcd, 4),
+                          params(3,    abcd, -1),
+                          params(2,    abcd, -2),
+                          params(1,    abcd, -3),
+                          params(null, abcd, -5));
     }
 
     public String substring(String str, Integer fromIndex, Integer toIndex) {
@@ -160,14 +161,14 @@ public class StrTest extends StringTest {
     public void equalsObject(boolean expected, String a, Object b) {
         Str sa = new Str(a);
         boolean result = sa.equals(b);
-        assertEqual(expected, result, message("a", a, "b", b));
+        assertThat(result, withContext(message("a", a, "b", b), equalTo(expected)));
     }    
 
     @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
     public void equalsString(boolean expected, String a, String b) {
         Str sa = new Str(a);
         boolean result = sa.equals(b);
-        assertEqual(expected, result, message("a", a, "b", b));
+        assertThat(result, withContext(message("a", a, "b", b), equalTo(expected)));
     }    
 
     @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
@@ -175,25 +176,25 @@ public class StrTest extends StringTest {
         Str sa = new Str(a);
         Str sb = new Str(b);
         boolean result = sa.equals(sb);
-        assertEqual(expected, result, message("a", a, "b", b));
+        assertThat(result, withContext(message("a", a, "b", b), equalTo(expected)));
     }
 
     private java.util.List<Object[]> parametersForEquals() {
         return paramsList(params(false, null, ""),
-                          params(false, "", null),
-                          params(true, null, null),
+                          params(false, "",   null),
+                          params(true,  null, null),
                           params(false, null, "a"),
-                          params(false, "a", null),
-                          params(true, "a", "a"),
-                          params(false, "a", "b"),
-                          params(false, "a", "A"),
-                          params(false, "a", "ab"));
+                          params(false, "a",  null),
+                          params(true,  "a",  "a"),
+                          params(false, "a",  "b"),
+                          params(false, "a",  "A"),
+                          params(false, "a",  "ab"));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void endsWithChar(boolean expected, String str, char ch) {
         boolean result = new Str(str).endsWith(ch);
-        assertEqual(expected, result, message("str", str, "ch", ch));
+        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
     }
     
     private List<Object[]> parametersForEndsWithChar() {
@@ -225,7 +226,7 @@ public class StrTest extends StringTest {
     public void compareTo(Integer expected, String x, String y) {
         Integer result = new Str(x).compareTo(new Str(y));
         Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
-        assertEqual(expected, relResult, message("x", x, "y", y, "result", result));
+        assertThat(relResult, withContext(message("x", x, "y", y), equalTo(expected)));
     }
     
     private List<Object[]> parametersForCompareTo() {
@@ -240,11 +241,27 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void hashCodeTest(Integer expected, String x) {
         Integer result = new Str(x).hashCode();
-        assertEqual(expected, result, message("x", x));
+        assertThat(result, withContext(message("x", x), equalTo(expected)));
     }
     
     private List<Object[]> parametersForHashCodeTest() {
         return paramsList(params("abc".hashCode(), "abc"),
                           params(0, null));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void initRepeat(Str expected, String str, int num) {
+        Str result = new Str(str, num);
+        assertThat(result, withContext(message("str", str, "num", num), equalTo(expected)));
+    }
+    
+    private List<Object[]> parametersForInitRepeat() {
+        return paramsList(params(new Str("a"), "a", 1),
+                          params(new Str("aa"), "a", 2),
+                          params(new Str(""), "a", 0),
+                          params(new Str(""), "a", -0),
+                          params(new Str(""), "", 0),
+                          params(new Str(""), "", 1),
+                          params(new Str(null), null, 1));
     }
 }

@@ -9,8 +9,11 @@ import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
 import org.junit.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
+import static org.incava.attest.ContextMatcher.withContext;
 import static org.incava.attest.Parameters.params;
 import static org.incava.attest.Parameters.paramsList;
 
@@ -136,11 +139,11 @@ public abstract class StringTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void repeatString(String expected, String str, int length) {
         String result = repeat(str, length);
-        assertEqual(expected, result, message("str", str, "length", length));
+        assertThat(result, withContext(message("str", str, "length", length), equalTo(expected)));
     }
     
     private List<Object[]> parametersForRepeatString() {
-        return paramsList(params("", null,  0),
+        return paramsList(params(null, null,  0),
                           params("", "abcd",  -1),
                           params("", "abcd",  0),
                           params("abcd", "abcd",  1),

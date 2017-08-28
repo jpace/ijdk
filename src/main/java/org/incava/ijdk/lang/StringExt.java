@@ -109,14 +109,23 @@ public class StringExt {
      * Returns the string, repeated <code>num</code> times.
      */
     public static String repeat(String str, int num) {
-        return new Str(str).repeat(num);
+        if (str == null) {
+            return null;
+        }
+        else {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < num; ++i) {
+                sb.append(str);
+            }
+            return sb.toString();
+        }
     }
 
     /**
      * Returns the character, repeated <code>num</code> times.
      */
-    public static String repeat(char ch, int length) {
-        return new Str(ch).repeat(length);
+    public static String repeat(Character ch, int num) {
+        return repeat(ch == null ? null : String.valueOf(ch), num);
     }
 
     /**
