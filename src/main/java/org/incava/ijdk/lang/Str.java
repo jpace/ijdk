@@ -9,9 +9,32 @@ import java.util.StringTokenizer;
 import org.incava.ijdk.util.Indexable;
 
 /**
- * Extensions to the String class.
+ * Extensions to the String class. A Java String (java.lang.String) can be dereferenced from the Str
+ * object via the <code>str</code> and <code>obj</code> methods.
  */
 public class Str extends Obj<String> implements Comparing<Str> {
+    private static final Str EMPTY = new Str("");
+    
+    /**
+     * Creates an empty string. There is only one shared, immutable empty string object, so this can
+     * save memory.
+     *
+     * @return the empty string
+     */
+    public static Str empty() {
+        return EMPTY;
+    }
+    
+    /**
+     * Creates a string. In a future implementation, this may pool frequently-used objects for reduced memory.
+     *
+     * @param the string; may be null
+     * @return the new Str
+     */
+    public static Str of(String str) {
+        return new Str(str);
+    }
+    
     /**
      * Creates a string from the collection, joined by <code>delim</code>. If <code>coll</code> is
      * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the
@@ -67,6 +90,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     
     /**
      * Returns the wrapped string.
+     *
+     * @return the wrapped string
      */
     public String getString() {
         return str();
@@ -74,6 +99,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns the wrapped string.
+     *
+     * @return the wrapped string
      */
     public String str() {
         return obj();
@@ -81,6 +108,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns whether the given string is equal to this one.
+     *
+     * @return the comparison value
      */
     public boolean equals(String other) {
         return str() == null ? other == null : str().equals(other);
@@ -88,6 +117,10 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns whether the given string is equal to this one.
+     *
+     * @return the comparison value
+     *
+     * @return the comparison value
      */
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -499,6 +532,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns whether the wrapped string is equal to the other. If both are null, then true is
      * returned. Otherwise, if either is null, then false is returned.
+     *
+     * @return the comparison value
      */
     public Boolean eq(String other) {
         return equals(other);
@@ -507,6 +542,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns whether the wrapped string is equal to the other, without regard to case. If both are
      * null, then true is returned. Otherwise, if either is null, then false is returned.
+     *
+     * @return the comparison value
      */
     public Boolean eqi(String other) {
         if (str() == null || other == null) {
@@ -522,20 +559,22 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * the given length - 1, and appended with a dash, so <code>snip("foobar", 4)</code> is "foo-.
      * Returns null if <code>str</code> is null. Returns an empty string if <code>length</code> is
      * zero or less.
+     *
+     * @return the snipped string
      */
-    public String snip(int len) {
+    public Str snip(int len) {
         if (str() == null) {
-            return null;
+            return this;
         }
         else if (len <= 0) {
-            return "";
+            return Str.empty();
         }
         else if (str().length() > len)  {
             String substr = len - 2 < 0 ? "" : get(0, len - 2);
-            return substr + '-';
+            return Str.of(substr + '-');
         }
         else {
-            return str();
+            return this;
         }
     }
 

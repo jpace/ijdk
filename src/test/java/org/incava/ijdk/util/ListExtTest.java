@@ -10,8 +10,6 @@ import org.junit.Test;
 
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
-import static org.incava.attest.Parameters.params;
-import static org.incava.attest.Parameters.paramsList;
 
 public class ListExtTest extends Parameterized {
     public static final List<Integer> NUMS = Arrays.asList(new Integer[] { 2, 4, 6, 8 });

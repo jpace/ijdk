@@ -14,8 +14,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
-import static org.incava.attest.Parameters.params;
-import static org.incava.attest.Parameters.paramsList;
 
 public abstract class StringTest extends Parameterized {
     public abstract String[] split(String str, char delim, int max);

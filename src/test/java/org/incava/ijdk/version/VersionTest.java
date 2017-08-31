@@ -12,8 +12,6 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
-import static org.incava.attest.Parameters.params;
-import static org.incava.attest.Parameters.paramsList;
 
 public class VersionTest extends Parameterized {
     public void assertVersion(Integer expMajor, Integer expMinor, Integer expPatch, Integer expRevision, Version ver) {

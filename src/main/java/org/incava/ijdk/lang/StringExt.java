@@ -299,7 +299,7 @@ public class StringExt {
      * zero or less.
      */
     public static String snip(String str, int len) {
-        return new Str(str).snip(len);
+        return new Str(str).snip(len).str();
     }
 
     /**
