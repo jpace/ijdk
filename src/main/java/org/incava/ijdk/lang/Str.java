@@ -16,8 +16,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     private static final Str EMPTY = new Str("");
     
     /**
-     * Creates an empty string. There is only one shared, immutable empty string object, so this can
-     * save memory.
+     * Creates an empty string. There is only one shared, immutable empty string object, to conserve
+     * memory.
      *
      * @return the empty string
      */
@@ -39,6 +39,10 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * Creates a string from the collection, joined by <code>delim</code>. If <code>coll</code> is
      * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the
      * empty string.
+     * 
+     * @param coll the collection to be joined
+     * @param delim the delimiter within the joined string
+     * @return the joined string
      */
     public static Str join(Collection<?> coll, String delim) {
         if (coll == null) {
@@ -62,6 +66,10 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * Creates a string from the array, joined by <code>delim</code>. If <code>ary</code> is null,
      * then the wrapped string is null. If <code>delim</code> is null, it is treated as the empty
      * string.
+     *
+     * @param ary the array to join
+     * @param delim the delimiter within the joined string
+     * @return the joined string
      */
     public static Str join(Object[] ary, String delim) {
         return join(ary == null ? null : Arrays.asList(ary), delim);
@@ -109,6 +117,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns whether the given string is equal to this one.
      *
+     * @param other the string to compare to this one
      * @return the comparison value
      */
     public boolean equals(String other) {
@@ -118,8 +127,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns whether the given string is equal to this one.
      *
-     * @return the comparison value
-     *
+     * @param obj the object to compare to this one
      * @return the comparison value
      */
     public boolean equals(Object obj) {
@@ -140,6 +148,10 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns an array of strings split at the character delimiter. Returns null if
      * <code>str</code> is null.
+     *
+     * @param delim the delimiter to split at
+     * @param max the maximum number of elements
+     * @return the array of split strings
      */
     public String[] split(char delim, int max) {
         return split(String.valueOf(delim), max);
@@ -148,6 +160,10 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
      * is null.
+     *
+     * @param delim the delimiter to split at
+     * @param max the maximum number of elements
+     * @return the array of split strings
      */
     public String[] split(String delim, int max) {
         String string = str();
@@ -163,11 +179,11 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
             List<String> splitList = new ArrayList<String>();
 
-            int  nFound = 0;
-            int  strlen = string.length();
-            int  end = 0;
-            int  beg = 0;
-            int  delimlen = delim.length();
+            int nFound = 0;
+            int strlen = string.length();
+            int end = 0;
+            int beg = 0;
+            int delimlen = delim.length();
 
             for (int idx = 0; idx < strlen; ++idx) {
                 Str strg = new Str(string.substring(idx));
@@ -194,6 +210,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns an array of strings split at the character delimiter. Returns null if
      * <code>str</code> is null.
+     *
+     * @param delim the delimiter to split at
+     * @return the array of split strings
      */
     public String[] split(char delim) {
         return split(String.valueOf(delim), -1);
@@ -202,6 +221,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
      * is null.
+     *
+     * @param delim the delimiter to split at
+     * @return the array of split strings
      */
     public String[] split(String delim) {
         return split(delim, -1);
@@ -209,6 +231,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Converts the string into a list, delimited by whitespace and commas.
+     *
+     * @return the list of strings, without whitespace or commas
      */
     public List<String> toList() {
         if (isNull()) {

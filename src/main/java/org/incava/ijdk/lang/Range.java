@@ -35,6 +35,9 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
     /**
      * Creates a range of <code>first</code> through <code>last</code> (i.e., inclusive). First can
      * be less than, equal to, or greater than, last.
+     *
+     * @param first the first element in the range
+     * @param last the last element in the range
      */
     public Range(Integer first, Integer last) {
         this.first = first;
@@ -42,7 +45,8 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
     }
 
     /**
-     * Returns an iterator for the range. Usage:
+     * Returns an iterator for the range, inclusive of both <code>first</code> and
+     * <code>last</code>. Usage:
      *
      * <pre>
      *  Range rg = new Range(11, 14);
@@ -51,6 +55,9 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      * </pre>
      *
      * A range is iterated over only if <code>first</code> &lt;= <code>last</code>.
+     *
+     * @return an iterator of [from .. to]
+     * @see #upTo
      */
     public Iterator<Integer> iterator() {
         return new RangeIterator(this.first, this.last);
@@ -67,6 +74,8 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      * </pre>
      *
      * A range is iterated over only if <code>first</code> &lt;= <code>last</code>.
+     *
+     * @return an iterable of [first ... last]
      */
     public Iterable<Integer> upTo() {
         return new Iterable<Integer>() {
@@ -76,15 +85,19 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
         };
     }
 
-    /*
+    /**
      * Returns the first number of the range.
+     *
+     * @return the first number
      */
     public Integer getFirst() {
         return first;
     }
 
-    /*
+    /**
      * Returns the first number of the range.
+     *
+     * @return the first number
      */
     public Integer first() {
         return first;
@@ -92,6 +105,8 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
 
     /**
      * Returns the last number of the range.
+     *
+     * @return the last number
      */
     public Integer getLast() {
         return last;
@@ -99,6 +114,8 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
 
     /**
      * Returns the last number of the range.
+     *
+     * @return the last number
      */
     public Integer last() {
         return last;
@@ -106,6 +123,9 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
 
     /**
      * Returns whether the given number is within the range, or is either the first or last value.
+     *
+     * @param n the number to check
+     * @return whether last &gt;= n &gt;= first
      */
     public boolean includes(Integer n) {
         return n != null && (n == first || n == last || (n > first && n < last));
@@ -118,6 +138,8 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      *  Range rg = new Range(3, 7);
      *  List&lt;Integer&gt; ary = rg.toExpandedList(); // ary == [ 3, 4, 5, 6, 7 ]
      * </pre>
+     *
+     * @return an array of integers
      */
     public Array<Integer> toArray() {
         Array<Integer> list = Array.<Integer>empty();
@@ -129,6 +151,8 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
 
     /**
      * Returns whether this range equals the other.
+     *
+     * @return the comparison value
      */
     public boolean equals(Object obj) {
         if (obj instanceof Range) {
@@ -162,6 +186,8 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      * Compares this range to the other. A range is less than another range if either the first or
      * last elements are less than the other's. A range is greater than another range if either the
      * first or last element are greater than the other's.
+     *
+     * @return the comparison value
      */
     public int compareTo(Range other) {
         if (other == null) {
@@ -171,9 +197,9 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
             return 0;
         }
         else {
-            int cmp = ObjectExt.compare(first, other.first);
+            int cmp = Comp.compare(first, other.first);
             if (cmp == 0) {
-                cmp = ObjectExt.compare(last, other.last);
+                cmp = Comp.compare(last, other.last);
             }
             return cmp;
         }
