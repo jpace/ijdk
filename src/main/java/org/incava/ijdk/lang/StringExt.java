@@ -129,6 +129,13 @@ public class StringExt {
     }
 
     /**
+     * Returns the character, repeated <code>num</code> times.
+     */
+    public static String repeat(char ch, int num) {
+        return repeat(String.valueOf(ch), num);
+    }    
+
+    /**
      * Returns the leftmost <code>num</code> characters of the string, not exceeding the length of
      * the string. Does not throw the annoying IndexOutOfBoundsException. Returns null if the input
      * string is null. Returns an empty string if <code>num</code> is negative.

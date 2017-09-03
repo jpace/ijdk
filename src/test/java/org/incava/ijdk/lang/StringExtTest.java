@@ -59,6 +59,10 @@ public class StringExtTest extends StringTest {
         return StringExt.repeat(str, length);
     }    
 
+    public String repeat(Character ch, int length) {
+        return StringExt.repeat(ch, length);
+    }
+
     public String repeat(char ch, int length) {
         return StringExt.repeat(ch, length);
     }
