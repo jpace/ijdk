@@ -209,6 +209,19 @@ public class StringListTest extends Parameterized {
     private List<Object[]> parametersForSort() {
         return paramsList(params(StringList.of("a", "b", "c"), StringList.of("b", "a", "c")),
                           params(StringList.of("a", "b", "c"), StringList.of("b", "c", "a")));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void collect(StringList expected, StringList ary, String repl) {
+        StringList result = ary.collect(repl);
+        StringList original = new StringList(ary);
+        assertThat(result, equalTo(expected));
+        assertThat(ary, equalTo(original));
+    }
+    
+    private List<Object[]> parametersForCollect() {
+        return paramsList(params(StringList.of("x-a", "x-b", "x-c"), StringList.of("a", "b", "c"), "x-%s"),
+                          params(StringList.of("a", "b", "c"), StringList.of("a", "b", "c"), "%s"));
     }    
 
     // @Test @Parameters @TestCaseName("{method} {index} {params}")

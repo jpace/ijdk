@@ -211,5 +211,19 @@ public class StringList extends Array<String> {
         StringList sorted = new StringList(this);
         Collections.sort(sorted);
         return sorted;
-    }    
+    }
+
+    /**
+     * Returns a list of strings, formatted via <code>repl</code>.
+     *
+     * @see java.lang.String#format
+     * @see java.util.Formatter
+     */
+    public StringList collect(String repl) {
+        StringList sl = StringList.empty();
+        for (String it : this) {
+            sl.add(String.format(repl, it));
+        }
+        return sl;
+    }
 }
