@@ -28,7 +28,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Creates a string. In a future implementation, this may pool frequently-used objects for reduced memory.
      *
-     * @param the string; may be null
+     * @param str the string; may be null
      * @return the new Str
      */
     public static Str of(String str) {

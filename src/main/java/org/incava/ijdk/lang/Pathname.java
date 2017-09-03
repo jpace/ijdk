@@ -32,13 +32,17 @@ public class Pathname extends File {
 
     /**
      * Creates a Pathname from a file, using its relative -- not absolute or canonical -- path.
+     *
+     * @param file the file for this pathname
      */
     public Pathname(File file) {
         super(file.toString());
     }
 
     /**
-     * Creates a Pathname from a pathname.
+     * Creates a Pathname from a name.
+     *
+     * @param pathName the name of this object
      */
     public Pathname(String pathName) {
         super(pathName);
@@ -57,6 +61,8 @@ public class Pathname extends File {
      * <pre>
      *     new Pathname("abc/def.txt").relativePath(); // == "abc/def.txt"
      * </pre>
+     *
+     * @return the relative path of this pathname
      */
     public String relativePath() {
         return toString();
@@ -68,6 +74,8 @@ public class Pathname extends File {
      * <pre>
      *     new Pathname("abc/def.txt").baseName();     // == "def.txt"
      * </pre>
+     *
+     * @return the base name of this pathname
      */
     public String baseName() {
         return getName();
@@ -83,6 +91,8 @@ public class Pathname extends File {
      *     new Pathname("abc/def.").extension();       // == ""
      *     new Pathname("abc/def").extension();        // == null
      * </pre>
+     *
+     * @return the extension of this pathname
      */
     public String extension() {
         String name = baseName();
@@ -98,6 +108,8 @@ public class Pathname extends File {
      *     new Pathname("abc/def.txt").rootName();     // == "def"
      *     new Pathname("abc/def.tar.gz").rootName();  // == "def.tar"
      * </pre>
+     *
+     * @return the root name of this pathname
      */
     public String rootName() {
         String baseName = baseName();
@@ -123,6 +135,8 @@ public class Pathname extends File {
      *     new Pathname("b").parent().parent();          // == ".."
      *     new Pathname("b").parent().parent().parent(); // == "../.."
      * </pre>
+     *
+     * @return the path of this pathname
      */
     public Pathname parent() {
         String separator = "/";
@@ -164,6 +178,8 @@ public class Pathname extends File {
      *
      * This currently does not resolve intermediate elements, such as "." and "..", and it may in
      * the future.
+     *
+     * @return the expanded path
      */
     public String expandPath() {
         return getAbsolutePath();
@@ -171,6 +187,8 @@ public class Pathname extends File {
 
     /**
      * Reads the file, returning a list of lines, which do not include end of line characters.
+     *
+     * @return the lines of the file
      */
     public java.util.List<String> readLines() {
         return IO.readLines(relativePath());
@@ -178,6 +196,8 @@ public class Pathname extends File {
 
     /**
      * Reads the file as an array of bytes.
+     *
+     * @return the bytes of the file
      */
     public byte[] readBytes() {
         return FileExt.readBytes(this);
@@ -194,6 +214,8 @@ public class Pathname extends File {
 
     /**
      * Returns the immediate subelements of this pathname.
+     *
+     * @return the children of this pathname
      */
     public java.util.List<Pathname> children() {
         java.util.List<Pathname> children = new java.util.ArrayList<Pathname>();
