@@ -6,3 +6,4 @@ org.incava.ijdk.tuple
 org.incava.ijdk.util
 org.incava.ijdk.util.jar
 org.incava.ijdk.util.options
+org.incava.ijdk.version
