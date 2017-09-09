@@ -158,23 +158,20 @@ public class StrTest extends StringTest {
     @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
     public void equalsObject(boolean expected, String a, Object b) {
         Str sa = new Str(a);
-        boolean result = sa.equals(b);
-        assertThat(result, withContext(message("a", a, "b", b), equalTo(expected)));
+        assertThat(sa.equals(b), withContext(message("a", a, "b", b), equalTo(expected)));
     }    
 
     @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
     public void equalsString(boolean expected, String a, String b) {
         Str sa = new Str(a);
-        boolean result = sa.equals(b);
-        assertThat(result, withContext(message("a", a, "b", b), equalTo(expected)));
+        assertThat(sa.equals(b), withContext(message("a", a, "b", b), equalTo(expected)));
     }    
 
     @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
     public void equalsStr(boolean expected, String a, String b) {
         Str sa = new Str(a);
         Str sb = new Str(b);
-        boolean result = sa.equals(sb);
-        assertThat(result, withContext(message("a", a, "b", b), equalTo(expected)));
+        assertThat(sa.equals(sb), withContext(message("a", a, "b", b), equalTo(expected)));
     }
 
     private java.util.List<Object[]> parametersForEquals() {
@@ -191,8 +188,7 @@ public class StrTest extends StringTest {
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void endsWithChar(boolean expected, String str, char ch) {
-        boolean result = new Str(str).endsWith(ch);
-        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
+        assertThat(new Str(str).endsWith(ch), withContext(message("str", str, "ch", ch), equalTo(expected)));
     }
     
     private List<Object[]> parametersForEndsWithChar() {
@@ -204,8 +200,7 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void endsWithString(boolean expected, String str, String s) {
-        boolean result = new Str(str).endsWith(s);
-        assertThat(result, withContext(message("str", str, "s", s), equalTo(expected)));
+        assertThat(new Str(str).endsWith(s), withContext(message("str", str, "s", s), equalTo(expected)));
     }
     
     private List<Object[]> parametersForEndsWithString() {
@@ -238,8 +233,7 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void hashCodeTest(Integer expected, String x) {
-        Integer result = new Str(x).hashCode();
-        assertThat(result, withContext(message("x", x), equalTo(expected)));
+        assertThat(new Str(x).hashCode(), withContext(message("x", x), equalTo(expected)));
     }
     
     private List<Object[]> parametersForHashCodeTest() {
@@ -249,8 +243,7 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void initRepeat(Str expected, String str, int num) {
-        Str result = new Str(str, num);
-        assertThat(result, withContext(message("str", str, "num", num), equalTo(expected)));
+        assertThat(new Str(str, num), withContext(message("str", str, "num", num), equalTo(expected)));
     }
     
     private List<Object[]> parametersForInitRepeat() {

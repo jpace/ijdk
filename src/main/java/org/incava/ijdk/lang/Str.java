@@ -252,9 +252,15 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * Returns a string starting with the <code>str</code> parameter, with <code>ch</code>'s
      * following the string to a length of <code>length</code>.
      *
+     * <pre>
      * Examples:
      *     pad("abcd", '*', 8) -&gt; "abcd****"
      *     pad("abcd", '*', 3) -&gt; "abcd"
+     * </pre>
+     * 
+     * @param ch the character to use for padding
+     * @param length the length of the padded string
+     * @return the padded string
      */
     public String pad(char ch, int length) {
         if (str() == null) {
@@ -273,9 +279,13 @@ public class Str extends Obj<String> implements Comparing<Str> {
      *
      * Examples:
      * <pre>
-     *     pad("420", '*', 8)  -&gt; "*****420"
-     *     pad("1144", '*', 3) -&gt; "1144"
+     *     pad("1234", '*', 8)  -&gt; "****1234"
+     *     pad("1234", '*', 3) -&gt; "1234"
      * </pre>
+     * 
+     * @param ch the character to use for padding
+     * @param length the length of the padded string
+     * @return the padded string
      */
     public String padLeft(char ch, int length) {
         return str() == null ? null : repeat(ch, length - str().length()) + str();
@@ -283,6 +293,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Pads with spaces.
+     * 
+     * @param length the length of the padded string
+     * @return the padded string
      */
     public String pad(int length) {
         return pad(' ', length);
@@ -290,13 +303,20 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Left-pads with spaces.
+     * 
+     * @param length the length of the padded string
+     * @return the padded string
      */
     public String padLeft(int length) {
         return padLeft(' ', length);
     }
 
     /**
-     * Returns the string, repeated <code>num</code> times.
+     * Returns the string, repeated <code>num</code> times. Returns null if the referenced string is
+     * null.
+     * 
+     * @param num the number of times to repeat this string
+     * @return the repeated string
      */
     public String repeat(int num) {
         if (isNull()) {
@@ -311,6 +331,10 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns the character, repeated <code>num</code> times.
+     *
+     * @param ch the character to repeat
+     * @param length the length of the padded string
+     * @return the repeated string
      */
     public String repeat(char ch, int length) {
         return new Str(String.valueOf(ch)).repeat(length);
@@ -318,9 +342,11 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns the leftmost <code>num</code> characters of the string, not exceeding the length of
-     * the string. Unlike String#substring, does not throw the annoying IndexOutOfBoundsException.
-     * Returns null if the input string is null. Returns an empty string if <code>num</code> is
-     * negative.
+     * the string. Unlike String#substring, does not throw IndexOutOfBoundsException. Returns null
+     * if the input string is null. Returns an empty string if <code>num</code> is negative or zero.
+     *
+     * @param num the number of characters to extract
+     * @return the extracted string
      */
     public String left(int num) {
         return num <= 0 ? "" : get(0, num - 1);
@@ -328,9 +354,12 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns the rightmost <code>num</code> characters of the string, not exceeding the length of
-     * the string. Unlike String#substring, does not throw the annoying IndexOutOfBoundsException.
-     * Returns null if the wrapped string is null. Returns an empty string if <code>num</code> is
-     * negative.
+     * the string. Unlike String#substring, does not throw IndexOutOfBoundsException. Returns null
+     * if the wrapped string is null. Returns an empty string if <code>num</code> is negative or
+     * zero.
+     *
+     * @param num the number of characters to extract
+     * @return the extracted string
      */
     public String right(int num) {
         if (isNull()) {
@@ -347,8 +376,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * string, where -1 is the last character in the string. If the wrapped string is null, then
      * null is returned.
      *
-     * @return The character at the given index, or null if out of range.
-     * @param index The index into the source string. Negative value goes from end backward.
+     * @return The character at the given index, or null if out of range
+     * @param index The index into the source string. Negative value goes from end backward
      */
     public Character charAt(int index) {
         if (isNull()) {
@@ -361,8 +390,10 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * An alias for Str#charAt.
+     * An alias for Str#charAt, handling negative indices.
      *
+     * @param index the index at which to get the character
+     * @return the character at the index
      * @see Str#charAt(int)
      */
     public Character get(int index) {
@@ -379,6 +410,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
      *
      * If <code>str</code> is null, then null is returned.
      *
+     * @param fromIndex the starting index, inclusive
+     * @param toIndex the ending index, inclusive
+     * @return the substring
      * @see Str#get(Integer, Integer)
      */
     public String substring(Integer fromIndex, Integer toIndex) {
@@ -414,10 +448,13 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns the substring from the <code>ch</code> character to the end of the string. If the
-     * string does not contain the given character, or if <code>str</code> or <code>ch</code> is
-     * null, then null is returned. If <code>ch</code> is the last character, then an empty string
-     * is returned.
+     * Returns the substring from the index after the <code>ch</code> character to the end of the
+     * string. If the string does not contain the given character, or if <code>str</code> or
+     * <code>ch</code> is null, then null is returned. If <code>ch</code> is the last character,
+     * then an empty string is returned.
+     *
+     * @param ch the character to find
+     * @return the extracted substring
      */
     public String substringAfter(Character ch) {
         Integer idx = indexOf(ch);
@@ -428,6 +465,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * Returns the substring before the <code>ch</code> character. If the string does not contain
      * the given character, , or if <code>str</code> or <code>ch</code> is null, then null is
      * returned. If <code>ch</code> is the first character, then an empty string is returned.
+     *
+     * @param ch the character to find
+     * @return the extracted substring
      */
     public String substringBefore(Character ch) {
         Integer idx = indexOf(ch);
@@ -437,6 +477,10 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Same as <code>String#substring</code>, but with the indices <em>inclusive</em>, like the Ruby syntax
      * <code>str[4 .. 8]</code>. This method the same as <code>Str.substring</code>.
+     *
+     * @param fromIndex the starting index, inclusive
+     * @param toIndex the ending index, inclusive
+     * @return the substring
      */
     public String get(Integer fromIndex, Integer toIndex) {
         return substring(fromIndex, toIndex);
@@ -447,6 +491,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * negative index will result in the distance from the end of the string, with index -1 meaning
      * the last character in the string. Returns null if the resulting index is out of range. If
      * the wrapped string is null, then null is returned.
+     *
+     * @param index the index
+     * @return the relative index
      */
     protected Integer getIndex(Integer index) {
         return isNull() || str().length() == 0 ? null : new Indexable(str().length()).get(index);
@@ -455,6 +502,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns whether the string <code>str</code> begins with the character <code>ch</code>.
      * Returns false if the wrapped string is null.
+     *
+     * @param ch the character to find
+     * @return whether the string starts with <code>ch</code>
      */
     public boolean startsWith(char ch) {
         Character startChar = get(0);
@@ -464,6 +514,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns whether the wrapped string begins with the string <code>str</code>. For
      * consistency with String. Returns false if the wrapped string is null.
+     *
+     * @param str the string to find
+     * @return whether the string starts with <code>str</code>
      */
     public boolean startsWith(String str) {
         return str() != null && str().startsWith(str);
@@ -472,6 +525,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns whether the wrapped string ends with the character <code>ch</code>.
      * Returns false if the wrapped string is null.
+     *
+     * @param ch the character to find
+     * @return whether the string ends with <code>ch</code>
      */
     public boolean endsWith(char ch) {
         Character startChar = get(-1);
@@ -481,16 +537,19 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns whether the wrapped string ends with the string <code>str</code>. For
      * consistency with String. Returns false if the wrapped string is null.
+     *
+     * @param str the string to find
+     * @return whether the string ends with <code>str</code>
      */
     public boolean endsWith(String str) {
-        String subStr = get(-str.length(), -1);
         return str() != null && str().endsWith(str);
     }
 
     /**
-     * Removes a single end of line character, either \\n or \\r. Even if there are multiple end of
-     * line characters, only one is removed. Returns null if the wrapped string is null.
+     * Removes a single end-of-line character, either \\n or \\r. Even if there are multiple
+     * end-of-line characters, only one is removed. Returns null if the wrapped string is null.
      *
+     * @return the string without one end-of-line character
      * @see #chompAll
      */
     public String chomp() {
@@ -512,9 +571,10 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Removes multiple end of line characters, either \\n or \\r. Returns null if the wrapped
+     * Removes multiple end-of-line characters, either \\n or \\r. Returns null if the wrapped
      * string is null.
      *
+     * @return the string without all end-of-line characters
      * @see #chomp
      */
     public String chompAll() {
@@ -534,6 +594,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns whether the string contains the character. If <code>str</code> or
      * <code>ch</code> is null, false is returned.
+     *
+     * @param ch the character to find
+     * @return whether the string contains <code>ch</code>
      */
     public boolean contains(Character ch) {
         return indexOf(ch) != null;
@@ -542,6 +605,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns the index of the first occurance of the character in the string, or null if either
      * <code>str</code> or <code>ch</code> is null, or if the character is not in the string.
+     *
+     * @param ch the character to find
+     * @return the index of <code>ch</code>
      */
     public Integer indexOf(Character ch) {
         if (isNull() || ch == null) {
@@ -557,6 +623,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * Returns whether the wrapped string is equal to the other. If both are null, then true is
      * returned. Otherwise, if either is null, then false is returned.
      *
+     * @param other the other string
      * @return the comparison value
      */
     public Boolean eq(String other) {
@@ -564,9 +631,10 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns whether the wrapped string is equal to the other, without regard to case. If both are
-     * null, then true is returned. Otherwise, if either is null, then false is returned.
+     * Returns whether the wrapped string is equal to the other, <em>without regard to case</em>. If
+     * both are null, then true is returned. Otherwise, if either is null, then false is returned.
      *
+     * @param other the other string
      * @return the comparison value
      */
     public Boolean eqi(String other) {
@@ -580,10 +648,11 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * If <code>str</code> is longer than <code>length</code>, then the returned string is cut at
-     * the given length - 1, and appended with a dash, so <code>snip("foobar", 4)</code> is "foo-.
+     * the given length - 1, and appended with a dash, so <code>snip("foobar", 4)</code> is "foo-".
      * Returns null if <code>str</code> is null. Returns an empty string if <code>length</code> is
      * zero or less.
      *
+     * @param len the length of the snipped string
      * @return the snipped string
      */
     public Str snip(int len) {
@@ -604,6 +673,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns whether the wrapped string is null or of zero length.
+     *
+     * @return whether the string is empty
      */
     public boolean isEmpty() {
         // str.isEmpty() is JDK 1.6+, and IJDK is backward compatible with 1.5.
@@ -612,6 +683,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns the length of the string, returning 0 if the wrapped string is null.
+     *
+     * @return the length of the string
      */
     public int length() {
         return isNull() ? 0 : str().length();
@@ -621,6 +694,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * Unquotes the string, removing matching leading and trailing single or double quotes, if both
      * of either type wraps the string. Returns the wrapped string if neither case is true. Returns
      * null if the wrapped string is null.
+     *
+     * @return the string, unquoted
+     * @see #quote
      */
     public String unquote() {
         if (length() >= 2 && get(0) == get(-1) && (get(0) == '"' || get(0) == '\'')) {
@@ -633,11 +709,20 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Quotes the string, using double quotes. Returns null if the wrapped string is null.
+     *
+     * @return the string, quoted
      */
     public String quote() {
         return isNull() ? null : "\"" + str() + "\"";
     }
 
+    /**
+     * Returns a negative number, zero, or a positive number, for when <code>other</code> is less
+     * than, equal to, or greater than this one.
+     *
+     * @param other the other string
+     * @return the comparison value
+     */
     public int compareTo(Str other) {
         if (isNull()) {
             return other == null || other.isNull() ? 0 : -1;
@@ -650,6 +735,11 @@ public class Str extends Obj<String> implements Comparing<Str> {
         }
     }
 
+    /**
+     * Returns the hash code of the wrapped string, or zero if null.
+     *
+     * @return the hash code
+     */
     public int hashCode() {
         return isNull() ? 0 : str().hashCode();
     }
@@ -696,13 +786,17 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns the first character in the string, or null if the string is null or empty.
+     *
+     * @return the first character
      */
     public Character first() {
         return get(0);
     }
 
     /**
-     * Returns the first character in the string, or null if the string is null or empty.
+     * Returns the last character in the string, or null if the string is null or empty.
+     *
+     * @return the last character
      */
     public Character last() {
         return get(-1);
