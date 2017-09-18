@@ -10,7 +10,7 @@ import org.incava.ijdk.str.Criteria;
  * An extension of org.incava.ijdk.collect.Array&lt;String&gt;, with a constructor for varargs, and
  * selectors that use closures.
  */
-public class StringList extends Array<String> {
+public class StringList extends BaseArray<String, StringList> {
     /**
      * Creates a new StringList.
      *
@@ -37,6 +37,10 @@ public class StringList extends Array<String> {
      * Creates an empty StringList.
      */
     public StringList() {
+    }
+
+    public StringList newInstance() {
+        return new StringList();
     }
 
     /**
@@ -143,7 +147,8 @@ public class StringList extends Array<String> {
             return null;
         }
         for (String str : this) {
-            if (criteria.execute(str)) {
+            Boolean exec = criteria.execute(str);
+            if (exec != null && exec) {
                 return str;
             }
         }

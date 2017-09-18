@@ -224,15 +224,16 @@ public class StringListTest extends Parameterized {
                           params(StringList.of("a", "b", "c"), StringList.of("a", "b", "c"), "%s"));
     }    
 
-    // @Test @Parameters @TestCaseName("{method} {index} {params}")
-    // public void collect(StringList expected, StringList ary) {
-    //     StringList result = ary.collect();
-    //     assertThat(result, equalTo(expected));
-    //     assertThat(result, not(equalTo(ary)));
-    // }
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void unique(StringList expected, StringList ary) {
+        StringList result = ary.unique();
+        StringList original = new StringList(ary);
+        assertThat(result, equalTo(expected));
+        assertThat(ary, equalTo(original));
+    }
     
-    // private List<Object[]> parametersForCollect() {
-    //     return paramsList(params(StringList.of("a", "b", "c"), StringList.of("b", "a", "c")),
-    //                       params(StringList.of("a", "b", "c"), StringList.of("b", "c", "a")));
-    // }    
+    private List<Object[]> parametersForUnique() {
+        return paramsList(params(StringList.of("b", "a", "c"), StringList.of("b", "a", "c")),
+                          params(StringList.of("b", "c", "a"), StringList.of("b", "c", "a")));
+    }    
 }
