@@ -210,15 +210,6 @@ public class StringList extends BaseArray<String, StringList> {
     }
 
     /**
-     * Returns a copy of this string list, sorted.
-     */
-    public StringList sort() {
-        StringList sorted = new StringList(this);
-        Collections.sort(sorted);
-        return sorted;
-    }
-
-    /**
      * Returns a list of strings, formatted via <code>repl</code>.
      *
      * @see java.lang.String#format
