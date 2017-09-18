@@ -50,7 +50,6 @@ public class BaseArray<T extends Object, C extends BaseArray<T, C>> extends Arra
     /**
      * Returns the list as a StringList, with each element converted via <code>toString()</code>.
      *
-     * @see #toStringArrayList
      * @see org.incava.ijdk.collect.StringList
      * @return this array, as an array of strings.
      */
