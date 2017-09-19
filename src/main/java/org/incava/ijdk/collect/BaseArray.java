@@ -9,7 +9,14 @@ import org.incava.ijdk.lang.Sequence;
 import org.incava.ijdk.lang.Str;
 
 /**
- * A dynamically-sized collection, wrapping ArrayList.
+ * A dynamically-sized collection, wrapping ArrayList. <code>Array</code>, a subclass of
+ * <code>BaseArray</code>, has a simpler name.
+ *
+ * To subclass this, the subclass should pass its class as a self type. For example:
+ *
+ * <pre>
+ *    public class StringList extends BaseArray&lt;String, StringList&gt;
+ * </pre>
  */
 public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> extends ArrayList<T> implements Sequence<T> {
     public static final long serialVersionUID = 1L;
@@ -301,7 +308,7 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
      *     Array&lt;Integer&gt; l5 = list.elements(-1, -2, 1); // [ 8, 7, 7 ]
      * </pre>
      *
-     * @see Array#get
+     * @see BaseArray#get
      */
     public C elements(int ... indices) {
         C elmts = newInstance();

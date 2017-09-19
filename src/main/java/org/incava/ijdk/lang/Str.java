@@ -84,6 +84,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Creates a new string from the character, and wraps that string.
+     *
+     * @param ch the character to wrap
      */
     public Str(char ch) {
         this(String.valueOf(ch));
@@ -91,6 +93,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Repeats the given string <code>num</code> times.
+     *
+     * @param str the string to repeat
+     * @param num the number of times to repeat
      */
     public Str(String str, int num) {
         super(StringExt.repeat(str, num));

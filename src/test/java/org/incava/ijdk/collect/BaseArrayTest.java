@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
+import static org.incava.attest.ExistsMatcher.exists;
 
 public class BaseArrayTest extends Parameterized {
     public static class ExampleArray<T> extends BaseArray<T, ExampleArray<T>> {
@@ -47,14 +48,6 @@ public class BaseArrayTest extends Parameterized {
         }
     }
 
-    private static ExampleArray<Object> emptyObjectArray = new ExampleArray<Object>();
-    private static ExampleArray<Integer> emptyIntegerArray = new ExampleArray<Integer>();
-    private static ExampleArray<Integer> array123 = new ExampleArray<Integer>(1, 2, 3);
-    
-    private static ExampleArray<Integer> emptyIntArray() {
-        return new ExampleArray<Integer>();
-    }
-
     private static ExampleArray<Integer> integerArray(Integer ... ary) {
         return new ExampleArray<Integer>(ary);
     }
@@ -71,27 +64,28 @@ public class BaseArrayTest extends Parameterized {
     private List<Object[]> parametersForInit() {
         List<String> abcList = Arrays.asList(new String[] { "a", "b", "c" });
         
-        return paramsList(params(emptyObjectArray, emptyObjectArray),
+        return paramsList(params(objectArray(), objectArray()),
                           params(abcList,          new ExampleArray<Object>(abcList)),
                           params(abcList,          objectArray("a", "b", "c")),
-                          params(emptyObjectArray, new ExampleArray<Object>((Collection<Object>)null)),
-                          params(emptyObjectArray, emptyObjectArray));
+                          params(objectArray(), new ExampleArray<Object>((Collection<Object>)null)),
+                          params(objectArray(), objectArray()));
     }    
     
     @Test
     public void toStringList() {
         ExampleArray<String> expected = new ExampleArray<String>("1", "2", "3");
-        ExampleArray<Integer> numbers = array123;
+        ExampleArray<Integer> numbers = new ExampleArray<Integer>(1, 2, 3);
         assertThat(expected, equalTo(numbers.toStringList()));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void containsAnyCollection(Boolean expected, ExampleArray<Integer> list, List<Integer> coll) {
-        assertThat(list.containsAny(coll), equalTo(expected));
+        Boolean result = list.containsAny(coll);
+        assertThat(result, equalTo(expected));
     }
 
     public List<Object[]> parametersForContainsAnyCollection() {
-        ExampleArray<Integer> ary123 = array123;
+        ExampleArray<Integer> ary123 = integerArray(1, 2, 3);
         return paramsList(params(true,  ary123, integerArray(1)),
                           params(true,  ary123, integerArray(2, 4)),
                           params(false, ary123, integerArray(4)),
@@ -100,7 +94,8 @@ public class BaseArrayTest extends Parameterized {
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void containsAnyArray(Boolean expected, ExampleArray<Integer> list, Integer ... args) {
-        assertThat(expected, equalTo(list.containsAny(args)));
+        Boolean result = list.containsAny(args);
+        assertThat(result, equalTo(expected));
     }
     
     @Test
@@ -109,7 +104,7 @@ public class BaseArrayTest extends Parameterized {
     }
 
     public List<Object[]> parametersForContainsAnyArray() {
-        ExampleArray<Integer> ary123 = array123;       
+        ExampleArray<Integer> ary123 = integerArray(1, 2, 3);
         return paramsList(params(true,  ary123, 1),
                           params(true,  ary123, 4, 3),
                           params(false, ary123, 4));
@@ -123,7 +118,7 @@ public class BaseArrayTest extends Parameterized {
     public List<Object[]> parametersForFirst() {
         return paramsList(params(new Integer(6), integerArray(6)),
                           params(new Integer(6), integerArray(6, 7)),
-                          params((Integer)null,  emptyIntArray()));
+                          params((Integer)null,  integerArray()));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -134,12 +129,13 @@ public class BaseArrayTest extends Parameterized {
     public List<Object[]> parametersForLast() {
         return paramsList(params(new Integer(6), integerArray(6)),
                           params(new Integer(7), integerArray(6, 7)),
-                          params((Integer)null,  emptyIntArray()));
+                          params((Integer)null,  integerArray()));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void get(T expected, ExampleArray<T> list, int idx) {
-        assertThat(expected, withContext("list: " + list, equalTo(list.get(idx))));
+        T result = list.get(idx);
+        assertThat(result, withContext("list: " + list, equalTo(expected)));
     }
 
     public List<Object[]> parametersForGet() {
@@ -194,11 +190,11 @@ public class BaseArrayTest extends Parameterized {
     public List<Object[]> parametersForAppend() {
         return paramsList(params(integerArray(6, 7),    integerArray(6),    7),
                           params(integerArray(6, null), integerArray(6),    (Integer)null),
-                          params(integerArray(7),       emptyIntArray(), 7));
+                          params(integerArray(7),       integerArray(), 7));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void set(ExampleArray<Object> expected, ExampleArray<Object> list, int index, Object obj) {
+    public <T> void set(ExampleArray<T> expected, ExampleArray<T> list, int index, T obj) {
         if (expected == null) {
             try {
                 list.set(index, obj);
@@ -217,14 +213,14 @@ public class BaseArrayTest extends Parameterized {
     public List<Object[]> parametersForSet() {
         return paramsList(params(integerArray(6, 7),    integerArray(6),     1, 7),
                           params(integerArray(6, null), integerArray(6),     1, (Integer)null),
-                          params(integerArray(7),       emptyIntArray(),  0, 7),
-                          params(null,                  emptyIntArray(), -1, 7),
+                          params(integerArray(7),       integerArray(),  0, 7),
+                          params(null,                  integerArray(), -1, 7),
                           params(integerArray(7),       integerArray(6),    -1, 7),
                           params(null,                  integerArray(6),    -2, 7));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void removeAll(Boolean expReturned, ExampleArray<Object> expected, ExampleArray<Object> list, Object toRemove) {
+    public <T> void removeAll(Boolean expReturned, ExampleArray<T> expected, ExampleArray<T> list, T toRemove) {
         Boolean result = list.removeAll(toRemove);
         String msg = message("list", list, "toRemove", toRemove);
         assertThat(result, withContext(msg, equalTo(expReturned)));
@@ -232,60 +228,61 @@ public class BaseArrayTest extends Parameterized {
     }
 
     public List<Object[]> parametersForRemoveAll() {
-        return paramsList(params(true,  integerArray(1),    integerArray(1, 2),    2),
-                          params(true,  integerArray(1),    integerArray(1, 2, 2), 2),
-                          params(true,  emptyIntArray(), integerArray(2, 2),    2),
-                          params(false, emptyIntArray(), emptyIntArray(),    2),
-                          params(false, integerArray(1),    integerArray(1),       2));
+        return paramsList(params(true,  integerArray(1), integerArray(1, 2),    2),
+                          params(true,  integerArray(1), integerArray(1, 2, 2), 2),
+                          params(true,  integerArray(),  integerArray(2, 2),    2),
+                          params(false, integerArray(),  integerArray(),        2),
+                          params(false, integerArray(1), integerArray(1),       2));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void getRandomElement(Boolean expected, ExampleArray<Object> list) {
-        assertThat(list.getRandomElement() != null, withContext(message("list", list), equalTo(expected)));
+    public <T> void getRandomElement(Boolean expected, ExampleArray<T> list) {
+        T elmt = list.getRandomElement();
+        assertThat(elmt, withContext(message("list", list), exists(expected)));
     }
 
     public List<Object[]> parametersForGetRandomElement() {
         return paramsList(params(true,  integerArray(1)),
                           params(true,  integerArray(1, 2)),
-                          params(false, emptyIntArray()));
+                          params(false, integerArray()));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void takeFirst(Object expReturn, ExampleArray<Object> expList, ExampleArray<Object> list) {
-        ExampleArray<Object> origList = new ExampleArray<Object>(list);
-        Object result = list.takeFirst();
+    public <T> void takeFirst(T expReturn, ExampleArray<T> expList, ExampleArray<T> list) {
+        ExampleArray<T> origList = new ExampleArray<T>(list);
+        T result = list.takeFirst();
         assertThat(result, sameInstance(expReturn));
         assertThat(list, equalTo(expList));
     }
 
     public List<Object[]> parametersForTakeFirst() {
-        return paramsList(params(1,             emptyIntArray(),         objectArray(1)),
+        return paramsList(params(1,             integerArray(),         objectArray(1)),
                           params(1,             objectArray(2),             objectArray(1, 2)),
                           params("a",           new ExampleArray<String>(), objectArray("a")),
                           params("a",           objectArray("b"),           objectArray("a", "b")),
-                          params((Integer)null, emptyIntArray(),         emptyIntArray()));
+                          params((Integer)null, integerArray(),         integerArray()));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void takeLast(Object expReturn, ExampleArray<Object> expList, ExampleArray<Object> list) {
-        ExampleArray<Object> origList = new ExampleArray<Object>(list);
-        Object result = list.takeLast();
+    public <T> void takeLast(T expReturn, ExampleArray<T> expList, ExampleArray<T> list) {
+        ExampleArray<T> origList = new ExampleArray<T>(list);
+        T result = list.takeLast();
         assertThat(result, sameInstance(expReturn));
         assertThat(list, equalTo(expList));
     }
 
     public List<Object[]> parametersForTakeLast() {
-        return paramsList(params(1,             emptyIntArray(), objectArray(1)),
+        return paramsList(params(1,             integerArray(), objectArray(1)),
                           params(2,             objectArray(1),     objectArray(1, 2)),
                           params("a",           objectArray(),      objectArray("a")),
                           params("b",           objectArray("a"),   objectArray("a", "b")),
-                          params((Integer)null, emptyIntArray(), emptyIntArray()));
+                          params((Integer)null, integerArray(), integerArray()));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void unique(ExampleArray<Object> expected, ExampleArray<Object> list) {
-        ExampleArray<Object> origList = new ExampleArray<Object>(list);
-        ExampleArray<Object> result = list.unique();
+    public <T> void unique(ExampleArray<T> expected, ExampleArray<T> list) {
+        ExampleArray<T> origList = new ExampleArray<T>(list);
+        ExampleArray<T> result = list.unique();
         assertThat(result, equalTo(expected));
         assertThat(list, equalTo(origList));
     }
@@ -296,21 +293,21 @@ public class BaseArrayTest extends Parameterized {
                           params(integerArray(1, 2), integerArray(1, 2)),
                           params(integerArray(2, 1), integerArray(2, 1)),
                           params(integerArray(1, 2), integerArray(1, 2, 1)),
-                          params(emptyIntArray(), emptyIntArray()));
+                          params(integerArray(), integerArray()));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void compact(ExampleArray<Object> expected, ExampleArray<Object> list) {
-        ExampleArray<Object> origList = new ExampleArray<Object>(list);
-        ExampleArray<Object> result = list.compact();
+    public <T> void compact(ExampleArray<T> expected, ExampleArray<T> list) {
+        ExampleArray<T> origList = new ExampleArray<T>(list);
+        ExampleArray<T> result = list.compact();
         assertThat(result, equalTo(expected));
         assertThat(list, equalTo(origList));
     }
 
     public List<Object[]> parametersForCompact() {
-        return paramsList(params(emptyIntegerArray,  emptyIntegerArray),
+        return paramsList(params(integerArray(),     integerArray()),
                           params(integerArray(1),    integerArray(1)),
-                          params(emptyIntegerArray,  integerArray((Integer)null)),
+                          params(integerArray(),     integerArray((Integer)null)),
                           params(integerArray(1),    integerArray(1, null)),
                           params(integerArray(1),    integerArray(1, null, null)),
                           params(integerArray(1),    integerArray(null, 1)),
@@ -321,13 +318,14 @@ public class BaseArrayTest extends Parameterized {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void join(String expected, ExampleArray<Object> list, String delimiter) {
-        assertThat(list.join(delimiter), withContext(message("list", list, "delimiter", delimiter), equalTo(expected)));
+    public <T> void join(String expected, ExampleArray<T> list, String delimiter) {
+        String result = list.join(delimiter);
+        assertThat(result, withContext(message("list", list, "delimiter", delimiter), equalTo(expected)));
     }
 
     public List<Object[]> parametersForJoin() {
-        return paramsList(params("",      emptyIntegerArray,     ""),
-                          params("",      emptyIntegerArray,     "x"),
+        return paramsList(params("",      integerArray(),        ""),
+                          params("",      integerArray(),        "x"),
                           params("1",     integerArray(1),       ""),
                           params("1null", integerArray(1, null), ""),
                           params("1",     integerArray(1),       "x"),
@@ -335,21 +333,23 @@ public class BaseArrayTest extends Parameterized {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void plus(ExampleArray<Object> expected, ExampleArray<Object> list, ExampleArray<Object> other) {
-        assertThat(list.plus(other), withContext(message("list", list, "other", other), equalTo(expected)));
+    public <T> void plus(ExampleArray<T> expected, ExampleArray<T> list, ExampleArray<T> other) {
+        ExampleArray<T> result = list.plus(other);
+        assertThat(result, withContext(message("list", list, "other", other), equalTo(expected)));
     }
     
     private List<Object[]> parametersForPlus() {
-        return paramsList(params(integerArray(1, 2, 3, 4), integerArray(1, 2), integerArray(3, 4)),
-                          params(array123,                 integerArray(1, 2), integerArray(3)),
-                          params(integerArray(1, 2),       integerArray(1, 2), emptyIntArray()),
-                          params(integerArray(1, 2, 3, 3), array123,           integerArray(3)),
-                          params(integerArray(1, 2, 3, 1), array123,           integerArray(1)));
+        return paramsList(params(integerArray(1, 2, 3, 4), integerArray(1, 2),    integerArray(3, 4)),
+                          params(integerArray(1, 2, 3),    integerArray(1, 2),    integerArray(3)),
+                          params(integerArray(1, 2),       integerArray(1, 2),    integerArray()),
+                          params(integerArray(1, 2, 3, 3), integerArray(1, 2, 3), integerArray(3)),
+                          params(integerArray(1, 2, 3, 1), integerArray(1, 2, 3), integerArray(1)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void minus(ExampleArray<Object> expected, ExampleArray<Object> list, ExampleArray<Object> other) {
-        assertThat(list.minus(other), equalTo(expected));
+    public <T> void minus(ExampleArray<T> expected, ExampleArray<T> list, ExampleArray<T> other) {
+        ExampleArray<T> result = list.minus(other);
+        assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForMinus() {
@@ -358,39 +358,41 @@ public class BaseArrayTest extends Parameterized {
                           params(integerArray(1, 1), integerArray(1, 1),    integerArray(2)),
                           params(integerArray(1, 1), integerArray(1, 2, 1), integerArray(2)),
         
-                          params(emptyIntArray(), emptyIntArray(),    emptyIntArray()),
-                          params(emptyIntArray(), emptyIntArray(),    integerArray(1)),
-                          params(integerArray(1),    integerArray(1),       emptyIntArray()));
+                          params(integerArray(),     integerArray(),        integerArray()),
+                          params(integerArray(),     integerArray(),        integerArray(1)),
+                          params(integerArray(1),    integerArray(1),       integerArray()));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void elements(ExampleArray<Object> expected, ExampleArray<Object> list, int ... indices) {
-        assertThat(list.elements(indices), withContext(message("indices", indices), equalTo(expected)));
+    public <T> void elements(ExampleArray<T> expected, ExampleArray<T> list, int ... indices) {
+        ExampleArray<T> result = list.elements(indices);
+        assertThat(result, withContext(message("list", list, "indices", indices), equalTo(expected)));
     }
     
     private List<Object[]> parametersForElements() {
-        ExampleArray<Integer> list678 = integerArray(6, 7, 8);
-        ExampleArray<Integer> listOfNull = integerArray((Integer)null);
+        ExampleArray<Integer> ary678 = integerArray(6, 7, 8);
+        ExampleArray<Integer> arrayOfNull = integerArray((Integer)null);
         
-        return paramsList(params(integerArray(6),    list678, new int[] { 0 }),
-                          params(integerArray(7),    list678, new int[] { 1 }),
-                          params(integerArray(8),    list678, new int[] { 2 }),
+        return paramsList(params(integerArray(6),    ary678, new int[] { 0 }),
+                          params(integerArray(7),    ary678, new int[] { 1 }),
+                          params(integerArray(8),    ary678, new int[] { 2 }),
 
-                          params(integerArray(6, 7), list678, new int[] { 0, 1 }),
-                          params(integerArray(7, 6), list678, new int[] { 1, 0 }),
+                          params(integerArray(6, 7), ary678, new int[] { 0, 1 }),
+                          params(integerArray(7, 6), ary678, new int[] { 1, 0 }),
 
-                          params(integerArray(6, 6), list678, new int[] { 0, 0 }),
+                          params(integerArray(6, 6), ary678, new int[] { 0, 0 }),
 
-                          params(integerArray(8),    list678, new int[] { -1 }),
-                          params(integerArray(8, 7), list678, new int[] { -1, 1 }),
-                          params(integerArray(8, 7), list678, new int[] { -1, -2 }),
+                          params(integerArray(8),    ary678, new int[] { -1 }),
+                          params(integerArray(8, 7), ary678, new int[] { -1, 1 }),
+                          params(integerArray(8, 7), ary678, new int[] { -1, -2 }),
         
-                          params(listOfNull,         list678, new int[] { -4 }));
+                          params(arrayOfNull,        ary678, new int[] { -4 }));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void intersection(ExampleArray<Object> expected, ExampleArray<Object> x, ExampleArray<Object> y) {
-        assertThat(x.intersection(y), equalTo(expected));
+    public <T> void intersection(ExampleArray<T> expected, ExampleArray<T> x, ExampleArray<T> y) {
+        ExampleArray<T> result = x.intersection(y);
+        assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForIntersection() {
@@ -412,9 +414,9 @@ public class BaseArrayTest extends Parameterized {
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void sorted(ExampleArray<Object> expArray, String expException, ExampleArray<Object> ary) {
+    public <T> void sorted(ExampleArray<T> expArray, String expException, ExampleArray<T> ary) {
         try {
-            ExampleArray<Object> result = ary.sorted();
+            ExampleArray<T> result = ary.sorted();
             assertThat(result, equalTo(expArray));
         }
         catch (Exception ex) {
