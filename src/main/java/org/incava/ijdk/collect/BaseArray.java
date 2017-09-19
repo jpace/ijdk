@@ -9,9 +9,16 @@ import org.incava.ijdk.lang.Sequence;
 import org.incava.ijdk.lang.Str;
 
 /**
- * A dynamically-sized collection, wrapping ArrayList.
+ * A dynamically-sized collection, wrapping ArrayList. <code>Array</code>, a subclass of
+ * <code>BaseArray</code>, has a simpler name.
+ *
+ * To subclass this, the subclass should pass its class as a self type. For example:
+ *
+ * <pre>
+ *    public class StringList extends BaseArray&lt;String, StringList&gt;
+ * </pre>
  */
-public class BaseArray<T extends Object, C extends BaseArray<T, C>> extends ArrayList<T> implements Sequence<T> {
+public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> extends ArrayList<T> implements Sequence<T> {
     public static final long serialVersionUID = 1L;
 
     /**
@@ -43,9 +50,7 @@ public class BaseArray<T extends Object, C extends BaseArray<T, C>> extends Arra
     /**
      * Returns a new instance of this type.
      */
-    public C newInstance() {
-        return null;
-    }
+    public abstract C newInstance();
 
     /**
      * Returns the list as a StringList, with each element converted via <code>toString()</code>.
@@ -78,7 +83,12 @@ public class BaseArray<T extends Object, C extends BaseArray<T, C>> extends Arra
      */
     @SafeVarargs
     final public boolean containsAny(T ... args) {
-        return containsAny(new BaseArray<T, C>(args));
+        for (Object obj : args) {
+            if (contains(obj)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -112,18 +122,18 @@ public class BaseArray<T extends Object, C extends BaseArray<T, C>> extends Arra
     }
 
     /**
-     * Returns a Array containing the <code>m</code>th element through the <code>n</code>th element
-     * in the list, both inclusive.
+     * Returns an array (of the generic subtype) containing the <code>m</code>th element through the
+     * <code>n</code>th element in the list, both inclusive.
      *
      * <p> If <code>m</code> <code>n</code> is negative, then the index is the offset from the end,
      * where <code>-1</code> is the last element, <code>-2</code> is the second to last element, and
      * so on and so forth. If <code>m</code> or <code>n</code> is out of range (not within <code>0
      * ... size()</code>), then an empty set is returned.</p>
      */
-    public Array<T> get(int fromIndex, int toIndex) {
+    public C get(int fromIndex, int toIndex) {
         Integer fromIdx = getIndex(fromIndex);
         Integer toIdx   = toIndex < 0 ? getIndex(toIndex) : Integer.valueOf(toIndex);
-        Array<T> list = new Array<T>();
+        C list = newInstance();
         if (fromIdx != null && toIdx != null) {
             while (fromIdx <= toIdx && fromIdx < size()) {
                 list.add(get(fromIdx));
@@ -144,9 +154,10 @@ public class BaseArray<T extends Object, C extends BaseArray<T, C>> extends Arra
      *
      * @see java.util.List#add
      */
-    public BaseArray<T, C> append(T obj) {
+    @SuppressWarnings("unchecked")
+    public C append(T obj) {
         add(obj);
-        return this;
+        return (C)this;
     }
 
     /**
@@ -297,7 +308,7 @@ public class BaseArray<T extends Object, C extends BaseArray<T, C>> extends Arra
      *     Array&lt;Integer&gt; l5 = list.elements(-1, -2, 1); // [ 8, 7, 7 ]
      * </pre>
      *
-     * @see Array#get
+     * @see BaseArray#get
      */
     public C elements(int ... indices) {
         C elmts = newInstance();

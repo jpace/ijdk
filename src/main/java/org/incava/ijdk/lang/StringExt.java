@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Extensions to the String class. Alternatively, the static methods here are defined as instance
- * objects of the Str class.
+ * objects of the <code>Str</code> class. See documentation of the equivalent methods in <code>Str</code>.
  *
  * @see org.incava.ijdk.lang.Str
  */
