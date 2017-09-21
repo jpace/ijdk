@@ -704,11 +704,18 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @see #quote
      */
     public String unquote() {
-        if (length() >= 2 && get(0) == get(-1) && (get(0) == '"' || get(0) == '\'')) {
-            return get(1, -2);
+        if (isNull() || length() < 2) {
+            return obj();
         }
         else {
-            return str();
+            Character first = get(0);
+            Character last = get(-1);
+            if (first.equals(last) && (first.equals('"') || first.equals('\''))) {
+                return get(1, -2);
+            }
+            else {
+                return obj();
+            }
         }
     }    
 
@@ -806,4 +813,73 @@ public class Str extends Obj<String> implements Comparing<Str> {
     public Character last() {
         return get(-1);
     }
+
+    /**
+     * Replaces literal occurrances of <code>from</code> with <code>to</code>. Unlike
+     * String#replaceAll, this does not apply <code>from</code> as a regular expression.
+     *
+     * @param from the left-hand side of the replacement
+     * @param to the right-hand side of the replacement
+     * @return the string, with substitutions
+     */
+    public String replaceAll(String from, String to) {
+        return replaceAll(from, to, false);
+    }
+    
+    /**
+     * Replaces literal occurrances of <code>from</code> with <code>to</code>, without regard to
+     * case. Unlike String#replaceAll, this does not apply <code>from</code> as a regular
+     * expression.
+     *
+     * @param from the left-hand side of the replacement
+     * @param to the right-hand side of the replacement
+     * @return the string, with substitutions
+     */
+    public String replaceAllIgnoreCase(String from, String to) {
+        return replaceAll(from, to, true);
+    }
+
+    /**
+     * Replaces literal occurrances of <code>from</code> with <code>to</code>, optionally without
+     * regard to case. Unlike String#replaceAll, this does not apply <code>from</code> as a regular
+     * expression.
+     *
+     * @param from the left-hand side of the replacement
+     * @param to the right-hand side of the replacement
+     * @param ignoreCase whether to ignore case
+     * @return the string, with substitutions
+     */
+    public String replaceAll(String from, String to, boolean ignoreCase) {
+        if (isNull()) {
+            return null;
+        }
+        Str newStr = new Str(obj());
+        int pos = 0;
+        while ((pos = newStr.indexOf(from, pos, ignoreCase)) >= 0) {
+            newStr = new Str(newStr.obj().substring(0, pos) + to + newStr.obj().substring(pos + from.length()));
+            pos += to.length();
+        }
+        return newStr.obj();
+    }
+
+    /**
+     * Returns the position of <code>str</code> in this string, starting at <code>pos</code>,
+     * optionally ignoring case.
+     *
+     * @param substr the string to search for
+     * @param pos the starting position of the search
+     * @param ignoreCase whether to ignore case
+     * @return the index at which substr is found
+     */
+    public int indexOf(String substr, int pos, boolean ignoreCase) {
+        String str = obj();
+        if (str == null) {
+            return -1;
+        }
+        else if (ignoreCase) {
+            str = str.toUpperCase();
+            substr = substr.toUpperCase();
+        }
+        return str.indexOf(substr, pos);
+    }    
 }

@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
-import org.incava.ijdk.lang.StringTest;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -255,4 +254,63 @@ public class StrTest extends StringTest {
                           params(new Str(""), "", 1),
                           params(new Str(null), null, 1));
     }
+
+    @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
+    public void replaceAll(String expWithCase, String expIgnoreCase, String line, String from, String to) {
+        String msg = message("line", line, "from", from, "to", to);
+        Str str = new Str(line);
+        assertThat(str.replaceAll(from, to), withContext(msg, equalTo(expWithCase)));
+    }
+
+    @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
+    public void replaceAllIgnoreCase(String expWithCase, String expIgnoreCase, String line, String from, String to) {
+        String msg = message("line", line, "from", from, "to", to);
+        Str str = new Str(line);
+        assertThat(str.replaceAllIgnoreCase(from, to), withContext(msg, equalTo(expIgnoreCase)));
+    }
+    
+    private List<Object[]> parametersForReplace() {
+        List<Object[]> pl = paramsList();
+        
+        pl.add(params("1",     "1",      "one",            "one", "1"));
+        pl.add(params("ONE",   "1",      "ONE",            "one", "1"));
+        pl.add(params("One",   "1",      "One",            "one", "1"));
+        
+        pl.add(params("1 two", "1 two",  "one two",        "one", "1"));
+        pl.add(params("11",    "11",     "oneone",         "one", "1"));
+        pl.add(params("1 1",   "1 1",    "one one",        "one", "1"));
+        
+        // not applied as regular expressions:
+        pl.add(params("1",       "1",      "$one",         "$one", "1"));
+        pl.add(params("one two", "one two", "one two",     "one.*", "1"));
+        pl.add(params("1 two",   "1 two",   "one.* two",   "one.*", "1"));
+        pl.add(params("one",     "one",     "one",         "(?:one|two)", "12"));
+        pl.add(params("two",     "two",     "two",         "(?:one|two)", "12"));
+        pl.add(params("12",      "12",      "(?:one|two)", "(?:one|two)", "12"));
+
+        pl.add(params(null,      null,      null,          "one", "1"));
+        
+        return pl;
+    }
+    
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void indexOfTest(int expected, String x, String y, int pos, boolean ignoreCase) {
+        String msg = message("x", x, "y", y, "pos", pos, "ignoreCase", ignoreCase);
+        assertThat(new Str(x).indexOf(y, pos, ignoreCase), withContext(msg, equalTo(expected)));
+    }
+    
+    private List<Object[]> parametersForIndexOfTest() {
+        return paramsList(params(0,  "abc", "a", 0, true),
+                          params(0,  "abc", "a", 0, false),
+                          params(-1, "abc", "a", 1, true),
+                          
+                          params(1,  "abc", "b", 0, true),
+                          params(1,  "abc", "b", 1, true),
+                          
+                          params(-1, "abc", "d", 0, true),
+                          params(0,  "abc", "A", 0, true),
+                          params(-1, "abc", "A", 0, false),
+
+                          params(-1, null,  "A", 0, false));
+    }    
 }

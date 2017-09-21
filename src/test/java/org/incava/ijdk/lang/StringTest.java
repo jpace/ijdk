@@ -551,13 +551,15 @@ public abstract class StringTest extends Parameterized {
     }
     
     private List<Object[]> parametersForUnquote() {
-        return paramsList(params(null, null),
-                          params("", ""),
-                          params("abc", "abc"),
+        return paramsList(params(null,      null),
+                          params("",        ""),
+                          params("abc",     "abc"),
                           params("\'abc\"", "\'abc\""),
                           params("\"abc\'", "\"abc\'"),
-                          params("abc", "\'abc\'"),
-                          params("abc", "\"abc\""));
+                          params("abc",     "\'abc\'"),
+                          params("abc",     "\"abc\""),
+                          params("\"",      "\""),
+                          params("",        "\"\""));
     }
     
     // quote
