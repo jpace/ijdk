@@ -17,6 +17,9 @@ import org.incava.ijdk.lang.Str;
  * <pre>
  *    public class StringList extends BaseArray&lt;String, StringList&gt;
  * </pre>
+ *
+ * @param <T> the element type of the array
+ * @param <C> the class of the array subtype
  */
 public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> extends ArrayList<T> implements Sequence<T> {
     public static final long serialVersionUID = 1L;
