@@ -6,9 +6,9 @@ public abstract class Criteria<T> implements Closure<T, String> {
     /**
      * Returns true if the string starts with the substring.
      */
-    public static Criteria<Boolean> startsWith(String substr) {
+    public static Criteria<Boolean> startsWith(final String substr) {
         return new Criteria<Boolean>() {
-            public Boolean apply(String str) {
+            public Boolean apply(final String str) {
                 return str.startsWith(substr);
             }
         };
@@ -17,9 +17,9 @@ public abstract class Criteria<T> implements Closure<T, String> {
     /**
      * Returns true if the string contains the substring.
      */
-    public static Criteria<Boolean> contains(String substr) {
+    public static Criteria<Boolean> contains(final String substr) {
         return new Criteria<Boolean>() {
-            public Boolean apply(String str) {
+            public Boolean apply(final String str) {
                 return str.contains(substr);
             }
         };
@@ -28,9 +28,9 @@ public abstract class Criteria<T> implements Closure<T, String> {
     /**
      * Returns true if the string ends with the substring.
      */
-    public static Criteria<Boolean> endsWith(String substr) {
+    public static Criteria<Boolean> endsWith(final String substr) {
         return new Criteria<Boolean>() {
-            public Boolean apply(String str) {
+            public Boolean apply(final String str) {
                 return str.endsWith(substr);
             }
         };
@@ -39,9 +39,9 @@ public abstract class Criteria<T> implements Closure<T, String> {
     /**
      * Returns true if an element equals the given string, without regard to case.
      */
-    public static Criteria<Boolean> equalsIgnoreCase(String other) {
+    public static Criteria<Boolean> equalsIgnoreCase(final String other) {
         return new Criteria<Boolean>() {
-            public Boolean apply(String str) {
+            public Boolean apply(final String str) {
                 return str.equalsIgnoreCase(other);
             }
         };
@@ -50,9 +50,9 @@ public abstract class Criteria<T> implements Closure<T, String> {
     /**
      * Returns true if an element equals the given string.
      */
-    public static Criteria<Boolean> equals(String other) {
+    public static Criteria<Boolean> equals(final String other) {
         return new Criteria<Boolean>() {
-            public Boolean apply(String str) {
+            public Boolean apply(final String str) {
                 return str.equals(other);
             }
         };

@@ -14,7 +14,7 @@ import static org.incava.test.Parameters.paramsList;
 public class TestCriteria {
     @Test
     @Parameters
-    public void init(Boolean expected, String x, String y) {
+    public void init(Boolean expected, String x, final String y) {
         Criteria<Boolean> crit = new Criteria<Boolean>() {
                 public Boolean apply(String str) {
                     return str.startsWith(y);
