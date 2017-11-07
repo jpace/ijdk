@@ -3,10 +3,11 @@ package org.incava.ijdk.version;
 import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.lang.Comparing;
 import org.incava.ijdk.lang.DefaultComparing;
-import org.incava.ijdk.lang.Obj;
 
 /**
- * A version of the form "1.2.3.4".
+ * A version of the form "1.2.3.4". A version can be of any length, with the first four digits being
+ * major.minor.build.revision (AKA major.minor.patch.revision). A special case is
+ * Version.of("latest"), which will always exceed (be greater than) any other version.
  */
 public class Version implements Comparing<Version> {
     public static final Version LATEST = new Version(Integer.MAX_VALUE) {
@@ -19,39 +20,33 @@ public class Version implements Comparing<Version> {
         return "latest".equalsIgnoreCase(str) ? LATEST : new Version(str);
     }    
     
-    private final Integer major;
-    private final Integer minor;
-    private final Integer build;
-    private final Integer revision;
+    private final Array<Integer> values;
     private final DefaultComparing<Version> comparing;
     
     public Version(String str) {
-        String[] nums = str.split("\\.");
-        major = getNumber(nums, 0, 0);
-        minor = getNumber(nums, 1, null);
-        build = getNumber(nums, 2, null);
-        revision = getNumber(nums, 3, null);
+        values = Array.empty();
+        for (String it : str.split("\\.")) {
+            Integer num = Integer.valueOf(it);
+            values.append(num);            
+        }
         comparing = new DefaultComparing<Version>(this);
     }
 
     public Version(Integer ... args) {
-        major = getNumber(args, 0, null);
-        minor = getNumber(args, 1, null);
-        build = getNumber(args, 2, null);
-        revision = getNumber(args, 3, null);
+        values = Array.of(args);
         comparing = new DefaultComparing<Version>(this);
     }
 
     public Integer getMajor() {
-        return major;
+        return values.get(0);
     }
 
     public Integer getMinor() {
-        return minor;
+        return values.get(1);
     }
 
     public Integer getBuild() {
-        return build;
+        return values.get(2);
     }
 
     public Integer getPatch() {
@@ -59,19 +54,19 @@ public class Version implements Comparing<Version> {
     }
 
     public Integer getRevision() {
-        return revision;
+        return values.get(3);
+    }
+
+    public Array<Integer> getValues() {
+        return values;
     }
 
     public String toString() {
-        return Array.of(major, minor, build, revision).compact().join(".");
+        return values.join(".");
     }
 
     public int hashCode() {
-        int hash = Obj.of(major).hashCode();
-        hash = hash * 3 + Obj.of(minor).hashCode();
-        hash = hash * 17 + Obj.of(build).hashCode();
-        hash = hash * 31 + Obj.of(revision).hashCode();
-        return hash;
+        return values.hashCode();
     }
 
     /**
@@ -86,13 +81,12 @@ public class Version implements Comparing<Version> {
      * as if they are zero, so 1.2.3 == 1.2.3.0.
      */
     public int compareTo(Version other) {
-        int cmp;
-        if ((cmp = compareField(major, other.major)) == 0) {
-            if ((cmp = compareField(minor, other.minor)) == 0) {
-                if ((cmp = compareField(build, other.build)) == 0) {
-                    cmp = compareField(revision, other.revision);
-                }
-            }
+        int numFields = Math.max(values.size(), other.values.size());
+        int cmp = 0;
+        for (int idx = 0; cmp == 0 && idx < numFields; ++idx) {
+            Integer x = getValueAt(idx);
+            Integer y = other.getValueAt(idx);
+            cmp = new DefaultComparing<Integer>(x).compareTo(y);
         }
         return cmp;
     }
@@ -112,32 +106,9 @@ public class Version implements Comparing<Version> {
     public boolean gte(Version other) {
         return comparing.gte(other);
     }
-    
-    private int compareField(Integer x, Integer y) {
-        if (x == null) {
-            x = 0;
-        }
-        if (y == null) {
-            y = 0;
-        }
-        return new DefaultComparing<Integer>(x).compareTo(y);
-    }
 
-    static Integer getNumber(String[] strs, Integer index, Integer defValue) {
-        return strs.length > index && strs[index].length() > 0 ? Integer.valueOf(strs[index]) : defValue;
-    }
-
-    static Integer getNumber(Integer[] ints, Integer index, Integer defValue) {
-        return ints.length > index ? ints[index] : defValue;
-    }
-
-    static StringBuilder append(StringBuilder sb, Integer value, boolean prependDot) {
-        if (value == null) {
-            return sb;
-        }
-        else if (prependDot) {
-            sb.append('.');
-        }
-        return sb.append(value);
-    }
+    private Integer getValueAt(int idx) {
+        Integer val = values.get(idx);
+        return val == null ? 0 : val;
+    }    
 }

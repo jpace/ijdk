@@ -4,6 +4,7 @@ import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
+import org.incava.ijdk.collect.Array;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,7 +22,21 @@ public class VersionTest extends Parameterized {
         assertEqual(expPatch, ver.getPatch(), msg);
         assertEqual(expPatch, ver.getBuild(), msg);
         assertEqual(expRevision, ver.getRevision(), msg);
-    }
+        Array<Integer> expValues = Array.empty();
+        if (expMajor != null) {
+            expValues.append(expMajor);            
+            if (expMinor != null) {
+                expValues.append(expMinor);                
+                if (expPatch != null) {
+                    expValues.append(expPatch);                        
+                    if (expRevision != null) {
+                        expValues.append(expRevision);                            
+                    }
+                }
+            }
+        }
+        assertThat(ver.getValues(), equalTo(expValues));
+    }   
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void initFromString(Integer expMajor, Integer expMinor, Integer expPatch, Integer expRevision, String str) {
