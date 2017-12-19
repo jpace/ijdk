@@ -1,13 +1,37 @@
 package org.incava.ijdk.lang;
 
-import java.util.*;
-
 /**
  * Extensions to Integer, wrapping a possibly-null Integer with better null checking.
  */
-public class Int extends Obj {
+public class Int extends Obj<Integer> {
     /**
-     * Returns the str as an integer, or null if it is null or is not an integer.
+     * Returns an Int (integer) for the number.
+     *
+     * @param num the number to wrap; can be null
+     * @return an Int wrapping the given Integer
+     */
+    public static Int of(Integer num) {
+        // this may become optimized to reduce object creation
+        return new Int(num);
+    }
+    
+    /**
+     * Returns an Int (integer) for the string. If the string is not a valid integer, then the
+     * wrapped integer will be null.
+     *
+     * @param str the string to parse for the number; can be null
+     * @return an Int wrapping the given string, converted to an Integer
+     */
+    public static Int of(String str) {
+        // this too may become optimized to reduce object creation
+        return new Int(toInteger(str));
+    }
+    
+    /**
+     * Returns the str as an integer, or null if it is null or is not a valid integer.
+     *
+     * @param str the string to parse for the number; can be null
+     * @return an Int wrapping the given string, converted to an Integer
      */
     public static Integer toInteger(String str) {
         if (str == null) {
@@ -21,35 +45,31 @@ public class Int extends Obj {
         }
     }
     
-    private final Integer integer;
-    
     /**
-     * Converts the given string to an integer, if it is a valid value. Otherwise the wrapped
+     * Converts the given string to an integer, if it is a valid integer. Otherwise the wrapped
      * integer will be null.
+     *
+     * @param str the string to parse for the number; can be null
      */
-    public Int(String string) {
-        this(toInteger(string));
+    public Int(String str) {
+        this(toInteger(str));
     }
 
     /**
      * Wraps the given integer, which can be null.
+     *
+     * @param num the number to wrap; can be null
      */
-    public Int(Integer in) {
-        super(in);
-        this.integer = in;
+    public Int(Integer num) {
+        super(num);
     }
 
     /**
      * Returns the wrapped integer.
-     */
-    public Integer getInteger() {
-        return this.integer;
-    }
-
-    /**
-     * Returns the wrapped integer.
+     *
+     * @return the wrapped integer
      */
     public Integer integer() {
-        return this.integer;
+        return obj();
     }
 }

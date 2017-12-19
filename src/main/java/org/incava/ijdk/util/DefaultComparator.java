@@ -3,10 +3,9 @@ package org.incava.ijdk.util;
 import java.util.Comparator;
 
 /**
- * Provides a default implementation for a Comparator. <code>equals</code>
- * relies on <code>compare</code> (returning true if <code>compare</code>
- * returns 0). <code>compare</code> also checks for the given class, if
- * provided.
+ * Provides a default implementation for a Comparator. <code>equals</code> relies on
+ * <code>compare</code> (returning true if <code>compare</code> returns 0). <code>compare</code>
+ * also checks for the given class, if provided.
  */
 public abstract class DefaultComparator<T> implements Comparator<T> {
     private final Class<?> type;

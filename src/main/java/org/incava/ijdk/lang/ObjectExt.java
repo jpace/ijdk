@@ -6,7 +6,7 @@ import org.incava.ijdk.lang.Obj;
 /**
  * Extensions to the Object class.
  *
- * @see ijdk.lang.Obj
+ * @see org.incava.ijdk.lang.Obj
  */
 public class ObjectExt {
     /**
@@ -17,7 +17,7 @@ public class ObjectExt {
      * @return whether the objects are equal or both are null
      */
     public static boolean areEqual(Object x, Object y) {
-        return new Obj(x).equals(y);
+        return Obj.of(x).equals(y);
     }
 
     /**
@@ -30,12 +30,13 @@ public class ObjectExt {
      * @see #areEqual
      */
     public static boolean equal(Object x, Object y) {
-        return new Obj(x).equals(y);
+        return Obj.of(x).equals(y);
     }
 
     /**
      * Compares the two objects, including testing for null.
      *
+     * @param <A> the type of objects; is Comparable
      * @param x the first object to compare
      * @param y the second object to compare
      * @return a negative, zero, or positive integer
@@ -52,10 +53,10 @@ public class ObjectExt {
      * @return whether the object is not null and is true for that object type
      * @see #isEmpty
      * @see #isFalse
-     * @see ijdk.lang.Obj#isTrue
+     * @see org.incava.ijdk.lang.Obj#isTrue
      */
     public static boolean isTrue(Object obj) {
-        return new Obj(obj).isTrue();
+        return Obj.of(obj).isTrue();
     }
 
     /**
@@ -65,10 +66,10 @@ public class ObjectExt {
      * @return whether the object is null or is false for that object type
      * @see #isEmpty
      * @see #isFalse
-     * @see ijdk.lang.Obj#isFalse
+     * @see org.incava.ijdk.lang.Obj#isFalse
      */
     public static boolean isFalse(Object obj) {
-        return new Obj(obj).isFalse();
+        return Obj.of(obj).isFalse();
     }
 
     /**
@@ -78,10 +79,10 @@ public class ObjectExt {
      * @return whether the object is null or is empty for that object type
      * @see #isEmpty
      * @see #isFalse
-     * @see ijdk.lang.Obj#isEmpty
+     * @see org.incava.ijdk.lang.Obj#isEmpty
      */
     public static boolean isEmpty(Object obj) {
-        return new Obj(obj).isEmpty();
+        return Obj.of(obj).isEmpty();
     }
 
     /**
@@ -93,7 +94,7 @@ public class ObjectExt {
      * @see #isNotNull
      */
     public static boolean isNull(Object obj) {
-        return new Obj(obj).isNull();
+        return Obj.of(obj).isNull();
     }
 
     /**
@@ -105,6 +106,6 @@ public class ObjectExt {
      * @see #isNull
      */
     public static boolean isNotNull(Object obj) {
-        return new Obj(obj).isNotNull();
+        return Obj.of(obj).isNotNull();
     }
 }

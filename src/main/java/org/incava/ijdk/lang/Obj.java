@@ -4,59 +4,87 @@ import java.util.Collection;
 import java.util.Arrays;
 
 /**
- * Extensions to the Object class, wrapping a Java Object with additional methods.
+ * Extension to the Object class, wrapping a JDK Object with additional methods. The referenced
+ * object can be null. Also has "boolean-ness" of an object, which can be true, false, or empty.
+ *
+ * @param <T> the type of object being wrapped
  */
-public class Obj {        
+public class Obj<T> implements Bool {
     /**
-     * Returns whether the object is null. This method provides an alternative syntax to "if (obj ==
-     * null)".
-     *
-     * @see #isNotNull
+     * A single variable representing all objects that wrap null.
      */
-    public static boolean isNull(Object obj) {
-        return obj == null;
-    }
+    public static Obj<Object> NULL = new Obj<Object>(null);
 
     /**
-     * Returns whether the object is not null. This method provides an alternative syntax to "if
-     * (obj != null)".
+     * Creates a wrapper for the given object. If the object is null, the common variable
+     * <code>NULL</code> is returned, thus eliminating unnecessary object creation.
      *
-     * @see #isNull
+     * @param <T> the type of object being wrapped
+     * @param obj the object being wrapped
+     * @return the newly created object, or <code>NULL</code>
      */
-    public static boolean isNotNull(Object obj) {
-        return obj != null;
+    @SuppressWarnings("unchecked")
+    public static <T> Obj<T> of(T obj) {
+        return obj == null ? (Obj<T>)NULL : new Obj<T>(obj);
     }
 
-    private final Object object;
+    private final T object;
 
-    public Obj(Object object) {
+    /**
+     * Creates a wrapper for the given object.
+     *
+     * @param object the object to wrap
+     */
+    public Obj(T object) {
         this.object = object;
     }
 
     /**
      * Returns the wrapped object.
+     *
+     * @return the wrapped object
+     * @see #obj
      */
-    public Object getObject() {
+    public T get() {
         return this.object;
     }
 
     /**
      * Returns the wrapped object.
+     *
+     * @return the wrapped object
+     * @see #get
      */
-    public Object obj() {
+    public T obj() {
         return this.object;
     }
     
     /**
      * Returns whether the other object is equal to the wrapped object, including whether they are
-     * both null.
+     * both null. If <code>other</code> is a <code>Obj</code>, then its wrapped object is
+     * compared.
+     *
+     * @param other the object to compare to the wrapped object
+     * @return whether the given object equals this one
      */
     public boolean equals(Object other) {
         if (isNull()) {
-            return other == null;
+            if (other instanceof Obj) {
+                return ((Obj)other).isNull();
+            }
+            else {
+                return other == null;
+            }
         }
         else if (other == null) {
             return false;
+        }
+        else if (this == other) {
+            return true;
+        }
+        else if (other instanceof Obj) {
+            Object oobj = ((Obj)other).obj();
+            return obj().equals(oobj);
         }
         else {
             return obj().equals(other);
@@ -64,7 +92,9 @@ public class Obj {
     }
 
     /**
-     * Returns the hash code for the wrapped object.
+     * Returns the hash code of the wrapped object. Returns 0 if the referenced object is null.
+     *
+     * @return the hash code
      */
     public int hashCode() {
         return isNull() ? 0 : obj().hashCode();
@@ -105,9 +135,6 @@ public class Obj {
         if (obj == null) {
             return true;
         }
-        else if (obj instanceof String) {
-            return new Str((String)obj).isEmpty();
-        }
         else if (obj instanceof Object[]) {
             return ((Object[])obj).length == 0;
         }
@@ -143,7 +170,8 @@ public class Obj {
 
     /**
      * Returns the wrapped object as a string. C style arrays (e.g., Double[]) are run through the
-     * toString for java.util.List, giving them better output.
+     * toString for java.util.List, giving them better output, <code>"[abc, def, ghi]"</code>
+     * instead of <code>"[Ljava.lang.Object;@15db9742"</code>.
      */
     public String toString() {
         Object obj = obj();

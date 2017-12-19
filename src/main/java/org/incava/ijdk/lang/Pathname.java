@@ -1,10 +1,8 @@
 package org.incava.ijdk.lang;
 
 import java.io.File;
-import java.util.*;
 import org.incava.ijdk.io.FileExt;
 import org.incava.ijdk.io.IO;
-import org.incava.ijdk.lang.ObjectExt;
 
 /**
  * Extends java.io.File with Ruby-ish functionality, based on pathname.rb.
@@ -23,7 +21,7 @@ public class Pathname extends File {
 
     public static java.util.List<Pathname> findAll() {
         Pathname root = new Pathname();
-        java.util.List<Pathname> all = new ArrayList<Pathname>();
+        java.util.List<Pathname> all = new java.util.ArrayList<Pathname>();
         for (Pathname child : root.children()) {
             all.add(child);
         }
@@ -34,13 +32,17 @@ public class Pathname extends File {
 
     /**
      * Creates a Pathname from a file, using its relative -- not absolute or canonical -- path.
+     *
+     * @param file the file for this pathname
      */
     public Pathname(File file) {
         super(file.toString());
     }
 
     /**
-     * Creates a Pathname from a pathname.
+     * Creates a Pathname from a name.
+     *
+     * @param pathName the name of this object
      */
     public Pathname(String pathName) {
         super(pathName);
@@ -59,6 +61,8 @@ public class Pathname extends File {
      * <pre>
      *     new Pathname("abc/def.txt").relativePath(); // == "abc/def.txt"
      * </pre>
+     *
+     * @return the relative path of this pathname
      */
     public String relativePath() {
         return toString();
@@ -70,6 +74,8 @@ public class Pathname extends File {
      * <pre>
      *     new Pathname("abc/def.txt").baseName();     // == "def.txt"
      * </pre>
+     *
+     * @return the base name of this pathname
      */
     public String baseName() {
         return getName();
@@ -85,6 +91,8 @@ public class Pathname extends File {
      *     new Pathname("abc/def.").extension();       // == ""
      *     new Pathname("abc/def").extension();        // == null
      * </pre>
+     *
+     * @return the extension of this pathname
      */
     public String extension() {
         String name = baseName();
@@ -100,6 +108,8 @@ public class Pathname extends File {
      *     new Pathname("abc/def.txt").rootName();     // == "def"
      *     new Pathname("abc/def.tar.gz").rootName();  // == "def.tar"
      * </pre>
+     *
+     * @return the root name of this pathname
      */
     public String rootName() {
         String baseName = baseName();
@@ -125,6 +135,8 @@ public class Pathname extends File {
      *     new Pathname("b").parent().parent();          // == ".."
      *     new Pathname("b").parent().parent().parent(); // == "../.."
      * </pre>
+     *
+     * @return the path of this pathname
      */
     public Pathname parent() {
         String separator = "/";
@@ -147,7 +159,7 @@ public class Pathname extends File {
         }
         else {
             // reduce single dots
-            java.util.List<String> comps = new ArrayList<String>();
+            java.util.List<String> comps = new java.util.ArrayList<String>();
             for (String c : components) {
                 if (!c.equals(".")) {
                     comps.add(c);
@@ -166,6 +178,8 @@ public class Pathname extends File {
      *
      * This currently does not resolve intermediate elements, such as "." and "..", and it may in
      * the future.
+     *
+     * @return the expanded path
      */
     public String expandPath() {
         return getAbsolutePath();
@@ -173,6 +187,8 @@ public class Pathname extends File {
 
     /**
      * Reads the file, returning a list of lines, which do not include end of line characters.
+     *
+     * @return the lines of the file
      */
     public java.util.List<String> readLines() {
         return IO.readLines(relativePath());
@@ -180,6 +196,8 @@ public class Pathname extends File {
 
     /**
      * Reads the file as an array of bytes.
+     *
+     * @return the bytes of the file
      */
     public byte[] readBytes() {
         return FileExt.readBytes(this);
@@ -190,15 +208,17 @@ public class Pathname extends File {
      *
      * @param lines the lines to print
      */
-    public void printLines(List<String> lines) {
+    public void printLines(java.util.List<String> lines) {
         IO.printLines(relativePath(), lines);
     }
 
     /**
      * Returns the immediate subelements of this pathname.
+     *
+     * @return the children of this pathname
      */
     public java.util.List<Pathname> children() {
-        java.util.List<Pathname> children = new ArrayList<Pathname>();
+        java.util.List<Pathname> children = new java.util.ArrayList<Pathname>();
         for (File child : listFiles()) {
             children.add(new Pathname(child));
         }

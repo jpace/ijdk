@@ -15,6 +15,8 @@ public class FileExt {
      * Reads the file into a string array, returning an empty array if there is
      * an error.
      *
+     * @param file the file to read from
+     * @return the lines of the file
      * @see #readLines(File, EnumSet)
      */
     public static List<String> readLines(File file) {
@@ -26,6 +28,9 @@ public class FileExt {
      * (sequences). Returns empty array on error, unless <code>options</code>
      * contains <code>ReadOptionType.WITH_EXCEPTION</code>.
      *
+     * @param file the file to read from
+     * @param options options for reading
+     * @return the lines of the file
      * @see ReaderExt#readLines
      */
     public static List<String> readLines(File file, EnumSet<ReadOptionType> options) throws IORuntimeException {
@@ -40,6 +45,7 @@ public class FileExt {
     /**
      * Prints the file as lines, using writer.println.
      *
+     * @param file the file to read from
      * @see #printLines(File, List, EnumSet)
      */
     public static void printLines(File file, List<String> lines) {
@@ -49,6 +55,9 @@ public class FileExt {
     /**
      * Prints the file as lines, using writer.println.
      *
+     * @param file the file to write to
+     * @param lines the lines to write
+     * @param options the options
      * @exception IORuntimeException Thrown if <code>options</code> contains
      * <code>WriteOptionType.WITH_EXCEPTION</code>.
      */
@@ -62,8 +71,10 @@ public class FileExt {
     }
 
     /**
-     * Resolves the file name, converting ~ to the home directory for the
-     * current user.
+     * Resolves the file name, converting ~ to the home directory for the current user.
+     *
+     * @param fname the name of the file
+     * @return the resolved file name
      */
     public static String resolveFileName(String fname) {        
         return fname.replace("~", System.getProperty("user.home"));
@@ -71,6 +82,9 @@ public class FileExt {
 
     /**
      * Returns the contents of the file, as a byte array.
+     *
+     * @param file the file to read from
+     * @return the bytes of the file
      */
     public static byte[] readBytes(File file) throws IORuntimeException {
         try {

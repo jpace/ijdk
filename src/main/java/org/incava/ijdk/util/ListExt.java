@@ -36,7 +36,7 @@ public class ListExt extends CollectionExt {
      * @see Index#getIndex
      */
     public static Integer getIndex(Integer size, Integer index) {
-        return Index.getIndex(size, index);
+        return new Indexable(size).get(index);
     }
 
     /**

@@ -3,75 +3,80 @@ package org.incava.ijdk.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import junit.framework.TestCase;
+import java.util.List;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.incava.attest.Parameterized;
+import org.junit.Test;
 
-public class CollectionExtTest extends TestCase {
-    public static final Collection<String> SOURCE = Arrays.asList(new String[] { "one", "two", "three", "four" });
-    public static final Collection<String> IDENTICAL = Arrays.asList(new String[] { "one", "two", "three", "four" });
-    public static final Collection<String> SUBSET = Arrays.asList(new String[] { "one" });
-    public static final Collection<String> SUPERSET = Arrays.asList(new String[] { "one", "two", "three", "four", "five" });
-    public static final Collection<String> OVERLAP = Arrays.asList(new String[] { "two", "three", "four", "five" });
-    public static final Collection<String> MISMATCH = Arrays.asList(new String[] { "five", "six" });
+import static org.incava.attest.Assertions.assertEqual;
+import static org.incava.attest.Assertions.message;
+import static org.incava.attest.Parameters.params;
+import static org.incava.attest.Parameters.paramsList;
+
+public class CollectionExtTest extends Parameterized {
+    public static final Collection<String> ABC = Arrays.asList(new String[] { "a", "b", "c" });
+    public static final Collection<String> ABC_DUP = Arrays.asList(new String[] { "a", "b", "c" });
+    public static final Collection<String> A = Arrays.asList(new String[] { "a" });
+    public static final Collection<String> ABCD = Arrays.asList(new String[] { "a", "b", "c", "d" });
+    public static final Collection<String> BCD = Arrays.asList(new String[] { "b", "c", "d" });
+    public static final Collection<String> DE = Arrays.asList(new String[] { "d", "e" });
     public static final Collection<String> EMPTY = new ArrayList<String>();
 
-    public CollectionExtTest(String name) {
-        super(name);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public <T> void hasAny(boolean expected, Collection<T> src, Collection<T> tgt) {
+        boolean result = CollectionExt.hasAny(src, tgt);
+        assertEqual(expected, result, message("src", src, "tgt", tgt));
+    }
+    
+    private List<Object[]> parametersForHasAny() {
+        return paramsList(params(true, ABC, ABC),
+                          params(true, ABC, ABC_DUP),
+                          params(true, ABC, A),
+                          params(true, ABC, ABCD),
+                          params(true, ABC, BCD),
+
+                          params(false, ABC, EMPTY),
+                          params(false, ABC, null),
+                          params(false, ABC, DE),
+
+                          params(false, null, EMPTY),
+                          params(false, null, null),
+                          params(false, null, DE));            
     }
 
-    public <T> void assertHasAny(boolean exp, Collection<T> src, Collection<T> tgt) {
-        String msg = "CollectionExt.hasAny(src: '" + src + "', tgt: '" + tgt + "'";
-        assertEquals(msg, exp, CollectionExt.hasAny(src, tgt));
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public <T> void hasAll(boolean expected, Collection<T> src, Collection<T> tgt) {
+        boolean result = CollectionExt.hasAll(src, tgt);
+        assertEqual(expected, result, message("src", src, "tgt", tgt));
+    }
+    
+    private List<Object[]> parametersForHasAll() {
+        return paramsList(params(true, ABC, ABC),
+                          params(true, ABC, ABC_DUP),
+                          params(true, ABC, A),
+                          params(true, ABC, EMPTY),
+
+                          params(true, EMPTY, EMPTY),
+
+                          params(false, ABC, ABCD),
+                          params(false, ABC, BCD),
+                          params(false, ABC, null),
+                          params(false, ABC, DE),
+
+                          params(false, null, EMPTY),
+                          params(false, null, null),
+                          params(false, null, DE));
     }
 
-    public <T> void assertHasAll(boolean exp, Collection<T> src, Collection<T> tgt) {
-        String msg = "CollectionExt.hasAll(src: '" + src + "', tgt: '" + tgt + "'";
-        assertEquals(msg, exp, CollectionExt.hasAll(src, tgt));
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public <T> void any(boolean expected, Collection<T> coll) {
+        boolean result = CollectionExt.any(coll);
+        assertEqual(expected, result);
     }
-
-    public <T> void assertAny(boolean exp, Collection<T> coll) {
-        String msg = "CollectionExt.any(coll: '" + coll;
-        assertEquals(msg, exp, CollectionExt.any(coll));
-    }
-
-    public void testHasAny() {
-        assertHasAny(true, SOURCE, SOURCE);
-        assertHasAny(true, SOURCE, IDENTICAL);
-        assertHasAny(true, SOURCE, SUBSET);
-        assertHasAny(true, SOURCE, SUPERSET);
-        assertHasAny(true, SOURCE, OVERLAP);
-
-        assertHasAny(false, SOURCE, EMPTY);
-        assertHasAny(false, SOURCE, null);
-        assertHasAny(false, SOURCE, MISMATCH);
-
-        assertHasAny(false, null,   EMPTY);
-        assertHasAny(false, null,   null);
-        assertHasAny(false, null,   MISMATCH);
-    }
-
-    public void testHasAll() {
-        assertHasAll(true, SOURCE, SOURCE);
-        assertHasAll(true, SOURCE, IDENTICAL);
-        assertHasAll(true, SOURCE, SUBSET);
-        assertHasAll(true, SOURCE, EMPTY);
-
-        assertHasAll(true, EMPTY, EMPTY);
-
-        assertHasAll(false, SOURCE, SUPERSET);
-        assertHasAll(false, SOURCE, OVERLAP);
-        assertHasAll(false, SOURCE, null);
-        assertHasAll(false, SOURCE, MISMATCH);
-
-        assertHasAll(false, null,   EMPTY);
-        assertHasAll(false, null,   null);
-        assertHasAll(false, null,   MISMATCH);
-    }
-
-    public void testAnyNonEmpty() {
-        assertAny(true, SOURCE);
-    }
-
-    public void testAnyIsEmpty() {
-        assertAny(false, EMPTY);
+    
+    private List<Object[]> parametersForAny() {
+        return paramsList(params(true, ABC),
+                          params(false, EMPTY));
     }
 }

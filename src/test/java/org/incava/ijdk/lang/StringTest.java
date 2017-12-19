@@ -3,1031 +3,578 @@ package org.incava.ijdk.lang;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import junit.framework.TestCase;
+import java.util.List;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.incava.attest.Parameterized;
 import org.junit.Test;
 
-public abstract class StringTest {
-    // split
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.incava.attest.Assertions.assertEqual;
+import static org.incava.attest.Assertions.message;
+import static org.incava.attest.ContextMatcher.withContext;
 
-    public abstract String[] assertSplit(String[] expected, String str, char delim, int max);
+public abstract class StringTest extends Parameterized {
+    public abstract String[] split(String str, char delim, int max);
 
-    public abstract String[] assertSplit(String[] expected, String str, String delim, int max);
+    public abstract String[] split(String str, String delim, int max);    
 
-    public void testSplitNull() {
-        assertSplit(null, null, ';', -1);
-    }
-
-    @Test
-    public void testSplitSingleChar() {
-        assertSplit(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ';', -1);
-    }
-
-    @Test
-    public void testSplitStringOneChar() {
-        assertSplit(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ";", -1);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void splitCharDelim(String[] expected, String str, char delim, int max) {
+        String[] result = split(str, delim, max);
+        assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
     }
     
-    @Test
-    public void testSplitStringWithWhitespace() {
-        assertSplit(new String[] { "this", "is", "a", "test" }, "this ; is ; a ; test", " ; ", -1);
+    private List<Object[]> parametersForSplitCharDelim() {
+        return paramsList(params(null, null, ';', -1),
+                          params(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ';', -1),
+                          params(new String[] { "this", "is", "a", "", "test" }, "this;is;a;;test", ';', -1),
+                          params(new String[] { "this", "is;a;;test" }, "this;is;a;;test", ';', 2),
+                          params(new String[] { "this", "is", "a;;test" }, "this;is;a;;test", ';', 3),
+                          params(new String[] { "this", "is", "a", ";test" }, "this;is;a;;test", ';', 4));
     }
 
-    @Test
-    public void testSplitStringCharEmptyBlock() {
-        assertSplit(new String[] { "this", "is", "a", "", "test" }, "this;is;a;;test", ';', -1);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void splitStringDelim(String[] expected, String str, String delim, int max) {
+        String[] result = split(str, delim, max);
+        assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
+    }
+    
+    private List<Object[]> parametersForSplitStringDelim() {
+        return paramsList(params(null, null, ";", -1),
+                          params(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ";", -1),
+                          params(new String[] { "this", "is", "a", "test" }, "this ; is ; a ; test", " ; ", -1));
     }
 
-    @Test
-    public void testSplitStringCharEmptyBlockMaxOne() {
-        assertSplit(new String[] { "this;is;a;;test" }, "this;is;a;;test", ';', 1);
-    }
-    
-    @Test
-    public void testSplitStringCharEmptyBlockMaxTwo() {
-        assertSplit(new String[] { "this", "is;a;;test" }, "this;is;a;;test", ';', 2);
-    }
+    public abstract List<String> toList(String str);
 
-    @Test
-    public void testSplitStringCharEmptyBlockMaxThree() {   
-        assertSplit(new String[] { "this", "is", "a;;test" }, "this;is;a;;test", ';', 3);
-    }
-        
-    @Test
-    public void testSplitStringCharEmptyBlockMaxFour() {
-        assertSplit(new String[] { "this", "is", "a", ";test" }, "this;is;a;;test", ';', 4);
-    }
-
-    // toList
-    
-    public abstract void assertToList(String[] exp, String str);
-        
-    @Test
-    public void testToListNull() {
-        assertToList(null, null);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void toList(String[] expected, String str) {
+        List<String> result = toList(str);
+        assertEqual(expected == null ? null : Arrays.asList(expected), result, message("str", str));
     }
     
-    @Test
-    public void testToListDefault() {
-        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
-        assertToList(expected, "fee, fi, foo, fum");
-    }
-    
-    @Test
-    public void testToListWhitespaceChars() {
-        String[] expected = new String[] { "fee", "fi", "foo", "fum" };
-        assertToList(expected, "fee,\tfi,\nfoo,\rfum");
+    private List<Object[]> parametersForToList() {
+        return paramsList(params(null, null),
+                          params(new String[] { "fee", "fi", "foo", "fum" }, "fee, fi, foo, fum"),
+                          params(new String[] { "fee", "fi", "foo", "fum" }, "fee,\tfi,\nfoo,\rfum"));
     }
     
     // pad
 
-    public abstract String assertPad(String expected, String str, char ch, int length);
+    public abstract String pad(String str, char ch, int length);
 
-    public abstract String assertPad(String expected, String str, int length);
+    public abstract String pad(String str, int length);
 
-    @Test
-    public void testPadCharNull() {
-        assertPad(null, null, '*', 8);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padWithChar(String expected, String str, char ch, int length) {
+        String result = pad(str, ch, length);
+        assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
     }
     
-    @Test
-    public void testPadCharDefault() {
-        assertPad("abcd****", "abcd", '*', 8);
-    }
-    
-    @Test
-    public void testPadCharShorter() {
-        assertPad("abcd", "abcd", '*', 3);
-    }
-    
-    @Test
-    public void testPadCharAtLength() {
-        assertPad("abcd", "abcd", '*', 4);
-    }
-    
-    @Test
-    public void testPadCharOneChar() {
-        assertPad("abcd*", "abcd", '*', 5);
-    }
-
-    @Test
-    public void testPadSpaceNull() {
-        assertPad(null, null, 8);
+    private List<Object[]> parametersForPadWithChar() {
+        return paramsList(params(null, null, '*', 8),
+                          params("abcd****", "abcd", '*', 8),
+                          params("abcd", "abcd", '*', 3),
+                          params("abcd", "abcd", '*', 4),
+                          params("abcd*", "abcd", '*', 5));
     }    
-    
-    @Test
-    public void testPadSpaceDefault() {
-        assertPad("abcd    ", "abcd", 8);
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padWithoutChar(String expected, String str, int length) {
+        String result = pad(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
     
-    @Test
-    public void testPadSpaceShorter() {
-        assertPad("abcd", "abcd", 3);
-    }
-    
-    @Test
-    public void testPadSpaceAtLength() {
-        assertPad("abcd", "abcd", 4);
-    }
-    
-    @Test
-    public void testPadSpaceOneChar() {
-        assertPad("abcd ", "abcd", 5);
+    private List<Object[]> parametersForPadWithoutChar() {
+        return paramsList(params("abcd    ", "abcd", 8),
+                          params("abcd", "abcd", 3),
+                          params("abcd", "abcd", 4),
+                          params("abcd ", "abcd", 5));
     }
 
     // padLeft
 
-    public abstract String assertPadLeft(String expected, String str, char ch, int length);
+    public abstract String padLeft(String str, char ch, int length);
 
-    public abstract String assertPadLeft(String expected, String str, int length);
-    
-    @Test
-    public void testPadLeftCharNull() {
-        assertPadLeft(null, null, '*', 8);
+    public abstract String padLeft(String str, int length);
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padLeftWithChar(String expected, String str, char ch, int length) {
+        String result = padLeft(str, ch, length);
+        assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
     }
     
-    @Test
-    public void testPadLeftCharDefault() {
-        assertPadLeft("****abcd", "abcd", '*', 8);
+    private List<Object[]> parametersForPadLeftWithChar() {
+        return paramsList(params(null, null, '*', 8),
+                          params("****abcd", "abcd", '*', 8),
+                          params("abcd", "abcd", '*', 3),
+                          params("abcd", "abcd", '*', 4),
+                          params("*abcd", "abcd", '*', 5));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padLeftWithoutChar(String expected, String str, int length) {
+        String result = padLeft(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
     
-    @Test
-    public void testPadLeftCharShorter() {
-        assertPadLeft("abcd", "abcd", '*', 3);
-    }
-    
-    @Test
-    public void testPadLeftCharAtLength() {
-        assertPadLeft("abcd", "abcd", '*', 4);
-    }
-    
-    @Test
-    public void testPadLeftCharOneChar() {
-        assertPadLeft("*abcd", "abcd", '*', 5);
-    }
-    
-    @Test
-    public void testPadLeftSpaceNull() {
-        assertPadLeft(null, null, 8);
-    }
-    
-    @Test
-    public void testPadLeftSpaceDefault() {
-        assertPadLeft("    abcd", "abcd", 8);
-    }
-    
-    @Test
-    public void testPadLeftSpaceShorter() {
-        assertPadLeft("abcd", "abcd", 3);
-    }
-    
-    @Test
-    public void testPadLeftSpaceAtLength() {
-        assertPadLeft("abcd", "abcd", 4);
-     }
-    
-    @Test
-    public void testPadLeftSpaceOneChar() {
-       assertPadLeft(" abcd", "abcd", 5);
+    private List<Object[]> parametersForPadLeftWithoutChar() {
+        return paramsList(params(null, null, 8),
+                          params("    abcd", "abcd", 8),
+                          params("abcd", "abcd", 3),
+                          params("abcd", "abcd", 4),
+                          params(" abcd", "abcd", 5));
     }
     
     // repeat
 
-    public abstract String assertRepeat(String expected, String str, int length);
+    public abstract String repeat(String str, int length);
 
-    public abstract String assertRepeat(String expected, char ch, int length);
+    public abstract String repeat(char ch, int length);
 
-    @Test
-    public void testRepeatStringNull() {
-        assertRepeat("", null,  0);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void repeatString(String expected, String str, int length) {
+        String result = repeat(str, length);
+        assertThat(result, withContext(message("str", str, "length", length), equalTo(expected)));
+    }
+    
+    private List<Object[]> parametersForRepeatString() {
+        return paramsList(params(null, null,  0),
+                          params("", "abcd",  -1),
+                          params("", "abcd",  0),
+                          params("abcd", "abcd",  1),
+                          params("abcdabcd", "abcd",  2));
     }
 
-    @Test
-    public void testRepeatStringNegative() {
-        assertRepeat("", "abcd",  -1);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void repeatChar(String expected, char ch, int length) {
+        String result = repeat(ch, length);
+        assertEqual(expected, result, message("ch", ch, "length", length));
     }
-
-    @Test
-    public void testRepeatStringZero() {
-        assertRepeat("", "abcd",  0);
-    }
-
-    @Test
-    public void testRepeatStringOne() {
-        assertRepeat("abcd", "abcd",  1);
-    }
-
-    @Test
-    public void testRepeatStringTwo() {
-        assertRepeat("abcdabcd", "abcd",  2);
-    }
-
-    @Test
-    public void testRepeatCharNegative() {
-        assertRepeat("", 'a', -1);
-    }
-
-    @Test
-    public void testRepeatCharZero() {
-        assertRepeat("", 'a', 0);
-    }
-
-    @Test
-    public void testRepeatCharOne() {
-        assertRepeat("a", 'a', 1);
-    }
-
-    @Test
-    public void testRepeatCharTwo() {
-        assertRepeat("aa", 'a', 2);
+    
+    private List<Object[]> parametersForRepeatChar() {
+        return paramsList(params("", 'a', -1),
+                          params("", 'a', 0),
+                          params("a", 'a', 1),
+                          params("aa", 'a', 2));
     }
 
     // left
 
-    public abstract String assertLeft(String expected, String str, int length);
+    public abstract String left(String str, int length);
 
-    @Test
-    public void testLeftNull() {
-        assertLeft(null, null,  1);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void left(String expected, String str, int length) {
+        String result = left(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
-
-    @Test
-    public void testLeftLonger() {
-        assertLeft("abcd", "abcdefgh", 4);
-    }
-
-    @Test
-    public void testLeftAtLimit() {
-        assertLeft("abcd", "abcd", 4);
-    }
-
-    @Test
-    public void testLeftShorter() {
-        assertLeft("abcd", "abcd", 5);
-    }
-
-    @Test
-    public void testLeftZero() {
-        assertLeft("", "abcd", 0);
-    }
-
-    @Test
-    public void testLeftNegative() {
-        assertLeft("", "abcd", -1);
+    
+    private List<Object[]> parametersForLeft() {
+        return paramsList(params(null, null,  1),
+                          params("abcd", "abcdefgh", 4),
+                          params("abcd", "abcd", 4),
+                          params("abcd", "abcd", 5),
+                          params("", "abcd", 0),
+                          params("", "abcd", -1));
     }
 
     // right
 
-    public abstract String assertRight(String expected, String str, int length);
+    public abstract String right(String str, int length);
 
-    @Test
-    public void testRightNull() {
-        assertRight(null, null,  1);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void right(String expected, String str, int length) {
+        String result = right(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
-
-    @Test
-    public void testRightLonger() {
-        assertRight("efgh", "abcdefgh", 4);
-    }
-
-    @Test
-    public void testRightAtLimit() {
-        assertRight("abcd", "abcd", 4);
-    }
-
-    @Test
-    public void testRightShorter() {
-        assertRight("abcd", "abcd", 5);
-    }
-
-    @Test
-    public void testRightZero() {
-        assertRight("", "abcd", 0);
-    }
-
-    @Test
-    public void testRightNegative() {
-        assertRight("", "abcd", -1);
+    
+    private List<Object[]> parametersForRight() {
+        return paramsList(params(null, null,  1),
+                          params("efgh", "abcdefgh", 4),
+                          params("abcd", "abcd", 4),
+                          params("abcd", "abcd", 5),
+                          params("", "abcd", 0),
+                          params("", "abcd", -1));
     }
 
     // join
 
-    public abstract String assertJoin(String expected, String[] ary, String delim);
+    public abstract String join(String[] ary, String delim);
 
-    public abstract String assertJoin(String expected, Collection<String> coll, String delim);
+    public abstract String join(Collection<String> coll, String delim);
 
-    @Test
-    public void testJoinArrayNull() {
-        assertJoin(null, (String[])null, ",");
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void joinArray(String expected, String[] ary, String delim) {
+        String result = join(ary, delim);
+        assertEqual(expected, result, message("ary", ary, "delim", delim));
+    }
+    
+    private List<Object[]> parametersForJoinArray() {
+        return paramsList(params(null, (String[])null, ","),
+                          params("abcd", new String[] { "a", "b", "c", "d" }, null),
+                          params("abcd", new String[] { "a", "b", "c", "d" }, ""),
+                          params("", new String[] { "" }, ","),
+                          params("a,b,c,d", new String[] { "a", "b", "c", "d" }, ","));
     }
 
-    @Test
-    public void testJoinArrayDelimNull() {
-        assertJoin("abcd", new String[] { "a", "b", "c", "d" }, null);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void joinCollection(String expected, Collection<String> coll, String delim) {
+        String result = join(coll, delim);
+        assertEqual(expected, result, message("coll", coll, "delim", delim));
     }
-
-    @Test
-    public void testJoinArrayDelimEmpty() {
-        assertJoin("abcd", new String[] { "a", "b", "c", "d" }, "");
-    }
-
-    @Test
-    public void testJoinArrayEmpty() {
-        assertJoin("", new String[] { "" }, ",");
-    }
-
-    @Test
-    public void testJoinArrayNotEmpty() {
-        assertJoin("a,b,c,d", new String[] { "a", "b", "c", "d" }, ",");
-    }
-
-    @Test
-    public void testJoinCollectionNull() {
-        assertJoin(null, (ArrayList<String>)null, ",");
-    }
-
-    @Test
-    public void testJoinCollectionDelimNull() {
-        assertJoin("abcd", Arrays.asList("a", "b", "c", "d"), null);
-    }
-
-    @Test
-    public void testJoinCollectionDelimEmpty() {
-        assertJoin("abcd", Arrays.asList("a", "b", "c", "d"), "");
-    }
-
-    @Test
-    public void testJoinCollectionEmpty() {
-        assertJoin("", new ArrayList<String>(), ",");
-    }
-
-    @Test
-    public void testJoinCollectionNotEmpty() {
-        assertJoin("a,b,c,d", Arrays.asList("a", "b", "c", "d"), ",");
+    
+    private List<Object[]> parametersForJoinCollection() {
+        return paramsList(params(null, (ArrayList<String>)null, ","),
+                          params("abcd", Arrays.asList("a", "b", "c", "d"), null),
+                          params("abcd", Arrays.asList("a", "b", "c", "d"), ""),
+                          params("", new ArrayList<String>(), ","),
+                          params("a,b,c,d", Arrays.asList("a", "b", "c", "d"), ","));
     }
 
     // charAt
+    
+    public abstract Character charAt(String str, int index);
 
-    public abstract Character assertCharAt(Character expected, String str, int index);
-    
-    @Test
-    public void testCharAtNullString() {
-        assertCharAt(null, null, 0);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void charAt(Character expected, String str, int index) {
+        Character result = charAt(str, index);
+        assertEqual(expected, result, message("str", str, "index", index));
     }
     
-    @Test
-    public void testCharAtZero() {
-        assertCharAt('a', "abc", 0);
-    }
-    
-    @Test
-    public void testCharAtOne() {
-        assertCharAt('b', "abc", 1);
-    }
-    
-    @Test
-    public void testCharAtEnd() {
-        assertCharAt('c', "abc", 2);
-    }
-    
-    @Test
-    public void testCharAtPastRange() {
-        assertCharAt(null, "abc", 3);
-    }
-    
-    @Test
-    public void testCharAtNegativeOne() {
-        assertCharAt('c', "abc", -1);
-    }
-    
-    @Test
-    public void testCharAtNegativeTwo() {
-        assertCharAt('b', "abc", -2);
-    }
-    
-    @Test
-    public void testCharAtNegativeAtStart() {
-        assertCharAt('a', "abc", -3);
-    }
-    
-    @Test
-    public void testCharAtNegativeBeforeRange() {
-        assertCharAt(null, "abc", -4);
+    private List<Object[]> parametersForCharAt() {
+        return paramsList(params(null, null, 0),
+                          params('a', "abc", 0),
+                          params('b', "abc", 1),
+                          params('c', "abc", 2),
+                          params(null, "abc", 3),
+                          params('c', "abc", -1),
+                          params('b', "abc", -2),
+                          params('a', "abc", -3),
+                          params(null, "abc", -4));
     }
 
     // get
 
-    public abstract Character assertGet(Character expected, String str, int index);
-    
-    @Test
-    public void testGetNullString() {
-        assertGet(null, null, 0);
+    public abstract Character get(String str, int index);
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void get(Character expected, String str, int index) {
+        Character result = get(str, index);
+        assertEqual(expected, result, message("str", str, "index", index));
     }
     
-    @Test
-    public void testGetZero() {
-        assertGet('a', "abc", 0);
-    }
-    
-    @Test
-    public void testGetOne() {
-        assertGet('b', "abc", 1);
-    }
-    
-    @Test
-    public void testGetEnd() {
-        assertGet('c', "abc", 2);
-    }
-    
-    @Test
-    public void testGetPastRange() {
-        assertGet(null, "abc", 3);
-    }
-    
-    @Test
-    public void testGetNegativeOne() {
-        assertGet('c', "abc", -1);
-    }
-    
-    @Test
-    public void testGetNegativeTwo() {
-        assertGet('b', "abc", -2);
-    }
-    
-    @Test
-    public void testGetNegativeAtStart() {
-        assertGet('a', "abc", -3);
-    }
-    
-    @Test
-    public void testGetNegativeBeforeRange() {
-        assertGet(null, "abc", -4);
+    private List<Object[]> parametersForGet() {
+        return paramsList(params(null, null, 0),
+                          params('a', "abc", 0),
+                          params('b', "abc", 1),
+                          params('c', "abc", 2),
+                          params(null, "abc", 3),
+                          params('c', "abc", -1),
+                          params('b', "abc", -2),
+                          params('a', "abc", -3),
+                          params(null, "abc", -4));
     }
 
     // substring
 
-    public abstract String assertSubstring(String expected, String str, Integer fromIndex, Integer toIndex);
+    public abstract String substring(String str, Integer fromIndex, Integer toIndex);
 
-    @Test
-    public void testSubstringNull() {
-        assertSubstring(null, null, 1, 0);
-    }
-
-    @Test
-    public void testSubstringPositiveFull() {
-        assertSubstring("abcd", "abcd", 0, 3);
-    }
-
-    @Test
-    public void testSubstringPositiveFromLessThanTo() {
-        assertSubstring("abc", "abcd", 0, 2);
-    }
-
-    @Test
-    public void testSubstringPositiveFromEqualsTo() {
-        assertSubstring("a", "abcd", 0, 0);
-    }
-
-    @Test
-    public void testSubstringPositiveFromGreaterThanTo() {
-        // expect "", not null, per Ruby behavior
-        assertSubstring("", "abcd", 1, 0);
-    }
-
-    @Test
-    public void testSubstringPositiveFromPastEnd() {
-        assertSubstring("", "abcd", 4, 5);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void substring(String expected, String str, Integer fromIndex, Integer toIndex) {
+        String result = substring(str, fromIndex, toIndex);
+        assertEqual(expected, result, message("str", str, "fromIndex", fromIndex, "toIndex", toIndex));
     }
     
-    @Test
-    public void testSubstringNegativeFull() {
-        assertSubstring("abcd", "abcd", -4, -1);
-    }
-    
-    @Test
-    public void testSubstringNegativeFromLessThanTo() {
-        assertSubstring("abc", "abcd", -4, -2);
-    }    
-    
-    @Test
-    public void testSubstringNegativeFromEqualsTo() {
-        assertSubstring("a", "abcd", -4, -4);
-    }
-    
-    @Test
-    public void testSubstringNegativeFromGreaterThanTo() {
-        // expect "", not null, per Ruby behavior
-        assertSubstring("", "abcd", -1, -2);
-    }
-
-    @Test
-    public void testSubstringNullFrom() {
-        // null == first in string
-        assertSubstring("abc", "abcd", null, -2);
-    }
-
-    @Test
-    public void testSubstringNullTo() {
-        assertSubstring("cd", "abcd", -2, null);
-    }
-
-    @Test
-    public void testSubstringNullFromNullTo() {
-        assertSubstring("abcd", "abcd", null, null);
+    private List<Object[]> parametersForSubstring() {
+        return paramsList(params(null, null, 1, 0),
+                          params("abcd", "abcd", 0, 3),
+                          params("abc", "abcd", 0, 2),
+                          params("a", "abcd", 0, 0),
+                          // expect "", not null, per Ruby behavior
+                          params("", "abcd", 1, 0),
+                          params("", "abcd", 4, 5),
+                          params("abcd", "abcd", -4, -1),
+                          params("abc", "abcd", -4, -2),
+                          params("a", "abcd", -4, -4),
+                          // expect "", not null, per Ruby behavior
+                          params("", "abcd", -1, -2),
+                          // null == first in string
+                          params("abc", "abcd", null, -2),
+                          params("cd", "abcd", -2, null),
+                          params("abcd", "abcd", null, null));
     }
 
     // startsWith
 
-    public abstract boolean assertStartsWith(boolean expected, String str, char ch);
+    public abstract boolean startsWith(String str, char ch);
 
-    @Test
-    public void testStartsWithNull() {
-        assertStartsWith(false, null, 'j');
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void startsWith(boolean expected, String str, char ch) {
+        boolean result = startsWith(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
     }
-
-    @Test
-    public void testStartsWithMatch() {
-        assertStartsWith(true, "java", 'j');
-    }
-
-    @Test
-    public void testStartsWithNoMatch() {
-        assertStartsWith(false, "java", 'a');
-    }
-
-    @Test
-    public void testStartsWithMismatchedCase() {
-        assertStartsWith(false, "java", 'J');
+    
+    private List<Object[]> parametersForStartsWith() {
+        return paramsList(params(false, null, 'j'),
+                          params(true, "java", 'j'),
+                          params(false, "java", 'a'),
+                          params(false, "java", 'J'));
     }
 
     // indexOf
 
-    public abstract Integer assertIndexOf(Integer expected, String str, Character ch);
-    
-    @Test
-    public void testIndexOfNullCharacter() {
-        assertIndexOf(null, "abc", null);
-    }
-    
-    @Test
-    public void testIndexOfNullString() {
-        assertIndexOf(null, null,  'a');
-    }
-    
-    @Test
-    public void testIndexOfBothNull() {
-        assertIndexOf(null, null,  null);
-    }
-    
-    @Test
-    public void testIndexOfFirstChar() {
-        assertIndexOf(0, "abc", 'a');
-    }
-    
-    @Test
-    public void testIndexOfLastChar() {
-        assertIndexOf(2, "abc", 'c');
-    }
+    public abstract Integer indexOf(String str, Character ch);
 
-    @Test
-    public void testIndexOfNoMatch() {
-        assertIndexOf(null, "abc", 'd');
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void indexOf(Integer expected, String str, Character ch) {
+        Integer result = indexOf(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
     }
-
-    @Test
-    public void testIndexOfMismatchedCase() {
-        assertIndexOf(null, "abc", 'A');
+    
+    private List<Object[]> parametersForIndexOf() {
+        return paramsList(params(null, "abc", null),
+                          params(null, null,  'a'),
+                          params(null, null,  null),
+                          params(0, "abc", 'a'),
+                          params(2, "abc", 'c'),
+                          params(null, "abc", 'd'),
+                          params(null, "abc", 'A'));
     }
 
     // contains
 
-    public abstract boolean assertContains(boolean expected, String str, Character ch);
-    
-    @Test
-    public void testContainsNullCharacter() {
-        assertContains(false, "abc", null);
-    }
-    
-    @Test
-    public void testContainsNullString() {
-        assertContains(false, null,  'a');
-    }
-    
-    @Test
-    public void testContainsBothNull() {
-        assertContains(false, null,  null);
-    }
-    
-    @Test
-    public void testContainsFirstChar() {
-        assertContains(true, "abc", 'a');
-    }
-    
-    @Test
-    public void testContainsLastChar() {
-        assertContains(true, "abc", 'c');
-    }
+    public abstract boolean contains(String str, Character ch);
 
-    @Test
-    public void testContainsNoMatch() {
-        assertContains(false, "abc", 'd');
-    }    
-
-    @Test
-    public void testContainsMismatchedCase() {
-        assertContains(false, "abc", 'A');
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void contains(boolean expected, String str, Character ch) {
+        boolean result = contains(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
+    }
+    
+    private List<Object[]> parametersForContains() {
+        return paramsList(params(false, "abc", null),
+                          params(false, null,  'a'),
+                          params(false, null,  null),
+                          params(true, "abc", 'a'),
+                          params(true, "abc", 'c'),
+                          params(false, "abc", 'd'),
+                          params(false, "abc", 'A'));
     }
 
     // substringAfter
 
-    public abstract String assertSubstringAfter(String expected, String str, Character ch);
-    
-    @Test
-    public void testSubstringAfterNullCharacter() {
-        assertSubstringAfter(null, "abc", null);
-    }
-    
-    @Test
-    public void testSubstringAfterNullString() {
-        assertSubstringAfter(null, null,  'a');
-    }
-    
-    @Test
-    public void testSubstringAfterBothNull() {
-        assertSubstringAfter(null, null,  null);
-    }
-    
-    @Test
-    public void testSubstringAfterFirstChar() {
-        assertSubstringAfter("bc", "abc", 'a');
-    }
-    
-    @Test
-    public void testSubstringAfterLastChar() {
-        assertSubstringAfter("", "abc", 'c');
-    }
+    public abstract String substringAfter(String str, Character ch);
 
-    @Test
-    public void testSubstringAfterNoMatch() {
-        assertSubstringAfter(null, "abc", 'd');
-    }    
-
-    @Test
-    public void testSubstringAfterMismatchedCase() {
-        assertSubstringAfter(null, "abc", 'A');
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void substringAfter(String expected, String str, Character ch) {
+        String result = substringAfter(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
+    }
+    
+    private List<Object[]> parametersForSubstringAfter() {
+        return paramsList(params(null, "abc", null),
+                          params(null, null,  'a'),
+                          params(null, null,  null),
+                          params("bc", "abc", 'a'),
+                          params("", "abc", 'c'),
+                          params(null, "abc", 'd'),
+                          params(null, "abc", 'A'));
     }
 
     // substringBefore
 
-    public abstract String assertSubstringBefore(String expected, String str, Character ch);
+    public abstract String substringBefore(String str, Character ch);
 
-    @Test
-    public void testSubstringBeforeNullCharacter() {
-        assertSubstringBefore(null, "abc", null);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void substringBefore(String expected, String str, Character ch) {
+        String result = substringBefore(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
     }
     
-    @Test
-    public void testSubstringBeforeNullString() {
-        assertSubstringBefore(null, null,  'a');
-    }
-    
-    @Test
-    public void testSubstringBeforeBothNull() {
-        assertSubstringBefore(null, null,  null);
-    }
-    
-    @Test
-    public void testSubstringBeforeFirstChar() {
-        assertSubstringBefore("", "abc", 'a');
-    }
-    
-    @Test
-    public void testSubstringBeforeLastChar() {
-        assertSubstringBefore("ab", "abc", 'c');
-    }
-
-    @Test
-    public void testSubstringBeforeNoMatch() {
-        assertSubstringBefore(null, "abc", 'd');
-    }    
-
-    @Test
-    public void testSubstringBeforeMismatchedCase() {
-        assertSubstringBefore(null, "abc", 'A');
+    private List<Object[]> parametersForSubstringBefore() {
+        return paramsList(params(null, "abc", null),
+                          params(null, null,  'a'),
+                          params(null, null,  null),
+                          params("", "abc", 'a'),
+                          params("ab", "abc", 'c'),
+                          params(null, "abc", 'd'),
+                          params(null, "abc", 'A'));
     }
 
     // eq
 
-    public abstract Boolean assertEq(Boolean expected, String a, String b);
+    public abstract Boolean eq(String a, String b);
 
-    @Test
-    public void testEqNullEmptyString() {
-        assertEq(false, null, "");
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void eq(Boolean expected, String a, String b) {
+        Boolean result = eq(a, b);
+        assertEqual(expected, result, message("a", a, "b", b));
     }
-
-    @Test
-    public void testEqEmptyStringNull() {
-        assertEq(false, "", null);
-    }
-
-    @Test
-    public void testEqNullNull() {
-        assertEq(true, null, null);
-    }
-
-    @Test
-    public void testEqNullNonEmptyString() {
-        assertEq(false, null, "a");
-    }
-
-    @Test
-    public void testEqNonEmptyStringNull() {
-        assertEq(false, "a", null);
-    }
-
-    @Test
-    public void testEqCharCharMatch() {
-        assertEq(true, "a", "a");
-    }
-
-    @Test
-    public void testEqCharCharNoMatch() {
-        assertEq(false, "a", "b");
-    }
-
-    @Test
-    public void testEqCharCharMismatchedCase() {
-        assertEq(false, "a", "A");
-    }
-
-    @Test
-    public void testEqDifferentLengths() {
-        assertEq(false, "a", "ab");
+    
+    private List<Object[]> parametersForEq() {
+        return paramsList(params(false, null, ""),
+                          params(false, "", null),
+                          params(true, null, null),
+                          params(false, null, "a"),
+                          params(false, "a", null),
+                          params(true, "a", "a"),
+                          params(false, "a", "b"),
+                          params(false, "a", "A"),
+                          params(false, "a", "ab"));
     }
 
     // eqi
 
-    public abstract Boolean assertEqi(Boolean expected, String a, String b);
+    public abstract Boolean eqi(String a, String b);
 
-    @Test
-    public void testEqiNullEmptyString() {
-        assertEqi(false, null, "");
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void eqi(Boolean expected, String a, String b) {
+        Boolean result = eqi(a, b);
+        assertEqual(expected, result, message("a", a, "b", b));
     }
-
-    @Test
-    public void testEqiEmptyStringNull() {
-        assertEqi(false, "", null);
-    }
-
-    @Test
-    public void testEqiNullNull() {
-        assertEqi(true, null, null);
-    }
-
-    @Test
-    public void testEqiNullNonEmptyString() {
-        assertEqi(false, null, "a");
-    }
-
-    @Test
-    public void testEqiNonEmptyStringNull() {
-        assertEqi(false, "a", null);
-    }
-
-    @Test
-    public void testEqiCharCharMatch() {
-        assertEqi(true, "a", "a");
-    }
-
-    @Test
-    public void testEqiCharCharNoMatch() {
-        assertEqi(false, "a", "b");
-    }
-
-    @Test
-    public void testEqiCharCharMismatchedCase() {
-        assertEqi(true, "A", "a");
-    }
-
-    @Test
-    public void testEqiDifferentLengths() {
-        assertEqi(false, "a", "ab");
+    
+    private List<Object[]> parametersForEqi() {
+        return paramsList(params(false, null, ""),
+                          params(false, "", null),
+                          params(true, null, null),
+                          params(false, null, "a"),
+                          params(false, "a", null),
+                          params(true, "a", "a"),
+                          params(false, "a", "b"),
+                          params(true, "A", "a"),
+                          params(false, "a", "ab"));
     }
 
     // snip
 
-    public abstract String assertSnip(String expected, String str, int length);
+    public abstract String snip(String str, int length);
 
-    @Test
-    public void testSnipNull() {
-        assertSnip(null, null, 3);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void snip(String expected, String str, int length) {
+        String result = snip(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
-
-    @Test
-    public void testSnipEmpty() {
-        assertSnip("", "", 3);
-    }
-
-    @Test
-    public void testSnipToEmpty() {
-        assertSnip("-", "abc", 1);
-    }
-
-    @Test
-    public void testSnipLongerAtEnd() {
-        assertSnip("a-", "abc", 2);
-    }
-
-    @Test
-    public void testSnipAtLength() {
-        assertSnip("abc", "abc", 3);
-    }
-
-    @Test
-    public void testSnipTwoLonger() {
-        assertSnip("ab-", "abcd", 3);
+    
+    private List<Object[]> parametersForSnip() {
+        return paramsList(params(null, null, 3),
+                          params("", "", 3),
+                          params("-", "abc", 1),
+                          params("a-", "abc", 2),
+                          params("abc", "abc", 3),
+                          params("ab-", "abcd", 3));
     }
 
     // isEmpty
 
-    public abstract boolean assertIsEmpty(boolean expected, String str);
+    public abstract boolean isEmpty(String str);
 
-    @Test
-    public void testIsEmptyNull() {
-        assertIsEmpty(true, null);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void isEmpty(boolean expected, String str) {
+        boolean result = isEmpty(str);
+        assertEqual(expected, result, message("str", str));
     }
-
-    @Test
-    public void testIsEmptyEmpty() {
-        assertIsEmpty(true, "");
-    }
-
-    @Test
-    public void testIsEmptyNonEmpty() {
-        assertIsEmpty(false, "a");
+    
+    private List<Object[]> parametersForIsEmpty() {
+        return paramsList(params(true, null),
+                          params(true, ""),
+                          params(false, "a"));
     }
 
     // length
 
-    public abstract int assertLength(int expected, String str);
+    public abstract int length(String str);
 
-    @Test
-    public void testLengthNull() {
-        assertLength(0, null);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void length(int expected, String str) {
+        int result = length(str);
+        assertEqual(expected, result, message("str", str));
     }
-
-    @Test
-    public void testLengthEmpty() {
-        assertLength(0, "");
-    }
-
-    @Test
-    public void testLengthNonEmpty() {
-        assertLength(1, "a");
+    
+    private List<Object[]> parametersForLength() {
+        return paramsList(params(0, null),
+                          params(0, ""),
+                          params(1, "a"));
     }
 
     // chomp
 
-    public abstract String assertChomp(String expected, String str);
+    public abstract String chomp(String str);
 
-    @Test
-    public void testChompNull() {
-        assertChomp(null, null);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void chomp(String expected, String str) {
+        String result = chomp(str);
+        assertEqual(expected, result, message("str", str));
     }
-
-    @Test
-    public void testChompEmpty() {
-        assertChomp("", "");
-    }
-
-    @Test
-    public void testChompNoEoln() {
-        assertChomp("a", "a");
-    }
-
-    @Test
-    public void testChompN() {
-        assertChomp("a", "a\n");
-    }
-
-    @Test
-    public void testChompNN() {
-        assertChomp("a\n", "a\n\n");
-    }
-
-    @Test
-    public void testChompR() {
-        assertChomp("a", "a\r");
-    }
-
-    @Test
-    public void testChompRR() {
-        assertChomp("a\r", "a\r\r");
-    }
-
-    @Test
-    public void testChompRN() {
-        assertChomp("a\r", "a\r\n");
+    
+    private List<Object[]> parametersForChomp() {
+        return paramsList(params(null, null),
+                          params("", ""),
+                          params("a", "a"),
+                          params("a", "a\n"),
+                          params("a\n", "a\n\n"),
+                          params("a", "a\r"),
+                          params("a\r", "a\r\r"),
+                          params("a\r", "a\r\n"));
     }
 
     // chompAll
 
-    public abstract String assertChompAll(String expected, String str);
+    public abstract String chompAll(String str);
 
-    @Test
-    public void testChompAllNull() {
-        assertChompAll(null, null);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void chompAll(String expected, String str) {
+        String result = chompAll(str);
+        assertEqual(expected, result, message("str", str));
     }
-
-    @Test
-    public void testChompAllEmpty() {
-        assertChompAll("", "");
+    
+    private List<Object[]> parametersForChompAll() {
+        return paramsList(params(null, null),
+                          params("", ""),
+                          params("a", "a"),
+                          params("a", "a\n"),
+                          params("a", "a\n\n"),
+                          params("a", "a\r"),
+                          params("a", "a\r\r"),
+                          params("a", "a\r\n"));
     }
-
-    @Test
-    public void testChompAllNoEoln() {
-        assertChompAll("a", "a");
-    }
-
-    @Test
-    public void testChompAllN() {
-        assertChompAll("a", "a\n");
-    }
-
-    @Test
-    public void testChompAllNN() {
-        assertChompAll("a", "a\n\n");
-    }
-
-    @Test
-    public void testChompAllR() {
-        assertChompAll("a", "a\r");
-    }
-
-    @Test
-    public void testChompAllRR() {
-        assertChompAll("a", "a\r\r");
-    }
-
-    @Test
-    public void testChompAllRN() {
-        assertChompAll("a", "a\r\n");
-    }    
     
     // unquote
     
-    public abstract String assertUnquote(String expected, String str);
-    
-    @Test
-    public void testUnquoteNull() {
-        assertUnquote(null, null);
+    public abstract String unquote(String str);    
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void unquote(String expected, String str) {
+        String result = unquote(str);
+        assertEqual(expected, result, message("str", str));
     }
     
-    @Test
-    public void testUnquoteEmpty() {
-        assertUnquote("", "");
-    }
-    
-    @Test
-    public void testUnquoteNeitherQuote() {
-        assertUnquote("abc", "abc");
-    }
-    
-    @Test
-    public void testUnquoteSingleDouble() {
-        assertUnquote("\'abc\"", "\'abc\"");
-    }
-    
-    @Test
-    public void testUnquoteDoubleSingle() {
-        assertUnquote("\"abc\'", "\"abc\'");
-    }
-    
-    @Test
-    public void testUnquoteSingleSingle() {
-        assertUnquote("abc", "\'abc\'");
-    }
-    
-    @Test
-    public void testUnquoteDoubleDouble() {
-        assertUnquote("abc", "\"abc\"");
+    private List<Object[]> parametersForUnquote() {
+        return paramsList(params(null,      null),
+                          params("",        ""),
+                          params("abc",     "abc"),
+                          params("\'abc\"", "\'abc\""),
+                          params("\"abc\'", "\"abc\'"),
+                          params("abc",     "\'abc\'"),
+                          params("abc",     "\"abc\""),
+                          params("\"",      "\""),
+                          params("",        "\"\""));
     }
     
     // quote
     
-    public abstract String assertQuote(String expected, String str);
-    
-    @Test
-    public void testQuoteNull() {
-        assertQuote(null, null);
+    public abstract String quote(String str);
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void quote(String expected, String str) {
+        String result = quote(str);
+        assertEqual(expected, result, message("str", str));
     }
     
-    @Test
-    public void testQuoteEmpty() {
-        assertQuote("\"\"", "");
-    }
-    
-    @Test
-    public void testQuoteNotEmpty() {
-        assertQuote("\"abc\"", "abc");
+    private List<Object[]> parametersForQuote() {
+        return paramsList(params(null, null),
+                          params("\"\"", ""),
+                          params("\"abc\"", "abc"));
     }
 }
