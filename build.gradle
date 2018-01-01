@@ -14,6 +14,9 @@ apply plugin: 'java'
 
 group = 'org.incava'
 version ='3.7.3'
+// sourceCompatibility = 1.5
+// sourceCompatibility = 1.5
+
 ext {
     pkgName = 'ijdk'
     pkgDesc = 'Incava Java Development Kit'
