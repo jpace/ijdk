@@ -65,8 +65,8 @@ public class BaseArrayTest extends Parameterized {
         List<String> abcList = Arrays.asList(new String[] { "a", "b", "c" });
         
         return paramsList(params(objectArray(), objectArray()),
-                          params(abcList,          new ExampleArray<Object>(abcList)),
-                          params(abcList,          objectArray("a", "b", "c")),
+                          params(abcList,       new ExampleArray<Object>(abcList)),
+                          params(abcList,       objectArray("a", "b", "c")),
                           params(objectArray(), new ExampleArray<Object>((Collection<Object>)null)),
                           params(objectArray(), objectArray()));
     }    
@@ -188,9 +188,9 @@ public class BaseArrayTest extends Parameterized {
     }
 
     public List<Object[]> parametersForAppend() {
-        return paramsList(params(integerArray(6, 7),    integerArray(6),    7),
-                          params(integerArray(6, null), integerArray(6),    (Integer)null),
-                          params(integerArray(7),       integerArray(), 7));
+        return paramsList(params(integerArray(6, 7),    integerArray(6), 7),
+                          params(integerArray(6, null), integerArray(6), (Integer)null),
+                          params(integerArray(7),       integerArray(),  7));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -211,12 +211,12 @@ public class BaseArrayTest extends Parameterized {
     }
 
     public List<Object[]> parametersForSet() {
-        return paramsList(params(integerArray(6, 7),    integerArray(6),     1, 7),
-                          params(integerArray(6, null), integerArray(6),     1, (Integer)null),
-                          params(integerArray(7),       integerArray(),  0, 7),
-                          params(null,                  integerArray(), -1, 7),
-                          params(integerArray(7),       integerArray(6),    -1, 7),
-                          params(null,                  integerArray(6),    -2, 7));
+        return paramsList(params(integerArray(6, 7),    integerArray(6),  1, 7),
+                          params(integerArray(6, null), integerArray(6),  1, (Integer)null),
+                          params(integerArray(7),       integerArray(),   0, 7),
+                          params(null,                  integerArray(),  -1, 7),
+                          params(integerArray(7),       integerArray(6), -1, 7),
+                          params(null,                  integerArray(6), -2, 7));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -256,11 +256,11 @@ public class BaseArrayTest extends Parameterized {
     }
 
     public List<Object[]> parametersForTakeFirst() {
-        return paramsList(params(1,             integerArray(),         objectArray(1)),
+        return paramsList(params(1,             integerArray(),             objectArray(1)),
                           params(1,             objectArray(2),             objectArray(1, 2)),
                           params("a",           new ExampleArray<String>(), objectArray("a")),
                           params("a",           objectArray("b"),           objectArray("a", "b")),
-                          params((Integer)null, integerArray(),         integerArray()));
+                          params((Integer)null, integerArray(),             integerArray()));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -272,11 +272,11 @@ public class BaseArrayTest extends Parameterized {
     }
 
     public List<Object[]> parametersForTakeLast() {
-        return paramsList(params(1,             integerArray(), objectArray(1)),
-                          params(2,             objectArray(1),     objectArray(1, 2)),
-                          params("a",           objectArray(),      objectArray("a")),
-                          params("b",           objectArray("a"),   objectArray("a", "b")),
-                          params((Integer)null, integerArray(), integerArray()));
+        return paramsList(params(1,             integerArray(),   objectArray(1)),
+                          params(2,             objectArray(1),   objectArray(1, 2)),
+                          params("a",           objectArray(),    objectArray("a")),
+                          params("b",           objectArray("a"), objectArray("a", "b")),
+                          params((Integer)null, integerArray(),   integerArray()));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -293,7 +293,7 @@ public class BaseArrayTest extends Parameterized {
                           params(integerArray(1, 2), integerArray(1, 2)),
                           params(integerArray(2, 1), integerArray(2, 1)),
                           params(integerArray(1, 2), integerArray(1, 2, 1)),
-                          params(integerArray(), integerArray()));
+                          params(integerArray(),     integerArray()));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -333,13 +333,14 @@ public class BaseArrayTest extends Parameterized {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public <T> void plus(ExampleArray<T> expected, ExampleArray<T> list, ExampleArray<T> other) {
+    public <T> void plus(ExampleArray<T> expected, ExampleArray<T> list, Collection<T> other) {
         ExampleArray<T> result = list.plus(other);
         assertThat(result, withContext(message("list", list, "other", other), equalTo(expected)));
     }
     
     private List<Object[]> parametersForPlus() {
         return paramsList(params(integerArray(1, 2, 3, 4), integerArray(1, 2),    integerArray(3, 4)),
+                          params(integerArray(1, 2, 3, 4), integerArray(1, 2),    Arrays.asList(new Integer[] { 3, 4 })),
                           params(integerArray(1, 2, 3),    integerArray(1, 2),    integerArray(3)),
                           params(integerArray(1, 2),       integerArray(1, 2),    integerArray()),
                           params(integerArray(1, 2, 3, 3), integerArray(1, 2, 3), integerArray(3)),
@@ -347,13 +348,14 @@ public class BaseArrayTest extends Parameterized {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public <T> void minus(ExampleArray<T> expected, ExampleArray<T> list, ExampleArray<T> other) {
+    public <T> void minus(ExampleArray<T> expected, ExampleArray<T> list, Collection<T> other) {
         ExampleArray<T> result = list.minus(other);
         assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForMinus() {
         return paramsList(params(integerArray(2),    integerArray(1, 2),    integerArray(1)),
+                          params(integerArray(2),    integerArray(1, 2),    Arrays.asList(new Integer[] { 1 })),
                           params(integerArray(1),    integerArray(1, 2),    integerArray(2)),
                           params(integerArray(1, 1), integerArray(1, 1),    integerArray(2)),
                           params(integerArray(1, 1), integerArray(1, 2, 1), integerArray(2)),

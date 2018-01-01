@@ -274,7 +274,7 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
      * Returns a new list, concatenating the other list with this one. Elements will be in the order
      * of this list, then the elements of the other.
      */
-    public C plus(C other) {
+    public C plus(Collection<T> other) {
         C newList = newInstance();
         for (T obj : this) {
             newList.append(obj);
@@ -289,7 +289,7 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
      * Returns a new list, containing the elements of this list that are not in the other. The
      * retained elements are in the same order as they are in this list.
      */
-    public C minus(C other) {
+    public C minus(Collection<T> other) {
         C newList = newInstance();
         for (T obj : this) {
             if (!other.contains(obj)) {
@@ -324,7 +324,7 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
     /**
      * Returns a list of elements in both this array and the other. The order is the same as in this array.
      */
-    public C intersection(C other) {
+    public C intersection(Collection<T> other) {
         C ary = newInstance();
         for (T obj : this) {
             if (other.contains(obj)) {
