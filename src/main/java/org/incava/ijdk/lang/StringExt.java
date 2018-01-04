@@ -174,7 +174,8 @@ public class StringExt {
     }
 
     public static String snip(String str, int len) {
-        return new Str(str).snip(len).str();
+        Str snipped = new Str(str).snip(len);
+        return snipped == null ? null : snipped.str();
     }
 
     public static boolean isEmpty(String str) {

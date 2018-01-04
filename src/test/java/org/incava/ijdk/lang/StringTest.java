@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.nullValue;
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
@@ -37,7 +38,7 @@ public abstract class StringTest extends Parameterized {
                           params(new String[] { "fee", "fi", "foo", "fum" }, "fee,\tfi,\nfoo,\rfum"));
     }
     
-    protected List<Object[]> parametersForPadWithChar() {
+    public List<Object[]> parametersForPadWithChar() {
         return paramsList(params(null,       null,   '*', 8), 
                           params("abcd****", "abcd", '*', 8), 
                           params("abcd",     "abcd", '*', 3), 
@@ -51,16 +52,6 @@ public abstract class StringTest extends Parameterized {
                           params("abcd",     "abcd", 4), 
                           params("abcd ",    "abcd", 5));
     }
-
-    public abstract String padLeft(String str, char ch, int length);
-
-    public abstract String padLeft(String str, int length);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void padLeftWithChar(String expected, String str, char ch, int length) {
-        String result = padLeft(str, ch, length);
-        assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
-    }
     
     public List<Object[]> parametersForPadLeftWithChar() {
         return paramsList(params(null,       null,   '*', 8), 
@@ -69,61 +60,31 @@ public abstract class StringTest extends Parameterized {
                           params("abcd",     "abcd", '*', 4), 
                           params("*abcd",    "abcd", '*', 5));
     }
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void padLeftWithoutChar(String expected, String str, int length) {
-        String result = padLeft(str, length);
-        assertEqual(expected, result, message("str", str, "length", length));
-    }
     
-    private List<Object[]> parametersForPadLeftWithoutChar() {
+    public List<Object[]> parametersForPadLeftWithoutChar() {
         return paramsList(params(null,       null,   8), 
                           params("    abcd", "abcd", 8), 
                           params("abcd",     "abcd", 3), 
                           params("abcd",     "abcd", 4), 
                           params(" abcd",    "abcd", 5));
     }
-
-    public abstract String repeat(String str, int length);
-
-    public abstract String repeat(char ch, int length);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void repeatString(String expected, String str, int length) {
-        String result = repeat(str, length);
-        assertThat(result, withContext(message("str", str, "length", length), equalTo(expected)));
-    }
     
-    private List<Object[]> parametersForRepeatString() {
+    public List<Object[]> parametersForRepeatString() {
         return paramsList(params(null,       null,   0),  
                           params("",         "abcd", -1), 
                           params("",         "abcd", 0),  
                           params("abcd",     "abcd", 1),  
                           params("abcdabcd", "abcd", 2));
     }
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void repeatChar(String expected, char ch, int length) {
-        String result = repeat(ch, length);
-        assertEqual(expected, result, message("ch", ch, "length", length));
-    }
     
-    private List<Object[]> parametersForRepeatChar() {
+    public List<Object[]> parametersForRepeatChar() {
         return paramsList(params("",   'a', -1), 
                           params("",   'a', 0),  
                           params("a",  'a', 1),  
                           params("aa", 'a', 2));
     }
-
-    public abstract String left(String str, int length);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void left(String expected, String str, int length) {
-        String result = left(str, length);
-        assertEqual(expected, result, message("str", str, "length", length));
-    }
     
-    private List<Object[]> parametersForLeft() {
+    public List<Object[]> parametersForLeft() {
         return paramsList(params(null,   null,       1), 
                           params("abcd", "abcdefgh", 4), 
                           params("abcd", "abcd",     4), 
@@ -131,16 +92,8 @@ public abstract class StringTest extends Parameterized {
                           params("",     "abcd",     0), 
                           params("",     "abcd",     -1));
     }
-
-    public abstract String right(String str, int length);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void right(String expected, String str, int length) {
-        String result = right(str, length);
-        assertEqual(expected, result, message("str", str, "length", length));
-    }
     
-    private List<Object[]> parametersForRight() {
+    public List<Object[]> parametersForRight() {
         return paramsList(params(null,   null,       1), 
                           params("efgh", "abcdefgh", 4), 
                           params("abcd", "abcd",     4), 
@@ -149,15 +102,7 @@ public abstract class StringTest extends Parameterized {
                           params("",     "abcd",     -1));
     }
     
-    public abstract Character charAt(String str, int index);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void charAt(Character expected, String str, int index) {
-        Character result = charAt(str, index);
-        assertEqual(expected, result, message("str", str, "index", index));
-    }
-    
-    private List<Object[]> parametersForCharAt() {
+    public List<Object[]> parametersForCharAt() {
         return paramsList(params(null, null,  0),  
                           params('a',  "abc", 0),  
                           params('b',  "abc", 1),  
@@ -168,16 +113,8 @@ public abstract class StringTest extends Parameterized {
                           params('a',  "abc", -3), 
                           params(null, "abc", -4));
     }
-
-    public abstract Character get(String str, int index);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void get(Character expected, String str, int index) {
-        Character result = get(str, index);
-        assertEqual(expected, result, message("str", str, "index", index));
-    }
     
-    private List<Object[]> parametersForGet() {
+    public List<Object[]> parametersForGet() {
         return paramsList(params(null, null,  0),  
                           params('a',  "abc", 0),  
                           params('b',  "abc", 1),  
@@ -188,16 +125,8 @@ public abstract class StringTest extends Parameterized {
                           params('a',  "abc", -3), 
                           params(null, "abc", -4));
     }
-
-    public abstract String substring(String str, Integer fromIndex, Integer toIndex);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void substring(String expected, String str, Integer fromIndex, Integer toIndex) {
-        String result = substring(str, fromIndex, toIndex);
-        assertEqual(expected, result, message("str", str, "fromIndex", fromIndex, "toIndex", toIndex));
-    }
     
-    private List<Object[]> parametersForSubstring() {
+    public List<Object[]> parametersForSubstring() {
         return paramsList(params(null,   null,     1,    0),    
                           params("abcd", "abcd",   0,    3),    
                           params("abc",  "abcd",   0,    2),    
@@ -215,31 +144,15 @@ public abstract class StringTest extends Parameterized {
                           params("cd",   "abcd",   -2,   null), 
                           params("abcd", "abcd",   null, null));
     }
-
-    public abstract boolean startsWith(String str, char ch);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void startsWith(boolean expected, String str, char ch) {
-        boolean result = startsWith(str, ch);
-        assertEqual(expected, result, message("str", str, "ch", ch));
-    }
     
-    private List<Object[]> parametersForStartsWith() {
+    public List<Object[]> parametersForStartsWith() {
         return paramsList(params(false, null,   'j'), 
                           params(true,  "java", 'j'), 
                           params(false, "java", 'a'), 
                           params(false, "java", 'J'));
     }
-
-    public abstract Integer indexOf(String str, Character ch);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void indexOf(Integer expected, String str, Character ch) {
-        Integer result = indexOf(str, ch);
-        assertEqual(expected, result, message("str", str, "ch", ch));
-    }
     
-    private List<Object[]> parametersForIndexOf() {
+    public List<Object[]> parametersForIndexOf() {
         return paramsList(params(null, "abc", null), 
                           params(null, null,  'a'),  
                           params(null, null,  null), 
@@ -248,18 +161,8 @@ public abstract class StringTest extends Parameterized {
                           params(null, "abc", 'd'),  
                           params(null, "abc", 'A'));
     }
-
-    // contains
-
-    public abstract boolean contains(String str, Character ch);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void contains(boolean expected, String str, Character ch) {
-        boolean result = contains(str, ch);
-        assertEqual(expected, result, message("str", str, "ch", ch));
-    }
     
-    private List<Object[]> parametersForContains() {
+    public List<Object[]> parametersForContains() {
         return paramsList(params(false, "abc", null), 
                           params(false, null,  'a'),  
                           params(false, null,  null), 
@@ -268,16 +171,8 @@ public abstract class StringTest extends Parameterized {
                           params(false, "abc", 'd'),  
                           params(false, "abc", 'A'));
     }
-
-    public abstract String substringAfter(String str, Character ch);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void substringAfter(String expected, String str, Character ch) {
-        String result = substringAfter(str, ch);
-        assertEqual(expected, result, message("str", str, "ch", ch));
-    }
     
-    private List<Object[]> parametersForSubstringAfter() {
+    public List<Object[]> parametersForSubstringAfter() {
         return paramsList(params(null, "abc", null), 
                           params(null, null,  'a'),  
                           params(null, null,  null), 
@@ -286,16 +181,8 @@ public abstract class StringTest extends Parameterized {
                           params(null, "abc", 'd'),  
                           params(null, "abc", 'A'));
     }
-
-    public abstract String substringBefore(String str, Character ch);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void substringBefore(String expected, String str, Character ch) {
-        String result = substringBefore(str, ch);
-        assertEqual(expected, result, message("str", str, "ch", ch));
-    }
     
-    private List<Object[]> parametersForSubstringBefore() {
+    public List<Object[]> parametersForSubstringBefore() {
         return paramsList(params(null, "abc", null), 
                           params(null, null,  'a'),  
                           params(null, null,  null), 
@@ -304,16 +191,8 @@ public abstract class StringTest extends Parameterized {
                           params(null, "abc", 'd'),  
                           params(null, "abc", 'A'));
     }
-
-    public abstract Boolean eq(String a, String b);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void eq(Boolean expected, String a, String b) {
-        Boolean result = eq(a, b);
-        assertEqual(expected, result, message("a", a, "b", b));
-    }
     
-    private List<Object[]> parametersForEq() {
+    public List<Object[]> parametersForEq() {
         return paramsList(params(false, null, ""),   
                           params(false, "",   null), 
                           params(true,  null, null), 
@@ -324,16 +203,8 @@ public abstract class StringTest extends Parameterized {
                           params(false, "a",  "A"),  
                           params(false, "a",  "ab"));
     }
-
-    public abstract Boolean eqi(String a, String b);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void eqi(Boolean expected, String a, String b) {
-        Boolean result = eqi(a, b);
-        assertEqual(expected, result, message("a", a, "b", b));
-    }
     
-    private List<Object[]> parametersForEqi() {
+    public List<Object[]> parametersForEqi() {
         return paramsList(params(false, null, ""),   
                           params(false, "",   null), 
                           params(true,  null, null), 
@@ -344,16 +215,8 @@ public abstract class StringTest extends Parameterized {
                           params(true,  "A",  "a"),  
                           params(false, "a",  "ab"));
     }
-
-    public abstract String snip(String str, int length);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void snip(String expected, String str, int length) {
-        String result = snip(str, length);
-        assertEqual(expected, result, message("str", str, "length", length));
-    }
     
-    private List<Object[]> parametersForSnip() {
+    public List<Object[]> parametersForSnip() {
         return paramsList(params(null,  null,   3), 
                           params("",    "",     3), 
                           params("-",   "abc",  1), 
@@ -361,44 +224,20 @@ public abstract class StringTest extends Parameterized {
                           params("abc", "abc",  3), 
                           params("ab-", "abcd", 3));
     }
-
-    public abstract boolean isEmpty(String str);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void isEmpty(boolean expected, String str) {
-        boolean result = isEmpty(str);
-        assertEqual(expected, result, message("str", str));
-    }
     
-    private List<Object[]> parametersForIsEmpty() {
+    public List<Object[]> parametersForIsEmpty() {
         return paramsList(params(true,  null), 
                           params(true,  ""),   
                           params(false, "a"));
     }
-
-    public abstract int length(String str);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void length(int expected, String str) {
-        int result = length(str);
-        assertEqual(expected, result, message("str", str));
-    }
     
-    private List<Object[]> parametersForLength() {
+    public List<Object[]> parametersForLength() {
         return paramsList(params(0, null), 
                           params(0, ""),   
                           params(1, "a"));
     }
-
-    public abstract String chomp(String str);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void chomp(String expected, String str) {
-        String result = chomp(str);
-        assertEqual(expected, result, message("str", str));
-    }
     
-    private List<Object[]> parametersForChomp() {
+    public List<Object[]> parametersForChomp() {
         return paramsList(params(null,  null),    
                           params("",    ""),      
                           params("a",   "a"),     
@@ -408,16 +247,8 @@ public abstract class StringTest extends Parameterized {
                           params("a\r", "a\r\r"), 
                           params("a\r", "a\r\n"));
     }
-
-    public abstract String chompAll(String str);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void chompAll(String expected, String str) {
-        String result = chompAll(str);
-        assertEqual(expected, result, message("str", str));
-    }
     
-    private List<Object[]> parametersForChompAll() {
+    public List<Object[]> parametersForChompAll() {
         return paramsList(params(null, null),    
                           params("",   ""),      
                           params("a",  "a"),     
@@ -428,15 +259,7 @@ public abstract class StringTest extends Parameterized {
                           params("a",  "a\r\n"));
     }
     
-    public abstract String unquote(String str);    
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void unquote(String expected, String str) {
-        String result = unquote(str);
-        assertEqual(expected, result, message("str", str));
-    }
-    
-    private List<Object[]> parametersForUnquote() {
+    public List<Object[]> parametersForUnquote() {
         return paramsList(params(null,      null),
                           params("",        ""),
                           params("abc",     "abc"),
@@ -448,15 +271,7 @@ public abstract class StringTest extends Parameterized {
                           params("",        "\"\""));
     }
     
-    public abstract String quote(String str);
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void quote(String expected, String str) {
-        String result = quote(str);
-        assertEqual(expected, result, message("str", str));
-    }
-    
-    private List<Object[]> parametersForQuote() {
+    public List<Object[]> parametersForQuote() {
         return paramsList(params(null,      null), 
                           params("\"\"",    ""),   
                           params("\"abc\"", "abc"));

@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
@@ -37,57 +38,82 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void padWithChar(String expected, String str, char ch, int length) {
         Str result = toStr(str).pad(ch, length);
-        assertEqual(toStr(expected), result, message("str", str, "ch", ch, "length", length));
+        assertResult(expected, result, message("str", str, "ch", ch, "length", length));        
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void padWithoutChar(String expected, String str, int length) {
         Str result = toStr(str).pad(length);
-        assertEqual(toStr(expected), result, message("str", str, "length", length));
-    }    
-
-    public String pad(String str, char ch, int length) {
-        return new Str(str).pad(ch, length).str();
+        assertThat(result, withContext(message("str", str, "length", length), equalTo(toStr(expected))));
     }
 
-    public String pad(String str, int length) {
-        return new Str(str).pad(length).str();
-    }    
-
-    public String padLeft(String str, char ch, int length) {
-        return new Str(str).padLeft(ch, length).str();
-    }    
-
-    public String padLeft(String str, int length) {
-        return new Str(str).padLeft(length).str();
-    }    
-
-    public String repeat(String str, int length) {
-        return new Str(str).repeat(length);
-    }    
-
-    public String repeat(char ch, int length) {
-        return new Str(ch).repeat(length);
+    public void assertResult(String expected, Str result, String msg) {
+        if (expected == null) {
+            assertThat(result, withContext(msg, nullValue()));
+        }
+        else {
+            assertThat(result, withContext(msg, equalTo(toStr(expected))));
+        }
     }
 
-    public String left(String str, int length) {
-        return new Str(str).left(length);
+    public void assertResult(String expected, String result, String msg) {
+        if (expected == null) {
+            assertThat(result, withContext(msg, nullValue()));
+        }
+        else {
+            assertThat(result, withContext(msg, equalTo(expected)));
+        }
     }
 
-    public String right(String str, int length) {
-        return new Str(str).right(length);
-    }
-
-    public Character charAt(String str, int index) {
-        return new Str(str).charAt(index);
-    }
-
-    public Character get(String str, int index) {
-        return new Str(str).get(index);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padLeftWithChar(String expected, String str, char ch, int length) {
+        Str result = toStr(str).padLeft(ch, length);
+        assertResult(expected, result, message("str", str, "ch", ch, "length", length));
     }    
 
-    @Test
-    @Parameters
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padLeftWithoutChar(String expected, String str, int length) {
+        Str result = toStr(str).padLeft(length);
+        assertResult(expected, result, message("str", str, "length", length));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void repeatString(String expected, String str, int length) {
+        String result = toStr(str).repeat(length);
+        assertResult(expected, result, message("str", str, "length", length));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void repeatChar(String expected, char ch, int length) {
+        String result = new Str(ch).repeat(length);
+        assertResult(expected, result, message("ch", ch, "length", length));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void left(String expected, String str, int length) {
+        String result = new Str(str).left(length);
+        assertResult(expected, result, message("str", str, "length", length));
+    }    
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void right(String expected, String str, int length) {
+        String result = new Str(str).right(length);
+        assertResult(expected, result, message("str", str, "length", length));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void charAt(Character expected, String str, int index) {
+        Character result = new Str(str).charAt(index);
+        assertThat(result, withContext(message("str", str, "index", index), equalTo(expected)));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void get(Character expected, String str, int index) {
+        Character result = new Str(str).get(index);
+        assertThat(result, withContext(message("str", str, "index", index), equalTo(expected)));
+    }    
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void getIndex(Integer expected, String str, int index) {
         Integer result = new Str(str).getIndex(index);
         assertEqual(expected, result, message("str", str, "index", index));
@@ -106,64 +132,94 @@ public class StrTest extends StringTest {
                           params(null, abcd, -5));
     }
 
-    public String substring(String str, Integer fromIndex, Integer toIndex) {
-        return new Str(str).substring(fromIndex, toIndex);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void substring(String expected, String str, Integer fromIndex, Integer toIndex) {
+        String result = new Str(str).substring(fromIndex, toIndex);
+        assertResult(expected, result, message("str", str, "fromIndex", fromIndex, "toIndex", toIndex));
     }
 
-    public boolean startsWith(String str, char ch) {
-        return new Str(str).startsWith(ch);
-    }
-
-    public Integer indexOf(String str, Character ch) {
-        return new Str(str).indexOf(ch);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void startsWith(boolean expected, String str, char ch) {
+        boolean result = new Str(str).startsWith(ch);
+        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
     }    
 
-    public boolean contains(String str, Character ch) {
-        return new Str(str).contains(ch);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void indexOf(Integer expected, String str, Character ch) {
+        Integer result = new Str(str).indexOf(ch);
+        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
     }
 
-    public String substringAfter(String str, Character ch) {
-        return new Str(str).substringAfter(ch);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void contains(boolean expected, String str, Character ch) {
+        boolean result = new Str(str).contains(ch);
+        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
+    }
+    
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void substringAfter(String expected, String str, Character ch) {
+        String result = new Str(str).substringAfter(ch);
+        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
     }
 
-    public String substringBefore(String str, Character ch) {
-        return new Str(str).substringBefore(ch);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void substringBefore(String expected, String str, Character ch) {
+        String result = new Str(str).substringBefore(ch);
+        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
     }
 
-    public Boolean eq(String a, String b) {
-        return new Str(a).eq(b);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void eq(Boolean expected, String a, String b) {
+        Boolean result = new Str(a).eq(b);
+        assertThat(result, withContext(message("a", a, "b", b), equalTo(expected)));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void eqi(Boolean expected, String a, String b) {
+        Boolean result = new Str(a).eqi(b);
+        assertThat(result, withContext(message("a", a, "b", b), equalTo(expected)));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void snip(String expected, String str, int length) {
+        Str result = new Str(str).snip(length);
+        assertResult(expected, result, message("str", str, "length", length));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void isEmpty(boolean expected, String str) {
+        boolean result = new Str(str).isEmpty();
+        assertThat(result, withContext(message("str", str), equalTo(expected)));
     }    
 
-    public Boolean eqi(String a, String b) {
-        return new Str(a).eqi(b);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void length(int expected, String str) {
+        int result = new Str(str).length();
+        assertThat(result, withContext(message("str", str), equalTo(expected)));
     }
 
-    public String snip(String str, int length) {
-        return new Str(str).snip(length).str();
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void chomp(String expected, String str) {
+        String result = new Str(str).chomp();
+        assertThat(result, withContext(message("str", str), equalTo(expected)));
     }
 
-    public boolean isEmpty(String str) {
-        return new Str(str).isEmpty();
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void chompAll(String expected, String str) {
+        String result = new Str(str).chompAll();
+        assertThat(result, withContext(message("str", str), equalTo(expected)));
     }
 
-    public int length(String str) {
-        return new Str(str).length();
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void unquote(String expected, String str) {
+        String result = new Str(str).unquote();
+        assertThat(result, withContext(message("str", str), equalTo(expected)));
     }
 
-    public String chomp(String str) {
-        return new Str(str).chomp();
-    }
-
-    public String chompAll(String str) {
-        return new Str(str).chompAll();
-    }
-    
-    public String unquote(String str) {
-        return new Str(str).unquote();
-    }
-    
-    public String quote(String str) {
-        return new Str(str).quote();
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void quote(String expected, String str) {
+        String result = new Str(str).quote();
+        assertEqual(expected, result, message("str", str));
     }
 
     public Str toStr(String str) {
@@ -172,18 +228,6 @@ public class StrTest extends StringTest {
 
     public String fromStr(Str str) {
         return str == null ? null : str.str();
-    }
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void padLeftWithChar(String expected, String str, char ch, int length) {
-        Str result = toStr(str).padLeft(ch, length);
-        assertEqual(expected == null ? null : Str.of(expected), result, message("str", str, "ch", ch, "length", length));
-    }
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void padLeftWithoutChar(String expected, String str, int length) {
-        Str result = toStr(str).padLeft(length);
-        assertEqual(expected == null ? null : Str.of(expected), result, message("str", str, "length", length));
     }
     
     @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
@@ -269,7 +313,7 @@ public class StrTest extends StringTest {
     
     private List<Object[]> parametersForHashCodeTest() {
         return paramsList(params("abc".hashCode(), "abc"),
-                          params(0, null));
+                          params(0,                null));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -278,7 +322,7 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForInitRepeat() {
-        return paramsList(params(new Str("a"),  "a",  1),  
+        return paramsList(params(new Str("a"),  "a",  1),
                           params(new Str("aa"), "a",  2),  
                           params(new Str(""),   "a",  0),  
                           params(new Str(""),   "a",  -0), 

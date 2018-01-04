@@ -679,7 +679,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      */
     public Str snip(int len) {
         if (str() == null) {
-            return this;
+            return null;
         }
         else if (len <= 0) {
             return Str.empty();

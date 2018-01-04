@@ -9,8 +9,11 @@ import junitparams.naming.TestCaseName;
 import org.incava.ijdk.lang.StringTest;
 import org.junit.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
+import static org.incava.attest.ContextMatcher.withContext;
 import static org.incava.attest.Parameters.params;
 import static org.incava.attest.Parameters.paramsList;
 
@@ -58,100 +61,136 @@ public class StringExtTest extends StringTest {
         assertEqual(expected, result, message("str", str, "length", length));
     }
 
-    public String padLeft(String str, char ch, int length) {
-        return StringExt.padLeft(str, ch, length);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padLeftWithChar(String expected, String str, char ch, int length) {
+        String result = StringExt.padLeft(str, ch, length);
+        assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padLeftWithoutChar(String expected, String str, int length) {
+        String result = StringExt.padLeft(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void repeatString(String expected, String str, int length) {
+        String result = StringExt.repeat(str, length);
+        assertThat(result, withContext(message("str", str, "length", length), equalTo(expected)));
     }    
 
-    public String padLeft(String str, int length) {
-        return StringExt.padLeft(str, length);
-    }    
-
-    public String repeat(String str, int length) {
-        return StringExt.repeat(str, length);
-    }    
-
-    public String repeat(Character ch, int length) {
-        return StringExt.repeat(ch, length);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void left(String expected, String str, int length) {
+        String result = StringExt.left(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
 
-    public String repeat(char ch, int length) {
-        return StringExt.repeat(ch, length);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void right(String expected, String str, int length) {
+        String result = StringExt.right(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
 
-    public String left(String str, int length) {
-        return StringExt.left(str, length);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void charAt(Character expected, String str, int index) {
+        Character result = StringExt.charAt(str, index);
+        assertEqual(expected, result, message("str", str, "index", index));
     }
 
-    public String right(String str, int length) {
-        return StringExt.right(str, length);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void get(Character expected, String str, int index) {
+        Character result = StringExt.get(str, index);
+        assertEqual(expected, result, message("str", str, "index", index));
     }
 
-    public Character charAt(String str, int index) {
-        return StringExt.charAt(str, index);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void substring(String expected, String str, Integer fromIndex, Integer toIndex) {
+        String result = StringExt.substring(str, fromIndex, toIndex);
+        assertEqual(expected, result, message("str", str, "fromIndex", fromIndex, "toIndex", toIndex));
     }
 
-    public Character get(String str, int index) {
-        return StringExt.get(str, index);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void startsWith(boolean expected, String str, char ch) {
+        boolean result = StringExt.startsWith(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
     }
 
-    public String substring(String str, Integer fromIndex, Integer toIndex) {
-        return StringExt.substring(str, fromIndex, toIndex);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void indexOf(Integer expected, String str, Character ch) {
+        Integer result = StringExt.indexOf(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
     }
 
-    public boolean startsWith(String str, char ch) {
-        return StringExt.startsWith(str, ch);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void contains(boolean expected, String str, Character ch) {
+        boolean result = StringExt.contains(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
     }
 
-    public Integer indexOf(String str, Character ch) {
-        return StringExt.indexOf(str, ch);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void substringAfter(String expected, String str, Character ch) {
+        String result = StringExt.substringAfter(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
     }
 
-    public boolean contains(String str, Character ch) {
-        return StringExt.contains(str, ch);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void substringBefore(String expected, String str, Character ch) {
+        String result = StringExt.substringBefore(str, ch);
+        assertEqual(expected, result, message("str", str, "ch", ch));
     }
 
-    public String substringAfter(String str, Character ch) {
-        return StringExt.substringAfter(str, ch);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void eq(Boolean expected, String a, String b) {
+        Boolean result = StringExt.eq(a, b);
+        assertEqual(expected, result, message("a", a, "b", b));
     }
 
-    public String substringBefore(String str, Character ch) {
-        return StringExt.substringBefore(str, ch);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void eqi(Boolean expected, String a, String b) {
+        Boolean result = StringExt.eqi(a, b);
+        assertEqual(expected, result, message("a", a, "b", b));
     }
 
-    public Boolean eq(String a, String b) {
-        return StringExt.eq(a, b);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void snip(String expected, String str, int length) {
+        String result = StringExt.snip(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
     }
 
-    public Boolean eqi(String a, String b) {
-        return StringExt.eqi(a, b);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void isEmpty(boolean expected, String str) {
+        boolean result = StringExt.isEmpty(str);
+        assertEqual(expected, result, message("str", str));
     }
 
-    public String snip(String str, int length) {
-        return StringExt.snip(str, length);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void length(int expected, String str) {
+        int result = StringExt.length(str);
+        assertEqual(expected, result, message("str", str));
     }
 
-    public boolean isEmpty(String str) {
-        return StringExt.isEmpty(str);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void chomp(String expected, String str) {
+        String result = StringExt.chomp(str);
+        assertEqual(expected, result, message("str", str));
     }
 
-    public int length(String str) {
-        return StringExt.length(str);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void chompAll(String expected, String str) {
+        String result = StringExt.chompAll(str);
+        assertEqual(expected, result, message("str", str));
     }
 
-    public String chomp(String str) {
-        return StringExt.chomp(str);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void unquote(String expected, String str) {
+        String result = StringExt.unquote(str);
+        assertEqual(expected, result, message("str", str));
     }
 
-    public String chompAll(String str) {
-        return StringExt.chompAll(str);
-    }
-    
-    public String unquote(String str) {
-        return StringExt.unquote(str);
-    }
-    
-    public String quote(String str) {
-        return StringExt.quote(str);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void quote(String expected, String str) {
+        String result = StringExt.quote(str);
+        assertEqual(expected, result, message("str", str));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
