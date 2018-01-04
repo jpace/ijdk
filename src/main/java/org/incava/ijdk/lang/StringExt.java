@@ -56,20 +56,28 @@ public class StringExt {
         }
     }
 
+    private static Str toStr(String str) {
+        return Str.of(str);
+    }
+
+    private static String fromStr(Str str) {
+        return str == null ? null : str.str();
+    }
+
     public static String pad(String str, char ch, int length) {
-        return new Str(str).pad(ch, length);
+        return fromStr(toStr(str).pad(ch, length));
     }
 
     public static String padLeft(String str, char ch, int length) {
-        return new Str(str).padLeft(ch, length);
+        return fromStr(toStr(str).padLeft(ch, length));
     }
 
     public static String pad(String str, int length) {
-        return new Str(str).pad(length);
+        return fromStr(toStr(str).pad(length));
     }
 
     public static String padLeft(String str, int length) {
-        return new Str(str).padLeft(length);
+        return fromStr(toStr(str).padLeft(length));
     }
 
     public static String repeat(String str, int num) {

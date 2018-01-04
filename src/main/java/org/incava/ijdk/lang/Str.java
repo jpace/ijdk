@@ -10,10 +10,10 @@ import org.incava.ijdk.util.Indexable;
 
 /**
  * Extensions to the String class. A Java String (java.lang.String) can be dereferenced from the Str
- * object via the <code>str</code> and <code>obj</code> methods.
+ * object via the <code>str</code> and <code>obj</code> methods. Str instances are immutable.
  */
 public class Str extends Obj<String> implements Comparing<Str> {
-    private static final Str EMPTY = new Str("");
+    public static final Str EMPTY = new Str("");
     
     /**
      * Creates an empty string. There is only one shared, immutable empty string object, to conserve
@@ -48,18 +48,17 @@ public class Str extends Obj<String> implements Comparing<Str> {
         if (coll == null) {
             return new Str(null);
         }
-        StringBuilder sb = new StringBuilder();
-        boolean isFirst = true;
+        StringBuilder sb = null;
         for (Object obj : coll) {
-            if (!isFirst) {
-                sb.append(delim == null ? "" : delim);
+            if (sb == null) {
+                sb = new StringBuilder();
             }
             else {
-                isFirst = false;
-            }
+                sb.append(delim == null ? "" : delim);
+            }            
             sb.append(String.valueOf(obj));
         }
-        return new Str(sb.toString());
+        return new Str(sb == null ? "" : sb.toString());
     }
 
     /**
@@ -99,6 +98,16 @@ public class Str extends Obj<String> implements Comparing<Str> {
      */
     public Str(String str, int num) {
         super(StringExt.repeat(str, num));
+    }
+
+    /**
+     * Repeats the given character <code>num</code> times.
+     *
+     * @param ch the character to repeat
+     * @param num the number of times to repeat
+     */
+    public Str(char ch, int num) {
+        super(StringExt.repeat(ch, num));
     }
     
     /**
@@ -204,8 +213,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
             }
 
             if (strlen > beg) {
-                String tmp = strlen == beg ? "" : string.substring(beg, strlen);
-                splitList.add(tmp);
+                String t = strlen == beg ? "" : string.substring(beg, strlen);
+                splitList.add(t);
             }
             
             return splitList.toArray(new String[splitList.size()]);
@@ -267,7 +276,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param length the length of the padded string
      * @return the padded string
      */
-    public String pad(char ch, int length) {
+    public Str pad(char ch, int length) {
         if (str() == null) {
             return null;
         }
@@ -275,7 +284,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
         while (sb.length() < length) {
             sb.append(ch);
         }
-        return sb.toString();
+        return Str.of(sb.toString());
     }
 
     /**
@@ -292,8 +301,15 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param length the length of the padded string
      * @return the padded string
      */
-    public String padLeft(char ch, int length) {
-        return str() == null ? null : repeat(ch, length - str().length()) + str();
+    public Str padLeft(char ch, int length) {
+        if (isNull()) {
+            return null;
+        }
+        else {
+            int len = length - str().length();
+            Str cstr = new Str(ch, len);
+            return Str.of(cstr.str() + str());
+        }
     }
 
     /**
@@ -302,7 +318,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param length the length of the padded string
      * @return the padded string
      */
-    public String pad(int length) {
+    public Str pad(int length) {
         return pad(' ', length);
     }
 
@@ -312,7 +328,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param length the length of the padded string
      * @return the padded string
      */
-    public String padLeft(int length) {
+    public Str padLeft(int length) {
         return padLeft(' ', length);
     }
 
@@ -332,17 +348,6 @@ public class Str extends Obj<String> implements Comparing<Str> {
             sb.append(str());
         }
         return sb.toString();
-    }
-
-    /**
-     * Returns the character, repeated <code>num</code> times.
-     *
-     * @param ch the character to repeat
-     * @param length the length of the padded string
-     * @return the repeated string
-     */
-    public String repeat(char ch, int length) {
-        return new Str(String.valueOf(ch)).repeat(length);
     }
 
     /**
@@ -370,8 +375,12 @@ public class Str extends Obj<String> implements Comparing<Str> {
         if (isNull()) {
             return null;
         }
+        else if (num <= 0) {
+            return "";
+        }
         else {
-            return num <= 0 ? "" : get(-Math.min(num, str().length()), -1);
+            int from = Math.min(num, str().length());
+            return get(-from, -1);
         }
     }
 
@@ -476,7 +485,15 @@ public class Str extends Obj<String> implements Comparing<Str> {
      */
     public String substringBefore(Character ch) {
         Integer idx = indexOf(ch);
-        return idx == null ? null : idx == 0 ? "" : substring(0, idx - 1);
+        if (idx == null) {
+            return null;
+        }
+        else if (idx == 0) {
+            return "";
+        }
+        else {
+            return substring(0, idx - 1);
+        }
     }
 
     /**

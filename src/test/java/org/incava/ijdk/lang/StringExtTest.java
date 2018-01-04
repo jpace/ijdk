@@ -1,5 +1,6 @@
 package org.incava.ijdk.lang;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -17,7 +18,7 @@ public class StringExtTest extends StringTest {
     // the unquoting functionality is in StringExt, but not Str:
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void toListQuoted(String[] expected, String str) {
-        List<String> result = toList(str);
+        List<String> result = StringExt.toList(str);
         assertEqual(expected == null ? null : Arrays.asList(expected), result, message("str", str));
     }
     
@@ -27,25 +28,35 @@ public class StringExtTest extends StringTest {
                           params(new String[] { "fee", "fi", "foo", "fum" }, "\'fee,\tfi,\nfoo,\rfum\'"));
     }
     
-    public String[] split(String str, char delim, int max) {
-        return StringExt.split(str, delim, max);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void splitCharDelim(String[] expected, String str, char delim, int max) {
+        String[] result = StringExt.split(str, delim, max);
+        assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
     }
 
-    public String[] split(String str, String delim, int max) {
-        return StringExt.split(str, delim, max);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void splitStringDelim(String[] expected, String str, String delim, int max) {
+        String[] result = StringExt.split(str, delim, max);
+        assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
     }
 
-    public List<String> toList(String str) {
-        return StringExt.toList(str);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void toList(String[] expected, String str) {
+        List<String> result = StringExt.toList(str);
+        assertEqual(expected == null ? null : Arrays.asList(expected), result, message("str", str));
     }
 
-    public String pad(String str, char ch, int length) {
-        return StringExt.pad(str, ch, length);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padWithChar(String expected, String str, char ch, int length) {
+        String result = StringExt.pad(str, ch, length);
+        assertEqual(expected, result, message("str", str, "ch", ch, "length", length));
     }
-
-    public String pad(String str, int length) {
-        return StringExt.pad(str, length);
-    }    
+    
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padWithoutChar(String expected, String str, int length) {
+        String result = StringExt.pad(str, length);
+        assertEqual(expected, result, message("str", str, "length", length));
+    }
 
     public String padLeft(String str, char ch, int length) {
         return StringExt.padLeft(str, ch, length);
@@ -73,14 +84,6 @@ public class StringExtTest extends StringTest {
 
     public String right(String str, int length) {
         return StringExt.right(str, length);
-    }
-
-    public String join(String[] ary, String delim) {
-        return StringExt.join(ary, delim);
-    }
-
-    public String join(Collection<String> coll, String delim) {
-        return StringExt.join(coll, delim);
     }
 
     public Character charAt(String str, int index) {
@@ -149,5 +152,33 @@ public class StringExtTest extends StringTest {
     
     public String quote(String str) {
         return StringExt.quote(str);
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void joinArray(String expected, String[] ary, String delim) {
+        String result = StringExt.join(ary, delim);
+        assertEqual(expected, result, message("ary", ary, "delim", delim));
+    }
+    
+    private List<Object[]> parametersForJoinArray() {
+        return paramsList(params(null, (String[])null, ","),
+                          params("abcd",    new String[] { "a", "b", "c", "d" }, null),
+                          params("abcd",    new String[] { "a", "b", "c", "d" }, ""),
+                          params("",        new String[] { "" },                 ","),
+                          params("a,b,c,d", new String[] { "a", "b", "c", "d" }, ","));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void joinCollection(String expected, Collection<String> coll, String delim) {
+        String result = StringExt.join(coll, delim);
+        assertEqual(expected, result, message("coll", coll, "delim", delim));
+    }
+    
+    private List<Object[]> parametersForJoinCollection() {
+        return paramsList(params(null,      (ArrayList<String>)null,           ","),
+                          params("abcd",    Arrays.asList("a", "b", "c", "d"), null),
+                          params("abcd",    Arrays.asList("a", "b", "c", "d"), ""),
+                          params("",        new ArrayList<String>(),           ","),
+                          params("a,b,c,d", Arrays.asList("a", "b", "c", "d"), ","));
     }    
 }

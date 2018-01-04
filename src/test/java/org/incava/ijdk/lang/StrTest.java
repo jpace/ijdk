@@ -1,5 +1,7 @@
 package org.incava.ijdk.lang;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import junitparams.Parameters;
@@ -14,32 +16,50 @@ import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
 
 public class StrTest extends StringTest {
-    public String[] split(String str, char delim, int max) {
-        return new Str(str).split(delim, max);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void splitCharDelim(String[] expected, String str, char delim, int max) {
+        String[] result = new Str(str).split(delim, max);
+        assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
     }
 
-    public String[] split(String str, String delim, int max) {
-        return new Str(str).split(delim, max);
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void splitStringDelim(String[] expected, String str, String delim, int max) {
+        String[] result = new Str(str).split(delim, max);
+        assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
     }
 
-    public List<String> toList(String str) {
-        return new Str(str).toList();
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void toList(String[] expected, String str) {
+        List<String> result = new Str(str).toList();
+        assertEqual(expected == null ? null : Arrays.asList(expected), result, message("str", str));
     }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padWithChar(String expected, String str, char ch, int length) {
+        Str result = toStr(str).pad(ch, length);
+        assertEqual(toStr(expected), result, message("str", str, "ch", ch, "length", length));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padWithoutChar(String expected, String str, int length) {
+        Str result = toStr(str).pad(length);
+        assertEqual(toStr(expected), result, message("str", str, "length", length));
+    }    
 
     public String pad(String str, char ch, int length) {
-        return new Str(str).pad(ch, length);
+        return new Str(str).pad(ch, length).str();
     }
 
     public String pad(String str, int length) {
-        return new Str(str).pad(length);
+        return new Str(str).pad(length).str();
     }    
 
     public String padLeft(String str, char ch, int length) {
-        return new Str(str).padLeft(ch, length);
+        return new Str(str).padLeft(ch, length).str();
     }    
 
     public String padLeft(String str, int length) {
-        return new Str(str).padLeft(length);
+        return new Str(str).padLeft(length).str();
     }    
 
     public String repeat(String str, int length) {
@@ -57,14 +77,6 @@ public class StrTest extends StringTest {
     public String right(String str, int length) {
         return new Str(str).right(length);
     }
-
-    public String join(String[] ary, String delim) {
-        return Str.join(ary, delim).str();
-    }
-
-    public String join(Collection<String> coll, String delim) {
-        return Str.join(coll, delim).str();
-    }    
 
     public Character charAt(String str, int index) {
         return new Str(str).charAt(index);
@@ -154,6 +166,26 @@ public class StrTest extends StringTest {
         return new Str(str).quote();
     }
 
+    public Str toStr(String str) {
+        return Str.of(str);
+    }
+
+    public String fromStr(Str str) {
+        return str == null ? null : str.str();
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padLeftWithChar(String expected, String str, char ch, int length) {
+        Str result = toStr(str).padLeft(ch, length);
+        assertEqual(expected == null ? null : Str.of(expected), result, message("str", str, "ch", ch, "length", length));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void padLeftWithoutChar(String expected, String str, int length) {
+        Str result = toStr(str).padLeft(length);
+        assertEqual(expected == null ? null : Str.of(expected), result, message("str", str, "length", length));
+    }
+    
     @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
     public void equalsObject(boolean expected, String a, Object b) {
         Str sa = new Str(a);
@@ -168,8 +200,8 @@ public class StrTest extends StringTest {
 
     @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
     public void equalsStr(boolean expected, String a, String b) {
-        Str sa = new Str(a);
-        Str sb = new Str(b);
+        Str sa = toStr(a);
+        Str sb = toStr(b);
         assertThat(sa.equals(sb), withContext(message("a", a, "b", b), equalTo(expected)));
     }
 
@@ -187,31 +219,31 @@ public class StrTest extends StringTest {
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void endsWithChar(boolean expected, String str, char ch) {
-        assertThat(new Str(str).endsWith(ch), withContext(message("str", str, "ch", ch), equalTo(expected)));
+        assertThat(toStr(str).endsWith(ch), withContext(message("str", str, "ch", ch), equalTo(expected)));
     }
     
     private List<Object[]> parametersForEndsWithChar() {
-        return paramsList(params(true, "abc", 'c'),
-                          params(false, "abc", ' '),
-                          params(false, null, 'c'),
+        return paramsList(params(true,  "abc", 'c'), 
+                          params(false, "abc", ' '), 
+                          params(false, null,  'c'), 
                           params(false, "abc", 'd'));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void endsWithString(boolean expected, String str, String s) {
-        assertThat(new Str(str).endsWith(s), withContext(message("str", str, "s", s), equalTo(expected)));
+        assertThat(toStr(str).endsWith(s), withContext(message("str", str, "s", s), equalTo(expected)));
     }
     
     private List<Object[]> parametersForEndsWithString() {
-        return paramsList(params(true, "abc", "c"),
-                          params(true, "abc", "bc"),
-                          params(true, "abc", "abc"),
-                          params(false, "abcd", "abc"),
-                          params(true, "abc", ""),
-                          params(false, null, ""),
-                          params(true, "abc.x", ".x"),
-                          params(false, "abc.x", ".y"),
-                          params(false, "abc", "d"));
+        return paramsList(params(true,  "abc",   "c"),   
+                          params(true,  "abc",   "bc"),  
+                          params(true,  "abc",   "abc"), 
+                          params(false, "abcd",  "abc"), 
+                          params(true,  "abc",   ""),    
+                          params(false, null,    ""),    
+                          params(true,  "abc.x", ".x"),  
+                          params(false, "abc.x", ".y"),  
+                          params(false, "abc",   "d"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -222,12 +254,12 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForCompareTo() {
-        return paramsList(params(0, "abc", "abc"),
-                          params(-1, "abc", "def"),
-                          params(1, "def", "abc"),
-                          params(1, "abc", null),
-                          params(0, null, null),
-                          params(-1, null, "abc"));
+        return paramsList(params(0,  "abc", "abc"), 
+                          params(-1, "abc", "def"), 
+                          params(1,  "def", "abc"), 
+                          params(1,  "abc", null),  
+                          params(0,  null,  null),  
+                          params(-1, null,  "abc"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -246,26 +278,26 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForInitRepeat() {
-        return paramsList(params(new Str("a"), "a", 1),
-                          params(new Str("aa"), "a", 2),
-                          params(new Str(""), "a", 0),
-                          params(new Str(""), "a", -0),
-                          params(new Str(""), "", 0),
-                          params(new Str(""), "", 1),
+        return paramsList(params(new Str("a"),  "a",  1),  
+                          params(new Str("aa"), "a",  2),  
+                          params(new Str(""),   "a",  0),  
+                          params(new Str(""),   "a",  -0), 
+                          params(new Str(""),   "",   0),  
+                          params(new Str(""),   "",   1),  
                           params(new Str(null), null, 1));
     }
 
     @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
     public void replaceAll(String expWithCase, String expIgnoreCase, String line, String from, String to) {
         String msg = message("line", line, "from", from, "to", to);
-        Str str = new Str(line);
+        Str str = toStr(line);
         assertThat(str.replaceAll(from, to), withContext(msg, equalTo(expWithCase)));
     }
 
     @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
     public void replaceAllIgnoreCase(String expWithCase, String expIgnoreCase, String line, String from, String to) {
         String msg = message("line", line, "from", from, "to", to);
-        Str str = new Str(line);
+        Str str = toStr(line);
         assertThat(str.replaceAllIgnoreCase(from, to), withContext(msg, equalTo(expIgnoreCase)));
     }
     
@@ -312,5 +344,83 @@ public class StrTest extends StringTest {
                           params(-1, "abc", "A", 0, false),
 
                           params(-1, null,  "A", 0, false));
-    }    
+    }
+    
+    @Test
+    public void empty() {
+        Str empty = Str.empty();
+        assertThat(empty.str().length(), equalTo(0));
+        assertThat(Str.EMPTY, sameInstance(empty));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void joinArray(String expected, String[] ary, String delim) {
+        String result = Str.join(ary, delim).str();
+        assertEqual(expected, result, message("ary", ary, "delim", delim));
+    }
+    
+    private List<Object[]> parametersForJoinArray() {
+        return paramsList(params(null,      (String[])null,                      "~"),
+                          params("",        new String[] { },                    null),
+                          params("abcd",    new String[] { "a", "b", "c", "d" }, null),
+                          params("abcd",    new String[] { "a", "b", "c", "d" }, ""),
+                          params("",        new String[] { "" },                 "~"),
+                          params("a~b~c~d", new String[] { "a", "b", "c", "d" }, "~"));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void joinCollection(String expected, Collection<String> coll, String delim) {
+        String result = Str.join(coll, delim).str();
+        assertEqual(expected, result, message("coll", coll, "delim", delim));
+    }
+    
+    private List<Object[]> parametersForJoinCollection() {
+        return paramsList(params(null,      (ArrayList<String>)null,           "~"),
+                          params("",        Arrays.<String>asList(),           null),
+                          params("abcd",    Arrays.asList("a", "b", "c", "d"), null),
+                          params("abcd",    Arrays.asList("a", "b", "c", "d"), ""),
+                          params("",        new ArrayList<String>(),           "~"),
+                          params("a~b~c~d", Arrays.asList("a", "b", "c", "d"), "~"));
+    }
+    
+    @Test
+    public void example() {
+        Str str = Str.of("This Is a Test");
+        System.out.println("str: " + str);
+
+        Character c;
+
+        c = str.get(0);
+
+        c = str.get(-1);
+        c = str.get(-2);
+
+        String s;
+
+        s = str.left(4);
+        System.out.println("s: " + s);
+
+        s = str.right(3);
+        System.out.println("s: " + s);
+
+        Str text = Str.of("abc\ndef\n\n");
+        s = text.chomp();
+
+        System.out.println("s: " + s);
+        System.out.println("text: " + text);
+
+        s = text.chompAll();
+
+        String[] lines = text.split("\n");
+        System.out.println("lines: " + java.util.Arrays.asList(lines));
+
+        List<String> chunks = Str.of("abc def\nghi\tjkl").toList();
+        System.out.println("chunks: " + chunks);
+
+        boolean b;
+
+        b = str.startsWith("T");
+
+        b = str.endsWith("t");        
+    }
 }
