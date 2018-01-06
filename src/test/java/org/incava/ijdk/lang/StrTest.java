@@ -212,8 +212,8 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void unquote(String expected, String str) {
-        String result = new Str(str).unquote();
-        assertThat(result, withContext(message("str", str), equalTo(expected)));
+        Str result = new Str(str).unquote();
+        assertThat(result, withContext(message("str", str), equalTo(toStr(expected))));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

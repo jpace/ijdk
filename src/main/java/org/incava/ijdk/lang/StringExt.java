@@ -51,7 +51,7 @@ public class StringExt {
             return null;
         }
         else {
-            strg = new Str(strg.unquote());
+            strg = strg.unquote();
             return strg.toList();
         }
     }
@@ -191,7 +191,7 @@ public class StringExt {
     }
 
     public static String unquote(String str) {
-        return new Str(str).unquote();
+        return new Str(str).unquote().str();
     }    
 
     public static String quote(String str) {

@@ -730,18 +730,18 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the string, unquoted
      * @see #quote
      */
-    public String unquote() {
+    public Str unquote() {
         if (isNull() || length() < 2) {
-            return obj();
+            return this;
         }
         else {
             Character first = get(0);
             Character last = get(-1);
             if (first.equals(last) && (first.equals('"') || first.equals('\''))) {
-                return get(1, -2);
+                return Str.of(get(1, -2));
             }
             else {
-                return obj();
+                return this;
             }
         }
     }    
