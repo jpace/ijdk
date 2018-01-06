@@ -111,7 +111,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
     
     /**
-     * Returns the wrapped string.
+     * Returns the wrapped string, as a <code>java.lang.String</code>. Will be null if the wrapped
+     * string is null.
      *
      * @return the wrapped string
      */
@@ -120,7 +121,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns the wrapped string.
+     * Returns the wrapped string, as a <code>java.lang.String</code>. Will be null if the wrapped
+     * string is null.
      *
      * @return the wrapped string
      */
@@ -173,7 +175,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
-     * is null.
+     * is null. Unlike <code>java.lang.String#split</code>, the delimiter is only a string, not a
+     * regular expression.
      *
      * @param delim the delimiter to split at
      * @param max the maximum number of elements
@@ -339,7 +342,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param num the number of times to repeat this string
      * @return the repeated string
      */
-    public String repeat(int num) {
+    public Str repeat(int num) {
         if (isNull()) {
             return null;
         }
@@ -347,7 +350,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
         for (int i = 0; i < num; ++i) {
             sb.append(str());
         }
-        return sb.toString();
+        return Str.of(sb.toString());
     }
 
     /**
@@ -358,8 +361,14 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param num the number of characters to extract
      * @return the extracted string
      */
-    public String left(int num) {
-        return num <= 0 ? "" : get(0, num - 1);
+    public Str left(int num) {
+        if (num <= 0) {
+            return Str.empty();
+        }
+        else {
+            String s = get(0, num - 1);
+            return s == null ? null : Str.of(s);
+        }
     }
 
     /**
@@ -371,16 +380,17 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param num the number of characters to extract
      * @return the extracted string
      */
-    public String right(int num) {
+    public Str right(int num) {
         if (isNull()) {
             return null;
         }
         else if (num <= 0) {
-            return "";
+            return Str.empty();
         }
         else {
             int from = Math.min(num, str().length());
-            return get(-from, -1);
+            String s = get(-from, -1);
+            return s == null ? null : Str.of(s);
         }
     }
 
@@ -574,20 +584,20 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the string without one end-of-line character
      * @see #chompAll
      */
-    public String chomp() {
+    public Str chomp() {
         if (str() == null) {
             return null;
         }
         else {
             Character lastChar = get(-1);
             if (lastChar == null) {
-                return "";
+                return Str.empty();
             }
             else if ("\r\n".indexOf(lastChar) >= 0) {
-                return substring(0, -2);
+                return Str.of(get(0, -2));
             }
             else {
-                return str();
+                return this;
             }
         }
     }
@@ -599,7 +609,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the string without all end-of-line characters
      * @see #chomp
      */
-    public String chompAll() {
+    public Str chompAll() {
         String string = str();
         if (string == null) {
             return null;
@@ -609,7 +619,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             while (idx >= 0 && "\r\n".indexOf(string.charAt(idx)) != -1) {
                 --idx;
             }
-            return string.substring(0, idx + 1);
+            return Str.of(get(0, idx));
         }
     }
 

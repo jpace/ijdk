@@ -1,34 +1,22 @@
 package org.incava.ijdk.lang;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import junitparams.Parameters;
-import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
-import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.nullValue;
-import static org.incava.attest.Assertions.assertEqual;
-import static org.incava.attest.Assertions.message;
-import static org.incava.attest.ContextMatcher.withContext;
-
+// Data used by StrText and StringExtTest
 public abstract class StringTest extends Parameterized {
     public List<Object[]> parametersForSplitCharDelim() {
         return paramsList(params(null, null, ';', -1),
-                          params(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ';', -1),
-                          params(new String[] { "this", "is", "a", "", "test" }, "this;is;a;;test", ';', -1),
-                          params(new String[] { "this", "is;a;;test" }, "this;is;a;;test", ';', 2),
-                          params(new String[] { "this", "is", "a;;test" }, "this;is;a;;test", ';', 3),
-                          params(new String[] { "this", "is", "a", ";test" }, "this;is;a;;test", ';', 4));
+                          params(new String[] { "this", "is", "a",     "test"  }, "this;is;a;test",  ';', -1),
+                          params(new String[] { "this", "is", "a", "", "test"  }, "this;is;a;;test", ';', -1),
+                          params(new String[] { "this", "is;a;;test"           }, "this;is;a;;test", ';',  2),
+                          params(new String[] { "this", "is", "a;;test"        }, "this;is;a;;test", ';',  3),
+                          params(new String[] { "this", "is", "a",     ";test" }, "this;is;a;;test", ';',  4));
     }
     
     public List<Object[]> parametersForSplitStringDelim() {
         return paramsList(params(null, null, ";", -1),
-                          params(new String[] { "this", "is", "a", "test" }, "this;is;a;test", ";", -1),
+                          params(new String[] { "this", "is", "a", "test" }, "this;is;a;test",       ";",   -1),
                           params(new String[] { "this", "is", "a", "test" }, "this ; is ; a ; test", " ; ", -1));
     }
     
@@ -70,35 +58,35 @@ public abstract class StringTest extends Parameterized {
     }
     
     public List<Object[]> parametersForRepeatString() {
-        return paramsList(params(null,       null,   0),  
-                          params("",         "abcd", -1), 
-                          params("",         "abcd", 0),  
-                          params("abcd",     "abcd", 1),  
-                          params("abcdabcd", "abcd", 2));
+        return paramsList(params(null,       null,    0),
+                          params("",         "abcd", -1),
+                          params("",         "abcd",  0),
+                          params("abcd",     "abcd",  1),
+                          params("abcdabcd", "abcd",  2));
     }
     
     public List<Object[]> parametersForRepeatChar() {
-        return paramsList(params("",   'a', -1), 
-                          params("",   'a', 0),  
-                          params("a",  'a', 1),  
-                          params("aa", 'a', 2));
+        return paramsList(params("",   'a', -1),
+                          params("",   'a',  0),
+                          params("a",  'a',  1),
+                          params("aa", 'a',  2));
     }
     
     public List<Object[]> parametersForLeft() {
-        return paramsList(params(null,   null,       1), 
-                          params("abcd", "abcdefgh", 4), 
-                          params("abcd", "abcd",     4), 
-                          params("abcd", "abcd",     5), 
-                          params("",     "abcd",     0), 
+        return paramsList(params(null,   null,        1),
+                          params("abcd", "abcdefgh",  4),
+                          params("abcd", "abcd",      4),
+                          params("abcd", "abcd",      5),
+                          params("",     "abcd",      0),
                           params("",     "abcd",     -1));
     }
     
     public List<Object[]> parametersForRight() {
-        return paramsList(params(null,   null,       1), 
-                          params("efgh", "abcdefgh", 4), 
-                          params("abcd", "abcd",     4), 
-                          params("abcd", "abcd",     5), 
-                          params("",     "abcd",     0), 
+        return paramsList(params(null,   null,        1),
+                          params("efgh", "abcdefgh",  4), 
+                          params("abcd", "abcd",      4), 
+                          params("abcd", "abcd",      5),
+                          params("",     "abcd",      0),
                           params("",     "abcd",     -1));
     }
     

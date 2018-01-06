@@ -102,11 +102,13 @@ public class StringExt {
     }    
 
     public static String left(String str, int num) {
-        return new Str(str).left(num);
+        Str lstr = new Str(str).left(num);
+        return lstr == null ? null : lstr.str();
     }
 
     public static String right(String str, int num) {
-        return new Str(str).right(num);
+        Str rstr = new Str(str).right(num);
+        return rstr == null ? null : rstr.str();
     }
 
     public static String join(Collection<?> coll, String delim) {
@@ -150,11 +152,13 @@ public class StringExt {
     }
 
     public static String chomp(String str) {
-        return new Str(str).chomp();
+        Str chomped = new Str(str).chomp();
+        return chomped == null ? null : chomped.str();
     }
 
     public static String chompAll(String str) {
-        return new Str(str).chompAll();
+        Str chomped = new Str(str).chompAll();
+        return chomped == null ? null : chomped.str();
     }
 
     public static boolean contains(String str, Character ch) {

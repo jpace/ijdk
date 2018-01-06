@@ -79,25 +79,25 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void repeatString(String expected, String str, int length) {
-        String result = toStr(str).repeat(length);
+        Str result = toStr(str).repeat(length);
         assertResult(expected, result, message("str", str, "length", length));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void repeatChar(String expected, char ch, int length) {
-        String result = new Str(ch).repeat(length);
+        Str result = new Str(ch).repeat(length);
         assertResult(expected, result, message("ch", ch, "length", length));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void left(String expected, String str, int length) {
-        String result = new Str(str).left(length);
+        Str result = new Str(str).left(length);
         assertResult(expected, result, message("str", str, "length", length));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void right(String expected, String str, int length) {
-        String result = new Str(str).right(length);
+        Str result = new Str(str).right(length);
         assertResult(expected, result, message("str", str, "length", length));
     }
 
@@ -200,13 +200,13 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void chomp(String expected, String str) {
-        String result = new Str(str).chomp();
+        Str result = new Str(str).chomp();
         assertThat(result, withContext(message("str", str), equalTo(expected)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void chompAll(String expected, String str) {
-        String result = new Str(str).chompAll();
+        Str result = new Str(str).chompAll();
         assertThat(result, withContext(message("str", str), equalTo(expected)));
     }
 
@@ -440,20 +440,21 @@ public class StrTest extends StringTest {
         c = str.get(-2);
 
         String s;
+        Str t;
 
-        s = str.left(4);
-        System.out.println("s: " + s);
+        t = str.left(4);
+        System.out.println("t: " + t);
 
-        s = str.right(3);
-        System.out.println("s: " + s);
+        t = str.right(3);
+        System.out.println("t: " + t);
 
         Str text = Str.of("abc\ndef\n\n");
-        s = text.chomp();
+        t = text.chomp();
 
-        System.out.println("s: " + s);
+        System.out.println("t: " + t);
         System.out.println("text: " + text);
 
-        s = text.chompAll();
+        t = text.chompAll();
 
         String[] lines = text.split("\n");
         System.out.println("lines: " + java.util.Arrays.asList(lines));
