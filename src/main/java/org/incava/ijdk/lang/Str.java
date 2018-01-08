@@ -183,45 +183,49 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the array of split strings
      */
     public String[] split(String delim, int max) {
-        String string = str();
-        
-        if (string == null) {
+        List<String> list = splitToList(delim, max);
+        return list == null ? null : list.toArray(new String[list.size()]);
+    }
+
+    public List<String> splitToList(char delim, Integer max) {
+        return splitToList(String.valueOf(delim), max);
+    }
+
+    public List<String> splitToList(String delim, Integer max) {
+        List<String> list = new ArrayList<>();
+
+        if (isNull()) {
             return null;
         }
-        else if (max == 1) {
-            return new String[] { string };
+        else if (max != null && Integer.valueOf(max) == 1) {
+            list.add(str());
         }
-        else {
-            --max;              // adjust count between 0 and 1
-
-            List<String> splitList = new ArrayList<String>();
-
-            int nFound = 0;
-            int strlen = string.length();
-            int end = 0;
-            int beg = 0;
-            int delimlen = delim.length();
-
-            for (int idx = 0; idx < strlen; ++idx) {
-                Str strg = new Str(string.substring(idx));
-                if (strg.left(delimlen).equals(delim)) {
-                    String substr = string.substring(beg, end);
-                    splitList.add(substr);
-                    beg = end + delimlen;
-                    if (max > 0 && ++nFound >= max) {
-                        break;
+        else if (!isEmpty()) {
+            int strlen = str().length();
+            int dellen = delim.length();
+            int idx = 0;
+            int from = 0;
+            while (idx < strlen) {
+                if (delim.equals(get(idx, idx + dellen - 1))) {
+                    if (max != null && list.size() + 1 == max) {
+                        list.add(get(from, -1));
+                        return list;
+                    }
+                    else {
+                        String substr = idx == 0 ? "" : get(from, idx - 1);
+                        list.add(substr);
+                        idx += dellen;
+                        from = idx;
                     }
                 }
-                ++end;
+                else {
+                    ++idx;
+                }
             }
-
-            if (strlen > beg) {
-                String t = strlen == beg ? "" : string.substring(beg, strlen);
-                splitList.add(t);
-            }
-            
-            return splitList.toArray(new String[splitList.size()]);
+            list.add(get(from, idx == 0 ? 0 : idx - 1));
         }
+
+        return list;
     }
 
     /**

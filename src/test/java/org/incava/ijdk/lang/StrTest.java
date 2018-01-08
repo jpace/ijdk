@@ -30,6 +30,35 @@ public class StrTest extends StringTest {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void splitToListStringDelim(List<String> expected, String str, String delim, Integer max) {
+        List<String> result = new Str(str).splitToList(delim, max);
+        assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
+    }
+
+    private List<String> list(String ... strs) {
+        return new ArrayList<>(Arrays.asList(strs));
+    }
+
+    public List<Object[]> parametersForSplitToListStringDelim() {
+        return paramsList(params(null,                       null,           ";", -1),
+                          params(list("ab;cd;e"),            "ab;cd;e",      ";",  1),
+                          params(list("ab", "cd;ef"),        "ab;cd;ef",     ";",  2),
+                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  3),
+                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  4),
+                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  null),
+                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  0),
+                          params(list("ab", "cd", "", "e"),  "ab;cd;;e",     ";",  null),
+                          params(list("", "ab", "cd"),       ";ab;cd",       ";",  null),
+                          params(list("ab", "cd", ""),       "ab;cd;",       ";",  null),
+                          params(list("ab", "cd", "ef"),     "ab;cd;ef",     ";",  null),
+                          params(list("ab", "cd", "ef"),     "ab--cd--ef",   "--", null),
+                          params(list("ab", "", "cd", "ef"), "ab----cd--ef", "--", null),
+                          params(list("", "ab", "cd", "ef"), "--ab--cd--ef", "--", null),
+                          params(list("-ab", "cd", "ef"),    "-ab--cd--ef",  "--", null),
+                          params(list(),                     "",             ";",  null));
+    }    
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void toList(String[] expected, String str) {
         List<String> result = new Str(str).toList();
         assertEqual(expected == null ? null : Arrays.asList(expected), result, message("str", str));
