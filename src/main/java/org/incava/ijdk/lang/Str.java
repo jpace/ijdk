@@ -751,8 +751,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
      *
      * @return the string, quoted
      */
-    public String quote() {
-        return isNull() ? null : "\"" + str() + "\"";
+    public Str quote() {
+        return isNull() ? null : Str.of("\"" + str() + "\"");
     }
 
     /**

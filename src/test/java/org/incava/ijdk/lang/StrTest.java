@@ -218,8 +218,8 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void quote(String expected, String str) {
-        String result = new Str(str).quote();
-        assertEqual(expected, result, message("str", str));
+        Str result = new Str(str).quote();
+        assertResult(expected, result, message("str", str));
     }
 
     public Str toStr(String str) {

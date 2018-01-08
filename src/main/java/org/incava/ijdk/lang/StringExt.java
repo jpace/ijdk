@@ -195,6 +195,7 @@ public class StringExt {
     }    
 
     public static String quote(String str) {
-        return new Str(str).quote();
+        Str qstr = new Str(str).quote();
+        return qstr == null ? null : qstr.str();
     }    
 }

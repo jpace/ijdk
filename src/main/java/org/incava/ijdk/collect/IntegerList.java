@@ -4,7 +4,7 @@ import java.util.Collection;
 import org.incava.ijdk.lang.Closure;
 import org.incava.ijdk.lang.Pair;
 
-public class IntegerList extends Array<Integer> {
+public class IntegerList extends BaseArray<Integer, IntegerList> {
     /**
      * Creates a new IntegerList.
      *
@@ -51,6 +51,10 @@ public class IntegerList extends Array<Integer> {
         for (Integer str : ary) {
             add(str);
         }
+    }
+
+    public IntegerList newInstance() {
+        return new IntegerList();
     }
 
     /**

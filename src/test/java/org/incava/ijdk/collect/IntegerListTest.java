@@ -92,4 +92,24 @@ public class IntegerListTest extends Parameterized {
                           params(3, 1, 2, null),
                           params(3, 2, 1));
     }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void unique(IntegerList expected, IntegerList ilist) {
+        IntegerList result = ilist.unique();
+        assertEqual(expected, result, message("ilist", ilist));
+    }
+
+    private List<Object[]> parametersForUnique() {
+        return paramsList(params(IntegerList.of(2, 3, 5), IntegerList.of(2, 3, 2, 3, 3, 5, 5, 3)));
+    }    
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void get(IntegerList expected, IntegerList ilist, Integer from, Integer to) {
+        IntegerList result = ilist.get(from, to);
+        assertEqual(expected, result, message("ilist", ilist));
+    }
+
+    private List<Object[]> parametersForGet() {
+        return paramsList(params(IntegerList.of(3, 1, 7), IntegerList.of(2, 3, 1, 7, 8), 1, -2));
+    }    
 }
