@@ -1,7 +1,7 @@
 package org.incava.ijdk.util;
 
 /**
- * Wraps index calculations of a sequence similar to Ruby, where <code>index -2</code> means the
+ * Wraps index calculations of a sequence similar to Ruby, where index <code>-2</code> means the
  * next-to-last element in a list.
  */
 public class Indexable {
@@ -10,7 +10,7 @@ public class Indexable {
     /**
      * Creates an instance.
      *
-     * @param size the size into which the index is applied
+     * @param size the size against which the index is applied
      */
     public Indexable(Integer size) {
         this.size = size;
@@ -58,8 +58,12 @@ public class Indexable {
             return null;
         }
         else {
-            int idx = index < 0 ? this.size + index : index;
-            return idx < 0 || idx >= this.size ? null : idx;
+            int idx = toIndex(index);
+            return idx >= 0 && idx < this.size ? idx : null;
         }
+    }
+
+    private Integer toIndex(Integer index) {
+        return index < 0 ? this.size + index : index;
     }
 }

@@ -49,13 +49,15 @@ public class StrTest extends StringTest {
                           params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  0),
                           params(list("ab", "cd", "", "e"),  "ab;cd;;e",     ";",  null),
                           params(list("", "ab", "cd"),       ";ab;cd",       ";",  null),
-                          params(list("ab", "cd", ""),       "ab;cd;",       ";",  null),
+                          // params(list("ab", "cd", ""),       "ab;cd;",       ";",  null),
+                          params(list("ab", "cd"),       "ab;cd;",       ";",  null),
                           params(list("ab", "cd", "ef"),     "ab;cd;ef",     ";",  null),
                           params(list("ab", "cd", "ef"),     "ab--cd--ef",   "--", null),
                           params(list("ab", "", "cd", "ef"), "ab----cd--ef", "--", null),
                           params(list("", "ab", "cd", "ef"), "--ab--cd--ef", "--", null),
                           params(list("-ab", "cd", "ef"),    "-ab--cd--ef",  "--", null),
-                          params(list(),                     "",             ";",  null));
+                          params(list(""),                   "",             ";",  null),
+                          params(list("ab", "cd", "e"),      "ab.cd.e",      ".",  null));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -351,13 +353,13 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForInitRepeat() {
-        return paramsList(params(new Str("a"),  "a",  1),
-                          params(new Str("aa"), "a",  2),  
-                          params(new Str(""),   "a",  0),  
-                          params(new Str(""),   "a",  -0), 
-                          params(new Str(""),   "",   0),  
-                          params(new Str(""),   "",   1),  
-                          params(new Str(null), null, 1));
+        return paramsList(params(new Str("a"),  "a",   1),
+                          params(new Str("aa"), "a",   2),  
+                          params(new Str(""),   "a",   0),  
+                          params(new Str(""),   "a",  -1), 
+                          params(new Str(""),   "",    0),  
+                          params(new Str(""),   "",    1),  
+                          params(new Str(null), null,  1));
     }
 
     @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")

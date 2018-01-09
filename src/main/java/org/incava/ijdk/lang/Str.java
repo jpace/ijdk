@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 import org.incava.ijdk.util.Indexable;
 
@@ -186,46 +187,26 @@ public class Str extends Obj<String> implements Comparing<Str> {
         List<String> list = splitToList(delim, max);
         return list == null ? null : list.toArray(new String[list.size()]);
     }
-
-    public List<String> splitToList(char delim, Integer max) {
-        return splitToList(String.valueOf(delim), max);
-    }
-
+    
+    /**
+     * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
+     * is null. Unlike <code>java.lang.String#split</code>, the delimiter is only a string, not a
+     * regular expression.
+     *
+     * @param delim the delimiter to split at
+     * @param max the maximum number of elements
+     * @return the array of split strings
+     */
     public List<String> splitToList(String delim, Integer max) {
-        List<String> list = new ArrayList<>();
-
         if (isNull()) {
             return null;
         }
-        else if (max != null && Integer.valueOf(max) == 1) {
-            list.add(str());
+        Pattern pat = Pattern.compile(delim, Pattern.LITERAL);
+        if (max == null) {
+            max = 0;
         }
-        else if (!isEmpty()) {
-            int strlen = str().length();
-            int dellen = delim.length();
-            int idx = 0;
-            int from = 0;
-            while (idx < strlen) {
-                if (delim.equals(get(idx, idx + dellen - 1))) {
-                    if (max != null && list.size() + 1 == max) {
-                        list.add(get(from, -1));
-                        return list;
-                    }
-                    else {
-                        String substr = idx == 0 ? "" : get(from, idx - 1);
-                        list.add(substr);
-                        idx += dellen;
-                        from = idx;
-                    }
-                }
-                else {
-                    ++idx;
-                }
-            }
-            list.add(get(from, idx == 0 ? 0 : idx - 1));
-        }
-
-        return list;
+        String[] ary = pat.split(str(), max);
+        return new ArrayList<>(Arrays.asList(ary));
     }
 
     /**
@@ -287,11 +268,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
         if (str() == null) {
             return null;
         }
-        StringBuilder sb = new StringBuilder(str());
-        while (sb.length() < length) {
-            sb.append(ch);
+        else {
+            return Str.of(str() + StringExt.repeat(ch, length - length()));
         }
-        return Str.of(sb.toString());
     }
 
     /**
@@ -313,9 +292,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return null;
         }
         else {
-            int len = length - str().length();
-            Str cstr = new Str(ch, len);
-            return Str.of(cstr.str() + str());
+            return Str.of(StringExt.repeat(ch, length - length()) + str());
         }
     }
 
@@ -347,14 +324,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the repeated string
      */
     public Str repeat(int num) {
-        if (isNull()) {
-            return null;
-        }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < num; ++i) {
-            sb.append(str());
-        }
-        return Str.of(sb.toString());
+        return isNull() ? null : Str.of(StringExt.repeat(str(), num));
     }
 
     /**

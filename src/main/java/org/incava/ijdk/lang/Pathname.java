@@ -147,7 +147,7 @@ public class Pathname extends File {
             parentPath = "..";
         }
         else if (components.length == 1) {
-            if (components[0].equals(".")) {
+            if (components[0].equals(".") || components[0].equals("")) {
                 parentPath = "..";
             }
             else if (!components[0].equals("..") && components[0].equals(baseName())) {
