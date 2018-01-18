@@ -3,6 +3,7 @@ package org.incava.ijdk.lang;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
@@ -14,6 +15,10 @@ import org.incava.ijdk.util.Indexable;
  * object via the <code>str</code> and <code>obj</code> methods. Str instances are immutable.
  */
 public class Str extends Obj<String> implements Comparing<Str> {
+    public enum Option {
+        IGNORE_CASE
+    }
+    
     public static final Str EMPTY = new Str("");
     
     /**
@@ -525,7 +530,39 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return whether the string starts with <code>str</code>
      */
     public boolean startsWith(String str) {
-        return str() != null && str().startsWith(str);
+        return startsWith(str, null);
+    }
+
+    /**
+     * Returns whether the wrapped string begins with the string <code>str</code>. For
+     * consistency with String. Returns false if the wrapped string is null.
+     *
+     * @param str the string to find
+     * @param options 
+     * @return whether the string starts with <code>str</code>
+     */
+    public boolean startsWith(String str, EnumSet<Str.Option> options) {
+        if (isNull() || str.length() > length()) {
+            return false;
+        }
+        
+        Str other = Str.of(str);
+        boolean ignoreCase = options != null && options.contains(Str.Option.IGNORE_CASE);
+        for (int idx = 0; idx < str.length(); ++idx) {
+            Character x = get(idx);
+            Character y = other.get(idx);
+            if (!x.equals(y)) {
+                if (ignoreCase) {
+                    if (Character.toUpperCase(x) != Character.toUpperCase(y)) {
+                        return false;
+                    }
+                }
+                else {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -817,26 +854,26 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Replaces literal occurrances of <code>from</code> with <code>to</code>. Unlike
-     * String#replaceAll, this does not apply <code>from</code> as a regular expression.
+     * String#replaceAll, this applies <code>from</code> as a literal, not as a regular expression.
      *
      * @param from the left-hand side of the replacement
      * @param to the right-hand side of the replacement
      * @return the string, with substitutions
      */
-    public String replaceAll(String from, String to) {
+    public Str replaceAll(String from, String to) {
         return replaceAll(from, to, false);
     }
     
     /**
      * Replaces literal occurrances of <code>from</code> with <code>to</code>, without regard to
-     * case. Unlike String#replaceAll, this does not apply <code>from</code> as a regular
+     * case. Unlike String#replaceAll, this applies <code>from</code> as a literal, not as a regular
      * expression.
      *
      * @param from the left-hand side of the replacement
      * @param to the right-hand side of the replacement
      * @return the string, with substitutions
      */
-    public String replaceAllIgnoreCase(String from, String to) {
+    public Str replaceAllIgnoreCase(String from, String to) {
         return replaceAll(from, to, true);
     }
 
@@ -850,17 +887,42 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param ignoreCase whether to ignore case
      * @return the string, with substitutions
      */
-    public String replaceAll(String from, String to, boolean ignoreCase) {
+    public Str replaceAll(String from, String to, boolean ignoreCase) {
+        return replaceAll(from, to, ignoreCase ? EnumSet.of(Str.Option.IGNORE_CASE) : null);
+    }
+
+    /**
+     * Replaces literal occurrances of <code>from</code> with <code>to</code>, optionally without
+     * regard to case. Unlike String#replaceAll, this does not apply <code>from</code> as a regular
+     * expression.
+     *
+     * @param from the left-hand side of the replacement
+     * @param to the right-hand side of the replacement
+     * @param ignoreCase whether to ignore case
+     * @return the string, with substitutions
+     */
+    public Str replaceAll(String from, String to, EnumSet<Str.Option> options) {
+        boolean ignoreCase = options != null && options.contains(Str.Option.IGNORE_CASE);
         if (isNull()) {
             return null;
         }
-        Str newStr = new Str(obj());
-        int pos = 0;
-        while ((pos = newStr.indexOf(from, pos, ignoreCase)) >= 0) {
-            newStr = new Str(newStr.obj().substring(0, pos) + to + newStr.obj().substring(pos + from.length()));
-            pos += to.length();
+
+        StringBuilder sb = new StringBuilder();
+        String s = str();
+        int len = str().length();
+
+        int idx = 0;
+        while (idx < len) {
+            if (str().startsWith(from, idx)) {
+                sb.append(to);
+                idx += from.length();
+            }
+            else {
+                sb.append(charAt(idx));
+                ++idx;
+            }
         }
-        return newStr.obj();
+        return Str.of(sb.toString());
     }
 
     /**

@@ -137,7 +137,9 @@ public abstract class StringTest extends Parameterized {
         return paramsList(params(false, null,   'j'), 
                           params(true,  "java", 'j'), 
                           params(false, "java", 'a'), 
-                          params(false, "java", 'J'));
+                          params(false, "java", 'J'),
+                          params(true,  "Java", 'J'),
+                          params(false, "Java", 'j'));
     }
     
     public List<Object[]> parametersForIndexOf() {
