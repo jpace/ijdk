@@ -14,15 +14,13 @@ apply plugin: 'java'
 
 group = 'org.incava'
 version ='3.7.4'
-// sourceCompatibility = 1.5
-// sourceCompatibility = 1.5
 
 ext {
     pkgName = 'ijdk'
     pkgDesc = 'Incava Java Development Kit'
     githubRepo = 'github.com/jpace/ijdk'
-    pkgLicense = 'Apache-2.0'
-    pkgLicenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    pkgLicense = 'MIT'
+    pkgLicenseUrl = 'https://mit-license.org/'
     devInfo = {
         id 'jpace'
         name 'Jeff Pace'
