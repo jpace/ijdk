@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.regex.Pattern;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.junit.Ignore;
@@ -19,6 +20,32 @@ import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
 
 public class StrTest extends StringTest {
+    public void assertResult(String expected, Str result, String msg) {
+        if (expected == null) {
+            assertThat(result, withContext(msg, nullValue()));
+        }
+        else {
+            assertThat(result, withContext(msg, equalTo(toStr(expected))));
+        }
+    }
+
+    public void assertResult(String expected, String result, String msg) {
+        if (expected == null) {
+            assertThat(result, withContext(msg, nullValue()));
+        }
+        else {
+            assertThat(result, withContext(msg, equalTo(expected)));
+        }
+    }
+
+    public Str toStr(String str) {
+        return Str.of(str);
+    }
+
+    public String fromStr(Str str) {
+        return str == null ? null : str.str();
+    }
+    
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void splitCharDelim(String[] expected, String str, char delim, int max) {
         String[] result = new Str(str).split(delim, max);
@@ -78,24 +105,6 @@ public class StrTest extends StringTest {
     public void padWithoutChar(String expected, String str, int length) {
         Str result = toStr(str).pad(length);
         assertThat(result, withContext(message("str", str, "length", length), equalTo(toStr(expected))));
-    }
-
-    public void assertResult(String expected, Str result, String msg) {
-        if (expected == null) {
-            assertThat(result, withContext(msg, nullValue()));
-        }
-        else {
-            assertThat(result, withContext(msg, equalTo(toStr(expected))));
-        }
-    }
-
-    public void assertResult(String expected, String result, String msg) {
-        if (expected == null) {
-            assertThat(result, withContext(msg, nullValue()));
-        }
-        else {
-            assertThat(result, withContext(msg, equalTo(expected)));
-        }
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -174,8 +183,28 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void startsWith(boolean expected, String str, char ch) {
         boolean result = new Str(str).startsWith(ch);
-        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
+        assertThat(result, equalTo(expected));
     }    
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void startsWithString(boolean expected, String str, String substr) {
+        boolean result = new Str(str).startsWith(substr);
+        assertThat(result, equalTo(expected));
+    }    
+
+    public List<Object[]> parametersForStartsWithString() {
+        return paramsList(params(false, null,   "a"),     
+                          params(true,  "abcd", "a"),     
+                          params(true,  "abcd", "ab"),    
+                          params(true,  "abcd", "abc"),
+                          params(true,  "abcd", ""),     
+                          params(false, "ab",   "abc"),   
+                          params(true,  "abcd", "abcd"),  
+                          params(false, "abcd", "abcde"), 
+                          params(false, "abcd", "b"),     
+                          params(false, "abcd", "A"),     
+                          params(true,  "Abcd", "A"));
+    }
 
     @Test @Parameters(method="parametersForStartsWith") @TestCaseName("{method} {index} {params}")
     public void startsWithUseCase(boolean expected, String str, char ch) {
@@ -186,19 +215,36 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void startsWithIgnoreCase(boolean expected, String str, String substr) {
         boolean result = new Str(str).startsWith(substr, EnumSet.of(Str.Option.IGNORE_CASE));
-        assertThat(result, withContext(message("str", str, "substr", substr), equalTo(expected)));
+        assertThat(result, equalTo(expected));
     }
 
     public List<Object[]> parametersForStartsWithIgnoreCase() {
-        return paramsList(params(false, null,   "j"), 
-                          params(true,  "java", "j"), 
-                          params(true,  "java", "ja"), 
-                          params(true,  "java", "jav"), 
-                          params(true,  "java", "java"), 
-                          params(false, "java", "javat"), 
-                          params(false, "java", "a"), 
-                          params(true,  "java", "J"),
-                          params(true,  "Java", "J"));
+        return paramsList(params(false, null,   "a"),     
+                          params(true,  "abcd", "a"),     
+                          params(true,  "abcd", "ab"),    
+                          params(true,  "abcd", "abc"),
+                          params(false, "ab",   "abc"),   
+                          params(true,  "abcd", "abcd"),  
+                          params(false, "abcd", "abcde"), 
+                          params(false, "abcd", "b"),     
+                          params(true,  "abcd", "A"),     
+                          params(true,  "Abcd", "A"));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void startsWithOffset(boolean expected, String str, String substr, int offset) {
+        boolean result = new Str(str).startsWith(substr, offset);
+        assertThat(result, equalTo(expected));
+    }
+
+    public List<Object[]> parametersForStartsWithOffset() {
+        return paramsList(params(false, null,   "a",   0), 
+                          params(true,  "abcd", "a",   0), 
+                          params(true,  "abcd", "b",   1), 
+                          params(false, "abcd", "a",   1), 
+                          params(false, "ab",   "abc", 0), 
+                          params(false, "abcd", "A",   0), 
+                          params(true,  "abcd", "ab",  0));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -278,14 +324,6 @@ public class StrTest extends StringTest {
         Str result = new Str(str).quote();
         assertResult(expected, result, message("str", str));
     }
-
-    public Str toStr(String str) {
-        return Str.of(str);
-    }
-
-    public String fromStr(Str str) {
-        return str == null ? null : str.str();
-    }
     
     @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
     public void equalsObject(boolean expected, String a, Object b) {
@@ -364,8 +402,25 @@ public class StrTest extends StringTest {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void compareToWithOptions(Integer expected, String x, String y, EnumSet<Str.Option> options) {
+        Integer result = new Str(x).compareTo(new Str(y), options);
+        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
+        assertThat(relResult, withContext(message("x", x, "y", y, "options", options), equalTo(expected)));
+    }
+    
+    private List<Object[]> parametersForCompareToWithOptions() {
+        return paramsList(params(0,  "abc",   "abc",  EnumSet.of(Str.Option.IGNORE_CASE)), 
+                          params(0,  "Abc",   "abc",  EnumSet.of(Str.Option.IGNORE_CASE)), 
+                          params(-1, "Abc",   "abc",  EnumSet.noneOf(Str.Option.class)),   
+                          params(1,  "abc",   "Abc",  EnumSet.noneOf(Str.Option.class)),   
+                          params(-1, "abcd",  "abc",  EnumSet.noneOf(Str.Option.class)),   
+                          params(1,  "abc",   "abcd", EnumSet.noneOf(Str.Option.class)),   
+                          params(-1, "abcde", "abc",  EnumSet.noneOf(Str.Option.class)));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void hashCodeTest(Integer expected, String x) {
-        assertThat(new Str(x).hashCode(), withContext(message("x", x), equalTo(expected)));
+        assertThat(new Str(x).hashCode(), equalTo(expected));
     }
     
     private List<Object[]> parametersForHashCodeTest() {
@@ -375,7 +430,7 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void initRepeat(Str expected, String str, int num) {
-        assertThat(new Str(str, num), withContext(message("str", str, "num", num), equalTo(expected)));
+        assertThat(new Str(str, num), equalTo(expected));
     }
     
     private List<Object[]> parametersForInitRepeat() {
@@ -390,24 +445,15 @@ public class StrTest extends StringTest {
 
     @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
     public void replaceAll(String expWithCase, String expIgnoreCase, String line, String from, String to) {
-        String msg = message("line", line, "from", from, "to", to);
         Str str = toStr(line);
-        assertThat(str.replaceAll(from, to), withContext(msg, equalTo(expWithCase == null ? null : toStr(expWithCase))));
+        assertThat(str.replaceAll(from, to), equalTo(expWithCase == null ? null : toStr(expWithCase)));
     }
 
     @Ignore @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
     public void replaceAllIgnoreCase(String expWithCase, String expIgnoreCase, String line, String from, String to) {
-        String msg = message("line", line, "from", from, "to", to);
         Str str = toStr(line);
-        assertThat(str.replaceAllIgnoreCase(from, to), withContext(msg, equalTo(expIgnoreCase == null ? null : toStr(expIgnoreCase))));
-    }
-
-    @Ignore @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
-    public void replaceAllIgnoreCaseOption(String expWithCase, String expIgnoreCase, String line, String from, String to) {
-        String msg = message("line", line, "from", from, "to", to);
-        Str str = toStr(line);
-        Str result = str.replaceAll(from, to, EnumSet.of(Str.Option.IGNORE_CASE));
-        assertThat(str.replaceAllIgnoreCase(from, to), withContext(msg, equalTo(expIgnoreCase == null ? null : toStr(expIgnoreCase))));
+        Str result = str.replaceAll(from, to, EnumSet.of(Str.Option.IGNORE_CASE));        
+        assertThat(result, equalTo(expIgnoreCase == null ? null : toStr(expIgnoreCase)));
     }
     
     private List<Object[]> parametersForReplace() {
@@ -492,46 +538,20 @@ public class StrTest extends StringTest {
                           params("",        new ArrayList<String>(),           "~"),
                           params("a~b~c~d", Arrays.asList("a", "b", "c", "d"), "~"));
     }
-    
-    @Test
-    public void example() {
-        Str str = Str.of("This Is a Test");
-        System.out.println("str: " + str);
 
-        Character c;
-
-        c = str.get(0);
-
-        c = str.get(-1);
-        c = str.get(-2);
-
-        String s;
-        Str t;
-
-        t = str.left(4);
-        System.out.println("t: " + t);
-
-        t = str.right(3);
-        System.out.println("t: " + t);
-
-        Str text = Str.of("abc\ndef\n\n");
-        t = text.chomp();
-
-        System.out.println("t: " + t);
-        System.out.println("text: " + text);
-
-        t = text.chompAll();
-
-        String[] lines = text.split("\n");
-        System.out.println("lines: " + java.util.Arrays.asList(lines));
-
-        List<String> chunks = Str.of("abc def\nghi\tjkl").toList();
-        System.out.println("chunks: " + chunks);
-
-        boolean b;
-
-        b = str.startsWith("T");
-
-        b = str.endsWith("t");        
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void scan(List<List<String>> expected, String s, String re) {
+        Str str = Str.of(s);
+        List<List<String>> result = str.scan(Pattern.compile(re));
+        assertThat(result, withContext(message("s", s, "re", re), equalTo(expected)));
     }
+    
+    private List<Object[]> parametersForScan() {
+        List<Object[]> pl = paramsList();
+        pl.add(params(Arrays.asList(new Object[] { list("a") }),              "ab",    "a"));
+        pl.add(params(Arrays.asList(new Object[] { list("a"), list("a") }),   "aba",   "a"));
+        pl.add(params(Arrays.asList(new Object[] { list("ab", "b") }),        "abaca", "a(b)"));
+        pl.add(params(Arrays.asList(new Object[] { list("abac", "b", "c") }), "abaca", "a(b).(.)"));
+        return pl;
+    }    
 }

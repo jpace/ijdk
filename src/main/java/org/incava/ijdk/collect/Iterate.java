@@ -47,6 +47,19 @@ public class Iterate {
     }
 
     /**
+     * Returns an Iterable (iterator) for the collection, which can be null. If <code>coll</code> is
+     * null, an "empty" iterator will be returned. Only non-null elements will be in the Iterable.
+     *
+     * @param elements the elements to iterate over; can be null
+     * @param <T> the type of elements
+     * @return an iterator for the collection
+     * @see #each
+     */
+    public static <T> Iterable<T> overNonNull(Iterable<T> elements) {
+        return elements == null ? new EmptyIterable<T>() : elements;
+    }
+
+    /**
      * An iterator that has a value (<code>it.value()</code>) and an index
      * (<code>it.index()</code>).
      *

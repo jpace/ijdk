@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.incava.ijdk.util.Indexable;
@@ -16,7 +17,8 @@ import org.incava.ijdk.util.Indexable;
  */
 public class Str extends Obj<String> implements Comparing<Str> {
     public enum Option {
-        IGNORE_CASE
+        IGNORE_CASE,
+        ALPHANUMERIC
     }
     
     public static final Str EMPTY = new Str("");
@@ -538,18 +540,43 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * consistency with String. Returns false if the wrapped string is null.
      *
      * @param str the string to find
-     * @param options 
+     * @param options the options to apply (valid: IGNORE_CASE)
      * @return whether the string starts with <code>str</code>
      */
     public boolean startsWith(String str, EnumSet<Str.Option> options) {
-        if (isNull() || str.length() > length()) {
+        return startsWith(str, 0, options);
+    }
+    
+    /**
+     * Returns whether the wrapped string begins with the string <code>str</code>. For
+     * consistency with String. Returns false if the wrapped string is null.
+     *
+     * @param str the string to find
+     * @param offset the index from which to start the match
+     * @return whether the string starts with <code>str</code>
+     */
+    public boolean startsWith(String str, int offset) {
+        return startsWith(str, offset, EnumSet.noneOf(Str.Option.class)); 
+    }
+    
+    /**
+     * Returns whether the wrapped string begins with the string <code>str</code>. For
+     * consistency with String. Returns false if the wrapped string is null.
+     *
+     * @param str the string to find
+     * @param offset the index from which to start the match
+     * @param options the options to apply (valid: IGNORE_CASE)
+     * @return whether the string starts with <code>str</code>
+     */
+    public boolean startsWith(String str, int offset, EnumSet<Str.Option> options) {
+        if (isNull() || offset + str.length() > length()) {
             return false;
         }
         
         Str other = Str.of(str);
         boolean ignoreCase = options != null && options.contains(Str.Option.IGNORE_CASE);
         for (int idx = 0; idx < str.length(); ++idx) {
-            Character x = get(idx);
+            Character x = get(offset + idx);
             Character y = other.get(idx);
             if (!x.equals(y)) {
                 if (ignoreCase) {
@@ -784,6 +811,59 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return str().compareTo(other.str());
         }
     }
+    
+
+    /**
+     * Returns a negative number, zero, or a positive number, for when <code>other</code> is less
+     * than, equal to, or greater than this one.
+     *
+     * @param other the other string
+     * @param options options to use in comparing, IGNORE_CASE and ALPHANUMERIC
+     * @return the comparison value
+     */
+    public int compareTo(Str other, EnumSet<Str.Option> options) {
+        if (isNull()) {
+            return other == null || other.isNull() ? 0 : -1;
+        }
+        else if (other.isNull()) {
+            return 1;
+        }
+        else {
+            // no, this is not efficient
+            boolean ignoreCase = options.contains(Str.Option.IGNORE_CASE);
+            boolean alphanumeric  = options.contains(Str.Option.ALPHANUMERIC);
+            int cmp = 0;
+            String s = str();
+            String t = other.str();
+
+            if (ignoreCase) {
+                s = s.toUpperCase();
+                t = t.toUpperCase();
+            }
+            
+            int len = Math.min(s.length(), t.length());
+            int idx;
+            for (idx = 0; cmp == 0 && idx < len; ++idx) {
+                char c = s.charAt(idx);
+                char d = t.charAt(idx);
+                cmp = c - d;
+                if (cmp != 0) {
+                    if (ignoreCase) {
+                        Character uc = Character.toUpperCase(c);
+                        Character ud = Character.toUpperCase(d);
+                        cmp = uc.compareTo(ud);
+                    }
+                }
+            }
+
+            if (cmp == 0) {
+                cmp = t.length() - s.length();
+            }
+            
+            return cmp;
+        }
+    }
+    
 
     /**
      * Returns the hash code of the wrapped string, or zero if null.
@@ -863,19 +943,6 @@ public class Str extends Obj<String> implements Comparing<Str> {
     public Str replaceAll(String from, String to) {
         return replaceAll(from, to, false);
     }
-    
-    /**
-     * Replaces literal occurrances of <code>from</code> with <code>to</code>, without regard to
-     * case. Unlike String#replaceAll, this applies <code>from</code> as a literal, not as a regular
-     * expression.
-     *
-     * @param from the left-hand side of the replacement
-     * @param to the right-hand side of the replacement
-     * @return the string, with substitutions
-     */
-    public Str replaceAllIgnoreCase(String from, String to) {
-        return replaceAll(from, to, true);
-    }
 
     /**
      * Replaces literal occurrances of <code>from</code> with <code>to</code>, optionally without
@@ -898,7 +965,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      *
      * @param from the left-hand side of the replacement
      * @param to the right-hand side of the replacement
-     * @param ignoreCase whether to ignore case
+     * @param options options use in replacing (valid: IGNORE_CASE)
      * @return the string, with substitutions
      */
     public Str replaceAll(String from, String to, EnumSet<Str.Option> options) {
@@ -944,5 +1011,45 @@ public class Str extends Obj<String> implements Comparing<Str> {
             substr = substr.toUpperCase();
         }
         return str.indexOf(substr, pos);
-    }    
+    }
+
+    /**
+     * Returns a list of matchers where the pattern was matched in the string. Essentially the
+     * opposite of String#split, which returns the elements where the pattern does <em>not</em>
+     * match. Each element in the returned list is a list, in which the first element is the entire
+     * match, and the other elements are the capturing groups.
+     *
+     * <pre>
+     * Str str = Str.of("abaca");
+     * List&lt;List&lt;String&gt;&gt; result = str.scan(Pattern.compile("a(b).(.)"));
+     * // result == list of "abac", "b", "c"
+     * </pre>
+     */
+    public List<List<String>> scan(Pattern pattern) {
+        int idx = 0;
+        String s = str();
+        int len = s.length();
+        Matcher m = pattern.matcher(s);
+        m.useAnchoringBounds(false);
+
+        List<List<String>> matchList = new ArrayList<List<String>>();
+            
+        while (idx < len) {
+            if (m.find(idx)) {
+                List<String> subList = new ArrayList<String>();
+                int pos = m.start();
+                String grp = m.group();
+                for (int gi = 0; gi <= m.groupCount(); ++gi) {
+                    String g = m.group(gi);
+                    subList.add(g);
+                }
+                matchList.add(subList);
+                idx = m.end();
+            }
+            else {
+                break;
+            }
+        }
+        return matchList;
+    }
 }
