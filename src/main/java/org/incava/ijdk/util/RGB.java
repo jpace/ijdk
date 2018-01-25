@@ -1,7 +1,5 @@
 package org.incava.ijdk.util;
 
-import java.util.*;
-
 public class RGB {
     private final int red;
     private final int green;

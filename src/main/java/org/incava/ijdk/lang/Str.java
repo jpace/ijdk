@@ -84,6 +84,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Wraps the given string.
+     *
+     * @param string the string to wrap
      */
     public Str(String string) {
         super(string);
@@ -1019,11 +1021,17 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * match. Each element in the returned list is a list, in which the first element is the entire
      * match, and the other elements are the capturing groups.
      *
+     * Unlike elsewhere in the JDK, the pattern (regular expression) here is not anchored, so "a*b"
+     * will match "def aaaab ghi".
+     *
      * <pre>
      * Str str = Str.of("abaca");
      * List&lt;List&lt;String&gt;&gt; result = str.scan(Pattern.compile("a(b).(.)"));
      * // result == list of "abac", "b", "c"
      * </pre>
+     *
+     * @param pattern the pattern to scan for
+     * @return a list of list of matching elements, one inner list per section matched
      */
     public List<List<String>> scan(Pattern pattern) {
         int idx = 0;
