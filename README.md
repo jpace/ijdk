@@ -10,7 +10,7 @@ and modeled on the equivalent in Ruby. For example, reading a file:
 Note the similarity to idiomatic Ruby:
 
 ```ruby
-    lines = IO.readlines("foo.txt")
+    lines = IO.readlines "foo.txt"
 ```
 
 # Usage
@@ -416,13 +416,12 @@ IJDK is available in the Maven repository.
 
 # Help
 
-Please email me at jeugenepace at gmail dot com if you have questions or feedback about IJDK.
+Email me at jeugenepace at gmail dot com if you have questions or feedback about IJDK.
 
-# Contributing
+# More Examples
 
-I'm eager to learn how others use this library, and what additional features they would like. Please
-email me at the above address.
+More detailed examples are at the [IJDK Cookbook](https://jpace.github.io/ijdk-cookbook/).
 
 # Credits
 
-Much of this was inspired by Ruby.
+Much of this was inspired by Ruby and Perl.
