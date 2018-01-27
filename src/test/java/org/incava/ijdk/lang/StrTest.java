@@ -15,7 +15,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
 
@@ -49,19 +48,19 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void splitCharDelim(String[] expected, String str, char delim, int max) {
         String[] result = new Str(str).split(delim, max);
-        assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
+        assertThat(result, equalTo(expected));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void splitStringDelim(String[] expected, String str, String delim, int max) {
         String[] result = new Str(str).split(delim, max);
-        assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
+        assertThat(result, equalTo(expected));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void splitToListStringDelim(List<String> expected, String str, String delim, Integer max) {
         List<String> result = new Str(str).splitToList(delim, max);
-        assertEqual(expected, result, message("str", str, "delim", delim, "max", max));
+        assertThat(result, equalTo(expected));
     }
 
     private List<String> list(String ... strs) {
@@ -92,7 +91,7 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void toList(String[] expected, String str) {
         List<String> result = new Str(str).toList();
-        assertEqual(expected == null ? null : Arrays.asList(expected), result, message("str", str));
+        assertThat(result, expected == null ? nullValue() : equalTo(Arrays.asList(expected)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -158,7 +157,7 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void getIndex(Integer expected, String str, int index) {
         Integer result = new Str(str).getIndex(index);
-        assertEqual(expected, result, message("str", str, "index", index));
+        assertThat(result, equalTo(expected));
     }
     
     private java.util.List<Object[]> parametersForGetIndex() {
@@ -209,7 +208,7 @@ public class StrTest extends StringTest {
     @Test @Parameters(method="parametersForStartsWith") @TestCaseName("{method} {index} {params}")
     public void startsWithUseCase(boolean expected, String str, char ch) {
         boolean result = new Str(str).startsWith(ch);
-        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
+        assertThat(result, equalTo(expected));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -250,7 +249,7 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void indexOf(Integer expected, String str, Character ch) {
         Integer result = new Str(str).indexOf(ch);
-        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
+        assertThat(result, equalTo(expected));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -492,14 +491,15 @@ public class StrTest extends StringTest {
     @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
     public void replaceAll(String expWithCase, String expIgnoreCase, String line, String from, String to) {
         Str str = toStr(line);
-        assertThat(str.replaceAll(from, to), equalTo(expWithCase == null ? null : toStr(expWithCase)));
+        Str result = str.replaceAll(from, to);
+        assertThat(result, expWithCase == null ? nullValue() : equalTo(toStr(expWithCase)));
     }
 
-    @Ignore @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
+    @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
     public void replaceAllIgnoreCase(String expWithCase, String expIgnoreCase, String line, String from, String to) {
         Str str = toStr(line);
         Str result = str.replaceAll(from, to, EnumSet.of(Str.Option.IGNORE_CASE));        
-        assertThat(result, equalTo(expIgnoreCase == null ? null : toStr(expIgnoreCase)));
+        assertThat(result, expIgnoreCase == null ? nullValue() : equalTo(toStr(expIgnoreCase)));
     }
     
     private List<Object[]> parametersForReplace() {
@@ -558,30 +558,25 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void joinArray(String expected, String[] ary, String delim) {
         String result = Str.join(ary, delim).str();
-        assertEqual(expected, result, message("ary", ary, "delim", delim));
+        assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForJoinArray() {
-        return paramsList(params(null,      (String[])null,                      "~"),
-                          params("",        new String[] { },                    null),
-                          params("abcd",    new String[] { "a", "b", "c", "d" }, null),
-                          params("abcd",    new String[] { "a", "b", "c", "d" }, ""),
-                          params("",        new String[] { "" },                 "~"),
-                          params("a~b~c~d", new String[] { "a", "b", "c", "d" }, "~"));
+        return paramsList(params(null,      (String[])null,                 "~"),
+                          params("",        new String[] { },               null),
+                          params("a~b~c",   new String[] { "a", "b", "c" }, "~"),
+                          params("aXXbXXc", new String[] { "a", "b", "c" }, "XX"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void joinCollection(String expected, Collection<String> coll, String delim) {
         String result = Str.join(coll, delim).str();
-        assertEqual(expected, result, message("coll", coll, "delim", delim));
+        assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForJoinCollection() {
         return paramsList(params(null,      (ArrayList<String>)null,           "~"),
                           params("",        Arrays.<String>asList(),           null),
-                          params("abcd",    Arrays.asList("a", "b", "c", "d"), null),
-                          params("abcd",    Arrays.asList("a", "b", "c", "d"), ""),
-                          params("",        new ArrayList<String>(),           "~"),
                           params("a~b~c~d", Arrays.asList("a", "b", "c", "d"), "~"));
     }
 
@@ -589,7 +584,7 @@ public class StrTest extends StringTest {
     public void scan(List<List<String>> expected, String s, String re) {
         Str str = Str.of(s);
         List<List<String>> result = str.scan(Pattern.compile(re));
-        assertThat(result, withContext(message("s", s, "re", re), equalTo(expected)));
+        assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForScan() {

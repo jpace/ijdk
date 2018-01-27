@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import org.incava.ijdk.str.StrAlphanumericComparator;
 import org.incava.ijdk.str.StrComparator;
 import org.incava.ijdk.str.StrIgnoreCaseComparator;
+import org.incava.ijdk.util.Collections;
 
 import org.incava.ijdk.util.Indexable;
 
@@ -56,20 +57,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the joined string
      */
     public static Str join(Collection<?> coll, String delim) {
-        if (coll == null) {
-            return new Str(null);
-        }
-        StringBuilder sb = null;
-        for (Object obj : coll) {
-            if (sb == null) {
-                sb = new StringBuilder();
-            }
-            else {
-                sb.append(delim == null ? "" : delim);
-            }            
-            sb.append(String.valueOf(obj));
-        }
-        return new Str(sb == null ? "" : sb.toString());
+        String joined = Collections.join(coll, delim);
+        return Str.of(joined);
     }
 
     /**
@@ -541,8 +530,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns whether the wrapped string begins with the string <code>str</code>. For
-     * consistency with String. Returns false if the wrapped string is null.
+     * Returns whether the wrapped string begins with the string <code>str</code>, applying options
+     * for matching (ignoring case).
      *
      * @param str the string to find
      * @param options the options to apply (valid: IGNORE_CASE)
@@ -943,7 +932,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
         int idx = 0;
         while (idx < len) {
-            if (str().startsWith(from, idx)) {
+            if (startsWith(from, idx, options)) {
                 sb.append(to);
                 idx += from.length();
             }
