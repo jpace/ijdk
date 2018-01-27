@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.incava.ijdk.lang.Sequence;
 import org.incava.ijdk.lang.Str;
@@ -341,20 +342,27 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
      */
     @SuppressWarnings("unchecked")
     public C sorted() {
-        Object[] copy = toArray();
+        return sorted(null);
+    }
+
+    /**
+     * Returns a copy of this array, sorted, using the given comparator
+     *
+     * @return a sorted array
+     */
+    @SuppressWarnings("unchecked")
+    public C sorted(Comparator<? super T> comparator) {
+        T[] copy = (T[])toArray();
         if (copy.length == 0) {
             return newInstance();
         }
-        else if (copy[0] instanceof Comparable) {
-            Arrays.sort(copy);
+        else {
+            Arrays.sort(copy, comparator);
             C ary = newInstance();
             for (Object x : copy) {
                 ary.add((T)x);
             }
             return ary;
-        }
-        else {
-            throw new RuntimeException("array contains " + copy[0].getClass() + ", which is not Comparable");
         }
     }
 

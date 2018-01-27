@@ -2,6 +2,7 @@ package org.incava.ijdk.collect;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
@@ -54,6 +55,10 @@ public class BaseArrayTest extends Parameterized {
 
     private static ExampleArray<Object> objectArray(Object ... ary) {
         return new ExampleArray<Object>(ary);
+    }
+
+    private static ExampleArray<String> stringArray(String ... ary) {
+        return new ExampleArray<String>(ary);
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -416,24 +421,33 @@ public class BaseArrayTest extends Parameterized {
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public <T> void sorted(ExampleArray<T> expArray, String expException, ExampleArray<T> ary) {
-        try {
-            ExampleArray<T> result = ary.sorted();
-            assertThat(result, equalTo(expArray));
-        }
-        catch (Exception ex) {
-            assertThat(ex.getMessage(), equalTo(expException));
-        }
+    public <T> void sorted(ExampleArray<T> expArray, ExampleArray<T> ary) {
+        ExampleArray<T> result = ary.sorted();
+        assertThat(result, equalTo(expArray));
     }
     
     private List<Object[]> parametersForSorted() {
         ExampleArray<Object> ab  = objectArray("a", "b");
         ExampleArray<Object> ba  = objectArray("b", "a");
         
-        ExampleArray<Object> sba  = objectArray(new StringBuilder("a"), new StringBuilder("b"));
-        
-        return paramsList(params(ab, null, ab),
-                          params(ab, null, ba),
-                          params(ab, "array contains class java.lang.StringBuilder, which is not Comparable", sba));
+        return paramsList(params(ab, ab),
+                          params(ab, ba));
     }    
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public <T> void sortedComparator(ExampleArray<T> expArray, ExampleArray<T> ary, Comparator<T> comparator) {
+        ExampleArray<T> result = ary.sorted(comparator);
+        assertThat(result, equalTo(expArray));
+    }
+    
+    private List<Object[]> parametersForSortedComparator() {
+        Comparator<String> strLenComp = new Comparator<String>() {
+                public int compare(String x, String y) {
+                    return Integer.valueOf(x.length()).compareTo(Integer.valueOf(y.length()));
+                }
+            };
+        ExampleArray<String> ab  = stringArray("aaa", "bb", "c");
+        return paramsList(params(stringArray("c", "bb", "aaa"), ab, strLenComp));
+    }
 }
+

@@ -1,12 +1,14 @@
 package org.incava.ijdk.collect;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.hamcrest.Matchers;
 import org.incava.attest.Parameterized;
 import org.incava.ijdk.lang.Closure;
+import org.incava.ijdk.str.StringAlphanumericComparator;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -210,6 +212,18 @@ public class StringListTest extends Parameterized {
         return paramsList(params(StringList.of("a", "b", "c"), StringList.of("b", "a", "c")),
                           params(StringList.of("a", "b", "c"), StringList.of("b", "c", "a")));
     }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void sortedComparator(StringList expected, StringList ary, Comparator<String> comp) {
+        StringList result = ary.sorted(comp);
+        assertThat(result, equalTo(expected));
+        assertThat(result, not(equalTo(ary)));
+    }
+    
+    private List<Object[]> parametersForSortedComparator() {
+        return paramsList(params(StringList.of("a9", "a10", "b"), StringList.of("b", "a10", "a9"), new StringAlphanumericComparator()), 
+                          params(StringList.of("b3", "b4",  "c"), StringList.of("c", "b4",  "b3"), new StringAlphanumericComparator()));
+    }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void collect(StringList expected, StringList ary, String repl) {
