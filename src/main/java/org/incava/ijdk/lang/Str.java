@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.incava.ijdk.str.StrAlphanumericComparator;
+import org.incava.ijdk.str.StrComparator;
+import org.incava.ijdk.str.StrIgnoreCaseComparator;
 
 import org.incava.ijdk.util.Indexable;
 
@@ -107,7 +110,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param num the number of times to repeat
      */
     public Str(String str, int num) {
-        super(StringExt.repeat(str, num));
+        this(StringExt.repeat(str, num));
     }
 
     /**
@@ -117,7 +120,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param num the number of times to repeat
      */
     public Str(char ch, int num) {
-        super(StringExt.repeat(ch, num));
+        this(StringExt.repeat(ch, num));
     }
     
     /**
@@ -580,15 +583,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
         for (int idx = 0; idx < str.length(); ++idx) {
             Character x = get(offset + idx);
             Character y = other.get(idx);
-            if (!x.equals(y)) {
-                if (ignoreCase) {
-                    if (Character.toUpperCase(x) != Character.toUpperCase(y)) {
-                        return false;
-                    }
-                }
-                else {
-                    return false;
-                }
+            if (!Char.isMatch(x, y, ignoreCase)) {
+                return false;
             }
         }
         return true;
@@ -602,8 +598,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return whether the string ends with <code>ch</code>
      */
     public boolean endsWith(char ch) {
-        Character startChar = get(-1);
-        return startChar != null && startChar == ch;
+        Character lastChar = get(-1);
+        return lastChar != null && lastChar == ch;
     }
 
     /**
@@ -796,25 +792,16 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns a negative number, zero, or a positive number, for when <code>other</code> is less
-     * than, equal to, or greater than this one.
+     * Returns a negative number, zero, or a positive number, for when <code>this</code> is less
+     * than, equal to, or greater than <code>other</code> .
      *
      * @param other the other string
      * @return the comparison value
      */
     public int compareTo(Str other) {
-        if (isNull()) {
-            return other == null || other.isNull() ? 0 : -1;
-        }
-        else if (other.isNull()) {
-            return 1;
-        }
-        else {
-            return str().compareTo(other.str());
-        }
+        return compareTo(other, EnumSet.noneOf(Str.Option.class));
     }
     
-
     /**
      * Returns a negative number, zero, or a positive number, for when <code>other</code> is less
      * than, equal to, or greater than this one.
@@ -824,48 +811,22 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the comparison value
      */
     public int compareTo(Str other, EnumSet<Str.Option> options) {
-        if (isNull()) {
-            return other == null || other.isNull() ? 0 : -1;
+        if (isNull() || other == null || other.isNull()) {
+            return Boolean.compare(isNull(), other == null || other.isNull());
         }
-        else if (other.isNull()) {
-            return 1;
+        else if (options != null && options.contains(Str.Option.IGNORE_CASE)) {
+            StrIgnoreCaseComparator comp = new StrIgnoreCaseComparator();
+            return comp.compare(this, other);
+        }
+        else if (options != null && options.contains(Str.Option.ALPHANUMERIC)) {
+            StrAlphanumericComparator comp = new StrAlphanumericComparator();
+            return comp.compare(this, other);
         }
         else {
-            // no, this is not efficient
-            boolean ignoreCase = options.contains(Str.Option.IGNORE_CASE);
-            boolean alphanumeric  = options.contains(Str.Option.ALPHANUMERIC);
-            int cmp = 0;
-            String s = str();
-            String t = other.str();
-
-            if (ignoreCase) {
-                s = s.toUpperCase();
-                t = t.toUpperCase();
-            }
-            
-            int len = Math.min(s.length(), t.length());
-            int idx;
-            for (idx = 0; cmp == 0 && idx < len; ++idx) {
-                char c = s.charAt(idx);
-                char d = t.charAt(idx);
-                cmp = c - d;
-                if (cmp != 0) {
-                    if (ignoreCase) {
-                        Character uc = Character.toUpperCase(c);
-                        Character ud = Character.toUpperCase(d);
-                        cmp = uc.compareTo(ud);
-                    }
-                }
-            }
-
-            if (cmp == 0) {
-                cmp = t.length() - s.length();
-            }
-            
-            return cmp;
+            StrComparator comp = new StrComparator();
+            return comp.compare(this, other);
         }
-    }
-    
+    }    
 
     /**
      * Returns the hash code of the wrapped string, or zero if null.
@@ -1045,7 +1006,6 @@ public class Str extends Obj<String> implements Comparing<Str> {
         while (idx < len) {
             if (m.find(idx)) {
                 List<String> subList = new ArrayList<String>();
-                int pos = m.start();
                 String grp = m.group();
                 for (int gi = 0; gi <= m.groupCount(); ++gi) {
                     String g = m.group(gi);

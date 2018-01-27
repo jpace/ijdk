@@ -3,12 +3,12 @@ package org.incava.ijdk.lang;
 /**
  * A list with extended functionality, modeled on the Enumerable class in Ruby.
  */
-public interface Sequence<T> extends java.util.List<T> {
+public interface Sequence<T, C extends Sequence<T, C>> extends java.util.List<T> {
     /**
      * Adds the given element, and returns a sequence, so this method call can be chained into
      * multiple ones. The returned sequence could be either this object, or a newly-created object.
      */
-    public Sequence<T> append(T element);
+    public C append(T element);
 
     /**
      * Returns the first element in the sequence.
@@ -38,13 +38,13 @@ public interface Sequence<T> extends java.util.List<T> {
      * Returns a new sequence that contains unique elements from the sequence, in the same order as
      * in this one.
      */
-    public Sequence<T> unique();
+    public C unique();
 
     /**
      * Returns a new sequence that contains only the non-null elements from this sequence, in the
      * same order as in this sequence.
      */
-    public Sequence<T> compact();
+    public C compact();
 
     /**
      * Returns the sequence as a String, joined by the delimiter.

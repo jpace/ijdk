@@ -21,7 +21,7 @@ import org.incava.ijdk.lang.Str;
  * @param <T> the element type of the array
  * @param <C> the class of the array subtype
  */
-public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> extends ArrayList<T> implements Sequence<T> {
+public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> extends ArrayList<T> implements Sequence<T, C> {
     public static final long serialVersionUID = 1L;
 
     /**

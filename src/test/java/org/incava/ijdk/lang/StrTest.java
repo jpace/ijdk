@@ -396,9 +396,23 @@ public class StrTest extends StringTest {
         return paramsList(params(0,  "abc", "abc"), 
                           params(-1, "abc", "def"), 
                           params(1,  "def", "abc"), 
-                          params(1,  "abc", null),  
+                          params(-1, "abc", null),  
+                          params(-1, "ab",  "abc"),  
                           params(0,  null,  null),  
-                          params(-1, null,  "abc"));
+                          params(1,  null,  "abc"));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void compareToNull(Integer expected, Str x, Str y) {
+        Integer result = x.compareTo(y);
+        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
+        assertThat(relResult, withContext(message("x", x, "y", y), equalTo(expected)));
+    }
+    
+    private List<Object[]> parametersForCompareToNull() {
+        return paramsList(params(-1, Str.of("abc"), null), 
+                          params(0,  Str.of(null),  null), 
+                          params(0,  Str.of(null),  Str.of(null)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -413,9 +427,29 @@ public class StrTest extends StringTest {
                           params(0,  "Abc",   "abc",  EnumSet.of(Str.Option.IGNORE_CASE)), 
                           params(-1, "Abc",   "abc",  EnumSet.noneOf(Str.Option.class)),   
                           params(1,  "abc",   "Abc",  EnumSet.noneOf(Str.Option.class)),   
-                          params(-1, "abcd",  "abc",  EnumSet.noneOf(Str.Option.class)),   
-                          params(1,  "abc",   "abcd", EnumSet.noneOf(Str.Option.class)),   
-                          params(-1, "abcde", "abc",  EnumSet.noneOf(Str.Option.class)));
+                          params(1,  "abcd",  "abc",  EnumSet.noneOf(Str.Option.class)),   
+                          params(-1, "abc",   "abcd", EnumSet.noneOf(Str.Option.class)),   
+                          params(1,  "abcde", "abc",  EnumSet.noneOf(Str.Option.class)));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void compareToAlphanumeric(Integer expected, String x, String y) {
+        Integer result = new Str(x).compareTo(new Str(y), EnumSet.of(Str.Option.ALPHANUMERIC));
+        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
+        assertThat(relResult, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForCompareToAlphanumeric() {
+        return paramsList(params(0,  "1",   "1"),
+                          params(0,  "a",   "a"),
+                          params(-1, "2",   "3"),
+                          params(1,  "3",   "2"),
+                          params(-1, "9",   "12"),
+                          params(1,  "12",  "9"),
+                          params(-1, "a2",  "a3"),
+                          params(1, "a1",  "a"),
+                          params(-1,  "a",   "a1"),
+                          params(-1, "a9",  "a12"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -429,13 +463,25 @@ public class StrTest extends StringTest {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void initRepeat(Str expected, String str, int num) {
+    public void initRepeatChar(Str expected, char ch, int num) {
+        assertThat(new Str(ch, num), equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForInitRepeatChar() {
+        return paramsList(params(new Str("a"),  'a',   1),
+                          params(new Str("aa"), 'a',   2),  
+                          params(new Str(""),   'a',   0),
+                          params(new Str(""),   'a',  -1));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void initRepeatString(Str expected, String str, int num) {
         assertThat(new Str(str, num), equalTo(expected));
     }
     
-    private List<Object[]> parametersForInitRepeat() {
-        return paramsList(params(new Str("a"),  "a",   1),
-                          params(new Str("aa"), "a",   2),  
+    private List<Object[]> parametersForInitRepeatString() {
+        return paramsList(params(new Str("ab"),  "ab",   1),
+                          params(new Str("abab"), "ab",   2),  
                           params(new Str(""),   "a",   0),  
                           params(new Str(""),   "a",  -1), 
                           params(new Str(""),   "",    0),  

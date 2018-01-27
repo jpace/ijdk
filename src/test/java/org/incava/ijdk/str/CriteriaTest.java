@@ -22,9 +22,9 @@ public class CriteriaTest extends Parameterized {
     }
     
     private java.util.List<Object[]> parametersForInit() {
-        return paramsList(params(true, "abc", "a"),
-                          params(false, "def", "a"),
-                          params(null, null, "a"));
+        return paramsList(params(true,  "abc", "a"), 
+                          params(false, "def", "a"), 
+                          params(null,  null,  "a"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -35,9 +35,9 @@ public class CriteriaTest extends Parameterized {
     }
     
     private java.util.List<Object[]> parametersForStartsWith() {
-        return paramsList(params(true, "abc", "a"),
-                          params(false, "def", "a"),
-                          params(null, null, "a"));
+        return paramsList(params(true,  "abc", "a"), 
+                          params(false, "def", "a"), 
+                          params(null,  null,  "a"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -48,9 +48,9 @@ public class CriteriaTest extends Parameterized {
     }
     
     private java.util.List<Object[]> parametersForContains() {
-        return paramsList(params(true, "abc", "b"),
-                          params(false, "def", "b"),
-                          params(null, null, "b"));
+        return paramsList(params(true,  "abc", "b"), 
+                          params(false, "def", "b"), 
+                          params(null,  null,  "b"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -61,9 +61,9 @@ public class CriteriaTest extends Parameterized {
     }
     
     private java.util.List<Object[]> parametersForEndsWith() {
-        return paramsList(params(true, "abc", "c"),
-                          params(false, "abc", "a"),
-                          params(null, null, "a"));
+        return paramsList(params(true,  "abc", "c"), 
+                          params(false, "abc", "a"), 
+                          params(null,  null,  "a"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
