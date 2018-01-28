@@ -224,7 +224,8 @@ public abstract class StringTest extends Parameterized {
     public List<Object[]> parametersForLength() {
         return paramsList(params(0, null), 
                           params(0, ""),   
-                          params(1, "a"));
+                          params(1, "a"),
+                          params(2, "ab"));
     }
     
     public List<Object[]> parametersForChomp() {

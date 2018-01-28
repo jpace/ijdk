@@ -294,10 +294,10 @@ public class StrTest extends StringTest {
         assertThat(result, withContext(message("str", str), equalTo(expected)));
     }    
 
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; [{params}]")
     public void length(int expected, String str) {
         int result = new Str(str).length();
-        assertThat(result, withContext(message("str", str), equalTo(expected)));
+        assertThat(result, equalTo(expected));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
