@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.util.EnumSet;
 import java.util.List;
 
-public class FileExt {
+public class Files {
     /**
      * Reads the file into a string array, returning an empty array if there is
      * an error.
@@ -31,11 +31,11 @@ public class FileExt {
      * @param file the file to read from
      * @param options options for reading
      * @return the lines of the file
-     * @see ReaderExt#readLines
+     * @see Readers#readLines
      */
     public static List<String> readLines(File file, EnumSet<ReadOptionType> options) throws IORuntimeException {
         try {
-            return ReaderExt.readLines(new FileReader(file), options);
+            return Readers.readLines(new FileReader(file), options);
         }
         catch (FileNotFoundException fnfe) {
             return IOExceptionHandler.handleReadException(fnfe, options);
@@ -63,7 +63,7 @@ public class FileExt {
      */
     public static void printLines(File file, List<String> lines, EnumSet<WriteOptionType> options) throws IORuntimeException {
         try {
-            PrintWriterExt.printLines(new PrintWriter(file), lines);
+            PrintWriters.printLines(new PrintWriter(file), lines);
         }
         catch (FileNotFoundException fnfe) {
             IOExceptionHandler.handleWriteException(fnfe, options);

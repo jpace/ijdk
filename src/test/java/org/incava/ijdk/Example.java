@@ -110,7 +110,7 @@ public class Example {
         }
 
         // new way:
-        if (StringExt.startsWith(s, 't')) {
+        if (Strings.startsWith(s, 't')) {
         }
     }
 
@@ -125,10 +125,10 @@ public class Example {
 
         // new way:
         { 
-            String padded = StringExt.pad("testing", '*', 16);
+            String padded = Strings.pad("testing", '*', 16);
 
             // or for spaces (default character):
-            String padded2 = StringExt.pad("testing", 16);
+            String padded2 = Strings.pad("testing", 16);
         }
     }
 
@@ -143,10 +143,10 @@ public class Example {
 
         // new way:
         {
-            String padded = StringExt.padLeft("testing", '*', 16);
+            String padded = Strings.padLeft("testing", '*', 16);
 
             // or for spaces (default character):
-            String padded2 = StringExt.padLeft("testing", 16);
+            String padded2 = Strings.padLeft("testing", 16);
         }
     }
 
@@ -162,10 +162,10 @@ public class Example {
 
         // new way:
         {
-            String sub = StringExt.left(str, 10);
+            String sub = Strings.left(str, 10);
         }
 
-        // ditto for StringExt.right
+        // ditto for Strings.right
     }
 
     public void stringJoin() {
@@ -191,7 +191,7 @@ public class Example {
 
         // new way
         {
-            String str = StringExt.join(ary, ":");
+            String str = Strings.join(ary, ":");
         }
     }
 
@@ -209,7 +209,7 @@ public class Example {
         
         // new way
         {
-            Character ch1 = StringExt.charAt(str, 4);
+            Character ch1 = Strings.charAt(str, 4);
         }
             
         // old way, last character:
@@ -219,14 +219,14 @@ public class Example {
         
         // new way
         {
-            Character ch = StringExt.charAt(str, -1);
+            Character ch = Strings.charAt(str, -1);
         }
         
-        // above can be used with StringExt.substring -- negative indices and
+        // above can be used with Strings.substring -- negative indices and
         // binding the maximum range to within the string:
-        String substr0 = StringExt.substring(str, 16, -8); // "cons"
-        String substr1 = StringExt.substring(str, 16, -1); // "constructor"
-        String substr2 = StringExt.substring(str, 16, 111); // "constructor"
+        String substr0 = Strings.substring(str, 16, -8); // "cons"
+        String substr1 = Strings.substring(str, 16, -1); // "constructor"
+        String substr2 = Strings.substring(str, 16, 111); // "constructor"
     }
 
     public void datatypeRange() {
@@ -350,15 +350,15 @@ public class Example {
 
         // new way:
         {
-            String s = ListExt.get(list, idx);
+            String s = Lists.get(list, idx);
         }
 
         // use negative indices for distance from end (-1 == end)
         
         {
-            String s = ListExt.get(list, -1); // last in list
-            String t = ListExt.get(list, -2); // next to list
-            String u = ListExt.get(list, -3); // second from last
+            String s = Lists.get(list, -1); // last in list
+            String t = Lists.get(list, -2); // next to list
+            String u = Lists.get(list, -3); // second from last
         }
     }
 

@@ -11,14 +11,14 @@ import org.junit.Test;
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
 
-public class ListExtTest extends Parameterized {
+public class ListsTest extends Parameterized {
     public static final List<Integer> NUMS = Arrays.asList(new Integer[] { 2, 4, 6, 8 });
     public static final List<String> WORDS  = Arrays.asList(new String[] { "the", "whole", "kit", "and", "caboodle" });
     public static final List<String> EMPTY  = new ArrayList<String>();
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void get(T expected, List<T> list, int idx) {
-        T result = ListExt.get(list, idx);
+        T result = Lists.get(list, idx);
         assertEqual(expected, result, message("list", list, "idx", idx));
     }
     
@@ -46,7 +46,7 @@ public class ListExtTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void first(T expected, List<T> list) {
-        T result = ListExt.first(list);
+        T result = Lists.first(list);
         assertEqual(expected, result);
     }
     
@@ -58,7 +58,7 @@ public class ListExtTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void last(T expected, List<T> list) {
-        T result = ListExt.last(list);
+        T result = Lists.last(list);
         assertEqual(expected, result);        
     }
     
@@ -70,7 +70,7 @@ public class ListExtTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void removeAll(List<T> expected, List<T> list, T element) {
-        ListExt.removeAll(list, element);
+        Lists.removeAll(list, element);
         assertEqual(expected, list);
     }
     
@@ -84,7 +84,7 @@ public class ListExtTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void getIndex(Integer expected, Integer size, Integer index) {
-        Integer result = ListExt.getIndex(size, index);
+        Integer result = Lists.getIndex(size, index);
         assertEqual(expected, result, message("size", size, "index", index));
     }
     
@@ -108,7 +108,7 @@ public class ListExtTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void contains(Boolean expected, List<T> list, T value) {
-        Boolean result = ListExt.contains(list, value);
+        Boolean result = Lists.contains(list, value);
         assertEqual(expected, result, message("list", list, "value", value));
     }
     
@@ -128,7 +128,7 @@ public class ListExtTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void getRandomElement(Boolean expObject, List<T> list) {
-        T result = ListExt.getRandomElement(list);
+        T result = Lists.getRandomElement(list);
         assertEqual(expObject, result != null, message("list", list, "result", result));
     }
     

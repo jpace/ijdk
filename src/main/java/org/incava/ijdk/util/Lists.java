@@ -3,7 +3,7 @@ package org.incava.ijdk.util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListExt extends CollectionExt {
+public class Lists extends Collections {
     /**
      * Returns the first element in the list.
      */

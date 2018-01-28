@@ -99,7 +99,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param num the number of times to repeat
      */
     public Str(String str, int num) {
-        this(StringExt.repeat(str, num));
+        this(Strings.repeat(str, num));
     }
 
     /**
@@ -109,7 +109,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param num the number of times to repeat
      */
     public Str(char ch, int num) {
-        this(StringExt.repeat(ch, num));
+        this(Strings.repeat(ch, num));
     }
     
     /**
@@ -270,7 +270,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return null;
         }
         else {
-            return Str.of(str() + StringExt.repeat(ch, length - length()));
+            return Str.of(str() + Strings.repeat(ch, length - length()));
         }
     }
 
@@ -293,7 +293,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return null;
         }
         else {
-            return Str.of(StringExt.repeat(ch, length - length()) + str());
+            return Str.of(Strings.repeat(ch, length - length()) + str());
         }
     }
 
@@ -325,7 +325,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the repeated string
      */
     public Str repeat(int num) {
-        return isNull() ? null : Str.of(StringExt.repeat(str(), num));
+        return isNull() ? null : Str.of(Strings.repeat(str(), num));
     }
 
     /**

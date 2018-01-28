@@ -20,7 +20,7 @@ public class IO {
      * @see ReadOptionType
      */
     public static List<String> readLines(String fileName, EnumSet<ReadOptionType> options) {
-        return FileExt.readLines(new File(fileName), options);
+        return Files.readLines(new File(fileName), options);
     }
 
     /**
@@ -42,6 +42,6 @@ public class IO {
      * @param lines the lines to print
      */
     public static void printLines(String fileName, List<String> lines) {
-        FileExt.printLines(new File(fileName), lines);
+        Files.printLines(new File(fileName), lines);
     }
 }

@@ -6,14 +6,14 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-import org.incava.ijdk.util.CollectionExt;
+import org.incava.ijdk.util.Collections;
 
 import static org.incava.ijdk.lang.ICore.isEmpty;
 
 /**
  * Wraps java.io.Reader.
  */
-public class ReaderExt {    
+public class Readers {    
     /**
      * Reads lines from the given reader, applying options.
      *
@@ -26,7 +26,7 @@ public class ReaderExt {
         try {
             List<String>   lines = new ArrayList<String>();
             BufferedReader br    = new BufferedReader(rdr);            
-            boolean        checkEmpty = CollectionExt.contains(options, ReadOptionType.NONEMPTY);
+            boolean        checkEmpty = Collections.contains(options, ReadOptionType.NONEMPTY);
 
             String line = br.readLine();
             while (line != null) {
@@ -54,7 +54,7 @@ public class ReaderExt {
     public static String readAsString(Reader rdr, EnumSet<ReadOptionType> options) {
         StringBuilder sb = new StringBuilder();
         List<String> lines = readLines(rdr, EnumSet.noneOf(ReadOptionType.class));
-        boolean addEoln = CollectionExt.contains(options, ReadOptionType.ADD_EOLNS);
+        boolean addEoln = Collections.contains(options, ReadOptionType.ADD_EOLNS);
         for (String line : lines) {
             sb.append(line);
             if (addEoln) {

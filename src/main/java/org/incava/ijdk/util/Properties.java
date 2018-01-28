@@ -2,7 +2,7 @@ package org.incava.ijdk.util;
 
 import static org.incava.ijdk.util.IUtil.*;
 
-public class PropertyExt {
+public class Properties {
     /**
      * Returns the boolean value of the property, or null if it does not exist.
      */

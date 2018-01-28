@@ -1,6 +1,5 @@
 package org.incava.ijdk.lang;
 
-import org.incava.ijdk.lang.Str;
 import java.util.Collection;
 import java.util.List;
 
@@ -10,7 +9,7 @@ import java.util.List;
  *
  * @see org.incava.ijdk.lang.Str
  */
-public class StringExt {
+public class Strings {
     /**
      * Returns an array of strings split at the character delimiter. Returns null if
      * <code>str</code> is null.

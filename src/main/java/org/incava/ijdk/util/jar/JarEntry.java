@@ -2,7 +2,7 @@ package org.incava.ijdk.util.jar;
 
 import java.io.File;
 import java.util.jar.JarOutputStream;
-import org.incava.ijdk.io.FileExt;
+import org.incava.ijdk.io.Files;
 
 public class JarEntry {
     private final File file;
@@ -30,7 +30,7 @@ public class JarEntry {
         je.setTime(file.lastModified());
         jos.putNextEntry(je);
 
-        byte[] contents = FileExt.readBytes(file);
+        byte[] contents = Files.readBytes(file);
         jos.write(contents);
     }
 }

@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-import org.incava.ijdk.util.CollectionExt;
+import org.incava.ijdk.util.Collections;
+
 import static org.incava.ijdk.util.IUtil.*;
 
 /**
@@ -13,14 +14,14 @@ import static org.incava.ijdk.util.IUtil.*;
  */
 public class IOExceptionHandler {
     public static List<String> handleReadException(IOException ioe, EnumSet<ReadOptionType> options) throws IORuntimeException {
-        if (CollectionExt.contains(options, ReadOptionType.WITH_EXCEPTION)) {
+        if (Collections.contains(options, ReadOptionType.WITH_EXCEPTION)) {
             throw new IORuntimeException(ioe);
         }
         return new ArrayList<String>();
 
     }
     public static void handleWriteException(IOException ioe, EnumSet<WriteOptionType> options) throws IORuntimeException {
-        if (CollectionExt.contains(options, WriteOptionType.WITH_EXCEPTION)) {
+        if (Collections.contains(options, WriteOptionType.WITH_EXCEPTION)) {
             throw new IORuntimeException(ioe);
         }
     }

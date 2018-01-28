@@ -1,7 +1,7 @@
 package org.incava.ijdk.lang;
 
 import java.io.File;
-import org.incava.ijdk.io.FileExt;
+import org.incava.ijdk.io.Files;
 import org.incava.ijdk.io.IO;
 
 /**
@@ -200,7 +200,7 @@ public class Pathname extends File {
      * @return the bytes of the file
      */
     public byte[] readBytes() {
-        return FileExt.readBytes(this);
+        return Files.readBytes(this);
     }
 
     /**

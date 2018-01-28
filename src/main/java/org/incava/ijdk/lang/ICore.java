@@ -5,14 +5,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeMap;
-
 import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.collect.Iterate;
 import org.incava.ijdk.collect.StringList;
-
 import org.incava.ijdk.io.StdOut;
-import org.incava.ijdk.lang.ObjectExt;
-import org.incava.ijdk.lang.StringExt;
+import org.incava.ijdk.lang.Objects;
+import org.incava.ijdk.lang.Strings;
 
 public class ICore {
     /**
@@ -22,11 +20,11 @@ public class ICore {
      * @param obj the object to check
      * @see #isEmpty
      * @see #isFalse
-     * @see org.incava.ijdk.lang.ObjectExt#isTrue
+     * @see org.incava.ijdk.lang.Objects#isTrue
      * @return whether the object is true
      */
     public static boolean isTrue(Object obj) {
-        return ObjectExt.isTrue(obj);
+        return Objects.isTrue(obj);
     }
 
     /**
@@ -38,7 +36,7 @@ public class ICore {
      * @return whether the array is true
      */
     public static boolean isTrue(Object ... objs) {
-        return ObjectExt.isTrue(objs);
+        return Objects.isTrue(objs);
     }
 
     /**
@@ -49,7 +47,7 @@ public class ICore {
      * @return whether the object is false
      */
     public static boolean isFalse(Object obj) {
-        return ObjectExt.isFalse(obj);
+        return Objects.isFalse(obj);
     }
 
     /**
@@ -60,7 +58,7 @@ public class ICore {
      * @return whether the array is false
      */
     public static boolean isFalse(Object ... objs) {
-        return ObjectExt.isFalse(objs);
+        return Objects.isFalse(objs);
     }
 
     /**
@@ -71,7 +69,7 @@ public class ICore {
      * @return whether the object is empty
      */
     public static boolean isEmpty(Object obj) {
-        return ObjectExt.isEmpty(obj);
+        return Objects.isEmpty(obj);
     }
 
     /**
@@ -82,7 +80,7 @@ public class ICore {
      * @return whether the string is empty
      */
     public static boolean isEmpty(String str) {
-        return StringExt.isEmpty(str);
+        return Strings.isEmpty(str);
     }
 
     /**

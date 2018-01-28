@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.EnumSet;
 
-public class InputStreamExt {
+public class InputStreams {
     /**
      * Reads the file into a string array, without end-of-line characters
      * (sequences). Returns empty array on error.
@@ -15,7 +15,7 @@ public class InputStreamExt {
      * @return the lines, as a list of strings
      */
     public static List<String> readLines(InputStream stream) throws IORuntimeException {
-        return ReaderExt.readLines(new InputStreamReader(stream), null);
+        return Readers.readLines(new InputStreamReader(stream), null);
     }
 
     /**
@@ -27,6 +27,6 @@ public class InputStreamExt {
      * @return the lines, as a list of strings
      */
     public static List<String> readLines(InputStream stream, EnumSet<ReadOptionType> options) throws IORuntimeException {
-        return ReaderExt.readLines(new InputStreamReader(stream), options);
+        return Readers.readLines(new InputStreamReader(stream), options);
     }
 }

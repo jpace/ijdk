@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Wrapper for PrintWriter.
  */
-public class PrintWriterExt {
+public class PrintWriters {
     /**
      * Prints the lines (with println), and flushes and closes the writer.
      *

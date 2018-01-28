@@ -1,7 +1,6 @@
 package org.incava.ijdk.io;
 
 import java.util.List;
-import org.incava.ijdk.lang.StringExt;
 
 public class CommandResult {
     private final int exitStatus;

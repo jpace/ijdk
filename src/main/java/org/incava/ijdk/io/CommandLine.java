@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import org.incava.ijdk.lang.StringExt;
 
 public class CommandLine {
     private final List<String> args;

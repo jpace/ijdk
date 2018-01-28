@@ -8,7 +8,7 @@ import org.incava.ijdk.lang.Obj;
  *
  * @see org.incava.ijdk.lang.Obj
  */
-public class ObjectExt {
+public class Objects {
     /**
      * Returns whether the objects are equal, including whether they are both null.
      *

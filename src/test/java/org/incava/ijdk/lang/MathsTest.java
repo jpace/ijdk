@@ -12,10 +12,10 @@ import static org.incava.attest.Assertions.message;
 import static org.incava.attest.Parameters.params;
 import static org.incava.attest.Parameters.paramsList;
 
-public class MathExtTest extends Parameterized {
+public class MathsTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void min(int expected, int[] nums) {
-        int result = MathExt.min(nums);
+        int result = Maths.min(nums);
         assertEqual(expected, result, message("nums", Arrays.asList(nums)));
     }
     

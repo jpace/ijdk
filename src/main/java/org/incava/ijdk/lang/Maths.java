@@ -3,7 +3,7 @@ package org.incava.ijdk.lang;
 /**
  * Math extensions.
  */
-public class MathExt {
+public class Maths {
     /**
      * Returns the minimum value in the array, which can be empty or null. Returns Integer.MIN_VALUE
      * if not found.
