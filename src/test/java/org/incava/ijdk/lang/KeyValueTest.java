@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class KeyValueTest extends Parameterized {
     private KeyValue<String, Double> kvOne123 = KeyValue.of("one", 1.23);
@@ -97,4 +99,26 @@ public class KeyValueTest extends Parameterized {
                           params(-1, KeyValue.of(notComparable, 1.2), KeyValue.of(notComparable, 1.2)),
                           params(-1, KeyValue.of(1.2, notComparable), KeyValue.of(1.2, notComparable)));
     }
+    
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public <K, V> void parse(KeyValue<String, String> expected, String str, String delimiter) {
+        KeyValue<String, String> result = KeyValue.split(str, delimiter);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private java.util.List<Object[]> parametersForParse() {
+        return paramsList(params(new KeyValue<String, String>("abc", "123"), "abc:123", ":"),
+                          params(new KeyValue<String, String>("abc", "345"), "abc:345", ":"),
+                          params(new KeyValue<String, String>("def", "123"), "def:123", ":"),
+                          params(new KeyValue<String, String>("abc", "123"), "abc=123", "="),
+                          params(new KeyValue<String, String>("abc", "123"), "abc: 123", ": "),
+                          params(new KeyValue<String, String>("abc", "123"), "abc  : 123", "\\s*:\\s*"),
+                          params(new KeyValue<String, String>("abc", "123:345"), "abc:123:345", ":"),
+                          params(null, "abc:123", "^"),
+                          params(null, null, ""),
+                          params(null, null, null),
+                          params(null, null, null));
+    }
+
+
 }

@@ -3,6 +3,7 @@ package org.incava.ijdk.lang;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -12,7 +13,6 @@ import org.incava.ijdk.str.StrAlphanumericComparator;
 import org.incava.ijdk.str.StrComparator;
 import org.incava.ijdk.str.StrIgnoreCaseComparator;
 import org.incava.ijdk.util.Collections;
-
 import org.incava.ijdk.util.Indexable;
 
 /**
@@ -21,8 +21,9 @@ import org.incava.ijdk.util.Indexable;
  */
 public class Str extends Obj<String> implements Comparing<Str> {
     public enum Option {
+        ALPHANUMERIC,
         IGNORE_CASE,
-        ALPHANUMERIC
+        IGNORE_WHITESPACE
     }
     
     public static final Str EMPTY = new Str("");
@@ -734,8 +735,19 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return whether the string is empty
      */
     public boolean isEmpty() {
+        return isEmpty(null);
+    }
+
+    /**
+     * Returns whether the wrapped string is null or of zero length, optionally ignoring whitespace.
+     *
+     * @param option option to use in comparing; valid: IGNORE_WHITESPACE
+     * @return whether the string is empty
+     */
+    public boolean isEmpty(Str.Option option) {
         // str.isEmpty() is JDK 1.6+, and IJDK is backward compatible with 1.5.
-        return isNull() || str().length() == 0;
+        return ((isNull() || str().length() == 0) ||
+                (option != null && option.equals(Str.Option.IGNORE_WHITESPACE) && str().trim().length() == 0));
     }
 
     /**
@@ -803,16 +815,19 @@ public class Str extends Obj<String> implements Comparing<Str> {
         if (isNull() || other == null || other.isNull()) {
             return Boolean.compare(isNull(), other == null || other.isNull());
         }
-        else if (options != null && options.contains(Str.Option.IGNORE_CASE)) {
-            StrIgnoreCaseComparator comp = new StrIgnoreCaseComparator();
-            return comp.compare(this, other);
-        }
-        else if (options != null && options.contains(Str.Option.ALPHANUMERIC)) {
-            StrAlphanumericComparator comp = new StrAlphanumericComparator();
-            return comp.compare(this, other);
-        }
         else {
-            StrComparator comp = new StrComparator();
+            Comparator<Str> comp = null;
+            if (options != null) {
+                if (options.contains(Str.Option.IGNORE_CASE)) {
+                    comp = new StrIgnoreCaseComparator();
+                }
+                else if (options.contains(Str.Option.ALPHANUMERIC)) {
+                    comp = new StrAlphanumericComparator();
+                }
+            }
+            if (comp == null) {
+                comp = new StrComparator();
+            }
             return comp.compare(this, other);
         }
     }    

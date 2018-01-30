@@ -292,7 +292,22 @@ public class StrTest extends StringTest {
     public void isEmpty(boolean expected, String str) {
         boolean result = new Str(str).isEmpty();
         assertThat(result, withContext(message("str", str), equalTo(expected)));
-    }    
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void isEmptyIgnoreWhitespace(boolean expected, String str) {
+        boolean result = new Str(str).isEmpty(Str.Option.IGNORE_WHITESPACE);
+        assertThat(result, equalTo(expected));
+    }
+
+    private java.util.List<Object[]> parametersForIsEmptyIgnoreWhitespace() {
+        return paramsList(params(true, null),
+                          params(true, ""),
+                          params(false,  "a"),
+                          params(true,  " "),
+                          params(true,  "\t"),
+                          params(true,  "\n"));
+    }
 
     @Test @Parameters @TestCaseName("{method}(...) #{index}; [{params}]")
     public void length(int expected, String str) {

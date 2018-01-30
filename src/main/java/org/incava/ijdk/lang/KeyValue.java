@@ -16,6 +16,18 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
     public static <K, V> KeyValue<K, V> of(K key, V value) {
         return new KeyValue<K, V>(key, value);
     }
+
+    /**
+     * Splits the string, using the delimiter, which is a regular expression. 
+     *
+     * @param str the string to split
+     * @param regexp the regular expression
+     * @return a new KeyValue pair
+     */
+    public static KeyValue<String, String> split(String str, String regexp) {
+        String[] elements = str == null ? null : str.split(regexp, 2);
+        return elements != null && elements.length == 2 ? new KeyValue<>(elements[0], elements[1]) : null;
+    }
     
     private final K key;
     private final V value;
