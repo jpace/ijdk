@@ -9,6 +9,8 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
     /**
      * Shorter syntax than the default constructor, allowing the compiler to discern the object types.
      *
+     * @param <K> the key type
+     * @param <V> the value type
      * @param key the key
      * @param value the value
      * @return a new KeyValue pair

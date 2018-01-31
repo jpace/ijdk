@@ -24,7 +24,9 @@ public abstract class Collect<FromType, ToType> extends ArrayList<ToType> {
     }
 
     /**
-     * Ditto, but for real arrays.
+     * Creates a new collection, where the condition passes the condition.
+     *
+     * @param ary the array
      */
     public Collect(FromType[] ary) {
         for (FromType obj : ary) {
@@ -38,6 +40,7 @@ public abstract class Collect<FromType, ToType> extends ArrayList<ToType> {
      * Must be defined to return where the given object satisfies the condition.
      *
      * @param obj An object from the collection passed to the constructor.
+     * @return whether the condition is satisfied
      */
     public abstract boolean where(FromType obj);
     
@@ -45,6 +48,7 @@ public abstract class Collect<FromType, ToType> extends ArrayList<ToType> {
      * Returns the object to add to the collection.
      *
      * @param obj An object from the collection passed to the constructor.
+     * @return the object after being applied by the block
      */
     public abstract ToType block(FromType obj);
 }

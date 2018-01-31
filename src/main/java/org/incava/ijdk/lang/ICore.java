@@ -130,9 +130,9 @@ public class ICore {
      *     String status = db.status() != null ? db.status() : db.initialize());
      * </pre>
      *
+     * @param <T> the type of a and b
      * @param a the value returned if true
      * @param b the value returned if a is not true, and b is true
-     * @param <T> the type of a and b
      * @see #elvis
      * @see #isTrue
      * @return a if true, b if true, else null
@@ -150,9 +150,9 @@ public class ICore {
      *    String statusName = IUtil.and(userName, lastName);
      * </pre>
      *
+     * @param <T> the type of a and b
      * @param a the value returned if true
      * @param b the value returned if a is not true, and b is true
-     * @param <T> the type of a and b
      * @see #or
      * @see #isTrue
      * @return b if a and b are true, else null
@@ -165,6 +165,7 @@ public class ICore {
      * An alias for the <code>or</code> method. So-named for the "?:" operator
      * in Groovy.
      *
+     * @param <T> the type of obj and defVal
      * @param obj the object to return if true
      * @param defVal returned if obj is not true
      * @see #or
@@ -178,6 +179,7 @@ public class ICore {
      * Returns the last parameter, if all parameters evaluate to true (via
      * <code>isTrue</code>).
      *
+     * @param <T> the type of operands
      * @param operands the array of type T
      * @see #or
      * @see #isTrue
@@ -199,6 +201,7 @@ public class ICore {
     /**
      * Returns the first parameter that evaluates to true (via <code>isTrue</code>).
      *
+     * @param <T> the type of operands
      * @param operands the array of type T
      * @see #or
      * @see #isTrue
@@ -221,6 +224,7 @@ public class ICore {
      * Returns an Iterable (iterator) for the C-style array, which can be null.
      * If <code>ary</code> is null, an "empty" iterator will be returned.
      *
+     * @param <T> the type of ary elements
      * @param ary the array to iterate over; can be null
      * @return an iterator for the array
      */
@@ -232,6 +236,7 @@ public class ICore {
      * Returns an Iterable (iterator) for the collection, which can be null. If
      * <code>coll</code> is null, an "empty" iterator will be returned.
      *
+     * @param <T> the type of elements in the collection
      * @param coll the collection to iterate over; can be null
      * @return an iterator for the collection
      */
@@ -263,6 +268,7 @@ public class ICore {
      *     names.add("henry");
      * </pre>
      *
+     * @param <T> the type of elements
      * @param elements the array of type T
      * @return the Array
      */
@@ -329,6 +335,10 @@ public class ICore {
 
     /**
      * Creates an empty tree map.
+     *
+     * @param <KeyType> the type of keys
+     * @param <ValueType> the type of values
+     * @return an empty TreeMap 
      */
     public static <KeyType, ValueType> TreeMap<KeyType, ValueType> map() {
         return new TreeMap<KeyType, ValueType>();
@@ -336,6 +346,12 @@ public class ICore {
 
     /**
      * Creates a map with one key/value pair.
+     *
+     * @param <KeyType> the type of keys
+     * @param <ValueType> the type of values
+     * @param k1 the first key
+     * @param v1 the first value
+     * @return a TreeMap containing the k1 =&gt; v1 mapping
      */
     public static <KeyType, ValueType> TreeMap<KeyType, ValueType> map(KeyType k1, ValueType v1) {
         TreeMap<KeyType, ValueType> map = map();
@@ -345,6 +361,14 @@ public class ICore {
 
     /**
      * Creates a map with two key/value pairs.
+     *
+     * @param <KeyType> the type of keys
+     * @param <ValueType> the type of values
+     * @param k1 the first key
+     * @param v1 the first value
+     * @param k2 the second key
+     * @param v2 the second value
+     * @return a TreeMap containing the k1 =&gt; v1 and k2 =&gt; v2 mappings
      */
     public static <KeyType, ValueType> TreeMap<KeyType, ValueType> map(KeyType k1, ValueType v1, KeyType k2, ValueType v2) {
         TreeMap<KeyType, ValueType> map = map(k1, v1);
@@ -356,6 +380,10 @@ public class ICore {
      * Converts varargs to T[]. <code>ary("one", 1)</code> is shorter than <code>new Object[] {
      * "one", 1 }</code>. For Object arrays (i.e., to work around the "unchecked generic array
      * creation" warning), use <code>Common#objary</code>.
+     *
+     * @param <T> the type of elements of the array
+     * @param args the elements of the array
+     * @return an array containing the arguments
      */
     @SafeVarargs
     @SuppressWarnings("varargs")

@@ -15,13 +15,13 @@ import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
 
 public class CollectionsTest extends Parameterized {
-    public static final Collection<String> ABC     = Arrays.asList(new String[] { "a", "b", "c" });
-    public static final Collection<String> ABC_DUP = Arrays.asList(new String[] { "a", "b", "c" });
-    public static final Collection<String> A       = Arrays.asList(new String[] { "a" });
-    public static final Collection<String> ABCD    = Arrays.asList(new String[] { "a", "b", "c", "d" });
-    public static final Collection<String> BCD     = Arrays.asList(new String[] { "b", "c", "d" });
-    public static final Collection<String> DE      = Arrays.asList(new String[] { "d", "e" });
-    public static final Collection<String> EMPTY   = new ArrayList<String>();
+    public static final Collection<String> ABC     = Arrays.asList("a", "b", "c");
+    public static final Collection<String> ABC_DUP = Arrays.asList("a", "b", "c");
+    public static final Collection<String> A       = Arrays.asList("a");
+    public static final Collection<String> ABCD    = Arrays.asList("a", "b", "c", "d");
+    public static final Collection<String> BCD     = Arrays.asList("b", "c", "d");
+    public static final Collection<String> DE      = Arrays.asList("d", "e");
+    public static final Collection<String> EMPTY   = new ArrayList<>();
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void hasAny(boolean expected, Collection<T> src, Collection<T> tgt) {
@@ -30,18 +30,18 @@ public class CollectionsTest extends Parameterized {
     }
     
     private List<Object[]> parametersForHasAny() {
-        return paramsList(params(true, ABC, ABC),
-                          params(true, ABC, ABC_DUP),
-                          params(true, ABC, A),
-                          params(true, ABC, ABCD),
-                          params(true, ABC, BCD),
+        return paramsList(params(true,  ABC,  ABC),     
+                          params(true,  ABC,  ABC_DUP), 
+                          params(true,  ABC,  A),       
+                          params(true,  ABC,  ABCD),    
+                          params(true,  ABC,  BCD),     
 
-                          params(false, ABC, EMPTY),
-                          params(false, ABC, null),
-                          params(false, ABC, DE),
+                          params(false, ABC,  EMPTY),   
+                          params(false, ABC,  null),    
+                          params(false, ABC,  DE),      
 
-                          params(false, null, EMPTY),
-                          params(false, null, null),
+                          params(false, null, EMPTY),   
+                          params(false, null, null),    
                           params(false, null, DE));            
     }
 
@@ -52,21 +52,21 @@ public class CollectionsTest extends Parameterized {
     }
     
     private List<Object[]> parametersForHasAll() {
-        return paramsList(params(true, ABC, ABC),
-                          params(true, ABC, ABC_DUP),
-                          params(true, ABC, A),
-                          params(true, ABC, EMPTY),
+        return paramsList(params(true,  ABC,   ABC),     
+                          params(true,  ABC,   ABC_DUP), 
+                          params(true,  ABC,   A),       
+                          params(true,  ABC,   EMPTY),   
 
-                          params(true, EMPTY, EMPTY),
+                          params(true,  EMPTY, EMPTY),   
 
-                          params(false, ABC, ABCD),
-                          params(false, ABC, BCD),
-                          params(false, ABC, null),
-                          params(false, ABC, DE),
+                          params(false, ABC,   ABCD),    
+                          params(false, ABC,   BCD),     
+                          params(false, ABC,   null),    
+                          params(false, ABC,   DE),      
 
-                          params(false, null, EMPTY),
-                          params(false, null, null),
-                          params(false, null, DE));
+                          params(false, null,  EMPTY),   
+                          params(false, null,  null),    
+                          params(false, null,  DE));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

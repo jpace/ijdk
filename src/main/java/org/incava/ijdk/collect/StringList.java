@@ -212,6 +212,8 @@ public class StringList extends BaseArray<String, StringList> {
     /**
      * Returns a list of strings, formatted via <code>repl</code>.
      *
+     * @param repl the formatting to apply to each element in this list
+     * @return a new StringList, containing the formatted elements
      * @see java.lang.String#format
      * @see java.util.Formatter
      */

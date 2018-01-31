@@ -15,17 +15,21 @@ public class IndexTest extends Parameterized {
         assertEqual(expected, result, message("size", size, "index", index));
     }
 
-    public java.util.List<Object[]> parametersForGetIndex() {
-        return paramsList(params(null, null, 0),
-                          params(null, 0,    0),
-                          params(0,    4,    0),
-                          params(1,    4,    1),
-                          params(3,    4,    3),
-                          params(null, 4,    4),
-                          params(3,    4,   -1),
-                          params(2,    4,   -2),
-                          params(1,    4,   -3),
-                          params(0,    4,   -4),
-                          params(null, 4,   -5));
-    }            
+    private java.util.List<Object[]> parametersForGetIndex() {
+        return paramsList(params(0,    4,  0),
+                          params(1,    4,  1),
+                          params(null, 4,  4),
+                          params(null, 4,  5),
+
+                          params(3,    4, -1),
+                          params(2,    4, -2),
+                          params(1,    4, -3),
+                          params(0,    4, -4),
+                          params(null, 4, -5),
+                          params(null, 4, -6),
+
+                          params(null, 0,  0),
+                          params(null, 0,  1),
+                          params(null, 0, -1));
+    }
 }

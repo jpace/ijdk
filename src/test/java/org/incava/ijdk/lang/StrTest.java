@@ -609,5 +609,62 @@ public class StrTest extends StringTest {
         pl.add(params(Arrays.asList(new Object[] { list("ab", "b") }),        "abaca", "a(b)"));
         pl.add(params(Arrays.asList(new Object[] { list("abac", "b", "c") }), "abaca", "a(b).(.)"));
         return pl;
-    }    
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public void firstNoArg(Character expected, String str) {
+        Character result = Str.of(str).first();
+        assertThat(result, equalTo(expected));
+    }
+    
+    private java.util.List<Object[]> parametersForFirstNoArg() {
+        return paramsList(params('a', "abc"),
+                          params('d', "def"),
+                          params(null, ""),
+                          params(null, null));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public void firstWithArg(String expected, String str, Integer num) {
+        Str result = Str.of(str).first(num);
+        assertThat(result, expected == null ? nullValue() : equalTo(Str.of(expected)));
+    }
+    
+    private java.util.List<Object[]> parametersForFirstWithArg() {
+        return paramsList(params("a",   "abc",  1),  
+                          params("ab",  "abc",  2),  
+                          params("abc", "abc",  4),  
+                          params("",    "abc",  0),  
+                          params("",    "abc", -1), 
+                          params(null,  null,   1));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public void lastNoArg(Character expected, String str) {
+        Character result = Str.of(str).last();
+        assertThat(result, equalTo(expected));
+    }
+    
+    private java.util.List<Object[]> parametersForLastNoArg() {
+        return paramsList(params('c', "abc"),
+                          params('f', "def"),
+                          params(null, ""),
+                          params(null, null));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
+    public void lastWithArg(String expected, String str, Integer num) {
+        Str result = Str.of(str).last(num);
+        assertThat(result, expected == null ? nullValue() : equalTo(Str.of(expected)));
+    }
+    
+    private java.util.List<Object[]> parametersForLastWithArg() {
+        return paramsList(params("c",   "abc",  1),  
+                          params("bc",  "abc",  2),  
+                          params("abc", "abc",  3),  
+                          params("abc", "abc",  4),  
+                          params("",    "abc",  0),  
+                          params("",    "abc", -1), 
+                          params(null,  null,   1));
+    }
 }

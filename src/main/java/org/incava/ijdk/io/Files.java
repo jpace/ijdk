@@ -46,6 +46,7 @@ public class Files {
      * Prints the file as lines, using writer.println.
      *
      * @param file the file to read from
+     * @param lines the lines to write
      * @see #printLines(File, List, EnumSet)
      */
     public static void printLines(File file, List<String> lines) {

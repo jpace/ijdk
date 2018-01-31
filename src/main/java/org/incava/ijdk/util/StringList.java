@@ -17,6 +17,8 @@ public class StringList extends org.incava.ijdk.collect.StringList {
 
     /**
      * Creates a StringList from the given collection.
+     *
+     * @param coll the collection of strings with which to populate this object
      */
     public StringList(Collection<String> coll) {
         super(coll);
@@ -24,6 +26,8 @@ public class StringList extends org.incava.ijdk.collect.StringList {
 
     /**
      * Creates a StringList from the given array.
+     *
+     * @param ary the array of strings with which to populate this object
      */
     public StringList(String ... ary) {
         super(ary);

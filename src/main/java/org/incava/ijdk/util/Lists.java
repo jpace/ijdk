@@ -6,6 +6,10 @@ import java.util.List;
 public class Lists extends Collections {
     /**
      * Returns the first element in the list.
+     *
+     * @param <T> the element type
+     * @param list the list
+     * @return the first element in the list, or null if empty
      */
     public static <T> T first(List<T> list) {
         return new org.incava.ijdk.collect.Array<T>(list).first();
@@ -13,6 +17,10 @@ public class Lists extends Collections {
 
     /**
      * Returns the last element in the list.
+     *
+     * @param <T> the element type
+     * @param list the list
+     * @return the first element in the list, or null if empty
      */
     public static <T> T last(List<T> list) {
         return new org.incava.ijdk.collect.Array<T>(list).last();
@@ -21,52 +29,52 @@ public class Lists extends Collections {
     /**
      * Returns the nth element in the list, where n can be negative, to index
      * from the end of the list. Returns null if out of bounds.
+     *
+     * @param <T> the element type
+     * @param list the list
+     * @param index the index, zero-indexed
+     * @return the element at the given index, or null if not in bounds
      */
     public static <T> T get(List<T> list, int index) {
         return new org.incava.ijdk.collect.Array<T>(list).get(index);
     }
 
     /**
-     * Converts the index, which can be positive or negative, to one within the
-     * given size, representing the length of a list. A negative index will
-     * result in the distance from the end of the list, with index -1 meaning
-     * the last element in the list. Returns null if the resulting index is out
-     * of range.
-     *
-     * @see Index#getIndex
-     */
-    public static Integer getIndex(Integer size, Integer index) {
-        return new Indexable(size).get(index);
-    }
-
-    /**
      * Removes all occurrances of <code>element</code> from <code>list</code>, returning whether any
      * were found. Returns false if <code>list</code> is null.
+     *
+     * @param <T> the element type
+     * @param list the list to modify
+     * @param element the element to seek
+     * @return whether any matching elements were found
      */
     public static <T> boolean removeAll(List<T> list, T element) {
-        if (list == null) {
+        if (list != null && list.remove(element)) {
+            while (list.remove(element)) {
+                // nothing
+            }
+            return true;
+        }
+        else {
             return false;
         }
-        boolean found = list.remove(element);
-        boolean origFound = found;
-        while (found) {
-            found = list.remove(element);
-        }
-        return origFound;
     }
 
     /**
      * Returns a random element from the list, or null if the list is null or empty.
+     *
+     * @param <Type> the element type
+     * @param list the list to seek
+     * @return a random element, or null if the list is empty
      */
     public static <Type> Type getRandomElement(List<Type> list) {
         return new org.incava.ijdk.collect.Array<Type>(list).getRandomElement();
     }
 
     /**
-     * Returns a list (an ArrayList) initialized with the given elements. The
-     * list returned is of dynamic size (unlike <code>Arrays.asList(...)</code>,
-     * which returns a fixed-size array). The following two blocks are
-     * equivalent:
+     * Returns a list (an ArrayList) initialized with the given elements. The list returned is of
+     * dynamic size (unlike <code>Arrays.asList(...)</code>, which returns a fixed-size array). The
+     * following two blocks are equivalent:
      *
      * <pre>
      *     List&lt;String&gt; names = new ArrayList&lt;String&gt;(Arrays.asList("kevin", "jacob", "isaac"));
@@ -76,6 +84,10 @@ public class Lists extends Collections {
      *     List&lt;String&gt; names = list("kevin", "jacob", "isaac");
      *     names.add("henry");
      * </pre>
+     *
+     * @param <T> the element type
+     * @param elements the elements
+     * @return the new List
      */
     @SafeVarargs
     public static <T> List<T> create(T ... elements) {

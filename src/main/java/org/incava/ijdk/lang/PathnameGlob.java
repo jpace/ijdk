@@ -6,6 +6,12 @@ import java.util.List;
 public class PathnameGlob {
     public static final String SEPARATOR = File.separator;
 
+    /**
+     * Returns the glob as a pattern (regular expression).
+     *
+     * @param glob the glob
+     * @return the pattern
+     */
     public static String toPattern(String glob) {
         String[] components = new Str(glob).split(SEPARATOR);
         List<String> patList = ICore.<String>list();
@@ -16,9 +22,12 @@ public class PathnameGlob {
     }
 
     /**
-     * Converts an element within a glob, to a pattern.
+     * Converts an element within a glob, to a pattern, escaping characters such as '*' and '.'.
      * 
      * Roughly based on Dir#glob: http://ruby-doc.org/core-1.9.3/Dir.html
+     *
+     * @param element the element, such as "**"
+     * @return the pattern
      */
     protected static String elementToPattern(String element) {
         if (element.equals("**")) {

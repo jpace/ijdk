@@ -33,6 +33,8 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
 
     /**
      * Creates a list from the collection, copying its elements. <code>coll</code> can be null.
+     *
+     * @param coll the collection with which to populate this array
      */
     public BaseArray(Collection<? extends T> coll) {
         if (coll != null) {
@@ -42,6 +44,8 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
 
     /**
      * Creates the list from a varargs array.
+     *
+     * @param ary the ary to populate this list
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
@@ -52,7 +56,9 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
     }
 
     /**
-     * Returns a new instance of this type.
+     * Returns a new instance of this type. The contents of this array are <em>not</em> copied.
+     *
+     * @return a new instance of this type
      */
     public abstract C newInstance();
 
@@ -72,6 +78,9 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
 
     /**
      * Returns whether this list contains any element in the given collection.
+     *
+     * @param coll the collection to compare against this array
+     * @return whether this array contains any element in <code>coll</code>
      */
     public boolean containsAny(Collection<T> coll) {
         for (Object obj : coll) {
@@ -84,6 +93,9 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
 
     /**
      * Returns whether this list contains any element in the given array.
+     *
+     * @param args the array to compare against this array
+     * @return whether this array contains any element in <code>args</code>
      */
     @SafeVarargs
     final public boolean containsAny(T ... args) {
@@ -97,6 +109,8 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
 
     /**
      * Returns the first element in the list, or null if the list is empty.
+     *
+     * @return the first element, or null if empty
      */
     public T first() {
         return isEmpty() ? null : get(0);
@@ -104,6 +118,8 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
 
     /**
      * Returns the last element in the list, or null if the list is empty.
+     *
+     * @return the last element, or null if empty
      */
     public T last() {
         return isEmpty() ? null : get(size() - 1);
@@ -119,6 +135,9 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
      * <code>-1</code> is the last element, <code>-2</code> is the second to last element, and so on
      * and so forth. If <code>n</code> is out of range (not within <code>0 ... size()</code>), then
      * null is returned.</p>
+     *
+     * @param index the index into this array
+     * @return the element at the given index, or null if invalid
      */
     public T get(int index) {
         Integer idx = getIndex(index);
@@ -133,6 +152,10 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
      * where <code>-1</code> is the last element, <code>-2</code> is the second to last element, and
      * so on and so forth. If <code>m</code> or <code>n</code> is out of range (not within <code>0
      * ... size()</code>), then an empty set is returned.</p>
+     *
+     * @param fromIndex the beginning index into this array, inclusive
+     * @param toIndex the ending index into this array, inclusive
+     * @return the element at the given index, or null if invalid
      */
     public C get(int fromIndex, int toIndex) {
         Integer fromIdx = getIndex(fromIndex);
@@ -156,6 +179,8 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
      *    nums.append(4).append(5);
      * </pre>
      *
+     * @param obj the object to append to this array
+     * @return this instance, with the appended object
      * @see java.util.List#add
      */
     @SuppressWarnings("unchecked")
@@ -173,6 +198,10 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
      * resizes it accordingly when <code>set(index, obj) &amp;&amp; index &gt; size()</code>.
      * However, <code>set(-index, obj)</code> (a negative index value) will result in an
      * IllegalArgumentException when <code>-index &gt; -size()</code>.</p>
+     *
+     * @param index the index at which to set the element
+     * @param value the value to set
+     * @return the old value, or null if none
      */
     public T set(int index, T value) {
         if (index < 0) {
@@ -210,6 +239,8 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
 
     /**
      * Returns a random element from the list, or null if the list is empty.
+     *
+     * @return a random element from the list
      */
     public T getRandomElement() {
         if (isEmpty()) {
@@ -224,6 +255,8 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
 
     /**
      * Removes and returns the first element in the list. Returns null if the list is empty.
+     *
+     * @return the first element, or null if none
      */
     public T takeFirst() {
         return isEmpty() ? null : remove(0);
@@ -231,6 +264,8 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
 
     /**
      * Removes and returns the last element in the list. Returns null if the list is empty.
+     *
+     * @return the last element, or null if none
      */
     public T takeLast() {
         return isEmpty() ? null : remove(size() - 1);
@@ -239,6 +274,8 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
     /**
      * Returns a new list that contains unique elements from the list, in the same order as in this
      * list.
+     *
+     * @return a new list of unique elements
      */
     public C unique() {
         C uniqueList = newInstance();
@@ -253,6 +290,8 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
     /**
      * Returns a new list that contains only the non-null elements from this list, in the same
      * order as in this list.
+     *
+     * @return a new list of non-null elements
      */
     public C compact() {
         C uniqueList = newInstance();
@@ -266,6 +305,9 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
 
     /**
      * Returns the list as a String, joined by the delimiter.
+     *
+     * @param delimiter the delimiter with which to join the elements
+     * @return the joined string
      */
     public String join(String delimiter) {
         return Str.join(this, delimiter).toString();
@@ -274,6 +316,9 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
     /**
      * Returns a new list, concatenating the other list with this one. Elements will be in the order
      * of this list, then the elements of the other.
+     *
+     * @param other the collection to add
+     * @return the new array, containing elements of this and the other collection
      */
     public C plus(Collection<T> other) {
         C newList = newInstance();
@@ -289,6 +334,9 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
     /**
      * Returns a new list, containing the elements of this list that are not in the other. The
      * retained elements are in the same order as they are in this list.
+     *
+     * @param other the collection to remove
+     * @return the new array, containing elements of this array not in the other collection
      */
     public C minus(Collection<T> other) {
         C newList = newInstance();
@@ -312,7 +360,9 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
      *     Array&lt;Integer&gt; l5 = list.elements(-1, -2, 1); // [ 8, 7, 7 ]
      * </pre>
      *
-     * @see BaseArray#get
+     * @param indices the indices to get
+     * @return a new array, containing the elements for the indices
+     * @see #get
      */
     public C elements(int ... indices) {
         C elmts = newInstance();
@@ -324,6 +374,9 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
 
     /**
      * Returns a list of elements in both this array and the other. The order is the same as in this array.
+     *
+     * @param other the other collection
+     * @return a new array, containing elements in both this and the other collection
      */
     public C intersection(Collection<T> other) {
         C ary = newInstance();
@@ -348,6 +401,7 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
     /**
      * Returns a copy of this array, sorted, using the given comparator
      *
+     * @param comparator the comparator to sort with
      * @return a sorted array
      */
     @SuppressWarnings("unchecked")

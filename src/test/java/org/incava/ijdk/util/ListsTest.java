@@ -69,41 +69,21 @@ public class ListsTest extends Parameterized {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public <T> void removeAll(List<T> expected, List<T> list, T element) {
-        Lists.removeAll(list, element);
-        assertEqual(expected, list);
+    public <T> void removeAll(Boolean expectedReturn, List<T> expectedList, List<T> list, T element) {
+        Boolean result = Lists.removeAll(list, element);
+        assertEqual(expectedList, list);
+        assertEqual(expectedReturn, result);
     }
     
     private List<Object[]> parametersForRemoveAll() {
         List<String> letters = Arrays.asList("a", "a", "b", "b", "b", "c");
         
-        return paramsList(params(Arrays.asList("a", "a", "b", "b", "b"), new ArrayList<String>(letters), "c"),
-                          params(Arrays.asList("b", "b", "b", "c"), new ArrayList<String>(letters), "a"),
-                          params(letters, new ArrayList<String>(letters), "d"));
-    }
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void getIndex(Integer expected, Integer size, Integer index) {
-        Integer result = Lists.getIndex(size, index);
-        assertEqual(expected, result, message("size", size, "index", index));
-    }
-    
-    private List<Object[]> parametersForGetIndex() {
-        return paramsList(params(0,    4,  0),
-                          params(1,    4,  1),
-                          params(null, 4,  4),
-                          params(null, 4,  5),
-
-                          params(3,    4, -1),
-                          params(2,    4, -2),
-                          params(1,    4, -3),
-                          params(0,    4, -4),
-                          params(null, 4, -5),
-                          params(null, 4, -6),
-
-                          params(null, 0,  0),
-                          params(null, 0,  1),
-                          params(null, 0, -1));
+        return paramsList(params(true, Arrays.asList("a"), new ArrayList<>(Arrays.asList("a", "b")), "b"),
+                          params(true, Arrays.asList("a"), new ArrayList<>(Arrays.asList("b", "a")), "b"),
+                          params(true, Arrays.asList("b"), new ArrayList<>(Arrays.asList("a", "b")), "a"),
+                          params(false, Arrays.asList("a", "b"), new ArrayList<>(Arrays.asList("a", "b")), null),
+                          params(false, Arrays.asList("a", "b"), new ArrayList<>(Arrays.asList("a", "b")), "c"),
+                          params(true, Arrays.asList("a"), new ArrayList<>(Arrays.asList("a", "b", "b")), "b"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -116,13 +96,13 @@ public class ListsTest extends Parameterized {
         List<String> strList = Arrays.asList("one", "two", "three");
         List<Integer> intList = Arrays.asList(1, 2, 3);
         
-        return paramsList(params(true, strList, "one"),
-                          params(true, strList, "three"),
-                          params(false, strList, "four"),
-                          params(false, strList, "ONE"),
-                          params(false, null, null),
-                          params(true, intList, 1),
-                          params(true, intList, 3),
+        return paramsList(params(true,  strList, "one"),   
+                          params(true,  strList, "three"), 
+                          params(false, strList, "four"),  
+                          params(false, strList, "ONE"),   
+                          params(false, null,    null),    
+                          params(true,  intList, 1),       
+                          params(true,  intList, 3),       
                           params(false, intList, 4));
     }
 

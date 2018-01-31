@@ -332,7 +332,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns the leftmost <code>num</code> characters of the string, not exceeding the length of
      * the string. Unlike String#substring, does not throw IndexOutOfBoundsException. Returns null
-     * if the input string is null. Returns an empty string if <code>num</code> is negative or zero.
+     * if the referenced string is null. Returns an empty string if <code>num</code> is negative or
+     * zero.
      *
      * @param num the number of characters to extract
      * @return the extracted string
@@ -891,12 +892,47 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
+     * Returns the first <code>num</code> characters in the string, or null if the string is null or
+     * empty. Returns null if <code>num</code> is equal to or less than zero.
+     *
+     * @param num the number of characters
+     * @return the first <code>num</code> characters
+     */
+    public Str first(int num) {
+        if (num <= 0) {
+            return isNull() ? null : EMPTY;
+        }
+        else {
+            String fs = get(0, num - 1);
+            return fs == null ? null : Str.of(fs);
+        }
+    }
+
+    /**
      * Returns the last character in the string, or null if the string is null or empty.
      *
      * @return the last character
      */
     public Character last() {
         return get(-1);
+    }
+
+    /**
+     * Returns the last <code>num</code> characters in the string, or null if the string is null or
+     * empty. Returns null if <code>num</code> is equal to or less than zero.
+     *
+     * @param num the number of characters
+     * @return the last <code>num</code> characters
+     */
+    public Str last(int num) {
+        if (num <= 0) {
+            return isNull() ? null : EMPTY;
+        }
+        else {
+            int from = Math.min(num, length());
+            String fs = get(-from, -1);
+            return fs == null ? null : Str.of(fs);
+        }
     }
 
     /**
@@ -1023,5 +1059,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
             }
         }
         return matchList;
+    }
+
+    public String join(String delimiter) {
+        return null;
     }
 }

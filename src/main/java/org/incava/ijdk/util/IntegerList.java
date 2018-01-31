@@ -16,6 +16,8 @@ public class IntegerList extends ArrayList<Integer> {
 
     /**
      * Creates a IntegerList from the given collection.
+     *
+     * @param coll the collection of integers
      */
     public IntegerList(Collection<Integer> coll) {
         super(coll);
@@ -23,6 +25,8 @@ public class IntegerList extends ArrayList<Integer> {
 
     /**
      * Creates a IntegerList from the given array.
+     *
+     * @param ary the array of integers
      */
     public IntegerList(Integer ... ary) {
         for (Integer str : ary) {
@@ -32,6 +36,8 @@ public class IntegerList extends ArrayList<Integer> {
 
     /**
      * Returns the minimum, or null if there are no elements in this list.
+     *
+     * @return the minimum value
      */
     public Integer minimum() {
         Closure<Integer, Pair<Integer, Integer>> closure = new Closure<Integer, Pair<Integer, Integer>>() {
@@ -44,6 +50,8 @@ public class IntegerList extends ArrayList<Integer> {
 
     /**
      * Returns the maximum, or null if there are no elements in this list.
+     *
+     * @return the maximum value
      */
     public Integer maximum() {
         Closure<Integer, Pair<Integer, Integer>> closure = new Closure<Integer, Pair<Integer, Integer>>() {
@@ -57,6 +65,9 @@ public class IntegerList extends ArrayList<Integer> {
     /**
      * Returns the value from the closure applied to all elements, or null if there are no elements
      * in this list.
+     *
+     * @param closure the closure to apply
+     * @return the value returned by the last closure
      */
     public Integer apply(Closure<Integer, Pair<Integer, Integer>> closure) {
         Integer num = null;

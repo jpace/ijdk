@@ -6,6 +6,8 @@ import org.incava.ijdk.lang.Str;
 
 /**
  * A dynamically-sized collection, wrapping ArrayList.
+ *
+ * @param <T> the element type
  */
 public class Array<T extends Object> extends BaseArray<T, Array<T>> {
     /**
@@ -17,6 +19,11 @@ public class Array<T extends Object> extends BaseArray<T, Array<T>> {
      * Array&lt;Integer&gt; list = Array.of(6, 7);
      * Array&lt;Integer&gt; list = Array.of(6, 7, 8);
      * </pre>
+     *
+     * @param <T> the element type
+     * @param ary the elements for the new array
+     * @return the new array
+     * @see #empty
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
@@ -29,10 +36,12 @@ public class Array<T extends Object> extends BaseArray<T, Array<T>> {
      * is used to denote the generic type.
      *
      * <pre>
-     * Array&lt;String&gt; list = Array.&lt;String&gt;empty();
+     * Array&lt;String&gt; list = Array.&lt;&gt;empty();
      * </pre>
      *
-     * @return an empty array
+     * @param <T> the element type
+     * @return the new array
+     * @see #of
      */
     public static <T extends Object> Array<T> empty() {
         return new Array<T>();
@@ -48,6 +57,8 @@ public class Array<T extends Object> extends BaseArray<T, Array<T>> {
 
     /**
      * Creates a list from the collection, copying its elements. <code>coll</code> can be null.
+     *
+     * @param coll the collection to copy the elements from
      */
     public Array(Collection<? extends T> coll) {
         if (coll != null) {
@@ -57,6 +68,8 @@ public class Array<T extends Object> extends BaseArray<T, Array<T>> {
 
     /**
      * Creates the list from a varargs array.
+     *
+     * @param ary the elements for the new array
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
@@ -66,6 +79,12 @@ public class Array<T extends Object> extends BaseArray<T, Array<T>> {
         }
     }
 
+    /**
+     * Creates a new Array with the same element type. The returned array is <em>not</em> copied
+     * from this array.
+     *
+     * @return the new array of this type
+     */
     public Array<T> newInstance() {
         return new Array<T>();
     }

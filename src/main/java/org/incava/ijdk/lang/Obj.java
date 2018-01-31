@@ -13,7 +13,7 @@ public class Obj<T> implements Bool {
     /**
      * A single variable representing all objects that wrap null.
      */
-    public static Obj<Object> NULL = new Obj<Object>(null);
+    public static Obj<Object> NULL = new Obj<>(null);
 
     /**
      * Creates a wrapper for the given object. If the object is null, the common variable
