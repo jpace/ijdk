@@ -101,13 +101,13 @@ public class KeyValueTest extends Parameterized {
     }
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
-    public <K, V> void parse(KeyValue<String, String> expected, String str, String delimiter) {
+    public <K, V> void split(KeyValue<String, String> expected, String str, String delimiter) {
         KeyValue<String, String> result = KeyValue.split(str, delimiter);
         assertThat(result, equalTo(expected));
     }
     
-    private java.util.List<Object[]> parametersForParse() {
-        return paramsList(params(new KeyValue<String, String>("abc", "123"), "abc:123", ":"),
+    private java.util.List<Object[]> parametersForSplit() {
+        return paramsList(params(new KeyValue<>("abc", "123"), "abc:123", ":"),
                           params(new KeyValue<String, String>("abc", "345"), "abc:345", ":"),
                           params(new KeyValue<String, String>("def", "123"), "def:123", ":"),
                           params(new KeyValue<String, String>("abc", "123"), "abc=123", "="),
@@ -119,6 +119,4 @@ public class KeyValueTest extends Parameterized {
                           params(null, null, null),
                           params(null, null, null));
     }
-
-
 }

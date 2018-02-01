@@ -656,6 +656,12 @@ public class StrTest extends StringTest {
     public void lastWithArg(String expected, String str, Integer num) {
         Str result = Str.of(str).last(num);
         assertThat(result, expected == null ? nullValue() : equalTo(Str.of(expected)));
+        // if (expected == null) {
+        //     assertThat(result, nullValue());
+        // }
+        // else {
+        //     assertThat(result, equalTo(Str.of(expected)));
+        // }
     }
     
     private java.util.List<Object[]> parametersForLastWithArg() {
