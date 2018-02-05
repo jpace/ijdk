@@ -75,6 +75,10 @@ public class StrAlphanumericComparator implements Comparator<Str> {
     /**
      * Returns whether the substring starting at <code>idx</code> is a number, floating point or
      * integer.
+     *
+     * @param x the string to check
+     * @param idx the starting index
+     * @return the number, as a string
      */
     public String matchNumber(Str x, int idx) {
         Matcher matcher = this.pattern.matcher(x.str());

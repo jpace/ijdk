@@ -12,6 +12,10 @@ public class Find {
      * Passes back a list of files. Directories are processed recursively,
      * collecting files with the suffix of <code>suffix</code>. If
      * <code>name</code> refers to a file, it is simply added to the list.
+     *
+     * @param fileList the files matching the name and suffix
+     * @param name the name to match
+     * @param suffix the suffix to match
      */
     public static void getFileList(List<String> fileList, String name, final String suffix) {
         try {
@@ -48,6 +52,7 @@ public class Find {
      *
      * @param names the input file/directory names
      * @param suffix the extension to match
+     * @return the array of files matching the suffix
      */
     public static String[] getFileList(String[] names, String suffix) {
         List<String> fileList = new ArrayList<String>();
