@@ -729,5 +729,17 @@ public class StrTest extends StringTest {
 
         u = new Str("ho! ", 3);
         assertThat(u, equalTo("ho! ho! ho! "));
+
+        List<String> list = Str.of("first,    second  \nthird").toList();
+        assertThat(list, equalTo(org.incava.ijdk.collect.Array.of("first", "second", "third")));
+
+        t = s.quote();
+        assertThat(t, equalTo("\"hello, world\""));
+
+        u = t.unquote();
+        assertThat(u, equalTo("hello, world"));
+
+        t = s.snip(6);
+        assertThat(t, equalTo("hello-"));
     }    
 }
