@@ -1061,7 +1061,26 @@ public class Str extends Obj<String> implements Comparing<Str> {
         return matchList;
     }
 
-    public String join(String delimiter) {
-        return null;
+    /**
+     * Returns a copy of this string, without leading and trailing whitespace.
+     *
+     * @return the trimmed string
+     */
+    public Str trim() {
+        int start = 0;
+        int length = str().length();
+        while (start < length && isWhitespace(start)) {
+            ++start;
+        }
+        int end = length - 1;
+        while (end > start && isWhitespace(end)) {
+            --end;
+        }
+        return Str.of(get(start, end));
+    }
+
+    private boolean isWhitespace(int idx) {
+        Character ch = get(idx);
+        return ch != null && Character.isWhitespace(ch);
     }
 }

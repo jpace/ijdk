@@ -656,12 +656,6 @@ public class StrTest extends StringTest {
     public void lastWithArg(String expected, String str, Integer num) {
         Str result = Str.of(str).last(num);
         assertThat(result, expected == null ? nullValue() : equalTo(Str.of(expected)));
-        // if (expected == null) {
-        //     assertThat(result, nullValue());
-        // }
-        // else {
-        //     assertThat(result, equalTo(Str.of(expected)));
-        // }
     }
     
     private java.util.List<Object[]> parametersForLastWithArg() {
@@ -673,4 +667,67 @@ public class StrTest extends StringTest {
                           params("",    "abc", -1), 
                           params(null,  null,   1));
     }
+
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void trim(String expected, String str) {
+        Str result = new Str(str).trim();
+        assertThat(result, equalTo(expected));
+    }
+
+    private java.util.List<Object[]> parametersForTrim() {
+        return paramsList(params("",   ""),      
+                          params("",   " "),     
+                          params("a",  "a"),     
+                          params("a",  "a "),    
+                          params("ab", "ab "),   
+                          params("a",  " a"),    
+                          params("a",  " a "),   
+                          params("a",  "a  "),   
+                          params("a",  "  a"),   
+                          params("a",  "a\t"),   
+                          params("a",  "a\n"),   
+                          params("a",  "a\r"),   
+                          params("a",  "a\r\n"), 
+                          params("a",  "\r\na"));
+    }
+    
+    @Test
+    public void demo() {
+        Str s = Str.of("hello, world");
+        assertThat(s.str(), equalTo("hello, world"));
+
+        Character ch = s.get(5);
+        assertThat(ch, equalTo(','));
+
+        ch = s.get(-5);
+        assertThat(ch, equalTo('w'));
+
+        ch = s.first();
+        assertThat(ch, equalTo('h'));
+
+        ch = s.last();
+        assertThat(ch, equalTo('d'));
+
+        Boolean b = s.startsWith("hello");
+        assertThat(b, equalTo(true));
+
+        b = s.endsWith("rld");
+        assertThat(b, equalTo(true));
+
+        Str t = s.left(2);
+        assertThat(t, equalTo("he"));
+
+        t = s.right(5);
+        assertThat(t, equalTo("world"));
+
+        Str u = t.padLeft('.', 10);
+        assertThat(u, equalTo(".....world"));
+
+        u = t.pad('*', 8);
+        assertThat(u, equalTo("world***"));
+
+        u = new Str("ho! ", 3);
+        assertThat(u, equalTo("ho! ho! ho! "));
+    }    
 }
