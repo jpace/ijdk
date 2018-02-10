@@ -695,7 +695,7 @@ public class StrTest extends StringTest {
     @Test
     public void demo() {
         Str s = Str.of("hello, world");
-        assertThat(s.str(), equalTo("hello, world"));
+        assertThat(s, equalTo("hello, world"));
 
         Character ch = s.get(5);
         assertThat(ch, equalTo(','));

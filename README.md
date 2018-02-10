@@ -218,7 +218,7 @@ Classes for common Java collections of generics, such as a list of strings, and 
    int min = il.minimum();                 // min == 3
 ```
 
-## Pair and KeyValue
+## Tuples
 
 ```java
     Pair<String, Integer> score = Pair.create("Bird", 33);
@@ -230,6 +230,67 @@ Similarly, the nearly identical KeyValue:
 ```java
     KeyValue<String, Double> kv = KeyValue.of("one", 1.23);
     // kv.key() == "one", kv.value() == 1.23
+```
+
+And Triple:
+
+``` java
+    Triple<String, Integer, Double> t = Triple.of("abc", 123, 3.14);
+```
+
+## Str
+
+`Str` is an alternative to `java.lang.String`, more inspired by the Ruby String class.
+
+
+``` java
+    Str s = Str.of("hello, world");
+    assertThat(s, equalTo("hello, world"));
+
+    Character ch = s.get(5);
+    assertThat(ch, equalTo(','));
+
+    ch = s.get(-5);
+    assertThat(ch, equalTo('w'));
+
+    ch = s.first();
+    assertThat(ch, equalTo('h'));
+
+    ch = s.last();
+    assertThat(ch, equalTo('d'));
+
+    Boolean b = s.startsWith("hello");
+    assertThat(b, equalTo(true));
+
+    b = s.endsWith("rld");
+    assertThat(b, equalTo(true));
+
+    Str t = s.left(2);
+    assertThat(t, equalTo("he"));
+
+    t = s.right(5);
+    assertThat(t, equalTo("world"));
+
+    Str u = t.padLeft('.', 10);
+    assertThat(u, equalTo(".....world"));
+
+    u = t.pad('*', 8);
+    assertThat(u, equalTo("world***"));
+
+    u = new Str("ho! ", 3);
+    assertThat(u, equalTo("ho! ho! ho! "));
+
+    List<String> list = Str.of("first,    second  \nthird").toList();
+    assertThat(list, equalTo(org.incava.ijdk.collect.Array.of("first", "second", "third")));
+
+    t = s.quote();
+    assertThat(t, equalTo("\"hello, world\""));
+
+    u = t.unquote();
+    assertThat(u, equalTo("hello, world"));
+
+    t = s.snip(6);
+    assertThat(t, equalTo("hello-"));
 ```
 
 ## Range

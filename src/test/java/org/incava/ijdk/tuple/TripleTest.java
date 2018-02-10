@@ -50,10 +50,10 @@ public class TripleTest extends Parameterized {
                           params(0, aaa, Triple.of("one", 1.2, 1)),
                           params(0, Triple.of("one", 1.2, 1), aaa),
                           params(-1, aaa, aab),
-                          params(1, baa, aaa),
+                          params(1,  baa, aaa),
                           params(-1, aaa, aba),
-                          params(1, aba, aaa),
-                          params(1, baa, aaa),
+                          params(1,  aba, aaa),
+                          params(1,  baa, aaa),
                           params(-1, Triple.of(notComparable, 1.2, 0), Triple.of(notComparable, 1.2, 0)),
                           params(-1, Triple.of(1.2, notComparable, 0), Triple.of(1.2, notComparable, 0)),
                           params(-1, Triple.of(1.2, 0, notComparable), Triple.of(1.2, 0, notComparable)));
