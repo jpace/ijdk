@@ -12,30 +12,30 @@ import static org.incava.attest.Assertions.message;
 import static org.incava.attest.Parameters.params;
 import static org.incava.attest.Parameters.paramsList;
 
-public class IntegerListTest extends Parameterized {
+public class IntegerArrayTest extends Parameterized {
     @Test
     public void ctorEmpty() {
-        IntegerList sl = new IntegerList();
+        IntegerArray sl = new IntegerArray();
         assertEqual(0, sl.size());
     }
 
     @Test
     public void ctorCollection() {
         List<Integer> list = Arrays.asList(new Integer[] { 1, 2, 3 });
-        IntegerList sl = new IntegerList(list);
+        IntegerArray sl = new IntegerArray(list);
         assertEqual(3, sl.size());
     }
 
     @Test
     public void ctorOneArg() {
-        IntegerList sl = new IntegerList(1);
+        IntegerArray sl = new IntegerArray(1);
         assertEqual(1, sl.size());
         assertEqual(1, sl.get(0));
     }
 
     @Test
     public void ctorTwoArgs() {
-        IntegerList sl = new IntegerList(1, 2);
+        IntegerArray sl = new IntegerArray(1, 2);
         assertEqual(2, sl.size());
         assertEqual(1, sl.get(0));
         assertEqual(2, sl.get(1));
@@ -43,7 +43,7 @@ public class IntegerListTest extends Parameterized {
 
     @Test
     public void ctorThreeArgs() {
-        IntegerList sl = new IntegerList(1, 2, 3);
+        IntegerArray sl = new IntegerArray(1, 2, 3);
         assertEqual(3, sl.size());
         assertEqual(1, sl.get(0));
         assertEqual(2, sl.get(1));
@@ -52,7 +52,7 @@ public class IntegerListTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void minimum(Integer expected, Integer ... values) {
-        IntegerList sl = new IntegerList(values);
+        IntegerArray sl = new IntegerArray(values);
         Integer result = sl.minimum();
         assertEqual(expected, result, message("values", Arrays.asList(values)));
     }
@@ -66,7 +66,7 @@ public class IntegerListTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void maximum(Integer expected, Integer ... values) {
-        IntegerList sl = new IntegerList(values);
+        IntegerArray sl = new IntegerArray(values);
         Integer result = sl.maximum();
         assertEqual(expected, result, message("values", Arrays.asList(values)));        
     }
@@ -80,7 +80,7 @@ public class IntegerListTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void sum(Integer expected, Integer ... values) {
-        IntegerList sl = new IntegerList(values);
+        IntegerArray sl = new IntegerArray(values);
         Integer result = sl.sum();
         assertEqual(expected, result, message("values", Arrays.asList(values)));
     }
@@ -94,22 +94,22 @@ public class IntegerListTest extends Parameterized {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void unique(IntegerList expected, IntegerList ilist) {
-        IntegerList result = ilist.unique();
+    public void unique(IntegerArray expected, IntegerArray ilist) {
+        IntegerArray result = ilist.unique();
         assertEqual(expected, result, message("ilist", ilist));
     }
 
     private List<Object[]> parametersForUnique() {
-        return paramsList(params(IntegerList.of(2, 3, 5), IntegerList.of(2, 3, 2, 3, 3, 5, 5, 3)));
+        return paramsList(params(IntegerArray.of(2, 3, 5), IntegerArray.of(2, 3, 2, 3, 3, 5, 5, 3)));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void get(IntegerList expected, IntegerList ilist, Integer from, Integer to) {
-        IntegerList result = ilist.get(from, to);
+    public void get(IntegerArray expected, IntegerArray ilist, Integer from, Integer to) {
+        IntegerArray result = ilist.get(from, to);
         assertEqual(expected, result, message("ilist", ilist));
     }
 
     private List<Object[]> parametersForGet() {
-        return paramsList(params(IntegerList.of(3, 1, 7), IntegerList.of(2, 3, 1, 7, 8), 1, -2));
+        return paramsList(params(IntegerArray.of(3, 1, 7), IntegerArray.of(2, 3, 1, 7, 8), 1, -2));
     }    
 }

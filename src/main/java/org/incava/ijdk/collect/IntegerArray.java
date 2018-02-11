@@ -4,57 +4,57 @@ import java.util.Collection;
 import org.incava.ijdk.lang.Closure;
 import org.incava.ijdk.lang.Pair;
 
-public class IntegerList extends BaseArray<Integer, IntegerList> {
+public class IntegerArray extends BaseArray<Integer, IntegerArray> {
     /**
-     * Creates a new IntegerList.
+     * Creates a new IntegerArray.
      *
      * @param args the integers to populate the new array
      * @return the newly-created array
      */
-    public static IntegerList of(Integer ... args) {
-        return new IntegerList(args);
+    public static IntegerArray of(Integer ... args) {
+        return new IntegerArray(args);
     }
     
     /**
-     * Creates an empty IntegerList.
+     * Creates an empty IntegerArray.
      *
      * @return the newly-created array
      */
     @SuppressWarnings("unchecked")
-    public static IntegerList empty() {
-        return new IntegerList();
+    public static IntegerArray empty() {
+        return new IntegerArray();
     }
     
     private static final long serialVersionUID = 1405764141608264794L;
     
     /**
-     * Creates an empty IntegerList.
+     * Creates an empty IntegerArray.
      */
-    public IntegerList() {
+    public IntegerArray() {
     }
 
     /**
-     * Creates a IntegerList from the given collection.
+     * Creates a IntegerArray from the given collection.
      *
      * @param coll the collection from which to initialize this list
      */
-    public IntegerList(Collection<Integer> coll) {
+    public IntegerArray(Collection<Integer> coll) {
         super(coll);
     }
 
     /**
-     * Creates a IntegerList from the given array.
+     * Creates a IntegerArray from the given array.
      *
      * @param ary the array from which to initialize this list
      */
-    public IntegerList(Integer ... ary) {
+    public IntegerArray(Integer ... ary) {
         for (Integer str : ary) {
             add(str);
         }
     }
 
-    public IntegerList newInstance() {
-        return new IntegerList();
+    public IntegerArray newInstance() {
+        return new IntegerArray();
     }
 
     /**
