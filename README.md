@@ -64,8 +64,8 @@ An extension of ArrayList, with Ruby-like methods (thus the name matching Array 
     assertEqual(13, x);
     assertEqual(Array.of(5, 7, 9, 11), nums);
 
-    StringList sl = nums.toStringList();
-    assertEqual(StringList.of("5", "7", "9", "11"), sl);
+    StringArray sa = nums.toStringArray();
+    assertEqual(StringArray.of("5", "7", "9", "11"), sa);
 
     nums.append(2).append(2).append(2);
     assertEqual(Array.of(5, 7, 9, 11, 2, 2, 2), nums);
@@ -198,14 +198,16 @@ collision with java.util.Map).
 
 Classes for common Java collections of generics, such as a list of strings, and a list of integers:
 
-#### StringList
+#### StringArray
+
+Formerly StringList, an Array of Strings.
 
 ```java
    // instead of Array<String>; varargs constructor
-   StringList sl = new StringList("apple", "banana", "cherry");
-   boolean result = sl.anyStartsWith("ba");  // true
-   boolean result = sl.anyStartsWith("do");  // false
-   StringList lines = sl.toLines();          // returns each element appended with "\n"
+   StringArray sa = new StringArray("apple", "banana", "cherry");
+   boolean result = sa.anyStartsWith("ba");  // true
+   boolean result = sa.anyStartsWith("do");  // false
+   StringArray lines = sa.toLines();          // returns each element appended with "\n"
 ```
 
 #### IntegerList

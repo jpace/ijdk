@@ -19,36 +19,36 @@ import static org.hamcrest.Matchers.not;
 import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
 
-public class StringListTest extends Parameterized {
+public class StringArrayTest extends Parameterized {
     @Test
     public void empty() {
-        StringList sl = StringList.empty();
+        StringArray sl = StringArray.empty();
         assertThat(sl, Matchers.empty());
     }
     
     @Test
     public void ctorEmpty() {
-        StringList sl = new StringList();
+        StringArray sl = new StringArray();
         assertThat(sl, Matchers.empty());
     }
 
     @Test
     public void ctorCollection() {
         List<String> list = Arrays.asList(new String[] { "one", "two", "three" });
-        StringList sl = new StringList(list);
+        StringArray sl = new StringArray(list);
         assertThat(sl, hasSize(3));
     }
 
     @Test
     public void ctorVarArgsOne() {
-        StringList sl = new StringList("one");
+        StringArray sl = new StringArray("one");
         assertThat(sl, hasSize(1));
         assertThat(sl, contains("one"));
     }
 
     @Test
     public void ctorVarArgsTwo() {
-        StringList sl = new StringList("one", "two");
+        StringArray sl = new StringArray("one", "two");
         assertThat(sl, hasSize(2));
         assertThat(sl.get(0), equalTo("one"));
         assertThat(sl.get(1), equalTo("two"));
@@ -56,7 +56,7 @@ public class StringListTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void anyStartsWith(boolean expected, String substr, String ... args) {
-        StringList sl = new StringList(args);
+        StringArray sl = new StringArray(args);
         boolean result = sl.anyStartsWith(substr);
         assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));        
     }
@@ -69,7 +69,7 @@ public class StringListTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void anyContains(boolean expected, String substr, String ... args) {
-        StringList sl = new StringList(args);
+        StringArray sl = new StringArray(args);
         boolean result = sl.anyContains(substr);
         assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
     }
@@ -83,7 +83,7 @@ public class StringListTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void anyEndsWith(boolean expected, String substr, String ... args) {
-        StringList sl = new StringList(args);
+        StringArray sl = new StringArray(args);
         boolean result = sl.anyEndsWith(substr);
         assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
     }
@@ -96,7 +96,7 @@ public class StringListTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void findFirst(String expected, Closure<Boolean, String> criteria, String ... args) {
-        StringList sl = new StringList(args);
+        StringArray sl = new StringArray(args);
         String result = sl.findFirst(criteria);
         assertThat(result, withContext(equalTo(expected), message("sl", sl, "criteria", criteria)));
     }
@@ -131,51 +131,51 @@ public class StringListTest extends Parameterized {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void findAll(StringList expected, Closure<Boolean, String> criteria, String ... args) {
-        StringList sl = new StringList(args);
-        StringList result = sl.findAll(criteria);
+    public void findAll(StringArray expected, Closure<Boolean, String> criteria, String ... args) {
+        StringArray sl = new StringArray(args);
+        StringArray result = sl.findAll(criteria);
         assertThat(result, withContext(equalTo(expected), message("sl", sl, "criteria", criteria)));
     }
     
     private List<Object[]> parametersForFindAll() {
         List<Object[]> params = paramsList();
 
-        params.add(params(new StringList(), null, new String[0]));
+        params.add(params(new StringArray(), null, new String[0]));
 
         Closure<Boolean, String> critOne = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "one".equals(str);
                 }
             };
-        params.add(params(new StringList("one"), critOne, "one", "two"));
+        params.add(params(new StringArray("one"), critOne, "one", "two"));
 
         Closure<Boolean, String> critTwo = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "two".equals(str);
                 }
             };
-        params.add(params(new StringList("two"), critTwo, "one", "two"));
+        params.add(params(new StringArray("two"), critTwo, "one", "two"));
 
         Closure<Boolean, String> critContO = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return str.contains("o");
                 }
             };
-        params.add(params(new StringList("one", "two"), critContO, "one", "two", "three"));
+        params.add(params(new StringArray("one", "two"), critContO, "one", "two", "three"));
 
         Closure<Boolean, String> critThree = new Closure<Boolean, String>() {
                 public Boolean execute(String str) {
                     return "three".equals(str);
                 }
             };
-        params.add(params(new StringList(), critThree, "one", "two"));
+        params.add(params(new StringArray(), critThree, "one", "two"));
         
         return params;
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void anyEqualsIgnoreCase(boolean expected, String substr, String ... args) {
-        StringList sl = new StringList(args);
+        StringArray sl = new StringArray(args);
         boolean result = sl.anyEqualsIgnoreCase(substr);
         assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
     }
@@ -188,66 +188,66 @@ public class StringListTest extends Parameterized {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void toLines(StringList expected, StringList sl) {
-        StringList result = sl.toLines();
+    public void toLines(StringArray expected, StringArray sl) {
+        StringArray result = sl.toLines();
         assertThat(result, withContext(equalTo(expected), message("sl", sl)));
     }
     
     private List<Object[]> parametersForToLines() {
-        return paramsList(params(StringList.empty(),          StringList.empty()),
-                          params(StringList.of((String)null), StringList.of((String)null)),
-                          params(StringList.of("a\n"),        StringList.of("a")),
-                          params(StringList.of("a\n", "b\n"), StringList.of("a", "b")),
-                          params(StringList.of("a\n"),        StringList.of("a\n")));
+        return paramsList(params(StringArray.empty(),          StringArray.empty()),
+                          params(StringArray.of((String)null), StringArray.of((String)null)),
+                          params(StringArray.of("a\n"),        StringArray.of("a")),
+                          params(StringArray.of("a\n", "b\n"), StringArray.of("a", "b")),
+                          params(StringArray.of("a\n"),        StringArray.of("a\n")));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void sorted(StringList expected, StringList ary) {
-        StringList result = ary.sorted();
+    public void sorted(StringArray expected, StringArray ary) {
+        StringArray result = ary.sorted();
         assertThat(result, equalTo(expected));
         assertThat(result, not(equalTo(ary)));
     }
     
     private List<Object[]> parametersForSorted() {
-        return paramsList(params(StringList.of("a", "b", "c"), StringList.of("b", "a", "c")),
-                          params(StringList.of("a", "b", "c"), StringList.of("b", "c", "a")));
+        return paramsList(params(StringArray.of("a", "b", "c"), StringArray.of("b", "a", "c")),
+                          params(StringArray.of("a", "b", "c"), StringArray.of("b", "c", "a")));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void sortedComparator(StringList expected, StringList ary, Comparator<String> comp) {
-        StringList result = ary.sorted(comp);
+    public void sortedComparator(StringArray expected, StringArray ary, Comparator<String> comp) {
+        StringArray result = ary.sorted(comp);
         assertThat(result, equalTo(expected));
         assertThat(result, not(equalTo(ary)));
     }
     
     private List<Object[]> parametersForSortedComparator() {
-        return paramsList(params(StringList.of("a9", "a10", "b"), StringList.of("b", "a10", "a9"), new StringAlphanumericComparator()), 
-                          params(StringList.of("b3", "b4",  "c"), StringList.of("c", "b4",  "b3"), new StringAlphanumericComparator()));
+        return paramsList(params(StringArray.of("a9", "a10", "b"), StringArray.of("b", "a10", "a9"), new StringAlphanumericComparator()), 
+                          params(StringArray.of("b3", "b4",  "c"), StringArray.of("c", "b4",  "b3"), new StringAlphanumericComparator()));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void collect(StringList expected, StringList ary, String repl) {
-        StringList result = ary.collect(repl);
-        StringList original = new StringList(ary);
+    public void collect(StringArray expected, StringArray ary, String repl) {
+        StringArray result = ary.collect(repl);
+        StringArray original = new StringArray(ary);
         assertThat(result, equalTo(expected));
         assertThat(ary, equalTo(original));
     }
     
     private List<Object[]> parametersForCollect() {
-        return paramsList(params(StringList.of("x-a", "x-b", "x-c"), StringList.of("a", "b", "c"), "x-%s"),
-                          params(StringList.of("a", "b", "c"), StringList.of("a", "b", "c"), "%s"));
+        return paramsList(params(StringArray.of("x-a", "x-b", "x-c"), StringArray.of("a", "b", "c"), "x-%s"),
+                          params(StringArray.of("a", "b", "c"), StringArray.of("a", "b", "c"), "%s"));
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void unique(StringList expected, StringList ary) {
-        StringList result = ary.unique();
-        StringList original = new StringList(ary);
+    public void unique(StringArray expected, StringArray ary) {
+        StringArray result = ary.unique();
+        StringArray original = new StringArray(ary);
         assertThat(result, equalTo(expected));
         assertThat(ary, equalTo(original));
     }
     
     private List<Object[]> parametersForUnique() {
-        return paramsList(params(StringList.of("b", "a", "c"), StringList.of("b", "a", "c")),
-                          params(StringList.of("b", "c", "a"), StringList.of("b", "c", "a")));
+        return paramsList(params(StringArray.of("b", "a", "c"), StringArray.of("b", "a", "c")),
+                          params(StringArray.of("b", "c", "a"), StringArray.of("b", "c", "a")));
     }    
 }

@@ -16,7 +16,7 @@ import org.incava.ijdk.lang.Str;
  * To subclass this, the subclass should pass its class as a self type. For example:
  *
  * <pre>
- *    public class StringList extends BaseArray&lt;String, StringList&gt;
+ *    public class StringArray extends BaseArray&lt;String, StringArray&gt;
  * </pre>
  *
  * @param <T> the element type of the array
@@ -63,13 +63,13 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
     public abstract C newInstance();
 
     /**
-     * Returns the list as a StringList, with each element converted via <code>toString()</code>.
+     * Returns the list as a StringArray, with each element converted via <code>toString()</code>.
      *
-     * @see org.incava.ijdk.collect.StringList
+     * @see org.incava.ijdk.collect.StringArray
      * @return this array, as an array of strings.
      */
-    public StringList toStringList() {
-        StringList list = new StringList();
+    public StringArray toStringArray() {
+        StringArray list = new StringArray();
         for (T obj : this) {
             list.add(String.valueOf(obj));
         }

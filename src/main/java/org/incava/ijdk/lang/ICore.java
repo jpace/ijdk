@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.TreeMap;
 import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.collect.Iterate;
-import org.incava.ijdk.collect.StringList;
+import org.incava.ijdk.collect.StringArray;
 import org.incava.ijdk.io.StdOut;
 import org.incava.ijdk.lang.Objects;
 import org.incava.ijdk.lang.Strings;
@@ -283,11 +283,11 @@ public class ICore {
      * <code>ICore.&lt;String&gt;list()</code> for empty string lists.
      *
      * @param elements the elements for the new array
-     * @return the StringList
+     * @return the StringArray
      */
     @SuppressWarnings("unchecked")
-    public static StringList strlist(String ... elements) {
-        return new StringList(elements);
+    public static StringArray strlist(String ... elements) {
+        return new StringArray(elements);
     }
 
     /**

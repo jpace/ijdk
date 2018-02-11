@@ -106,8 +106,8 @@ public class ArrayTest extends Parameterized {
         assertEqual(13, x);
         assertEqual(Array.of(5, 7, 9, 11), nums);
 
-        StringList strList = nums.toStringList();
-        assertEqual(StringList.of("5", "7", "9", "11"), strList);
+        StringArray strAry = nums.toStringArray();
+        assertEqual(StringArray.of("5", "7", "9", "11"), strAry);
 
         nums.append(2).append(2).append(2);
         assertEqual(Array.of(5, 7, 9, 11, 2, 2, 2), nums);

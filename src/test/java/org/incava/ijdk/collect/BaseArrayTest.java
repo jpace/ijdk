@@ -77,10 +77,10 @@ public class BaseArrayTest extends Parameterized {
     }    
     
     @Test
-    public void toStringList() {
+    public void toStringArray() {
         ExampleArray<String> expected = new ExampleArray<String>("1", "2", "3");
         ExampleArray<Integer> numbers = new ExampleArray<Integer>(1, 2, 3);
-        assertThat(expected, equalTo(numbers.toStringList()));
+        assertThat(expected, equalTo(numbers.toStringArray()));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

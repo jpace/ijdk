@@ -10,54 +10,54 @@ import org.incava.ijdk.str.Criteria;
  * An extension of org.incava.ijdk.collect.Array&lt;String&gt;, with a constructor for varargs, and
  * selectors that use closures.
  */
-public class StringList extends BaseArray<String, StringList> {
+public class StringArray extends BaseArray<String, StringArray> {
     /**
-     * Creates a new StringList.
+     * Creates a new StringArray.
      *
      * @param args the strings to populate the new array
      * @return the newly-created array
      */
-    public static StringList of(String ... args) {
-        return new StringList(args);
+    public static StringArray of(String ... args) {
+        return new StringArray(args);
     }
     
     /**
-     * Creates an empty StringList.
+     * Creates an empty StringArray.
      *
      * @return the newly-created array
      */
     @SuppressWarnings("unchecked")
-    public static StringList empty() {
-        return new StringList();
+    public static StringArray empty() {
+        return new StringArray();
     }
     
     private static final long serialVersionUID = -5489075883851520676L;
 
     /**
-     * Creates an empty StringList.
+     * Creates an empty StringArray.
      */
-    public StringList() {
+    public StringArray() {
     }
 
-    public StringList newInstance() {
-        return new StringList();
+    public StringArray newInstance() {
+        return new StringArray();
     }
 
     /**
-     * Creates a StringList from the given collection.
+     * Creates a StringArray from the given collection.
      *
      * @param coll the collection of strings to populate this array.
      */
-    public StringList(Collection<String> coll) {
+    public StringArray(Collection<String> coll) {
         super(coll);
     }
 
     /**
-     * Creates a StringList from the given varargs.
+     * Creates a StringArray from the given varargs.
      *
      * @param ary the strings to populate the new array
      */
-    public StringList(String ... ary) {
+    public StringArray(String ... ary) {
         for (String str : ary) {
             add(str);
         }
@@ -109,7 +109,7 @@ public class StringList extends BaseArray<String, StringList> {
      * @param substr the substring to match
      * @return all strings in this list starting with the given one.
      */
-    public StringList allStartingWith(String substr) {
+    public StringArray allStartingWith(String substr) {
         return findAll(Criteria.startsWith(substr));
     }
 
@@ -119,7 +119,7 @@ public class StringList extends BaseArray<String, StringList> {
      * @param substr the substring to match
      * @return all strings in this list containing the given one.
      */
-    public StringList allContaining(String substr) {
+    public StringArray allContaining(String substr) {
         return findAll(Criteria.contains(substr));
     }
 
@@ -129,7 +129,7 @@ public class StringList extends BaseArray<String, StringList> {
      * @param substr the substring to match
      * @return all strings in this list ending with the given one.
      */
-    public StringList allEndingWith(String substr) {
+    public StringArray allEndingWith(String substr) {
         return findAll(Criteria.endsWith(substr));
     }
 
@@ -175,8 +175,8 @@ public class StringList extends BaseArray<String, StringList> {
      * @return all strings in the list for which the closure returns true.
      * @see org.incava.ijdk.str.Criteria
      */
-    public StringList findAll(Closure<Boolean, String> criteria) {
-        StringList matching = new StringList();
+    public StringArray findAll(Closure<Boolean, String> criteria) {
+        StringArray matching = new StringArray();
         if (criteria == null) {
             return matching;
         }
@@ -195,9 +195,9 @@ public class StringList extends BaseArray<String, StringList> {
      *
      * @return the new list of strings
      */
-    public StringList toLines() {
+    public StringArray toLines() {
         String eoln = IO.EOLN;
-        StringList newList = StringList.empty();
+        StringArray newList = StringArray.empty();
         for (String str : this) {
             if (str == null || str.endsWith(eoln)) {
                 newList.append(str);
@@ -213,12 +213,12 @@ public class StringList extends BaseArray<String, StringList> {
      * Returns a list of strings, formatted via <code>repl</code>.
      *
      * @param repl the formatting to apply to each element in this list
-     * @return a new StringList, containing the formatted elements
+     * @return a new StringArray, containing the formatted elements
      * @see java.lang.String#format
      * @see java.util.Formatter
      */
-    public StringList collect(String repl) {
-        StringList sl = StringList.empty();
+    public StringArray collect(String repl) {
+        StringArray sl = StringArray.empty();
         for (String it : this) {
             sl.add(String.format(repl, it));
         }

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.incava.ijdk.collect.Array;
-import org.incava.ijdk.collect.StringList;
+import org.incava.ijdk.collect.StringArray;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -173,9 +173,9 @@ public class ArrayExample {
     }
 
     @Test
-    public void toStringList() {
+    public void toStringArray() {
         println("");
-        println("toStringList");
+        println("toStringArray");
 
         List<Integer> list = new ArrayList<>(Arrays.asList(60, 16, 252, 9, 3, 17));
         println("list", list);
@@ -189,8 +189,8 @@ public class ArrayExample {
         }
         println("slist", slist);
         
-        StringList strList = ary.toStringList();
-        println("strList", strList);
+        StringArray strAry = ary.toStringArray();
+        println("strAry", strAry);
     }
 
     @Test
