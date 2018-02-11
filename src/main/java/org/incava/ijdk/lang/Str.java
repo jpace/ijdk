@@ -172,8 +172,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param max the maximum number of elements
      * @return the array of split strings
      */
-    public String[] split(char delim, int max) {
-        return split(String.valueOf(delim), max);
+    public String[] split(char delim, int max, String[] ary) {
+        return split(String.valueOf(delim), max, ary);
     }
 
     /**
@@ -185,8 +185,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param max the maximum number of elements
      * @return the array of split strings
      */
-    public String[] split(String delim, int max) {
-        List<String> list = splitToList(delim, max);
+    public String[] split(String delim, int max, String[] ary) {
+        List<String> list = split(delim, max);
         return list == null ? null : list.toArray(new String[list.size()]);
     }
     
@@ -199,7 +199,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param max the maximum number of elements
      * @return the array of split strings
      */
-    public List<String> splitToList(String delim, Integer max) {
+    public List<String> split(String delim, Integer max) {
         if (isNull()) {
             return null;
         }
@@ -219,7 +219,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the array of split strings
      */
     public String[] split(char delim) {
-        return split(String.valueOf(delim), -1);
+        return split(String.valueOf(delim), -1, new String[0]);
     }
 
     /**
@@ -230,7 +230,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the array of split strings
      */
     public String[] split(String delim) {
-        return split(delim, -1);
+        return split(delim, -1, new String[0]);
     }
 
     /**

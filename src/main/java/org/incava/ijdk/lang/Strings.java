@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Extensions to the String class. Alternatively, the static methods here are defined as instance
- * objects of the <code>Str</code> class. See documentation of the equivalent methods in <code>Str</code>.
+ * methods of the <code>Str</code> class. See documentation of the equivalent methods in <code>Str</code>.
  *
  * @see org.incava.ijdk.lang.Str
  */
@@ -20,7 +20,7 @@ public class Strings {
      * @return the array of split strings
      */
     public static String[] split(String str, char delim, int max) {
-        return new Str(str).split(String.valueOf(delim), max);
+        return split(str, String.valueOf(delim), max);
     }
 
     /**
@@ -33,15 +33,15 @@ public class Strings {
      * @return the array of split strings
      */
     public static String[] split(String str, String delim, int max) {
-        return new Str(str).split(delim, max);
+        return new Str(str).split(delim, max, new String[0]);
     }
 
     public static String[] split(String str, char delim) {
-        return new Str(str).split(String.valueOf(delim), -1);
+        return split(str, delim, -1);
     }
 
     public static String[] split(String str, String delim) {
-        return new Str(str).split(delim, -1);
+        return split(str, delim, -1);
     }
 
     public static List<String> toList(String str) {

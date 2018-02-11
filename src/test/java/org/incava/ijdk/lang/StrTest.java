@@ -45,21 +45,21 @@ public class StrTest extends StringTest {
         return str == null ? null : str.str();
     }
     
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void splitCharDelim(String[] expected, String str, char delim, int max) {
-        String[] result = new Str(str).split(delim, max);
+    @Test @Parameters(method="parametersForSplitCharDelim") @TestCaseName("{method} {index} {params}")
+    public void splitToArrayCharDelim(String[] expected, String str, char delim, int max) {
+        String[] result = new Str(str).split(delim, max, new String[0]);
         assertThat(result, equalTo(expected));
     }
 
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void splitStringDelim(String[] expected, String str, String delim, int max) {
-        String[] result = new Str(str).split(delim, max);
+    @Test @Parameters(method="parametersForSplitStringDelim") @TestCaseName("{method} {index} {params}")
+    public void splitToArrayStringDelim(String[] expected, String str, String delim, int max) {
+        String[] result = new Str(str).split(delim, max, new String[0]);
         assertThat(result, equalTo(expected));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void splitToListStringDelim(List<String> expected, String str, String delim, Integer max) {
-        List<String> result = new Str(str).splitToList(delim, max);
+        List<String> result = new Str(str).split(delim, max);
         assertThat(result, equalTo(expected));
     }
 
