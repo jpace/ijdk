@@ -19,6 +19,7 @@ import static org.hamcrest.Matchers.not;
 import static org.incava.attest.Assertions.message;
 import static org.incava.attest.ContextMatcher.withContext;
 
+@SuppressWarnings("deprecation")
 public class StringListTest extends Parameterized {
     @Test
     public void empty() {

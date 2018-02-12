@@ -12,6 +12,7 @@ import static org.incava.attest.Assertions.message;
 import static org.incava.attest.Parameters.params;
 import static org.incava.attest.Parameters.paramsList;
 
+@SuppressWarnings("deprecation")
 public class IntegerListTest extends Parameterized {
     @Test
     public void ctorEmpty() {
