@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import org.incava.ijdk.util.EmptyIterable;
+import org.incava.ijdk.util.NonNullIterable;
 import org.incava.ijdk.util.NumIterable;
 
 /**
@@ -56,7 +57,7 @@ public class Iterate {
      * @see #each
      */
     public static <T> Iterable<T> overNonNull(Iterable<T> elements) {
-        return elements == null ? new EmptyIterable<T>() : elements;
+        return elements == null ? new EmptyIterable<T>() : new NonNullIterable<T>(elements);
     }
 
     /**

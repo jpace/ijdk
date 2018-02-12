@@ -390,6 +390,17 @@ index (which starts from zero):
     }
 ```
 
+### Non-Null Iterator
+
+`Iterate.overNonNull` yields only non-null elements.
+
+```java
+    List<String> list = Arrays.asList(null, "b", null, null, "e", null, "g");
+    for (It<String> it : Iterate.overNonNull(list)) {
+        // will get the strings "b", "e", and "g" only
+    }
+```
+
 ## MultiMap
 
 Does one-to-many mappings.

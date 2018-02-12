@@ -102,5 +102,24 @@ public class IterateTest extends Parameterized {
             ++index;
         }
         assertThat(index, equalTo(0));
+    }
+
+    @Test
+    public void overNonNullIterableNull() {
+        for (Object obj : Iterate.overNonNull(null)) {
+            throw new RuntimeException("should not iterate over a null iterable");
+        }
+    }
+
+    @Test
+    public void overNonNull() {
+        List<String> list = Arrays.asList("a", null, "c");
+        List<String> expected = Arrays.asList("a", "c");
+        int index = 0;
+        for (String s : Iterate.overNonNull(list)) {
+            assertThat(s, equalTo(expected.get(index)));
+            ++index;
+        }
+        assertThat(index, equalTo(expected.size()));
     }    
 }
