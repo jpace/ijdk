@@ -435,9 +435,9 @@ public class BaseArrayTest extends Parameterized {
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public <T> void sortedComparator(ExampleArray<T> expArray, ExampleArray<T> ary, Comparator<T> comparator) {
+    public <T> void sortedComparator(ExampleArray<T> expected, ExampleArray<T> ary, Comparator<T> comparator) {
         ExampleArray<T> result = ary.sorted(comparator);
-        assertThat(result, equalTo(expArray));
+        assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForSortedComparator() {
@@ -449,5 +449,21 @@ public class BaseArrayTest extends Parameterized {
         ExampleArray<String> ab  = stringArray("aaa", "bb", "c");
         return paramsList(params(stringArray("c", "bb", "aaa"), ab, strLenComp));
     }
-}
 
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public <T> void reverse(ExampleArray<T> expected, ExampleArray<T> ary) {
+        ExampleArray<T> result = ary.reverse();
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForReverse() {
+        ExampleArray<Object> ab  = objectArray("a", "b");
+        ExampleArray<Object> ba  = objectArray("b", "a");
+        ExampleArray<Object> empty  = objectArray();
+        
+        return paramsList(params(ba, ab),
+                          params(ab, ba),
+                          params(empty, empty));
+    }    
+}

@@ -423,4 +423,17 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
     private Integer getIndex(Integer n) {
         return new org.incava.ijdk.util.Indexable(size()).get(n);
     }
+
+    /**
+     * Returns a copy of this array, in reverse order
+     *
+     * @return a reversed array
+     */
+    public C reverse() {
+        C ary = newInstance();
+        for (int idx = size() - 1; idx >= 0; --idx) {
+            ary.add(get(idx));
+        }
+        return ary;
+    }    
 }    
