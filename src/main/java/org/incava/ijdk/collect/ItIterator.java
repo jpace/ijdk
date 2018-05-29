@@ -21,10 +21,7 @@ public class ItIterator<T> implements Iterator<It<T>> {
     }
 
     public It<T> next() {
-        T element = this.iterator.next();
-        It<T> it = new It<T>(element, this.index);
-        ++this.index;
-        return it;
+        return new It<T>(this.iterator.next(), this.index++);
     }
     
     public void remove() {

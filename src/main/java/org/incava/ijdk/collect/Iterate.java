@@ -1,9 +1,11 @@
 package org.incava.ijdk.collect;
 
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import org.incava.ijdk.util.EmptyIterable;
+import org.incava.ijdk.util.EnumerationIterable;
 import org.incava.ijdk.util.NonNullIterable;
 import org.incava.ijdk.util.NumIterable;
 
@@ -45,6 +47,18 @@ public class Iterate {
      */
     public static <T> Iterable<T> over(Iterable<T> elements) {
         return elements == null ? new EmptyIterable<T>() : elements;
+    }
+
+    /**
+     * Returns an Iterable (iterator) for the enumeration, which can be null. If
+     * <code>coll</code> is null, an "empty" iterator will be returned.
+     *
+     * @param elements the elements to iterate over; can be null
+     * @param <T> the type of elements
+     * @return an iterator for the enumeration
+     */
+    public static <T> Iterable<T> over(Enumeration<T> elements) {
+        return elements == null ? new EmptyIterable<T>() : new EnumerationIterable<T>(elements);
     }
 
     /**
