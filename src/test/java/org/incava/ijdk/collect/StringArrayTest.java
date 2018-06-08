@@ -1,5 +1,12 @@
 package org.incava.ijdk.collect;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -9,6 +16,7 @@ import org.hamcrest.Matchers;
 import org.incava.attest.Parameterized;
 import org.incava.ijdk.lang.Closure;
 import org.incava.ijdk.str.StringAlphanumericComparator;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -249,5 +257,72 @@ public class StringArrayTest extends Parameterized {
     private List<Object[]> parametersForUnique() {
         return paramsList(params(StringArray.of("b", "a", "c"), StringArray.of("b", "a", "c")),
                           params(StringArray.of("b", "c", "a"), StringArray.of("b", "c", "a")));
+    }    
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void fromFile(StringArray expected, File file) {
+        if (expected == null) {
+            try {
+                StringArray.from(file);
+                Assert.fail("exception expected");
+            }
+            catch (Exception ex) {
+                // good
+            }
+        }
+        else {
+            StringArray result = StringArray.from(file);
+            assertThat(result, equalTo(expected));
+        }
+    }
+    
+    private List<Object[]> parametersForFromFile() {
+        Path bac = Paths.get("/tmp", "bac.txt");
+        Path xyz = Paths.get("/tmp", "xyz.txt");
+
+        try {
+            Files.write(bac, StringArray.of("b", "a", "c"));
+            Files.write(xyz, StringArray.of("x", "y", "z"));
+        }
+        catch (IOException ioe) {
+            throw new RuntimeException(ioe);
+        }
+        
+        return paramsList(params(StringArray.of("b", "a", "c"), new File("/tmp/bac.txt")),
+                          params(StringArray.of("x", "y", "z"), new File("/tmp/xyz.txt")),
+                          params(null, new File("/tmp/doesnotexists.nil")));
+    }    
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void fromInputStream(StringArray expected, InputStream inputStream) {
+        if (expected == null) {
+            try {
+                StringArray.from(inputStream);
+                Assert.fail("exception expected");
+            }
+            catch (Exception ex) {
+                // good
+            }
+        }
+        else {
+            StringArray result = StringArray.from(inputStream);
+            assertThat(result, equalTo(expected));
+        }
+    }
+    
+    private List<Object[]> parametersForFromInputStream() {
+        File def = new File("/tmp/def.txt");
+        File pqr = new File("/tmp/pqr.txt");
+
+        try {
+            Files.write(def.toPath(), StringArray.of("d", "e", "f"));
+            Files.write(pqr.toPath(), StringArray.of("p", "q", "r"));
+
+            return paramsList(params(StringArray.of("d", "e", "f"), new FileInputStream(def)),
+                              params(StringArray.of("p", "q", "r"), new FileInputStream(pqr)));            
+        }
+        catch (IOException ioe) {
+            throw new RuntimeException(ioe);
+        }        
     }    
 }
