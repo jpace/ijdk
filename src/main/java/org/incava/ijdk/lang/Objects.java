@@ -1,5 +1,7 @@
 package org.incava.ijdk.lang;
 
+import java.util.Arrays;
+import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.lang.Comp;
 import org.incava.ijdk.lang.Obj;
 
@@ -108,4 +110,59 @@ public class Objects {
     public static boolean isNotNull(Object obj) {
         return Obj.of(obj).isNotNull();
     }
+
+    /**
+     * Returns whether the second object is equal to the first object.
+     *
+     * @param x the first object to compare
+     * @param y the second object to compare
+     * @return whether the values are equal
+     */
+    public static boolean equals(HasInstanceValues x, HasInstanceValues y) {
+        if (x == null) {
+            return y == null;
+        }
+        else if (y == null) {
+            return false;
+        }
+        else {
+            return Arrays.equals(getInstanceObjects(x), getInstanceObjects(y));
+        }
+    }
+
+    /**
+     * Returns the hash code of the given object. Returns 0 if the referenced object is null.
+     *
+     * @param x the object of which to calculate the hash code
+     * @return the hash code
+     */
+    public static int hashCode(HasInstanceValues x) {
+        return x == null ? 0 : Arrays.hashCode(getInstanceObjects(x));
+    }
+
+    /**
+     * Returns a string, joining the values with commas.
+     *
+     * @param x the object to generate the string from
+     * @return the string
+     */
+    public static String toString(HasInstanceValues x) {
+        return toString(x, ", ");
+    }
+
+    /**
+     * Returns a string, joining the values with the given string.
+     *
+     * @param x the object to generate the string from
+     * @param delim the delimiter with which to join the string
+     * @return the string
+     */
+    public static String toString(HasInstanceValues x, String delim) {
+        return x == null ? null : x.getInstanceValues().join(delim);
+    }
+
+    private static Object[] getInstanceObjects(HasInstanceValues x) {
+        Array<Object> values = x.getInstanceValues();
+        return values.toArray(new Object[values.size()]);
+    }    
 }

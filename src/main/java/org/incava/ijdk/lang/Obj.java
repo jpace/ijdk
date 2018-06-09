@@ -1,7 +1,8 @@
 package org.incava.ijdk.lang;
 
-import java.util.Collection;
 import java.util.Arrays;
+import java.util.Collection;
+import org.incava.ijdk.collect.Array;
 
 /**
  * Extension to the Object class, wrapping a JDK Object with additional methods. The referenced
@@ -83,8 +84,8 @@ public class Obj<T> implements Bool {
             return true;
         }
         else if (other instanceof Obj) {
-            Object oobj = ((Obj)other).obj();
-            return obj().equals(oobj);
+            Obj<?> obj = (Obj)other;
+            return Arrays.equals(getInstanceObjects(), obj.getInstanceObjects());
         }
         else {
             return obj().equals(other);
@@ -97,7 +98,7 @@ public class Obj<T> implements Bool {
      * @return the hash code
      */
     public int hashCode() {
-        return isNull() ? 0 : obj().hashCode();
+        return Arrays.hashCode(getInstanceObjects());
     }
 
     /**
@@ -184,5 +185,20 @@ public class Obj<T> implements Bool {
         else {
             return obj.toString();
         }
+    }
+
+    /**
+     * Returns the values that comprise this object in terms of equality and hash codes. For an
+     * object (Obj), the instance value is the wrapped/referenced object.
+     *
+     * @return the fields of this object
+     */
+    protected Array<Object> getInstanceValues() {
+        return Array.of(object);
+    }    
+
+    private Object[] getInstanceObjects() {
+        Array<Object> values = getInstanceValues();
+        return values.toArray(new Object[values.size()]);
     }    
 }

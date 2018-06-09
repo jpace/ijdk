@@ -58,7 +58,7 @@ public class KeyValueTest extends Parameterized {
     @Test
     public void hashCodeTest() {
         KeyValue<String, Double> kv = KeyValue.of("one", 1.23);
-        assertEqual(1171979044, kv.hashCode());
+        assertEqual(1162283989, kv.hashCode());
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

@@ -1,37 +1,17 @@
 package org.incava.ijdk.lang;
 
 import org.incava.ijdk.collect.Array;
+import org.incava.ijdk.collect.IntegerIterable;
+import org.incava.ijdk.collect.IntegerIterator;
 import java.util.Iterator;
 
 /**
  * A range of integers, inclusive. Supports iteration and array expansion.
  */
-public class Range implements Comparable<Range>, Iterable<Integer> {
+public class Range implements Comparable<Range>, Iterable<Integer>, HasInstanceValues {
     private final Integer first;
     private final Integer last;
 
-    class RangeIterator implements Iterator<Integer> {
-        private Integer current;
-        private final Integer last;
-        
-        public RangeIterator(Integer first, Integer last) {
-            this.current = first;
-            this.last = last;
-        }
-
-        public Integer next() {
-            return this.current++;
-        }
-
-        public boolean hasNext() {
-            return this.current.intValue() <= this.last.intValue();
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException();
-        } 
-    }
-    
     /**
      * Creates a range of <code>first</code> through <code>last</code> (i.e., inclusive). First can
      * be less than, equal to, or greater than, last.
@@ -60,16 +40,17 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      * @see #upTo
      */
     public Iterator<Integer> iterator() {
-        return new RangeIterator(this.first, this.last);
+        return new IntegerIterator(this.first, this.last);
     }
 
     /**
-     * Returns an iterator for the range, inclusive of the first value, but exclusive of the last
-     * one. Will not execute if <code>first</code> &lt;= <code>last - 1</code>. Usage:
+     * Returns an iterator for the range, inclusive of the first value, but <em>exclusive</em> of
+     * the last one. Will not execute if <code>first</code> &lt;= <code>last - 1</code>. Usage:
      *
      * <pre>
      *  Range rg = new Range(11, 14);
-     *  for (Integer i : rg.upTo()) { // block called with 11, 12, 13
+     *  for (Integer i : rg.upTo()) {
+     *      // block called with 11, 12, 13
      *  }
      * </pre>
      *
@@ -78,11 +59,7 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      * @return an iterable of [first ... last]
      */
     public Iterable<Integer> upTo() {
-        return new Iterable<Integer>() {
-            public Iterator<Integer> iterator() {
-                return new RangeIterator(Range.this.first, Range.this.last - 1);
-            }
-        };
+        return new IntegerIterable(this.first, this.last - 1);
     }
 
     /**
@@ -157,7 +134,7 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
     public boolean equals(Object obj) {
         if (obj instanceof Range) {
             Range other = (Range)obj;
-            return first == other.first && last == other.last;
+            return Objects.equals(this, other);
         }
         else {
             return false;
@@ -170,7 +147,7 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
      * @return the hash code
      */
     public int hashCode() {
-        return first.hashCode() * 17 + last.hashCode();
+        return Objects.hashCode(this);
     }
 
     /**
@@ -203,5 +180,9 @@ public class Range implements Comparable<Range>, Iterable<Integer> {
             }
             return cmp;
         }
+    }
+
+    public Array<Object> getInstanceValues() {
+        return Array.of(first, last);
     }
 }
