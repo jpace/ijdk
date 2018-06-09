@@ -33,7 +33,8 @@ public class Strings {
      * @return the array of split strings
      */
     public static String[] split(String str, String delim, int max) {
-        return new Str(str).split(delim, max, new String[0]);
+        List<String> list = new Str(str).split(delim, max);
+        return list == null ? null : list.toArray(new String[0]);
     }
 
     public static String[] split(String str, char delim) {
