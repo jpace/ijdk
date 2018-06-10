@@ -1,11 +1,14 @@
 package org.incava.ijdk.lang;
 
+import java.util.Arrays;
+import org.incava.ijdk.collect.Array;
+
 /**
  * Otherwise known as a Pair. This class, unlike <code>org.incava.ijdk.lang.Pair</code>, does not
  * require that the key and value types be Comparable, using their <code>compareTo</code> methods in
  * <code>KeyValue#compareTo</code> if they are subclasses of Comparable.
  */
-public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
+public class KeyValue<K, V> implements Comparable<KeyValue<K, V>>, HasInstanceValues {
     /**
      * Shorter syntax than the default constructor, allowing the compiler to discern the object types.
      *
@@ -82,20 +85,31 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
     }
 
     /**
-     * Returns if <code>obj</code> equals this one.
+     * Returns whether the other object is equal to the wrapped object, including whether they are
+     * both null. If <code>other</code> is a <code>Obj</code>, then its wrapped object is
+     * compared.
      *
-     * @param obj the object to compare to this one
-     * @return if <code>obj</code> equals this one
+     * @param obj the object to compare to the wrapped object
+     * @return whether the given object equals this one
      */
     public boolean equals(Object obj) {
         if (obj instanceof KeyValue) {
-            KeyValue<?, ?> other = (KeyValue<?, ?>)obj;
-            return Obj.of(key).equals(other.key()) && Obj.of(value).equals(other.value());
+            KeyValue<?, ?> other = (KeyValue)obj;
+            return Objects.equals(this, other);
         }
         else {
             return false;
         }
     }
+
+    /**
+     * Returns the hash code of the wrapped object. Returns 0 if the referenced object is null.
+     *
+     * @return the hash code
+     */
+    public int hashCode() {
+        return Objects.hashCode(this);
+    }    
 
     /**
      * Returns this key/value pair as a string, in the form "#{key} =&gt; #{value}".
@@ -114,16 +128,7 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
      * @return this object as a string
      */
     public String toString(String sep) {
-        return String.valueOf(key) + sep + String.valueOf(value);
-    }
-
-    /**
-     * Returns the hash code for the key/value pair.
-     * 
-     * @return the hash code
-     */
-    public int hashCode() {
-        return (key == null ? 1 : key.hashCode()) * 119 + (value == null ? 1 : value.hashCode());
+        return Objects.toString(this, sep);
     }
 
     /**
@@ -159,5 +164,13 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>> {
         else {
             return -1;
         }
+    }
+
+    /**
+     * Returns the values that comprise this object in terms of equality and hash codes. This is the
+     * key and the value.
+     */
+    public Array<Object> getInstanceValues() {
+        return Array.of(key, value);
     }    
 }

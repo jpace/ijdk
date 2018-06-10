@@ -25,7 +25,7 @@ public class Comp {
         }
         else {
             int cmp = x.compareTo(y);
-            return cmp == 0 ? 0 : (cmp < 0 ? -1 : 1);
+            return Integer.signum(cmp);
         }
     }    
 

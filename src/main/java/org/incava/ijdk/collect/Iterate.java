@@ -7,7 +7,6 @@ import java.util.List;
 import org.incava.ijdk.util.EmptyIterable;
 import org.incava.ijdk.util.EnumerationIterable;
 import org.incava.ijdk.util.NonNullIterable;
-import org.incava.ijdk.util.NumIterable;
 
 /**
  * Creates various types of Iterators, all of which are null safe (they can accept a null input).
@@ -20,7 +19,7 @@ public class Iterate {
      * @return an iterator
      */
     public static Iterable<Integer> count(int num) {
-        return new NumIterable(num);
+        return new IntegerIterable(0, num - 1);
     }
 
     /**

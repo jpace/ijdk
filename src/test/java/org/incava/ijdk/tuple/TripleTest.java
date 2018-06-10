@@ -4,6 +4,7 @@ import java.util.Arrays;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
+import org.incava.ijdk.collect.Array;
 import org.junit.Test;
 
 import static org.incava.attest.Assertions.assertEqual;
@@ -57,5 +58,52 @@ public class TripleTest extends Parameterized {
                           params(-1, Triple.of(notComparable, 1.2, 0), Triple.of(notComparable, 1.2, 0)),
                           params(-1, Triple.of(1.2, notComparable, 0), Triple.of(1.2, notComparable, 0)),
                           params(-1, Triple.of(1.2, 0, notComparable), Triple.of(1.2, 0, notComparable)));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public <A, B, C> void testEquals(boolean expected, Triple<A, B, C> tr, Object obj) {
+        boolean result = tr.equals(obj);
+        assertEqual(expected, result, message("tr", tr, "obj", obj));
+    }
+    
+    private java.util.List<Object[]> parametersForTestEquals() {
+        Triple<String, Double, Integer> aaa = Triple.of("one", 1.2, 1);
+        Triple<String, Double, Integer> aab = Triple.of("one", 1.2, 2);
+        Triple<String, Double, Integer> aba = Triple.of("one", 2.3, 1);
+        Triple<String, Double, Integer> baa = Triple.of("two", 1.2, 1);
+
+        // StringBuilder is not comparable:
+        StringBuilder notComparable = new StringBuilder("one");
+
+        return paramsList(params(true,  aaa, aaa),
+                          params(true,  aaa, Triple.of("one", 1.2, 1)),
+                          params(true,  Triple.of("one", 1.2, 1), aaa),
+                          params(false, aaa, aab),
+                          params(false, baa, aaa),
+                          params(false, aaa, aba),
+                          params(false, aba, aaa),
+                          params(false, baa, aaa),
+                          params(false, aaa, "xyz"),
+                          params(true,  Triple.of(notComparable, 1.2, 0), Triple.of(notComparable, 1.2, 0)),
+                          params(true,  Triple.of(1.2, notComparable, 0), Triple.of(1.2, notComparable, 0)),
+                          params(true,  Triple.of(1.2, 0, notComparable), Triple.of(1.2, 0, notComparable)));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public <A, B, C> void getInstanceValues(Array<?> expected, Triple<A, B, C> tr) {
+        Array<?> result = tr.getInstanceValues();
+        assertEqual(expected, result, message("tr", tr));
+    }
+    
+    private java.util.List<Object[]> parametersForGetInstanceValues() {
+        Triple<String, Double, Integer> aaa = Triple.of("one", 1.2, 1);
+        Triple<String, Double, Integer> aab = Triple.of("one", 1.2, 2);
+        Triple<String, Double, Integer> aba = Triple.of("one", 2.3, 1);
+        Triple<String, Double, Integer> baa = Triple.of("two", 1.2, 1);
+
+        return paramsList(params(Array.of("one", 1.2, 1), aaa),
+                          params(Array.of("one", 1.2, 2), aab),
+                          params(Array.of("one", 2.3, 1), aba),
+                          params(Array.of("two", 1.2, 1), baa));
     }    
 }

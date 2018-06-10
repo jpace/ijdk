@@ -27,7 +27,10 @@ public class StringArray extends BaseArray<String, StringArray> {
     }
 
     /**
-     * Reads lines from a file.
+     * Reads lines from a text file.
+     *
+     * @param file the file to read from
+     * @return an array of lines from the file
      */
     public static StringArray from(File file) {
         try {
@@ -40,7 +43,10 @@ public class StringArray extends BaseArray<String, StringArray> {
     }
 
     /**
-     * Reads lines from an input stream.
+     * Reads lines from an input stream, which is presumed to be text.
+     *
+     * @param stream the stream to read from
+     * @return an array of lines from the stream
      */
     public static StringArray from(InputStream stream) {
         StringArray lines = empty();

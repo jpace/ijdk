@@ -1,6 +1,7 @@
 package org.incava.ijdk.lang;
 
 import java.io.File;
+import java.util.List;
 import org.incava.ijdk.io.Files;
 import org.incava.ijdk.io.IO;
 
@@ -140,21 +141,21 @@ public class Pathname extends File {
      */
     public Pathname parent() {
         String separator = "/";
-        String[] components = new Str(relativePath()).split(separator);
+        List<String> components = new Str(relativePath()).split(separator, null);
         
         String parentPath = null;
-        if (components.length == 0) {
+        if (components.isEmpty()) {
             parentPath = "..";
         }
-        else if (components.length == 1) {
-            if (components[0].equals(".") || components[0].equals("")) {
+        else if (components.size() == 1) {
+            if (components.get(0).equals(".") || components.get(0).equals("")) {
                 parentPath = "..";
             }
-            else if (!components[0].equals("..") && components[0].equals(baseName())) {
+            else if (!components.get(0).equals("..") && components.get(0).equals(baseName())) {
                 parentPath = ".";
             }
             else {
-                parentPath = components[0] + separator + "..";
+                parentPath = components.get(0) + separator + "..";
             }
         }
         else {

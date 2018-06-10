@@ -13,7 +13,7 @@ public class PathnameGlob {
      * @return the pattern
      */
     public static String toPattern(String glob) {
-        String[] components = new Str(glob).split(SEPARATOR);
+        List<String> components = new Str(glob).split(SEPARATOR, null);
         List<String> patList = ICore.<String>list();
         for (String comp : components) {
             patList.add(elementToPattern(comp));

@@ -162,33 +162,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
         else {
             return false;
         }
-    }
-    
-    /**
-     * Returns an array of strings split at the character delimiter. Returns null if
-     * <code>str</code> is null.
-     *
-     * @param delim the delimiter to split at
-     * @param max the maximum number of elements
-     * @return the array of split strings
-     */
-    public String[] split(char delim, int max, String[] ary) {
-        return split(String.valueOf(delim), max, ary);
-    }
-
-    /**
-     * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
-     * is null. Unlike <code>java.lang.String#split</code>, the delimiter is only a string, not a
-     * regular expression.
-     *
-     * @param delim the delimiter to split at
-     * @param max the maximum number of elements
-     * @return the array of split strings
-     */
-    public String[] split(String delim, int max, String[] ary) {
-        List<String> list = split(delim, max);
-        return list == null ? null : list.toArray(new String[list.size()]);
-    }
+    }    
     
     /**
      * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
@@ -209,28 +183,6 @@ public class Str extends Obj<String> implements Comparing<Str> {
         }
         String[] ary = pat.split(str(), max);
         return new ArrayList<>(Arrays.asList(ary));
-    }
-
-    /**
-     * Returns an array of strings split at the character delimiter. Returns null if
-     * <code>str</code> is null.
-     *
-     * @param delim the delimiter to split at
-     * @return the array of split strings
-     */
-    public String[] split(char delim) {
-        return split(String.valueOf(delim), -1, new String[0]);
-    }
-
-    /**
-     * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
-     * is null.
-     *
-     * @param delim the delimiter to split at
-     * @return the array of split strings
-     */
-    public String[] split(String delim) {
-        return split(delim, -1, new String[0]);
     }
 
     /**

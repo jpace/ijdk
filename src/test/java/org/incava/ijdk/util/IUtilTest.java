@@ -181,7 +181,7 @@ public class IUtilTest extends Parameterized {
             Assert.fail("exception expected");
         }
         catch (NoSuchElementException e) {
-            assertEqual("limit: " + 3, e.getMessage());
+            // good
         }
     }
 

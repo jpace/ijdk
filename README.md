@@ -110,6 +110,9 @@ An extension of ArrayList, with Ruby-like methods (thus the name matching Array 
 
     Array<Integer> ary = Array.of(3, 7, 1).sorted();
     assertEqual(Array.of(1, 3, 7), ary);
+
+    Array<Integer> ary = Array.of(3, 7, 1).reverse();
+    assertEqual(Array.of(1, 7, 3), ary);
 ```
 
 ### Hash<T>
@@ -182,7 +185,7 @@ collision with java.util.Map).
         assertEqual(exp, entry.getValue(), message("entry", entry));
     }
 
-    Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");    
+    Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");
     assertEqual("abc", h.fetch("first"));
     assertEqual("xyz", h.fetch("fourth", "xyz"));
     assertEqual(null, h.fetch("fourth", null));
@@ -210,11 +213,11 @@ Formerly StringList, an Array of Strings.
    StringArray lines = sa.toLines();          // returns each element appended with "\n"
 ```
 
-#### IntegerList
+#### IntegerArray
 
 ```java
    // instead of Array<Integer>; varargs constructor
-   IntegerList il = new IntegerList(3, 6, 9);
+   IntegerArray il = new IntegerArray(3, 6, 9);
    int max = il.maximum();                 // max == 9
    int avg = il.average();                 // avg == 6
    int min = il.minimum();                 // min == 3

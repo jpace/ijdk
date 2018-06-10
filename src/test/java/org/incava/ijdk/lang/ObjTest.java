@@ -93,9 +93,10 @@ public class ObjTest extends Parameterized {
     }
     
     private List<Object[]> parametersForHashCodeTest() {
-        return paramsList(params(0, null),
-                          params(1, 1),
-                          params("abc".hashCode(), "abc"));
+        // Arrays.hashCode offsets the "real" value by 31
+        return paramsList(params(31 + 0, null),
+                          params(31 + 1, 1),
+                          params(31 + "abc".hashCode(), "abc"));
     }
 
     @Test @Parameters(method="parametersForIsBoolean") @TestCaseName("{method} {index} {params}")

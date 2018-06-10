@@ -45,18 +45,6 @@ public class StrTest extends StringTest {
         return str == null ? null : str.str();
     }
     
-    @Test @Parameters(method="parametersForSplitCharDelim") @TestCaseName("{method} {index} {params}")
-    public void splitToArrayCharDelim(String[] expected, String str, char delim, int max) {
-        String[] result = new Str(str).split(delim, max, new String[0]);
-        assertThat(result, equalTo(expected));
-    }
-
-    @Test @Parameters(method="parametersForSplitStringDelim") @TestCaseName("{method} {index} {params}")
-    public void splitToArrayStringDelim(String[] expected, String str, String delim, int max) {
-        String[] result = new Str(str).split(delim, max, new String[0]);
-        assertThat(result, equalTo(expected));
-    }
-
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void splitToListStringDelim(List<String> expected, String str, String delim, Integer max) {
         List<String> result = new Str(str).split(delim, max);
@@ -194,7 +182,7 @@ public class StrTest extends StringTest {
     public List<Object[]> parametersForStartsWithString() {
         return paramsList(params(false, null,   "a"),     
                           params(true,  "abcd", "a"),     
-                          params(true,  "abcd", "ab"),    
+                          params(true,  "abcd", "ab"),
                           params(true,  "abcd", "abc"),
                           params(true,  "abcd", ""),     
                           params(false, "ab",   "abc"),   

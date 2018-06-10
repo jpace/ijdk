@@ -1,5 +1,6 @@
 package org.incava.ijdk.tuple;
 
+import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.lang.Comp;
 
 /**
@@ -60,5 +61,13 @@ public class Triple<A, B, C> extends Pair<A, B> {
         else {
             return cmp;
         }
+    }
+
+    /**
+     * Returns the values that comprise this object in terms of equality and hash codes. This is the
+     * key and the value.
+     */
+    public Array<Object> getInstanceValues() {
+        return super.getInstanceValues().append(third);
     }    
 }
