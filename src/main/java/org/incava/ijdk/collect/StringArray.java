@@ -1,16 +1,13 @@
 package org.incava.ijdk.collect;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import org.incava.ijdk.io.IO;
+import org.incava.ijdk.io.InputStreams;
 import org.incava.ijdk.lang.Closure;
 import org.incava.ijdk.str.Criteria;
 
@@ -52,29 +49,9 @@ public class StringArray extends BaseArray<String, StringArray> {
      * @return an array of lines from the stream
      */
     public static StringArray from(InputStream stream) {
-        InputStreamReader isr = null;
-        try {
-            StringArray lines = empty();
-            isr = new InputStreamReader(stream);
-            BufferedReader br = new BufferedReader(isr);
-            String line;
-            while ((line = br.readLine()) != null) {
-                lines.add(line);
-            }
-            return lines;
-        }
-        catch (IOException ioe) {
-            throw new RuntimeException(ioe);
-        }
-        finally {
-            try {
-                if (isr != null) {
-                    isr.close();
-                }
-            }
-            catch (IOException ioe) {
-            }
-        }
+        StringArray lines = empty();
+        InputStreams.readLines(lines, stream);
+        return lines;
     }
     
     /**
