@@ -526,7 +526,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
         for (int idx = 0; idx < str.length(); ++idx) {
             Character x = get(offset + idx);
             Character y = other.get(idx);
-            if (!Char.isMatch(x, y, ignoreCase)) {
+            if (!Characters.isMatch(x, y, ignoreCase)) {
                 return false;
             }
         }

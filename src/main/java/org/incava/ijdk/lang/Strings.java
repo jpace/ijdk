@@ -2,10 +2,12 @@ package org.incava.ijdk.lang;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * Extensions to the String class. Alternatively, the static methods here are defined as instance
- * methods of the <code>Str</code> class. See documentation of the equivalent methods in <code>Str</code>.
+ * Extensions to the String class. Many of the static methods here are defined as instance methods
+ * of the <code>Str</code> class.
  *
  * @see org.incava.ijdk.lang.Str
  */
@@ -197,5 +199,82 @@ public class Strings {
     public static String quote(String str) {
         Str qstr = new Str(str).quote();
         return qstr == null ? null : qstr.str();
+    }
+
+    public static int compareChars(String s, String t, int idx) {
+        Character sCh = s.charAt(idx);
+        Character tCh = t.charAt(idx);
+        return sCh.compareTo(tCh);
+    }
+
+    /**
+     * Returns the value starting at <code>idx</code> in <code>str</code> as an integer, if the
+     * characters are digits.
+     *
+     * @param str the string to check
+     * @param idx the starting index
+     * @return the number, as an integer
+     */
+    public static Integer matchInteger(String str, int idx) {
+        String intPart = matchDigits(str, idx);
+        return intPart == null ? null : Integer.valueOf(intPart);
+    }
+
+    /**
+     * Returns the value starting at <code>idx</code> in <code>str</code> as a double, if the
+     * characters are digits separated by one dot.
+     *
+     * @param str the string to check
+     * @param idx the starting index
+     * @return the number, as a double
+     */
+    public static Double matchDouble(String str, int idx) {
+        String intPart = matchDigits(str, idx);
+        if (intPart != null) {
+            idx += intPart.length();
+            if (matchChar(str, idx, '.') != null) {
+                String fractPart = matchDigits(str, idx + 1);
+                if (fractPart != null) {
+                    return Double.valueOf(intPart + '.' + fractPart);
+                }
+            }
+        }
+        return null;
+    }
+
+    public static Character matchDigit(String str, int idx) {
+        if (idx >= str.length()) {
+            return null;
+        }
+        else {
+            char ch = str.charAt(idx);
+            return Character.isDigit(ch) ? ch : null;
+        }
+    }
+
+    public static Character matchChar(String str, int idx, char match) {
+        if (idx >= str.length()) {
+            return null;
+        }
+        else {
+            char ch = str.charAt(idx);
+            return ch == match ? ch : null;
+        }
+    }
+
+    public static String matchDigits(String str, int idx) {
+        Character ch = matchDigit(str, idx);
+        if (ch == null) {
+            return null;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(ch);
+
+        while ((ch = matchDigit(str, ++idx)) != null) {
+            sb.append(ch);
+        }
+
+        return sb.toString();
     }    
 }

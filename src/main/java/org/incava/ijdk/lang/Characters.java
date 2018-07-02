@@ -1,6 +1,6 @@
 package org.incava.ijdk.lang;
 
-public class Char {
+public class Characters {
     public static boolean isMatch(Character x, Character y, boolean ignoreCase) {
         return x.equals(y) || (ignoreCase && Character.toUpperCase(x) == Character.toUpperCase(y));
     }

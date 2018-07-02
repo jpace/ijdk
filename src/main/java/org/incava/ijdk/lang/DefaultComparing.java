@@ -28,15 +28,18 @@ public class DefaultComparing<T extends Comparable<T>> implements Comparing<T> {
     }
 
     public int compareTo(T other) {
-        if (value == null) {
-            return other == null ? 0 : -1;
+        if (value == other) {
+            return 0;
+        }
+        else if (value == null) {
+            return -1;
         }
         else if (other == null) {
             return 1;
         }
         else {
             int cmp = value.compareTo(other);
-            return cmp == 0 ? 0 : (cmp < 0 ? -1 : 1);
+            return Integer.signum(cmp);
         }
     }    
 }

@@ -1,7 +1,7 @@
 package org.incava.ijdk.str;
 
 import java.util.Comparator;
-import org.incava.ijdk.lang.Char;
+import org.incava.ijdk.lang.Characters;
 import org.incava.ijdk.lang.Str;
 
 public class StrIgnoreCaseComparator implements Comparator<Str> {
@@ -13,7 +13,7 @@ public class StrIgnoreCaseComparator implements Comparator<Str> {
         for (int idx = 0; idx < len; ++idx) {
             Character c = s.charAt(idx);
             Character d = t.charAt(idx);
-            int cmp = Char.compareIgnoreCase(c, d);
+            int cmp = Characters.compareIgnoreCase(c, d);
             if (cmp != 0) {
                 return cmp;
             }

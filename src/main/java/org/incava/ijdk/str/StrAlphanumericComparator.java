@@ -4,72 +4,61 @@ import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.incava.ijdk.lang.Str;
+import org.incava.ijdk.lang.Strings;
 
 public class StrAlphanumericComparator implements Comparator<Str> {
     private final Pattern pattern;
-
-    public StrAlphanumericComparator() {
-        this.pattern = Pattern.compile("\\d+(?:\\.\\d)*");
-    }
     
+    public StrAlphanumericComparator() {
+        this.pattern = Pattern.compile("\\d+(?:\\.\\d+)?");
+    }
+
     public int compare(Str s, Str t) {
         // I'd like to use Str#scan, but that gets cyclical, with both in development right now
         // (3.8.0)
 
-        Integer sIdx = 0;
-        Integer tIdx = 0;
+        return compare(s, t, 0, 0);
+    }
 
-        Integer sLen = s.length();
-        Integer tLen = t.length();
-
-        while (sIdx < sLen && tIdx < tLen) {
-            String sNum = matchNumber(s, sIdx);
-            String tNum = matchNumber(t, tIdx);
-
-            if (sNum == null) {
-                if (tNum == null) {
-                    Character sCh = s.charAt(sIdx);
-                    Character tCh = t.charAt(tIdx);
-                    int cmp = sCh.compareTo(tCh);
-                    if (cmp == 0) {
-                        ++sIdx;
-                        ++tIdx;
-                    }
-                    else {
-                        return cmp;
-                    }
-                }
-                else {
-                    return 1;
-                }
-            }
-            else if (tNum == null) {
-                return -1;
-            }
-            else {
-                Double sDbl = Double.valueOf(sNum);
-                Double tDbl = Double.valueOf(tNum);
-                int cmp = sDbl.compareTo(tDbl);
-                if (cmp == 0) {
-                    sIdx += sNum.length();
-                    tIdx += tNum.length();
-                }
-                else {
-                    return cmp;
-                }
-            }
-            
+    public int compare(Str s, Str t, Integer sIdx, Integer tIdx) {
+        int sLen = s.length();
+        int tLen = t.length();
+        
+        if (sIdx >= sLen || tIdx >= tLen) {
+            return Integer.signum(sLen - tLen);
         }
 
-        return sLen - tLen;
+        String sNum = matchNumber(s, sIdx);
+        String tNum = matchNumber(t, tIdx);
+
+        if (sNum == null) {
+            if (tNum == null) {
+                int cmp = compareChars(s, sIdx, t, tIdx);
+                return cmp == 0 ? compare(s, t, sIdx + 1, tIdx + 1) : cmp;
+            }
+            else {
+                return 1;
+            }
+        }
+        else if (tNum == null) {
+            return -1;
+        }
+        else {
+            int cmp = compareNumbers(sNum, tNum);
+            return cmp == 0 ? compare(s, t, sIdx + sNum.length(), tIdx + tNum.length()) : cmp;
+        }            
+    }    
+
+    public static int compareChars(Str s, int sIdx, Str t, int tIdx) {
+        Character sCh = s.charAt(sIdx);
+        Character tCh = t.charAt(tIdx);
+        return sCh.compareTo(tCh);
     }
 
-    public boolean equals(Object obj) {
-        return obj instanceof StrIgnoreCaseComparator;
-    }
-
-    public int hashCode() {
-        return super.hashCode();
+    public static int compareNumbers(String sNum, String tNum) {
+        Double sDbl = Double.valueOf(sNum);
+        Double tDbl = Double.valueOf(tNum);
+        return sDbl.compareTo(tDbl);
     }
 
     /**

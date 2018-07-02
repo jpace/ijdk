@@ -19,8 +19,7 @@ public class StrAlphanumericComparatorTest extends Parameterized {
     public void compare(Integer expected, String x, String y) {
         StrAlphanumericComparator comp = new StrAlphanumericComparator();
         Integer result = comp.compare(Str.of(x), Str.of(y));
-        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
-        assertThat(relResult, equalTo(expected));
+        assertThat(result, equalTo(expected));
     }
     
     private java.util.List<Object[]> parametersForCompare() {
@@ -35,6 +34,7 @@ public class StrAlphanumericComparatorTest extends Parameterized {
         
         addParams(pl, -1, "a",        "ab");
         addParams(pl,  1, "ab",       "a");
+        addParams(pl, -1, "a",        "abc");
 
         addParams(pl, -1, "8",        "9");
         addParams(pl,  1, "9",        "8");
@@ -55,6 +55,7 @@ public class StrAlphanumericComparatorTest extends Parameterized {
         addParams(pl,  1, "a3.2",     "a2.1");
         
         addParams(pl, -1, "a9.2",     "a10.1");
+        addParams(pl, -1, "a9.2",     "a10.1.0");
         
         addParams(pl,  0, "x1y",      "x1y");
         addParams(pl, -1, "x1y1",     "x1y2");

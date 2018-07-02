@@ -219,5 +219,50 @@ public class StringsTest extends StringTest {
                           params("abcd",    Arrays.asList("a", "b", "c", "d"), ""),
                           params("",        new ArrayList<String>(),           ","),
                           params("a,b,c,d", Arrays.asList("a", "b", "c", "d"), ","));
+    }
+    
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void compareChars(int expected, String s, String t, int idx) {
+        int result = Strings.compareChars(s, t, idx);
+        assertEqual(expected, result, message("s", s, "t", t, "idx", idx));
+    }
+
+    private List<Object[]> parametersForCompareChars() {
+        return paramsList(params(0,  "a",  "a",  0), 
+                          params(-1, "a",  "b",  0), 
+                          params(-1, "ab", "ac", 1));
+    }    
+    
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void matchInteger(Integer expected, String str, int idx) {
+        Integer result = Strings.matchInteger(str, idx);
+        assertEqual(expected, result, message("str", str, "idx", idx));
+    }
+
+    private List<Object[]> parametersForMatchInteger() {
+        return paramsList(params(null,   "a",    0), 
+                          params(null,   "a",    0), 
+                          params(null,   "1",    1), 
+                          params(null,   "a1",   0), 
+                          params("1",    "a1",   1), 
+                          params("1",    "1",    0), 
+                          params("12",   "12",   0), 
+                          params("2",    "12",   1), 
+                          params("1",    "1.",   0));
+    }    
+    
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void matchDouble(Double expected, String str, int idx) {
+        Double result = Strings.matchDouble(str, idx);
+        assertEqual(expected, result, message("str", str, "idx", idx));
+    }
+
+    private List<Object[]> parametersForMatchDouble() {
+        return paramsList(params(null,   "a",    0), 
+                          params(null,   "a",    0), 
+                          params(null,   "1",    1), 
+                          params(null,   "a1",   0), 
+                          params("1.2",  "1.2",  0), 
+                          params("11.2", "11.2", 0));
     }    
 }

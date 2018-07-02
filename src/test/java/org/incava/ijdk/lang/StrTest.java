@@ -442,16 +442,16 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForCompareToAlphanumeric() {
-        return paramsList(params(0,  "1",   "1"),
-                          params(0,  "a",   "a"),
-                          params(-1, "2",   "3"),
-                          params(1,  "3",   "2"),
-                          params(-1, "9",   "12"),
-                          params(1,  "12",  "9"),
-                          params(-1, "a2",  "a3"),
-                          params(1, "a1",  "a"),
-                          params(-1,  "a",   "a1"),
-                          params(-1, "a9",  "a12"));
+        return paramsList(params(0,  "1",  "1"),  
+                          params(0,  "a",  "a"),  
+                          params(-1, "2",  "3"),  
+                          params(1,  "3",  "2"),  
+                          params(-1, "9",  "12"), 
+                          params(1,  "12", "9"),  
+                          params(-1, "a2", "a3"), 
+                          params(1,  "a1", "a"),  
+                          params(-1, "a",  "a1"), 
+                          params(-1, "a9", "a12"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
