@@ -4,9 +4,6 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import org.incava.ijdk.util.EmptyIterable;
-import org.incava.ijdk.util.EnumerationIterable;
-import org.incava.ijdk.util.NonNullIterable;
 
 /**
  * Creates various types of Iterators, all of which are null safe (they can accept a null input).
@@ -112,4 +109,44 @@ public class Iterate {
     public static <T> ItIterable<T> each(Iterable<T> elements) {
         return new ItIterable<T>(elements);
     }
+
+    /**
+     * An iterator that has a value (<code>it.value()</code>) and an index
+     * (<code>it.key()</code>).
+     *
+     * <pre>
+     *     for (KeyValue&lt;Integer, String&gt; it : Iterate.eachWithIndex(array)) {
+     *         System.out.println("element #" + it.key() + ": " + it.value());
+     *     }
+     * </pre>
+     *
+     * @param ary the array to iterate over; can be null
+     * @param <T> the type of elements
+     * @return an iterator for the array
+     * @see #over
+     * @see org.incava.ijdk.lang.KeyValue
+     */
+    public static <T> IndexIterable<T> eachWithIndex(T[] ary) {
+        return new IndexIterable<T>(ary == null ? null : Arrays.asList(ary));
+    }    
+
+    /**
+     * An iterator that has a value (<code>it.value()</code>) and an index
+     * (<code>it.index()</code>).
+     *
+     * <pre>
+     *     for (It&lt;String&gt; it : Iterate.each(list)) {
+     *         System.out.println("element #" + it.index() + ": " + it.value());
+     *     }
+     * </pre>
+     *
+     * @param elements the elements to iterate over; can be null
+     * @param <T> the type of elements
+     * @return an iterator for the elements
+     * @see #over
+     * @see org.incava.ijdk.collect.It
+     */
+    public static <T> IndexIterable<T> eachWithIndex(Iterable<T> elements) {
+        return new IndexIterable<T>(elements);
+    }    
 }

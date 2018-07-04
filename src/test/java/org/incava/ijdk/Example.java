@@ -5,7 +5,9 @@ import java.util.*;
 import java.util.Arrays;
 import org.incava.ijdk.io.*;
 import org.incava.ijdk.lang.*;
+import org.incava.ijdk.collect.*;
 import org.incava.ijdk.util.*;
+
 import static org.incava.ijdk.util.IUtil.*;
 
 public class Example {

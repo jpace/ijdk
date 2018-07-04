@@ -1,4 +1,4 @@
-package org.incava.ijdk.util;
+package org.incava.ijdk.collect;
 
 import java.util.Enumeration;
 import java.util.Iterator;
