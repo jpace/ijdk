@@ -47,4 +47,13 @@ public class Pair<A, B> extends KeyValue<A, B> {
     public B second() {
         return value();
     }
+
+    /**
+     * Returns this key/value pair as a string, in the form "#{first} , #{second}".
+     *
+     * @return this object as a string
+     */
+    public String toString() {
+        return "(" + toString(", ") + ")";
+    }
 }
