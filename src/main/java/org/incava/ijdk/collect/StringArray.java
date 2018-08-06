@@ -1,6 +1,7 @@
 package org.incava.ijdk.collect;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -34,8 +35,7 @@ public class StringArray extends BaseArray<String, StringArray> {
      */
     public static StringArray from(File file) {
         try {
-            List<String> lines = Files.readAllLines(file.toPath());
-            return new StringArray(lines);
+            return from(new FileInputStream(file));
         }
         catch (IOException ioe) {
             throw new RuntimeException(ioe);
