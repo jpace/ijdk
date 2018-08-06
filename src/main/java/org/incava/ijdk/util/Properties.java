@@ -1,7 +1,5 @@
 package org.incava.ijdk.util;
 
-import static org.incava.ijdk.util.IUtil.isNull;
-
 public class Properties {
     /**
      * Returns the boolean value of the property, or null if it does not exist.
@@ -11,7 +9,7 @@ public class Properties {
      */
     public static Boolean getBoolean(String name) {
         String val = System.getProperty(name);
-        return isNull(val) ? null : Boolean.valueOf(val);
+        return val == null ? null : Boolean.valueOf(val);
     }
 
     /**
@@ -22,6 +20,6 @@ public class Properties {
      */
     public static Integer getInteger(String name) {
         String val = System.getProperty(name);
-        return isNull(val) ? null : Integer.valueOf(val);
+        return val == null ? null : Integer.valueOf(val);
     }
 }
