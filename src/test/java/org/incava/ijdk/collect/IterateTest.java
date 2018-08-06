@@ -64,48 +64,6 @@ public class IterateTest extends Parameterized {
     }
 
     @Test
-    public void eachList() {
-        List<String> list = Arrays.asList(new String[] { "a", "b", "c" });
-        int index = 0;
-        for (It<String> it : Iterate.each(list)) {
-            assertThat(it.index(), equalTo(index));
-            assertThat(it.value(), equalTo(list.get(index)));
-            ++index;
-        }
-    }    
-
-    @Test
-    public void eachListNull() {
-        List<String> list = null;
-        int index = 0;
-        for (It<String> it : Iterate.each(list)) {
-            ++index;
-        }
-        assertThat(index, equalTo(0));
-    }
-    
-    @Test
-    public void eachArray() {
-        String[] ary = new String[] { "a", "b", "c" };
-        int index = 0;
-        for (It<String> it : Iterate.each(ary)) {
-            assertThat(it.index(), equalTo(index));
-            assertThat(it.value(), equalTo(ary[index]));
-            ++index;
-        }
-    }    
-    
-    @Test
-    public void eachArrayNull() {
-        String[] ary = null;
-        int index = 0;
-        for (It<String> it : Iterate.each(ary)) {
-            ++index;
-        }
-        assertThat(index, equalTo(0));
-    }
-
-    @Test
     public void overNonNullIterableNull() {
         for (Object obj : Iterate.overNonNull(null)) {
             throw new RuntimeException("should not iterate over a null iterable");
