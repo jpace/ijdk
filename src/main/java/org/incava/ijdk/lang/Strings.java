@@ -83,20 +83,11 @@ public class Strings {
     }
 
     public static String repeat(String str, int num) {
-        if (str == null) {
-            return null;
-        }
-        else {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < num; ++i) {
-                sb.append(str);
-            }
-            return sb.toString();
-        }
+        return repeat(new StringBuilder(), str, num);
     }
 
     public static String repeat(Character ch, int num) {
-        return repeat(ch == null ? null : String.valueOf(ch), num);
+        return ch == null ? null : repeat(String.valueOf(ch), num);
     }
 
     public static String repeat(char ch, int num) {
@@ -242,6 +233,10 @@ public class Strings {
         return null;
     }
 
+    /**
+     * Returns the character at <code>idx</code> as a character, if the character exists and is a
+     * digit. Returns null otherwise.
+     */
     public static Character matchDigit(String str, int idx) {
         if (idx >= str.length()) {
             return null;
@@ -252,6 +247,10 @@ public class Strings {
         }
     }
 
+    /**
+     * Returns the character at <code>idx</code> as a character, if the character exists and is
+     * equal to <code>match</code>. Returns null otherwise.
+     */
     public static Character matchChar(String str, int idx, char match) {
         if (idx >= str.length()) {
             return null;
@@ -262,6 +261,10 @@ public class Strings {
         }
     }
 
+    /**
+     * Returns the characters starting at <code>idx</code> as a character, if the character exists and is
+     * equal to <code>match</code>. Returns null otherwise.
+     */
     public static String matchDigits(String str, int idx) {
         Character ch = matchDigit(str, idx);
         if (ch == null) {
@@ -276,5 +279,17 @@ public class Strings {
         }
 
         return sb.toString();
-    }    
+    }
+
+    public static String repeat(StringBuilder sb, String str, int num) {
+        if (str == null) {
+            return null;
+        }
+        else {
+            for (int i = 0; i < num; ++i) {
+                sb.append(str);
+            }
+            return sb.toString();
+        }
+    }
 }

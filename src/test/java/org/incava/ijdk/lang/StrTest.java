@@ -55,6 +55,10 @@ public class StrTest extends StringTest {
         return new ArrayList<>(Arrays.asList(strs));
     }
 
+    private List<Object> list(Object ... ary) {
+        return new ArrayList<>(Arrays.asList(ary));
+    }
+
     public List<Object[]> parametersForSplitToListStringDelim() {
         return paramsList(params(null,                       null,           ";", -1),
                           params(list("ab;cd;e"),            "ab;cd;e",      ";",  1),
@@ -592,10 +596,10 @@ public class StrTest extends StringTest {
     
     private List<Object[]> parametersForScan() {
         List<Object[]> pl = paramsList();
-        pl.add(params(Arrays.asList(new Object[] { list("a") }),              "ab",    "a"));
-        pl.add(params(Arrays.asList(new Object[] { list("a"), list("a") }),   "aba",   "a"));
-        pl.add(params(Arrays.asList(new Object[] { list("ab", "b") }),        "abaca", "a(b)"));
-        pl.add(params(Arrays.asList(new Object[] { list("abac", "b", "c") }), "abaca", "a(b).(.)"));
+        pl.add(params(list(list("a")),              "ab",    "a"));
+        pl.add(params(list(list("a"), list("a")),   "aba",   "a"));
+        pl.add(params(list(list("ab", "b")),        "abaca", "a(b)"));
+        pl.add(params(list(list("abac", "b", "c")), "abaca", "a(b).(.)"));
         return pl;
     }
 
@@ -678,6 +682,18 @@ public class StrTest extends StringTest {
                           params("a",  "a\r"),   
                           params("a",  "a\r\n"), 
                           params("a",  "\r\na"));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void escape(String expected, String str) {
+        Str result = new Str(str).escape();
+        assertThat(result, equalTo(expected));
+    }
+
+    private java.util.List<Object[]> parametersForEscape() {
+        return paramsList(params("",   ""),
+                          params("\\ ",   " "),
+                          params("a\\ b\\ c",  "a b c"));
     }
     
     @Test

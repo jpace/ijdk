@@ -1031,6 +1031,13 @@ public class Str extends Obj<String> implements Comparing<Str> {
         return Str.of(get(start, end));
     }
 
+    /**
+     * Returns a copy of the string with special characters, including spaces, escaped.
+     */
+    public Str escape() {
+        return Str.of(str().replaceAll(" ", "\\\\ "));
+    }
+
     private boolean isWhitespace(int idx) {
         Character ch = get(idx);
         return ch != null && Character.isWhitespace(ch);
