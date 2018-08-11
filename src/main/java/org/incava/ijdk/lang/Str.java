@@ -974,8 +974,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * match. Each element in the returned list is a list, in which the first element is the entire
      * match, and the other elements are the capturing groups.
      *
-     * Unlike elsewhere in the JDK, the pattern (regular expression) here is not anchored, so "a*b"
-     * will match "def aaaab ghi".
+     * Matching Ruby and not like elsewhere in the JDK, the pattern (regular expression) here is not
+     * anchored, so "a*b" will match "def aaaab ghi".
      *
      * <pre>
      * Str str = Str.of("abaca");
@@ -1042,4 +1042,27 @@ public class Str extends Obj<String> implements Comparing<Str> {
         Character ch = get(idx);
         return ch != null && Character.isWhitespace(ch);
     }
+
+    /**
+     * Returns a copy of this string concatenated with the other.
+     */
+    public Str plus(Str other) {
+        return Str.of(str() + other.str());
+    }
+
+    /**
+     * Returns the index at which the pattern matches. Returns null if the pattern does not match.
+     */
+    public Integer indexOf(Pattern pattern) {
+        return indexOf(pattern, 0);
+    }   
+
+    /**
+     * Returns the index at which the pattern matches, starting at the offset. Returns null if the
+     * pattern does not match.
+     */
+    public Integer indexOf(Pattern pattern, Integer offset) {
+        Matcher m = pattern.matcher(str());
+        return m.find(offset) ? m.start() : null;
+    }   
 }

@@ -695,6 +695,52 @@ public class StrTest extends StringTest {
                           params("\\ ",   " "),
                           params("a\\ b\\ c",  "a b c"));
     }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void plus(String expected, String str, String other) {
+        Str result = new Str(str).plus(Str.of(other));
+        assertThat(Str.of(result), equalTo(expected));
+    }
+
+    private java.util.List<Object[]> parametersForPlus() {
+        return paramsList(params("",  "",  ""),
+                          params("ab", "a", "b"),
+                          params("b", "", "b"));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void indexOfPattern(Integer expected, String str, String pat) {
+        Pattern pattern = Pattern.compile(pat);
+        Integer result = new Str(str).indexOf(pattern);
+        assertThat(result, equalTo(expected));
+    }
+
+    private java.util.List<Object[]> parametersForIndexOfPattern() {
+        return paramsList(params(0,  "",  ""),
+                          params(null, "a", "b"),
+                          params(0, "ab", "a."),
+                          params(0, "ab", "a"),
+                          params(1, "bab", "ab"),
+                          params(0, "aba", "a"));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void indexOfPatternWithOffset(Integer expected, String str, String pat, Integer offset) {
+        Pattern pattern = Pattern.compile(pat);
+        Integer result = new Str(str).indexOf(pattern, offset);
+        assertThat(result, equalTo(expected));
+    }
+
+    private java.util.List<Object[]> parametersForIndexOfPatternWithOffset() {
+        return paramsList(params(0,    "",    "",   0), 
+                          params(null, "a",   "b",  0), 
+                          params(0,    "ab",  "a",  0), 
+                          params(null, "ab",  "a",  1), 
+                          params(1,    "bab", "ab", 0), 
+                          params(1,    "bab", "ab", 1), 
+                          params(0,    "aba", "a",  0), 
+                          params(2,    "aba", "a",  1));
+    }
     
     @Test
     public void demo() {
