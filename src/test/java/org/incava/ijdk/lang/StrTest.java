@@ -685,6 +685,41 @@ public class StrTest extends StringTest {
     }
 
     @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void trimLeft(String expected, String str) {
+        Str result = new Str(str).trimLeft();
+        assertThat(result, equalTo(Str.of(expected)));
+    }
+
+    private java.util.List<Object[]> parametersForTrimLeft() {
+        return paramsList(params("",   ""),
+                          params("",   " "),
+                          params("a",  "a"),     
+                          params("a",  " a"),
+                          params("a",  "  a"),
+                          params("a ",  "a "),    
+                          params("a ",  " a "),
+                          params("a\t",  "\ta\t"));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void trimRight(String expected, String str) {
+        Str result = new Str(str).trimRight();
+        assertThat(result, equalTo(Str.of(expected)));
+    }
+
+    private java.util.List<Object[]> parametersForTrimRight() {
+        return paramsList(params("",   ""),
+                          params("",   " "),
+                          params("a",  "a"),     
+                          params(" a",  " a"),
+                          params("  a",  "  a"),
+                          params("a",  "a "),    
+                          params("a",  "a  "),    
+                          params(" a",  " a "),
+                          params("\ta",  "\ta\t"));
+    }
+    
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
     public void escape(String expected, String str) {
         Str result = new Str(str).escape();
         assertThat(result, equalTo(expected));

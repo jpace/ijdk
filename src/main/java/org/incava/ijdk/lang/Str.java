@@ -708,7 +708,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      *
      * @return the length of the string
      */
-    public int length() {
+    public Integer length() {
         return isNull() ? 0 : str().length();
     }
 
@@ -1019,20 +1019,47 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the trimmed string
      */
     public Str trim() {
-        int start = 0;
-        int length = str().length();
-        while (start < length && isWhitespace(start)) {
-            ++start;
-        }
-        int end = length - 1;
-        while (end > start && isWhitespace(end)) {
-            --end;
-        }
-        return Str.of(get(start, end));
+        return trim(true, true);
     }
 
     /**
-     * Returns a copy of the string with special characters, including spaces, escaped.
+     * Returns a copy of this string, without leading whitespace.
+     *
+     * @return the trimmed string
+     */
+    public Str trimLeft() {
+        return trim(true, false);
+    }
+
+    /**
+     * Returns a copy of this string, without trailing whitespace.
+     *
+     * @return the trimmed string
+     */
+    public Str trimRight() {
+        return trim(false, true);
+    }
+
+    /**
+     * Returns a copy of this string, optionally trimming leading and trailing whitespace.
+     *
+     * @return the trimmed string
+     */
+    private Str trim(boolean trimLeft, boolean trimRight) {
+        int start = 0;
+        int length = str().length();
+        while (trimLeft && start < length && isWhitespace(start)) {
+            ++start;
+        }
+        int end = length - 1;
+        while (trimRight && end >= start && isWhitespace(end)) {
+            --end;
+        }
+        return Str.of(end < 0 ? "" : get(start, end));
+    }    
+
+    /**
+     * Returns a copy of the string with spaces escaped.
      */
     public Str escape() {
         return Str.of(str().replaceAll(" ", "\\\\ "));
@@ -1064,5 +1091,5 @@ public class Str extends Obj<String> implements Comparing<Str> {
     public Integer indexOf(Pattern pattern, Integer offset) {
         Matcher m = pattern.matcher(str());
         return m.find(offset) ? m.start() : null;
-    }   
+    }
 }
