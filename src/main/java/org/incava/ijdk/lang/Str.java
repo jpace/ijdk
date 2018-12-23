@@ -166,7 +166,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
     
     /**
      * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
-     * is null. Unlike <code>java.lang.String#split</code>, the delimiter is only a string, not a
+     * is null. Unlike <code>java.lang.String#split</code>, the delimiter is a literal string, not a
      * regular expression.
      *
      * @param delim the delimiter to split at
@@ -174,16 +174,67 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the array of split strings
      */
     public List<String> split(String delim, Integer max) {
+        String[] ary = splitToArray(delim, max);
+        return ary == null ? null : Arrays.asList(ary);
+    }
+
+    public List<String> splitToList(String delim, Integer max) {
         if (isNull()) {
             return null;
         }
-        Pattern pat = Pattern.compile(delim, Pattern.LITERAL);
-        if (max == null) {
-            max = 0;
+        else {
+            Pattern pat = Pattern.compile(delim, Pattern.LITERAL);
+            if (max == null) {
+                max = 0;
+            }
+            String[] ary = pat.split(str(), max);
+            return new ArrayList<>(Arrays.asList(ary));
         }
-        String[] ary = pat.split(str(), max);
-        return new ArrayList<>(Arrays.asList(ary));
     }
+
+    public String[] splitToArray(String delim, Integer max) {
+        String string = str();
+        
+        if (string == null) {
+            return null;
+        }
+        else if (max != null && max == 1) {
+            return new String[] { string };
+        }
+        else {
+            if (max != null) {
+                --max;              // adjust count between 0 and 1
+            }
+
+            List<String> splitList = new ArrayList<String>();
+
+            int nFound = 0;
+            int strlen = string.length();
+            int end = 0;
+            int beg = 0;
+            int delimlen = delim.length();
+
+            for (int idx = 0; idx < strlen; ++idx) {
+                Str strg = new Str(string.substring(idx));
+                if (strg.left(delimlen).equals(delim)) {
+                    String substr = string.substring(beg, end);
+                    splitList.add(substr);
+                    beg = end + delimlen;
+                    if (max != null && max > 0 && ++nFound >= max) {
+                        break;
+                    }
+                }
+                ++end;
+            }
+
+            if (strlen > beg) {
+                String t = strlen == beg ? "" : string.substring(beg, strlen);
+                splitList.add(t);
+            }
+            
+            return splitList.toArray(new String[splitList.size()]);
+        }
+    }    
 
     /**
      * Converts the string into a list, delimited by whitespace and commas.

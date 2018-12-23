@@ -137,7 +137,7 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
      * null is returned.</p>
      *
      * @param index the index into this array
-     * @return the element at the given index, or null if invalid
+     * @return the element at the given index, or null if out of range
      */
     public T get(int index) {
         Integer idx = getIndex(index);
@@ -155,7 +155,7 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
      *
      * @param fromIndex the beginning index into this array, inclusive
      * @param toIndex the ending index into this array, inclusive
-     * @return the element at the given index, or null if invalid
+     * @return the element at the given index, or null if out of range
      */
     public C get(int fromIndex, int toIndex) {
         Integer fromIdx = getIndex(fromIndex);

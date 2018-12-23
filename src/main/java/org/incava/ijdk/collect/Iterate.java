@@ -26,7 +26,6 @@ public class Iterate {
      * @param ary the array to iterate over; can be null
      * @param <T> the type of elements
      * @return an iterator for the array
-     * @see #each
      */
     public static <T> Iterable<T> over(T[] ary) {
         return ary == null ? new EmptyIterable<T>() : Array.of(ary);
@@ -39,7 +38,6 @@ public class Iterate {
      * @param elements the elements to iterate over; can be null
      * @param <T> the type of elements
      * @return an iterator for the collection
-     * @see #each
      */
     public static <T> Iterable<T> over(Iterable<T> elements) {
         return elements == null ? new EmptyIterable<T>() : elements;
@@ -64,7 +62,6 @@ public class Iterate {
      * @param elements the elements to iterate over; can be null
      * @param <T> the type of elements
      * @return an iterator for the collection
-     * @see #each
      */
     public static <T> Iterable<T> overNonNull(Iterable<T> elements) {
         return elements == null ? new EmptyIterable<T>() : new NonNullIterable<T>(elements);

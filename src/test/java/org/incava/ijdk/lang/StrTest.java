@@ -47,8 +47,18 @@ public class StrTest extends StringTest {
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void splitToListStringDelim(List<String> expected, String str, String delim, Integer max) {
-        List<String> result = new Str(str).split(delim, max);
+        List<String> result = new Str(str).splitToList(delim, max);
+        if (expected != null) {
+            assertThat(result.size(), equalTo(expected.size()));
+        }
         assertThat(result, equalTo(expected));
+    }
+
+    @Ignore @Test @Parameters(method="parametersForSplitToListStringDelim") @TestCaseName("{method} {index} {params}")
+    public void splitToArrayStringDelim(List<String> expected, String str, String delim, Integer max) {
+        String[] result = new Str(str).splitToArray(delim, max);
+        List<String> resList = result == null ? null : Arrays.asList(result);
+        assertThat(resList, equalTo(expected));
     }
 
     private List<String> list(String ... strs) {
@@ -69,15 +79,19 @@ public class StrTest extends StringTest {
                           params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  0),
                           params(list("ab", "cd", "", "e"),  "ab;cd;;e",     ";",  null),
                           params(list("", "ab", "cd"),       ";ab;cd",       ";",  null),
-                          // params(list("ab", "cd", ""),       "ab;cd;",       ";",  null),
                           params(list("ab", "cd"),       "ab;cd;",       ";",  null),
                           params(list("ab", "cd", "ef"),     "ab;cd;ef",     ";",  null),
                           params(list("ab", "cd", "ef"),     "ab--cd--ef",   "--", null),
                           params(list("ab", "", "cd", "ef"), "ab----cd--ef", "--", null),
                           params(list("", "ab", "cd", "ef"), "--ab--cd--ef", "--", null),
                           params(list("-ab", "cd", "ef"),    "-ab--cd--ef",  "--", null),
-                          params(list(""),                   "",             ";",  null),
-                          params(list("ab", "cd", "e"),      "ab.cd.e",      ".",  null));
+                          params(list(""),                     "",             ";",  null),
+                          params(list("ab", "cd", "e"),      "ab.cd.e",      ".",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e-",      "-",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e--", "-",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e---", "-",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e----", "-",  null)
+                          );
     }    
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
