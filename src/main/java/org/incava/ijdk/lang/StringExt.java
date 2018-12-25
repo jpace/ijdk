@@ -32,7 +32,7 @@ public class StringExt {
      * <code>str</code> is null.
      */
     public static String[] split(String str, char delim) {
-        return new Str(str).split(String.valueOf(delim), -1).toArray(new String[0]);
+        return new Str(str).split(String.valueOf(delim), null).toArray(new String[0]);
     }
 
     /**
@@ -40,7 +40,7 @@ public class StringExt {
      * is null.
      */
     public static String[] split(String str, String delim) {
-        return new Str(str).split(delim, -1).toArray(new String[0]);
+        return new Str(str).split(delim, null).toArray(new String[0]);
     }
 
     /**
@@ -53,13 +53,7 @@ public class StringExt {
      * @see org.incava.ijdk.lang.Str#toList
      */
     public static List<String> toList(String str) {
-        Str strg = new Str(str);
-        if (strg.isNull()) {
-            return null;
-        }
-        else {
-            return strg.unquote().toList();
-        }
+        return str == null ? null : new Str(str).unquote().toList();
     }
 
     /**
@@ -108,23 +102,14 @@ public class StringExt {
      * Returns the string, repeated <code>num</code> times.
      */
     public static String repeat(String str, int num) {
-        if (str == null) {
-            return null;
-        }
-        else {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < num; ++i) {
-                sb.append(str);
-            }
-            return sb.toString();
-        }
+        return str == null ? null : new Str(str, num).str();
     }
 
     /**
      * Returns the character, repeated <code>num</code> times.
      */
     public static String repeat(Character ch, int num) {
-        return repeat(ch == null ? null : String.valueOf(ch), num);
+        return ch == null ? null : new Str(ch, num).str();
     }
 
     /**

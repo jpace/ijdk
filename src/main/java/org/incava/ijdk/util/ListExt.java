@@ -33,7 +33,7 @@ public class ListExt extends CollectionExt {
      * the last element in the list. Returns null if the resulting index is out
      * of range.
      *
-     * @see Index#getIndex
+     * @see Indexable#get
      */
     public static Integer getIndex(Integer size, Integer index) {
         return new Indexable(size).get(index);

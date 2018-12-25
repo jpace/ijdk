@@ -44,23 +44,16 @@ public class StrTest extends StringTest {
     public String fromStr(Str str) {
         return str == null ? null : str.str();
     }
-    
+
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void splitToListStringDelim(List<String> expected, String str, String delim, Integer max) {
-        List<String> result = new Str(str).splitToList(delim, max);
+    public void split(List<String> expected, String str, String delim, Integer max) {
+        List<String> result = new Str(str).split(delim, max);
         if (expected != null) {
             assertThat(result.size(), equalTo(expected.size()));
         }
         assertThat(result, equalTo(expected));
     }
-
-    @Ignore @Test @Parameters(method="parametersForSplitToListStringDelim") @TestCaseName("{method} {index} {params}")
-    public void splitToArrayStringDelim(List<String> expected, String str, String delim, Integer max) {
-        String[] result = new Str(str).splitToArray(delim, max);
-        List<String> resList = result == null ? null : Arrays.asList(result);
-        assertThat(resList, equalTo(expected));
-    }
-
+    
     private List<String> list(String ... strs) {
         return new ArrayList<>(Arrays.asList(strs));
     }
@@ -69,7 +62,33 @@ public class StrTest extends StringTest {
         return new ArrayList<>(Arrays.asList(ary));
     }
 
-    public List<Object[]> parametersForSplitToListStringDelim() {
+    public List<Object[]> parametersForSplit() {
+        return paramsList(params(null,                       null,           ";", -1),
+                          params(list("ab;cd;e"),            "ab;cd;e",      ";",  1),
+                          params(list("ab", "cd;ef"),        "ab;cd;ef",     ";",  2),
+                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  3),
+                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  4),
+                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  null),
+                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  0),
+                          params(list("ab", "cd", "", "e"),  "ab;cd;;e",     ";",  null),
+                          params(list("", "ab", "cd"),       ";ab;cd",       ";",  null),
+                          params(list("ab", "cd"),       "ab;cd;",       ";",  null),
+                          params(list("ab", "cd", "ef"),     "ab;cd;ef",     ";",  null),
+                          params(list("ab", "cd", "ef"),     "ab--cd--ef",   "--", null),
+                          params(list("ab", "", "cd", "ef"), "ab----cd--ef", "--", null),
+                          params(list("", "ab", "cd", "ef"), "--ab--cd--ef", "--", null),
+                          params(list("-ab", "cd", "ef"),    "-ab--cd--ef",  "--", null),
+                          params(list(""),                     "",             ";",  null),
+                          params(list("ab", "cd", "e"),      "ab.cd.e",      ".",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e-",      "-",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e--", "-",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e---", "-",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e----", "-",  null),
+                          params(list("ab", "cd", "e"),      "ab\ncd\ne\n\n", "\n",  null)
+                          );
+    }    
+
+    public List<Object[]> parametersForSplitToArray() {
         return paramsList(params(null,                       null,           ";", -1),
                           params(list("ab;cd;e"),            "ab;cd;e",      ";",  1),
                           params(list("ab", "cd;ef"),        "ab;cd;ef",     ";",  2),

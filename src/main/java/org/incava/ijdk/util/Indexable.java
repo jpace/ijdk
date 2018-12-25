@@ -1,8 +1,8 @@
 package org.incava.ijdk.util;
 
 /**
- * Wraps index calculations of a sequence similar to Ruby, where index <code>-2</code> means the
- * next-to-last element in a list.
+ * Wraps index calculations of a sequence similar to Ruby, where index <code>0</code> is the first
+ * element, and <code>-2</code> is the next-to-last element in a list.
  */
 public class Indexable {
     private Integer size;

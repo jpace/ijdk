@@ -174,11 +174,6 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the array of split strings
      */
     public List<String> split(String delim, Integer max) {
-        String[] ary = splitToArray(delim, max);
-        return ary == null ? null : Arrays.asList(ary);
-    }
-
-    public List<String> splitToList(String delim, Integer max) {
         if (isNull()) {
             return null;
         }
@@ -191,50 +186,6 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return new ArrayList<>(Arrays.asList(ary));
         }
     }
-
-    public String[] splitToArray(String delim, Integer max) {
-        String string = str();
-        
-        if (string == null) {
-            return null;
-        }
-        else if (max != null && max == 1) {
-            return new String[] { string };
-        }
-        else {
-            if (max != null) {
-                --max;              // adjust count between 0 and 1
-            }
-
-            List<String> splitList = new ArrayList<String>();
-
-            int nFound = 0;
-            int strlen = string.length();
-            int end = 0;
-            int beg = 0;
-            int delimlen = delim.length();
-
-            for (int idx = 0; idx < strlen; ++idx) {
-                Str strg = new Str(string.substring(idx));
-                if (strg.left(delimlen).equals(delim)) {
-                    String substr = string.substring(beg, end);
-                    splitList.add(substr);
-                    beg = end + delimlen;
-                    if (max != null && max > 0 && ++nFound >= max) {
-                        break;
-                    }
-                }
-                ++end;
-            }
-
-            if (strlen > beg) {
-                String t = strlen == beg ? "" : string.substring(beg, strlen);
-                splitList.add(t);
-            }
-            
-            return splitList.toArray(new String[splitList.size()]);
-        }
-    }    
 
     /**
      * Converts the string into a list, delimited by whitespace and commas.
@@ -465,6 +416,11 @@ public class Str extends Obj<String> implements Comparing<Str> {
         return idx == null ? null : substring(idx + 1, null);
     }
 
+    public Str substringAfter(Character ch, Str str) {
+        Integer idx = indexOf(ch);
+        return idx == null ? null : Str.of(substring(idx + 1, null));
+    }
+
     /**
      * Returns the substring before the <code>ch</code> character. If the string does not contain
      * the given character, , or if <code>str</code> or <code>ch</code> is null, then null is
@@ -508,7 +464,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the relative index
      */
     protected Integer getIndex(Integer index) {
-        return isNull() || str().length() == 0 ? null : new Indexable(str().length()).get(index);
+        int len = isNull() ? 0 : str().length();
+        return new Indexable(len).get(index);
     }
 
     /**
@@ -633,8 +590,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Removes multiple end-of-line characters, either \\n or \\r. Returns null if the wrapped
-     * string is null.
+     * Removes all multiple end-of-line characters from the end of the string, either \\n or \\r.
+     * Returns null if the wrapped string is null.
      *
      * @return the string without all end-of-line characters
      * @see #chomp
@@ -700,12 +657,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the comparison value
      */
     public Boolean eqi(String other) {
-        if (str() == null || other == null) {
-            return str() == null && other == null;
-        }
-        else {
-            return str().equalsIgnoreCase(other);
-        }
+        String s = str();
+        return s == null || other == null ? (s == null && other == null) : s.equalsIgnoreCase(other);
     }
 
     /**
@@ -1020,13 +973,13 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns a list of matchers where the pattern was matched in the string. Essentially the
+     * Returns a list of matchers where the pattern was matched in the string. This is the
      * opposite of String#split, which returns the elements where the pattern does <em>not</em>
      * match. Each element in the returned list is a list, in which the first element is the entire
      * match, and the other elements are the capturing groups.
      *
-     * Matching Ruby and not like elsewhere in the JDK, the pattern (regular expression) here is not
-     * anchored, so "a*b" will match "def aaaab ghi".
+     * Consistent with Ruby and not like elsewhere in the JDK, the pattern (regular expression) here
+     * is not anchored, so "a*b" will match "def aaaab ghi".
      *
      * <pre>
      * Str str = Str.of("abaca");
