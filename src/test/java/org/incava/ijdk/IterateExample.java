@@ -2,21 +2,12 @@ package org.incava.ijdk;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import org.incava.ijdk.collect.Iterate;
 import org.incava.ijdk.collect.StringArray;
 import org.incava.ijdk.lang.KeyValue;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.incava.attest.Assertions.message;
-import static org.incava.attest.ContextMatcher.withContext;
-import static org.incava.attest.ExistsMatcher.exists;
 
 public class IterateExample {
     public void println(String name, Object val) {
