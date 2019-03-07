@@ -235,7 +235,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      *
      * Examples:
      * <pre>
-     *     pad("1234", '*', 8)  -&gt; "****1234"
+     *     pad("1234", '*', 8) -&gt; "****1234"
      *     pad("1234", '*', 3) -&gt; "1234"
      * </pre>
      * 
