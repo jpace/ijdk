@@ -717,6 +717,15 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
+     * Quotes the string, using double quotes. Returns null if the wrapped string is null.
+     *
+     * @return the string, quoted
+     */
+    public Str quote() {
+        return isNull() ? null : Str.of("\"" + str() + "\"");
+    }
+
+    /**
      * Unquotes the string, removing matching leading and trailing single or double quotes, if both
      * of either type wraps the string. Returns the wrapped string if neither case is true. Returns
      * null if the wrapped string is null.
@@ -739,15 +748,6 @@ public class Str extends Obj<String> implements Comparing<Str> {
             }
         }
     }    
-
-    /**
-     * Quotes the string, using double quotes. Returns null if the wrapped string is null.
-     *
-     * @return the string, quoted
-     */
-    public Str quote() {
-        return isNull() ? null : Str.of("\"" + str() + "\"");
-    }
 
     /**
      * Returns a negative number, zero, or a positive number, for when <code>this</code> is less
