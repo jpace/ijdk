@@ -256,5 +256,28 @@ public class StrExample {
 
         String y = new Str(s).substringAfter('d');
         println("y", y);
-    }    
+    }
+
+    @Test
+    public void startsWithChar() {
+        String s = "abcdef";
+
+        boolean x = s.length() >= 1 && s.charAt(0) == 'a';
+        println("x", x);
+
+        boolean y = new Str(s).startsWith('a');
+        println("y", y);
+    }
+
+    @Test
+    public void startsWithString() {
+        String s = "abcdef";
+
+        boolean x = s.length() >= 3 && s.substring(0, 3).equals("abc");
+        println("x", x);
+
+        boolean y = new Str(s).startsWith("abc");
+        println("y", y);
+    }
+
 }
