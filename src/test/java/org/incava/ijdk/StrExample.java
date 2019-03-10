@@ -185,7 +185,7 @@ public class StrExample {
         
         String s = "abcdef";
         int n = 4;
-        String x = n < s.length() ? s.substring(0, n) : "";
+        String x = s.substring(0, n);
         println("x", x);
 
         Str y = new Str(s).left(n);
@@ -198,7 +198,7 @@ public class StrExample {
         
         String s = "abcdef";
         int n = 4;
-        String x = n < s.length() ? s.substring(s.length() - n, s.length()) : "";
+        String x = s.substring(s.length() - n, s.length());
         println("x", x);
 
         Str y = new Str(s).right(n);
