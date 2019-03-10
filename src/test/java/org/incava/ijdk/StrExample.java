@@ -692,4 +692,38 @@ public class StrExample {
         int y = new Str(s).indexOf(t, 0, true);
         println("y", y);
     }    
+
+    @Test
+    public void trimLeft() {
+        println("trimLeft");
+        
+        String s = "   abc def   ";
+
+        int idx = 0;
+        while (idx < s.length() && Character.isWhitespace(s.charAt(idx))) {
+            ++idx;
+        }
+        String x = idx < s.length() ? s.substring(idx, s.length()) : "";
+        println("x", x);
+        
+        Str y = new Str(s).trimLeft();
+        println("y", y);
+    }    
+
+    @Test
+    public void trimRight() {
+        println("trimRight");
+        
+        String s = "   abc def   ";
+
+        int idx = s.length() - 1;
+        while (idx >= 0 && Character.isWhitespace(s.charAt(idx))) {
+            --idx;
+        }
+        String x = idx >= 0 ? s.substring(0, idx + 1) : "";
+        println("x", x);
+        
+        Str y = new Str(s).trimRight();
+        println("y", y);
+    }
 }
