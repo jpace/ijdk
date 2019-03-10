@@ -63,28 +63,28 @@ public class StrTest extends StringTest {
     }
 
     public List<Object[]> parametersForSplit() {
-        return paramsList(params(null,                       null,           ";", -1),
-                          params(list("ab;cd;e"),            "ab;cd;e",      ";",  1),
-                          params(list("ab", "cd;ef"),        "ab;cd;ef",     ";",  2),
-                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  3),
-                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  4),
-                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  null),
-                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  0),
-                          params(list("ab", "cd", "", "e"),  "ab;cd;;e",     ";",  null),
-                          params(list("", "ab", "cd"),       ";ab;cd",       ";",  null),
-                          params(list("ab", "cd"),       "ab;cd;",       ";",  null),
-                          params(list("ab", "cd", "ef"),     "ab;cd;ef",     ";",  null),
-                          params(list("ab", "cd", "ef"),     "ab--cd--ef",   "--", null),
-                          params(list("ab", "", "cd", "ef"), "ab----cd--ef", "--", null),
-                          params(list("", "ab", "cd", "ef"), "--ab--cd--ef", "--", null),
-                          params(list("-ab", "cd", "ef"),    "-ab--cd--ef",  "--", null),
-                          params(list(""),                     "",             ";",  null),
-                          params(list("ab", "cd", "e"),      "ab.cd.e",      ".",  null),
+        return paramsList(params(null,                       null,            ";", -1),
+                          params(list("ab;cd;e"),            "ab;cd;e",       ";",  1),
+                          params(list("ab", "cd;ef"),        "ab;cd;ef",      ";",  2),
+                          params(list("ab", "cd", "e"),      "ab;cd;e",       ";",  3),
+                          params(list("ab", "cd", "e"),      "ab;cd;e",       ";",  4),
+                          params(list("ab", "cd", "e"),      "ab;cd;e",       ";",  null),
+                          params(list("ab", "cd", "e"),      "ab;cd;e",       ";",  0),
+                          params(list("ab", "cd", "", "e"),  "ab;cd;;e",      ";",  null),
+                          params(list("", "ab", "cd"),       ";ab;cd",        ";",  null),
+                          params(list("ab", "cd"),           "ab;cd;",        ";",  null),
+                          params(list("ab", "cd", "ef"),     "ab;cd;ef",      ";",  null),
+                          params(list("ab", "cd", "ef"),     "ab--cd--ef",    "--", null),
+                          params(list("ab", "", "cd", "ef"), "ab----cd--ef",  "--", null),
+                          params(list("", "ab", "cd", "ef"), "--ab--cd--ef",  "--", null),
+                          params(list("-ab", "cd", "ef"),    "-ab--cd--ef",   "--", null),
+                          params(list(""),                   "",              ";",  null),
+                          params(list("ab", "cd", "e"),      "ab.cd.e",       ".",  null),
                           params(list("ab", "cd", "e"),      "ab-cd-e-",      "-",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e--", "-",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e---", "-",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e----", "-",  null),
-                          params(list("ab", "cd", "e"),      "ab\ncd\ne\n\n", "\n",  null)
+                          params(list("ab", "cd", "e"),      "ab-cd-e--",     "-",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e---",    "-",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e----",   "-",  null),
+                          params(list("ab", "cd", "e"),      "ab\ncd\ne\n\n", "\n", null)
                           );
     }    
 
@@ -98,18 +98,18 @@ public class StrTest extends StringTest {
                           params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  0),
                           params(list("ab", "cd", "", "e"),  "ab;cd;;e",     ";",  null),
                           params(list("", "ab", "cd"),       ";ab;cd",       ";",  null),
-                          params(list("ab", "cd"),       "ab;cd;",       ";",  null),
+                          params(list("ab", "cd"),           "ab;cd;",       ";",  null),
                           params(list("ab", "cd", "ef"),     "ab;cd;ef",     ";",  null),
                           params(list("ab", "cd", "ef"),     "ab--cd--ef",   "--", null),
                           params(list("ab", "", "cd", "ef"), "ab----cd--ef", "--", null),
                           params(list("", "ab", "cd", "ef"), "--ab--cd--ef", "--", null),
                           params(list("-ab", "cd", "ef"),    "-ab--cd--ef",  "--", null),
-                          params(list(""),                     "",             ";",  null),
+                          params(list(""),                   "",             ";",  null),
                           params(list("ab", "cd", "e"),      "ab.cd.e",      ".",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e-",      "-",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e--", "-",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e---", "-",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e----", "-",  null)
+                          params(list("ab", "cd", "e"),      "ab-cd-e-",     "-",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e--",    "-",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e---",   "-",  null),
+                          params(list("ab", "cd", "e"),      "ab-cd-e----",  "-",  null)
                           );
     }    
 

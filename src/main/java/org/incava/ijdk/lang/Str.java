@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.incava.ijdk.regexp.MatchData;
 import org.incava.ijdk.str.StrAlphanumericComparator;
 import org.incava.ijdk.str.StrComparator;
 import org.incava.ijdk.str.StrIgnoreCaseComparator;
@@ -235,7 +236,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      *
      * Examples:
      * <pre>
-     *     pad("1234", '*', 8)  -&gt; "****1234"
+     *     pad("1234", '*', 8) -&gt; "****1234"
      *     pad("1234", '*', 3) -&gt; "1234"
      * </pre>
      * 
@@ -717,6 +718,15 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
+     * Quotes the string, using double quotes. Returns null if the wrapped string is null.
+     *
+     * @return the string, quoted
+     */
+    public Str quote() {
+        return isNull() ? null : Str.of("\"" + str() + "\"");
+    }
+
+    /**
      * Unquotes the string, removing matching leading and trailing single or double quotes, if both
      * of either type wraps the string. Returns the wrapped string if neither case is true. Returns
      * null if the wrapped string is null.
@@ -739,15 +749,6 @@ public class Str extends Obj<String> implements Comparing<Str> {
             }
         }
     }    
-
-    /**
-     * Quotes the string, using double quotes. Returns null if the wrapped string is null.
-     *
-     * @return the string, quoted
-     */
-    public Str quote() {
-        return isNull() ? null : Str.of("\"" + str() + "\"");
-    }
 
     /**
      * Returns a negative number, zero, or a positive number, for when <code>this</code> is less
