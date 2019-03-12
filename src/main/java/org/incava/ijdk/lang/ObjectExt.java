@@ -9,6 +9,7 @@ import org.incava.ijdk.lang.Obj;
  * @see org.incava.ijdk.lang.Obj
  * @deprecated use Obj and Objects instead
  */
+@Deprecated
 public class ObjectExt {
     /**
      * Returns whether the objects are equal, including whether they are both null.

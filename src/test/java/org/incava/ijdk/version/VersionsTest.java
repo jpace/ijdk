@@ -62,7 +62,7 @@ public class VersionsTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void findLatest(Version expected, Versions versions) {
         Version result = versions.findLatest();
-        assertThat(expected, sameInstance(expected));
+        assertThat(result, sameInstance(expected));
     }
     
     private List<Object[]> parametersForFindLatest() {

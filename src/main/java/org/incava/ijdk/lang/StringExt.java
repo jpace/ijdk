@@ -9,6 +9,7 @@ import java.util.List;
  * objects of the Str class.
  *
  * @see org.incava.ijdk.lang.Str
+ * @see org.incava.ijdk.lang.Strings
  */
 public class StringExt {
     /**
@@ -384,6 +385,7 @@ public class StringExt {
      * the string is null.
      *
      * @param str the string
+     * @return the unquoted string
      */
     public static String unquote(String str) {
         return new Str(str).unquote().toString();
@@ -393,6 +395,7 @@ public class StringExt {
      * Quotes the string, using double quotes. Returns null if the string is null.
      *
      * @param str the string
+     * @return the quoted string
      */
     public static String quote(String str) {
         return new Str(str).quote().toString();

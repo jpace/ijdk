@@ -262,8 +262,8 @@ public class Strings {
     }
 
     /**
-     * Returns the characters starting at <code>idx</code> as a character, if the character exists and is
-     * equal to <code>match</code>. Returns null otherwise.
+     * Returns the characters starting at <code>idx</code>, if the characters at that point are
+     * digits. Returns null otherwise.
      */
     public static String matchDigits(String str, int idx) {
         Character ch = matchDigit(str, idx);

@@ -1,12 +1,6 @@
 package org.incava.ijdk.io;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -20,7 +14,7 @@ public class FileExt {
      * @see #readLines(File, EnumSet)
      */
     public static List<String> readLines(File file) {
-        return readLines(file, null);
+        return Files.readLines(file);
     }
 
     /**
@@ -34,12 +28,7 @@ public class FileExt {
      * @see ReaderExt#readLines
      */
     public static List<String> readLines(File file, EnumSet<ReadOptionType> options) throws IORuntimeException {
-        try {
-            return ReaderExt.readLines(new FileReader(file), options);
-        }
-        catch (FileNotFoundException fnfe) {
-            return IOExceptionHandler.handleReadException(fnfe, options);
-        }
+        return Files.readLines(file, options);
     }
 
     /**
@@ -49,7 +38,7 @@ public class FileExt {
      * @see #printLines(File, List, EnumSet)
      */
     public static void printLines(File file, List<String> lines) {
-        printLines(file, lines, null);
+        Files.printLines(file, lines);
     }
     
     /**
@@ -62,12 +51,7 @@ public class FileExt {
      * <code>WriteOptionType.WITH_EXCEPTION</code>.
      */
     public static void printLines(File file, List<String> lines, EnumSet<WriteOptionType> options) throws IORuntimeException {
-        try {
-            PrintWriterExt.printLines(new PrintWriter(file), lines);
-        }
-        catch (FileNotFoundException fnfe) {
-            IOExceptionHandler.handleWriteException(fnfe, options);
-        }
+        Files.printLines(file, lines, options);
     }
 
     /**
@@ -76,8 +60,8 @@ public class FileExt {
      * @param fname the name of the file
      * @return the resolved file name
      */
-    public static String resolveFileName(String fname) {        
-        return fname.replace("~", System.getProperty("user.home"));
+    public static String resolveFileName(String fname) {
+        return Files.resolveFileName(fname);
     }
 
     /**
@@ -87,19 +71,6 @@ public class FileExt {
      * @return the bytes of the file
      */
     public static byte[] readBytes(File file) throws IORuntimeException {
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            byte[] buf = new byte[4096];
-            int nBytes = 0;
-            while ((nBytes = fis.read(buf)) != -1) {
-                baos.write(buf, 0, nBytes);
-            }
-            fis.close();
-            return baos.toByteArray();
-        }
-        catch (IOException ex) {
-            throw new IORuntimeException(ex);
-        }
+        return Files.readBytes(file);
     }
 }
