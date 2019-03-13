@@ -23,4 +23,17 @@ public class RegexpTest extends Parameterized {
                           params(new MatchData(StringArray.of("abcdef", "ab", "cd")), "(a.)(..)ef", "abcdefgh"),
                           params(null, "xyz", "abcdef"));
     }
+    
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void isMatch(boolean expected, String pattern, String str) {
+        Regexp re = new Regexp(pattern);
+        boolean result = re.isMatch(str);
+        assertThat(result, equalTo(expected));
+    }
+
+    private List<Object[]> parametersForIsMatch() {
+        return paramsList(params(true, "(a.)(..)ef", "abcdef"),
+                          params(true, "(a.)(..)ef", "abcdefgh"),
+                          params(false, "xyz", "abcdef"));
+    }
 }

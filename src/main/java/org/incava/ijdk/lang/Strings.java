@@ -236,6 +236,10 @@ public class Strings {
     /**
      * Returns the character at <code>idx</code> as a character, if the character exists and is a
      * digit. Returns null otherwise.
+     *
+     * @param str the string to match
+     * @param idx the location within the string
+     * @return the matched digit
      */
     public static Character matchDigit(String str, int idx) {
         if (idx >= str.length()) {
@@ -250,6 +254,11 @@ public class Strings {
     /**
      * Returns the character at <code>idx</code> as a character, if the character exists and is
      * equal to <code>match</code>. Returns null otherwise.
+     *
+     * @param str the string to match
+     * @param idx the location within the string
+     * @param match the character to match
+     * @return the matched character
      */
     public static Character matchChar(String str, int idx, char match) {
         if (idx >= str.length()) {
@@ -264,6 +273,10 @@ public class Strings {
     /**
      * Returns the characters starting at <code>idx</code>, if the characters at that point are
      * digits. Returns null otherwise.
+     *
+     * @param str the string to match
+     * @param idx the location within the string
+     * @return the matched digits
      */
     public static String matchDigits(String str, int idx) {
         Character ch = matchDigit(str, idx);

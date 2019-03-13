@@ -18,6 +18,8 @@ public class StringExt {
      *
      * @param str the string
      * @param delim the delimiter
+     * @param max the maximum to split
+     * @return the array of strings split from str
      */
     public static String[] split(String str, char delim, int max) {
         return new Str(str).split(String.valueOf(delim), max).toArray(new String[0]);
@@ -29,6 +31,8 @@ public class StringExt {
      *
      * @param str the string
      * @param delim the delimiter
+     * @param max the maximum to split
+     * @return the array of strings split from str
      */
     public static String[] split(String str, String delim, int max) {
         return new Str(str).split(delim, max).toArray(new String[0]);
@@ -40,6 +44,7 @@ public class StringExt {
      *
      * @param str the string
      * @param delim the delimiter
+     * @return the array of strings split from str
      */
     public static String[] split(String str, char delim) {
         return new Str(str).split(String.valueOf(delim), null).toArray(new String[0]);
@@ -51,6 +56,7 @@ public class StringExt {
      *
      * @param str the string
      * @param delim the delimiter
+     * @return the array of strings split from str
      */
     public static String[] split(String str, String delim) {
         return new Str(str).split(delim, null).toArray(new String[0]);
@@ -63,6 +69,7 @@ public class StringExt {
      * The unquoting behavior exists for pre-3.0 versions of IJDK.
      *
      * @param str the string
+     * @return the list of strings
      * @see org.incava.ijdk.lang.Str#unquote
      * @see org.incava.ijdk.lang.Str#toList
      */
@@ -82,6 +89,8 @@ public class StringExt {
      *
      * @param str the string
      * @param ch the padding character
+     * @param length the length of the padded string
+     * @return the padded string
      */
     public static String pad(String str, char ch, int length) {
         return new Str(str).pad(ch, length).toString();
@@ -100,6 +109,7 @@ public class StringExt {
      * @param str the string
      * @param ch the padding character
      * @param length the length
+     * @return the padded string
      */
     public static String padLeft(String str, char ch, int length) {
         return new Str(str).padLeft(ch, length).toString();
@@ -110,6 +120,7 @@ public class StringExt {
      *
      * @param str the string
      * @param length the length
+     * @return the padded string
      */
     public static String pad(String str, int length) {
         return new Str(str).pad(length).toString();
@@ -120,6 +131,7 @@ public class StringExt {
      *
      * @param str the string
      * @param length the length
+     * @return the padded string
      */
     public static String padLeft(String str, int length) {
         return new Str(str).padLeft(length).toString();
@@ -130,6 +142,7 @@ public class StringExt {
      *
      * @param str the string
      * @param num the number of times to repeat
+     * @return the repeated string
      */
     public static String repeat(String str, int num) {
         return str == null ? null : new Str(str, num).str();
@@ -140,6 +153,7 @@ public class StringExt {
      *
      * @param ch the character
      * @param num the number of times to repeat
+     * @return the repeated string
      */
     public static String repeat(Character ch, int num) {
         return ch == null ? null : new Str(ch, num).str();
@@ -152,6 +166,7 @@ public class StringExt {
      *
      * @param str the string
      * @param num the number of characters
+     * @return the left substring
      */
     public static String left(String str, int num) {
         return new Str(str).left(num).toString();
@@ -164,6 +179,7 @@ public class StringExt {
      *
      * @param str the string
      * @param num the number of characters
+     * @return the right substring
      */
     public static String right(String str, int num) {
         return new Str(str).right(num).toString();
@@ -172,6 +188,10 @@ public class StringExt {
     /**
      * Returns the collection, joined by <code>delim</code>. Returns null if <code>coll</code> is
      * null. If <code>delim</code> is null, it is treated as the empty string.
+     *
+     * @param coll the collection to join
+     * @param delim the delimiter
+     * @return the joined string
      */
     public static String join(Collection<?> coll, String delim) {
         return Str.join(coll, delim).str();
@@ -180,9 +200,13 @@ public class StringExt {
     /**
      * Returns the array, joined by <code>str</code>. Returns null if <code>ary</code> is null. If
      * <code>str</code> is null, it is treated as the empty string.
+     *
+     * @param ary the array to join
+     * @param delim the delimiter
+     * @return the joined string
      */
-    public static String join(Object[] ary, String str) {
-        return Str.join(ary, str).str();
+    public static String join(Object[] ary, String delim) {
+        return Str.join(ary, delim).str();
     }
 
     /**
@@ -190,10 +214,10 @@ public class StringExt {
      * <code>index</code> is negative, the character is the nth character from the end of the
      * string, where -1 is the last character in the string.
      *
-     * @return The character at the given index, or null if out of range.
      * @param str the source string
      * @param index the index
      * @param index The index into the source string. Negative value goes from end backward.
+     * @return The character at the given index, or null if out of range.
      */
     public static Character charAt(String str, int index) {
         return new Str(str).charAt(index);
@@ -204,6 +228,7 @@ public class StringExt {
      *
      * @param str the string
      * @param index the index
+     * @return the character at the index
      * @see #charAt(String, int)
      */
     public static Character get(String str, int index) {
@@ -223,6 +248,7 @@ public class StringExt {
      * @param str the string
      * @param fromIndex the beginning point
      * @param toIndex the ending point, inclusive
+     * @return the substring
      * @see #get(String, Integer, Integer)
      */
     public static String substring(String str, Integer fromIndex, Integer toIndex) {
@@ -237,6 +263,7 @@ public class StringExt {
      *
      * @param str the string
      * @param ch the character
+     * @return the substring
      */
     public static String substringAfter(String str, Character ch) {
         return new Str(str).substringAfter(ch);
@@ -249,6 +276,7 @@ public class StringExt {
      *
      * @param str the string
      * @param ch the character
+     * @return the substring
      */
     public static String substringBefore(String str, Character ch) {
         return new Str(str).substringBefore(ch);
@@ -261,6 +289,7 @@ public class StringExt {
      * @param str the string
      * @param fromIndex the beginning point
      * @param toIndex the ending point, inclusive
+     * @return the substring
      */
     public static String get(String str, Integer fromIndex, Integer toIndex) {
         return new Str(str).get(fromIndex, toIndex);
@@ -272,6 +301,7 @@ public class StringExt {
      *
      * @param str the string.
      * @param ch the character
+     * @return whether the string starts with the character
      */
     public static boolean startsWith(String str, char ch) {
         return new Str(str).startsWith(ch);
@@ -283,6 +313,7 @@ public class StringExt {
      *
      * @param str the string.
      * @param pref the leading string
+     * @return whether the string starts with the string
      */
     public static boolean startsWith(String str, String pref) {
         return new Str(str).startsWith(pref);
@@ -293,6 +324,7 @@ public class StringExt {
      * line characters, only one is removed.
      *
      * @param str the string.
+     * @return the chomped string
      * @see #chompAll
      */
     public static String chomp(String str) {
@@ -303,6 +335,7 @@ public class StringExt {
      * Removes multiple end of line characters, either \\n or \\r.
      *
      * @param str the string.
+     * @return the chomped string
      */
     public static String chompAll(String str) {
         return new Str(str).chompAll().toString();
@@ -314,6 +347,7 @@ public class StringExt {
      *
      * @param str the string
      * @param ch the character
+     * @return whether the string contains the character
      */
     public static boolean contains(String str, Character ch) {
         return new Str(str).contains(ch);
@@ -325,6 +359,7 @@ public class StringExt {
      *
      * @param str the string
      * @param ch the character
+     * @return the index of the character
      */
     public static Integer indexOf(String str, Character ch) {
         return new Str(str).indexOf(ch);
@@ -333,6 +368,10 @@ public class StringExt {
     /**
      * Returns whether the two strings are equal. If both are null, then true is returned.
      * Otherwise, if either is null, then false is returned.
+     *
+     * @param a the first string
+     * @param b the second string
+     * @return whether the strings are equal
      */
     public static Boolean eq(String a, String b) {
         return new Str(a).eq(b);
@@ -341,6 +380,10 @@ public class StringExt {
     /**
      * Returns whether the two strings are equal, without regard to case. If both are null, then
      * true is returned. Otherwise, if either is null, then false is returned.
+     *
+     * @param a the first string
+     * @param b the second string
+     * @return whether the strings are equal, ignoring case
      */
     public static Boolean eqi(String a, String b) {
         return new Str(a).eqi(b);
@@ -354,6 +397,7 @@ public class StringExt {
      *
      * @param str the string
      * @param len the length
+     * @return the snipped string
      */
     public static String snip(String str, int len) {
         return new Str(str).snip(len).toString();

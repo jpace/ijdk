@@ -15,12 +15,12 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class MatchDataTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void init(Object expected, Matcher matcher) {
-        MatchData result = new MatchData(matcher);
+    public void of(Object expected, Matcher matcher) {
+        MatchData result = MatchData.of(matcher);
         assertThat(result, equalTo(expected));
     }
 
-    private List<Object[]> parametersForInit() {
+    private List<Object[]> parametersForOf() {
         Pattern p1 = Pattern.compile("(a.)(..)ef");
         String s1 = "abcdef";
         Matcher m1 = p1.matcher(s1);
@@ -29,13 +29,8 @@ public class MatchDataTest extends Parameterized {
         String s2 = "--abcdef--";
         Matcher m2 = p1.matcher(s1);
         m2.find();
-
-        String s3 = "xyz";
-        Matcher m3 = p1.matcher(s3);
-        m3.matches();
         
         return paramsList(params(StringArray.of("abcdef", "ab", "cd"), m1),
-                          params(StringArray.of("abcdef", "ab", "cd"), m2),
-                          params(StringArray.empty(), m3));
+                          params(StringArray.of("abcdef", "ab", "cd"), m2));
     }
 }

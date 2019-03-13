@@ -1065,6 +1065,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns a copy of the string with spaces escaped.
+     *
+     * @return the escaped string
      */
     public Str escape() {
         return Str.of(str().replaceAll(" ", "\\\\ "));
@@ -1077,6 +1079,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns a copy of this string concatenated with the other.
+     *
+     * @param other the string to concatenate to this one
+     * @return the concatenated string
      */
     public Str plus(Str other) {
         return Str.of(str() + other.str());
@@ -1084,6 +1089,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Returns the index at which the pattern matches. Returns null if the pattern does not match.
+     *
+     * @param pattern the pattern to match
+     * @return the index of the match, or null if none
      */
     public Integer indexOf(Pattern pattern) {
         return indexOf(pattern, 0);
@@ -1092,6 +1100,10 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns the index at which the pattern matches, starting at the offset. Returns null if the
      * pattern does not match.
+     *
+     * @param pattern the pattern to match
+     * @param offset the offset into the string to start
+     * @return the index of the match, or null if none
      */
     public Integer indexOf(Pattern pattern, Integer offset) {
         Matcher m = pattern.matcher(str());

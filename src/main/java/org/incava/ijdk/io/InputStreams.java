@@ -34,6 +34,9 @@ public class InputStreams {
 
     /**
      * Reads lines from an input stream into a list of strings.
+     *
+     * @param list the list to read into
+     * @param stream the input stream
      */
     public static void readLines(List<String> list, InputStream stream) {
         InputStreamReader isr = null;

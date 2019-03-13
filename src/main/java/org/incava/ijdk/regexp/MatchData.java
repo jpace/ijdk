@@ -23,16 +23,6 @@ public class MatchData extends StringArray {
         return md;
     }
     
-    public MatchData(Matcher matcher) {
-        if (matcher.matches()) {
-            int nGroups = matcher.groupCount();
-            for (int idx = 0; idx <= nGroups; ++idx) {
-                String str = matcher.group(idx);
-                add(str);
-            }
-        }
-    }
-    
     public MatchData() {
     }
 

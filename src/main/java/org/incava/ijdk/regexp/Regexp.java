@@ -29,4 +29,25 @@ public class Regexp {
         Matcher matcher = pattern.matcher(str);
         return matcher.find() ? MatchData.of(matcher) : null;
     }
+
+    /**
+     * Returns whether the regular expression matches the string. As with <code>match</code>, does
+     * not do a full match, as does java.util.regex.Matcher#matches.
+     *
+     * @param str the string to match against the pattern
+     * @return the whether there was a match
+     */
+    public boolean isMatch(String str) {
+        Matcher matcher = pattern.matcher(str);
+        return matcher.find();
+    }
+
+    /**
+     * Returns the regular expression as a pattern.
+     *
+     * @return the pattern
+     */
+    public String toString() {
+        return pattern.toString();
+    }
 }
