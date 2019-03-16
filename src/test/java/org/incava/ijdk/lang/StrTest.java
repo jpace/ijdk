@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
+import org.incava.ijdk.collect.StringArray;
+import org.incava.ijdk.regexp.MatchData;
+import org.incava.ijdk.regexp.Regexp;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -808,6 +811,34 @@ public class StrTest extends StringTest {
                           params(1,    "bab", "ab", 1), 
                           params(0,    "aba", "a",  0), 
                           params(2,    "aba", "a",  1));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void matchRegexpNoOffset(MatchData expected, String pat, String str) {
+        Regexp regexp = Regexp.of(pat);
+        MatchData result = new Str(str).match(regexp);
+        assertThat(result, equalTo(expected));
+    }
+
+    private java.util.List<Object[]> parametersForMatchRegexpNoOffset() {
+        return paramsList(params(new MatchData(StringArray.of("")), "",    ""),   
+                          params(null,            "b",   "a"),  
+                          params(new MatchData(StringArray.of("ab")), "a.",  "ab"), 
+                          params(new MatchData(StringArray.of("a")), "a",  "ab"),  
+                          params(new MatchData(StringArray.of("ab")), "ab", "bab"), 
+                          params(new MatchData(StringArray.of("a")), "a", "a"));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void matchRegexpWithOffset(MatchData expected, String pat, String str, Integer offset) {
+        Regexp regexp = Regexp.of(pat);
+        MatchData result = new Str(str).match(regexp, offset);
+        assertThat(result, equalTo(expected));
+    }
+
+    private java.util.List<Object[]> parametersForMatchRegexpWithOffset() {
+        return paramsList(params(new MatchData(StringArray.of("a")), "a",  "a", 0),
+                          params(null, "a",    "a", 1));
     }
     
     @Test

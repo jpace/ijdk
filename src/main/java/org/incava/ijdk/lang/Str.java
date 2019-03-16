@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.incava.ijdk.regexp.MatchData;
+import org.incava.ijdk.regexp.Regexp;
 import org.incava.ijdk.str.StrAlphanumericComparator;
 import org.incava.ijdk.str.StrComparator;
 import org.incava.ijdk.str.StrIgnoreCaseComparator;
@@ -1108,5 +1109,28 @@ public class Str extends Obj<String> implements Comparing<Str> {
     public Integer indexOf(Pattern pattern, Integer offset) {
         Matcher m = pattern.matcher(str());
         return m.find(offset) ? m.start() : null;
+    }
+
+    /**
+     * Returns the match data at which the regular expression matches, starting at the beginning of
+     * the string. Returns null if the regexp does not match.
+     *
+     * @param re the regular expression to match
+     * @return the match data, or null if none
+     */
+    public MatchData match(Regexp re) {
+        return re.match(str());
+    }
+
+    /**
+     * Returns the match data at which the regular expression matches, starting at the offset.
+     * Returns null if the regexp does not match.
+     *
+     * @param re the regular expression to match
+     * @param offset the offset into the string to start
+     * @return the match data, or null if none
+     */
+    public MatchData match(Regexp re, Integer offset) {
+        return re.match(str(), offset);
     }
 }
