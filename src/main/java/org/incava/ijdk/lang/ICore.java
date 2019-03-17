@@ -144,7 +144,7 @@ public class ICore {
     /**
      * If both parameters evaluate to true (via <code>isTrue</code>), then the
      * second value is returned. This results in code such as:
-     * 
+     *
      * <pre>
      *    String statusName = userName != null &amp;&amp; lastName != null ? lastName : null;
      *    String statusName = IUtil.and(userName, lastName);
@@ -338,7 +338,7 @@ public class ICore {
      *
      * @param <KeyType> the type of keys
      * @param <ValueType> the type of values
-     * @return an empty TreeMap 
+     * @return an empty TreeMap
      */
     public static <KeyType, ValueType> TreeMap<KeyType, ValueType> map() {
         return new TreeMap<KeyType, ValueType>();

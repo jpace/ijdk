@@ -32,7 +32,7 @@ public abstract class StringTest extends Parameterized {
                           params("abcd",     "abcd", '*', 3),
                           params("abcd",     "abcd", '*', 4),
                           params("abcd*",    "abcd", '*', 5));
-    }    
+    }
     
     public List<Object[]> parametersForPadWithoutChar() {
         return paramsList(params("abcd    ", "abcd", 8),
@@ -45,7 +45,7 @@ public abstract class StringTest extends Parameterized {
         return paramsList(params(null,       null,   '*', 8),
                           params("****abcd", "abcd", '*', 8),
                           params("abcd",     "abcd", '*', 3),
-                          params("abcd",     "abcd", '*', 4), 
+                          params("abcd",     "abcd", '*', 4),
                           params("*abcd",    "abcd", '*', 5));
     }
     
@@ -83,170 +83,170 @@ public abstract class StringTest extends Parameterized {
     
     public List<Object[]> parametersForRight() {
         return paramsList(params(null,   null,        1),
-                          params("efgh", "abcdefgh",  4), 
-                          params("abcd", "abcd",      4), 
+                          params("efgh", "abcdefgh",  4),
+                          params("abcd", "abcd",      4),
                           params("abcd", "abcd",      5),
                           params("",     "abcd",      0),
                           params("",     "abcd",     -1));
     }
     
     public List<Object[]> parametersForCharAt() {
-        return paramsList(params(null, null,  0),  
-                          params('a',  "abc", 0),  
-                          params('b',  "abc", 1),  
-                          params('c',  "abc", 2),  
-                          params(null, "abc", 3),  
-                          params('c',  "abc", -1), 
-                          params('b',  "abc", -2), 
-                          params('a',  "abc", -3), 
+        return paramsList(params(null, null,  0),
+                          params('a',  "abc", 0),
+                          params('b',  "abc", 1),
+                          params('c',  "abc", 2),
+                          params(null, "abc", 3),
+                          params('c',  "abc", -1),
+                          params('b',  "abc", -2),
+                          params('a',  "abc", -3),
                           params(null, "abc", -4));
     }
     
     public List<Object[]> parametersForGet() {
-        return paramsList(params(null, null,  0),  
-                          params('a',  "abc", 0),  
-                          params('b',  "abc", 1),  
-                          params('c',  "abc", 2),  
-                          params(null, "abc", 3),  
-                          params('c',  "abc", -1), 
-                          params('b',  "abc", -2), 
-                          params('a',  "abc", -3), 
+        return paramsList(params(null, null,  0),
+                          params('a',  "abc", 0),
+                          params('b',  "abc", 1),
+                          params('c',  "abc", 2),
+                          params(null, "abc", 3),
+                          params('c',  "abc", -1),
+                          params('b',  "abc", -2),
+                          params('a',  "abc", -3),
                           params(null, "abc", -4));
     }
     
     public List<Object[]> parametersForSubstring() {
-        return paramsList(params(null,   null,     1,    0),    
-                          params("abcd", "abcd",   0,    3),    
-                          params("abc",  "abcd",   0,    2),    
-                          params("a",    "abcd",   0,    0),    
+        return paramsList(params(null,   null,     1,    0),
+                          params("abcd", "abcd",   0,    3),
+                          params("abc",  "abcd",   0,    2),
+                          params("a",    "abcd",   0,    0),
                           // expect "",  not null, per Ruby behavior
-                          params("",     "abcd",   1,    0),    
-                          params("",     "abcd",   4,    5),    
-                          params("abcd", "abcd",   -4,   -1),   
-                          params("abc",  "abcd",   -4,   -2),   
-                          params("a",    "abcd",   -4,   -4),   
+                          params("",     "abcd",   1,    0),
+                          params("",     "abcd",   4,    5),
+                          params("abcd", "abcd",   -4,   -1),
+                          params("abc",  "abcd",   -4,   -2),
+                          params("a",    "abcd",   -4,   -4),
                           // expect "",  not null, per Ruby behavior
-                          params("",     "abcd",   -1,   -2),   
+                          params("",     "abcd",   -1,   -2),
                           // null == first in string
-                          params("abc",  "abcd",   null, -2),   
-                          params("cd",   "abcd",   -2,   null), 
+                          params("abc",  "abcd",   null, -2),
+                          params("cd",   "abcd",   -2,   null),
                           params("abcd", "abcd",   null, null));
     }
     
     public List<Object[]> parametersForStartsWith() {
-        return paramsList(params(false, null,   'j'), 
-                          params(true,  "java", 'j'), 
-                          params(false, "java", 'a'), 
+        return paramsList(params(false, null,   'j'),
+                          params(true,  "java", 'j'),
+                          params(false, "java", 'a'),
                           params(false, "java", 'J'),
                           params(true,  "Java", 'J'),
                           params(false, "Java", 'j'));
     }
     
     public List<Object[]> parametersForIndexOf() {
-        return paramsList(params(null, "abc", null), 
-                          params(null, null,  'a'),  
-                          params(null, null,  null), 
-                          params(0,    "abc", 'a'),  
-                          params(2,    "abc", 'c'),  
-                          params(null, "abc", 'd'),  
+        return paramsList(params(null, "abc", null),
+                          params(null, null,  'a'),
+                          params(null, null,  null),
+                          params(0,    "abc", 'a'),
+                          params(2,    "abc", 'c'),
+                          params(null, "abc", 'd'),
                           params(null, "abc", 'A'));
     }
     
     public List<Object[]> parametersForContains() {
-        return paramsList(params(false, "abc", null), 
-                          params(false, null,  'a'),  
-                          params(false, null,  null), 
-                          params(true,  "abc", 'a'),  
-                          params(true,  "abc", 'c'),  
-                          params(false, "abc", 'd'),  
+        return paramsList(params(false, "abc", null),
+                          params(false, null,  'a'),
+                          params(false, null,  null),
+                          params(true,  "abc", 'a'),
+                          params(true,  "abc", 'c'),
+                          params(false, "abc", 'd'),
                           params(false, "abc", 'A'));
     }
     
     public List<Object[]> parametersForSubstringAfter() {
-        return paramsList(params(null, "abc", null), 
-                          params(null, null,  'a'),  
-                          params(null, null,  null), 
-                          params("bc", "abc", 'a'),  
-                          params("",   "abc", 'c'),  
-                          params(null, "abc", 'd'),  
+        return paramsList(params(null, "abc", null),
+                          params(null, null,  'a'),
+                          params(null, null,  null),
+                          params("bc", "abc", 'a'),
+                          params("",   "abc", 'c'),
+                          params(null, "abc", 'd'),
                           params(null, "abc", 'A'));
     }
     
     public List<Object[]> parametersForSubstringBefore() {
-        return paramsList(params(null, "abc", null), 
-                          params(null, null,  'a'),  
-                          params(null, null,  null), 
-                          params("",   "abc", 'a'),  
-                          params("ab", "abc", 'c'),  
-                          params(null, "abc", 'd'),  
+        return paramsList(params(null, "abc", null),
+                          params(null, null,  'a'),
+                          params(null, null,  null),
+                          params("",   "abc", 'a'),
+                          params("ab", "abc", 'c'),
+                          params(null, "abc", 'd'),
                           params(null, "abc", 'A'));
     }
     
     public List<Object[]> parametersForEq() {
-        return paramsList(params(false, null, ""),   
-                          params(false, "",   null), 
-                          params(true,  null, null), 
-                          params(false, null, "a"),  
-                          params(false, "a",  null), 
-                          params(true,  "a",  "a"),  
-                          params(false, "a",  "b"),  
-                          params(false, "a",  "A"),  
+        return paramsList(params(false, null, ""),
+                          params(false, "",   null),
+                          params(true,  null, null),
+                          params(false, null, "a"),
+                          params(false, "a",  null),
+                          params(true,  "a",  "a"),
+                          params(false, "a",  "b"),
+                          params(false, "a",  "A"),
                           params(false, "a",  "ab"));
     }
     
     public List<Object[]> parametersForEqi() {
-        return paramsList(params(false, null, ""),   
-                          params(false, "",   null), 
-                          params(true,  null, null), 
-                          params(false, null, "a"),  
-                          params(false, "a",  null), 
-                          params(true,  "a",  "a"),  
-                          params(false, "a",  "b"),  
-                          params(true,  "A",  "a"),  
+        return paramsList(params(false, null, ""),
+                          params(false, "",   null),
+                          params(true,  null, null),
+                          params(false, null, "a"),
+                          params(false, "a",  null),
+                          params(true,  "a",  "a"),
+                          params(false, "a",  "b"),
+                          params(true,  "A",  "a"),
                           params(false, "a",  "ab"));
     }
     
     public List<Object[]> parametersForSnip() {
-        return paramsList(params(null,  null,   3), 
-                          params("",    "",     3), 
-                          params("-",   "abc",  1), 
-                          params("a-",  "abc",  2), 
-                          params("abc", "abc",  3), 
+        return paramsList(params(null,  null,   3),
+                          params("",    "",     3),
+                          params("-",   "abc",  1),
+                          params("a-",  "abc",  2),
+                          params("abc", "abc",  3),
                           params("ab-", "abcd", 3));
     }
     
     public List<Object[]> parametersForIsEmpty() {
-        return paramsList(params(true,  null), 
-                          params(true,  ""),   
+        return paramsList(params(true,  null),
+                          params(true,  ""),
                           params(false, "a"));
     }
     
     public List<Object[]> parametersForLength() {
-        return paramsList(params(0, null), 
-                          params(0, ""),   
+        return paramsList(params(0, null),
+                          params(0, ""),
                           params(1, "a"),
                           params(2, "ab"));
     }
     
     public List<Object[]> parametersForChomp() {
-        return paramsList(params(null,  null),    
-                          params("",    ""),      
-                          params("a",   "a"),     
-                          params("a",   "a\n"),   
-                          params("a\n", "a\n\n"), 
-                          params("a",   "a\r"),   
-                          params("a\r", "a\r\r"), 
+        return paramsList(params(null,  null),
+                          params("",    ""),
+                          params("a",   "a"),
+                          params("a",   "a\n"),
+                          params("a\n", "a\n\n"),
+                          params("a",   "a\r"),
+                          params("a\r", "a\r\r"),
                           params("a\r", "a\r\n"));
     }
     
     public List<Object[]> parametersForChompAll() {
-        return paramsList(params(null, null),    
-                          params("",   ""),      
-                          params("a",  "a"),     
-                          params("a",  "a\n"),   
-                          params("a",  "a\n\n"), 
-                          params("a",  "a\r"),   
-                          params("a",  "a\r\r"), 
+        return paramsList(params(null, null),
+                          params("",   ""),
+                          params("a",  "a"),
+                          params("a",  "a\n"),
+                          params("a",  "a\n\n"),
+                          params("a",  "a\r"),
+                          params("a",  "a\r\r"),
                           params("a",  "a\r\n"));
     }
     
@@ -263,8 +263,8 @@ public abstract class StringTest extends Parameterized {
     }
     
     public List<Object[]> parametersForQuote() {
-        return paramsList(params(null,      null), 
-                          params("\"\"",    ""),   
+        return paramsList(params(null,      null),
+                          params("\"\"",    ""),
                           params("\"abc\"", "abc"));
     }
 }

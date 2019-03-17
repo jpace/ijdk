@@ -10,7 +10,7 @@ public class ThrwTest {
     public void testGetStackTraceStringNPE() {
         Throwable t = new NullPointerException("nope");
         String expected = "java.lang.NullPointerException: nope\n" +
-            "\tat org.incava.ijdk.lang.ThrwTest.testGetStackTraceStringNPE(ThrwTest.java:11)\n" + 
+            "\tat org.incava.ijdk.lang.ThrwTest.testGetStackTraceStringNPE(ThrwTest.java:11)\n" +
             "\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)";
         assertGetStackTraceString(expected, t);
     }

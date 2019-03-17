@@ -57,7 +57,7 @@ public class VersionsTest extends Parameterized {
                           params(null, a,    ba, "1"),
                           params(a,    b,    ba, "2"),
                           params(b,    b,    ba, "3"));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void findLatest(Version expected, Versions versions) {
@@ -68,5 +68,5 @@ public class VersionsTest extends Parameterized {
     private List<Object[]> parametersForFindLatest() {
         return paramsList(params(b, ab),
                           params(b, ba));
-    }    
+    }
 }

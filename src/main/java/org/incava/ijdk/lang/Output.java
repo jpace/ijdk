@@ -20,7 +20,7 @@ public class Output {
      * @param fmt the format of the string
      * @param args arguments to the format
      * @return always returns true
-     * 
+     *
      * @see java.lang.String#format
      */
     public static boolean printf(String fmt, Object ... args) {
@@ -37,5 +37,5 @@ public class Output {
     public static boolean println(Object obj) {
         System.out.println(obj);
         return true;
-    }    
+    }
 }

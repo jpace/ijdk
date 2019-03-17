@@ -24,19 +24,19 @@ public class VersionTest extends Parameterized {
         assertEqual(expRevision, ver.getRevision(), msg);
         Array<Integer> expValues = Array.empty();
         if (expMajor != null) {
-            expValues.append(expMajor);            
+            expValues.append(expMajor);
             if (expMinor != null) {
-                expValues.append(expMinor);                
+                expValues.append(expMinor);
                 if (expPatch != null) {
-                    expValues.append(expPatch);                        
+                    expValues.append(expPatch);
                     if (expRevision != null) {
-                        expValues.append(expRevision);                            
+                        expValues.append(expRevision);
                     }
                 }
             }
         }
         assertThat(ver.getValues(), equalTo(expValues));
-    }   
+    }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void initFromString(Integer expMajor, Integer expMinor, Integer expPatch, Integer expRevision, String str) {
@@ -89,7 +89,7 @@ public class VersionTest extends Parameterized {
         Version v12 = new Version(1, 2);
         Version v123 = new Version(1, 2, 3);
         Version v1230 = new Version(1, 2, 3, 0);
-        Version v1234 = new Version(1, 2, 3, 4);        
+        Version v1234 = new Version(1, 2, 3, 4);
         
         return paramsList(params(true,  v, v),
                           params(true,  v, new Version()),

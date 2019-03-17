@@ -59,7 +59,7 @@ public class ListsTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void last(T expected, List<T> list) {
         T result = Lists.last(list);
-        assertEqual(expected, result);        
+        assertEqual(expected, result);
     }
     
     private List<Object[]> parametersForLast() {
@@ -96,13 +96,13 @@ public class ListsTest extends Parameterized {
         List<String> strList = Arrays.asList("one", "two", "three");
         List<Integer> intList = Arrays.asList(1, 2, 3);
         
-        return paramsList(params(true,  strList, "one"),   
-                          params(true,  strList, "three"), 
-                          params(false, strList, "four"),  
-                          params(false, strList, "ONE"),   
-                          params(false, null,    null),    
-                          params(true,  intList, 1),       
-                          params(true,  intList, 3),       
+        return paramsList(params(true,  strList, "one"),
+                          params(true,  strList, "three"),
+                          params(false, strList, "four"),
+                          params(false, strList, "ONE"),
+                          params(false, null,    null),
+                          params(true,  intList, 1),
+                          params(true,  intList, 3),
                           params(false, intList, 4));
     }
 

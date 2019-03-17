@@ -27,7 +27,7 @@ public class Comp {
             int cmp = x.compareTo(y);
             return Integer.signum(cmp);
         }
-    }    
+    }
 
     /**
      * Returns whether x is less than y.

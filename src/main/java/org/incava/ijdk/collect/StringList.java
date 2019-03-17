@@ -154,7 +154,7 @@ public class StringList extends BaseArray<String, StringList> {
             }
         }
         return null;
-    }    
+    }
 
     /**
      * Returns whether the given criteria matches any element in the list.
@@ -166,7 +166,7 @@ public class StringList extends BaseArray<String, StringList> {
      */
     public Boolean hasMatch(Closure<Boolean, String> criteria) {
         return findFirst(criteria) != null;
-    }    
+    }
 
     /**
      * Returns all strings in the list for which the closure returns true. Returns an empty list if

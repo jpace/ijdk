@@ -76,7 +76,7 @@ public class StringsTest extends StringTest {
     public void repeatString(String expected, String str, int length) {
         String result = Strings.repeat(str, length);
         assertThat(result, withContext(message("str", str, "length", length), equalTo(expected)));
-    }    
+    }
 
     @Test @Parameters(method="parametersForRepeatString") @TestCaseName("{method} {index} {params}")
     public void repeatStringBuilder(String expected, String str, int length) {
@@ -89,7 +89,7 @@ public class StringsTest extends StringTest {
         else {
             assertThat(sb.toString(), withContext(message("str", str, "length", length), equalTo(expected)));
         }
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void left(String expected, String str, int length) {
@@ -240,10 +240,10 @@ public class StringsTest extends StringTest {
     }
 
     private List<Object[]> parametersForCompareChars() {
-        return paramsList(params(0,  "a",  "a",  0), 
-                          params(-1, "a",  "b",  0), 
+        return paramsList(params(0,  "a",  "a",  0),
+                          params(-1, "a",  "b",  0),
                           params(-1, "ab", "ac", 1));
-    }    
+    }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void matchInteger(Integer expected, String str, int idx) {
@@ -252,16 +252,16 @@ public class StringsTest extends StringTest {
     }
 
     private List<Object[]> parametersForMatchInteger() {
-        return paramsList(params(null,   "a",    0), 
-                          params(null,   "a",    0), 
-                          params(null,   "1",    1), 
-                          params(null,   "a1",   0), 
-                          params("1",    "a1",   1), 
-                          params("1",    "1",    0), 
-                          params("12",   "12",   0), 
-                          params("2",    "12",   1), 
+        return paramsList(params(null,   "a",    0),
+                          params(null,   "a",    0),
+                          params(null,   "1",    1),
+                          params(null,   "a1",   0),
+                          params("1",    "a1",   1),
+                          params("1",    "1",    0),
+                          params("12",   "12",   0),
+                          params("2",    "12",   1),
                           params("1",    "1.",   0));
-    }    
+    }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void matchDouble(Double expected, String str, int idx) {
@@ -270,11 +270,11 @@ public class StringsTest extends StringTest {
     }
 
     private List<Object[]> parametersForMatchDouble() {
-        return paramsList(params(null,   "a",    0), 
-                          params(null,   "a",    0), 
-                          params(null,   "1",    1), 
-                          params(null,   "a1",   0), 
-                          params("1.2",  "1.2",  0), 
+        return paramsList(params(null,   "a",    0),
+                          params(null,   "a",    0),
+                          params(null,   "1",    1),
+                          params(null,   "a1",   0),
+                          params("1.2",  "1.2",  0),
                           params("11.2", "11.2", 0));
-    }    
+    }
 }

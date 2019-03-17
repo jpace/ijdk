@@ -57,7 +57,7 @@ public class IntegerIteratorTest extends Parameterized {
                           params(2,    x),
                           params(null, y),
                           params(null, new IntegerIterator(2, 1)));
-    }    
+    }
 
     @Test
     public void remove() {

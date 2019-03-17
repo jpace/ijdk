@@ -16,8 +16,8 @@ import static org.incava.attest.ContextMatcher.withContext;
 public class StrUtilTest extends Parameterized {
     private List<Object[]> parametersForGetNumberStrings() {
         String[] ary = new String[] { "6",  "7", "8", "9" };
-        return paramsList(params(6,  ary, 0, 13), 
-                          params(7,  ary, 1, 13), 
+        return paramsList(params(6,  ary, 0, 13),
+                          params(7,  ary, 1, 13),
                           params(13, ary, 4, 13));
     }
 
@@ -29,8 +29,8 @@ public class StrUtilTest extends Parameterized {
 
     private List<Object[]> parametersForGetNumberIntegers() {
         Integer[] ary = new Integer[] { 6,  7, 8, 9 };
-        return paramsList(params(6,  ary, 0, 13), 
-                          params(7,  ary, 1, 13), 
+        return paramsList(params(6,  ary, 0, 13),
+                          params(7,  ary, 1, 13),
                           params(13, ary, 4, 13));
     }
 
@@ -48,8 +48,8 @@ public class StrUtilTest extends Parameterized {
     }
     
     private List<Object[]> parametersForAppend() {
-        return paramsList(params(new StringBuilder("1.2"), new StringBuilder("1"), 2, true),  
-                          params(new StringBuilder("12"),  new StringBuilder("1"), 2, false), 
+        return paramsList(params(new StringBuilder("1.2"), new StringBuilder("1"), 2, true),
+                          params(new StringBuilder("12"),  new StringBuilder("1"), 2, false),
                           params(new StringBuilder("1"),   new StringBuilder(),    1, false));
     }
 }

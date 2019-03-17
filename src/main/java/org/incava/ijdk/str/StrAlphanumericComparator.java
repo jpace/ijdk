@@ -46,8 +46,8 @@ public class StrAlphanumericComparator implements Comparator<Str> {
         else {
             int cmp = compareNumbers(sNum, tNum);
             return cmp == 0 ? compare(s, t, sIdx + sNum.length(), tIdx + tNum.length()) : cmp;
-        }            
-    }    
+        }
+    }
 
     public static int compareChars(Str s, int sIdx, Str t, int tIdx) {
         Character sCh = s.charAt(sIdx);

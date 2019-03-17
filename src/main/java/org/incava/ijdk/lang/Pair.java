@@ -6,7 +6,7 @@ package org.incava.ijdk.lang;
  *
  * @see KeyValue
  */
-public class Pair<FirstType extends Comparable<? super FirstType>, SecondType extends Comparable<? super SecondType>> 
+public class Pair<FirstType extends Comparable<? super FirstType>, SecondType extends Comparable<? super SecondType>>
     implements Comparable<Pair<FirstType, SecondType>> {
 
     /**
@@ -30,7 +30,7 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
         return new Pair<X, Y>(first, second);
     }
 
-    private final FirstType first;    
+    private final FirstType first;
     private final SecondType second;
     
     /**
@@ -122,7 +122,7 @@ public class Pair<FirstType extends Comparable<? super FirstType>, SecondType ex
 
     /**
      * Returns a hash code for the pair.
-     * 
+     *
      * @return the hash code
      */
     public int hashCode() {

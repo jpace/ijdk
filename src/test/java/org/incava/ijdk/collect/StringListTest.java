@@ -59,7 +59,7 @@ public class StringListTest extends Parameterized {
     public void anyStartsWith(boolean expected, String substr, String ... args) {
         StringList sl = new StringList(args);
         boolean result = sl.anyStartsWith(substr);
-        assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));        
+        assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
     }
     
     private List<Object[]> parametersForAnyStartsWith() {
@@ -222,9 +222,9 @@ public class StringListTest extends Parameterized {
     }
     
     private List<Object[]> parametersForSortedComparator() {
-        return paramsList(params(StringList.of("a9", "a10", "b"), StringList.of("b", "a10", "a9"), new StringAlphanumericComparator()), 
+        return paramsList(params(StringList.of("a9", "a10", "b"), StringList.of("b", "a10", "a9"), new StringAlphanumericComparator()),
                           params(StringList.of("b3", "b4",  "c"), StringList.of("c", "b4",  "b3"), new StringAlphanumericComparator()));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void collect(StringList expected, StringList ary, String repl) {
@@ -237,7 +237,7 @@ public class StringListTest extends Parameterized {
     private List<Object[]> parametersForCollect() {
         return paramsList(params(StringList.of("x-a", "x-b", "x-c"), StringList.of("a", "b", "c"), "x-%s"),
                           params(StringList.of("a", "b", "c"), StringList.of("a", "b", "c"), "%s"));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void unique(StringList expected, StringList ary) {
@@ -250,5 +250,5 @@ public class StringListTest extends Parameterized {
     private List<Object[]> parametersForUnique() {
         return paramsList(params(StringList.of("b", "a", "c"), StringList.of("b", "a", "c")),
                           params(StringList.of("b", "c", "a"), StringList.of("b", "c", "a")));
-    }    
+    }
 }

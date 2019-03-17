@@ -658,7 +658,7 @@ public class X11Colors {
     public static RGB DARK_CYAN = rgb(0, 139, 139);
     public static RGB DARK_MAGENTA = rgb(139, 0, 139);
     public static RGB DARK_RED = rgb(139, 0, 0);
-    public static RGB LIGHT_GREEN = rgb(144, 238, 144);    
+    public static RGB LIGHT_GREEN = rgb(144, 238, 144);
 
     protected static RGB rgb(int red, int green, int blue) {
         return new RGB(red, green, blue);

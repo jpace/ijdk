@@ -31,5 +31,5 @@ public class IndexableTest extends Parameterized {
                           params(1,    4,   -3),
                           params(0,    4,   -4),
                           params(null, 4,   -5));
-    }    
+    }
 }

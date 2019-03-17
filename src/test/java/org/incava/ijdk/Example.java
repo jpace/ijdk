@@ -17,7 +17,7 @@ public class Example {
         String firstAddress = "742 Evergreen Terrace"; // home
         String secondAddress = "1000 Mammon Street";   // Burns'
         
-        List<String> otherAddresses = Arrays.asList(new String[] { 
+        List<String> otherAddresses = Arrays.asList(new String[] {
                 "1313 Mockingbird Lane", // Muensters
                 "518 Crestview Drive",    // Beverly Hillbillies
             });
@@ -127,7 +127,7 @@ public class Example {
         }
 
         // new way:
-        { 
+        {
             String padded = Strings.pad("testing", '*', 16);
 
             // or for spaces (default character):
@@ -252,7 +252,7 @@ public class Example {
         Range rg = new Range(3, 17);
         for (int v : rg) {
             System.out.println("v: " + v);
-        }   
+        }
     }
 
     public void fileReading() {
@@ -333,12 +333,12 @@ public class Example {
             
         // the same exists for and:
         // old way:
-        { 
+        {
             String x = s != null && t != null ? "both" : null;
         }
 
         // new way:
-        { 
+        {
             String x = and(s, t, "both");
         }
     }

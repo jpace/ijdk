@@ -93,7 +93,7 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      */
     public static <KeyType, ValueType> SortedMap<KeyType, ValueType> of(java.util.List<Pair<KeyType, ValueType>> list) {
         return new SortedMap<KeyType, ValueType>(list);
-    }    
+    }
 
     public static final long serialVersionUID = 1L;
 
@@ -179,7 +179,7 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      * @return the value or <code>defValue</code>
      */
     public V fetch(K key, V defValue) {
-        return containsKey(key) ? get(key) : defValue;            
+        return containsKey(key) ? get(key) : defValue;
     }
 
     /**

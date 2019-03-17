@@ -195,10 +195,10 @@ public class Obj<T> implements Bool {
      */
     protected Array<Object> getInstanceValues() {
         return Array.of(object);
-    }    
+    }
 
     private Object[] getInstanceObjects() {
         Array<Object> values = getInstanceValues();
         return values.toArray(new Object[values.size()]);
-    }    
+    }
 }

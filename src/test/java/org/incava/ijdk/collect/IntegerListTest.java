@@ -69,7 +69,7 @@ public class IntegerListTest extends Parameterized {
     public void maximum(Integer expected, Integer ... values) {
         IntegerList sl = new IntegerList(values);
         Integer result = sl.maximum();
-        assertEqual(expected, result, message("values", Arrays.asList(values)));        
+        assertEqual(expected, result, message("values", Arrays.asList(values)));
     }
     
     private List<Object[]> parametersForMaximum() {
@@ -102,7 +102,7 @@ public class IntegerListTest extends Parameterized {
 
     private List<Object[]> parametersForUnique() {
         return paramsList(params(IntegerList.of(2, 3, 5), IntegerList.of(2, 3, 2, 3, 3, 5, 5, 3)));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void get(IntegerList expected, IntegerList ilist, Integer from, Integer to) {
@@ -112,5 +112,5 @@ public class IntegerListTest extends Parameterized {
 
     private List<Object[]> parametersForGet() {
         return paramsList(params(IntegerList.of(3, 1, 7), IntegerList.of(2, 3, 1, 7, 8), 1, -2));
-    }    
+    }
 }

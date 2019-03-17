@@ -7,7 +7,7 @@ public class Maths {
     /**
      * Returns the minimum value in the array, which can be empty or null. Returns Integer.MIN_VALUE
      * if not found.
-     * 
+     *
      * @param ary the array of integers
      * @return the maximum value, or Integer.MIN_VALUE if the array is empty
      */
@@ -26,7 +26,7 @@ public class Maths {
 
     /**
      * Returns whether the value is between the lower and upper bound, inclusive.
-     * 
+     *
      * @param value the value to compare
      * @param lowerBound the lower boundary, inclusive
      * @param upperBound the upper boundary, inclusive

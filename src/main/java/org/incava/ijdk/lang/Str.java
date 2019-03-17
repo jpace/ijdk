@@ -54,7 +54,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * Creates a string from the collection, joined by <code>delim</code>. If <code>coll</code> is
      * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the
      * empty string.
-     * 
+     *
      * @param coll the collection to be joined
      * @param delim the delimiter within the joined string
      * @return the joined string
@@ -164,7 +164,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
         else {
             return false;
         }
-    }    
+    }
     
     /**
      * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
@@ -217,7 +217,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      *     pad("abcd", '*', 8) -&gt; "abcd****"
      *     pad("abcd", '*', 3) -&gt; "abcd"
      * </pre>
-     * 
+     *
      * @param ch the character to use for padding
      * @param length the length of the padded string
      * @return the padded string
@@ -240,7 +240,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      *     pad("1234", '*', 8) -&gt; "****1234"
      *     pad("1234", '*', 3) -&gt; "1234"
      * </pre>
-     * 
+     *
      * @param ch the character to use for padding
      * @param length the length of the padded string
      * @return the padded string
@@ -256,7 +256,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Pads with spaces.
-     * 
+     *
      * @param length the length of the padded string
      * @return the padded string
      */
@@ -266,7 +266,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
     /**
      * Left-pads with spaces.
-     * 
+     *
      * @param length the length of the padded string
      * @return the padded string
      */
@@ -277,7 +277,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
     /**
      * Returns the string, repeated <code>num</code> times. Returns null if the referenced string is
      * null.
-     * 
+     *
      * @param num the number of times to repeat this string
      * @return the repeated string
      */
@@ -514,7 +514,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return whether the string starts with <code>str</code>
      */
     public boolean startsWith(String str, int offset) {
-        return startsWith(str, offset, EnumSet.noneOf(Str.Option.class)); 
+        return startsWith(str, offset, EnumSet.noneOf(Str.Option.class));
     }
     
     /**
@@ -749,7 +749,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
                 return this;
             }
         }
-    }    
+    }
 
     /**
      * Returns a negative number, zero, or a positive number, for when <code>this</code> is less
@@ -789,7 +789,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             }
             return comp.compare(this, other);
         }
-    }    
+    }
 
     /**
      * Returns the hash code of the wrapped string, or zero if null.
@@ -1062,7 +1062,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             --end;
         }
         return Str.of(end < 0 ? "" : get(start, end));
-    }    
+    }
 
     /**
      * Returns a copy of the string with spaces escaped.
@@ -1096,7 +1096,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      */
     public Integer indexOf(Pattern pattern) {
         return indexOf(pattern, 0);
-    }   
+    }
 
     /**
      * Returns the index at which the pattern matches, starting at the offset. Returns null if the

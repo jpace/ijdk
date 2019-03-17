@@ -78,7 +78,7 @@ public class ANSI {
      * @param green the green value, 0 through 255
      * @param blue the blue value, 0 through 255
      * @return the formatting string
-     */    
+     */
     public static String foreground(int red, int green, int blue) {
         int code = toCode(red, green, blue);
         return asString("38;5;" + code);
@@ -100,7 +100,7 @@ public class ANSI {
 
     /**
      * Returns a string for an effect:
-     * 
+     *
      *     none: 0
      *     reset: 0
      *     bold: 1
@@ -123,12 +123,12 @@ public class ANSI {
 
     private static String asString(String code) {
         return "" + ESCAPE + "[" + code + "m";
-    }    
+    }
 
     // red, green, blue values are 0-255
     protected static int toCode(int red, int green, int blue) {
         return 16 + 36 * toAnsi(red) + 6 * toAnsi(green) + toAnsi(blue);
-    }    
+    }
 
     protected static int toCode(RGB rgb) {
         return toCode(rgb.getRed(), rgb.getGreen(), rgb.getBlue());

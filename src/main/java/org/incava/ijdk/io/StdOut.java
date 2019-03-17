@@ -19,7 +19,7 @@ public class StdOut {
      * @param fmt the format of the string
      * @param args arguments to the format
      * @return always returns true
-     * 
+     *
      * @see java.lang.String#format
      */
     public static boolean printf(String fmt, Object ... args) {

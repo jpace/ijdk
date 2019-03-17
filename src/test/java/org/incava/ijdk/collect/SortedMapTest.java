@@ -24,7 +24,7 @@ public class SortedMapTest extends Parameterized {
         SortedMap<String, Integer> ijdkMap = new SortedMap<String, Integer>(jdkMap);
         assertThat(ijdkMap, equalTo(jdkMap));
         assertThat(jdkMap, equalTo(ijdkMap));
-    }   
+    }
     
     @Test
     public void ofList() {
@@ -39,12 +39,12 @@ public class SortedMapTest extends Parameterized {
         expected.put("three", 3);
 
         assertThat(expected, equalTo(SortedMap.of(list)));
-    }   
+    }
     
     @Test
     public void empty() {
         assertThat(SortedMap.<String, Integer>empty(), equalTo(new SortedMap<String, Integer>()));
-    }   
+    }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void of(java.util.TreeMap<K, V> expected, SortedMap<K, V> result) {
@@ -118,10 +118,10 @@ public class SortedMapTest extends Parameterized {
         java.util.Iterator<java.util.Map.Entry<String, Integer>> it = map.iterator();
         java.util.Iterator<java.util.Map.Entry<String, Integer>> expIt = expected.entrySet().iterator();
 
-        assertThat(it.hasNext(), equalTo(true));        
+        assertThat(it.hasNext(), equalTo(true));
         assertThat(expIt.next(), equalTo(it.next()));
         assertThat(expIt.next(), equalTo(it.next()));
-        assertThat(it.hasNext(), equalTo(false));        
+        assertThat(it.hasNext(), equalTo(false));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -131,7 +131,7 @@ public class SortedMapTest extends Parameterized {
     }
     
     private List<Object[]> parametersForFetchWithDefValue() {
-        SortedMap<String, String> h = SortedMap.of("first", "abc", "second", "def", "third", "ghi");        
+        SortedMap<String, String> h = SortedMap.of("first", "abc", "second", "def", "third", "ghi");
         return paramsList(params("abc", h, "first", "xyz"),
                           params("def", h, "second", "xyz"),
                           params("yyy", h, "fourth", "yyy"),
@@ -150,7 +150,7 @@ public class SortedMapTest extends Parameterized {
     }
     
     private List<Object[]> parametersForFetchNoDefault() {
-        SortedMap<String, String> h = SortedMap.of("first", "abc", "second", "def", "third", "ghi");        
+        SortedMap<String, String> h = SortedMap.of("first", "abc", "second", "def", "third", "ghi");
         return paramsList(params(null, h, "first"),
                           params("key not found: 'fourth'", h, "fourth"),
                           params("key not found: 'fifth'",  h, "fifth"));

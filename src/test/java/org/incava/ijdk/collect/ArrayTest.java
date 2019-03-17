@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.incava.attest.Assertions.assertEqual;
 
-public class ArrayTest extends Parameterized {    
+public class ArrayTest extends Parameterized {
     private Array<Integer> emptyIntegerList() {
         return Array.<Integer>of();
     }
@@ -25,7 +25,7 @@ public class ArrayTest extends Parameterized {
     public void empty() {
         Array<Object> ary = Array.empty();
         assertThat(ary, hasSize(0));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void of(Array<Object> expected, Array<Object> ary) {
@@ -53,7 +53,7 @@ public class ArrayTest extends Parameterized {
     }
     
     private List<Object[]> parametersForNewInstance() {
-        List<String> abcList = Arrays.asList(new String[] { "a", "b", "c" });        
+        List<String> abcList = Arrays.asList(new String[] { "a", "b", "c" });
         return paramsList(params(Array.class, new Array<String>()));
     }
 
@@ -70,7 +70,7 @@ public class ArrayTest extends Parameterized {
                           params(abcList,             new Array<Object>("a", "b", "c")),
                           params(new Array<Object>(), new Array<Object>((Collection<Object>)null)),
                           params(new Array<Object>(), Array.<Object>empty()));
-    }    
+    }
 
     @Test
     public void demo() {

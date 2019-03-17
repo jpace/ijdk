@@ -25,7 +25,7 @@ public class MapTest extends Parameterized {
         Hash<String, Integer> ijdkMap = new Hash<String, Integer>(jdkMap);
         assertThat(ijdkMap, equalTo(jdkMap));
         assertThat(jdkMap, equalTo(ijdkMap));
-    }   
+    }
     
     @Test
     public void ofList() {
@@ -40,16 +40,16 @@ public class MapTest extends Parameterized {
         expected.put("three", 3);
 
         assertThat(expected, equalTo(Hash.of(list)));
-    }   
+    }
     
     @Test
     public void empty() {
         assertEqual(new Hash<String, Integer>(), Hash.<String, Integer>empty());
-    }   
+    }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void of(TreeMap<K, V> expected, Hash<K, V> result) {
-        assertEqual(expected, result);        
+        assertEqual(expected, result);
     }
     
     private List<Object[]> parametersForOf() {
@@ -126,7 +126,7 @@ public class MapTest extends Parameterized {
     }
     
     private List<Object[]> parametersForFetchWithDefValue() {
-        Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");        
+        Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");
         return paramsList(params("abc", h, "first", "xyz"),
                           params("def", h, "second", "xyz"),
                           params("yyy", h, "fourth", "yyy"),
@@ -145,7 +145,7 @@ public class MapTest extends Parameterized {
     }
     
     private List<Object[]> parametersForFetchNoDefault() {
-        Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");        
+        Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");
         return paramsList(params(null, h, "first"),
                           params("key not found: 'fourth'", h, "fourth"),
                           params("key not found: 'fifth'", h, "fifth"));

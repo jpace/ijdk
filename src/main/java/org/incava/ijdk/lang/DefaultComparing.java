@@ -41,5 +41,5 @@ public class DefaultComparing<T extends Comparable<T>> implements Comparing<T> {
             int cmp = value.compareTo(other);
             return Integer.signum(cmp);
         }
-    }    
+    }
 }

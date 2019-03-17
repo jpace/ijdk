@@ -35,7 +35,7 @@ public class TripleTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <A, B, C> void compareTo(Integer expected, Triple<A, B, C> x, Triple<A, B, C> y) {
         int result = x.compareTo(y);
-        assertEqual(expected, result, message("x", x, "y", y));        
+        assertEqual(expected, result, message("x", x, "y", y));
     }
     
     private java.util.List<Object[]> parametersForCompareTo() {
@@ -105,5 +105,5 @@ public class TripleTest extends Parameterized {
                           params(Array.of("one", 1.2, 2), aab),
                           params(Array.of("one", 2.3, 1), aba),
                           params(Array.of("two", 1.2, 1), baa));
-    }    
+    }
 }

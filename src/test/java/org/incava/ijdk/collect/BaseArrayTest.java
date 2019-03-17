@@ -42,7 +42,7 @@ public class BaseArrayTest extends Parameterized {
             for (T el : ary) {
                 add(el);
             }
-        }        
+        }
         
         public ExampleArray<T> newInstance() {
             return new ExampleArray<T>();
@@ -74,7 +74,7 @@ public class BaseArrayTest extends Parameterized {
                           params(abcList,       objectArray("a", "b", "c")),
                           params(objectArray(), new ExampleArray<Object>((Collection<Object>)null)),
                           params(objectArray(), objectArray()));
-    }    
+    }
     
     @Test
     public void toStringArray() {
@@ -157,7 +157,7 @@ public class BaseArrayTest extends Parameterized {
                           params(null,           ary67, -3),
                           params(null,           empty,  0),
                           params(null,           empty, -1),
-                          params(null,           empty,  1));                         
+                          params(null,           empty,  1));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -266,7 +266,7 @@ public class BaseArrayTest extends Parameterized {
                           params("a",           new ExampleArray<String>(), objectArray("a")),
                           params("a",           objectArray("b"),           objectArray("a", "b")),
                           params((Integer)null, integerArray(),             integerArray()));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void takeLast(T expReturn, ExampleArray<T> expList, ExampleArray<T> list) {
@@ -299,7 +299,7 @@ public class BaseArrayTest extends Parameterized {
                           params(integerArray(2, 1), integerArray(2, 1)),
                           params(integerArray(1, 2), integerArray(1, 2, 1)),
                           params(integerArray(),     integerArray()));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void compact(ExampleArray<T> expected, ExampleArray<T> list) {
@@ -414,11 +414,11 @@ public class BaseArrayTest extends Parameterized {
                           params(x2,  x12,                   x2),
                           params(emp, x11,                   x2),
                           params(x2,  integerArray(1, 2, 1), x2),
-                          params(x21, x21,                   x12),        
+                          params(x21, x21,                   x12),
                           params(emp, emp,                   emp),
                           params(emp, emp,                   x1),
                           params(emp, x1,                    emp));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void sorted(ExampleArray<T> expArray, ExampleArray<T> ary) {
@@ -432,7 +432,7 @@ public class BaseArrayTest extends Parameterized {
         
         return paramsList(params(ab, ab),
                           params(ab, ba));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T> void sortedComparator(ExampleArray<T> expected, ExampleArray<T> ary, Comparator<T> comparator) {
@@ -465,5 +465,5 @@ public class BaseArrayTest extends Parameterized {
         return paramsList(params(ba, ab),
                           params(ab, ba),
                           params(empty, empty));
-    }    
+    }
 }

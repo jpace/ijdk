@@ -19,12 +19,12 @@ public class StrComparatorTest extends Parameterized {
     }
     
     private java.util.List<Object[]> parametersForCompare() {
-        return paramsList(params(0,  "a",   "a"),   
-                          params(1,  "a",   "A"),   
-                          params(-1, "A",   "a"),   
-                          params(-1, "a",   "ab"),  
-                          params(-1, "a",   "abc"), 
-                          params(1,  "ab",  "a"),   
+        return paramsList(params(0,  "a",   "a"),
+                          params(1,  "a",   "A"),
+                          params(-1, "A",   "a"),
+                          params(-1, "a",   "ab"),
+                          params(-1, "a",   "abc"),
+                          params(1,  "ab",  "a"),
                           params(1,  "abc", "a"));
     }
 }

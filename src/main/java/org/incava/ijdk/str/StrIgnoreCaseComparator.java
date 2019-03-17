@@ -28,5 +28,5 @@ public class StrIgnoreCaseComparator implements Comparator<Str> {
 
     public int hashCode() {
         return super.hashCode();
-    }    
+    }
 }

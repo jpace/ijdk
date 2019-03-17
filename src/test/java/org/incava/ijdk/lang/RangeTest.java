@@ -18,7 +18,7 @@ public class RangeTest extends Parameterized {
     public void first(Integer expected, Range rg) {
         Integer result = rg.first();
         assertEqual(expected, result, message("rg", rg));
-    }    
+    }
 
     @Test @Parameters(method="parametersForFirst") @TestCaseName("{method} {index} {params}")
     public void getFirst(Integer expected, Range rg) {
@@ -35,7 +35,7 @@ public class RangeTest extends Parameterized {
     public void last(Integer expected, Range rg) {
         Integer result = rg.last();
         assertEqual(expected, result, message("rg", rg));
-    }    
+    }
 
     @Test @Parameters(method="parametersForLast") @TestCaseName("{method} {index} {params}")
     public void getLast(Integer expected, Range rg) {
@@ -90,7 +90,7 @@ public class RangeTest extends Parameterized {
                           
                           params(true,  rg33, 3),
                           params(false, rg33, 4),
-                          params(false, rg33, 5));                          
+                          params(false, rg33, 5));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

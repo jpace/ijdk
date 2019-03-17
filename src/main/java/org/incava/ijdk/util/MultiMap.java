@@ -49,9 +49,9 @@ public class MultiMap<K, V> extends AbstractMap<K, Collection<V>> {
             coll = getCollection();
             put(key, coll);
         }
-        coll.add(value);    
+        coll.add(value);
         return coll;
-    }        
+    }
 
     @SafeVarargs
     public final Collection<V> putEach(K key, V ... values) {

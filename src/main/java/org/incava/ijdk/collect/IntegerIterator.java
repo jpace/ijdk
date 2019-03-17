@@ -39,5 +39,5 @@ public class IntegerIterator implements Iterator<Integer> {
 
     public void remove() {
         throw new UnsupportedOperationException();
-    } 
+    }
 }

@@ -62,7 +62,7 @@ public interface Sequence<T, C extends Sequence<T, C>> extends java.util.List<T>
 
     /**
      * Returns the sequence as a String, joined by the delimiter.
-     * 
+     *
      * @param delimiter the delimiter between each element
      * @return the joined string
      */

@@ -127,7 +127,7 @@ public class IUtilTest extends Parameterized {
         assertEqual(true, litOne.hasNext());
         assertEqual("one", litOne.next());
         assertEqual("eine", litOne.next());
-        assertEqual(false, litOne.hasNext());        
+        assertEqual(false, litOne.hasNext());
 
         Iterator<String> litEmpty = IUtil.iter(listEmpty).iterator();
         assertEqual(false, litEmpty.hasNext());
@@ -146,7 +146,7 @@ public class IUtilTest extends Parameterized {
         assertEqual(true, aitOne.hasNext());
         assertEqual("one", aitOne.next());
         assertEqual("eine", aitOne.next());
-        assertEqual(false, aitOne.hasNext());        
+        assertEqual(false, aitOne.hasNext());
 
         Iterator<String> aitEmpty = IUtil.iter(aryEmpty).iterator();
         assertEqual(false, aitEmpty.hasNext());

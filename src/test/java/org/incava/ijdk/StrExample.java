@@ -144,7 +144,7 @@ public class StrExample {
 
         String y = new Str("abc").pad('*', 8).toString();
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void padLeft() {
@@ -157,7 +157,7 @@ public class StrExample {
 
         String y = new Str("abc").padLeft('*', 8).toString();
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void repeat() {
@@ -170,7 +170,7 @@ public class StrExample {
 
         Str y = new Str("ho").repeat(3);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void left() {
@@ -181,7 +181,7 @@ public class StrExample {
 
         Str y = new Str(s).left(n);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void right() {
@@ -192,7 +192,7 @@ public class StrExample {
 
         Str y = new Str(s).right(n);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void charAtPositive() {
@@ -204,7 +204,7 @@ public class StrExample {
         Character y = new Str(s).charAt(n);
         // or y = new Str(s).get(n);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void charAtNegative() {
@@ -216,7 +216,7 @@ public class StrExample {
         Character y = new Str(s).charAt(n);
         // or y = new Str(s).get(n);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void substringPositive() {
@@ -230,7 +230,7 @@ public class StrExample {
         String y = new Str(s).substring(i, j);
         // or get(i, j)
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void substringNegative() {
@@ -244,7 +244,7 @@ public class StrExample {
         String y = new Str(s).substring(i, j);
         // or get(i, j)
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void substringBefore() {
@@ -256,7 +256,7 @@ public class StrExample {
 
         String y = new Str(s).substringBefore('d');
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void substringAfter() {
@@ -348,7 +348,7 @@ public class StrExample {
 
         Str y = new Str(s).chompAll();
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void contains() {
@@ -359,7 +359,7 @@ public class StrExample {
 
         boolean y = new Str(s).contains('d');
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void indexOf() {
@@ -370,7 +370,7 @@ public class StrExample {
 
         int y = new Str(s).indexOf('d');
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void eq() {
@@ -382,7 +382,7 @@ public class StrExample {
 
         boolean y = new Str(s).eq(t);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void eqi() {
@@ -394,7 +394,7 @@ public class StrExample {
 
         boolean y = new Str(s).eq(t);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void snip() {
@@ -405,7 +405,7 @@ public class StrExample {
 
         Str y = new Str(s).snip(4);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void isEmpty() {
@@ -416,7 +416,7 @@ public class StrExample {
 
         boolean y = new Str(s).isEmpty(Str.Option.IGNORE_WHITESPACE);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void quote() {
@@ -427,7 +427,7 @@ public class StrExample {
 
         Str y = new Str(s).quote();
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void unquote() {
@@ -438,7 +438,7 @@ public class StrExample {
 
         Str y = new Str(s).unquote();
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void compareToAlphanumeric() {
@@ -450,7 +450,7 @@ public class StrExample {
         
         int y = new Str(s).compareTo(new Str(t), EnumSet.of(Str.Option.ALPHANUMERIC));
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void compareToIgnorecase() {
@@ -462,7 +462,7 @@ public class StrExample {
         
         int y = new Str(s).compareTo(new Str(t), EnumSet.of(Str.Option.IGNORE_CASE));
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void lt() {
@@ -474,7 +474,7 @@ public class StrExample {
         
         boolean y = new Str(s).lt(new Str(t));
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void lte() {
@@ -498,7 +498,7 @@ public class StrExample {
         
         boolean y = new Str(s).gt(new Str(t));
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void gte() {
@@ -510,7 +510,7 @@ public class StrExample {
         
         boolean y = new Str(s).gte(new Str(t));
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void firstChar() {
@@ -521,7 +521,7 @@ public class StrExample {
         
         char y = new Str(s).first();
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void firstString() {
@@ -532,7 +532,7 @@ public class StrExample {
         
         Str y = new Str(s).first(3);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void lastChar() {
@@ -543,7 +543,7 @@ public class StrExample {
         
         char y = new Str(s).last();
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void lastString() {
@@ -554,7 +554,7 @@ public class StrExample {
         
         Str y = new Str(s).last(3);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void replaceAll() {
@@ -576,7 +576,7 @@ public class StrExample {
         
         Str y = new Str(s).replaceAll(t, u);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void replaceAllIgnoreCase() {
@@ -600,7 +600,7 @@ public class StrExample {
         
         Str y = new Str(s).replaceAll(t, u, EnumSet.of(Str.Option.IGNORE_CASE));
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void indexOfIgnoreCase() {
@@ -612,7 +612,7 @@ public class StrExample {
         
         int y = new Str(s).indexOf(t, 0, true);
         printValue("y", y);
-    }    
+    }
 
     @Test
     public void trimLeft() {
@@ -627,7 +627,7 @@ public class StrExample {
         
         Str y = new Str(s).trimLeft();
         printValue("y", "\"" + y + "\"");
-    }    
+    }
 
     @Test
     public void trimRight() {

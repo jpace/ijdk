@@ -65,7 +65,7 @@ public class KeyValueTest extends Parameterized {
     public <K, V> void toStringTest(String expected, KeyValue<K, V> kv, String separator) {
         String result = separator == null ? kv.toString() : kv.toString(separator);
         assertEqual(expected, result, message("kv", kv, "separator", separator));
-    }    
+    }
 
     private java.util.List<Object[]> parametersForToStringTest() {
         KeyValue<String, Double> kv = KeyValue.of("one", 1.23);
@@ -76,7 +76,7 @@ public class KeyValueTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void compareTo(Integer expected, KeyValue<K, V> x, KeyValue<K, V> y) {
         int result = x.compareTo(y);
-        assertEqual(result, expected, message("x", x, "y", y));        
+        assertEqual(result, expected, message("x", x, "y", y));
     }
     
     private java.util.List<Object[]> parametersForCompareTo() {

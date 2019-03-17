@@ -30,19 +30,19 @@ public class CollectionsTest extends Parameterized {
     }
     
     private List<Object[]> parametersForHasAny() {
-        return paramsList(params(true,  ABC,  ABC),     
-                          params(true,  ABC,  ABC_DUP), 
-                          params(true,  ABC,  A),       
-                          params(true,  ABC,  ABCD),    
-                          params(true,  ABC,  BCD),     
+        return paramsList(params(true,  ABC,  ABC),
+                          params(true,  ABC,  ABC_DUP),
+                          params(true,  ABC,  A),
+                          params(true,  ABC,  ABCD),
+                          params(true,  ABC,  BCD),
 
-                          params(false, ABC,  EMPTY),   
-                          params(false, ABC,  null),    
-                          params(false, ABC,  DE),      
+                          params(false, ABC,  EMPTY),
+                          params(false, ABC,  null),
+                          params(false, ABC,  DE),
 
-                          params(false, null, EMPTY),   
-                          params(false, null, null),    
-                          params(false, null, DE));            
+                          params(false, null, EMPTY),
+                          params(false, null, null),
+                          params(false, null, DE));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -52,20 +52,20 @@ public class CollectionsTest extends Parameterized {
     }
     
     private List<Object[]> parametersForHasAll() {
-        return paramsList(params(true,  ABC,   ABC),     
-                          params(true,  ABC,   ABC_DUP), 
-                          params(true,  ABC,   A),       
-                          params(true,  ABC,   EMPTY),   
+        return paramsList(params(true,  ABC,   ABC),
+                          params(true,  ABC,   ABC_DUP),
+                          params(true,  ABC,   A),
+                          params(true,  ABC,   EMPTY),
 
-                          params(true,  EMPTY, EMPTY),   
+                          params(true,  EMPTY, EMPTY),
 
-                          params(false, ABC,   ABCD),    
-                          params(false, ABC,   BCD),     
-                          params(false, ABC,   null),    
-                          params(false, ABC,   DE),      
+                          params(false, ABC,   ABCD),
+                          params(false, ABC,   BCD),
+                          params(false, ABC,   null),
+                          params(false, ABC,   DE),
 
-                          params(false, null,  EMPTY),   
-                          params(false, null,  null),    
+                          params(false, null,  EMPTY),
+                          params(false, null,  null),
                           params(false, null,  DE));
     }
 

@@ -40,7 +40,7 @@ public class RegexpTest extends Parameterized {
                           params(new MatchData(StringArray.of("def", "d")),       "(.+)ef", "abcdef", 3),
                           params(null,                                            "(.+)ef", "abcdef", 4),
                           params(new MatchData(StringArray.of("abcdef", "ab", "cd")), "(a.)(..)ef", "abcdefgh", 0));
-    }    
+    }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void isMatchNoOffset(boolean expected, String pattern, String str) {
@@ -63,9 +63,9 @@ public class RegexpTest extends Parameterized {
     }
 
     private List<Object[]> parametersForIsMatchWithOffset() {
-        return paramsList(params(true,  "(a.)(..)ef", "abcdef",   0), 
-                          params(false, "(a.)(..)ef", "abcdef",   1), 
-                          params(true,  "(a.)(..)ef", "abcdefgh", 0), 
+        return paramsList(params(true,  "(a.)(..)ef", "abcdef",   0),
+                          params(false, "(a.)(..)ef", "abcdef",   1),
+                          params(true,  "(a.)(..)ef", "abcdefgh", 0),
                           params(false, "xyz",        "abcdef",   0));
     }
 }

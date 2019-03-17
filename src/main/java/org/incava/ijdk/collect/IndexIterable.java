@@ -17,5 +17,5 @@ public class IndexIterable<T> implements Iterable<KeyValue<Integer, T>> {
 
     public Iterator<KeyValue<Integer, T>> iterator() {
         return new IndexIterator<T>(elements);
-    }    
+    }
 }

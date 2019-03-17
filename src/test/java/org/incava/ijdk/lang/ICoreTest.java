@@ -13,7 +13,7 @@ public class ICoreTest {
     @Test
     public void mapEmpty() {
         TreeMap<String, String> expected = new TreeMap<String, String>();
-        assertEqual(expected, ICore.<String, String>map());        
+        assertEqual(expected, ICore.<String, String>map());
     }
 
     @Test
@@ -48,5 +48,5 @@ public class ICoreTest {
     public void intlist() {
         List<Integer> expected = new ArrayList<Integer>();
         assertEqual(expected, ICore.intlist());
-    }    
+    }
 }

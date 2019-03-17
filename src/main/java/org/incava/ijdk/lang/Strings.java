@@ -15,7 +15,7 @@ public class Strings {
     /**
      * Returns an array of strings split at the character delimiter. Returns null if
      * <code>str</code> is null.
-     * 
+     *
      * @param str the string to split
      * @param delim the character to split at
      * @param max the maximum number to split
@@ -92,7 +92,7 @@ public class Strings {
 
     public static String repeat(char ch, int num) {
         return repeat(String.valueOf(ch), num);
-    }    
+    }
 
     public static String left(String str, int num) {
         Str lstr = new Str(str).left(num);
@@ -134,7 +134,7 @@ public class Strings {
 
     public static String get(String str, Integer fromIndex, Integer toIndex) {
         return new Str(str).get(fromIndex, toIndex);
-    }    
+    }
 
     public static boolean startsWith(String str, char ch) {
         return new Str(str).startsWith(ch);
@@ -185,7 +185,7 @@ public class Strings {
 
     public static String unquote(String str) {
         return new Str(str).unquote().str();
-    }    
+    }
 
     public static String quote(String str) {
         Str qstr = new Str(str).quote();

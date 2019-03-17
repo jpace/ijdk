@@ -76,7 +76,7 @@ public class ObjTest extends Parameterized {
                           params(false, objStr, 1),
                           params(false, objStr, objStrNull),
                           params(false, objStrNull, objStr),
-                          params(false, objStr, objIntNull),                          
+                          params(false, objStr, objIntNull),
                           params(true,  objInt, 1),
                           params(true,  objInt, new Obj<Integer>(1)),
                           params(true,  objInt, objInt),
@@ -111,14 +111,14 @@ public class ObjTest extends Parameterized {
         Obj<T> nobj = new Obj<T>(obj);
         boolean result = nobj.isFalse();
         assertEqual(!expected, result, message("nobj", nobj, "obj", obj));
-    }    
+    }
 
     @Test @Parameters(method="parametersForIsBoolean") @TestCaseName("{method} {index} {params}")
     public <T> void isEmpty(boolean expected, T obj) {
         Obj<T> nobj = new Obj<T>(obj);
         boolean result = nobj.isEmpty();
         assertEqual(!expected, result, message("nobj", nobj, "obj", obj));
-    }    
+    }
     
     private List<Object[]> parametersForIsBoolean() {
         return paramsList(params(false, null),
@@ -133,7 +133,7 @@ public class ObjTest extends Parameterized {
                           params(true, new Object[] { "" }),
                           params(false, new Object[] { }),
 
-                          // Collection<T>            
+                          // Collection<T>
                           params(true, Arrays.asList(new Object[] { "abc" })),
                           params(true, Arrays.asList(new Object[] { "" })),
                           params(false, Arrays.asList(new Object[] { })));

@@ -41,7 +41,7 @@ public class Collections extends Objects {
      */
     public static <Type> Set<Type> intersection(Collection<Type> a, Collection<Type> b) {
         Set<Type> intSet = new HashSet<Type>(a);
-        intSet.retainAll(b);        
+        intSet.retainAll(b);
         return intSet;
     }
 
@@ -91,7 +91,7 @@ public class Collections extends Objects {
      */
     public static <Type> boolean hasAll(Collection<Type> src, Collection<Type> tgt) {
         return checkHas(src, tgt, true);
-    }   
+    }
 
     /**
      * Returns whether any element in <code>tgt</code> is in <code>src</code>.
@@ -129,5 +129,5 @@ public class Collections extends Objects {
         }
 
         return forAll;
-    }    
+    }
 }

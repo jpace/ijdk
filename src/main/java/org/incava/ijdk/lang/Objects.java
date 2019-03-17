@@ -164,5 +164,5 @@ public class Objects {
     private static Object[] getInstanceObjects(HasInstanceValues x) {
         Array<Object> values = x.getInstanceValues();
         return values.toArray(new Object[values.size()]);
-    }    
+    }
 }

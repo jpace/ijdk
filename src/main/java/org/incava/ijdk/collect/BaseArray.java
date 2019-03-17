@@ -435,5 +435,5 @@ public abstract class BaseArray<T extends Object, C extends BaseArray<T, C>> ext
             ary.add(get(idx));
         }
         return ary;
-    }    
-}    
+    }
+}

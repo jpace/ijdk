@@ -73,7 +73,7 @@ public class ArrayExample {
         println("n", n);
 
         n = list.size() >= 2 ? list.get(list.size() - 2) : null;
-        println("n", n);        
+        println("n", n);
         n = ary.get(-2);
         println("n", n);
         
@@ -103,7 +103,7 @@ public class ArrayExample {
         list.add(2);
         list.add(8);
         list.add(6);
-        println("list", list);        
+        println("list", list);
 
         // chaining appends:
         ary.append(2).append(8).append(6);
@@ -118,7 +118,7 @@ public class ArrayExample {
         List<Integer> list = new ArrayList<>(Arrays.asList(60, 16, 252, 9, 3, 17));
         println("list", list);
         
-        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);        
+        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);
         println("ary", ary);
         println("list/ary", ary);
 
@@ -158,7 +158,7 @@ public class ArrayExample {
 
         List<Integer> list = new ArrayList<>(Arrays.asList(60, 16, 252, 9, 3, 17));
         println("list", list);
-        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);        
+        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);
         println("ary", ary);
         println("list/ary", ary);
 
@@ -179,7 +179,7 @@ public class ArrayExample {
 
         List<Integer> list = new ArrayList<>(Arrays.asList(60, 16, 252, 9, 3, 17));
         println("list", list);
-        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);        
+        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);
         println("ary", ary);
         println("list/ary", ary);
 
@@ -200,7 +200,7 @@ public class ArrayExample {
 
         List<Integer> list = new ArrayList<>(Arrays.asList(60, 16, 252, 9, 3, 17));
         println("list", list);
-        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);        
+        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);
         println("ary", ary);
         println("list/ary", ary);
 
@@ -220,7 +220,7 @@ public class ArrayExample {
 
         List<Integer> list = new ArrayList<>(Arrays.asList(60, 16, 252, 9, 3, 17));
         println("list", list);
-        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);        
+        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);
         println("ary", ary);
         println("list/ary", ary);
 
@@ -253,7 +253,7 @@ public class ArrayExample {
             if (!ulist.contains(it)) {
                 ulist.add(it);
             }
-        }        
+        }
         println("ulist", ulist);
 
         Array<Integer> uary = ary.unique();
@@ -268,7 +268,7 @@ public class ArrayExample {
         List<Integer> list = new ArrayList<>(Arrays.asList(60, 16, 252, 9, 3, 17));
         println("list", list);
         
-        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);        
+        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);
         println("ary", ary);
         println("list/ary", ary);
 
@@ -299,8 +299,8 @@ public class ArrayExample {
         List<Integer> list = new ArrayList<>(Arrays.asList(60, 16, 252, 9, 3, 17));
         println("list", list);
         
-        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);        
-        println("ary", ary);        
+        Array<Integer> ary = Array.of(60, 16, 252, 9, 3, 17);
+        println("ary", ary);
         println("list/ary", ary);
 
         List<Integer> toAdd = Arrays.asList(9, 6, 3, 1);
@@ -490,16 +490,16 @@ public class ArrayExample {
         println("b", b);
 
         b = ary.containsAny(6, 1, 11);
-        println("b", b);        
+        println("b", b);
 
         b = ary.containsAny(7, 17);
-        println("b", b);        
+        println("b", b);
     }
 
     @Test
     public void example() {
         println("");
-        println("example");        
+        println("example");
 
         Array<String> simpsons = Array.of("homer", "marge", "lisa", "bart");
         println("simpsons", simpsons);

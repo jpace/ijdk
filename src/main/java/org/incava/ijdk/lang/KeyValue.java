@@ -23,7 +23,7 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>>, HasInstanceVa
     }
 
     /**
-     * Splits the string, using the delimiter, which is a regular expression. 
+     * Splits the string, using the delimiter, which is a regular expression.
      *
      * @param str the string to split
      * @param regexp the regular expression
@@ -109,7 +109,7 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>>, HasInstanceVa
      */
     public int hashCode() {
         return Objects.hashCode(this);
-    }    
+    }
 
     /**
      * Returns this key/value pair as a string, in the form "#{key} =&gt; #{value}".
@@ -172,5 +172,5 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>>, HasInstanceVa
      */
     public Array<Object> getInstanceValues() {
         return Array.of(key, value);
-    }    
+    }
 }

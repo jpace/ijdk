@@ -12,7 +12,7 @@ public class Thrw {
 
     /**
      * Returns the stack trace as a string. Returns null if the wrapped throwable is null.
-     * 
+     *
      * @return the stack trace
      */
     public String getStackTraceString() {

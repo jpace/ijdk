@@ -47,7 +47,7 @@ public class Readme extends Parameterized {
         // creates a map from one key/value pair
         Hash<String, String> h = Hash.of("one", "1");
         HashMap<String, String> expected = new HashMap<String, String>();
-        expected.put("one", "1");        
+        expected.put("one", "1");
         assertEqual(expected, h, message("h", h));
     }
 
@@ -56,7 +56,7 @@ public class Readme extends Parameterized {
         // creates a map from two key/value pairs
         Hash<String, String> h = Hash.of("one", "1", "two", "2");
         HashMap<String, String> expected = new HashMap<String, String>();
-        expected.put("one", "1");        
+        expected.put("one", "1");
         expected.put("two", "2");
         assertEqual(expected, h, message("h", h));
     }
@@ -125,7 +125,7 @@ public class Readme extends Parameterized {
 
     @Test
     public void fetch() {
-        Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");        
+        Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");
         assertEqual("abc", h.fetch("first"), message("h", h));
         assertEqual("xyz", h.fetch("fourth", "xyz"), message("h", h));
         assertEqual(null, h.fetch("fourth", null), message("h", h));

@@ -13,23 +13,23 @@ import static org.hamcrest.Matchers.equalTo;
 public class CharactersTest extends Parameterized {
     public static int compareIgnoreCaseDiff(Character x, Character y) {
         return Character.toUpperCase(x) - Character.toUpperCase(y);
-    }    
+    }
 
     public static int compareIgnoreCaseEqDiff(Character x, Character y) {
         return x.charValue() == y.charValue() ? 0 : Character.toUpperCase(x) - Character.toUpperCase(y);
-    }    
+    }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void isMatch(Boolean expected, Character x, Character y, Boolean ignoreCase) {
         Boolean result = Characters.isMatch(x, y, ignoreCase);
         assertThat(result, equalTo(expected));
-    }    
+    }
     
     private List<Object[]> parametersForIsMatch() {
-        return paramsList(params(true,  'a', 'a', false), 
-                          params(false, 'b', 'a', false), 
-                          params(true,  'a', 'a', true),  
-                          params(true,  'a', 'A', true),  
+        return paramsList(params(true,  'a', 'a', false),
+                          params(false, 'b', 'a', false),
+                          params(true,  'a', 'a', true),
+                          params(true,  'a', 'A', true),
                           params(false, 'a', 'A', false));
     }
 
@@ -37,25 +37,25 @@ public class CharactersTest extends Parameterized {
     public void compare(Integer expected, Character x, Character y, Boolean ignoreCase) {
         Integer result = Characters.compare(x, y, ignoreCase);
         assertThat(result, equalTo(expected));
-    }    
+    }
     
     private List<Object[]> parametersForCompare() {
-        return paramsList(params(0,   'a', 'a', false), 
-                          params(0,   'a', 'a', true),  
-                          params(0,   'A', 'a', true),  
+        return paramsList(params(0,   'a', 'a', false),
+                          params(0,   'a', 'a', true),
+                          params(0,   'A', 'a', true),
                           params(-32, 'A', 'a', false));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void compareIgnoreCase(Integer expected, Character x, Character y) {
         Integer result = Characters.compareIgnoreCase(x, y);
         assertThat(result, equalTo(expected));
-    }    
+    }
     
     private List<Object[]> parametersForCompareIgnoreCase() {
-        return paramsList(params(0, 'a', 'a'), 
-                          params(0, 'a', 'a'), 
-                          params(0, 'A', 'a'), 
+        return paramsList(params(0, 'a', 'a'),
+                          params(0, 'a', 'a'),
+                          params(0, 'A', 'a'),
                           params(0, 'A', 'a'));
     }
 

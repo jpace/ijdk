@@ -293,7 +293,7 @@ public class StringExt {
      */
     public static String get(String str, Integer fromIndex, Integer toIndex) {
         return new Str(str).get(fromIndex, toIndex);
-    }    
+    }
 
     /**
      * Returns whether the string <code>str</code> begins with the character <code>ch</code>.
@@ -433,7 +433,7 @@ public class StringExt {
      */
     public static String unquote(String str) {
         return new Str(str).unquote().toString();
-    }    
+    }
 
     /**
      * Quotes the string, using double quotes. Returns null if the string is null.

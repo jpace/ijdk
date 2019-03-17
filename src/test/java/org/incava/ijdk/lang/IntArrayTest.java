@@ -61,7 +61,7 @@ public class IntArrayTest extends Parameterized {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void length(int expected, int[] nums) {
-        assertEqual(expected, IntArray.length(nums), message("nums", nums == null ? null : Arrays.asList(nums)));        
+        assertEqual(expected, IntArray.length(nums), message("nums", nums == null ? null : Arrays.asList(nums)));
     }
     
     private List<Object[]> parametersForLength() {
@@ -109,5 +109,5 @@ public class IntArrayTest extends Parameterized {
                           params(new String[] { }, new int[] { }),
                           params(new String[] { "3" }, new int[] { 3 }),
                           params(new String[] { "3", "17" }, new int[] { 3, 17 }));
-    }    
+    }
 }

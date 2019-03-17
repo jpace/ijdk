@@ -94,7 +94,7 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
      */
     public static <KeyType, ValueType> Hash<KeyType, ValueType> of(java.util.List<Pair<KeyType, ValueType>> list) {
         return new Hash<KeyType, ValueType>(list);
-    }    
+    }
 
     /**
      * Creates a map from an Array.
@@ -109,7 +109,7 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
             h.put(array.get(idx * 2), array.get(idx * 2 + 1));
         }
         return h;
-    }    
+    }
 
     public static final long serialVersionUID = 1L;
 
@@ -195,7 +195,7 @@ public class Hash<K, V> extends java.util.HashMap<K, V> implements Iterable<java
      * @return the value or <code>defValue</code>
      */
     public V fetch(K key, V defValue) {
-        return containsKey(key) ? get(key) : defValue;            
+        return containsKey(key) ? get(key) : defValue;
     }
 
     /**

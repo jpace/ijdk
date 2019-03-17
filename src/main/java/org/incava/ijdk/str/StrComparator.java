@@ -27,5 +27,5 @@ public class StrComparator implements Comparator<Str> {
 
     public int hashCode() {
         return super.hashCode();
-    }    
+    }
 }

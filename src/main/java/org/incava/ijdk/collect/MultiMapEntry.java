@@ -3,7 +3,7 @@ package org.incava.ijdk.collect;
 import java.util.Collection;
 import java.util.Map;
 
-public class MultiMapEntry<K, V> implements Map.Entry<K, Collection<V>>, Comparable<Map.Entry<K, Collection<V>>> {        
+public class MultiMapEntry<K, V> implements Map.Entry<K, Collection<V>>, Comparable<Map.Entry<K, Collection<V>>> {
     private final K key;
     private Collection<V> value;
 

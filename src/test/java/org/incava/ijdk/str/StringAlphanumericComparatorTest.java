@@ -30,7 +30,7 @@ public class StringAlphanumericComparatorTest extends Parameterized {
         addParams(pl, 0,  "a1",       "a1");
         addParams(pl, 0,  "a9",       "a9");
 
-        // the rest are in StrAlphanumericComparator ...        
+        // the rest are in StrAlphanumericComparator ...
 
         addParams(pl, -1, "a",        "b");
         addParams(pl,  1, "b",        "a");

@@ -91,7 +91,7 @@ public class IterateTest extends Parameterized {
             assertThat(it.value(), equalTo(list.get(index)));
             ++index;
         }
-    }    
+    }
 
     @Test
     public void eachWithIndexListNull() {
@@ -112,7 +112,7 @@ public class IterateTest extends Parameterized {
             assertThat(it.value(), equalTo(ary[index]));
             ++index;
         }
-    }    
+    }
     
     @Test
     public void eachWithIndexArrayNull() {
@@ -122,5 +122,5 @@ public class IterateTest extends Parameterized {
             ++index;
         }
         assertThat(index, equalTo(0));
-    }    
+    }
 }

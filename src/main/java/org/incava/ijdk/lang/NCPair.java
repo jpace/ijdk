@@ -10,7 +10,7 @@ public class NCPair<FirstType, SecondType> {
         return new NCPair<X, Y>(first, second);
     }
 
-    private final FirstType first;    
+    private final FirstType first;
     private final SecondType second;
     
     public NCPair(FirstType first, SecondType second) {

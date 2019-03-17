@@ -12,5 +12,5 @@ public class Characters {
     public static int compareIgnoreCase(Character x, Character y) {
         int cmp = x.compareTo(y);
         return cmp == 0 ? cmp : Character.toUpperCase(x) - Character.toUpperCase(y);
-    }    
+    }
 }

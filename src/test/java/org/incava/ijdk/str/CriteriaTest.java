@@ -22,8 +22,8 @@ public class CriteriaTest extends Parameterized {
     }
     
     private java.util.List<Object[]> parametersForInit() {
-        return paramsList(params(true,  "abc", "a"), 
-                          params(false, "def", "a"), 
+        return paramsList(params(true,  "abc", "a"),
+                          params(false, "def", "a"),
                           params(null,  null,  "a"));
     }
 
@@ -35,8 +35,8 @@ public class CriteriaTest extends Parameterized {
     }
     
     private java.util.List<Object[]> parametersForStartsWith() {
-        return paramsList(params(true,  "abc", "a"), 
-                          params(false, "def", "a"), 
+        return paramsList(params(true,  "abc", "a"),
+                          params(false, "def", "a"),
                           params(null,  null,  "a"));
     }
 
@@ -48,8 +48,8 @@ public class CriteriaTest extends Parameterized {
     }
     
     private java.util.List<Object[]> parametersForContains() {
-        return paramsList(params(true,  "abc", "b"), 
-                          params(false, "def", "b"), 
+        return paramsList(params(true,  "abc", "b"),
+                          params(false, "def", "b"),
                           params(null,  null,  "b"));
     }
 
@@ -61,15 +61,15 @@ public class CriteriaTest extends Parameterized {
     }
     
     private java.util.List<Object[]> parametersForEndsWith() {
-        return paramsList(params(true,  "abc", "c"), 
-                          params(false, "abc", "a"), 
+        return paramsList(params(true,  "abc", "c"),
+                          params(false, "abc", "a"),
                           params(null,  null,  "a"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void equalsIgnoreCase(Boolean expected, final String x, final String y) {
         Criteria<Boolean> crit = Criteria.equalsIgnoreCase(y);
-        assertEqual(expected, crit.execute(x));        
+        assertEqual(expected, crit.execute(x));
     }
     
     private java.util.List<Object[]> parametersForEqualsIgnoreCase() {
@@ -84,7 +84,7 @@ public class CriteriaTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void equals(Boolean expected, final String x, final String y) {
         Criteria<Boolean> crit = Criteria.equals(y);
-        assertEqual(expected, crit.execute(x));        
+        assertEqual(expected, crit.execute(x));
     }
     
     private java.util.List<Object[]> parametersForEquals() {
@@ -94,5 +94,5 @@ public class CriteriaTest extends Parameterized {
                           params(null, null, "b"),
                           // since null is filtered out, the comparison isn't done:
                           params(null, null, null));
-    }    
+    }
 }

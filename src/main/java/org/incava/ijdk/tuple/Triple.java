@@ -5,7 +5,7 @@ import org.incava.ijdk.lang.Comp;
 
 /**
  * A set of three objects.
- * 
+ *
  * @param <A> the type of the first object
  * @param <B> the type of the second object
  * @param <C> the type of the third object
@@ -13,7 +13,7 @@ import org.incava.ijdk.lang.Comp;
 public class Triple<A, B, C> extends Pair<A, B> {
     /**
      * Shorter syntax than the default constructor, allowing the compiler to discern the object types.
-     * 
+     *
      * @param <A> the type of the first object
      * @param <B> the type of the second object
      * @param <C> the type of the third object
@@ -69,5 +69,5 @@ public class Triple<A, B, C> extends Pair<A, B> {
      */
     public Array<Object> getInstanceValues() {
         return super.getInstanceValues().append(third);
-    }    
+    }
 }

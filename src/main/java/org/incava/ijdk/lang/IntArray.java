@@ -130,5 +130,5 @@ public class IntArray extends IntegerArray {
     public static int average(int[] ary) {
         int len = length(ary);
         return len == 0 ? 0 : sum(ary) / len;
-    }    
+    }
 }

@@ -13,7 +13,7 @@ import static org.incava.attest.ContextMatcher.withContext;
 
 public class CompTest extends Parameterized {
     private List<Object[]> compParams() {
-        String empty = new String();        
+        String empty = new String();
         String abc = "abc";
         String def = "def";
         
@@ -63,5 +63,5 @@ public class CompTest extends Parameterized {
 
     private <T> void assertBooleanEqual(boolean expected, boolean result, T x, T y) {
         assertThat(result, withContext(message("x", x, "y", y), equalTo(expected)));
-    }    
+    }
 }

@@ -84,13 +84,13 @@ public class StrAlphanumericComparatorTest extends Parameterized {
     }
     
     private java.util.List<Object[]> parametersForMatchNumber() {
-        return paramsList(params(null,   "a",    0), 
-                          params(null,   "a",    0), 
-                          params(null,   "a1",   0), 
-                          params("1",    "a1",   1), 
-                          params("1",    "1",    0), 
-                          params("1",    "1.",   0), 
-                          params("1.2",  "1.2",  0), 
+        return paramsList(params(null,   "a",    0),
+                          params(null,   "a",    0),
+                          params(null,   "a1",   0),
+                          params("1",    "a1",   1),
+                          params("1",    "1",    0),
+                          params("1",    "1.",   0),
+                          params("1.2",  "1.2",  0),
                           params("11.2", "11.2", 0));
-    }    
+    }
 }

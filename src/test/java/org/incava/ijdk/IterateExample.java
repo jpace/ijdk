@@ -28,13 +28,13 @@ public class IterateExample {
     public void count() {
         println("count - old");
         for (int i = 0; i < 3; ++i) {
-            println("i", i);            
+            println("i", i);
         }
         
         println("count - new");
         for (Integer i : Iterate.count(3)) {
             println("i", i);
-        }        
+        }
     }
 
     @Test
@@ -93,7 +93,7 @@ public class IterateExample {
             for (String s : list) {
                 println("s", s);
             }
-        }        
+        }
         
         println("over null iterable - new");
         for (String s : Iterate.over(list)) {
@@ -135,7 +135,7 @@ public class IterateExample {
             println("it.key()", it.key());
             println("it.value()", it.value());
         }
-    }    
+    }
 
     @Test
     public void eachWithIndexListNull() {
@@ -175,7 +175,7 @@ public class IterateExample {
             println("it.key()", it.key());
             println("it.value()", it.value());
         }
-    }    
+    }
     
     @Test
     public void eachWithIndexArrayNull() {
@@ -196,5 +196,5 @@ public class IterateExample {
             println("it.key()", it.key());
             println("it.value()", it.value());
         }
-    }    
+    }
 }

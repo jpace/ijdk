@@ -34,7 +34,7 @@ public class ObjectsTest extends Parameterized {
                           params(0,  abc,   abc),
                           params(-1, abc,   def),
                           params(1,  def,   abc));
-    }    
+    }
 
     @Test @Parameters(method="parametersForCompare") @TestCaseName("{method} {index} {params}")
     public void equal(int cmpValue, Object x, Object y) {

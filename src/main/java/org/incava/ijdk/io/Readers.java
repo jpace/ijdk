@@ -13,7 +13,7 @@ import static org.incava.ijdk.lang.ICore.isEmpty;
 /**
  * Wraps java.io.Reader.
  */
-public class Readers {    
+public class Readers {
     /**
      * Reads lines from the given reader, applying options.
      *
@@ -25,7 +25,7 @@ public class Readers {
     public static List<String> readLines(Reader rdr, EnumSet<ReadOptionType> options) {
         try {
             List<String>   lines = new ArrayList<String>();
-            BufferedReader br    = new BufferedReader(rdr);            
+            BufferedReader br    = new BufferedReader(rdr);
             boolean        checkEmpty = Collections.contains(options, ReadOptionType.NONEMPTY);
 
             String line = br.readLine();

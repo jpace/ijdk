@@ -88,7 +88,7 @@ public class StrTest extends StringTest {
                           params(list("ab", "cd", "e"),      "ab-cd-e---",    "-",  null),
                           params(list("ab", "cd", "e"),      "ab-cd-e----",   "-",  null),
                           params(list("ab", "cd", "e"),      "ab\ncd\ne\n\n", "\n", null));
-    }    
+    }
 
     public List<Object[]> parametersForSplitToArray() {
         return paramsList(params(null,                       null,           ";", -1),
@@ -112,7 +112,7 @@ public class StrTest extends StringTest {
                           params(list("ab", "cd", "e"),      "ab-cd-e--",    "-",  null),
                           params(list("ab", "cd", "e"),      "ab-cd-e---",   "-",  null),
                           params(list("ab", "cd", "e"),      "ab-cd-e----",  "-",  null));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void toList(String[] expected, String str) {
@@ -123,7 +123,7 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void padWithChar(String expected, String str, char ch, int length) {
         Str result = toStr(str).pad(ch, length);
-        assertResult(expected, result, message("str", str, "ch", ch, "length", length));        
+        assertResult(expected, result, message("str", str, "ch", ch, "length", length));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -136,7 +136,7 @@ public class StrTest extends StringTest {
     public void padLeftWithChar(String expected, String str, char ch, int length) {
         Str result = toStr(str).padLeft(ch, length);
         assertResult(expected, result, message("str", str, "ch", ch, "length", length));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void padLeftWithoutChar(String expected, String str, int length) {
@@ -160,7 +160,7 @@ public class StrTest extends StringTest {
     public void left(String expected, String str, int length) {
         Str result = new Str(str).left(length);
         assertResult(expected, result, message("str", str, "length", length));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void right(String expected, String str, int length) {
@@ -178,7 +178,7 @@ public class StrTest extends StringTest {
     public void get(Character expected, String str, int index) {
         Character result = new Str(str).get(index);
         assertThat(result, withContext(message("str", str, "index", index), equalTo(expected)));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void getIndex(Integer expected, String str, int index) {
@@ -209,25 +209,25 @@ public class StrTest extends StringTest {
     public void startsWith(boolean expected, String str, char ch) {
         boolean result = new Str(str).startsWith(ch);
         assertThat(result, equalTo(expected));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void startsWithString(boolean expected, String str, String substr) {
         boolean result = new Str(str).startsWith(substr);
         assertThat(result, equalTo(expected));
-    }    
+    }
 
     public List<Object[]> parametersForStartsWithString() {
-        return paramsList(params(false, null,   "a"),     
-                          params(true,  "abcd", "a"),     
+        return paramsList(params(false, null,   "a"),
+                          params(true,  "abcd", "a"),
                           params(true,  "abcd", "ab"),
                           params(true,  "abcd", "abc"),
-                          params(true,  "abcd", ""),     
-                          params(false, "ab",   "abc"),   
-                          params(true,  "abcd", "abcd"),  
-                          params(false, "abcd", "abcde"), 
-                          params(false, "abcd", "b"),     
-                          params(false, "abcd", "A"),     
+                          params(true,  "abcd", ""),
+                          params(false, "ab",   "abc"),
+                          params(true,  "abcd", "abcd"),
+                          params(false, "abcd", "abcde"),
+                          params(false, "abcd", "b"),
+                          params(false, "abcd", "A"),
                           params(true,  "Abcd", "A"));
     }
 
@@ -235,7 +235,7 @@ public class StrTest extends StringTest {
     public void startsWithUseCase(boolean expected, String str, char ch) {
         boolean result = new Str(str).startsWith(ch);
         assertThat(result, equalTo(expected));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void startsWithIgnoreCase(boolean expected, String str, String substr) {
@@ -244,15 +244,15 @@ public class StrTest extends StringTest {
     }
 
     public List<Object[]> parametersForStartsWithIgnoreCase() {
-        return paramsList(params(false, null,   "a"),     
-                          params(true,  "abcd", "a"),     
-                          params(true,  "abcd", "ab"),    
+        return paramsList(params(false, null,   "a"),
+                          params(true,  "abcd", "a"),
+                          params(true,  "abcd", "ab"),
                           params(true,  "abcd", "abc"),
-                          params(false, "ab",   "abc"),   
-                          params(true,  "abcd", "abcd"),  
-                          params(false, "abcd", "abcde"), 
-                          params(false, "abcd", "b"),     
-                          params(true,  "abcd", "A"),     
+                          params(false, "ab",   "abc"),
+                          params(true,  "abcd", "abcd"),
+                          params(false, "abcd", "abcde"),
+                          params(false, "abcd", "b"),
+                          params(true,  "abcd", "A"),
                           params(true,  "Abcd", "A"));
     }
 
@@ -263,12 +263,12 @@ public class StrTest extends StringTest {
     }
 
     public List<Object[]> parametersForStartsWithOffset() {
-        return paramsList(params(false, null,   "a",   0), 
-                          params(true,  "abcd", "a",   0), 
-                          params(true,  "abcd", "b",   1), 
-                          params(false, "abcd", "a",   1), 
-                          params(false, "ab",   "abc", 0), 
-                          params(false, "abcd", "A",   0), 
+        return paramsList(params(false, null,   "a",   0),
+                          params(true,  "abcd", "a",   0),
+                          params(true,  "abcd", "b",   1),
+                          params(false, "abcd", "a",   1),
+                          params(false, "ab",   "abc", 0),
+                          params(false, "abcd", "A",   0),
                           params(true,  "abcd", "ab",  0));
     }
 
@@ -369,13 +369,13 @@ public class StrTest extends StringTest {
     public void equalsObject(boolean expected, String a, Object b) {
         Str sa = new Str(a);
         assertThat(sa.equals(b), withContext(message("a", a, "b", b), equalTo(expected)));
-    }    
+    }
 
     @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
     public void equalsString(boolean expected, String a, String b) {
         Str sa = new Str(a);
         assertThat(sa.equals(b), withContext(message("a", a, "b", b), equalTo(expected)));
-    }    
+    }
 
     @Test @Parameters(method="parametersForEquals") @TestCaseName("{method} {index} {params}")
     public void equalsStr(boolean expected, String a, String b) {
@@ -402,9 +402,9 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForEndsWithChar() {
-        return paramsList(params(true,  "abc", 'c'), 
-                          params(false, "abc", ' '), 
-                          params(false, null,  'c'), 
+        return paramsList(params(true,  "abc", 'c'),
+                          params(false, "abc", ' '),
+                          params(false, null,  'c'),
                           params(false, "abc", 'd'));
     }
 
@@ -414,14 +414,14 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForEndsWithString() {
-        return paramsList(params(true,  "abc",   "c"),   
-                          params(true,  "abc",   "bc"),  
-                          params(true,  "abc",   "abc"), 
-                          params(false, "abcd",  "abc"), 
-                          params(true,  "abc",   ""),    
-                          params(false, null,    ""),    
-                          params(true,  "abc.x", ".x"),  
-                          params(false, "abc.x", ".y"),  
+        return paramsList(params(true,  "abc",   "c"),
+                          params(true,  "abc",   "bc"),
+                          params(true,  "abc",   "abc"),
+                          params(false, "abcd",  "abc"),
+                          params(true,  "abc",   ""),
+                          params(false, null,    ""),
+                          params(true,  "abc.x", ".x"),
+                          params(false, "abc.x", ".y"),
                           params(false, "abc",   "d"));
     }
 
@@ -433,12 +433,12 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForCompareTo() {
-        return paramsList(params(0,  "abc", "abc"), 
-                          params(-1, "abc", "def"), 
-                          params(1,  "def", "abc"), 
-                          params(-1, "abc", null),  
-                          params(-1, "ab",  "abc"),  
-                          params(0,  null,  null),  
+        return paramsList(params(0,  "abc", "abc"),
+                          params(-1, "abc", "def"),
+                          params(1,  "def", "abc"),
+                          params(-1, "abc", null),
+                          params(-1, "ab",  "abc"),
+                          params(0,  null,  null),
                           params(1,  null,  "abc"));
     }
 
@@ -450,8 +450,8 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForCompareToNull() {
-        return paramsList(params(-1, Str.of("abc"), null), 
-                          params(0,  Str.of(null),  null), 
+        return paramsList(params(-1, Str.of("abc"), null),
+                          params(0,  Str.of(null),  null),
                           params(0,  Str.of(null),  Str.of(null)));
     }
 
@@ -463,12 +463,12 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForCompareToWithOptions() {
-        return paramsList(params(0,  "abc",   "abc",  EnumSet.of(Str.Option.IGNORE_CASE)), 
-                          params(0,  "Abc",   "abc",  EnumSet.of(Str.Option.IGNORE_CASE)), 
-                          params(-1, "Abc",   "abc",  EnumSet.noneOf(Str.Option.class)),   
-                          params(1,  "abc",   "Abc",  EnumSet.noneOf(Str.Option.class)),   
-                          params(1,  "abcd",  "abc",  EnumSet.noneOf(Str.Option.class)),   
-                          params(-1, "abc",   "abcd", EnumSet.noneOf(Str.Option.class)),   
+        return paramsList(params(0,  "abc",   "abc",  EnumSet.of(Str.Option.IGNORE_CASE)),
+                          params(0,  "Abc",   "abc",  EnumSet.of(Str.Option.IGNORE_CASE)),
+                          params(-1, "Abc",   "abc",  EnumSet.noneOf(Str.Option.class)),
+                          params(1,  "abc",   "Abc",  EnumSet.noneOf(Str.Option.class)),
+                          params(1,  "abcd",  "abc",  EnumSet.noneOf(Str.Option.class)),
+                          params(-1, "abc",   "abcd", EnumSet.noneOf(Str.Option.class)),
                           params(1,  "abcde", "abc",  EnumSet.noneOf(Str.Option.class)));
     }
 
@@ -480,15 +480,15 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForCompareToAlphanumeric() {
-        return paramsList(params(0,  "1",  "1"),  
-                          params(0,  "a",  "a"),  
-                          params(-1, "2",  "3"),  
-                          params(1,  "3",  "2"),  
-                          params(-1, "9",  "12"), 
-                          params(1,  "12", "9"),  
-                          params(-1, "a2", "a3"), 
-                          params(1,  "a1", "a"),  
-                          params(-1, "a",  "a1"), 
+        return paramsList(params(0,  "1",  "1"),
+                          params(0,  "a",  "a"),
+                          params(-1, "2",  "3"),
+                          params(1,  "3",  "2"),
+                          params(-1, "9",  "12"),
+                          params(1,  "12", "9"),
+                          params(-1, "a2", "a3"),
+                          params(1,  "a1", "a"),
+                          params(-1, "a",  "a1"),
                           params(-1, "a9", "a12"));
     }
 
@@ -509,7 +509,7 @@ public class StrTest extends StringTest {
     
     private List<Object[]> parametersForInitRepeatChar() {
         return paramsList(params(new Str("a"),  'a',  1),
-                          params(new Str("aa"), 'a',  2),  
+                          params(new Str("aa"), 'a',  2),
                           params(new Str(""),   'a',  0),
                           params(new Str(""),   'a', -1));
     }
@@ -521,11 +521,11 @@ public class StrTest extends StringTest {
     
     private List<Object[]> parametersForInitRepeatString() {
         return paramsList(params(new Str("ab"),   "ab",  1),
-                          params(new Str("abab"), "ab",  2),  
-                          params(new Str(""),     "a",   0),  
-                          params(new Str(""),     "a",  -1), 
-                          params(new Str(""),     "",    0),  
-                          params(new Str(""),     "",    1),  
+                          params(new Str("abab"), "ab",  2),
+                          params(new Str(""),     "a",   0),
+                          params(new Str(""),     "a",  -1),
+                          params(new Str(""),     "",    0),
+                          params(new Str(""),     "",    1),
                           params(new Str(null),   null,  1));
     }
 
@@ -539,7 +539,7 @@ public class StrTest extends StringTest {
     @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
     public void replaceAllIgnoreCase(String expWithCase, String expIgnoreCase, String line, String from, String to) {
         Str str = toStr(line);
-        Str result = str.replaceAll(from, to, EnumSet.of(Str.Option.IGNORE_CASE));        
+        Str result = str.replaceAll(from, to, EnumSet.of(Str.Option.IGNORE_CASE));
         assertThat(result, expIgnoreCase == null ? nullValue() : equalTo(toStr(expIgnoreCase)));
     }
     
@@ -657,11 +657,11 @@ public class StrTest extends StringTest {
     }
     
     private java.util.List<Object[]> parametersForFirstWithArg() {
-        return paramsList(params("a",   "abc",  1),  
-                          params("ab",  "abc",  2),  
-                          params("abc", "abc",  4),  
-                          params("",    "abc",  0),  
-                          params("",    "abc", -1), 
+        return paramsList(params("a",   "abc",  1),
+                          params("ab",  "abc",  2),
+                          params("abc", "abc",  4),
+                          params("",    "abc",  0),
+                          params("",    "abc", -1),
                           params(null,  null,   1));
     }
 
@@ -685,12 +685,12 @@ public class StrTest extends StringTest {
     }
     
     private java.util.List<Object[]> parametersForLastWithArg() {
-        return paramsList(params("c",   "abc",  1),  
-                          params("bc",  "abc",  2),  
-                          params("abc", "abc",  3),  
-                          params("abc", "abc",  4),  
-                          params("",    "abc",  0),  
-                          params("",    "abc", -1), 
+        return paramsList(params("c",   "abc",  1),
+                          params("bc",  "abc",  2),
+                          params("abc", "abc",  3),
+                          params("abc", "abc",  4),
+                          params("",    "abc",  0),
+                          params("",    "abc", -1),
                           params(null,  null,   1));
     }
 
@@ -702,19 +702,19 @@ public class StrTest extends StringTest {
     }
 
     private java.util.List<Object[]> parametersForTrim() {
-        return paramsList(params("",   ""),      
-                          params("",   " "),     
-                          params("a",  "a"),     
-                          params("a",  "a "),    
-                          params("ab", "ab "),   
-                          params("a",  " a"),    
-                          params("a",  " a "),   
-                          params("a",  "a  "),   
-                          params("a",  "  a"),   
-                          params("a",  "a\t"),   
-                          params("a",  "a\n"),   
-                          params("a",  "a\r"),   
-                          params("a",  "a\r\n"), 
+        return paramsList(params("",   ""),
+                          params("",   " "),
+                          params("a",  "a"),
+                          params("a",  "a "),
+                          params("ab", "ab "),
+                          params("a",  " a"),
+                          params("a",  " a "),
+                          params("a",  "a  "),
+                          params("a",  "  a"),
+                          params("a",  "a\t"),
+                          params("a",  "a\n"),
+                          params("a",  "a\r"),
+                          params("a",  "a\r\n"),
                           params("a",  "\r\na"));
     }
 
@@ -725,13 +725,13 @@ public class StrTest extends StringTest {
     }
 
     private java.util.List<Object[]> parametersForTrimLeft() {
-        return paramsList(params("",    ""),    
-                          params("",    " "),   
-                          params("a",   "a"),   
-                          params("a",   " a"),  
-                          params("a",   "  a"), 
-                          params("a ",  "a "),  
-                          params("a ",  " a "), 
+        return paramsList(params("",    ""),
+                          params("",    " "),
+                          params("a",   "a"),
+                          params("a",   " a"),
+                          params("a",   "  a"),
+                          params("a ",  "a "),
+                          params("a ",  " a "),
                           params("a\t", "\ta\t"));
     }
 
@@ -742,14 +742,14 @@ public class StrTest extends StringTest {
     }
 
     private java.util.List<Object[]> parametersForTrimRight() {
-        return paramsList(params("",    ""),    
-                          params("",    " "),   
-                          params("a",   "a"),   
-                          params(" a",  " a"),  
-                          params("  a", "  a"), 
-                          params("a",   "a "),  
-                          params("a",   "a  "), 
-                          params(" a",  " a "), 
+        return paramsList(params("",    ""),
+                          params("",    " "),
+                          params("a",   "a"),
+                          params(" a",  " a"),
+                          params("  a", "  a"),
+                          params("a",   "a "),
+                          params("a",   "a  "),
+                          params(" a",  " a "),
                           params("\ta", "\ta\t"));
     }
     
@@ -760,8 +760,8 @@ public class StrTest extends StringTest {
     }
 
     private java.util.List<Object[]> parametersForEscape() {
-        return paramsList(params("",          ""),  
-                          params("\\ ",       " "), 
+        return paramsList(params("",          ""),
+                          params("\\ ",       " "),
                           params("a\\ b\\ c", "a b c"));
     }
 
@@ -772,8 +772,8 @@ public class StrTest extends StringTest {
     }
 
     private java.util.List<Object[]> parametersForPlus() {
-        return paramsList(params("",   "",  ""),  
-                          params("ab", "a", "b"), 
+        return paramsList(params("",   "",  ""),
+                          params("ab", "a", "b"),
                           params("b",  "",  "b"));
     }
 
@@ -785,11 +785,11 @@ public class StrTest extends StringTest {
     }
 
     private java.util.List<Object[]> parametersForIndexOfPattern() {
-        return paramsList(params(0,    "",    ""),   
-                          params(null, "a",   "b"),  
-                          params(0,    "ab",  "a."), 
-                          params(0,    "ab",  "a"),  
-                          params(1,    "bab", "ab"), 
+        return paramsList(params(0,    "",    ""),
+                          params(null, "a",   "b"),
+                          params(0,    "ab",  "a."),
+                          params(0,    "ab",  "a"),
+                          params(1,    "bab", "ab"),
                           params(0,    "aba", "a"));
     }
 
@@ -801,13 +801,13 @@ public class StrTest extends StringTest {
     }
 
     private java.util.List<Object[]> parametersForIndexOfPatternWithOffset() {
-        return paramsList(params(0,    "",    "",   0), 
-                          params(null, "a",   "b",  0), 
-                          params(0,    "ab",  "a",  0), 
-                          params(null, "ab",  "a",  1), 
-                          params(1,    "bab", "ab", 0), 
-                          params(1,    "bab", "ab", 1), 
-                          params(0,    "aba", "a",  0), 
+        return paramsList(params(0,    "",    "",   0),
+                          params(null, "a",   "b",  0),
+                          params(0,    "ab",  "a",  0),
+                          params(null, "ab",  "a",  1),
+                          params(1,    "bab", "ab", 0),
+                          params(1,    "bab", "ab", 1),
+                          params(0,    "aba", "a",  0),
                           params(2,    "aba", "a",  1));
     }
 
@@ -819,11 +819,11 @@ public class StrTest extends StringTest {
     }
 
     private java.util.List<Object[]> parametersForMatchRegexpNoOffset() {
-        return paramsList(params(new MatchData(StringArray.of("")), "",    ""),   
-                          params(null,            "b",   "a"),  
-                          params(new MatchData(StringArray.of("ab")), "a.",  "ab"), 
-                          params(new MatchData(StringArray.of("a")), "a",  "ab"),  
-                          params(new MatchData(StringArray.of("ab")), "ab", "bab"), 
+        return paramsList(params(new MatchData(StringArray.of("")), "",    ""),
+                          params(null,            "b",   "a"),
+                          params(new MatchData(StringArray.of("ab")), "a.",  "ab"),
+                          params(new MatchData(StringArray.of("a")), "a",  "ab"),
+                          params(new MatchData(StringArray.of("ab")), "ab", "bab"),
                           params(new MatchData(StringArray.of("a")), "a", "a"));
     }
 
@@ -888,5 +888,5 @@ public class StrTest extends StringTest {
 
         t = s.snip(6);
         assertThat(t, equalTo("hello-"));
-    }    
+    }
 }

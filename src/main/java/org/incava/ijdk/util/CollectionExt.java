@@ -25,7 +25,7 @@ public class CollectionExt extends ObjectExt {
 
     public static <Type> boolean hasAll(Collection<Type> src, Collection<Type> tgt) {
         return Collections.hasAll(src, tgt);
-    }   
+    }
 
     public static <Type> boolean hasAny(Collection<Type> src, Collection<Type> tgt) {
         return Collections.hasAny(src, tgt);

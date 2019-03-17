@@ -24,7 +24,7 @@ public class HashTest extends Parameterized {
         Hash<String, Integer> ijdkMap = new Hash<String, Integer>(jdkMap);
         assertThat(ijdkMap, equalTo(jdkMap));
         assertThat(jdkMap, equalTo(ijdkMap));
-    }   
+    }
     
     @Test
     public void ofList() {
@@ -39,7 +39,7 @@ public class HashTest extends Parameterized {
         expected.put("three", 3);
 
         assertThat(expected, equalTo(Hash.of(list)));
-    }   
+    }
     
     @Test
     public void ofArray() {
@@ -53,12 +53,12 @@ public class HashTest extends Parameterized {
         expected.put("three", "3");
 
         assertThat(expected, equalTo(Hash.of(array)));
-    }   
+    }
     
     @Test
     public void empty() {
         assertThat(Hash.<String, Integer>empty(), equalTo(new Hash<String, Integer>()));
-    }   
+    }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void of(java.util.TreeMap<K, V> expected, Hash<K, V> result) {
@@ -126,10 +126,10 @@ public class HashTest extends Parameterized {
     public void iterator() {
         Hash<String, Integer> map = Hash.of("one", 1, "two", 2);
         java.util.Iterator<java.util.Map.Entry<String, Integer>> it = map.iterator();
-        assertThat(it.hasNext(), equalTo(true));        
+        assertThat(it.hasNext(), equalTo(true));
         assertThat(it.next(), equalTo(new java.util.AbstractMap.SimpleEntry<String, Integer>("one", 1)));
         assertThat(it.next(), equalTo(new java.util.AbstractMap.SimpleEntry<String, Integer>("two", 2)));
-        assertThat(it.hasNext(), equalTo(false));        
+        assertThat(it.hasNext(), equalTo(false));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -139,7 +139,7 @@ public class HashTest extends Parameterized {
     }
     
     private List<Object[]> parametersForFetchWithDefValue() {
-        Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");        
+        Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");
         return paramsList(params("abc", h, "first", "xyz"),
                           params("def", h, "second", "xyz"),
                           params("yyy", h, "fourth", "yyy"),
@@ -158,7 +158,7 @@ public class HashTest extends Parameterized {
     }
     
     private List<Object[]> parametersForFetchNoDefault() {
-        Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");        
+        Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");
         return paramsList(params(null, h, "first"),
                           params("key not found: 'fourth'", h, "fourth"),
                           params("key not found: 'fifth'",  h, "fifth"));

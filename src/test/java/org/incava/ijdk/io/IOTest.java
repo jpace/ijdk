@@ -22,7 +22,7 @@ public class IOTest extends Parameterized {
     private final String tmpdir = System.getProperty("java.io.tmpdir");
 
     public File writeFile(String fname, String ... lines) {
-        File file = new File(fname);        
+        File file = new File(fname);
         try {
             PrintWriter pw = new PrintWriter(fname);
             for (String line : lines) {
@@ -53,7 +53,7 @@ public class IOTest extends Parameterized {
 
     @Test
     public void testReadLinesNonEmpty() {
-        String[] lines = new String[] { 
+        String[] lines = new String[] {
             "",
             "first line",
             "",
@@ -75,7 +75,7 @@ public class IOTest extends Parameterized {
         List<String> readLines = IO.readLines(tmpFname, EnumSet.of(ReadOptionType.NONEMPTY));
         assertEqual(expLines, readLines);
 
-        tmpFile.delete();        
+        tmpFile.delete();
     }
 
     @Test

@@ -32,13 +32,13 @@ public class Indexable {
      * <p>Examples:</p>
      *
      * <pre>
-     *     Indexable idx = new Indexable(null);  
+     *     Indexable idx = new Indexable(null);
      *     idx.get(null, 0);  // == null
      *
-     *     idx = new Indexable(0);  
+     *     idx = new Indexable(0);
      *     idx.get(0, 0);     // == null
      *
-     *     idx = new Indexable(4);  
+     *     idx = new Indexable(4);
      *     idx.get(0);     // == 0
      *     idx.get(1);     // == 1
      *     idx.get(3);     // == 3

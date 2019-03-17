@@ -77,7 +77,7 @@ public class Files {
      * @param fname the name of the file
      * @return the resolved file name
      */
-    public static String resolveFileName(String fname) {        
+    public static String resolveFileName(String fname) {
         return fname.replace("~", System.getProperty("user.home"));
     }
 

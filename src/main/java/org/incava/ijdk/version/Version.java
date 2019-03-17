@@ -18,7 +18,7 @@ public class Version implements Comparing<Version> {
     
     public static Version of(String str) {
         return "latest".equalsIgnoreCase(str) ? LATEST : new Version(str);
-    }    
+    }
     
     private final Array<Integer> values;
     private final DefaultComparing<Version> comparing;
@@ -27,7 +27,7 @@ public class Version implements Comparing<Version> {
         values = Array.empty();
         for (String it : str.split("\\.")) {
             Integer num = Integer.valueOf(it);
-            values.append(num);            
+            values.append(num);
         }
         comparing = new DefaultComparing<Version>(this);
     }
@@ -110,5 +110,5 @@ public class Version implements Comparing<Version> {
     private Integer getValueAt(int idx) {
         Integer val = values.get(idx);
         return val == null ? 0 : val;
-    }    
+    }
 }

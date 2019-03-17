@@ -68,7 +68,7 @@ public class IntegerListTest extends Parameterized {
     public void maximum(Integer expected, Integer ... values) {
         IntegerList sl = new IntegerList(values);
         Integer result = sl.maximum();
-        assertEqual(expected, result, message("values", Arrays.asList(values)));        
+        assertEqual(expected, result, message("values", Arrays.asList(values)));
     }
     
     private List<Object[]> parametersForMaximum() {

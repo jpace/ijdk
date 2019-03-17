@@ -85,7 +85,7 @@ public class Iterate {
      */
     public static <T> IndexIterable<T> eachWithIndex(T[] ary) {
         return new IndexIterable<T>(ary == null ? null : Arrays.asList(ary));
-    }    
+    }
 
     /**
      * An iterator that has a value (<code>it.value()</code>) and an index
@@ -105,5 +105,5 @@ public class Iterate {
      */
     public static <T> IndexIterable<T> eachWithIndex(Iterable<T> elements) {
         return new IndexIterable<T>(elements);
-    }    
+    }
 }

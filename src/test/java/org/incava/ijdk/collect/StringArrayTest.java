@@ -66,7 +66,7 @@ public class StringArrayTest extends Parameterized {
     public void anyStartsWith(boolean expected, String substr, String ... args) {
         StringArray sl = new StringArray(args);
         boolean result = sl.anyStartsWith(substr);
-        assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));        
+        assertThat(result, withContext(equalTo(expected), message("sl", sl, "substr", substr)));
     }
     
     private List<Object[]> parametersForAnyStartsWith() {
@@ -229,9 +229,9 @@ public class StringArrayTest extends Parameterized {
     }
     
     private List<Object[]> parametersForSortedComparator() {
-        return paramsList(params(StringArray.of("a9", "a10", "b"), StringArray.of("b", "a10", "a9"), new StringAlphanumericComparator()), 
+        return paramsList(params(StringArray.of("a9", "a10", "b"), StringArray.of("b", "a10", "a9"), new StringAlphanumericComparator()),
                           params(StringArray.of("b3", "b4",  "c"), StringArray.of("c", "b4",  "b3"), new StringAlphanumericComparator()));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void collect(StringArray expected, StringArray ary, String repl) {
@@ -244,7 +244,7 @@ public class StringArrayTest extends Parameterized {
     private List<Object[]> parametersForCollect() {
         return paramsList(params(StringArray.of("x-a", "x-b", "x-c"), StringArray.of("a", "b", "c"), "x-%s"),
                           params(StringArray.of("a", "b", "c"), StringArray.of("a", "b", "c"), "%s"));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void unique(StringArray expected, StringArray ary) {
@@ -257,7 +257,7 @@ public class StringArrayTest extends Parameterized {
     private List<Object[]> parametersForUnique() {
         return paramsList(params(StringArray.of("b", "a", "c"), StringArray.of("b", "a", "c")),
                           params(StringArray.of("b", "c", "a"), StringArray.of("b", "c", "a")));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void fromFile(StringArray expected, File file) {
@@ -291,7 +291,7 @@ public class StringArrayTest extends Parameterized {
         return paramsList(params(StringArray.of("b", "a", "c"), new File("/tmp/bac.txt")),
                           params(StringArray.of("x", "y", "z"), new File("/tmp/xyz.txt")),
                           params(null, new File("/tmp/doesnotexists.nil")));
-    }    
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void fromInputStream(StringArray expected, InputStream inputStream) {
@@ -319,10 +319,10 @@ public class StringArrayTest extends Parameterized {
             Files.write(pqr.toPath(), StringArray.of("p", "q", "r"));
 
             return paramsList(params(StringArray.of("d", "e", "f"), new FileInputStream(def)),
-                              params(StringArray.of("p", "q", "r"), new FileInputStream(pqr)));            
+                              params(StringArray.of("p", "q", "r"), new FileInputStream(pqr)));
         }
         catch (IOException ioe) {
             throw new RuntimeException(ioe);
-        }        
-    }    
+        }
+    }
 }

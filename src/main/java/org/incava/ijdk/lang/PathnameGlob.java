@@ -23,7 +23,7 @@ public class PathnameGlob {
 
     /**
      * Converts an element within a glob, to a pattern, escaping characters such as '*' and '.'.
-     * 
+     *
      * Roughly based on Dir#glob: http://ruby-doc.org/core-1.9.3/Dir.html
      *
      * @param element the element, such as "**"

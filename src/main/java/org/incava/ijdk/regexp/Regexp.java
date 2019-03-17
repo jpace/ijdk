@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 /**
  * A regular expression, more closely matching the functionality in Ruby.
  */
-public class Regexp {    
+public class Regexp {
     /**
      * Creates a regular expression for the given pattern.
      *
