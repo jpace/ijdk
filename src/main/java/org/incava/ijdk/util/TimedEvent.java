@@ -6,14 +6,12 @@ package org.incava.ijdk.util;
  * <code>end</code> method is invoked.
  */
 public class TimedEvent {
+    private final long startTime;
+    private final TimedEventSet set;
+    private final String name;
+
     public long duration;
-
-    private String name;
-
-    private long startTime;
-
-    private TimedEventSet set;
-
+    
     public TimedEvent(String name, TimedEventSet set) {
         this.name = name;
         this.set = set;
@@ -43,5 +41,4 @@ public class TimedEvent {
         end();
         System.err.println(name + ": " + duration);
     }
-
 }
