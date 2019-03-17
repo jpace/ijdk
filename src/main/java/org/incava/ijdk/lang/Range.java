@@ -119,7 +119,7 @@ public class Range implements Comparable<Range>, Iterable<Integer>, HasInstanceV
      * @return an array of integers
      */
     public Array<Integer> toArray() {
-        Array<Integer> list = Array.<Integer>empty();
+        Array<Integer> list = Array.empty();
         for (Integer num = first; num <= last; ++num) {
             list.append(num);
         }
@@ -164,6 +164,7 @@ public class Range implements Comparable<Range>, Iterable<Integer>, HasInstanceV
      * last elements are less than the other's. A range is greater than another range if either the
      * first or last element are greater than the other's.
      *
+     * @param other the range to compare against
      * @return the comparison value
      */
     public int compareTo(Range other) {

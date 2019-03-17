@@ -77,10 +77,10 @@ public class RangeTest extends Parameterized {
         Range rg35 = new Range(3, 5);
         Range rg53 = new Range(5, 3);
         Range rg33 = new Range(3, 3);
-        return paramsList(params(true,  rg35, 3),
+        return paramsList(params(false, rg35, 2),
+                          params(true,  rg35, 3),
                           params(true,  rg35, 4),
                           params(true,  rg35, 5),
-                          params(false, rg35, 2),
                           params(false, rg35, 6),
                           params(false, rg35, null),
                           
@@ -101,8 +101,8 @@ public class RangeTest extends Parameterized {
     
     private List<Object[]> parametersForToArray() {
         return paramsList(params(Array.of(3, 4, 5, 6, 7), new Range(3, 7)),
-                          params(Array.of(3), new Range(3, 3)),
-                          params(Array.<Integer>empty(), new Range(7, 3)));
+                          params(Array.of(3),             new Range(3, 3)),
+                          params(Array.<Integer>empty(),  new Range(7, 3)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -117,8 +117,8 @@ public class RangeTest extends Parameterized {
     
     private List<Object[]> parametersForIterator() {
         return paramsList(params(new Integer[] { 2, 3, 4 }, new Range(2, 4)),
-                          params(new Integer[] { 2 }, new Range(2, 2)),
-                          params(new Integer[] { }, new Range(3, 2)));
+                          params(new Integer[] { 2 },       new Range(2, 2)),
+                          params(new Integer[] { },         new Range(3, 2)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -133,9 +133,9 @@ public class RangeTest extends Parameterized {
     
     private List<Object[]> parametersForUpTo() {
         return paramsList(params(new Integer[] { 2, 3 }, new Range(2, 4)),
-                          params(new Integer[] { 2 }, new Range(2, 3)),
-                          params(new Integer[] { }, new Range(2, 2)),
-                          params(new Integer[] { }, new Range(3, 2)));
+                          params(new Integer[] { 2 },    new Range(2, 3)),
+                          params(new Integer[] { },      new Range(2, 2)),
+                          params(new Integer[] { },      new Range(3, 2)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

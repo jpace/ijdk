@@ -3,10 +3,10 @@ package org.incava.ijdk.lang;
 import java.util.List;
 import org.incava.attest.Parameterized;
 
-// Data used by StrText and StringExtTest
+// Data used by StrTest and StringExtTest
 public abstract class StringTest extends Parameterized {
     public List<Object[]> parametersForSplitCharDelim() {
-        return paramsList(params(null, null, ';', -1),
+        return paramsList(params(null,                                            null,              ';', -1),
                           params(new String[] { "this", "is", "a",     "test"  }, "this;is;a;test",  ';', -1),
                           params(new String[] { "this", "is", "a", "", "test"  }, "this;is;a;;test", ';', -1),
                           params(new String[] { "this", "is;a;;test"           }, "this;is;a;;test", ';',  2),
@@ -15,45 +15,45 @@ public abstract class StringTest extends Parameterized {
     }
     
     public List<Object[]> parametersForSplitStringDelim() {
-        return paramsList(params(null, null, ";", -1),
+        return paramsList(params(null,                                       null,                   ";",   -1),
                           params(new String[] { "this", "is", "a", "test" }, "this;is;a;test",       ";",   -1),
                           params(new String[] { "this", "is", "a", "test" }, "this ; is ; a ; test", " ; ", -1));
     }
     
     public List<Object[]> parametersForToList() {
-        return paramsList(params(null, null),
+        return paramsList(params(null,                                       null),
                           params(new String[] { "fee", "fi", "foo", "fum" }, "fee, fi, foo, fum"),
                           params(new String[] { "fee", "fi", "foo", "fum" }, "fee,\tfi,\nfoo,\rfum"));
     }
     
     public List<Object[]> parametersForPadWithChar() {
-        return paramsList(params(null,       null,   '*', 8), 
-                          params("abcd****", "abcd", '*', 8), 
-                          params("abcd",     "abcd", '*', 3), 
-                          params("abcd",     "abcd", '*', 4), 
+        return paramsList(params(null,       null,   '*', 8),
+                          params("abcd****", "abcd", '*', 8),
+                          params("abcd",     "abcd", '*', 3),
+                          params("abcd",     "abcd", '*', 4),
                           params("abcd*",    "abcd", '*', 5));
     }    
     
     public List<Object[]> parametersForPadWithoutChar() {
-        return paramsList(params("abcd    ", "abcd", 8), 
-                          params("abcd",     "abcd", 3), 
-                          params("abcd",     "abcd", 4), 
+        return paramsList(params("abcd    ", "abcd", 8),
+                          params("abcd",     "abcd", 3),
+                          params("abcd",     "abcd", 4),
                           params("abcd ",    "abcd", 5));
     }
     
     public List<Object[]> parametersForPadLeftWithChar() {
-        return paramsList(params(null,       null,   '*', 8), 
-                          params("****abcd", "abcd", '*', 8), 
-                          params("abcd",     "abcd", '*', 3), 
+        return paramsList(params(null,       null,   '*', 8),
+                          params("****abcd", "abcd", '*', 8),
+                          params("abcd",     "abcd", '*', 3),
                           params("abcd",     "abcd", '*', 4), 
                           params("*abcd",    "abcd", '*', 5));
     }
     
     public List<Object[]> parametersForPadLeftWithoutChar() {
-        return paramsList(params(null,       null,   8), 
-                          params("    abcd", "abcd", 8), 
-                          params("abcd",     "abcd", 3), 
-                          params("abcd",     "abcd", 4), 
+        return paramsList(params(null,       null,   8),
+                          params("    abcd", "abcd", 8),
+                          params("abcd",     "abcd", 3),
+                          params("abcd",     "abcd", 4),
                           params(" abcd",    "abcd", 5));
     }
     
