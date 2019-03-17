@@ -6,9 +6,9 @@ package org.incava.ijdk.util;
  * <code>end</code> method is invoked.
  */
 public class TimedEvent {
-    private final long startTime;
-    private final TimedEventSet set;
     private final String name;
+    private final TimedEventSet set;
+    private final long startTime;
 
     public long duration;
     
