@@ -6,6 +6,7 @@ import java.util.List;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
+import org.incava.ijdk.collect.Array;
 import org.junit.Test;
 
 import static org.incava.attest.Assertions.assertEqual;
@@ -15,6 +16,20 @@ import static org.incava.attest.Parameters.params;
 import static org.incava.attest.Parameters.paramsList;
 
 public class ObjectsTest extends Parameterized {
+    public static class HasInstanceValuesExample implements HasInstanceValues {
+        private final Object x;
+        private final Object y;
+
+        public HasInstanceValuesExample(Object x, Object y) {
+            this.x = x;
+            this.y = y;
+        }
+        
+        public Array<Object> getInstanceValues() {
+            return Array.of(x, y);
+        }
+    }
+    
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <T extends Comparable<T>> void compare(int expected, T x, T y) {
         int result = Objects.compare(x, y);
@@ -84,5 +99,16 @@ public class ObjectsTest extends Parameterized {
     private List<Object[]> parametersForIsNull() {
         return paramsList(params(true, null),
                           params(false, new Object()));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void hashCode(int expected, HasInstanceValues obj) {
+        int result = Objects.hashCode(obj);
+        assertEqual(expected, result, message("obj", obj));
+    }
+    
+    private List<Object[]> parametersForHashCode() {
+        return paramsList(params(0, null),
+                          params(994, new HasInstanceValuesExample(1, 2)));
     }
 }
