@@ -27,6 +27,10 @@ public class BasicObjectTest extends Parameterized {
         }
     }
 
+    private static BasicObject create(Object x, Object y) {
+        return new BasicObjectExample(x, y);
+    }
+
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void hashCode(int expected, BasicObjectExample obj) {
         int result = obj.hashCode();
@@ -34,8 +38,20 @@ public class BasicObjectTest extends Parameterized {
     }
     
     private List<Object[]> parametersForHashCode() {
-        return paramsList(params(962, new BasicObjectExample(0, 1)),
-                          params(994, new BasicObjectExample(1, 2)));
+        return paramsList(params(962, create(0, 1)),
+                          params(994, create(1, 2)));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void equals(boolean expected, BasicObjectExample obj, BasicObjectExample other) {
+        boolean result = obj.equals(other);
+        assertEqual(expected, result, message("obj", obj, "other", other));
+    }
+    
+    private List<Object[]> parametersForEquals() {
+        return paramsList(params(true, create(0, 1), create(0, 1)),
+                          params(false, create(0, 1), create(0, 2)),
+                          params(false, create(0, 1), null));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -45,8 +61,8 @@ public class BasicObjectTest extends Parameterized {
     }
     
     private List<Object[]> parametersForToStringNoDelim() {
-        return paramsList(params("0, 1", new BasicObjectExample(0, 1)),
-                          params("1, 2", new BasicObjectExample(1, 2)));
+        return paramsList(params("0, 1", create(0, 1)),
+                          params("1, 2", create(1, 2)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -56,7 +72,7 @@ public class BasicObjectTest extends Parameterized {
     }
     
     private List<Object[]> parametersForToStringWithDelim() {
-        return paramsList(params("0==1", new BasicObjectExample(0, 1), "=="),
-                          params("0+1", new BasicObjectExample(0, 1), "+"));
+        return paramsList(params("0==1", create(0, 1), "=="),
+                          params("0+1",  create(0, 1), "+"));
     }
 }

@@ -15,8 +15,8 @@ public abstract class BasicObject implements HasInstanceValues {
      * @param other the object to compare to
      * @return whether the other object is equal to this one
      */
-    public boolean equals(BasicObject other) {
-        return other == null ? false : Arrays.equals(getInstanceObjects(), other.getInstanceObjects());
+    public boolean equals(HasInstanceValues other) {
+        return other != null && getInstanceValues().equals(other.getInstanceValues());
     }
     
     /**
@@ -25,7 +25,7 @@ public abstract class BasicObject implements HasInstanceValues {
      * @return the hash code
      */
     public int hashCode() {
-        return Arrays.hashCode(getInstanceObjects());
+        return getInstanceValues().hashCode();
     }
 
     /**
@@ -46,9 +46,4 @@ public abstract class BasicObject implements HasInstanceValues {
     public String toString(String delim) {
         return getInstanceValues().join(delim);
     }
-
-    private Object[] getInstanceObjects() {
-        Array<Object> values = getInstanceValues();
-        return values.toArray(new Object[values.size()]);
-    }    
 }

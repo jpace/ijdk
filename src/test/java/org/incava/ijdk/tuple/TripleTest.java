@@ -45,7 +45,7 @@ public class TripleTest extends Parameterized {
         Triple<String, Double, Integer> baa = Triple.of("two", 1.2, 1);
 
         // StringBuilder is not comparable:
-        StringBuilder notComparable = new StringBuilder("one");
+        StringBuilder nc = new StringBuilder("one");
 
         return paramsList(params(0, aaa, aaa),
                           params(0, aaa, Triple.of("one", 1.2, 1)),
@@ -55,25 +55,25 @@ public class TripleTest extends Parameterized {
                           params(-1, aaa, aba),
                           params(1,  aba, aaa),
                           params(1,  baa, aaa),
-                          params(-1, Triple.of(notComparable, 1.2, 0), Triple.of(notComparable, 1.2, 0)),
-                          params(-1, Triple.of(1.2, notComparable, 0), Triple.of(1.2, notComparable, 0)),
-                          params(-1, Triple.of(1.2, 0, notComparable), Triple.of(1.2, 0, notComparable)));
+                          params(-1, Triple.of(nc, 1.2, 0), Triple.of(nc, 1.2, 0)),
+                          params(-1, Triple.of(1.2, nc, 0), Triple.of(1.2, nc, 0)),
+                          params(-1, Triple.of(1.2, 0, nc), Triple.of(1.2, 0, nc)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public <A, B, C> void testEquals(boolean expected, Triple<A, B, C> tr, Object obj) {
+    public <A, B, C> void equals(boolean expected, Triple<A, B, C> tr, Object obj) {
         boolean result = tr.equals(obj);
         assertEqual(expected, result, message("tr", tr, "obj", obj));
     }
     
-    private java.util.List<Object[]> parametersForTestEquals() {
+    private java.util.List<Object[]> parametersForEquals() {
         Triple<String, Double, Integer> aaa = Triple.of("one", 1.2, 1);
         Triple<String, Double, Integer> aab = Triple.of("one", 1.2, 2);
         Triple<String, Double, Integer> aba = Triple.of("one", 2.3, 1);
         Triple<String, Double, Integer> baa = Triple.of("two", 1.2, 1);
 
         // StringBuilder is not comparable:
-        StringBuilder notComparable = new StringBuilder("one");
+        StringBuilder nc = new StringBuilder("one");
 
         return paramsList(params(true,  aaa, aaa),
                           params(true,  aaa, Triple.of("one", 1.2, 1)),
@@ -84,9 +84,9 @@ public class TripleTest extends Parameterized {
                           params(false, aba, aaa),
                           params(false, baa, aaa),
                           params(false, aaa, "xyz"),
-                          params(true,  Triple.of(notComparable, 1.2, 0), Triple.of(notComparable, 1.2, 0)),
-                          params(true,  Triple.of(1.2, notComparable, 0), Triple.of(1.2, notComparable, 0)),
-                          params(true,  Triple.of(1.2, 0, notComparable), Triple.of(1.2, 0, notComparable)));
+                          params(true,  Triple.of(nc, 1.2, 0), Triple.of(nc, 1.2, 0)),
+                          params(true,  Triple.of(1.2, nc, 0), Triple.of(1.2, nc, 0)),
+                          params(true,  Triple.of(1.2, 0, nc), Triple.of(1.2, 0, nc)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

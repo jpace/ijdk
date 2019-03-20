@@ -126,7 +126,7 @@ public class Objects {
             return false;
         }
         else {
-            return Arrays.equals(getInstanceObjects(x), getInstanceObjects(y));
+            return x.getInstanceValues().equals(y.getInstanceValues());
         }
     }
  
@@ -137,7 +137,7 @@ public class Objects {
      * @return the hash code
      */
     public static int hashCode(HasInstanceValues x) {
-        return x == null ? 0 : Arrays.hashCode(getInstanceObjects(x));
+        return x == null ? 0 : x.getInstanceValues().hashCode();
     }
 
     /**
@@ -159,10 +159,5 @@ public class Objects {
      */
     public static String toString(HasInstanceValues x, String delim) {
         return x == null ? null : x.getInstanceValues().join(delim);
-    }
-
-    private static Object[] getInstanceObjects(HasInstanceValues x) {
-        Array<Object> values = x.getInstanceValues();
-        return values.toArray(new Object[values.size()]);
     }
 }
