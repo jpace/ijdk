@@ -38,12 +38,12 @@ public class Objects {
     /**
      * Compares the two objects, including testing for null.
      *
-     * @param <A> the type of objects; is Comparable
+     * @param <T> the type of objects; is Comparable
      * @param x the first object to compare
      * @param y the second object to compare
      * @return a negative, zero, or positive integer
      */
-    public static<A extends Comparable<A>> int compare(A x, A y) {
+    public static<T extends Comparable<T>> int compare(T x, T y) {
         return Comp.compare(x, y);
     }
 

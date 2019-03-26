@@ -9,11 +9,10 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.incava.ijdk.collect.Array;
 import org.incava.ijdk.regexp.MatchData;
 import org.incava.ijdk.regexp.Regexp;
-import org.incava.ijdk.str.StrAlphanumericComparator;
-import org.incava.ijdk.str.StrComparator;
-import org.incava.ijdk.str.StrIgnoreCaseComparator;
+import org.incava.ijdk.str.StrComparators;
 import org.incava.ijdk.util.Collections;
 import org.incava.ijdk.util.Indexable;
 
@@ -761,6 +760,26 @@ public class Str extends Obj<String> implements Comparing<Str> {
     public int compareTo(Str other) {
         return compareTo(other, EnumSet.noneOf(Str.Option.class));
     }
+
+    
+    /**
+     * Returns a negative number, zero, or a positive number, for when <code>other</code> is less
+     * than, equal to, or greater than this one. Takes a list of options, IGNORE_CASE and
+     * ALPHANUMERIC the valid ones, which currently cannot be combined.
+     *
+     * @param other the other string
+     * @param options options to use in comparing, IGNORE_CASE and ALPHANUMERIC
+     * @return the comparison value
+     */
+    public int compareTo(Str other, Str.Option ... options) {
+        if (isNull() || other == null || other.isNull()) {
+            return Boolean.compare(isNull(), other == null || other.isNull());
+        }
+        else {
+            Comparator<Str> comp = new StrComparators().create(options);
+            return comp.compare(this, other);
+        }
+    }
     
     /**
      * Returns a negative number, zero, or a positive number, for when <code>other</code> is less
@@ -775,18 +794,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return Boolean.compare(isNull(), other == null || other.isNull());
         }
         else {
-            Comparator<Str> comp = null;
-            if (options != null) {
-                if (options.contains(Str.Option.IGNORE_CASE)) {
-                    comp = new StrIgnoreCaseComparator();
-                }
-                else if (options.contains(Str.Option.ALPHANUMERIC)) {
-                    comp = new StrAlphanumericComparator();
-                }
-            }
-            if (comp == null) {
-                comp = new StrComparator();
-            }
+            Str.Option[] opts = options == null ? new Str.Option[0] : options.toArray(new Str.Option[options.size()]);
+            Comparator<Str> comp = new StrComparators().create(opts);
             return comp.compare(this, other);
         }
     }

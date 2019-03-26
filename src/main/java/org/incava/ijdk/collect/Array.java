@@ -74,8 +74,10 @@ public class Array<T extends Object> extends BaseArray<T, Array<T>> {
     @SafeVarargs
     @SuppressWarnings("varargs")
     public Array(T ... ary) {
-        for (T el : ary) {
-            add(el);
+        if (ary != null) {
+            for (T el : ary) {
+                add(el);
+            }
         }
     }
 

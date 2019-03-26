@@ -44,7 +44,8 @@ public class ArrayTest extends Parameterized {
         
         return paramsList(params(aryAbc,              Array.of("a", "b", "c")),
                           params(aryDe,               Array.of("d", "e")),
-                          params(new Array<String>(), Array.<String>of()));
+                          params(new Array<String>(), Array.<String>of()),
+                          params(new Array<String>(), Array.<String>of((String[])null)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

@@ -391,7 +391,7 @@ public class StringExt {
 
     /**
      * If <code>str</code> is longer than <code>length</code>, then the returned string is cut at
-     * the given length and appended with a dash, so <code>snip("foobar", 3)</code> is "foo-.
+     * the given length and appended with a dash, so <code>snip("foobar", 3)</code> is "foo-".
      * Returns null if <code>str</code> is null. Returns an empty string if <code>length</code> is
      * zero or less.
      *

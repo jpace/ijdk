@@ -473,6 +473,24 @@ public class StrTest extends StringTest {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void compareToWithOptionsVarargs(Integer expected, String x, String y, Str.Option ... options) {
+        Integer result = new Str(x).compareTo(new Str(y), options);
+        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
+        assertThat(relResult, withContext(message("x", x, "y", y, "options", options), equalTo(expected)));
+    }
+    
+    private List<Object[]> parametersForCompareToWithOptionsVarargs() {
+        return paramsList(params(0,  "abc",   "abc",  Str.Option.IGNORE_CASE),
+                          params(0,  "Abc",   "abc",  Str.Option.IGNORE_CASE),
+                          params(-1, "Abc",   "abc",  new Str.Option[0]),
+                          params(1,  "abc",   "Abc",  new Str.Option[0]),
+                          params(1,  "abcd",  "abc",  new Str.Option[0]),
+                          params(-1, "abc",   "abcd", new Str.Option[0]),
+                          params(1,  "abcde", "abc",  new Str.Option[0]),
+                          params(1,  "abcde", "abc",  null));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void compareToAlphanumeric(Integer expected, String x, String y) {
         Integer result = new Str(x).compareTo(new Str(y), EnumSet.of(Str.Option.ALPHANUMERIC));
         Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
