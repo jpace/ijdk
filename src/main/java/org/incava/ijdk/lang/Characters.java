@@ -18,4 +18,10 @@ public class Characters {
         Character ch = str.get(idx);
         return ch != null && Character.isWhitespace(ch);
     }
+
+    public static boolean isNewLine(Str str, int idx) {
+        String nl = "\r\n";
+        Character ch = str.get(idx);
+        return ch != null && nl.indexOf(ch) >= 0;
+    }
 }

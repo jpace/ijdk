@@ -206,99 +206,39 @@ public class StrTest extends StringTest {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void startsWith(boolean expected, String str, char ch) {
-        boolean result = new Str(str).startsWith(ch);
-        assertThat(result, equalTo(expected));
-    }
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void startsWithString(boolean expected, String str, String substr) {
-        boolean result = new Str(str).startsWith(substr);
+    public void startsWithString(boolean expected, Str str, String substr) {
+        boolean result = str.startsWith(substr);
         assertThat(result, equalTo(expected));
     }
 
     public List<Object[]> parametersForStartsWithString() {
-        return paramsList(params(false, null,   "a"),
-                          params(true,  "abcd", "a"),
-                          params(true,  "abcd", "ab"),
-                          params(true,  "abcd", "abc"),
-                          params(true,  "abcd", ""),
-                          params(false, "ab",   "abc"),
-                          params(true,  "abcd", "abcd"),
-                          params(false, "abcd", "abcde"),
-                          params(false, "abcd", "b"),
-                          params(false, "abcd", "A"),
-                          params(true,  "Abcd", "A"));
-    }
-
-    @Test @Parameters(method="parametersForStartsWith") @TestCaseName("{method} {index} {params}")
-    public void startsWithUseCase(boolean expected, String str, char ch) {
-        boolean result = new Str(str).startsWith(ch);
-        assertThat(result, equalTo(expected));
-    }
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void startsWithIgnoreCase(boolean expected, String str, String substr) {
-        boolean result = new Str(str).startsWith(substr, EnumSet.of(Str.Option.IGNORE_CASE));
-        assertThat(result, equalTo(expected));
-    }
-
-    public List<Object[]> parametersForStartsWithIgnoreCase() {
-        return paramsList(params(false, null,   "a"),
-                          params(true,  "abcd", "a"),
-                          params(true,  "abcd", "ab"),
-                          params(true,  "abcd", "abc"),
-                          params(false, "ab",   "abc"),
-                          params(true,  "abcd", "abcd"),
-                          params(false, "abcd", "abcde"),
-                          params(false, "abcd", "b"),
-                          params(true,  "abcd", "A"),
-                          params(true,  "Abcd", "A"));
-    }
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void startsWithOffset(boolean expected, String str, String substr, int offset) {
-        boolean result = new Str(str).startsWith(substr, offset);
-        assertThat(result, equalTo(expected));
-    }
-
-    public List<Object[]> parametersForStartsWithOffset() {
-        return paramsList(params(false, null,   "a",   0),
-                          params(true,  "abcd", "a",   0),
-                          params(true,  "abcd", "b",   1),
-                          params(false, "abcd", "a",   1),
-                          params(false, "ab",   "abc", 0),
-                          params(false, "abcd", "A",   0),
-                          params(true,  "abcd", "ab",  0));
-    }
-
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void startsWithStrNoOptions(boolean expected, String str, String substr, int offset) {
-        boolean result = Str.of(str).startsWith(Str.of(substr), offset);
-        assertThat(result, equalTo(expected));
-    }
-
-    public List<Object[]> parametersForStartsWithStrNoOptions() {
-        return paramsList(params(false, null,   "a",     0),
-                          params(true,  "abcd", "a",     0),
-                          params(true,  "abcd", "b",     1),
-                          params(false, "abcd", "a",     1),
-                          params(false, "abcd", "abcde", 0),
-                          params(false, "abcd", "A",     0),
-                          params(true,  "abcd", "ab",    0));
+        Str s = Str.of("a");
+        return paramsList(params(true,  s, "a"),
+                          params(false, s, "b"));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void startsWithStrIgnoreCase(boolean expected, String str, String substr, int offset) {
-        boolean result = Str.of(str).startsWith(Str.of(substr), offset, Str.Option.IGNORE_CASE);
+    public void startsWith(boolean expected, Str str, String substr, Integer offset, Str.Option ... options) {
+        Str t = Str.of(substr);
+        boolean result = offset == null ? str.startsWith(t, 0, options) : str.startsWith(t, offset, options);
         assertThat(result, equalTo(expected));
     }
-
-    public List<Object[]> parametersForStartsWithStrIgnoreCase() {
-        return paramsList(params(true,  "abcd", "a",   0),
-                          params(false, "abcd", "b",   0),
-                          params(true,  "abcd", "A",   0),
-                          params(true,  "abcd", "aB",  0));
+    
+    public List<Object[]> parametersForStartsWith() {
+        Str s = Str.of("abc");
+        Str.Option[] empty = new Str.Option[0];
+        return paramsList(params(true,  s, "a",    null, empty),
+                          params(true,  s, "a",    0,    empty),
+                          params(false, s, "b",    0,    empty),
+                          params(true,  s, "b",    1,    empty),
+                          params(false, s, "A",    0,    empty),
+                          params(true,  s, "A",    0,    Str.Option.IGNORE_CASE),
+                          params(false, s, "aB",   0,    empty),
+                          params(true,  s, "aB",   0,    Str.Option.IGNORE_CASE),
+                          params(true,  s, "abc",  0,    empty),
+                          params(true,  s, "bc",   1,    empty),
+                          params(false, s, "bc",   2,    empty),
+                          params(false, s, "abcd", 0,    empty));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")

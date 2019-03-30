@@ -489,19 +489,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return whether the string starts with <code>str</code>
      */
     public boolean startsWith(String str) {
-        return startsWith(str, null);
-    }
-
-    /**
-     * Returns whether the wrapped string begins with the string <code>str</code>, applying options
-     * for matching (ignoring case).
-     *
-     * @param str the string to find
-     * @param options the options to apply (valid: IGNORE_CASE)
-     * @return whether the string starts with <code>str</code>
-     */
-    public boolean startsWith(String str, EnumSet<Str.Option> options) {
-        return startsWith(str, 0, options);
+        return startsWith(str, 0);
     }
     
     /**
@@ -510,10 +498,11 @@ public class Str extends Obj<String> implements Comparing<Str> {
      *
      * @param str the string to find
      * @param offset the index from which to start the match
+     * @param options the options to apply (valid: IGNORE_CASE)
      * @return whether the string starts with <code>str</code>
      */
-    public boolean startsWith(String str, int offset) {
-        return startsWith(str, offset, EnumSet.noneOf(Str.Option.class));
+    public boolean startsWith(String str, int offset, Str.Option ... options) {
+        return startsWith(Str.of(str), offset, options);
     }
     
     /**
@@ -526,21 +515,21 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return whether the string starts with <code>str</code>
      */
     public boolean startsWith(String str, int offset, EnumSet<Str.Option> options) {
-        if (isNull() || offset + str.length() > length()) {
-            return false;
-        }
-        
-        Str other = Str.of(str);
-        boolean ignoreCase = options != null && options.contains(Str.Option.IGNORE_CASE);
-        for (int idx = 0; idx < str.length(); ++idx) {
-            Character x = get(offset + idx);
-            Character y = other.get(idx);
-            if (!Characters.isMatch(x, y, ignoreCase)) {
-                return false;
-            }
-        }
-        return true;
+        Str.Option[] opts = options == null ? new Str.Option[0] : options.toArray(new Str.Option[options.size()]);
+        return startsWith(Str.of(str), offset, opts);
     }
+
+    /**
+     * Returns whether the wrapped string begins with the string <code>str</code>. For
+     * consistency with String. Returns false if the wrapped string is null.
+     *
+     * @param str the string to find
+     * @param options the options to apply (valid: IGNORE_CASE)
+     * @return whether the string starts with <code>str</code>
+     */
+    public boolean startsWith(String str, EnumSet<Str.Option> options) {
+        return startsWith(str, 0, options);
+    }    
 
     /**
      * Returns whether the wrapped string begins with the string <code>str</code>. For
@@ -552,7 +541,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return whether the string starts with <code>str</code>
      */
     public boolean startsWith(Str str, int offset, Str.Option ... options) {
-        if (isNull() || offset + str.length() > length()) {
+        if (isNull() || str == null || str.isNull() || offset + str.length() > length()) {
             return false;
         }
         
@@ -598,20 +587,17 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @see #chompAll
      */
     public Str chomp() {
-        if (str() == null) {
+        if (isNull()) {
             return null;
         }
+        else if (isEmpty()) {
+            return Str.empty();
+        }
+        else if (Characters.isNewLine(this, -1)) {
+            return Str.of(get(0, -2));
+        }
         else {
-            Character lastChar = get(-1);
-            if (lastChar == null) {
-                return Str.empty();
-            }
-            else if ("\r\n".indexOf(lastChar) >= 0) {
-                return Str.of(get(0, -2));
-            }
-            else {
-                return this;
-            }
+            return this;
         }
     }
 
@@ -623,13 +609,12 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @see #chomp
      */
     public Str chompAll() {
-        String string = str();
-        if (string == null) {
+        if (isNull()) {
             return null;
         }
         else {
             int idx = length() - 1;
-            while (idx >= 0 && "\r\n".indexOf(get(idx)) != -1) {
+            while (idx >= 0 && Characters.isNewLine(this, idx)) {
                 --idx;
             }
             return Str.of(get(0, idx));
@@ -764,8 +749,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return this;
         }
         else {
-            Character first = get(0);
-            Character last = get(-1);
+            Character first = first();
+            Character last = last();
             if (first.equals(last) && (first.equals('"') || first.equals('\''))) {
                 return Str.of(get(1, -2));
             }

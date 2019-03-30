@@ -73,6 +73,20 @@ public class CharactersTest extends Parameterized {
                           params(false, Str.of(" "),   1));
     }
 
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void isNewLine(boolean expected, Str str, int index) {
+        boolean result = Characters.isNewLine(str, index);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForIsNewLine() {
+        return paramsList(params(true,  Str.of("\r"),  0),
+                          params(true,  Str.of("\n"),  0),
+                          params(false, Str.of("\f"),  0),
+                          params(true,  Str.of("a\r"), 1),
+                          params(false, Str.of("a\r"), 0));
+    }
+
     private long iterations = 500000000L;
 
     private long runCompareIgnoreCaseOrig(Character x, Character y) {
