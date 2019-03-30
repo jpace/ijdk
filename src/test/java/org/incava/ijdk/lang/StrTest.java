@@ -273,6 +273,35 @@ public class StrTest extends StringTest {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void startsWithStrNoOptions(boolean expected, String str, String substr, int offset) {
+        boolean result = Str.of(str).startsWith(Str.of(substr), offset);
+        assertThat(result, equalTo(expected));
+    }
+
+    public List<Object[]> parametersForStartsWithStrNoOptions() {
+        return paramsList(params(false, null,   "a",     0),
+                          params(true,  "abcd", "a",     0),
+                          params(true,  "abcd", "b",     1),
+                          params(false, "abcd", "a",     1),
+                          params(false, "abcd", "abcde", 0),
+                          params(false, "abcd", "A",     0),
+                          params(true,  "abcd", "ab",    0));
+    }
+    
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void startsWithStrIgnoreCase(boolean expected, String str, String substr, int offset) {
+        boolean result = Str.of(str).startsWith(Str.of(substr), offset, Str.Option.IGNORE_CASE);
+        assertThat(result, equalTo(expected));
+    }
+
+    public List<Object[]> parametersForStartsWithStrIgnoreCase() {
+        return paramsList(params(true,  "abcd", "a",   0),
+                          params(false, "abcd", "b",   0),
+                          params(true,  "abcd", "A",   0),
+                          params(true,  "abcd", "aB",  0));
+    }
+    
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void indexOf(Integer expected, String str, Character ch) {
         Integer result = new Str(str).indexOf(ch);
         assertThat(result, equalTo(expected));
@@ -837,12 +866,12 @@ public class StrTest extends StringTest {
     }
 
     private java.util.List<Object[]> parametersForMatchRegexpNoOffset() {
-        return paramsList(params(new MatchData(StringArray.of("")), "",    ""),
-                          params(null,            "b",   "a"),
-                          params(new MatchData(StringArray.of("ab")), "a.",  "ab"),
-                          params(new MatchData(StringArray.of("a")), "a",  "ab"),
+        return paramsList(params(new MatchData(StringArray.of("")),   "",   ""),
+                          params(null,                                "b",  "a"),
+                          params(new MatchData(StringArray.of("ab")), "a.", "ab"),
+                          params(new MatchData(StringArray.of("a")),  "a",  "ab"),
                           params(new MatchData(StringArray.of("ab")), "ab", "bab"),
-                          params(new MatchData(StringArray.of("a")), "a", "a"));
+                          params(new MatchData(StringArray.of("a")),  "a",  "a"));
     }
 
     @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")

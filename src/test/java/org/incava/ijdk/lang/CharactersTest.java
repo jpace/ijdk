@@ -59,6 +59,20 @@ public class CharactersTest extends Parameterized {
                           params(0, 'A', 'a'));
     }
 
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void isWhitespace(boolean expected, Str str, int index) {
+        boolean result = Characters.isWhitespace(str, index);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForIsWhitespace() {
+        return paramsList(params(true,  Str.of(" "),   0),
+                          params(true,  Str.of("\f"),  0),
+                          params(false, Str.of("x"),   0),
+                          params(true,  Str.of("x "), -1),
+                          params(false, Str.of(" "),   1));
+    }
+
     private long iterations = 500000000L;
 
     private long runCompareIgnoreCaseOrig(Character x, Character y) {

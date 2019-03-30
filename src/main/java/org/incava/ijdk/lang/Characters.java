@@ -13,4 +13,9 @@ public class Characters {
         int cmp = x.compareTo(y);
         return cmp == 0 ? cmp : Character.toUpperCase(x) - Character.toUpperCase(y);
     }
+
+    public static boolean isWhitespace(Str str, int idx) {
+        Character ch = str.get(idx);
+        return ch != null && Character.isWhitespace(ch);
+    }
 }

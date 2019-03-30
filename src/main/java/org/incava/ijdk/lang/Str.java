@@ -320,7 +320,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return Str.empty();
         }
         else {
-            int from = Math.min(num, str().length());
+            int from = Math.min(num, length());
             String s = get(-from, -1);
             return s == null ? null : Str.of(s);
         }
@@ -364,7 +364,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * is inclusive: <code>"foobar"[2 .. 4] == "oba"</code>, which is unlike the JDK
      * String#substring behavior, where the equivalent would be <code>str.substring(2, 5)</code>.
      *
-     * If <code>str</code> is null, then null is returned.
+     * If the wrapped string is is null, then null is returned.
      *
      * @param fromIndex the starting index, inclusive
      * @param toIndex the ending index, inclusive
@@ -390,7 +390,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
         Integer toIdx = toIndex == null ? null : getIndex(toIndex);
         if (toIdx == null) {
-            toIdx = str().length() - 1;
+            toIdx = length() - 1;
         }
 
         if (frIdx > toIdx) {
@@ -465,7 +465,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the relative index
      */
     protected Integer getIndex(Integer index) {
-        int len = isNull() ? 0 : str().length();
+        int len = isNull() ? 0 : length();
         return new Indexable(len).get(index);
     }
 
@@ -543,6 +543,31 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
+     * Returns whether the wrapped string begins with the string <code>str</code>. For
+     * consistency with String. Returns false if the wrapped string is null.
+     *
+     * @param str the string to find
+     * @param offset the index from which to start the match
+     * @param options the options to apply (valid: IGNORE_CASE)
+     * @return whether the string starts with <code>str</code>
+     */
+    public boolean startsWith(Str str, int offset, Str.Option ... options) {
+        if (isNull() || offset + str.length() > length()) {
+            return false;
+        }
+        
+        boolean ignoreCase = options != null && Array.of(options).contains(Str.Option.IGNORE_CASE);
+        for (int idx = 0; idx < str.length(); ++idx) {
+            Character x = get(offset + idx);
+            Character y = str.get(idx);
+            if (!Characters.isMatch(x, y, ignoreCase)) {
+                return false;
+            }
+        }
+        return true;
+    }    
+
+    /**
      * Returns whether the wrapped string ends with the character <code>ch</code>.
      * Returns false if the wrapped string is null.
      *
@@ -603,8 +628,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return null;
         }
         else {
-            int idx = string.length() - 1;
-            while (idx >= 0 && "\r\n".indexOf(string.charAt(idx)) != -1) {
+            int idx = length() - 1;
+            while (idx >= 0 && "\r\n".indexOf(get(idx)) != -1) {
                 --idx;
             }
             return Str.of(get(0, idx));
@@ -672,13 +697,13 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the snipped string
      */
     public Str snip(int len) {
-        if (str() == null) {
+        if (isNull()) {
             return null;
         }
         else if (len <= 0) {
             return Str.empty();
         }
-        else if (str().length() > len)  {
+        else if (length() > len)  {
             String substr = len - 2 < 0 ? "" : get(0, len - 2);
             return Str.of(substr + '-');
         }
@@ -704,7 +729,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      */
     public boolean isEmpty(Str.Option option) {
         // str.isEmpty() is JDK 1.6+, and IJDK is backward compatible with 1.5.
-        return ((isNull() || str().length() == 0) ||
+        return ((isNull() || length() == 0) ||
                 (option != null && option.equals(Str.Option.IGNORE_WHITESPACE) && str().trim().length() == 0));
     }
 
@@ -946,7 +971,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
 
         StringBuilder sb = new StringBuilder();
         String s = str();
-        int len = str().length();
+        int len = length();
 
         int idx = 0;
         while (idx < len) {
@@ -1004,7 +1029,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
     public List<List<String>> scan(Pattern pattern) {
         int idx = 0;
         String s = str();
-        int len = s.length();
+        int len = length();
         Matcher m = pattern.matcher(s);
         m.useAnchoringBounds(false);
 
@@ -1062,13 +1087,17 @@ public class Str extends Obj<String> implements Comparing<Str> {
      */
     private Str trim(boolean trimLeft, boolean trimRight) {
         int start = 0;
-        int length = str().length();
-        while (trimLeft && start < length && isWhitespace(start)) {
-            ++start;
+        int len = length();
+        if (trimLeft) {
+            while (start < len && Characters.isWhitespace(this, start)) {
+                ++start;
+            }
         }
-        int end = length - 1;
-        while (trimRight && end >= start && isWhitespace(end)) {
-            --end;
+        int end = len - 1;
+        if (trimRight) {
+            while (end >= start && Characters.isWhitespace(this, end)) {
+                --end;
+            }
         }
         return Str.of(end < 0 ? "" : get(start, end));
     }
@@ -1080,11 +1109,6 @@ public class Str extends Obj<String> implements Comparing<Str> {
      */
     public Str escape() {
         return Str.of(str().replaceAll(" ", "\\\\ "));
-    }
-
-    private boolean isWhitespace(int idx) {
-        Character ch = get(idx);
-        return ch != null && Character.isWhitespace(ch);
     }
 
     /**
