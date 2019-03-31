@@ -516,8 +516,19 @@ public class StrTest extends StringTest {
                           params(new Str(null),   null,  1));
     }
 
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void replaceAllWithOptions(Str expected, String str, String from, String to, EnumSet<Str.Option> options) {
+        Str result = new Str(str).replaceAll(from, to, options);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForReplaceAllWithOptions() {
+        return paramsList(params(Str.of("One"), "One", "one", "1", EnumSet.noneOf(Str.Option.class)),
+                          params(Str.of("1"),   "One", "one", "1", EnumSet.of(Str.Option.IGNORE_CASE)));
+    }    
+
     @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
-    public void replaceAll(String expWithCase, String expIgnoreCase, String line, String from, String to) {
+    public void replaceAllNoOptions(String expWithCase, String expIgnoreCase, String line, String from, String to) {
         Str str = toStr(line);
         Str result = str.replaceAll(from, to);
         assertThat(result, expWithCase == null ? nullValue() : equalTo(toStr(expWithCase)));
@@ -540,19 +551,27 @@ public class StrTest extends StringTest {
         pl.add(params("1 two", "1 two",  "one two",        "one", "1"));
         pl.add(params("11",    "11",     "oneone",         "one", "1"));
         pl.add(params("1 1",   "1 1",    "one one",        "one", "1"));
-        pl.add(params("one 2", "one 2",  "one two",        "two", "2"));
-        
-        // not applied as regular expressions:
-        pl.add(params("1",       "1",      "$one",         "$one", "1"));
-        pl.add(params("one two", "one two", "one two",     "one.*", "1"));
-        pl.add(params("1 two",   "1 two",   "one.* two",   "one.*", "1"));
-        pl.add(params("one",     "one",     "one",         "(?:one|two)", "12"));
-        pl.add(params("two",     "two",     "two",         "(?:one|two)", "12"));
-        pl.add(params("12",      "12",      "(?:one|two)", "(?:one|two)", "12"));
+        pl.add(params("one 2", "one 2",  "one two",        "two", "2"));        
 
-        pl.add(params(null,      null,      null,          "one", "1"));
+        pl.add(params(null,    null,     null,             "one", "1"));
         
         return pl;
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void replaceAllLiteral(Str expected, String str, String from, String to) {
+        Str result = Str.of(str).replaceAll(from, to);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForReplaceAllLiteral() {
+        // not applied as regular expressions:
+        return paramsList(params(Str.of("1"),       "$one",        "$one",        "1"),
+                          params(Str.of("one two"), "one two",     "one.*",       "1"),
+                          params(Str.of("1 two"),   "one.* two",   "one.*",       "1"),
+                          params(Str.of("one"),     "one",         "(?:one|two)", "12"),
+                          params(Str.of("two"),     "two",         "(?:one|two)", "12"),
+                          params(Str.of("12"),      "(?:one|two)", "(?:one|two)", "12"));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")

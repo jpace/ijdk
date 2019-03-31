@@ -515,8 +515,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return whether the string starts with <code>str</code>
      */
     public boolean startsWith(String str, int offset, EnumSet<Str.Option> options) {
-        Str.Option[] opts = options == null ? new Str.Option[0] : options.toArray(new Str.Option[options.size()]);
-        return startsWith(Str.of(str), offset, opts);
+        return startsWith(Str.of(str), offset, toArray(options));
     }
 
     /**
@@ -528,7 +527,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return whether the string starts with <code>str</code>
      */
     public boolean startsWith(String str, EnumSet<Str.Option> options) {
-        return startsWith(str, 0, options);
+        return startsWith(str, 0, toArray(options));
     }    
 
     /**
@@ -768,7 +767,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the comparison value
      */
     public int compareTo(Str other) {
-        return compareTo(other, EnumSet.noneOf(Str.Option.class));
+        return compareTo(other, new Str.Option[0]);
     }
 
     
@@ -800,14 +799,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the comparison value
      */
     public int compareTo(Str other, EnumSet<Str.Option> options) {
-        if (isNull() || other == null || other.isNull()) {
-            return Boolean.compare(isNull(), other == null || other.isNull());
-        }
-        else {
-            Str.Option[] opts = options == null ? new Str.Option[0] : options.toArray(new Str.Option[options.size()]);
-            Comparator<Str> comp = new StrComparators().create(opts);
-            return comp.compare(this, other);
-        }
+        return compareTo(other, toArray(options));
     }
 
     /**
@@ -949,11 +941,24 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the string, with substitutions
      */
     public Str replaceAll(String from, String to, EnumSet<Str.Option> options) {
-        boolean ignoreCase = options != null && options.contains(Str.Option.IGNORE_CASE);
+        return replaceAll(from, to, toArray(options));
+    }
+
+    /**
+     * Replaces literal occurrances of <code>from</code> with <code>to</code>, optionally without
+     * regard to case. Unlike String#replaceAll, this does not apply <code>from</code> as a regular
+     * expression.
+     *
+     * @param from the left-hand side of the replacement
+     * @param to the right-hand side of the replacement
+     * @param options options use in replacing (valid: IGNORE_CASE)
+     * @return the string, with substitutions
+     */
+    public Str replaceAll(String from, String to, Str.Option ... options) {
         if (isNull()) {
             return null;
         }
-
+        
         StringBuilder sb = new StringBuilder();
         String s = str();
         int len = length();
@@ -1066,21 +1071,21 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns a copy of this string, optionally trimming leading and trailing whitespace.
+     * Returns a copy of this string, trimming leading and/or trailing whitespace.
      *
      * @return the trimmed string
      */
     private Str trim(boolean trimLeft, boolean trimRight) {
-        int start = 0;
         int len = length();
+        int start = 0;
         if (trimLeft) {
-            while (start < len && Characters.isWhitespace(this, start)) {
+            while (start < len && isWhitespace(start)) {
                 ++start;
             }
         }
         int end = len - 1;
         if (trimRight) {
-            while (end >= start && Characters.isWhitespace(this, end)) {
+            while (end >= start && isWhitespace(end)) {
                 --end;
             }
         }
@@ -1150,5 +1155,13 @@ public class Str extends Obj<String> implements Comparing<Str> {
      */
     public MatchData match(Regexp re, Integer offset) {
         return re.match(str(), offset);
+    }
+
+    private Str.Option[] toArray(EnumSet<Str.Option> options) {
+        return options == null ? new Str.Option[0] : options.toArray(new Str.Option[options.size()]);
+    }
+
+    private boolean isWhitespace(int index) {
+        return Characters.isWhitespace(this, index);
     }
 }
