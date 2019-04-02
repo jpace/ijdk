@@ -275,6 +275,7 @@ public class StringsTest extends StringTest {
                           params(null,   "1",    1),
                           params(null,   "a1",   0),
                           params("1.2",  "1.2",  0),
-                          params("11.2", "11.2", 0));
+                          params("11.2", "11.2", 0),
+                          params(null,   "1..2", 0));
     }
 }

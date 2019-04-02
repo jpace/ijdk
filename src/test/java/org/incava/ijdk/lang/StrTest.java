@@ -48,6 +48,14 @@ public class StrTest extends StringTest {
         return str == null ? null : str.str();
     }
 
+    private List<String> list(String ... strs) {
+        return new ArrayList<>(Arrays.asList(strs));
+    }
+
+    private List<Object> list(Object ... ary) {
+        return new ArrayList<>(Arrays.asList(ary));
+    }
+
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void split(List<String> expected, String str, String delim, Integer max) {
         List<String> result = new Str(str).split(delim, max);
@@ -57,14 +65,6 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
     
-    private List<String> list(String ... strs) {
-        return new ArrayList<>(Arrays.asList(strs));
-    }
-
-    private List<Object> list(Object ... ary) {
-        return new ArrayList<>(Arrays.asList(ary));
-    }
-
     public List<Object[]> parametersForSplit() {
         return paramsList(params(null,                       null,            ";", -1),
                           params(list("ab;cd;e"),            "ab;cd;e",       ";",  1),
@@ -784,6 +784,35 @@ public class StrTest extends StringTest {
     }
 
     @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void appendString(String expected, String str, String other) {
+        Str result = new Str(str).append(other);
+        assertThat(Str.of(result), equalTo(expected));
+    }
+
+    @Test @Parameters(method="parametersForAppendString") @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void appendStr(String expected, String str, String other) {
+        Str result = new Str(str).append(Str.of(other));
+        assertThat(Str.of(result), equalTo(expected));
+    }
+
+    private java.util.List<Object[]> parametersForAppendString() {
+        return paramsList(params("",     "",   ""),   
+                          params("abcd", "ab", "cd"), 
+                          params("ab",   "",   "ab"));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void appendChar(String expected, String str, Character ch) {
+        Str result = new Str(str).append(ch);
+        assertThat(Str.of(result), equalTo(expected));
+    }
+
+    private java.util.List<Object[]> parametersForAppendChar() {
+        return paramsList(params("a",  "",  'a'),
+                          params("ab", "a", 'b'));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
     public void indexOfPattern(Integer expected, String str, String pat) {
         Pattern pattern = Pattern.compile(pat);
         Integer result = new Str(str).indexOf(pattern);
@@ -841,8 +870,20 @@ public class StrTest extends StringTest {
     }
 
     private java.util.List<Object[]> parametersForMatchRegexpWithOffset() {
-        return paramsList(params(new MatchData(StringArray.of("a")), "a",  "a", 0),
-                          params(null, "a",    "a", 1));
+        return paramsList(params(new MatchData(StringArray.of("a")), "a", "a", 0),
+                          params(null,                               "a", "a", 1));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void valueOf(Str expected, Object obj) {
+        Str result = Str.valueOf(obj);
+        assertThat(result, equalTo(expected));
+    }
+
+    private java.util.List<Object[]> parametersForValueOf() {
+        return paramsList(params(new Str("1"),   new Integer(1)),
+                          params(new Str("2.3"), new Double(2.3)),
+                          params(null,           null));
     }
     
     @Test

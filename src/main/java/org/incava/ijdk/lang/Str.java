@@ -50,6 +50,18 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
     
     /**
+     * Creates a string, by invoking <code>toString</code> on the object. If the object is null, the
+     * wrapped string is also null.
+     *
+     * @param <T> the type of object
+     * @param obj the object; may be null
+     * @return the new Str
+     */
+    public static <T> Str valueOf(T obj) {
+        return new Str(obj == null ? null : obj.toString());
+    }
+    
+    /**
      * Creates a string from the collection, joined by <code>delim</code>. If <code>coll</code> is
      * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the
      * empty string.
@@ -1108,7 +1120,37 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the concatenated string
      */
     public Str plus(Str other) {
-        return Str.of(str() + other.str());
+        return append(other);
+    }
+
+    /**
+     * Returns a copy of this string concatenated with the other.
+     *
+     * @param other the str to concatenate to this one
+     * @return the concatenated string
+     */
+    public Str append(Str other) {
+        return append(other.str());
+    }
+
+    /**
+     * Returns a copy of this string concatenated with the other.
+     *
+     * @param other the string to concatenate to this one
+     * @return the concatenated string
+     */
+    public Str append(String other) {
+        return Str.of(str() + other);
+    }
+
+    /**
+     * Returns a copy of this string concatenated with the character.
+     *
+     * @param ch the character to concatenate to this one
+     * @return the concatenated string
+     */
+    public Str append(Character ch) {
+        return append(String.valueOf(ch));
     }
 
     /**
