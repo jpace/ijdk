@@ -1029,28 +1029,45 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return a list of list of matching elements, one inner list per section matched
      */
     public List<List<String>> scan(Pattern pattern) {
+        List<MatchData> matches = matches(pattern);
+
+        List<List<String>> matchList = new ArrayList<List<String>>();
+        for (MatchData match : matches) {
+            matchList.add(match);
+        }
+
+        return matchList;
+    }
+
+    /**
+     * Returns a list of matchdata instances where the pattern was matched in the string. This is
+     * the opposite of String#split, which returns the elements where the pattern does <em>not</em>
+     * match.
+     *
+     * Consistent with Ruby and not like elsewhere in the JDK, the pattern (regular expression) here
+     * is not anchored, so "a*b" will match "def aaaab ghi".
+     *
+     * <pre>
+     * Str str = Str.of("abaca");
+     * List&lt;List&lt;String&gt;&gt; result = str.scan(Pattern.compile("a(b).(.)"));
+     * // result == list of "abac", "b", "c"
+     * </pre>
+     *
+     * @param pattern the pattern to match against
+     * @return a list of match data instances, one per section matched
+     */
+    public List<MatchData> matches(Pattern pattern) {
         int idx = 0;
         String s = str();
         int len = length();
         Matcher m = pattern.matcher(s);
-        m.useAnchoringBounds(false);
 
-        List<List<String>> matchList = new ArrayList<List<String>>();
+        List<MatchData> matchList = new ArrayList<MatchData>();
             
-        while (idx < len) {
-            if (m.find(idx)) {
-                List<String> subList = new ArrayList<String>();
-                String grp = m.group();
-                for (int gi = 0; gi <= m.groupCount(); ++gi) {
-                    String g = m.group(gi);
-                    subList.add(g);
-                }
-                matchList.add(subList);
-                idx = m.end();
-            }
-            else {
-                break;
-            }
+        while (idx < len && m.find(idx)) {
+            MatchData md = MatchData.of(m);
+            matchList.add(md);
+            idx = m.end();
         }
         return matchList;
     }

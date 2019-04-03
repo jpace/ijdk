@@ -635,12 +635,23 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForScan() {
-        List<Object[]> pl = paramsList();
-        pl.add(params(list(list("a")),              "ab",    "a"));
-        pl.add(params(list(list("a"), list("a")),   "aba",   "a"));
-        pl.add(params(list(list("ab", "b")),        "abaca", "a(b)"));
-        pl.add(params(list(list("abac", "b", "c")), "abaca", "a(b).(.)"));
-        return pl;
+        return paramsList(params(list(list("a"), list("a")), "aba", "a"));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void matches(List<MatchData> expected, String s, String re) {
+        Str str = Str.of(s);
+        List<MatchData> result = str.matches(Pattern.compile(re));
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForMatches() {
+        return paramsList(params(list(new MatchData(StringArray.of("a"))),                                       "ab",    "a"),
+                          params(list(new MatchData(StringArray.of("a")), new MatchData(StringArray.of("a"))),   "aba",   "a"),
+                          params(list(new MatchData(StringArray.of("ab", "b"))),                                 "abaca", "a(b)"),
+                          params(list(new MatchData(StringArray.of("abac", "b", "c"))),                          "abaca", "a(b).(.)"),
+                          params(list(new MatchData(StringArray.of("a"))),                                       "ab",    "^a"),
+                          params(list(new MatchData(StringArray.of("b"))),                                       "ab",    "b$"));
     }
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
