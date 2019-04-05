@@ -1016,9 +1016,6 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * match. Each element in the returned list is a list, in which the first element is the entire
      * match, and the other elements are the capturing groups.
      *
-     * Consistent with Ruby and not like elsewhere in the JDK, the pattern (regular expression) here
-     * is not anchored, so "a*b" will match "def aaaab ghi".
-     *
      * <pre>
      * Str str = Str.of("abaca");
      * List&lt;List&lt;String&gt;&gt; result = str.scan(Pattern.compile("a(b).(.)"));
@@ -1044,12 +1041,9 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * the opposite of String#split, which returns the elements where the pattern does <em>not</em>
      * match.
      *
-     * Consistent with Ruby and not like elsewhere in the JDK, the pattern (regular expression) here
-     * is not anchored, so "a*b" will match "def aaaab ghi".
-     *
      * <pre>
      * Str str = Str.of("abaca");
-     * List&lt;List&lt;String&gt;&gt; result = str.scan(Pattern.compile("a(b).(.)"));
+     * List&lt;MatchData&gt; result = str.matches(Pattern.compile("a(b).(.)"));
      * // result == list of "abac", "b", "c"
      * </pre>
      *
