@@ -5,9 +5,8 @@ import java.util.Set;
 import org.incava.ijdk.lang.ObjectExt;
 
 /**
- * @deprecated use Collections instead
+ * use Collections instead
  */
-@Deprecated
 public class CollectionExt extends ObjectExt {
     public static <Type> Set<Type> intersection(Collection<Type> a, Collection<Type> b) {
         return Collections.intersection(a, b);

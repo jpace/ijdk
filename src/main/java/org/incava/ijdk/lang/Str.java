@@ -416,25 +416,6 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns the substring from the index after the <code>ch</code> character to the end of the
-     * string. If the string does not contain the given character, or if <code>str</code> or
-     * <code>ch</code> is null, then null is returned. If <code>ch</code> is the last character,
-     * then an empty string is returned.
-     *
-     * @param ch the character to find
-     * @return the extracted substring
-     */
-    public String substringAfter(Character ch) {
-        Integer idx = indexOf(ch);
-        return idx == null ? null : substring(idx + 1, null);
-    }
-
-    public Str substringAfter(Character ch, Str str) {
-        Integer idx = indexOf(ch);
-        return idx == null ? null : Str.of(substring(idx + 1, null));
-    }
-
-    /**
      * Returns the substring before the <code>ch</code> character. If the string does not contain
      * the given character, , or if <code>str</code> or <code>ch</code> is null, then null is
      * returned. If <code>ch</code> is the first character, then an empty string is returned.
@@ -454,6 +435,58 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return substring(0, idx - 1);
         }
     }
+
+    /**
+     * Returns the substring, as an <code>Str</code>, before the <code>ch</code> character. If the
+     * string does not contain the given character, , or if <code>str</code> or <code>ch</code> is
+     * null, then null is returned. If <code>ch</code> is the first character, then an empty string
+     * is returned.
+     *
+     * @param ch the character to find
+     * @param str an Str instance; for method overloading
+     * @return the extracted substring
+     */
+    public Str substringBefore(Character ch, Str str) {
+        Integer idx = indexOf(ch);
+        if (idx == null) {
+            return null;
+        }
+        else if (idx == 0) {
+            return Str.EMPTY;
+        }
+        else {
+            return Str.of(substring(0, idx - 1));
+        }
+    }
+
+    /**
+     * Returns the substring from the index after the <code>ch</code> character to the end of the
+     * string. If the string does not contain the given character, or if <code>str</code> or
+     * <code>ch</code> is null, then null is returned. If <code>ch</code> is the last character,
+     * then an empty string is returned.
+     *
+     * @param ch the character to find
+     * @return the extracted substring
+     */
+    public String substringAfter(Character ch) {
+        Integer idx = indexOf(ch);
+        return idx == null ? null : substring(idx + 1, null);
+    }
+
+    /**
+     * Returns the substring, as an <code>Str</code>, from the index after the <code>ch</code>
+     * character to the end of the string. If the string does not contain the given character, or if
+     * <code>str</code> or <code>ch</code> is null, then null is returned. If <code>ch</code> is the
+     * last character, then an empty string is returned.
+     *
+     * @param ch the character to find
+     * @param str an Str instance; for method overloading
+     * @return the extracted substring
+     */
+    public Str substringAfter(Character ch, Str str) {
+        Integer idx = indexOf(ch);
+        return idx == null ? null : Str.of(substring(idx + 1, null));
+    }    
 
     /**
      * Same as <code>String#substring</code>, but with the indices <em>inclusive</em>, like the Ruby syntax

@@ -259,9 +259,29 @@ public class StrTest extends StringTest {
         assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
     }
 
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void substringBefore(String expected, String str, Character ch) {
+    @Test @Parameters(method="parametersForSubstringBefore") @TestCaseName("{method} {index} {params}")
+    public void substringBeforeStr(String expected, String str, Character ch) {
+        Str result = new Str(str).substringBefore(ch, Str.EMPTY);
+        Str exp = expected == null ? null : Str.of(expected);
+        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(exp)));
+    }
+
+    @Test @Parameters(method="parametersForSubstringBefore") @TestCaseName("{method} {index} {params}")
+    public void substringBeforeString(String expected, String str, Character ch) {
         String result = new Str(str).substringBefore(ch);
+        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
+    }
+
+    @Test @Parameters(method="parametersForSubstringAfter") @TestCaseName("{method} {index} {params}")
+    public void substringAfterStr(String expected, String str, Character ch) {
+        Str result = new Str(str).substringAfter(ch, Str.EMPTY);
+        Str exp = expected == null ? null : Str.of(expected);
+        assertThat(result, withContext(message("str", str, "ch", ch), equalTo(exp)));
+    }
+
+    @Test @Parameters(method="parametersForSubstringAfter") @TestCaseName("{method} {index} {params}")
+    public void substringAfterString(String expected, String str, Character ch) {
+        String result = new Str(str).substringAfter(ch);
         assertThat(result, withContext(message("str", str, "ch", ch), equalTo(expected)));
     }
 
