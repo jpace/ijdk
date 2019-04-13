@@ -50,6 +50,17 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
     
     /**
+     * Creates a string from a string builder. In a future implementation, this may pool
+     * frequently-used objects for reduced memory.
+     *
+     * @param sb the string builder
+     * @return the new Str
+     */
+    public static Str of(StringBuilder sb) {
+        return new Str(sb == null ? null : sb.toString());
+    }
+    
+    /**
      * Creates a string, by invoking <code>toString</code> on the object. If the object is null, the
      * wrapped string is also null.
      *
@@ -57,7 +68,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param obj the object; may be null
      * @return the new Str
      */
-    public static <T> Str valueOf(T obj) {
+    public static <T> Str toString(T obj) {
         return new Str(obj == null ? null : obj.toString());
     }
     
@@ -190,14 +201,13 @@ public class Str extends Obj<String> implements Comparing<Str> {
         if (isNull()) {
             return null;
         }
-        else {
-            Pattern pat = Pattern.compile(delim, Pattern.LITERAL);
-            if (max == null) {
-                max = 0;
-            }
-            String[] ary = pat.split(str(), max);
-            return new ArrayList<>(Arrays.asList(ary));
+        
+        Pattern pat = Pattern.compile(delim, Pattern.LITERAL);
+        if (max == null) {
+            max = 0;
         }
+        String[] ary = pat.split(str(), max);
+        return new ArrayList<>(Arrays.asList(ary));
     }
 
     /**
@@ -234,12 +244,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the padded string
      */
     public Str pad(char ch, int length) {
-        if (str() == null) {
-            return null;
-        }
-        else {
-            return Str.of(str() + Strings.repeat(ch, length - length()));
-        }
+        return isNull() ? null : Str.of(str() + Strings.repeat(ch, length - length()));
     }
 
     /**
@@ -257,12 +262,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the padded string
      */
     public Str padLeft(char ch, int length) {
-        if (isNull()) {
-            return null;
-        }
-        else {
-            return Str.of(Strings.repeat(ch, length - length()) + str());
-        }
+        return isNull() ? null : Str.of(Strings.repeat(ch, length - length()) + str());
     }
 
     /**
@@ -527,8 +527,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns whether the wrapped string begins with the string <code>str</code>. For
-     * consistency with String. Returns false if the wrapped string is null.
+     * Returns whether the wrapped string begins with the string <code>str</code>. Returns false if
+     * the wrapped string is null.
      *
      * @param str the string to find
      * @return whether the string starts with <code>str</code>
@@ -538,8 +538,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
     
     /**
-     * Returns whether the wrapped string begins with the string <code>str</code>. For
-     * consistency with String. Returns false if the wrapped string is null.
+     * Returns whether the wrapped string begins with the string <code>str</code>, starting at the
+     * offset, and applying the given options. Returns false if the wrapped string is null.
      *
      * @param str the string to find
      * @param offset the index from which to start the match
@@ -551,8 +551,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
     
     /**
-     * Returns whether the wrapped string begins with the string <code>str</code>. For
-     * consistency with String. Returns false if the wrapped string is null.
+     * Returns whether the wrapped string begins with the string <code>str</code>, applying the
+     * given options. Returns false if the wrapped string is null.
      *
      * @param str the string to find
      * @param offset the index from which to start the match
@@ -564,8 +564,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns whether the wrapped string begins with the string <code>str</code>. For
-     * consistency with String. Returns false if the wrapped string is null.
+     * Returns whether the wrapped string begins with the string <code>str</code>, applying the
+     * given options. Returns false if the wrapped string is null.
      *
      * @param str the string to find
      * @param options the options to apply (valid: IGNORE_CASE)
@@ -576,8 +576,20 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }    
 
     /**
-     * Returns whether the wrapped string begins with the string <code>str</code>. For
-     * consistency with String. Returns false if the wrapped string is null.
+     * Returns whether the wrapped string begins with the string <code>str</code>, applying the
+     * given options. Returns false if the wrapped string is null.
+     *
+     * @param str the string to find
+     * @param options the options to apply (valid: IGNORE_CASE)
+     * @return whether the string starts with <code>str</code>
+     */
+    public boolean startsWith(String str, Str.Option ... options) {
+        return startsWith(str, 0, options);
+    }    
+
+    /**
+     * Returns whether the wrapped string begins with the string <code>str</code>, starting at the
+     * offset and applying the given options. Returns false if the wrapped string is null.
      *
      * @param str the string to find
      * @param offset the index from which to start the match
@@ -601,8 +613,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }    
 
     /**
-     * Returns whether the wrapped string ends with the character <code>ch</code>.
-     * Returns false if the wrapped string is null.
+     * Returns whether this string ends with the character <code>ch</code>. Returns false if the
+     * wrapped string is null.
      *
      * @param ch the character to find
      * @return whether the string ends with <code>ch</code>
@@ -613,8 +625,8 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
-     * Returns whether the wrapped string ends with the string <code>str</code>. For
-     * consistency with String. Returns false if the wrapped string is null.
+     * Returns whether this string ends with <code>str</code>. Returns false if the wrapped string
+     * is null.
      *
      * @param str the string to find
      * @return whether the string ends with <code>str</code>
@@ -747,7 +759,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return whether the string is empty
      */
     public boolean isEmpty() {
-        return isEmpty(null);
+        return isNull() || str().length() == 0;
     }
 
     /**
@@ -757,9 +769,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return whether the string is empty
      */
     public boolean isEmpty(Str.Option option) {
-        // str.isEmpty() is JDK 1.6+, and IJDK is backward compatible with 1.5.
-        return ((isNull() || length() == 0) ||
-                (option != null && option.equals(Str.Option.IGNORE_WHITESPACE) && str().trim().length() == 0));
+        return isEmpty() || (Str.Option.IGNORE_WHITESPACE.equals(option) && trim().isEmpty());
     }
 
     /**
@@ -792,15 +802,14 @@ public class Str extends Obj<String> implements Comparing<Str> {
         if (isNull() || length() < 2) {
             return this;
         }
+        
+        Character first = first();
+        Character last = last();
+        if (first.equals(last) && (first.equals('"') || first.equals('\''))) {
+            return Str.of(get(1, -2));
+        }
         else {
-            Character first = first();
-            Character last = last();
-            if (first.equals(last) && (first.equals('"') || first.equals('\''))) {
-                return Str.of(get(1, -2));
-            }
-            else {
-                return this;
-            }
+            return this;
         }
     }
 
@@ -814,7 +823,6 @@ public class Str extends Obj<String> implements Comparing<Str> {
     public int compareTo(Str other) {
         return compareTo(other, new Str.Option[0]);
     }
-
     
     /**
      * Returns a negative number, zero, or a positive number, for when <code>other</code> is less
@@ -1040,6 +1048,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             str = str.toUpperCase();
             substr = substr.toUpperCase();
         }
+        
         return str.indexOf(substr, pos);
     }
 
@@ -1105,7 +1114,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the trimmed string
      */
     public Str trim() {
-        return trim(true, true);
+        return trimLeft().trimRight();
     }
 
     /**
@@ -1114,7 +1123,12 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the trimmed string
      */
     public Str trimLeft() {
-        return trim(true, false);
+        int len = length();
+        int start = 0;
+        while (start < len && isWhitespace(start)) {
+            ++start;
+        }
+        return Str.of(get(start, len - 1));
     }
 
     /**
@@ -1123,29 +1137,11 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the trimmed string
      */
     public Str trimRight() {
-        return trim(false, true);
-    }
-
-    /**
-     * Returns a copy of this string, trimming leading and/or trailing whitespace.
-     *
-     * @return the trimmed string
-     */
-    private Str trim(boolean trimLeft, boolean trimRight) {
-        int len = length();
-        int start = 0;
-        if (trimLeft) {
-            while (start < len && isWhitespace(start)) {
-                ++start;
-            }
+        int end = length() - 1;
+        while (end >= 0 && isWhitespace(end)) {
+            --end;
         }
-        int end = len - 1;
-        if (trimRight) {
-            while (end >= start && isWhitespace(end)) {
-                --end;
-            }
-        }
-        return Str.of(end < 0 ? "" : get(start, end));
+        return Str.of(end < 0 ? "" : get(0, end));
     }
 
     /**

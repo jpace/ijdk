@@ -299,7 +299,7 @@ public class StrExample {
         boolean x = s.length() >= 3 && s.substring(0, 3).equalsIgnoreCase("abc");
         printValue("x", x);
 
-        boolean y = new Str(s).startsWith("abc", EnumSet.of(Str.Option.IGNORE_CASE));
+        boolean y = new Str(s).startsWith("abc", Str.Option.IGNORE_CASE);
         printValue("y", y);
     }
 
@@ -448,7 +448,7 @@ public class StrExample {
         int x = Integer.valueOf(s.substring(3, s.length())).compareTo(Integer.valueOf(t.substring(3, t.length())));
         printValue("x", x);
         
-        int y = new Str(s).compareTo(new Str(t), EnumSet.of(Str.Option.ALPHANUMERIC));
+        int y = new Str(s).compareTo(new Str(t), Str.Option.ALPHANUMERIC);
         printValue("y", y);
     }
 
@@ -460,7 +460,7 @@ public class StrExample {
         int x = s.toUpperCase().compareTo(t.toUpperCase());
         printValue("x", x);
         
-        int y = new Str(s).compareTo(new Str(t), EnumSet.of(Str.Option.IGNORE_CASE));
+        int y = new Str(s).compareTo(new Str(t), Str.Option.IGNORE_CASE);
         printValue("y", y);
     }
 
@@ -598,7 +598,7 @@ public class StrExample {
         x += s.substring(prev, s.length());
         printValue("x", x);
         
-        Str y = new Str(s).replaceAll(t, u, EnumSet.of(Str.Option.IGNORE_CASE));
+        Str y = new Str(s).replaceAll(t, u, Str.Option.IGNORE_CASE);
         printValue("y", y);
     }
 

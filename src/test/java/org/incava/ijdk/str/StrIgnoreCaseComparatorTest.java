@@ -14,7 +14,7 @@ public class StrIgnoreCaseComparatorTest extends Parameterized {
     public void compare(Integer expected, String x, String y) {
         StrIgnoreCaseComparator comp = new StrIgnoreCaseComparator();
         Integer result = comp.compare(Str.of(x), Str.of(y));
-        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
+        Integer relResult = Integer.signum(result);
         assertThat(relResult, equalTo(expected));
     }
     

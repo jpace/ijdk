@@ -309,6 +309,12 @@ public class StrTest extends StringTest {
         assertThat(result, withContext(message("str", str), equalTo(expected)));
     }
 
+    @Test @Parameters(method="parametersForIsEmpty") @TestCaseName("{method} {index} {params}")
+    public void isEmptyNullOption(boolean expected, String str) {
+        boolean result = new Str(str).isEmpty(null);
+        assertThat(result, withContext(message("str", str), equalTo(expected)));
+    }
+
     @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
     public void isEmptyIgnoreWhitespace(boolean expected, String str) {
         boolean result = new Str(str).isEmpty(Str.Option.IGNORE_WHITESPACE);
@@ -417,7 +423,7 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void compareTo(Integer expected, String x, String y) {
         Integer result = new Str(x).compareTo(new Str(y));
-        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
+        Integer relResult = Integer.signum(result);
         assertThat(relResult, withContext(message("x", x, "y", y), equalTo(expected)));
     }
     
@@ -434,20 +440,20 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void compareToNull(Integer expected, Str x, Str y) {
         Integer result = x.compareTo(y);
-        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
+        Integer relResult = Integer.signum(result);
         assertThat(relResult, withContext(message("x", x, "y", y), equalTo(expected)));
     }
     
     private List<Object[]> parametersForCompareToNull() {
         return paramsList(params(-1, Str.of("abc"), null),
-                          params(0,  Str.of(null),  null),
-                          params(0,  Str.of(null),  Str.of(null)));
+                          params(0,  Str.of((String)null),  null),
+                          params(0,  Str.of((String)null),  Str.of((String)null)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void compareToWithOptions(Integer expected, String x, String y, EnumSet<Str.Option> options) {
         Integer result = new Str(x).compareTo(new Str(y), options);
-        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
+        Integer relResult = Integer.signum(result);
         assertThat(relResult, withContext(message("x", x, "y", y, "options", options), equalTo(expected)));
     }
     
@@ -464,7 +470,7 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void compareToWithOptionsVarargs(Integer expected, String x, String y, Str.Option ... options) {
         Integer result = new Str(x).compareTo(new Str(y), options);
-        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
+        Integer relResult = Integer.signum(result);
         assertThat(relResult, withContext(message("x", x, "y", y, "options", options), equalTo(expected)));
     }
     
@@ -482,7 +488,7 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void compareToAlphanumeric(Integer expected, String x, String y) {
         Integer result = new Str(x).compareTo(new Str(y), EnumSet.of(Str.Option.ALPHANUMERIC));
-        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
+        Integer relResult = Integer.signum(result);
         assertThat(relResult, equalTo(expected));
     }
     
@@ -906,12 +912,12 @@ public class StrTest extends StringTest {
     }
 
     @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
-    public void valueOf(Str expected, Object obj) {
-        Str result = Str.valueOf(obj);
+    public void toString(Str expected, Object obj) {
+        Str result = Str.toString(obj);
         assertThat(result, equalTo(expected));
     }
 
-    private java.util.List<Object[]> parametersForValueOf() {
+    private java.util.List<Object[]> parametersForToString() {
         return paramsList(params(new Str("1"),   new Integer(1)),
                           params(new Str("2.3"), new Double(2.3)),
                           params(null,           null));

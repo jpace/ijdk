@@ -19,7 +19,7 @@ public class StringAlphanumericComparatorTest extends Parameterized {
     public void compare(Integer expected, String x, String y) {
         StringAlphanumericComparator comp = new StringAlphanumericComparator();
         Integer result = comp.compare(x, y);
-        Integer relResult = result == 0 ? 0 : (result / Math.abs(result));
+        Integer relResult = Integer.signum(result);
         assertThat(relResult, equalTo(expected));
     }
     
