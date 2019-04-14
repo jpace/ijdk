@@ -910,18 +910,6 @@ public class StrTest extends StringTest {
         return paramsList(params(new MatchData(StringArray.of("a")), "a", "a", 0),
                           params(null,                               "a", "a", 1));
     }
-
-    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
-    public void toString(Str expected, Object obj) {
-        Str result = Str.toString(obj);
-        assertThat(result, equalTo(expected));
-    }
-
-    private java.util.List<Object[]> parametersForToString() {
-        return paramsList(params(new Str("1"),   new Integer(1)),
-                          params(new Str("2.3"), new Double(2.3)),
-                          params(null,           null));
-    }
     
     @Test
     public void demo() {

@@ -29,47 +29,40 @@ public class Str extends Obj<String> implements Comparing<Str> {
     
     public static final Str EMPTY = new Str("");
     
+    public static final Str NULL = new Str(null);
+    
     /**
-     * Creates an empty string. There is only one shared, immutable empty string object, to conserve
+     * Creates an empty Str. There is only one shared, immutable empty string object, to conserve
      * memory.
      *
      * @return the empty string
      */
     public static Str empty() {
-        return EMPTY;
+        return new StrFactory().empty();
     }
     
     /**
-     * Creates a string. In a future implementation, this may pool frequently-used objects for reduced memory.
+     * Creates an Str. In a future implementation, this may pool frequently-used objects for reduced memory.
      *
      * @param str the string; may be null
      * @return the new Str
      */
     public static Str of(String str) {
-        return new Str(str);
+        return new StrFactory().of(str);
     }
     
     /**
-     * Creates a string from a string builder. In a future implementation, this may pool
-     * frequently-used objects for reduced memory.
+     * Creates an Str from an object. The value of <code>obj.toString()</code> is used at the point
+     * of object creation, so subsequent changes to <code>obj</code>, and therefore a different
+     * return value of <code>obj.toString()</code>, are not updated in the returned
+     * <code>Str</code>.
      *
-     * @param sb the string builder
+     * @param obj the object
      * @return the new Str
      */
-    public static Str of(StringBuilder sb) {
-        return new Str(sb == null ? null : sb.toString());
-    }
-    
-    /**
-     * Creates a string, by invoking <code>toString</code> on the object. If the object is null, the
-     * wrapped string is also null.
-     *
-     * @param <T> the type of object
-     * @param obj the object; may be null
-     * @return the new Str
-     */
-    public static <T> Str toString(T obj) {
-        return new Str(obj == null ? null : obj.toString());
+    @SuppressWarnings("unchecked")
+    public static Str of(Object obj) {
+        return new StrFactory().of(obj);
     }
     
     /**
