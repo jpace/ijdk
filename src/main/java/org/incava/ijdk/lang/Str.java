@@ -75,8 +75,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the joined string
      */
     public static Str join(Collection<?> coll, String delim) {
-        String joined = Collections.join(coll, delim);
-        return Str.of(joined);
+        return new StrFactory().join(coll, delim);
     }
 
     /**
@@ -89,7 +88,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @return the joined string
      */
     public static Str join(Object[] ary, String delim) {
-        return join(ary == null ? null : Arrays.asList(ary), delim);
+        return new StrFactory().join(ary, delim);
     }
 
     /**

@@ -1,5 +1,9 @@
 package org.incava.ijdk.lang;
 
+import java.util.Arrays;
+import java.util.Collection;
+import org.incava.ijdk.util.Collections;
+
 /**
  * Contains various means to create an Str.
  */
@@ -33,5 +37,32 @@ public class StrFactory {
      */
     public Str of(Object obj) {
         return obj == null ? Str.NULL : new Str(obj.toString());
+    }
+    
+    /**
+     * Creates an Str from the collection, joined by <code>delim</code>. If <code>coll</code> is
+     * null, then the wrapped string is null. If <code>delim</code> is null, it is treated as the
+     * empty string ("").
+     *
+     * @param coll the collection to be joined
+     * @param delim the delimiter within the joined string
+     * @return the joined string
+     */
+    public Str join(Collection<?> coll, String delim) {
+        String joined = Collections.join(coll, delim);
+        return Str.of(joined);
+    }
+
+    /**
+     * Creates an Str from the array, joined by <code>delim</code>. If <code>ary</code> is null,
+     * then the wrapped string is null. If <code>delim</code> is null, it is treated as the empty
+     * string.
+     *
+     * @param ary the array to join
+     * @param delim the delimiter within the joined string
+     * @return the joined string
+     */
+    public Str join(Object[] ary, String delim) {
+        return join(ary == null ? null : Arrays.asList(ary), delim);
     }
 }

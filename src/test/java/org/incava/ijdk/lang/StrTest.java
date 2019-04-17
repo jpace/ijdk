@@ -41,7 +41,7 @@ public class StrTest extends StringTest {
     }
 
     public Str toStr(String str) {
-        return Str.of(str);
+        return new Str(str);
     }
 
     public String fromStr(Str str) {
@@ -212,20 +212,20 @@ public class StrTest extends StringTest {
     }
 
     public List<Object[]> parametersForStartsWithString() {
-        Str s = Str.of("a");
+        Str s = new Str("a");
         return paramsList(params(true,  s, "a"),
                           params(false, s, "b"));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void startsWith(boolean expected, Str str, String substr, Integer offset, Str.Option ... options) {
-        Str t = Str.of(substr);
+        Str t = new Str(substr);
         boolean result = offset == null ? str.startsWith(t, 0, options) : str.startsWith(t, offset, options);
         assertThat(result, equalTo(expected));
     }
     
     public List<Object[]> parametersForStartsWith() {
-        Str s = Str.of("abc");
+        Str s = new Str("abc");
         Str.Option[] empty = new Str.Option[0];
         return paramsList(params(true,  s, "a",    null, empty),
                           params(true,  s, "a",    0,    empty),
@@ -262,7 +262,7 @@ public class StrTest extends StringTest {
     @Test @Parameters(method="parametersForSubstringBefore") @TestCaseName("{method} {index} {params}")
     public void substringBeforeStr(String expected, String str, Character ch) {
         Str result = new Str(str).substringBefore(ch, Str.EMPTY);
-        Str exp = expected == null ? null : Str.of(expected);
+        Str exp = expected == null ? null : new Str(expected);
         assertThat(result, withContext(message("str", str, "ch", ch), equalTo(exp)));
     }
 
@@ -275,7 +275,7 @@ public class StrTest extends StringTest {
     @Test @Parameters(method="parametersForSubstringAfter") @TestCaseName("{method} {index} {params}")
     public void substringAfterStr(String expected, String str, Character ch) {
         Str result = new Str(str).substringAfter(ch, Str.EMPTY);
-        Str exp = expected == null ? null : Str.of(expected);
+        Str exp = expected == null ? null : new Str(expected);
         assertThat(result, withContext(message("str", str, "ch", ch), equalTo(exp)));
     }
 
@@ -445,9 +445,9 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForCompareToNull() {
-        return paramsList(params(-1, Str.of("abc"), null),
-                          params(0,  Str.of((String)null),  null),
-                          params(0,  Str.of((String)null),  Str.of((String)null)));
+        return paramsList(params(-1, new Str("abc"),        null),
+                          params(0,  new Str((String)null), null),
+                          params(0,  new Str((String)null), new Str((String)null)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -549,8 +549,8 @@ public class StrTest extends StringTest {
     }
     
     private List<Object[]> parametersForReplaceAllWithOptions() {
-        return paramsList(params(Str.of("One"), "One", "one", "1", EnumSet.noneOf(Str.Option.class)),
-                          params(Str.of("1"),   "One", "one", "1", EnumSet.of(Str.Option.IGNORE_CASE)));
+        return paramsList(params(new Str("One"), "One", "one", "1", EnumSet.noneOf(Str.Option.class)),
+                          params(new Str("1"),   "One", "one", "1", EnumSet.of(Str.Option.IGNORE_CASE)));
     }    
 
     @Test @Parameters(method="parametersForReplace") @TestCaseName("{method} {index} {params}")
@@ -586,18 +586,18 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void replaceAllLiteral(Str expected, String str, String from, String to) {
-        Str result = Str.of(str).replaceAll(from, to);
+        Str result = new Str(str).replaceAll(from, to);
         assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForReplaceAllLiteral() {
         // not applied as regular expressions:
-        return paramsList(params(Str.of("1"),       "$one",        "$one",        "1"),
-                          params(Str.of("one two"), "one two",     "one.*",       "1"),
-                          params(Str.of("1 two"),   "one.* two",   "one.*",       "1"),
-                          params(Str.of("one"),     "one",         "(?:one|two)", "12"),
-                          params(Str.of("two"),     "two",         "(?:one|two)", "12"),
-                          params(Str.of("12"),      "(?:one|two)", "(?:one|two)", "12"));
+        return paramsList(params(new Str("1"),       "$one",        "$one",        "1"),
+                          params(new Str("one two"), "one two",     "one.*",       "1"),
+                          params(new Str("1 two"),   "one.* two",   "one.*",       "1"),
+                          params(new Str("one"),     "one",         "(?:one|two)", "12"),
+                          params(new Str("two"),     "two",         "(?:one|two)", "12"),
+                          params(new Str("12"),      "(?:one|two)", "(?:one|two)", "12"));
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -629,33 +629,28 @@ public class StrTest extends StringTest {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void joinArray(String expected, String[] ary, String delim) {
-        String result = Str.join(ary, delim).str();
+    public void joinArray(Str expected, String[] ary, String delim) {
+        Str result = Str.join(ary, delim);
         assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForJoinArray() {
-        return paramsList(params(null,      (String[])null,                 "~"),
-                          params("",        new String[] { },               null),
-                          params("a~b~c",   new String[] { "a", "b", "c" }, "~"),
-                          params("aXXbXXc", new String[] { "a", "b", "c" }, "XX"));
+        return paramsList(params(new Str("a~b~c"), new String[] { "a", "b", "c" }, "~"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void joinCollection(String expected, Collection<String> coll, String delim) {
-        String result = Str.join(coll, delim).str();
+    public void joinCollection(Str expected, Collection<String> coll, String delim) {
+        Str result = Str.join(coll, delim);
         assertThat(result, equalTo(expected));
     }
     
     private List<Object[]> parametersForJoinCollection() {
-        return paramsList(params(null,      (ArrayList<String>)null,           "~"),
-                          params("",        Arrays.<String>asList(),           null),
-                          params("a~b~c~d", Arrays.asList("a", "b", "c", "d"), "~"));
+        return paramsList(params(new Str("a~b~c~d"), Arrays.asList("a", "b", "c", "d"), "~"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void scan(List<List<String>> expected, String s, String re) {
-        Str str = Str.of(s);
+        Str str = new Str(s);
         List<List<String>> result = str.scan(Pattern.compile(re));
         assertThat(result, equalTo(expected));
     }
@@ -666,7 +661,7 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void matches(List<MatchData> expected, String s, String re) {
-        Str str = Str.of(s);
+        Str str = new Str(s);
         List<MatchData> result = str.matches(Pattern.compile(re));
         assertThat(result, equalTo(expected));
     }
@@ -682,7 +677,7 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void firstNoArg(Character expected, String str) {
-        Character result = Str.of(str).first();
+        Character result = new Str(str).first();
         assertThat(result, equalTo(expected));
     }
     
@@ -695,8 +690,8 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void firstWithArg(String expected, String str, Integer num) {
-        Str result = Str.of(str).first(num);
-        assertThat(result, expected == null ? nullValue() : equalTo(Str.of(expected)));
+        Str result = new Str(str).first(num);
+        assertThat(result, expected == null ? nullValue() : equalTo(new Str(expected)));
     }
     
     private java.util.List<Object[]> parametersForFirstWithArg() {
@@ -710,7 +705,7 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void lastNoArg(Character expected, String str) {
-        Character result = Str.of(str).last();
+        Character result = new Str(str).last();
         assertThat(result, equalTo(expected));
     }
     
@@ -723,8 +718,8 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")
     public void lastWithArg(String expected, String str, Integer num) {
-        Str result = Str.of(str).last(num);
-        assertThat(result, expected == null ? nullValue() : equalTo(Str.of(expected)));
+        Str result = new Str(str).last(num);
+        assertThat(result, expected == null ? nullValue() : equalTo(new Str(expected)));
     }
     
     private java.util.List<Object[]> parametersForLastWithArg() {
@@ -764,7 +759,7 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
     public void trimLeft(String expected, String str) {
         Str result = new Str(str).trimLeft();
-        assertThat(result, equalTo(Str.of(expected)));
+        assertThat(result, equalTo(new Str(expected)));
     }
 
     private java.util.List<Object[]> parametersForTrimLeft() {
@@ -781,7 +776,7 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
     public void trimRight(String expected, String str) {
         Str result = new Str(str).trimRight();
-        assertThat(result, equalTo(Str.of(expected)));
+        assertThat(result, equalTo(new Str(expected)));
     }
 
     private java.util.List<Object[]> parametersForTrimRight() {
@@ -810,8 +805,8 @@ public class StrTest extends StringTest {
 
     @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
     public void plus(String expected, String str, String other) {
-        Str result = new Str(str).plus(Str.of(other));
-        assertThat(Str.of(result), equalTo(expected));
+        Str result = new Str(str).plus(new Str(other));
+        assertThat(result, equalTo(expected));
     }
 
     private java.util.List<Object[]> parametersForPlus() {
@@ -823,13 +818,13 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
     public void appendString(String expected, String str, String other) {
         Str result = new Str(str).append(other);
-        assertThat(Str.of(result), equalTo(expected));
+        assertThat(result, equalTo(expected));
     }
 
     @Test @Parameters(method="parametersForAppendString") @TestCaseName("{method}(...) #{index}; params: {params}")
     public void appendStr(String expected, String str, String other) {
-        Str result = new Str(str).append(Str.of(other));
-        assertThat(Str.of(result), equalTo(expected));
+        Str result = new Str(str).append(new Str(other));
+        assertThat(result, equalTo(expected));
     }
 
     private java.util.List<Object[]> parametersForAppendString() {
@@ -841,7 +836,7 @@ public class StrTest extends StringTest {
     @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
     public void appendChar(String expected, String str, Character ch) {
         Str result = new Str(str).append(ch);
-        assertThat(Str.of(result), equalTo(expected));
+        assertThat(result, equalTo(expected));
     }
 
     private java.util.List<Object[]> parametersForAppendChar() {
