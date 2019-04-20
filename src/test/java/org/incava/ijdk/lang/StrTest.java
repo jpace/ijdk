@@ -48,6 +48,10 @@ public class StrTest extends StringTest {
         return str == null ? null : str.str();
     }
 
+    private StringArray strAry(String ... strs) {
+        return StringArray.of(strs);
+    }
+
     private List<String> list(String ... strs) {
         return new ArrayList<>(Arrays.asList(strs));
     }
@@ -56,68 +60,75 @@ public class StrTest extends StringTest {
         return new ArrayList<>(Arrays.asList(ary));
     }
 
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void split(List<String> expected, String str, String delim, Integer max) {
-        List<String> result = new Str(str).split(delim, max);
+    @Test @Parameters(method="parametersForSplit") @TestCaseName("{method} {index} {params}")
+    public void splitStrWithMax(StringArray expected, String str, String delim, Integer max) {
+        StringArray result = new Str(str).split(new Str(delim), max);
         if (expected != null) {
             assertThat(result.size(), equalTo(expected.size()));
         }
         assertThat(result, equalTo(expected));
     }
-    
-    public List<Object[]> parametersForSplit() {
-        return paramsList(params(null,                       null,            ";", -1),
-                          params(list("ab;cd;e"),            "ab;cd;e",       ";",  1),
-                          params(list("ab", "cd;ef"),        "ab;cd;ef",      ";",  2),
-                          params(list("ab", "cd", "e"),      "ab;cd;e",       ";",  3),
-                          params(list("ab", "cd", "e"),      "ab;cd;e",       ";",  4),
-                          params(list("ab", "cd", "e"),      "ab;cd;e",       ";",  null),
-                          params(list("ab", "cd", "e"),      "ab;cd;e",       ";",  0),
-                          params(list("ab", "cd", "", "e"),  "ab;cd;;e",      ";",  null),
-                          params(list("", "ab", "cd"),       ";ab;cd",        ";",  null),
-                          params(list("ab", "cd"),           "ab;cd;",        ";",  null),
-                          params(list("ab", "cd", "ef"),     "ab;cd;ef",      ";",  null),
-                          params(list("ab", "cd", "ef"),     "ab--cd--ef",    "--", null),
-                          params(list("ab", "", "cd", "ef"), "ab----cd--ef",  "--", null),
-                          params(list("", "ab", "cd", "ef"), "--ab--cd--ef",  "--", null),
-                          params(list("-ab", "cd", "ef"),    "-ab--cd--ef",   "--", null),
-                          params(list(""),                   "",              ";",  null),
-                          params(list("ab", "cd", "e"),      "ab.cd.e",       ".",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e-",      "-",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e--",     "-",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e---",    "-",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e----",   "-",  null),
-                          params(list("ab", "cd", "e"),      "ab\ncd\ne\n\n", "\n", null));
+
+    @Test @Parameters(method="parametersForSplit") @TestCaseName("{method} {index} {params}")
+    public void splitStringWithMax(StringArray expected, String str, String delim, Integer max) {
+        StringArray result = new Str(str).split(delim, max);
+        if (expected != null) {
+            assertThat(result.size(), equalTo(expected.size()));
+        }
+        assertThat(result, equalTo(expected));
     }
 
-    public List<Object[]> parametersForSplitToArray() {
-        return paramsList(params(null,                       null,           ";", -1),
-                          params(list("ab;cd;e"),            "ab;cd;e",      ";",  1),
-                          params(list("ab", "cd;ef"),        "ab;cd;ef",     ";",  2),
-                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  3),
-                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  4),
-                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  null),
-                          params(list("ab", "cd", "e"),      "ab;cd;e",      ";",  0),
-                          params(list("ab", "cd", "", "e"),  "ab;cd;;e",     ";",  null),
-                          params(list("", "ab", "cd"),       ";ab;cd",       ";",  null),
-                          params(list("ab", "cd"),           "ab;cd;",       ";",  null),
-                          params(list("ab", "cd", "ef"),     "ab;cd;ef",     ";",  null),
-                          params(list("ab", "cd", "ef"),     "ab--cd--ef",   "--", null),
-                          params(list("ab", "", "cd", "ef"), "ab----cd--ef", "--", null),
-                          params(list("", "ab", "cd", "ef"), "--ab--cd--ef", "--", null),
-                          params(list("-ab", "cd", "ef"),    "-ab--cd--ef",  "--", null),
-                          params(list(""),                   "",             ";",  null),
-                          params(list("ab", "cd", "e"),      "ab.cd.e",      ".",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e-",     "-",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e--",    "-",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e---",   "-",  null),
-                          params(list("ab", "cd", "e"),      "ab-cd-e----",  "-",  null));
+    @Test @Parameters(method="parametersForSplit") @TestCaseName("{method} {index} {params}")
+    public void splitStrWithoutMax(StringArray expected, String str, String delim, Integer max) {
+        if (max == null) {
+            StringArray result = new Str(str).split(new Str(delim));
+            if (expected != null) {
+                assertThat(result.size(), equalTo(expected.size()));
+            }
+            assertThat(result, equalTo(expected));
+        }
+    }
+
+    @Test @Parameters(method="parametersForSplit") @TestCaseName("{method} {index} {params}")
+    public void splitStringWithoutMax(StringArray expected, String str, String delim, Integer max) {
+        if (max == null) {
+            StringArray result = new Str(str).split(delim);
+            if (expected != null) {
+                assertThat(result.size(), equalTo(expected.size()));
+            }
+            assertThat(result, equalTo(expected));
+        }
+    }
+    
+    public List<Object[]> parametersForSplit() {
+        return paramsList(params(null,                         null,            ";", -1),
+                          params(strAry("ab;cd;e"),            "ab;cd;e",       ";",  1),
+                          params(strAry("ab", "cd;ef"),        "ab;cd;ef",      ";",  2),
+                          params(strAry("ab", "cd", "e"),      "ab;cd;e",       ";",  3),
+                          params(strAry("ab", "cd", "e"),      "ab;cd;e",       ";",  4),
+                          params(strAry("ab", "cd", "e"),      "ab;cd;e",       ";",  null),
+                          params(strAry("ab", "cd", "e"),      "ab;cd;e",       ";",  0),
+                          params(strAry("ab", "cd", "", "e"),  "ab;cd;;e",      ";",  null),
+                          params(strAry("", "ab", "cd"),       ";ab;cd",        ";",  null),
+                          params(strAry("ab", "cd"),           "ab;cd;",        ";",  null),
+                          params(strAry("ab", "cd", "ef"),     "ab;cd;ef",      ";",  null),
+                          params(strAry("ab", "cd", "ef"),     "ab--cd--ef",    "--", null),
+                          params(strAry("ab", "", "cd", "ef"), "ab----cd--ef",  "--", null),
+                          params(strAry("", "ab", "cd", "ef"), "--ab--cd--ef",  "--", null),
+                          params(strAry("-ab", "cd", "ef"),    "-ab--cd--ef",   "--", null),
+                          params(strAry(""),                   "",              ";",  null),
+                          params(strAry("ab", "cd", "e"),      "ab.cd.e",       ".",  null),
+                          params(strAry("ab", "cd", "e"),      "ab-cd-e-",      "-",  null),
+                          params(strAry("ab", "cd", "e"),      "ab-cd-e--",     "-",  null),
+                          params(strAry("ab", "cd", "e"),      "ab-cd-e---",    "-",  null),
+                          params(strAry("ab", "cd", "e"),      "ab-cd-e----",   "-",  null),
+                          params(strAry("ab", "cd", "e"),      "ab\ncd\ne\n\n", "\n", null));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void toList(String[] expected, String str) {
         List<String> result = new Str(str).toList();
-        assertThat(result, expected == null ? nullValue() : equalTo(Arrays.asList(expected)));
+        assertThat(result, expected == null ? nullValue() : equalTo(StringArray.of(expected)));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -601,12 +612,12 @@ public class StrTest extends StringTest {
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void indexOfTest(int expected, String x, String y, int pos, boolean ignoreCase) {
+    public void indexOfString(int expected, String x, String y, int pos, boolean ignoreCase) {
         String msg = message("x", x, "y", y, "pos", pos, "ignoreCase", ignoreCase);
         assertThat(new Str(x).indexOf(y, pos, ignoreCase), withContext(msg, equalTo(expected)));
     }
     
-    private List<Object[]> parametersForIndexOfTest() {
+    private List<Object[]> parametersForIndexOfString() {
         return paramsList(params(0,  "abc", "a", 0, true),
                           params(0,  "abc", "a", 0, false),
                           params(-1, "abc", "a", 1, true),
@@ -627,25 +638,43 @@ public class StrTest extends StringTest {
         assertThat(empty.str().length(), equalTo(0));
         assertThat(Str.EMPTY, sameInstance(empty));
     }
+    
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void ofString(Str expected, String s) {
+        assertThat(Str.of(s), equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForOfString() {
+        return paramsList(params(new Str("abc"), "abc"),
+                          params(new Str("def"), "def"));
+    }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void joinArray(Str expected, String[] ary, String delim) {
+    public void ofObject(Str expected, Object obj) {
+        assertThat(Str.of(obj), equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForOfObject() {
+        return paramsList(params(new Str("1"), Integer.valueOf(1)),
+                          params(new Str("2.3"), Double.valueOf(2.3)));
+    }
+
+    @Test
+    public void joinArray() {
+        String[] ary = new String[] { "a", "b", "c" };
+        String delim = "~";
+        Str expected = new Str("a~b~c");
         Str result = Str.join(ary, delim);
         assertThat(result, equalTo(expected));
     }
-    
-    private List<Object[]> parametersForJoinArray() {
-        return paramsList(params(new Str("a~b~c"), new String[] { "a", "b", "c" }, "~"));
-    }
 
-    @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public void joinCollection(Str expected, Collection<String> coll, String delim) {
+    @Test
+    public void joinCollection() {
+        Collection<String> coll = Arrays.asList("a", "b", "c", "d");
+        String delim = "~";
+        Str expected = new Str("a~b~c~d");
         Str result = Str.join(coll, delim);
         assertThat(result, equalTo(expected));
-    }
-    
-    private List<Object[]> parametersForJoinCollection() {
-        return paramsList(params(new Str("a~b~c~d"), Arrays.asList("a", "b", "c", "d"), "~"));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

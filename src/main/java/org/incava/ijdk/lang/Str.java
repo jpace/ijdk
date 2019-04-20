@@ -10,10 +10,10 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.incava.ijdk.collect.Array;
+import org.incava.ijdk.collect.StringArray;
 import org.incava.ijdk.regexp.MatchData;
 import org.incava.ijdk.regexp.Regexp;
 import org.incava.ijdk.str.StrComparators;
-import org.incava.ijdk.util.Collections;
 import org.incava.ijdk.util.Indexable;
 
 /**
@@ -160,6 +160,16 @@ public class Str extends Obj<String> implements Comparing<Str> {
     }
 
     /**
+     * Returns whether the given str is equal to this one.
+     *
+     * @param other the str to compare to this one
+     * @return the comparison value
+     */
+    public boolean equals(Str other) {
+        return isNull() ? other.isNull() : str().equals(other.str());
+    }
+
+    /**
      * Returns whether the given string is equal to this one.
      *
      * @param obj the object to compare to this one
@@ -173,7 +183,7 @@ public class Str extends Obj<String> implements Comparing<Str> {
             return equals((String)obj);
         }
         else if (obj instanceof Str) {
-            return equals(((Str)obj).str());
+            return equals((Str)obj);
         }
         else {
             return false;
@@ -189,17 +199,54 @@ public class Str extends Obj<String> implements Comparing<Str> {
      * @param max the maximum number of elements
      * @return the array of split strings
      */
-    public List<String> split(String delim, Integer max) {
+    public StringArray split(String delim, Integer max) {
+        return split(Str.of(delim), max);
+    }
+    
+    /**
+     * Returns an array of strings split at the str delimiter. Returns null if <code>str</code>
+     * is null. Unlike <code>java.lang.String#split</code>, the delimiter is a literal string, not a
+     * regular expression.
+     *
+     * @param delim the delimiter to split at
+     * @param max the maximum number of elements
+     * @return the array of split strings
+     */
+    public StringArray split(Str delim, Integer max) {
         if (isNull()) {
             return null;
         }
         
-        Pattern pat = Pattern.compile(delim, Pattern.LITERAL);
+        Pattern pat = Pattern.compile(delim.str(), Pattern.LITERAL);
         if (max == null) {
             max = 0;
         }
         String[] ary = pat.split(str(), max);
-        return new ArrayList<>(Arrays.asList(ary));
+        return StringArray.of(ary);
+    }
+    
+    /**
+     * Returns an array of strings split at the str delimiter. Returns null if <code>str</code>
+     * is null. Unlike <code>java.lang.String#split</code>, the delimiter is a literal string, not a
+     * regular expression. There is no limit to the number of strings.
+     *
+     * @param delim the delimiter to split at
+     * @return the array of split strings
+     */
+    public StringArray split(Str delim) {
+        return split(delim, null);
+    }
+    
+    /**
+     * Returns an array of strings split at the string delimiter. Returns null if <code>str</code>
+     * is null. Unlike <code>java.lang.String#split</code>, the delimiter is a literal string, not a
+     * regular expression. There is no limit to the number of strings.
+     *
+     * @param delim the delimiter to split at
+     * @return the array of split strings
+     */
+    public StringArray split(String delim) {
+        return split(delim, null);
     }
 
     /**
@@ -207,12 +254,12 @@ public class Str extends Obj<String> implements Comparing<Str> {
      *
      * @return the list of strings, without whitespace or commas
      */
-    public List<String> toList() {
+    public StringArray toList() {
         if (isNull()) {
             return null;
         }
         
-        List<String> list = new ArrayList<String>();
+        StringArray list = StringArray.empty();
         StringTokenizer st = new StringTokenizer(str(), " \t\n\r\f,");
         while (st.hasMoreTokens()) {
             String tk = st.nextToken();
