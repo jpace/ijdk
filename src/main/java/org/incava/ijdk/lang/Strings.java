@@ -94,6 +94,18 @@ public class Strings {
         return repeat(String.valueOf(ch), num);
     }
 
+    public static String repeat(StringBuilder sb, String str, int num) {
+        if (str == null) {
+            return null;
+        }
+        else {
+            for (int i = 0; i < num; ++i) {
+                sb.append(str);
+            }
+            return sb.toString();
+        }
+    }    
+
     public static String left(String str, int num) {
         Str lstr = new Str(str).left(num);
         return lstr == null ? null : lstr.str();
@@ -292,17 +304,5 @@ public class Strings {
         }
 
         return sb.toString();
-    }
-
-    public static String repeat(StringBuilder sb, String str, int num) {
-        if (str == null) {
-            return null;
-        }
-        else {
-            for (int i = 0; i < num; ++i) {
-                sb.append(str);
-            }
-            return sb.toString();
-        }
     }
 }

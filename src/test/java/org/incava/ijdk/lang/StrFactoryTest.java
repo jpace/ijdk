@@ -34,6 +34,18 @@ public class StrFactoryTest extends Parameterized {
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void ofCharacter(Str expected, char ch) {
+        StrFactory sf = new StrFactory();
+        Str result = sf.of(ch);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForOfCharacter() {
+        return paramsList(params(new Str("a"), 'a'), 
+                          params(new Str("b"), 'b'));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
     public void ofObject(Str expected, Object obj) {
         StrFactory sf = new StrFactory();
         Str result = sf.of(obj);
@@ -72,5 +84,36 @@ public class StrFactoryTest extends Parameterized {
                           params(new Str(""),        new String[] { },               null),
                           params(new Str("a~b~c"),   new String[] { "a", "b", "c" }, "~"),
                           params(new Str("aXXbXXc"), new String[] { "a", "b", "c" }, "XX"));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void ofRepeatChar(Str expected, char ch, int num) {
+        StrFactory sf = new StrFactory();
+        Str result = sf.of(ch, num);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForOfRepeatChar() {
+        return paramsList(params(new Str("a"),  'a',  1),
+                          params(new Str("aa"), 'a',  2),
+                          params(new Str(""),   'a',  0),
+                          params(new Str(""),   'a', -1));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void ofRepeatString(Str expected, String str, int num) {
+        StrFactory sf = new StrFactory();
+        Str result = sf.of(str, num);
+        assertThat(result, equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForOfRepeatString() {
+        return paramsList(params(new Str("ab"),   "ab",  1),
+                          params(new Str("abab"), "ab",  2),
+                          params(new Str(""),     "a",   0),
+                          params(new Str(""),     "a",  -1),
+                          params(new Str(""),     "",    0),
+                          params(new Str(""),     "",    1),
+                          params(new Str(null),   null,  1));
     }
 }

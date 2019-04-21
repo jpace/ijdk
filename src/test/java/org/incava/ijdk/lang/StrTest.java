@@ -197,7 +197,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
     
-    private java.util.List<Object[]> parametersForGetIndex() {
+    private List<Object[]> parametersForGetIndex() {
         String abcd = "abcd";
         return paramsList(params(null, null, 0),
                           params(0,    abcd, 0),
@@ -332,7 +332,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
 
-    private java.util.List<Object[]> parametersForIsEmptyIgnoreWhitespace() {
+    private List<Object[]> parametersForIsEmptyIgnoreWhitespace() {
         return paramsList(params(true, null),
                           params(true, ""),
                           params(false,  "a"),
@@ -390,7 +390,7 @@ public class StrTest extends StringTest {
         assertThat(sa.equals(sb), withContext(message("a", a, "b", b), equalTo(expected)));
     }
 
-    private java.util.List<Object[]> parametersForEquals() {
+    private List<Object[]> parametersForEquals() {
         return paramsList(params(false, null, ""),
                           params(false, "",   null),
                           params(true,  null, null),
@@ -536,6 +536,16 @@ public class StrTest extends StringTest {
                           params(new Str("aa"), 'a',  2),
                           params(new Str(""),   'a',  0),
                           params(new Str(""),   'a', -1));
+    }
+
+    @Test @Parameters @TestCaseName("{method} {index} {params}")
+    public void initChar(Str expected, char ch) {
+        assertThat(new Str(ch), equalTo(expected));
+    }
+    
+    private List<Object[]> parametersForInitChar() {
+        return paramsList(params(new Str("a"),  'a'),
+                          params(new Str("b"),  'b'));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
@@ -710,7 +720,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
     
-    private java.util.List<Object[]> parametersForFirstNoArg() {
+    private List<Object[]> parametersForFirstNoArg() {
         return paramsList(params('a',  "abc"),
                           params('d',  "def"),
                           params(null, ""),
@@ -723,7 +733,7 @@ public class StrTest extends StringTest {
         assertThat(result, expected == null ? nullValue() : equalTo(new Str(expected)));
     }
     
-    private java.util.List<Object[]> parametersForFirstWithArg() {
+    private List<Object[]> parametersForFirstWithArg() {
         return paramsList(params("a",   "abc",  1),
                           params("ab",  "abc",  2),
                           params("abc", "abc",  4),
@@ -738,7 +748,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
     
-    private java.util.List<Object[]> parametersForLastNoArg() {
+    private List<Object[]> parametersForLastNoArg() {
         return paramsList(params('c',  "abc"),
                           params('f',  "def"),
                           params(null, ""),
@@ -751,7 +761,7 @@ public class StrTest extends StringTest {
         assertThat(result, expected == null ? nullValue() : equalTo(new Str(expected)));
     }
     
-    private java.util.List<Object[]> parametersForLastWithArg() {
+    private List<Object[]> parametersForLastWithArg() {
         return paramsList(params("c",   "abc",  1),
                           params("bc",  "abc",  2),
                           params("abc", "abc",  3),
@@ -761,14 +771,13 @@ public class StrTest extends StringTest {
                           params(null,  null,   1));
     }
 
-
     @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
     public void trim(String expected, String str) {
         Str result = new Str(str).trim();
         assertThat(result, equalTo(expected));
     }
 
-    private java.util.List<Object[]> parametersForTrim() {
+    private List<Object[]> parametersForTrim() {
         return paramsList(params("",   ""),
                           params("",   " "),
                           params("a",  "a"),
@@ -791,7 +800,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(new Str(expected)));
     }
 
-    private java.util.List<Object[]> parametersForTrimLeft() {
+    private List<Object[]> parametersForTrimLeft() {
         return paramsList(params("",    ""),
                           params("",    " "),
                           params("a",   "a"),
@@ -808,7 +817,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(new Str(expected)));
     }
 
-    private java.util.List<Object[]> parametersForTrimRight() {
+    private List<Object[]> parametersForTrimRight() {
         return paramsList(params("",    ""),
                           params("",    " "),
                           params("a",   "a"),
@@ -826,7 +835,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
 
-    private java.util.List<Object[]> parametersForEscape() {
+    private List<Object[]> parametersForEscape() {
         return paramsList(params("",          ""),
                           params("\\ ",       " "),
                           params("a\\ b\\ c", "a b c"));
@@ -838,7 +847,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
 
-    private java.util.List<Object[]> parametersForPlus() {
+    private List<Object[]> parametersForPlus() {
         return paramsList(params("",   "",  ""),
                           params("ab", "a", "b"),
                           params("b",  "",  "b"));
@@ -856,7 +865,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
 
-    private java.util.List<Object[]> parametersForAppendString() {
+    private List<Object[]> parametersForAppendString() {
         return paramsList(params("",     "",   ""),   
                           params("abcd", "ab", "cd"), 
                           params("ab",   "",   "ab"));
@@ -868,7 +877,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
 
-    private java.util.List<Object[]> parametersForAppendChar() {
+    private List<Object[]> parametersForAppendChar() {
         return paramsList(params("a",  "",  'a'),
                           params("ab", "a", 'b'));
     }
@@ -880,7 +889,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
 
-    private java.util.List<Object[]> parametersForIndexOfPattern() {
+    private List<Object[]> parametersForIndexOfPattern() {
         return paramsList(params(0,    "",    ""),
                           params(null, "a",   "b"),
                           params(0,    "ab",  "a."),
@@ -896,7 +905,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
 
-    private java.util.List<Object[]> parametersForIndexOfPatternWithOffset() {
+    private List<Object[]> parametersForIndexOfPatternWithOffset() {
         return paramsList(params(0,    "",    "",   0),
                           params(null, "a",   "b",  0),
                           params(0,    "ab",  "a",  0),
@@ -914,7 +923,7 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
 
-    private java.util.List<Object[]> parametersForMatchRegexpNoOffset() {
+    private List<Object[]> parametersForMatchRegexpNoOffset() {
         return paramsList(params(new MatchData(StringArray.of("")),   "",   ""),
                           params(null,                                "b",  "a"),
                           params(new MatchData(StringArray.of("ab")), "a.", "ab"),
@@ -930,9 +939,21 @@ public class StrTest extends StringTest {
         assertThat(result, equalTo(expected));
     }
 
-    private java.util.List<Object[]> parametersForMatchRegexpWithOffset() {
+    private List<Object[]> parametersForMatchRegexpWithOffset() {
         return paramsList(params(new MatchData(StringArray.of("a")), "a", "a", 0),
                           params(null,                               "a", "a", 1));
+    }
+
+    @Test @Parameters @TestCaseName("{method}(...) #{index}; params: {params}")
+    public void toString(String expected, Str str) {
+        String result = str.toString();
+        assertThat(result, equalTo(expected));
+    }
+
+    private List<Object[]> parametersForToString() {
+        return paramsList(params("abc",  new Str("abc")), 
+                          params("def",  new Str("def")), 
+                          params("null", new Str("null")));
     }
     
     @Test

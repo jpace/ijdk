@@ -1278,6 +1278,13 @@ public class Str extends Obj<String> implements Comparing<Str> {
         return re.match(str(), offset);
     }
 
+    /**
+     * Returns the wrapped string, or "null" if null.
+     */
+    public String toString() {
+        return isNull() ? "null" : str();
+    }    
+
     private Str.Option[] toArray(EnumSet<Str.Option> options) {
         return options == null ? new Str.Option[0] : options.toArray(new Str.Option[options.size()]);
     }

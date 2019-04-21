@@ -145,7 +145,7 @@ public class StringExt {
      * @return the repeated string
      */
     public static String repeat(String str, int num) {
-        return str == null ? null : new Str(str, num).str();
+        return Strings.repeat(str, num);
     }
 
     /**
@@ -156,7 +156,7 @@ public class StringExt {
      * @return the repeated string
      */
     public static String repeat(Character ch, int num) {
-        return ch == null ? null : new Str(ch, num).str();
+        return Strings.repeat(ch, num);
     }
 
     /**

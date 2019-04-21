@@ -36,7 +36,7 @@ public class StrFactory {
      * @return the new Str
      */
     public Str of(Object obj) {
-        return obj == null ? Str.NULL : new Str(obj.toString());
+        return obj == null ? Str.NULL : of(obj.toString());
     }
     
     /**
@@ -50,7 +50,7 @@ public class StrFactory {
      */
     public Str join(Collection<?> coll, String delim) {
         String joined = Collections.join(coll, delim);
-        return Str.of(joined);
+        return of(joined);
     }
 
     /**
@@ -65,4 +65,36 @@ public class StrFactory {
     public Str join(Object[] ary, String delim) {
         return join(ary == null ? null : Arrays.asList(ary), delim);
     }
+
+    /**
+     * Creates an Str from the character.
+     *
+     * @param ch the character to wrap
+     * @return the created Str
+     */
+    public Str of(char ch) {
+        return of(String.valueOf(ch));
+    }
+
+    /**
+     * Creates an Str, repeating the given string <code>num</code> times.
+     *
+     * @param str the string to repeat
+     * @param num the number of times to repeat
+     * @return the created Str
+     */
+    public Str of(String str, int num) {
+        return of(Strings.repeat(str, num));
+    }
+
+    /**
+     * Creates an Str, repeating the given character <code>num</code> times.
+     *
+     * @param ch the character to repeat
+     * @param num the number of times to repeat
+     * @return the created Str
+     */
+    public Str of(char ch, int num) {
+        return of(Strings.repeat(ch, num));
+    }    
 }
