@@ -1,8 +1,5 @@
 package org.incava.ijdk.lang;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeMap;
 import org.incava.ijdk.collect.Array;
@@ -108,8 +105,8 @@ public class ICore {
     }
 
     /**
-     * Returns the first parameter if it is true, and otherwise returns the
-     * default value.
+     * Returns the first parameter if it is true, and otherwise returns the default value.
+     *
      *
      * The following two statements are equivalent:
      *
@@ -118,9 +115,9 @@ public class ICore {
      *     String statusName = IUtil.or(userName, "guest");
      * </pre>
      *
-     * This method is best for simple objects, since the default value is
-     * evaluated before the method is executed. For example, in the second block
-     * below, <code>db.initialize()</code> will be called.
+     * This method is best for simple objects, since the default value is evaluated before the
+     * method is executed. For example, in the first block below, <code>db.initialize()</code> will
+     * be called.
      *
      * <pre>
      *     String status = IUtil.or(db.status(), db.initialize());
@@ -133,7 +130,6 @@ public class ICore {
      * @param <T> the type of a and b
      * @param a the value returned if true
      * @param b the value returned if a is not true, and b is true
-     * @see #elvis
      * @see #isTrue
      * @return a if true, b if true, else null
      */
@@ -142,8 +138,8 @@ public class ICore {
     }
 
     /**
-     * If both parameters evaluate to true (via <code>isTrue</code>), then the
-     * second value is returned. This results in code such as:
+     * If both parameters evaluate to true (via <code>isTrue</code>), then the second value is
+     * returned. This results in code such as:
      *
      * <pre>
      *    String statusName = userName != null &amp;&amp; lastName != null ? lastName : null;
@@ -162,22 +158,7 @@ public class ICore {
     }
 
     /**
-     * An alias for the <code>or</code> method. So-named for the "?:" operator
-     * in Groovy.
-     *
-     * @param <T> the type of obj and defVal
-     * @param obj the object to return if true
-     * @param defVal returned if obj is not true
-     * @see #or
-     * @return obj or defVal
-     */
-    public static <T> T elvis(T obj, T defVal) {
-        return or(obj, defVal);
-    }
-
-    /**
-     * Returns the last parameter, if all parameters evaluate to true (via
-     * <code>isTrue</code>).
+     * Returns the last parameter, if all parameters evaluate to true (via <code>isTrue</code>).
      *
      * @param <T> the type of operands
      * @param operands the array of type T
@@ -299,7 +280,7 @@ public class ICore {
      */
     @SuppressWarnings("unchecked")
     public static Array<Integer> intlist(Integer ... elements) {
-        return ICore.<Integer>list(elements);
+        return ICore.list(elements);
     }
 
     /**

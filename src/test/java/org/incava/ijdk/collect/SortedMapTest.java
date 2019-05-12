@@ -1,6 +1,12 @@
 package org.incava.ijdk.collect;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
@@ -16,29 +22,41 @@ import static org.incava.attest.ContextMatcher.withContext;
 public class SortedMapTest extends Parameterized {
     @Test
     public void init() {
-        java.util.Map<String, Integer> jdkMap = new java.util.TreeMap<String, Integer>();
-        jdkMap.put("one", 1);
-        jdkMap.put("two", 2);
-        jdkMap.put("three", 3);
+        Map<String, Integer> jdk = new TreeMap<String, Integer>();
+        jdk.put("one", 1);
+        jdk.put("two", 2);
+        jdk.put("three", 3);
 
-        SortedMap<String, Integer> ijdkMap = new SortedMap<String, Integer>(jdkMap);
-        assertThat(ijdkMap, equalTo(jdkMap));
-        assertThat(jdkMap, equalTo(ijdkMap));
+        SortedMap<String, Integer> ijdk = new SortedMap<String, Integer>(jdk);
+        assertThat(ijdk, equalTo(jdk));
+    }
+    
+    @Test
+    public void mapEquals() {
+        Map<String, Integer> jdk = new TreeMap<String, Integer>();
+        jdk.put("one", 1);
+        jdk.put("two", 2);
+        jdk.put("three", 3);
+
+        SortedMap<String, Integer> ijdk = new SortedMap<String, Integer>(jdk);
+        assertThat(jdk.equals(ijdk), equalTo(true));
     }
     
     @Test
     public void ofList() {
-        java.util.List<Pair<String, Integer>> list = new java.util.ArrayList<Pair<String, Integer>>();
+        List<Pair<String, Integer>> list = new ArrayList<Pair<String, Integer>>();
         list.add(Pair.of("one", 1));
         list.add(Pair.of("two", 2));
         list.add(Pair.of("three", 3));
 
-        java.util.TreeMap<String, Integer> expected = new java.util.TreeMap<String, Integer>();
+        TreeMap<String, Integer> expected = new TreeMap<String, Integer>();
         expected.put("one", 1);
         expected.put("two", 2);
         expected.put("three", 3);
 
-        assertThat(expected, equalTo(SortedMap.of(list)));
+        SortedMap<String, Integer> result = SortedMap.of(list);
+
+        assertThat(expected, equalTo(result));
     }
     
     @Test
@@ -47,28 +65,28 @@ public class SortedMapTest extends Parameterized {
     }
     
     @Test @Parameters @TestCaseName("{method} {index} {params}")
-    public <K, V> void of(java.util.TreeMap<K, V> expected, SortedMap<K, V> result) {
+    public <K, V> void of(TreeMap<K, V> expected, SortedMap<K, V> result) {
         assertThat(result, equalTo(expected));
     }
     
-    private java.util.List<Object[]> parametersForOf() {
-        java.util.TreeMap<String, Integer> expected;
+    private List<Object[]> parametersForOf() {
+        TreeMap<String, Integer> expected;
         
-        java.util.List<Object[]> params = paramsList();
+        List<Object[]> params = paramsList();
 
-        expected = new java.util.TreeMap<String, Integer>();
+        expected = new TreeMap<String, Integer>();
         params.add(params(expected, SortedMap.<String, Integer>of()));
 
-        expected = new java.util.TreeMap<String, Integer>();
+        expected = new TreeMap<String, Integer>();
         expected.put("one", 1);
         params.add(params(expected, SortedMap.of("one", 1)));
 
-        expected = new java.util.TreeMap<String, Integer>();
+        expected = new TreeMap<String, Integer>();
         expected.put("two", 2);
         expected.put("three", 3);
         params.add(params(expected, SortedMap.of("two", 2, "three", 3)));
 
-        expected = new java.util.TreeMap<String, Integer>();
+        expected = new TreeMap<String, Integer>();
         expected.put("four", 4);
         expected.put("five", 5);
         expected.put("six", 6);
@@ -79,7 +97,7 @@ public class SortedMapTest extends Parameterized {
 
     @Test
     public void set() {
-        java.util.TreeMap<String, Integer> expected = new java.util.TreeMap<String, Integer>();
+        TreeMap<String, Integer> expected = new TreeMap<String, Integer>();
         expected.put("one", 1);
         expected.put("two", 2);
 
@@ -93,7 +111,7 @@ public class SortedMapTest extends Parameterized {
     @Test
     public void keys() {
         SortedMap<String, Integer> map = SortedMap.<String, Integer>of("one", 1, "two", 2);
-        java.util.Set<String> expected = new java.util.TreeSet<String>();
+        Set<String> expected = new TreeSet<String>();
         expected.add("one");
         expected.add("two");
         assertThat(map.keys(), equalTo(expected));
@@ -102,7 +120,7 @@ public class SortedMapTest extends Parameterized {
     @Test
     public void entries() {
         SortedMap<String, Integer> map = SortedMap.<String, Integer>of("one", 1, "two", 2);
-        java.util.TreeMap<String, Integer> expected = new java.util.TreeMap<String, Integer>();
+        TreeMap<String, Integer> expected = new TreeMap<String, Integer>();
         expected.put("one", 1);
         expected.put("two", 2);
         assertThat(map.entries(), equalTo(expected.entrySet()));
@@ -111,12 +129,12 @@ public class SortedMapTest extends Parameterized {
     @Test
     public void iterator() {
         SortedMap<String, Integer> map = SortedMap.<String, Integer>of("one", 1, "two", 2);
-        java.util.TreeMap<String, Integer> expected = new java.util.TreeMap<String, Integer>();
+        TreeMap<String, Integer> expected = new TreeMap<String, Integer>();
         expected.put("one", 1);
         expected.put("two", 2);
         
-        java.util.Iterator<java.util.Map.Entry<String, Integer>> it = map.iterator();
-        java.util.Iterator<java.util.Map.Entry<String, Integer>> expIt = expected.entrySet().iterator();
+        Iterator<Map.Entry<String, Integer>> it = map.iterator();
+        Iterator<Map.Entry<String, Integer>> expIt = expected.entrySet().iterator();
 
         assertThat(it.hasNext(), equalTo(true));
         assertThat(expIt.next(), equalTo(it.next()));

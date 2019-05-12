@@ -1,5 +1,10 @@
 package org.incava.ijdk.collect;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import org.incava.ijdk.tuple.Pair;
 
 /**
@@ -8,7 +13,7 @@ import org.incava.ijdk.tuple.Pair;
  * @param <K> the type of keys of the map
  * @param <K> the type of values of the map
  */
-public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable<java.util.Map.Entry<K, V>> {
+public class SortedMap<K, V> extends TreeMap<K, V> implements Iterable<Map.Entry<K, V>> {
     /**
      * Creates an empty tree map.
      *
@@ -18,7 +23,7 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      * @see #empty
      */
     public static <KeyType, ValueType> SortedMap<KeyType, ValueType> of() {
-        return new SortedMap<KeyType, ValueType>();
+        return empty();
     }
 
     /**
@@ -42,7 +47,7 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      * @return the new Map
      */
     public static <KeyType, ValueType> SortedMap<KeyType, ValueType> of(KeyType k1, ValueType v1) {
-        SortedMap<KeyType, ValueType> map = of();
+        SortedMap<KeyType, ValueType> map = empty();
         map.put(k1, v1);
         return map;
     }
@@ -91,7 +96,7 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      * @param <ValueType> the type of values of the map
      * @return the new Map
      */
-    public static <KeyType, ValueType> SortedMap<KeyType, ValueType> of(java.util.List<Pair<KeyType, ValueType>> list) {
+    public static <KeyType, ValueType> SortedMap<KeyType, ValueType> of(List<Pair<KeyType, ValueType>> list) {
         return new SortedMap<KeyType, ValueType>(list);
     }
 
@@ -102,7 +107,7 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      *
      * @param elements the keys and values for the map.
      */
-    public SortedMap(java.util.List<Pair<K, V>> elements) {
+    public SortedMap(List<Pair<K, V>> elements) {
         for (Pair<K, V> element : elements) {
             put(element.first(), element.second());
         }
@@ -113,12 +118,12 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      *
      * @param other the JDK map from which to populate this one
      */
-    public SortedMap(java.util.Map<K, V> other) {
+    public SortedMap(Map<K, V> other) {
         putAll(other);
     }
 
     /**
-     * Creates an empty IJDK map.
+     * Creates an empty tree map.
      */
     public SortedMap() {
     }
@@ -141,7 +146,7 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      *
      * @return the keys as a set
      */
-    public java.util.Set<K> keys() {
+    public Set<K> keys() {
         return keySet();
     }
 
@@ -150,7 +155,7 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      *
      * @return the entries as a set
      */
-    public java.util.Set<java.util.Map.Entry<K, V>> entries() {
+    public Set<Map.Entry<K, V>> entries() {
         return entrySet();
     }
 
@@ -167,7 +172,7 @@ public class SortedMap<K, V> extends java.util.TreeMap<K, V> implements Iterable
      *
      * @return the entries as a set
      */
-    public java.util.Iterator<java.util.Map.Entry<K, V>> iterator() {
+    public Iterator<Map.Entry<K, V>> iterator() {
         return entrySet().iterator();
     }
 
