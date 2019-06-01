@@ -6,7 +6,6 @@ import junitparams.naming.TestCaseName;
 import org.incava.attest.Parameterized;
 import org.junit.Test;
 
-import static org.incava.attest.Assertions.assertEqual;
 import static org.incava.attest.Assertions.message;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -16,22 +15,26 @@ public class KeyValueTest extends Parameterized {
 
     @Test @Parameters(method="parametersForAccessors") @TestCaseName("{method} {index} {params}")
     public void getKey(String expKey, Double expValue, KeyValue<String, Double> kv) {
-        assertEqual(expKey, kv.getKey(), message("kv", kv));
+        String result = kv.getKey();
+        assertThat(result, equalTo(expKey));
     }
 
     @Test @Parameters(method="parametersForAccessors") @TestCaseName("{method} {index} {params}")
     public void key(String expKey, Double expValue, KeyValue<String, Double> kv) {
-        assertEqual(expKey, kv.key(), message("kv", kv));
+        Object result = kv.key();
+        assertThat(result, equalTo(expKey));
     }
 
     @Test @Parameters(method="parametersForAccessors") @TestCaseName("{method} {index} {params}")
     public void getValue(String expKey, Double expValue, KeyValue<String, Double> kv) {
-        assertEqual(expValue, kv.getValue(), message("kv", kv));
+        Object result = kv.getValue();
+        assertThat(result, equalTo(expValue));
     }
 
     @Test @Parameters(method="parametersForAccessors") @TestCaseName("{method} {index} {params}")
     public void value(String expKey, Double expValue, KeyValue<String, Double> kv) {
-        assertEqual(expValue, kv.value(), message("kv", kv));
+        Object result = kv.value();
+        assertThat(result, equalTo(expValue));
     }
 
     private List<Object[]> parametersForAccessors() {
@@ -43,7 +46,7 @@ public class KeyValueTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void equalsTest(boolean expected, KeyValue<K, V> kv, Object other) {
         boolean result = kv.equals(other);
-        assertEqual(expected, result, message("kv", kv, "other", other));
+        assertThat(result, equalTo(expected));
     }
 
     private List<Object[]> parametersForEqualsTest() {
@@ -58,13 +61,14 @@ public class KeyValueTest extends Parameterized {
     @Test
     public void hashCodeTest() {
         KeyValue<String, Double> kv = KeyValue.of("one", 1.23);
-        assertEqual(1162283989, kv.hashCode());
+        int result = kv.hashCode();
+        assertThat(result, equalTo(1162283989));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void toStringTest(String expected, KeyValue<K, V> kv, String separator) {
         String result = separator == null ? kv.toString() : kv.toString(separator);
-        assertEqual(expected, result, message("kv", kv, "separator", separator));
+        assertThat(result, equalTo(expected));
     }
 
     private java.util.List<Object[]> parametersForToStringTest() {
@@ -76,28 +80,20 @@ public class KeyValueTest extends Parameterized {
     @Test @Parameters @TestCaseName("{method} {index} {params}")
     public <K, V> void compareTo(Integer expected, KeyValue<K, V> x, KeyValue<K, V> y) {
         int result = x.compareTo(y);
-        assertEqual(result, expected, message("x", x, "y", y));
+        assertThat(result, equalTo(expected));
     }
     
     private java.util.List<Object[]> parametersForCompareTo() {
-        KeyValue<String, Double> aa = KeyValue.of("one", 1.2);
-        KeyValue<String, Double> ab = KeyValue.of("one", 2.4);
-        KeyValue<String, Double> ba = KeyValue.of("two", 1.2);
-
-        // StringBuilder is not comparable:
-        StringBuilder notComparable = new StringBuilder("one");
+        KeyValue<String, Integer> aa  = KeyValue.of("x", 1);
+        KeyValue<String, Integer> aa2 = KeyValue.of("x", 1);
+        KeyValue<String, Integer> ab  = KeyValue.of("x", 2);
+        KeyValue<String, Integer> ba  = KeyValue.of("y", 1);
         
-        return paramsList(params(0,  aa, aa),
-                          params(0,  aa, KeyValue.of("one", 1.2)),
-                          params(0,  KeyValue.of("one", 1.2), aa),
-                          params(-1, aa, ba),
-                          params(1,  ba, aa),
-                          params(-1, aa, ba),
-                          params(-1, aa, ab),
-                          params(1,  ab, aa),
-                          // @todo although these are equal, compareTo returns -1, as if they are not.
-                          params(-1, KeyValue.of(notComparable, 1.2), KeyValue.of(notComparable, 1.2)),
-                          params(-1, KeyValue.of(1.2, notComparable), KeyValue.of(1.2, notComparable)));
+        return paramsList(params(0,  aa,  aa),
+                          params(0,  aa,  aa2),
+                          params(0,  aa2, aa),
+                          params(-1, aa,  ba),
+                          params(1,  ba,  aa));
     }
     
     @Test @Parameters @TestCaseName("{method}(...) #{index} [{params}]")

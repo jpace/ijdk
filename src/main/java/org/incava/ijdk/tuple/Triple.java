@@ -49,18 +49,9 @@ public class Triple<A, B, C> extends Pair<A, B> {
     public int compareTo(Triple<A, B, C> other) {
         int cmp = super.compareTo(other);
         if (cmp == 0) {
-            if (this.third instanceof Comparable) {
-                Comparable ctt = (Comparable)this.third;
-                Comparable cot = (Comparable)other.third;
-                return Comp.compare(ctt, cot);
-            }
-            else {
-                return -1;
-            }
+            cmp = Comp.compare(third, other.third);
         }
-        else {
-            return cmp;
-        }
+        return cmp;
     }
 
     /**

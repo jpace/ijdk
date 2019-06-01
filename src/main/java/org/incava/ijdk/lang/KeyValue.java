@@ -139,31 +139,11 @@ public class KeyValue<K, V> implements Comparable<KeyValue<K, V>>, HasInstanceVa
      * @return the comparison value, which is -1, 0, or 1
      */
     public int compareTo(KeyValue<K, V> other) {
-        int cmp = compare(this.key, other.key);
+        int cmp = Comp.compare(this.key, other.key);
         if (cmp == 0) {
-            return compare(this.value, other.value);
+            cmp = Comp.compare(this.value, other.value);
         }
-        else {
-            return cmp;
-        }
-    }
-
-    /**
-     * Compares the given objects, using their <code>compareTo</code> method if they implement
-     * <code>Comparable</code>. Returns -1 if the objects do not implement <code>Comparable</code>.
-     *
-     * @return the comparison value, which is -1, 0, or 1
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    private static <T> int compare(T x, T y) {
-        if (x instanceof Comparable) {
-            Comparable cx = (Comparable)x;
-            Comparable cy = (Comparable)y;
-            return Comp.compare(cx, cy);
-        }
-        else {
-            return -1;
-        }
+        return cmp;
     }
 
     /**

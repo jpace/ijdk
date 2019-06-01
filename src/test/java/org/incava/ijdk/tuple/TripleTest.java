@@ -39,25 +39,17 @@ public class TripleTest extends Parameterized {
     }
     
     private java.util.List<Object[]> parametersForCompareTo() {
-        Triple<String, Double, Integer> aaa = Triple.of("one", 1.2, 1);
-        Triple<String, Double, Integer> aab = Triple.of("one", 1.2, 2);
-        Triple<String, Double, Integer> aba = Triple.of("one", 2.3, 1);
-        Triple<String, Double, Integer> baa = Triple.of("two", 1.2, 1);
+        Triple<String, Integer, Integer> a = Triple.of("xxx", 1, 2);
+        Triple<String, Integer, Integer> b = Triple.of("xxx", 1, 3);
+        Triple<String, Integer, Integer> c = Triple.of("xxx", 2, 1);
+        Triple<String, Integer, Integer> d = Triple.of("yyy", 1, 1);
 
-        // StringBuilder is not comparable:
-        StringBuilder nc = new StringBuilder("one");
-
-        return paramsList(params(0, aaa, aaa),
-                          params(0, aaa, Triple.of("one", 1.2, 1)),
-                          params(0, Triple.of("one", 1.2, 1), aaa),
-                          params(-1, aaa, aab),
-                          params(1,  baa, aaa),
-                          params(-1, aaa, aba),
-                          params(1,  aba, aaa),
-                          params(1,  baa, aaa),
-                          params(-1, Triple.of(nc, 1.2, 0), Triple.of(nc, 1.2, 0)),
-                          params(-1, Triple.of(1.2, nc, 0), Triple.of(1.2, nc, 0)),
-                          params(-1, Triple.of(1.2, 0, nc), Triple.of(1.2, 0, nc)));
+        return paramsList(params(0,  a, a),
+                          params(-1, a, b),
+                          params(1,  d, a),
+                          params(-1, a, c),
+                          params(1,  c, a),
+                          params(1,  d, a));
     }
 
     @Test @Parameters @TestCaseName("{method} {index} {params}")

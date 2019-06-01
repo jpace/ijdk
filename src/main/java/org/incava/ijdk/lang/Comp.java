@@ -11,93 +11,128 @@ public class Comp {
     /**
      * Compares the two objects, including testing for null. Returns only -1, 0, or 1.
      *
-     * @param <Type> the type, which is Comparable
+     * @param <T> the type, which is Comparable
      * @param x the first value
      * @param y the second value
-     * @return the comparison value
+     * @return the comparison value, which is -1, 0, or 1
      */
-    public static <Type extends Comparable<Type>> int compare(Type x, Type y) {
-        if (x == null) {
-            return y == null ? 0 : -1;
+    public static <T extends Comparable<T>> int compare(T x, T y) {
+        Integer cmp = compareForNull(x, y);
+        if (cmp == null) {
+            cmp = x.compareTo(y);
+        }
+        return Integer.signum(cmp);
+    }
+
+    /**
+     * Compares the given objects, using their <code>compareTo</code> method if they implement
+     * <code>Comparable</code>. Returns -1 if the objects do not implement <code>Comparable</code>.
+     *
+     * @param <T> the type, which is Comparable
+     * @param x the first value
+     * @param y the second value
+     * @return the comparison value, which is -1, 0, or 1
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static <T> int compare(T x, T y) {
+        Integer cmp = compareForNull(x, y);
+        if (cmp == null) {
+            if (x instanceof Comparable) {
+                Comparable cx = (Comparable)x;
+                Comparable cy = (Comparable)y;
+                cmp = cx.compareTo(cy);
+            }
+            else {
+                cmp = -1;
+            }
+        }
+        return Integer.signum(cmp);
+    }
+
+    private static <T> Integer compareForNull(T x, T y) {
+        if (x == y) {
+            return 0;
+        }
+        else if (x == null) {
+            return -1;
         }
         else if (y == null) {
             return 1;
         }
         else {
-            int cmp = x.compareTo(y);
-            return Integer.signum(cmp);
+            return null;
         }
     }
 
     /**
      * Returns whether x is less than y.
      *
-     * @param <Type> the type, which is Comparable
+     * @param <T> the type, which is Comparable
      * @param x the first value
      * @param y the second value
      * @return whether x is less than y
      */
-    public static <Type extends Comparable<Type>> boolean lessThan(Type x, Type y) {
+    public static <T extends Comparable<T>> boolean lessThan(T x, T y) {
         return compare(x, y) < 0;
     }
 
     /**
      * Returns whether x is less than y.
      *
-     * @param <Type> the type, which is Comparable
+     * @param <T> the type, which is Comparable
      * @param x the first value
      * @param y the second value
      * @return whether x is less than y
      */
-    public static <Type extends Comparable<Type>> boolean lt(Type x, Type y) {
+    public static <T extends Comparable<T>> boolean lt(T x, T y) {
         return compare(x, y) < 0;
     }
 
     /**
      * Returns whether x is less than or equal to y.
      *
-     * @param <Type> the type, which is Comparable
+     * @param <T> the type, which is Comparable
      * @param x the first value
      * @param y the second value
      * @return whether x is less than or equal to y
      */
-    public static <Type extends Comparable<Type>> boolean lte(Type x, Type y) {
+    public static <T extends Comparable<T>> boolean lte(T x, T y) {
         return compare(x, y) <= 0;
     }
 
     /**
      * Returns whether x is greater than y.
      *
-     * @param <Type> the type, which is Comparable
+     * @param <T> the type, which is Comparable
      * @param x the first value
      * @param y the second value
      * @return whether x is greater than y
      */
-    public static <Type extends Comparable<Type>> boolean greaterThan(Type x, Type y) {
+    public static <T extends Comparable<T>> boolean greaterThan(T x, T y) {
         return compare(x, y) > 0;
     }
 
     /**
      * Returns whether x is greater than y.
      *
-     * @param <Type> the type, which is Comparable
+     * @param <T> the type, which is Comparable
      * @param x the first value
      * @param y the second value
      * @return whether x is greater than y
      */
-    public static <Type extends Comparable<Type>> boolean gt(Type x, Type y) {
+    public static <T extends Comparable<T>> boolean gt(T x, T y) {
         return compare(x, y) > 0;
     }
 
     /**
      * Returns whether x is greater than or equal to y.
      *
-     * @param <Type> the type, which is Comparable
+     * @param <T> the type, which is Comparable
      * @param x the first value
      * @param y the second value
      * @return whether x is greater than or equal to y
      */
-    public static <Type extends Comparable<Type>> boolean gte(Type x, Type y) {
+    public static <T extends Comparable<T>> boolean gte(T x, T y) {
         return compare(x, y) >= 0;
     }
 }
