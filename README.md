@@ -185,6 +185,7 @@ collision with java.util.Map).
         assertEqual(exp, entry.getValue(), message("entry", entry));
     }
 
+    // fetch throws an exception if there is no entry for the given key and a default is not given:
     Hash<String, String> h = Hash.of("first", "abc", "second", "def", "third", "ghi");
     assertEqual("abc", h.fetch("first"));
     assertEqual("xyz", h.fetch("fourth", "xyz"));
@@ -211,6 +212,9 @@ Formerly StringList, an Array of Strings.
    boolean result = sa.anyStartsWith("ba");  // true
    boolean result = sa.anyStartsWith("do");  // false
    StringArray lines = sa.toLines();          // returns each element appended with "\n"
+   
+   File file = new File("input.txt");
+   StringArray lines = StringArray.from(file);
 ```
 
 #### IntegerArray
@@ -370,7 +374,7 @@ Execute a given number of times, similar to Ruby:
 
 ```java
     for (Integer i : Iterate.count(3)) {
-        ICore.puts("hi");
+        System.out.println("hi");
     }
 ```
 
@@ -488,12 +492,12 @@ IJDK is available in the Maven repository.
     }
 
     dependencies {
-        compile group: 'org.incava', name: 'ijdk', version: '3.3.2'
+        compile group: 'org.incava', name: 'ijdk', version: '3.9.0'
     }
 
 # Help
 
-Email me at jeugenepace at gmail dot com if you have questions or feedback about IJDK.
+Send email to jeugenepace at gmail dot com if you have questions or feedback about IJDK.
 
 # More Examples
 
